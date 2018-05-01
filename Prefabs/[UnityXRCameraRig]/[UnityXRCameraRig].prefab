@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4361118032042482}
   - component: {fileID: 114282923290982710}
+  - component: {fileID: 114583763361574438}
   m_Layer: 0
   m_Name: LeftAnchor
   m_TagString: Untagged
@@ -36,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4509080931372404}
   - component: {fileID: 114764331833688408}
+  - component: {fileID: 114080674084496316}
   m_Layer: 0
   m_Name: RightAnchor
   m_TagString: Untagged
@@ -69,6 +71,7 @@ GameObject:
   - component: {fileID: 20188828118214572}
   - component: {fileID: 81284256634359146}
   - component: {fileID: 114055903060038604}
+  - component: {fileID: 114247250152654678}
   m_Layer: 0
   m_Name: HeadAnchor
   m_TagString: MainCamera
@@ -190,6 +193,36 @@ MonoBehaviour:
   m_TrackingType: 0
   m_UpdateType: 0
   m_UseRelativeTransform: 1
+--- !u!114 &114080674084496316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1085192622640384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f27fc0668d79644c93af545a243c86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 4509080931372404}
+  autoStartSampling: 1
+  velocityAverageFrames: 5
+  angularVelocityAverageFrames: 10
+--- !u!114 &114247250152654678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907295252762062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f27fc0668d79644c93af545a243c86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 4484799805633602}
+  autoStartSampling: 1
+  velocityAverageFrames: 5
+  angularVelocityAverageFrames: 10
 --- !u!114 &114282923290982710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,6 +239,21 @@ MonoBehaviour:
   m_TrackingType: 0
   m_UpdateType: 0
   m_UseRelativeTransform: 1
+--- !u!114 &114583763361574438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1056323152614116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f27fc0668d79644c93af545a243c86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 4361118032042482}
+  autoStartSampling: 1
+  velocityAverageFrames: 5
+  angularVelocityAverageFrames: 10
 --- !u!114 &114764331833688408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -218,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Device: 1
-  m_PoseSource: 5
+  m_PoseSource: 4
   m_TrackingType: 0
   m_UpdateType: 0
   m_UseRelativeTransform: 1
