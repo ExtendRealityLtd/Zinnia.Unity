@@ -26,6 +26,7 @@
         public override Vector3 GetVelocity()
         {
             Vector3 currentVelocity = Vector3.zero;
+            cachedTracker = null;
             foreach (VelocityTracker currentTracker in velocityTrackers)
             {
                 if (currentTracker != null && currentTracker.IsActive())
@@ -45,6 +46,7 @@
         public override Vector3 GetAngularVelocity()
         {
             Vector3 currentAngularVelocity = Vector3.zero;
+            cachedTracker = null;
             foreach (VelocityTracker currentTracker in velocityTrackers)
             {
                 if (currentTracker != null && currentTracker.IsActive())
@@ -63,7 +65,7 @@
         /// <returns>A VelocityTracker that is currently active.</returns>
         public virtual VelocityTracker GetActiveVelocityTracker()
         {
-            return (cachedTracker.IsActive() ? cachedTracker : null);
+            return (cachedTracker != null && cachedTracker.IsActive() ? cachedTracker : null);
         }
     }
 }
