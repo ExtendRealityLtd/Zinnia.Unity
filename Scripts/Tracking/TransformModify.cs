@@ -36,11 +36,11 @@
         /// <summary>
         /// The BeforeTransformUpdated event is emitted before the transformation process occurs.
         /// </summary>
-        public TransformModifyUnityEvent BeforeTransformUpdated;
+        public TransformModifyUnityEvent BeforeTransformUpdated = new TransformModifyUnityEvent();
         /// <summary>
         /// The AfterTransformUpdated event is emitted after the transformation process has occured.
         /// </summary>
-        public TransformModifyUnityEvent AfterTransformUpdated;
+        public TransformModifyUnityEvent AfterTransformUpdated = new TransformModifyUnityEvent();
 
         protected Vector3 finalPosition;
         protected Quaternion finalRotation;

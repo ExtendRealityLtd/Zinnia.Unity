@@ -35,43 +35,43 @@
         /// <summary>
         /// The BeforeProcessed event is emitted before any processing.
         /// </summary>
-        public ObjectFollowUnityEvent BeforeProcessed;
+        public ObjectFollowUnityEvent BeforeProcessed = new ObjectFollowUnityEvent();
         /// <summary>
         /// The AfterProcessed event is emitted after all processing is complete.
         /// </summary>
-        public ObjectFollowUnityEvent AfterProcessed;
+        public ObjectFollowUnityEvent AfterProcessed = new ObjectFollowUnityEvent();
         /// <summary>
         /// The BeforeTransformUpdated event is emitted before the Transform is updated.
         /// </summary>
-        public ObjectFollowUnityEvent BeforeTransformUpdated;
+        public ObjectFollowUnityEvent BeforeTransformUpdated = new ObjectFollowUnityEvent();
         /// <summary>
         /// The AfterTransformUpdated event is emitted after the Transform is updated.
         /// </summary>
-        public ObjectFollowUnityEvent AfterTransformUpdated;
+        public ObjectFollowUnityEvent AfterTransformUpdated = new ObjectFollowUnityEvent();
         /// <summary>
         /// The BeforePositionUpdated event is emitted before the Transform's position is updated.
         /// </summary>
-        public ObjectFollowUnityEvent BeforePositionUpdated;
+        public ObjectFollowUnityEvent BeforePositionUpdated = new ObjectFollowUnityEvent();
         /// <summary>
         /// The AfterPositionUpdated event is emitted after the Transform's position is updated.
         /// </summary>
-        public ObjectFollowUnityEvent AfterPositionUpdated;
+        public ObjectFollowUnityEvent AfterPositionUpdated = new ObjectFollowUnityEvent();
         /// <summary>
         /// The BeforeRotationUpdated event is emitted before the Transform's rotation is updated.
         /// </summary>
-        public ObjectFollowUnityEvent BeforeRotationUpdated;
+        public ObjectFollowUnityEvent BeforeRotationUpdated = new ObjectFollowUnityEvent();
         /// <summary>
         /// The AfterRotationUpdated event is emitted after the Transform's rotation is updated.
         /// </summary>
-        public ObjectFollowUnityEvent AfterRotationUpdated;
+        public ObjectFollowUnityEvent AfterRotationUpdated = new ObjectFollowUnityEvent();
         /// <summary>
         /// The BeforeScaleUpdated event is emitted before the Transform's scale is updated.
         /// </summary>
-        public ObjectFollowUnityEvent BeforeScaleUpdated;
+        public ObjectFollowUnityEvent BeforeScaleUpdated = new ObjectFollowUnityEvent();
         /// <summary>
         /// The AfterScaleUpdated event is emitted after the Transform's scale is updated.
         /// </summary>
-        public ObjectFollowUnityEvent AfterScaleUpdated;
+        public ObjectFollowUnityEvent AfterScaleUpdated = new ObjectFollowUnityEvent();
 
         /// <summary>
         /// The Process method executes the relevant process on the given FollowModifier.

@@ -35,15 +35,15 @@
         /// <summary>
         /// The ColorOverlayAdded event is emitted when the `AddColorOverlay` method is called.
         /// </summary>
-        public CameraColorOverlayUnityEvent ColorOverlayAdded;
+        public CameraColorOverlayUnityEvent ColorOverlayAdded = new CameraColorOverlayUnityEvent();
         /// <summary>
         /// The ColorOverlayRemoved event is emitted when the `RemoveColorOverlay` method is called.
         /// </summary>
-        public CameraColorOverlayUnityEvent ColorOverlayRemoved;
+        public CameraColorOverlayUnityEvent ColorOverlayRemoved = new CameraColorOverlayUnityEvent();
         /// <summary>
         /// The ColorOverlayChanged event is emitted during the color overlay cycle.
         /// </summary>
-        public CameraColorOverlayUnityEvent ColorOverlayChanged;
+        public CameraColorOverlayUnityEvent ColorOverlayChanged = new CameraColorOverlayUnityEvent();
 
         protected Color targetColor = new Color(0f, 0f, 0f, 0f);
         protected Color currentColor = new Color(0f, 0f, 0f, 0f);
