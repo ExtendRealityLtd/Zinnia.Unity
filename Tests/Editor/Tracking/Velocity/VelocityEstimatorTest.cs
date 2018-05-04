@@ -38,9 +38,8 @@
         [TearDown]
         public void TearDown()
         {
-            subject = null;
-            source = null;
-            containingObject = null;
+            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(containingObject);
         }
 
         [Test]

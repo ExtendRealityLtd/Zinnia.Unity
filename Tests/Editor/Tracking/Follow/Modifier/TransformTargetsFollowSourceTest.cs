@@ -18,8 +18,8 @@
         [TearDown]
         public void TearDown()
         {
-            subject = null;
-            containingObject = null;
+            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
