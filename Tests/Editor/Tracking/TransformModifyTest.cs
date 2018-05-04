@@ -27,12 +27,12 @@
         [TearDown]
         public void TearDown()
         {
-            subject = null;
-            containingObject = null;
+            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(containingObject);
 
-            sourceObject = null;
-            offsetObject = null;
-            targetObject = null;
+            Object.DestroyImmediate(sourceObject);
+            Object.DestroyImmediate(offsetObject);
+            Object.DestroyImmediate(targetObject);
         }
 
         [Test]
