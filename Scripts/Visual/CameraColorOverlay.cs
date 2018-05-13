@@ -45,6 +45,7 @@
         /// </summary>
         public CameraColorOverlayUnityEvent ColorOverlayChanged = new CameraColorOverlayUnityEvent();
 
+        protected float targetDuration;
         protected Color targetColor = new Color(0f, 0f, 0f, 0f);
         protected Color currentColor = new Color(0f, 0f, 0f, 0f);
         protected Color deltaColor = new Color(0f, 0f, 0f, 0f);
@@ -55,9 +56,7 @@
         /// </summary>
         public virtual void AddColorOverlay()
         {
-            CancelBlinkRoutine();
             AddColorOverlay(overlayColor, addDuration);
-            OnColorOverlayAdded(overlayColor);
         }
 
         /// <summary>
@@ -111,14 +110,25 @@
         /// <param name="duration">The duration over which the color is applied.</param>
         protected virtual void AddColorOverlay(Color newColor, float duration)
         {
-            targetColor = newColor;
-            if (duration > 0.0f)
+            CancelBlinkRoutine();
+
+            if (newColor != targetColor || duration != targetDuration)
             {
-                deltaColor = (targetColor - currentColor) / duration;
-            }
-            else
-            {
-                currentColor = newColor;
+                targetDuration = duration;
+                targetColor = newColor;
+                if (duration > 0.0f)
+                {
+                    deltaColor = (targetColor - currentColor) / duration;
+                }
+                else
+                {
+                    currentColor = newColor;
+                }
+
+                if (newColor != Color.clear)
+                {
+                    OnColorOverlayAdded(overlayColor);
+                }
             }
         }
 
