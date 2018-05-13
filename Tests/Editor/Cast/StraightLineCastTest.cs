@@ -1,0 +1,106 @@
+﻿namespace VRTK.Core.Cast
+{
+    using UnityEngine;
+    using NUnit.Framework;
+    using System.Collections.Generic;
+    using VRTK.Core.Utility;
+    using VRTK.Core.Utility.Mock;
+    using VRTK.Core.Utility.Stub;
+
+    public class StraightLineCastTest
+    {
+        private GameObject containingObject;
+        private StraightLineCastMock subject;
+        private GameObject validSurface;
+
+        [SetUp]
+        public void SetUp()
+        {
+            containingObject = new GameObject();
+            subject = containingObject.AddComponent<StraightLineCastMock>();
+            validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(containingObject);
+            Object.DestroyImmediate(validSurface);
+        }
+
+        [Test]
+        public void CastPointsValidTarget()
+        {
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.ManualAwake();
+            subject.Process();
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
+
+            Assert.AreEqual(expectedStart, subject.Points[0]);
+            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(castResultsChangedMock.Received);
+        }
+
+        [Test]
+        public void CastPointsInsufficientBeamLength()
+        {
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+            subject.maximumLength = validSurface.transform.position.z / 2f;
+
+            subject.ManualAwake();
+            subject.Process();
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = Vector3.forward * subject.maximumLength;
+
+            Assert.AreEqual(expectedStart, subject.Points[0]);
+            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.IsNull(subject.TargetHit);
+            Assert.IsTrue(castResultsChangedMock.Received);
+        }
+
+        [Test]
+        public void CastPointsInvalidTarget()
+        {
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+            validSurface.AddComponent<ExclusionRuleStub>();
+            ExclusionRule exclusions = validSurface.AddComponent<ExclusionRule>();
+            exclusions.checkType = ExclusionRule.CheckTypes.Script;
+            exclusions.identifiers = new List<string>() { "ExclusionRuleStub" };
+            subject.targetValidity = exclusions;
+
+            subject.ManualAwake();
+            subject.Process();
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
+
+            Assert.AreEqual(expectedStart, subject.Points[0]);
+            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.IsNull(subject.TargetHit);
+            Assert.IsTrue(castResultsChangedMock.Received);
+        }
+    }
+
+    public class StraightLineCastMock : StraightLineCast
+    {
+        public void ManualAwake()
+        {
+            Awake();
+        }
+    }
+}

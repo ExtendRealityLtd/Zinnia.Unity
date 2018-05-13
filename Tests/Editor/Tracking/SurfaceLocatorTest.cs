@@ -3,8 +3,9 @@
     using UnityEngine;
     using NUnit.Framework;
     using System.Collections.Generic;
-    using VRTK.Core.Utility.Mock;
     using VRTK.Core.Utility;
+    using VRTK.Core.Utility.Mock;
+    using VRTK.Core.Utility.Stub;
 
     public class SurfaceLocatorTest
     {
@@ -72,10 +73,10 @@
             subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
 
             validSurface.transform.position = Vector3.forward * 5f;
-            validSurface.AddComponent<PolicyTest>();
+            validSurface.AddComponent<ExclusionRuleStub>();
             ExclusionRule exclusions = validSurface.AddComponent<ExclusionRule>();
             exclusions.checkType = ExclusionRule.CheckTypes.Script;
-            exclusions.identifiers = new List<string>() { "PolicyTest" };
+            exclusions.identifiers = new List<string>() { "ExclusionRuleStub" };
 
             subject.searchOrigin = searchOrigin.transform;
             subject.searchDirection = Vector3.forward;
@@ -84,9 +85,5 @@
             subject.Locate();
             Assert.IsFalse(surfaceLocatedMock.Received);
         }
-    }
-
-    public class PolicyTest : MonoBehaviour
-    {
     }
 }
