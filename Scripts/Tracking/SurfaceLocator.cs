@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using VRTK.Core.Cast;
     using VRTK.Core.Utility;
     using VRTK.Core.Data.Type;
     using VRTK.Core.Process;
