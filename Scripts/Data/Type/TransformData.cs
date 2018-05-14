@@ -1,46 +1,48 @@
 ﻿namespace VRTK.Core.Data.Type
 {
     using UnityEngine;
+    using System;
 
     /// <summary>
-    /// The TrasnformData holds Transform information with the ability to override properties without affecting the scene Transform.
+    /// Holds <see cref="Transform"/> information with the ability to override properties without affecting the scene <see cref="Transform"/>.
     /// </summary>
+    [Serializable]
     public class TransformData
     {
         /// <summary>
-        /// A reference to the original transform.
+        /// A reference to the original <see cref="Transform"/>.
         /// </summary>
         public Transform transform;
         /// <summary>
-        /// Position override of the Transform object.
+        /// Position override of the <see cref="Transform"/> object.
         /// </summary>
         public Vector3? positionOverride = null;
         /// <summary>
-        /// Rotation override of the Transform object.
+        /// Rotation override of the <see cref="Transform"/> object.
         /// </summary>
         public Quaternion? rotationOverride = null;
         /// <summary>
-        /// Scale override of the Transform object.
+        /// Scale override of the <see cref="Transform"/> object.
         /// </summary>
         public Vector3? localScaleOverride = null;
 
         /// <summary>
-        /// The position of the transform or the positionOverride if it is set.
+        /// The position of the <see cref="Transform"/> or the <see cref="positionOverride"/> if it is set.
         /// </summary>
         public Vector3 Position => positionOverride ?? transform.position;
 
         /// <summary>
-        /// The rotation of the transform or the rotationOverride if it is set.
+        /// The rotation of the <see cref="Transform"/> or the <see cref="rotationOverride"/> if it is set.
         /// </summary>
         public Quaternion Rotation => rotationOverride ?? transform.rotation;
 
         /// <summary>
-        /// The localScale of the transform or the localScaleOverride if it is set.
+        /// The localScale of the <see cref="Transform"/> or the <see cref="localScaleOverride"/> if it is set.
         /// </summary>
         public Vector3 LocalScale => localScaleOverride ?? transform.localScale;
 
         /// <summary>
-        /// The state of whether the TransformData is valid.
+        /// The state of whether the <see cref="TransformData"/> is valid.
         /// </summary>
         public bool Valid
         {
@@ -51,16 +53,16 @@
         }
 
         /// <summary>
-        /// Creates a new TransformData for an empty Transform.
+        /// Creates a new <see cref="TransformData"/> for an empty <see cref="Transform"/>.
         /// </summary>
         public TransformData()
         {
         }
 
         /// <summary>
-        /// Creates a new TransformData from an existing Transform.
+        /// Creates a new <see cref="TransformData"/> from an existing <see cref="Transform"/>.
         /// </summary>
-        /// <param name="transform">The Transform to create the TransformData from.</param>
+        /// <param name="transform">The <see cref="Transform"/> to create the <see cref="TransformData"/> from.</param>
         public TransformData(Transform transform)
         {
             this.transform = transform;

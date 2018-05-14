@@ -1,21 +1,28 @@
 ﻿namespace VRTK.Core.Process
 {
     using UnityEngine;
+    using System;
 
     /// <summary>
-    /// The SourceTargetProcessor implements a Process that runs a set method on a source Component against an array of target Components.
+    /// An <see cref="IProcessable"/> that runs a set method on a source <see cref="Component"/> against an array of target <see cref="Component"/>s.
     /// </summary>
     public abstract class SourceTargetProcessor : MonoBehaviour, IProcessable
     {
         [Header("Processor Component Settings")]
 
-        [Tooltip("The source component to apply against the source within the process.")]
+        /// <summary>
+        /// The source <see cref="Component"/> to apply against the source within the process.
+        /// </summary>
+        [Tooltip("The source Component to apply against the source within the process.")]
         public Component sourceComponent;
-        [Tooltip("The target components to apply the source to within the process.")]
-        public Component[] targetComponents;
+        /// <summary>
+        /// The target <see cref="Component"/>s to apply the source to within the process.
+        /// </summary>
+        [Tooltip("The target Components to apply the source to within the process.")]
+        public Component[] targetComponents = Array.Empty<Component>();
 
         /// <summary>
-        /// Tjhe Component that is currently the active target for the process.
+        /// The <see cref="Component"/> that is currently the active target for the process.
         /// </summary>
         public Component ActiveTargetComponent
         {
@@ -24,14 +31,14 @@
         }
 
         /// <summary>
-        /// The Process method executes the relevant process to apply between the source and target Component.
+        /// Executes the relevant process to apply between the source and target <see cref="Component"/>.
         /// </summary>
         public abstract void Process();
 
         protected abstract void ProcessComponent(Component source, Component target);
 
         /// <summary>
-        /// The ProcessAllComponents method processes the source Component against every target Component in the array.
+        /// Processes the source <see cref="Component"/> against every target <see cref="Component"/> in the array.
         /// </summary>
         protected virtual void ProcessAllComponents()
         {
@@ -45,7 +52,7 @@
         }
 
         /// <summary>
-        /// The ProcessFirstActiveComponent method processes the source Component against the first active target Component in the array.
+        /// Processes the source <see cref="Component"/> against the first active target <see cref="Component"/> in the array.
         /// </summary>
         protected virtual void ProcessFirstActiveComponent()
         {

@@ -1,14 +1,15 @@
 ﻿namespace VRTK.Core.Process
 {
     using UnityEngine;
+    using System;
 
     /// <summary>
-    /// The MomentProcessor loops through the given moments and executes their Process method on the given Unity game loop moment.
+    /// Iterates through the given <see cref="MomentProcess"/> array and executes the <see cref="MomentProcess.process"/> method on the given Unity game loop moment.
     /// </summary>
     public class MomentProcessor : MonoBehaviour
     {
         /// <summary>
-        /// The Moment is the point in the Unity game loop when to execute the processes.
+        /// The point in the Unity game loop when to execute the processes.
         /// </summary>
         public enum Moment
         {
@@ -38,10 +39,16 @@
             PreRender
         }
 
+        /// <summary>
+        /// The moment in which to process the given processes.
+        /// </summary>
         [Tooltip("The moment in which to process the given processes.")]
         public Moment momentToProcess = Moment.PreRender;
-        [Tooltip("A collection of Moments to process.")]
-        public MomentProcess[] processes = new MomentProcess[0];
+        /// <summary>
+        /// A collection of <see cref="MomentProcess"/> to process.
+        /// </summary>
+        [Tooltip("A collection of MomentProcess to process.")]
+        public MomentProcess[] processes = Array.Empty<MomentProcess>();
 
         protected Moment subscribedMoment;
 
@@ -92,7 +99,7 @@
         }
 
         /// <summary>
-        /// The ManageSubscriptions method handles subscribing and unsubscribing to the relevant camera events.
+        /// Handles subscribing and unsubscribing to the relevant camera events.
         /// </summary>
         protected virtual void ManageSubscriptions()
         {
@@ -104,7 +111,7 @@
         }
 
         /// <summary>
-        /// The UnsubscribeMoment method handles unsubscribing to the chosen subscribed moment event.
+        /// Handles unsubscribing to the chosen subscribed moment event.
         /// </summary>
         protected virtual void UnsubscribeMoment()
         {
@@ -121,7 +128,7 @@
         }
 
         /// <summary>
-        /// The SubscribeMoment method handles subscribing to the chosen moment to process event.
+        /// Handles subscribing to the chosen moment to process event.
         /// </summary>
         protected virtual void SubscribeMoment()
         {
@@ -138,7 +145,7 @@
         }
 
         /// <summary>
-        /// The Process method iterates through the given processes and calls the Process method on each one.
+        /// Iterates through the given <see cref="MomentProcess"/> and calls <see cref="MomentProcess.process"/> on each one.
         /// </summary>
         protected virtual void Process()
         {

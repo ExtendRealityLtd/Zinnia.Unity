@@ -7,41 +7,59 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// The CameraColorOverlay applies a color over the valid cameras and can be used to fade the screen view.
+    /// Applies a color over the valid cameras and can be used to fade the screen view.
     /// </summary>
     public class CameraColorOverlay : MonoBehaviour
     {
-        [Tooltip("An array of cameras which to apply the color overlay to.")]
+        /// <summary>
+        /// A <see cref="Camera"/> collection to apply the color overlay to.
+        /// </summary>
+        [Tooltip("A Camera collection to apply the color overlay to.")]
         public List<Camera> validCameras = new List<Camera>();
-        [Tooltip("The color of the overlay.")]
+        /// <summary>
+        /// The <see cref="Color"/> of the overlay.
+        /// </summary>
+        [Tooltip("The Color of the overlay.")]
         public Color overlayColor = Color.black;
-        [Tooltip("The material to use for the overlay.")]
+        /// <summary>
+        /// The <see cref="Material"/> to use for the overlay.
+        /// </summary>
+        [Tooltip("The Material to use for the overlay.")]
         public Material overlayMaterial;
-        [Tooltip("The duration of time to apply the overlay color.")]
+        /// <summary>
+        /// The duration of time to apply the overlay <see cref="Color"/>.
+        /// </summary>
+        [Tooltip("The duration of time to apply the overlay Color.")]
         public float addDuration = 0f;
-        [Tooltip("The duration of time to remove the overlay color.")]
+        /// <summary>
+        /// The duration of time to remove the overlay <see cref="Color"/>.
+        /// </summary>
+        [Tooltip("The duration of time to remove the overlay Color.")]
         public float removeDuration = 1f;
-        [Tooltip("The duration of time to wait once the overlay color is applied before it is removed.")]
+        /// <summary>
+        /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
+        /// </summary>
+        [Tooltip("The duration of time to wait once the overlay Color is applied before it is removed.")]
         public float appliedDuration = 0f;
 
         /// <summary>
-        /// The CameraColorOverlayUnityEvent emits an event with the current color being overlaid on the valid cameras along with the sender object.
+        /// Defines the event with the overlay <see cref="Color"/> and sender <see cref="object"/>.
         /// </summary>
         [Serializable]
         public class CameraColorOverlayUnityEvent : UnityEvent<Color, object>
         {
-        };
+        }
 
         /// <summary>
-        /// The ColorOverlayAdded event is emitted when the `AddColorOverlay` method is called.
+        /// Emitted when an overlay <see cref="Color"/> is added.
         /// </summary>
         public CameraColorOverlayUnityEvent ColorOverlayAdded = new CameraColorOverlayUnityEvent();
         /// <summary>
-        /// The ColorOverlayRemoved event is emitted when the `RemoveColorOverlay` method is called.
+        /// Emitted when an overlay <see cref="Color"/> is removed.
         /// </summary>
         public CameraColorOverlayUnityEvent ColorOverlayRemoved = new CameraColorOverlayUnityEvent();
         /// <summary>
-        /// The ColorOverlayChanged event is emitted during the color overlay cycle.
+        /// Emitted when an overlay <see cref="Color"/> has changed from the previous render frame.
         /// </summary>
         public CameraColorOverlayUnityEvent ColorOverlayChanged = new CameraColorOverlayUnityEvent();
 
@@ -52,7 +70,7 @@
         protected Coroutine blinkRoutine;
 
         /// <summary>
-        /// The AddColorOverlay method applies the `overlayColor` to the `validCameras` over the given `addDuration`.
+        /// Applies the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="addDuration"/>.
         /// </summary>
         public virtual void AddColorOverlay()
         {
@@ -60,7 +78,7 @@
         }
 
         /// <summary>
-        /// The RemoveColorOverlay method removes the `overlayColor` from the `validCameras` over the given `removeDuration`.
+        /// Removes the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="removeDuration"/>.
         /// </summary>
         public virtual void RemoveColorOverlay()
         {
@@ -69,7 +87,7 @@
         }
 
         /// <summary>
-        /// The Blink method adds the `overlayColor` to the `validCameras` over the given `addDuration` then waits for the given `appliedDuration` then removes the `overlayColor` over the given `removeDuration`.
+        /// Applies the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="addDuration"/> then waits for the given <see cref="appliedDuration"/> then removes the <see cref="overlayColor"/> over the given <see cref="removeDuration"/>.
         /// </summary>
         public virtual void Blink()
         {
@@ -104,10 +122,10 @@
         }
 
         /// <summary>
-        /// The AddOverlayColor method applies the given color to the `validCameras` over the given duration.
+        /// Applies the given <see cref="Color"/> to the <see cref="validCameras"/> over the given duration.
         /// </summary>
-        /// <param name="newColor">Color to apply to the overlay.</param>
-        /// <param name="duration">The duration over which the color is applied.</param>
+        /// <param name="newColor"><see cref="Color"/> to apply to the overlay.</param>
+        /// <param name="duration">The duration over which the <see cref="Color"/> is applied.</param>
         protected virtual void AddColorOverlay(Color newColor, float duration)
         {
             CancelBlinkRoutine();
@@ -133,9 +151,9 @@
         }
 
         /// <summary>
-        /// The ResetBlink method waits for the given wait duration and then removes the color overlay over the remove duration.
+        /// Waits for the given wait duration and then removes the <see cref="Color"/> overlay over the remove duration.
         /// </summary>
-        /// <param name="givenWaitDuration">The duration in which to wait before removing the color overlay.</param>
+        /// <param name="givenWaitDuration">The duration in which to wait before removing the <see cref="Color"/> overlay.</param>
         /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
         protected virtual IEnumerator ResetBlink(float givenWaitDuration)
         {
@@ -144,7 +162,7 @@
         }
 
         /// <summary>
-        /// The CancelBlinkRoutine cancels any existing running `ResetBlink` Coroutine.
+        /// Cancels any existing running <see cref="ResetBlink(float)"/> Coroutine.
         /// </summary>
         protected virtual void CancelBlinkRoutine()
         {
@@ -155,9 +173,9 @@
         }
 
         /// <summary>
-        /// The PostRender event on the camera that will apply the color overlay.
+        /// The moment before <see cref="Camera"/> render that will apply the <see cref="Color"/> overlay.
         /// </summary>
-        /// <param name="cam">The camera to apply onto.</param>
+        /// <param name="cam">The <see cref="Camera"/> to apply onto.</param>
         protected virtual void PostRender(Camera cam)
         {
             if (!validCameras.Contains(cam))

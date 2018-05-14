@@ -6,7 +6,7 @@
     using VRTK.Core.Data.Attribute;
 
     /// <summary>
-    /// The ExclusionRule allows to create a list of either tag names, script names or layer names that can be checked against to see if another operation should be excluded or permitted.
+    /// A list of either tag names, script names or layer names that can be checked against to see if another operation should be excluded or permitted.
     /// </summary>
     public class ExclusionRule : MonoBehaviour
     {
@@ -16,11 +16,11 @@
         public enum OperationType
         {
             /// <summary>
-            /// Will ignore any GameObjects that contain the CheckType that is included in the identifiers list.
+            /// Will ignore any <see cref="GameObject"/>s that contain the <see cref="CheckTypes"/> that is included in the identifiers list.
             /// </summary>
             Ignore,
             /// <summary>
-            /// Will only include any GameObjects that contain the CheckType that is included in the identifiers list.
+            /// Will only include any <see cref="GameObject"/>s that contain the <see cref="CheckTypes"/> that is included in the identifiers list.
             /// </summary>
             Include
         }
@@ -32,33 +32,42 @@
         public enum CheckTypes
         {
             /// <summary>
-            /// The tag applied to the GameObject.
+            /// The tag applied to the <see cref="GameObject"/>.
             /// </summary>
             Tag = 1 << 0,
             /// <summary>
-            /// A script component added to the GameObject.
+            /// A script <see cref="Component"/> added to the <see cref="GameObject"/>.
             /// </summary>
             Script = 1 << 1,
             /// <summary>
-            /// A layer applied to the GameObject.
+            /// A layer applied to the <see cref="GameObject"/>.
             /// </summary>
             Layer = 1 << 2
         }
 
+        /// <summary>
+        /// The operation to apply on the list of identifiers.
+        /// </summary>
         [Tooltip("The operation to apply on the list of identifiers.")]
         public OperationType operation = OperationType.Ignore;
+        /// <summary>
+        /// The element type on the <see cref="GameObject"/> to check against.
+        /// </summary>
         [UnityFlag]
         [Tooltip("The element type on the GameObject to check against.")]
         public CheckTypes checkType = CheckTypes.Tag;
+        /// <summary>
+        /// A list of identifiers to check against the given check type.
+        /// </summary>
         [Tooltip("A list of identifiers to check against the given check type.")]
         public List<string> identifiers = new List<string>();
 
         /// <summary>
-        /// The ShouldExclude method is used to determine if a GameObject should be considered excluded due to the set rules.
+        /// Determines if a <see cref="GameObject"/> should be considered excluded due to the set rules.
         /// </summary>
-        /// <param name="obj">The GameObject to check.</param>
-        /// <param name="rule">The ExclusionRule to use for checking.</param>
-        /// <returns>Returns `true` if the given GameObject should be excluded based on the set rules.</returns>
+        /// <param name="obj">The <see cref="GameObject"/> to check.</param>
+        /// <param name="rule">The <see cref="ExclusionRule"/> to use for checking.</param>
+        /// <returns><see langword="true"/> if the given <see cref="GameObject"/> should be excluded based on the set rules.</returns>
         public static bool ShouldExclude(GameObject obj, ExclusionRule rule)
         {
             if (rule != null)
@@ -69,10 +78,10 @@
         }
 
         /// <summary>
-        /// The ShouldExclude method is used to determine if a GameObject should be considered excluded due to the set rules.
+        /// Determines if a <see cref="GameObject"/> should be considered excluded due to the set rules.
         /// </summary>
-        /// <param name="obj">The GameObject to check.</param>
-        /// <returns>Returns `true` if the given GameObject should be excluded based on the set rules.</returns>
+        /// <param name="obj">The <see cref="GameObject"/> to check.</param>
+        /// <returns><see langword="true"/> if the given <see cref="GameObject"/> should be excluded based on the set rules.</returns>
         public virtual bool ShouldExclude(GameObject obj)
         {
             if (operation == OperationType.Ignore)
@@ -86,11 +95,11 @@
         }
 
         /// <summary>
-        /// The ScriptCheck method determines if the given GameObject has a script named after one of the identifiers.
+        /// Determines if the given <see cref="GameObject"/> has a script named after one of the identifiers.
         /// </summary>
-        /// <param name="obj">The GameObject to check.</param>
+        /// <param name="obj">The <see cref="GameObject"/> to check.</param>
         /// <param name="returnState">The current state of the check.</param>
-        /// <returns>Returns `true` if the GameObject does have a script named after one of the identifiers.</returns>
+        /// <returns><see langword="true"/> if the <see cref="GameObject"/> does have a script named after one of the identifiers.</returns>
         protected virtual bool ScriptCheck(GameObject obj, bool returnState)
         {
             for (int i = 0; i < identifiers.Count; i++)
@@ -104,11 +113,11 @@
         }
 
         /// <summary>
-        /// The TagCheck method determines if the given GameObject has a tag named after one of the identifiers.
+        /// Determines if the given <see cref="GameObject"/> has a tag named after one of the identifiers.
         /// </summary>
-        /// <param name="obj">The GameObject to check.</param>
+        /// <param name="obj">The <see cref="GameObject"/> to check.</param>
         /// <param name="returnState">The current state of the check.</param>
-        /// <returns>Returns `true` if the GameObject does have a tag named after one of the identifiers.</returns>
+        /// <returns><see langword="true"/> if the <see cref="GameObject"/> does have a tag named after one of the identifiers.</returns>
         protected virtual bool TagCheck(GameObject obj, bool returnState)
         {
             if (returnState)
@@ -122,11 +131,11 @@
         }
 
         /// <summary>
-        /// The LayerCheck method determines if the given GameObject is on a layer named after one of the identifiers.
+        /// Determines if the given <see cref="GameObject"/> is on a layer named after one of the identifiers.
         /// </summary>
-        /// <param name="obj">The GameObject to check.</param>
+        /// <param name="obj">The <see cref="GameObject"/> to check.</param>
         /// <param name="returnState">The current state of the check.</param>
-        /// <returns>Returns `true` if the GameObject is on a layer named after one of the identifiers.</returns>
+        /// <returns><see langword="true"/> if the <see cref="GameObject"/> is on a layer named after one of the identifiers.</returns>
         protected virtual bool LayerCheck(GameObject obj, bool returnState)
         {
             if (returnState)
@@ -140,11 +149,11 @@
         }
 
         /// <summary>
-        /// The TypeCheck method determines the mechanism for checking the GameObject matches the appropriate identifiers.
+        /// Determines the mechanism for checking the <see cref="GameObject"/> matches the appropriate identifiers.
         /// </summary>
-        /// <param name="obj">The GameObject to check.</param>
+        /// <param name="obj">The <see cref="GameObject"/> to check.</param>
         /// <param name="returnState">The current state of the check.</param>
-        /// <returns>Returns `true` if the GameObject matches an appropriate identifier.</returns>
+        /// <returns><see langword="true"/> if the <see cref="GameObject"/> matches an appropriate identifier.</returns>
         protected virtual bool TypeCheck(GameObject obj, bool returnState)
         {
             int selection = 0;

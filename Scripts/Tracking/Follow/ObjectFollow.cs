@@ -10,72 +10,77 @@
     using VRTK.Core.Tracking.Follow.Modifier;
 
     /// <summary>
-    /// The ObjectFollow mirrors the transform properties of another object based on the given FollowModifier.
+    /// Mirrors the <see cref="Transform"/> properties of another <see cref="Transform"/> based on the given <see cref="FollowModifier"/>.
     /// </summary>
     public class ObjectFollow : SourceTargetProcessor
     {
         [Header("Object Follow Settings")]
 
+        /// <summary>
+        /// The <see cref="Transform"/> properties to follow.
+        /// </summary>
         [UnityFlag]
-        [Tooltip("The transform properties to follow.")]
+        [Tooltip("The Transform properties to follow.")]
         public TransformProperties follow = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
-        [Tooltip("The follow modifier mechanic to apply.")]
+        /// <summary>
+        /// The <see cref="FollowModifier"/> to apply.
+        /// </summary>
+        [Tooltip("The FollowModifier to apply.")]
         public FollowModifier followModifier;
 
         /// <summary>
-        /// The ObjectFollowUnityEvent emits an event with the source Transform, target Transform and the sender object.
+        /// Defines the event with the source <see cref="Transform"/>, target <see cref="Transform"/> and sender <see cref="object"/>.
         /// </summary>
         [Serializable]
         public class ObjectFollowUnityEvent : UnityEvent<Transform, Transform, object>
         {
-        };
+        }
 
         [Header("Object Follow Events")]
 
         /// <summary>
-        /// The BeforeProcessed event is emitted before any processing.
+        /// Emitted before any processing.
         /// </summary>
         public ObjectFollowUnityEvent BeforeProcessed = new ObjectFollowUnityEvent();
         /// <summary>
-        /// The AfterProcessed event is emitted after all processing is complete.
+        /// Emitted after all processing is complete.
         /// </summary>
         public ObjectFollowUnityEvent AfterProcessed = new ObjectFollowUnityEvent();
         /// <summary>
-        /// The BeforeTransformUpdated event is emitted before the Transform is updated.
+        /// Emitted before the Transform is updated.
         /// </summary>
         public ObjectFollowUnityEvent BeforeTransformUpdated = new ObjectFollowUnityEvent();
         /// <summary>
-        /// The AfterTransformUpdated event is emitted after the Transform is updated.
+        /// Emitted after the Transform is updated.
         /// </summary>
         public ObjectFollowUnityEvent AfterTransformUpdated = new ObjectFollowUnityEvent();
         /// <summary>
-        /// The BeforePositionUpdated event is emitted before the Transform's position is updated.
+        /// Emitted before the Transform's position is updated.
         /// </summary>
         public ObjectFollowUnityEvent BeforePositionUpdated = new ObjectFollowUnityEvent();
         /// <summary>
-        /// The AfterPositionUpdated event is emitted after the Transform's position is updated.
+        /// Emitted after the Transform's position is updated.
         /// </summary>
         public ObjectFollowUnityEvent AfterPositionUpdated = new ObjectFollowUnityEvent();
         /// <summary>
-        /// The BeforeRotationUpdated event is emitted before the Transform's rotation is updated.
+        /// Emitted before the Transform's rotation is updated.
         /// </summary>
         public ObjectFollowUnityEvent BeforeRotationUpdated = new ObjectFollowUnityEvent();
         /// <summary>
-        /// The AfterRotationUpdated event is emitted after the Transform's rotation is updated.
+        /// Emitted after the Transform's rotation is updated.
         /// </summary>
         public ObjectFollowUnityEvent AfterRotationUpdated = new ObjectFollowUnityEvent();
         /// <summary>
-        /// The BeforeScaleUpdated event is emitted before the Transform's scale is updated.
+        /// Emitted before the Transform's scale is updated.
         /// </summary>
         public ObjectFollowUnityEvent BeforeScaleUpdated = new ObjectFollowUnityEvent();
         /// <summary>
-        /// The AfterScaleUpdated event is emitted after the Transform's scale is updated.
+        /// Emitted after the Transform's scale is updated.
         /// </summary>
         public ObjectFollowUnityEvent AfterScaleUpdated = new ObjectFollowUnityEvent();
 
-        /// <summary>
-        /// The Process method executes the relevant process on the given FollowModifier.
-        /// </summary>
+
+        /// <inheritdoc />
         public override void Process()
         {
             OnBeforeProcessed();
@@ -140,11 +145,7 @@
             AfterScaleUpdated?.Invoke(source, target, this);
         }
 
-        /// <summary>
-        /// The ProcessComponent method applies the transformations on the source Transform using the taget Transform.
-        /// </summary>
-        /// <param name="source">The source Component that is a Transform.</param>
-        /// <param name="target">The target Component that is a Transform.</param>
+        /// <inheritdoc />
         protected override void ProcessComponent(Component source, Component target)
         {
             Transform sourceTransform = source.TryGetTransform();
@@ -163,10 +164,10 @@
         }
 
         /// <summary>
-        /// The UpdatePosition method executes the specified FollowModifier's UpdatePosition method.
+        /// Executes the specified <see cref="FollowModifier.UpdatePosition(Transform, Transform)"/>.
         /// </summary>
-        /// <param name="sourceTransform">The source Transform to apply the FollowModifier on.</param>
-        /// <param name="targetTransform">The target Transform to apply the FollowModifier with.</param>
+        /// <param name="sourceTransform">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
+        /// <param name="targetTransform">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
         protected virtual void UpdatePosition(Transform sourceTransform, Transform targetTransform)
         {
             if (follow.HasFlag(TransformProperties.Position))
@@ -178,10 +179,10 @@
         }
 
         /// <summary>
-        /// The UpdateRotation method executes the specified FollowModifier's UpdateRotation method.
+        /// Executes the specified <see cref="FollowModifier.UpdateRotation(Transform, Transform)"/>.
         /// </summary>
-        /// <param name="sourceTransform">The source Transform to apply the FollowModifier on.</param>
-        /// <param name="targetTransform">The target Transform to apply the FollowModifier with.</param>
+        /// <param name="sourceTransform">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
+        /// <param name="targetTransform">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
         protected virtual void UpdateRotation(Transform sourceTransform, Transform targetTransform)
         {
             if (follow.HasFlag(TransformProperties.Rotation))
@@ -193,10 +194,10 @@
         }
 
         /// <summary>
-        /// The UpdateScale method executes the specified FollowModifier's UpdateScale method.
+        /// Executes the specified <see cref="FollowModifier.UpdateScale(Transform, Transform)"/>.
         /// </summary>
-        /// <param name="sourceTransform">The source Transform to apply the FollowModifier on.</param>
-        /// <param name="targetTransform">The target Transform to apply the FollowModifier with.</param>
+        /// <param name="sourceTransform">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
+        /// <param name="targetTransform">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
         protected virtual void UpdateScale(Transform sourceTransform, Transform targetTransform)
         {
             if (follow.HasFlag(TransformProperties.Scale))
