@@ -3,6 +3,7 @@
     using UnityEngine;
     using NUnit.Framework;
     using VRTK.Core.Data.Type;
+    using VRTK.Core.Utility.Mock;
 
     public class TransformModifyTest
     {
@@ -138,6 +139,20 @@
             Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
             Assert.AreEqual(Quaternion.identity, sourceObject.transform.rotation);
             Assert.AreEqual(Vector3.one, sourceObject.transform.localScale);
+        }
+
+        [Test]
+        public void ModifyEvents()
+        {
+            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
+            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+
+            subject.source = sourceObject.transform;
+            subject.Modify(targetTransformData);
+            Assert.IsTrue(beforeTransformUpdatedMock.Received);
+            Assert.IsTrue(afterTransformUpdatedMock.Received);
         }
     }
 }

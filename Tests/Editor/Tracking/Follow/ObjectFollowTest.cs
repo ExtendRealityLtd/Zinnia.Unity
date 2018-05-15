@@ -3,6 +3,7 @@
     using UnityEngine;
     using NUnit.Framework;
     using VRTK.Core.Tracking.Follow.Modifier;
+    using VRTK.Core.Utility.Mock;
 
     public class ObjectFollowTest
     {
@@ -89,6 +90,16 @@
         [Test]
         public void ProcessAllTargets()
         {
+            UnityEventListenerMock beforeProcessedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterProcessedMock = new UnityEventListenerMock();
+            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+
+            subject.BeforeProcessed.AddListener(beforeProcessedMock.Listen);
+            subject.AfterProcessed.AddListener(afterProcessedMock.Listen);
+            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
+            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
             {
@@ -114,11 +125,30 @@
             Assert.AreEqual(Vector3.one, targets[0].transform.position);
             Assert.AreEqual(Vector3.one, targets[1].transform.position);
             Assert.AreEqual(Vector3.one, targets[2].transform.position);
+
+            Assert.IsTrue(beforeProcessedMock.Received);
+            Assert.IsTrue(afterProcessedMock.Received);
+            Assert.IsTrue(beforeTransformUpdatedMock.Received);
+            Assert.IsTrue(afterTransformUpdatedMock.Received);
         }
 
         [Test]
         public void ProcessPositionOnly()
         {
+            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
+
+            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
+            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
+            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
+            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
+            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
+            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
+
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
             {
@@ -152,11 +182,32 @@
             Assert.AreEqual(Vector3.one, targets[0].transform.localScale);
             Assert.AreEqual(Vector3.one, targets[1].transform.localScale);
             Assert.AreEqual(Vector3.one, targets[2].transform.localScale);
+
+            Assert.IsTrue(beforePositionUpdatedMock.Received);
+            Assert.IsTrue(afterPositionUpdatedMock.Received);
+            Assert.IsFalse(beforeRotationUpdatedMock.Received);
+            Assert.IsFalse(afterRotationUpdatedMock.Received);
+            Assert.IsFalse(beforeScaleUpdatedMock.Received);
+            Assert.IsFalse(afterScaleUpdatedMock.Received);
         }
 
         [Test]
         public void ProcessRotationOnly()
         {
+            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
+
+            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
+            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
+            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
+            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
+            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
+            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
+
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
             {
@@ -192,11 +243,32 @@
             Assert.AreEqual(Vector3.one, targets[0].transform.localScale);
             Assert.AreEqual(Vector3.one, targets[1].transform.localScale);
             Assert.AreEqual(Vector3.one, targets[2].transform.localScale);
+
+            Assert.IsFalse(beforePositionUpdatedMock.Received);
+            Assert.IsFalse(afterPositionUpdatedMock.Received);
+            Assert.IsTrue(beforeRotationUpdatedMock.Received);
+            Assert.IsTrue(afterRotationUpdatedMock.Received);
+            Assert.IsFalse(beforeScaleUpdatedMock.Received);
+            Assert.IsFalse(afterScaleUpdatedMock.Received);
         }
 
         [Test]
         public void ProcessScaleOnly()
         {
+            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
+
+            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
+            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
+            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
+            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
+            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
+            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
+
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
             {
@@ -232,11 +304,32 @@
             Assert.AreEqual(expectedScale, targets[0].transform.localScale);
             Assert.AreEqual(expectedScale, targets[1].transform.localScale);
             Assert.AreEqual(expectedScale, targets[2].transform.localScale);
+
+            Assert.IsFalse(beforePositionUpdatedMock.Received);
+            Assert.IsFalse(afterPositionUpdatedMock.Received);
+            Assert.IsFalse(beforeRotationUpdatedMock.Received);
+            Assert.IsFalse(afterRotationUpdatedMock.Received);
+            Assert.IsTrue(beforeScaleUpdatedMock.Received);
+            Assert.IsTrue(afterScaleUpdatedMock.Received);
         }
 
         [Test]
         public void ProcessPositionAndRotationOnly()
         {
+            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
+
+            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
+            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
+            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
+            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
+            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
+            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
+
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
             {
@@ -272,6 +365,13 @@
             Assert.AreEqual(Vector3.one, targets[0].transform.localScale);
             Assert.AreEqual(Vector3.one, targets[1].transform.localScale);
             Assert.AreEqual(Vector3.one, targets[2].transform.localScale);
+
+            Assert.IsTrue(beforePositionUpdatedMock.Received);
+            Assert.IsTrue(afterPositionUpdatedMock.Received);
+            Assert.IsTrue(beforeRotationUpdatedMock.Received);
+            Assert.IsTrue(afterRotationUpdatedMock.Received);
+            Assert.IsFalse(beforeScaleUpdatedMock.Received);
+            Assert.IsFalse(afterScaleUpdatedMock.Received);
         }
     }
 
