@@ -4,36 +4,32 @@
     using System;
 
     /// <summary>
-    /// The FloatAction emits a float value.
+    /// Emits a <see cref="float"/> value.
     /// </summary>
     public class FloatAction : BaseAction<float>
     {
         /// <summary>
-        /// The FloatActionUnityEvent emits an event with the specified type and the sender object.
+        /// Defines the event with the <see cref="float"/> value and sender <see cref="object"/>.
         /// </summary>
         [Serializable]
         public class FloatActionUnityEvent : UnityEvent<float, object>
         {
-        };
+        }
 
         /// <summary>
-        /// The Activated event is emitted when the action value changes into it's active state.
+        /// Emitted when the action value changes into it's active state.
         /// </summary>
         public FloatActionUnityEvent Activated = new FloatActionUnityEvent();
         /// <summary>
-        /// The Changed event is emitted when the action value changes from it's previous state.
+        /// Emitted when the action value changes from it's previous state.
         /// </summary>
         public FloatActionUnityEvent Changed = new FloatActionUnityEvent();
         /// <summary>
-        /// The Deactivated event is emitted when the action value changes into it's inactive state.
+        /// Emitted when the action value changes into it's inactive state.
         /// </summary>
         public FloatActionUnityEvent Deactivated = new FloatActionUnityEvent();
 
-        /// <summary>
-        /// The Receive method allows an action to receive the payload from another action to enable action chaining.
-        /// </summary>
-        /// <param name="value">The value from the action.</param>
-        /// <param name="sender">The sender of the action.</param>
+        /// <inheritdoc />
         public override void Receive(float value, object sender = null)
         {
             previousValue = Value;
@@ -42,10 +38,7 @@
             State = IsActive();
         }
 
-        /// <summary>
-        /// The OnActivated Method is used to call the appropriate Activated event.
-        /// </summary>
-        /// <param name="value">The value to pass to the event.</param>
+        /// <inheritdoc />
         protected override void OnActivated(float value)
         {
             if (CanEmit())
@@ -54,10 +47,7 @@
             }
         }
 
-        /// <summary>
-        /// The OnChanged Method is used to call the appropriate Changed event.
-        /// </summary>
-        /// <param name="value">The value to pass to the event.</param>
+        /// <inheritdoc />
         protected override void OnChanged(float value)
         {
             if (CanEmit())
@@ -66,10 +56,7 @@
             }
         }
 
-        /// <summary>
-        /// The OnDeactivated Method is used to call the appropriate Deactivated event.
-        /// </summary>
-        /// <param name="value">The value to pass to the event.</param>
+        /// <inheritdoc />
         protected override void OnDeactivated(float value)
         {
             if (CanEmit())
@@ -79,7 +66,7 @@
         }
 
         /// <summary>
-        /// The EmitEvents method attempts to emit each of the events if they are should be emitted.
+        /// Attempts to emit each of the events if they are should be emitted.
         /// </summary>
         protected virtual void EmitEvents()
         {
@@ -100,36 +87,36 @@
         }
 
         /// <summary>
-        /// The DefaultValue method returns true if the current value is at the default value for the type.
+        /// Determines if the current <see cref="BaseAction{T}.Value"/> is the default float value.
         /// </summary>
-        /// <returns></returns>
+        /// <returns><see langword="true"/> if the <see cref="BaseAction{T}.Value"/> is currently the default float value.</returns>
         protected virtual bool DefaultValue()
         {
             return (Value == default(float));
         }
 
         /// <summary>
-        /// The IsActive method returns whether the action is transitioning it's value state.
+        /// Determines whether the action is transitioning it's value state.
         /// </summary>
-        /// <returns>Returns `true` if the action value is changing.</returns>
+        /// <returns><see langword="true"/> if the action value is changing.</returns>
         protected virtual bool IsActive()
         {
             return (!DefaultValue() && HasChanged());
         }
 
         /// <summary>
-        /// The Activate method returns whether the action has just become active.
+        /// Determines whether the action has just become active.
         /// </summary>
-        /// <returns>Returns `true` if the action has just become active.</returns>
+        /// <returns><see langword="true"/> if the action has just become active.</returns>
         protected virtual bool Activate()
         {
             return (!State && IsActive());
         }
 
         /// <summary>
-        /// The Deactivate method returns whether the action has just become inactive.
+        /// Determines whether the action has just become inactive.
         /// </summary>
-        /// <returns>Returns `true` if the action has just become inactive.</returns>
+        /// <returns><see langword="true"/> if the action has just become inactive.</returns>
         protected virtual bool Deactivate()
         {
             return (State && (DefaultValue() || !HasChanged()));

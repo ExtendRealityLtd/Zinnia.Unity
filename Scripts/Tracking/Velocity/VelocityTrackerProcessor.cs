@@ -1,28 +1,30 @@
 ﻿namespace VRTK.Core.Tracking.Velocity
 {
     using UnityEngine;
+    using System;
 
     /// <summary>
-    /// The VelocityTrackerProcessor serves as a proxy for reporting on velocity data on the first active VelocityTracker that is provided in the array.
+    /// A proxy for reporting on velocity data on the first active <see cref="VelocityTracker"/> that is provided in the array.
     /// </summary>
     public class VelocityTrackerProcessor : VelocityTracker
     {
-        public VelocityTracker[] velocityTrackers = new VelocityTracker[0];
+        /// <summary>
+        /// Process the first active <see cref="VelocityTracker"/> found in the array.
+        /// </summary>
+        [Tooltip("Process the first active VelocityTracker found in the array.")]
+        public VelocityTracker[] velocityTrackers = Array.Empty<VelocityTracker>();
         protected VelocityTracker cachedTracker;
 
-        /// <summary>
-        /// The IsActive method returns the state of whether the component is active.
-        /// </summary>
-        /// <returns>Returns `true` if the component is considered active.</returns>
+        /// <inheritdoc />
         public override bool IsActive()
         {
             return isActiveAndEnabled;
         }
 
         /// <summary>
-        /// The GetVelocity method returns the reported velocity on the first active VelocityTracker.
+        /// The reported velocity on the first active <see cref="VelocityTracker"/>.
         /// </summary>
-        /// <returns>A Vector3 of the current velocity.</returns>
+        /// <returns>The current velocity.</returns>
         public override Vector3 GetVelocity()
         {
             Vector3 currentVelocity = Vector3.zero;
@@ -40,9 +42,9 @@
         }
 
         /// <summary>
-        /// The GetAngularVelocity method returns the reported angular velocity on the first active VelocityTracker.
+        /// The reported angular velocity on the first active <see cref="VelocityTracker"/>.
         /// </summary>
-        /// <returns>A Vector3 of the current angular velocity.</returns>
+        /// <returns>The current angular velocity.</returns>
         public override Vector3 GetAngularVelocity()
         {
             Vector3 currentAngularVelocity = Vector3.zero;
@@ -60,9 +62,9 @@
         }
 
         /// <summary>
-        /// The GetActiveVelocityTracker returns the current active Velocity Tracker that is reporting velocities.
+        /// The current active <see cref="VelocityTracker"/> that is reporting velocities.
         /// </summary>
-        /// <returns>A VelocityTracker that is currently active.</returns>
+        /// <returns>The current active <see cref="VelocityTracker"/>.</returns>
         public virtual VelocityTracker GetActiveVelocityTracker()
         {
             return (cachedTracker != null && cachedTracker.IsActive() ? cachedTracker : null);

@@ -3,7 +3,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// The InterfaceContainer acts as a container for an object that implements an interface that can be utilized within a Unity Inspector.
+    /// A container for an <see cref="Object"/> that implements an interface that can be utilized within a Unity Inspector.
     /// </summary>
     public abstract class InterfaceContainer
     {
@@ -12,7 +12,7 @@
     }
 
     /// <summary>
-    /// The InterfaceContainer acts as a container for a given interface type.
+    /// A container for a given interface type.
     /// </summary>
     /// <typeparam name="TInterface">The type of container for the interface.</typeparam>
     public abstract class InterfaceContainer<TInterface> : InterfaceContainer

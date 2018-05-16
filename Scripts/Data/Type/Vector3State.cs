@@ -3,21 +3,21 @@
     using System;
 
     /// <summary>
-    /// The Vector3State DataType allows a boolean to be set per Vector3 element to provide a state reference.
+    /// Allows a boolean to be set per <see cref="UnityEngine.Vector3"/> element to provide a state reference.
     /// </summary>
     [Serializable]
     public class Vector3State
     {
         /// <summary>
-        /// The X State of the Vector3.
+        /// The X State of the <see cref="UnityEngine.Vector3"/>.
         /// </summary>
         public bool xState;
         /// <summary>
-        /// The Y State of the Vector3.
+        /// The Y State of the <see cref="UnityEngine.Vector3"/>.
         /// </summary>
         public bool yState;
         /// <summary>
-        /// The Z State of the Vector3.
+        /// The Z State of the <see cref="UnityEngine.Vector3"/>.
         /// </summary>
         public bool zState;
 

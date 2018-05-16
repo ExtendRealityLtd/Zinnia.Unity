@@ -3,13 +3,19 @@
     using UnityEngine;
 
     /// <summary>
-    /// The MomentProcess is a wrapper for an IProcessable process that has a state to determine when it is to be processed.
+    /// Wrapper for an <see cref="IProcessable"/> process that has a state to determine when it is to be processed.
     /// </summary>
     public sealed class MomentProcess : MonoBehaviour
     {
+        /// <summary>
+        /// The process to attach to the moment.
+        /// </summary>
         [Tooltip("The process to attach to the moment.")]
         public ProcessContainer process;
-        [Tooltip("Only run the process if the process is on an active GameObject and the component is enabled.")]
+        /// <summary>
+        /// The process only executes if the <see cref="GameObject"/> is active and the <see cref="Component"/> is enabled.
+        /// </summary>
+        [Tooltip("Only run the process if the process is on an active GameObject and the Component is enabled.")]
         public bool onlyProcessOnActiveAndEnabled = true;
     }
 }

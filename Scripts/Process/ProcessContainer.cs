@@ -4,7 +4,7 @@
     using VRTK.Core.Utility;
 
     /// <summary>
-    /// The ProcessContainer is the proxy class used to make a process interface appear in the Unity Inspector.
+    /// A proxy class used to make a <see cref="IProcessable"/> interface appear in the Unity Inspector.
     /// </summary>
     [Serializable]
     public sealed class ProcessContainer : InterfaceContainer<IProcessable>

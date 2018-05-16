@@ -3,7 +3,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// The UnityFlag is an empty class that allows for a custom editor drawer.
+    /// Defines the `[UnityFlag]` attribute.
     /// </summary>
     public class UnityFlag : PropertyAttribute
     {

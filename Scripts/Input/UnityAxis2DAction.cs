@@ -4,12 +4,18 @@
     using VRTK.Core.Action;
 
     /// <summary>
-    /// The UnityAxis2DAction listens for the specified axes and emits the appropriate action.
+    /// Listens for the specified axes and emits the appropriate action.
     /// </summary>
     public class UnityAxis2DAction : Vector2Action
     {
+        /// <summary>
+        /// The named x axis to listen for state changes on.
+        /// </summary>
         [Tooltip("The named x axis to listen for state changes on.")]
         public string xAxisName;
+        /// <summary>
+        /// The named y axis to listen for state changes on.
+        /// </summary>
         [Tooltip("The named y axis to listen for state changes on.")]
         public string yAxisName;
 

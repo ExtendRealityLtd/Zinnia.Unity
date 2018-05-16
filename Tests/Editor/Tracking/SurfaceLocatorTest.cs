@@ -79,7 +79,7 @@
 
             subject.searchOrigin = searchOrigin.transform;
             subject.searchDirection = Vector3.forward;
-            subject.exclusionRule = exclusions;
+            subject.targetValidity = exclusions;
 
             subject.Locate();
             Assert.IsFalse(surfaceLocatedMock.Received);

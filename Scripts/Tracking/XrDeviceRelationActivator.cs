@@ -7,29 +7,38 @@
     using UnityEngine.XR;
 
     /// <summary>
-    /// The XrDeviceRelationActivator activates and deactivates GameObjects based on the currently loaded XR device automatically and allows to override the active GameObject manually.
+    /// Activates and deactivates <see cref="GameObject"/>s based on the currently loaded XR device automatically and allows to override the active <see cref="GameObject"/> manually.
     /// </summary>
     public class XrDeviceRelationActivator : MonoBehaviour
     {
         /// <summary>
-        /// The XrDeviceRelation allows specifying a GameObject that will be (de)activated based on the XR device name.
+        /// Specifies a <see cref="GameObject"/> that will be (de)activated based on the XR device name.
         /// </summary>
         [Serializable]
         public class XrDeviceRelation
         {
+            /// <summary>
+            /// The name of the XR device that needs to be loaded for this relation to be activated.
+            /// </summary>
             [Tooltip("The name of the XR device that needs to be loaded for this relation to be activated.")]
             public string xrDeviceName;
+            /// <summary>
+            /// The <see cref="GameObject"/>s to (de)activate.
+            /// </summary>
             [Tooltip("The GameObjects to (de)activate.")]
             public GameObject[] gameObjects;
         }
 
+        /// <summary>
+        /// The relations in order they will be activated if their XR device name matches the currently loaded one.
+        /// </summary>
         [Tooltip("The relations in order they will be activated if their XR device name matches the currently loaded one.")]
         public XrDeviceRelation[] relations = Array.Empty<XrDeviceRelation>();
 
         protected XrDeviceRelation currentRelation;
 
         /// <summary>
-        /// The Activate method activates the GameObject that is part of the relation if the XR device name matches the currently loaded one.
+        /// Activates the <see cref="GameObject"/> that is part of the relation if the XR device name matches the currently loaded one.
         /// </summary>
         /// <param name="relation">The relation to try to activate.</param>
         public virtual void Activate(XrDeviceRelation relation)
@@ -99,6 +108,10 @@
             }
         }
 
+        /// <summary>
+        /// Gets the loaded XR device name.
+        /// </summary>
+        /// <returns>The loaded XR device name.</returns>
         protected virtual string GetLoadedDeviceName()
         {
             return XRSettings.loadedDeviceName;

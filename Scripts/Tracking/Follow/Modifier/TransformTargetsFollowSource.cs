@@ -3,24 +3,24 @@
     using UnityEngine;
 
     /// <summary>
-    /// The TransformTargetsFollowSource will force the transformations of all the target Transforms to match those of the source Transform.
+    /// Forces the transformations of all the target <see cref="Transform"/>s to match those of the source <see cref="Transform"/>.
     /// </summary>
     public class TransformTargetsFollowSource : FollowModifier
     {
         /// <summary>
-        /// The ProcessFirstAndActiveOnly method determines whether the FollowModifier should process all targets or just the first active target.
+        /// Determines whether the <see cref="FollowModifier"/> should process all targets or just the first active target.
         /// </summary>
-        /// <returns>Always returns `false`.</returns>
+        /// <returns>Always <see langword="false"/>.</returns>
         public override bool ProcessFirstAndActiveOnly()
         {
             return false;
         }
 
         /// <summary>
-        /// The UpdatePosition method attempts to set the target Transform position to the source Transform position.
+        /// Sets the target <see cref="Transform.position"/> to the source <see cref="Transform.position"/>.
         /// </summary>
-        /// <param name="source">The source to utilise in the modification.</param>
-        /// <param name="target">The target to modify.</param>
+        /// <param name="source">The source <see cref="Transform"/> to utilize in the modification.</param>
+        /// <param name="target">The target <see cref="Transform"/> to modify.</param>
         public override void UpdatePosition(Transform source, Transform target)
         {
             if (source != null && target != null)
@@ -32,10 +32,10 @@
         }
 
         /// <summary>
-        /// The UpdateRotation method attempts to set the target Transform rotation to the source Transform rotation.
+        /// Sets the target <see cref="Transform.rotation"/> to the source <see cref="Transform.rotation"/>.
         /// </summary>
-        /// <param name="source">The source to utilise in the modification.</param>
-        /// <param name="target">The target to modify.</param>
+        /// <param name="source">The source <see cref="Transform"/> to utilize in the modification.</param>
+        /// <param name="target">The target <see cref="Transform"/> to modify.</param>
         public override void UpdateRotation(Transform source, Transform target)
         {
             if (source != null && target != null)
@@ -47,10 +47,10 @@
         }
 
         /// <summary>
-        /// The UpdateScale method attempts to set the target Transform scale to the source Transform scale.
+        /// Sets the target <see cref="Transform.localScale"/> to the source <see cref="Transform.localScale"/>.
         /// </summary>
-        /// <param name="source">The source to utilise in the modification.</param>
-        /// <param name="target">The target to modify.</param>
+        /// <param name="source">The source <see cref="Transform"/> to utilize in the modification.</param>
+        /// <param name="target">The target <see cref="Transform"/> to modify.</param>
         public override void UpdateScale(Transform source, Transform target)
         {
             if (source != null && target != null)

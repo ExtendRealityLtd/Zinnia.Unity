@@ -1,17 +1,21 @@
 ﻿namespace VRTK.Core.Action
 {
     using UnityEngine;
+    using System;
 
     /// <summary>
-    /// The CompoundAndAction emits an event when all given actions are in their active state.
+    /// Emits a <see cref="bool"/> value when all given actions are in their active state.
     /// </summary>
     public class CompoundAndAction : BooleanAction
     {
-        [Tooltip("An array of BaseActions to check the active state on.")]
-        public BaseAction[] actions;
+        /// <summary>
+        /// BaseActions to check the active state on.
+        /// </summary>
+        [Tooltip("BaseActions to check the active state on.")]
+        public BaseAction[] actions = Array.Empty<BaseAction>();
 
         /// <summary>
-        /// The Receive method is not used.
+        /// Not used.
         /// </summary>
         /// <param name="value">The value from the action.</param>
         /// <param name="sender">The sender of the action.</param>
