@@ -84,7 +84,7 @@
         public override void Process()
         {
             OnBeforeProcessed();
-            if (followModifier.ProcessFirstAndActiveOnly())
+            if (followModifier != null && followModifier.ProcessFirstAndActiveOnly())
             {
                 ProcessFirstActiveComponent();
             }
