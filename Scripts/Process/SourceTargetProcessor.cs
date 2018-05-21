@@ -59,7 +59,7 @@
             ActiveTargetComponent = null;
             foreach (Component currentComponent in targetComponents)
             {
-                if (sourceComponent != null && currentComponent.gameObject.activeInHierarchy)
+                if (sourceComponent != null && currentComponent != null && currentComponent.gameObject.activeInHierarchy)
                 {
                     ProcessComponent(sourceComponent, currentComponent);
                     ActiveTargetComponent = currentComponent;

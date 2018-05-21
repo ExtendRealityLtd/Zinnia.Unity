@@ -151,9 +151,16 @@
         {
             foreach (MomentProcess currentProcess in processes)
             {
-                if (currentProcess != null && (!currentProcess.onlyProcessOnActiveAndEnabled || currentProcess.isActiveAndEnabled))
+                if (currentProcess != null && currentProcess.process != null)
                 {
-                    currentProcess.process.Interface.Process();
+                    if (currentProcess.process.Interface == null)
+                    {
+                        throw new ArgumentNullException(String.Format("The MomentProcess.field on {0} cannot be null", currentProcess.name));
+                    }
+                    else if (!currentProcess.onlyProcessOnActiveAndEnabled || currentProcess.isActiveAndEnabled)
+                    {
+                        currentProcess.process.Interface.Process();
+                    }
                 }
             }
         }
