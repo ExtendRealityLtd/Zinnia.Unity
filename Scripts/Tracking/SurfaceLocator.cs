@@ -136,6 +136,7 @@
             {
                 SurfaceData.transform = SurfaceData.CollisionData.transform;
                 SurfaceData.positionOverride = SurfaceData.CollisionData.point;
+                SurfaceData.rotationOverride = Quaternion.identity;
                 return true;
             }
             return false;
