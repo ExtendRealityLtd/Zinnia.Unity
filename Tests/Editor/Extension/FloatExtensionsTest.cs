@@ -1,31 +1,36 @@
 ﻿namespace VRTK.Core.Extension
 {
-    using UnityEngine;
     using NUnit.Framework;
 
-    public class Vector3ExtensionsTest
+    public class FloatExtensionsTest
     {
         [Test]
         public void ApproxEqualsTrue()
         {
-            Vector3 a = Vector3.zero;
-            Vector3 b = Vector3.zero;
+            float a = 0f;
+            float b = 0f;
             float tolerance = 0f;
             Assert.IsTrue(a.ApproxEquals(b, tolerance));
             tolerance = 1f;
             Assert.IsTrue(a.ApproxEquals(b, tolerance));
-            b = Vector3.one * 0.5f;
+            b = 0.5f;
+            Assert.IsTrue(a.ApproxEquals(b, tolerance));
+
+            a = .33333f;
+            b = (float)1 / 3;
+            tolerance = .0001f;
+
             Assert.IsTrue(a.ApproxEquals(b, tolerance));
         }
 
         [Test]
         public void ApproxEqualsFalse()
         {
-            Vector3 a = Vector3.zero;
-            Vector3 b = Vector3.one;
+            float a = 0f;
+            float b = 1f;
             float tolerance = 0f;
             Assert.IsFalse(a.ApproxEquals(b, tolerance));
-            tolerance = 1f;
+            tolerance = 0.5f;
             Assert.IsFalse(a.ApproxEquals(b, tolerance));
         }
     }

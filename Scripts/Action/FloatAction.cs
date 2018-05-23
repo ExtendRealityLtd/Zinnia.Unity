@@ -2,6 +2,7 @@
 {
     using UnityEngine.Events;
     using System;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Emits a <see cref="float"/> value.
@@ -92,7 +93,7 @@
         /// <returns><see langword="true"/> if the <see cref="BaseAction{T}.Value"/> is currently the default float value.</returns>
         protected virtual bool DefaultValue()
         {
-            return (Value == default(float));
+            return (Value.ApproxEquals(default(float)));
         }
 
         /// <summary>

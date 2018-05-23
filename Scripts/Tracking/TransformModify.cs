@@ -7,6 +7,7 @@
     using VRTK.Core.Data.Attribute;
     using VRTK.Core.Data.Enum;
     using VRTK.Core.Data.Type;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Applies a transformation onto a given source <see cref="Transform"/> based on an injected target <see cref="Transform"/>.
@@ -102,7 +103,7 @@
         /// <param name="givenTarget">The target <see cref="TransformData"/> to obtain the transformation properties from.</param>
         protected virtual void ProcessTransform(TransformData givenSource, TransformData givenTarget)
         {
-            if (transitionDuration == 0f)
+            if (transitionDuration.ApproxEquals(0f))
             {
                 givenSource.transform.localScale = finalScale;
                 givenSource.transform.position = finalPosition;

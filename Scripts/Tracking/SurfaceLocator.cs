@@ -110,7 +110,7 @@
         /// <returns><see langword="true"/> if the surface position has changed or no previous surface data is found.</returns>
         protected virtual bool PositionChanged(float checkDistance)
         {
-            return (SurfaceData.PreviousCollisionData.transform == null || !SurfaceData.Position.Compare(SurfaceData.PreviousCollisionData.point, checkDistance));
+            return (SurfaceData.PreviousCollisionData.transform == null || !SurfaceData.Position.ApproxEquals(SurfaceData.PreviousCollisionData.point, checkDistance));
         }
 
         /// <summary>
