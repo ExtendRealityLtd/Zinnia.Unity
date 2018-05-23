@@ -94,6 +94,7 @@
         {
             if (givenOrigin != null && givenOrigin.Valid && CastRay(givenOrigin.Position, searchDirection) && PositionChanged(DISTANCE_VARIANCE))
             {
+                SurfaceData.rotationOverride = givenOrigin.Rotation;
                 OnSurfaceLocated(SurfaceData);
             }
         }
@@ -137,7 +138,6 @@
             {
                 SurfaceData.transform = SurfaceData.CollisionData.transform;
                 SurfaceData.positionOverride = SurfaceData.CollisionData.point;
-                SurfaceData.rotationOverride = Quaternion.identity;
                 return true;
             }
             return false;
