@@ -69,15 +69,14 @@
         /// <param name="initiator">Tne object that initiated the modification.</param>
         public virtual void Modify(TransformData target, object initiator = null)
         {
-            if (source != null && target != null)
+            if (source != null && target != null && isActiveAndEnabled)
             {
                 TransformData sourceData = new TransformData(source);
                 OnBeforeTransformUpdated(sourceData, target);
                 SetScale(sourceData, target);
                 SetPosition(sourceData, target);
                 SetRotation(sourceData, target);
-                ProcessTransform(sourceData);
-                OnAfterTransformUpdated(sourceData, target);
+                ProcessTransform(sourceData, target);
             }
         }
 
@@ -100,18 +99,20 @@
         /// Applies final transformations to the given <see cref="TransformData"/>.
         /// </summary>
         /// <param name="givenSource">The source <see cref="TransformData"/> to apply transformations to.</param>
-        protected virtual void ProcessTransform(TransformData givenSource)
+        /// <param name="givenTarget">The target <see cref="TransformData"/> to obtain the transformation properties from.</param>
+        protected virtual void ProcessTransform(TransformData givenSource, TransformData givenTarget)
         {
             if (transitionDuration == 0f)
             {
                 givenSource.transform.localScale = finalScale;
                 givenSource.transform.position = finalPosition;
                 givenSource.transform.rotation = finalRotation;
+                OnAfterTransformUpdated(givenSource, givenTarget);
             }
             else
             {
                 CancelTransition();
-                transitionRoutine = StartCoroutine(TransitionTransform(givenSource, givenSource.Position, finalPosition, givenSource.Rotation, finalRotation, givenSource.LocalScale, finalScale));
+                transitionRoutine = StartCoroutine(TransitionTransform(givenSource, givenTarget, givenSource.Position, finalPosition, givenSource.Rotation, finalRotation, givenSource.LocalScale, finalScale));
             }
         }
 
@@ -270,6 +271,7 @@
         /// Applies the relevant transformation to the affected <see cref="TransformData"/> over a given duration.
         /// </summary>
         /// <param name="affectTransform">The <see cref="TransformData"/> to apply the transformations to.</param>
+        /// <param name="givenTarget">The target <see cref="TransformData"/> to obtain the transformation properties from.</param>
         /// <param name="startPosition">The initial position of the <see cref="Transform"/>.</param>
         /// <param name="destinationPosition">The final position for the <see cref="Transform"/>.</param>
         /// <param name="startRotation">The initial rotation of the <see cref="Transform"/>.</param>
@@ -277,7 +279,7 @@
         /// <param name="startScale">The initial scale of the <see cref="Transform"/>.</param>
         /// <param name="destinationScale">The final scale of the <see cref="Transform"/>.</param>
         /// <returns>Coroutine enumerator.</returns>
-        protected virtual IEnumerator TransitionTransform(TransformData affectTransform, Vector3 startPosition, Vector3 destinationPosition, Quaternion startRotation, Quaternion destinationRotation, Vector3 startScale, Vector3 destinationScale)
+        protected virtual IEnumerator TransitionTransform(TransformData affectTransform, TransformData givenTarget, Vector3 startPosition, Vector3 destinationPosition, Quaternion startRotation, Quaternion destinationRotation, Vector3 startScale, Vector3 destinationScale)
         {
             float elapsedTime = 0f;
             WaitForEndOfFrame delayInstruction = new WaitForEndOfFrame();
@@ -294,6 +296,7 @@
             affectTransform.transform.localScale = destinationScale;
             affectTransform.transform.position = destinationPosition;
             affectTransform.transform.rotation = destinationRotation;
+            OnAfterTransformUpdated(affectTransform, givenTarget);
         }
     }
 }
