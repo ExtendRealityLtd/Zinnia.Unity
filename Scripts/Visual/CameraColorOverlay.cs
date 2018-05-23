@@ -4,8 +4,8 @@
     using UnityEngine.Events;
     using System;
     using System.Collections;
-    using System.Collections.Generic;
     using VRTK.Core.Extension;
+    using VRTK.Core.Data.Type;
 
     /// <summary>
     /// Applies a color over the valid cameras and can be used to fade the screen view.
@@ -16,7 +16,7 @@
         /// A <see cref="Camera"/> collection to apply the color overlay to.
         /// </summary>
         [Tooltip("A Camera collection to apply the color overlay to.")]
-        public List<Camera> validCameras = new List<Camera>();
+        public CameraList validCameras;
         /// <summary>
         /// The <see cref="Color"/> of the overlay.
         /// </summary>
@@ -179,7 +179,7 @@
         /// <param name="cam">The <see cref="Camera"/> to apply onto.</param>
         protected virtual void PostRender(Camera cam)
         {
-            if (!validCameras.Contains(cam))
+            if (validCameras == null || !validCameras.cameras.Contains(cam))
             {
                 return;
             }
