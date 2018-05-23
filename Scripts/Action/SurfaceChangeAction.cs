@@ -32,7 +32,7 @@
                 Vector3 generatedOrigin = GetCollisionPoint(surfaceData.PreviousCollisionData);
                 Vector3 generatedTarget = GeneratePoint(surfaceData.Position);
 
-                bool result = !generatedOrigin.Compare(generatedTarget, changeDistance);
+                bool result = !generatedOrigin.ApproxEquals(generatedTarget, changeDistance);
                 Receive(result, sender);
             }
         }

@@ -6,32 +6,27 @@
     public class Vector3ExtensionsTest
     {
         [Test]
-        public void CompareTrue()
+        public void ApproxEqualsTrue()
         {
             Vector3 a = Vector3.zero;
             Vector3 b = Vector3.zero;
-            float distance = 0f;
-
-            Assert.IsTrue(a.Compare(b, distance));
-
-            distance = 1f;
-            Assert.IsTrue(a.Compare(b, distance));
-
+            float tolerance = 0f;
+            Assert.IsTrue(a.ApproxEquals(b, tolerance));
+            tolerance = 1f;
+            Assert.IsTrue(a.ApproxEquals(b, tolerance));
             b = Vector3.one * 0.5f;
-            Assert.IsTrue(a.Compare(b, distance));
+            Assert.IsTrue(a.ApproxEquals(b, tolerance));
         }
 
         [Test]
-        public void CompareFalse()
+        public void ApproxEqualsFalse()
         {
             Vector3 a = Vector3.zero;
             Vector3 b = Vector3.one;
-            float distance = 0f;
-
-            Assert.IsFalse(a.Compare(b, distance));
-
-            distance = 1f;
-            Assert.IsFalse(a.Compare(b, distance));
+            float tolerance = 0f;
+            Assert.IsFalse(a.ApproxEquals(b, tolerance));
+            tolerance = 1f;
+            Assert.IsFalse(a.ApproxEquals(b, tolerance));
         }
     }
 }
