@@ -5,6 +5,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Applies a color over the valid cameras and can be used to fade the screen view.
@@ -130,7 +131,7 @@
         {
             CancelBlinkRoutine();
 
-            if (newColor != targetColor || duration != targetDuration)
+            if (newColor != targetColor || !duration.ApproxEquals(targetDuration))
             {
                 targetDuration = duration;
                 targetColor = newColor;
