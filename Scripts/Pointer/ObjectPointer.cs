@@ -176,7 +176,7 @@
         /// <summary>
         /// The target that the <see cref="ObjectPointer"/> is currently hovering over. If there is no target then it is <see langword="null"/>.
         /// </summary>
-        public PointerData HoverTarget => (previousPointsCastData == null ? null : GetPayload(previousPointsCastData));
+        public PointerData HoverTarget => (IsHovering ? GetPayload(activePointsCastData) : null);
 
         /// <summary>
         /// The target that the <see cref="ObjectPointer"/> has most recently selected.
@@ -191,7 +191,11 @@
         /// Whether the <see cref="ObjectPointer"/> is currently hovering over a target.
         /// </summary>
         /// <returns><see langword="true"/> if the <see cref="ObjectPointer"/> is currently hovering over a target, <see langword="false"/> otherwise.</returns>
-        public bool IsHovering => (HoverDuration > 0f);
+        public bool IsHovering
+        {
+            get;
+            protected set;
+        }
 
         /// <summary>
         /// Whether any <see cref="Element"/> of the <see cref="ObjectPointer"/> is currently visible.
@@ -223,7 +227,7 @@
             }
         }
 
-        protected PointsCastData previousPointsCastData;
+        protected PointsCastData activePointsCastData;
         protected bool? previousVisibility;
 
         /// <summary>
@@ -245,7 +249,7 @@
         public virtual void Deactivate()
         {
             ActivationState = false;
-            TryEmitExit(previousPointsCastData);
+            TryEmitExit(activePointsCastData);
             UpdateRenderData();
             Deactivated?.Invoke(HoverTarget, this);
         }
@@ -274,7 +278,7 @@
                 if (data.targetHit != null)
                 {
                     Transform targetTransform = data.targetHit.Value.transform;
-                    if (targetTransform != null && targetTransform != previousPointsCastData?.targetHit?.transform)
+                    if (targetTransform != null && targetTransform != activePointsCastData?.targetHit?.transform)
                     {
                         TryEmitExit(data);
                         OnEntered(data);
@@ -282,18 +286,20 @@
 
                     HoverDuration += Time.deltaTime;
                     OnHovering(data);
-                    previousPointsCastData = data;
+                    IsHovering = true;
                 }
                 else
                 {
                     TryEmitExit(data);
                 }
+                activePointsCastData = data;
                 UpdateRenderData();
             }
         }
 
         protected virtual void OnEnable()
         {
+            ActivationState = activateOnEnable;
             if (activateOnEnable)
             {
                 Activate();
@@ -343,7 +349,7 @@
         {
             PointsRendererData data = new PointsRendererData
             {
-                points = previousPointsCastData?.points ?? Array.Empty<Vector3>(),
+                points = activePointsCastData?.points ?? Array.Empty<Vector3>(),
                 start = GetElementRepresentation(origin),
                 repeatedSegment = GetElementRepresentation(repeatedSegment),
                 end = GetElementRepresentation(destination)
@@ -401,13 +407,13 @@
         /// <param name="data">The current points cast data.</param>
         protected virtual void TryEmitExit(PointsCastData data)
         {
-            if (previousPointsCastData?.targetHit?.transform == null)
+            if (activePointsCastData?.targetHit?.transform == null)
             {
                 return;
             }
             HoverDuration = 0f;
             OnExited(data);
-            previousPointsCastData = null;
+            IsHovering = false;
         }
 
         /// <summary>
@@ -439,7 +445,7 @@
         /// <returns>A <see cref="GameObject"/> to represent <paramref name="element"/>.</returns>
         protected virtual GameObject GetElementRepresentation(Element element)
         {
-            bool isValid = (previousPointsCastData?.targetHit != null);
+            bool isValid = (activePointsCastData?.targetHit != null);
 
             switch (element.visibility)
             {
