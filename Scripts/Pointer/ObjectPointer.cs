@@ -228,6 +228,7 @@
         }
 
         protected PointsCastData activePointsCastData;
+        protected PointsCastData previousPointsCastData;
         protected bool? previousVisibility;
 
         /// <summary>
@@ -235,7 +236,7 @@
         /// </summary>
         public virtual void Activate()
         {
-            if (isActiveAndEnabled)
+            if (isActiveAndEnabled && !ActivationState)
             {
                 ActivationState = true;
                 UpdateRenderData();
@@ -248,10 +249,7 @@
         /// </summary>
         public virtual void Deactivate()
         {
-            ActivationState = false;
-            TryEmitExit(activePointsCastData);
-            UpdateRenderData();
-            Deactivated?.Invoke(HoverTarget, this);
+            TryDeactivate();
         }
 
         /// <summary>
@@ -275,42 +273,53 @@
         {
             if (isActiveAndEnabled)
             {
-                if (data.targetHit != null)
+                if (IsVisible)
                 {
-                    Transform targetTransform = data.targetHit.Value.transform;
-                    if (targetTransform != null && targetTransform != activePointsCastData?.targetHit?.transform)
+                    previousPointsCastData = activePointsCastData;
+                    if (data.targetHit != null)
                     {
-                        TryEmitExit(data);
-                        OnEntered(data);
+                        Transform targetTransform = data.targetHit.Value.transform;
+                        if (targetTransform != null && targetTransform != activePointsCastData?.targetHit?.transform)
+                        {
+                            TryEmitExit(previousPointsCastData);
+                            OnEntered(data);
+                        }
+
+                        HoverDuration += Time.deltaTime;
+                        OnHovering(data);
+                        IsHovering = true;
+                    }
+                    else
+                    {
+                        TryEmitExit(previousPointsCastData);
                     }
 
-                    HoverDuration += Time.deltaTime;
-                    OnHovering(data);
-                    IsHovering = true;
+                    activePointsCastData = data;
                 }
                 else
                 {
-                    TryEmitExit(data);
+                    activePointsCastData = null;
+                    previousPointsCastData = null;
                 }
-                activePointsCastData = data;
+
                 UpdateRenderData();
             }
         }
 
         protected virtual void OnEnable()
         {
-            ActivationState = activateOnEnable;
             if (activateOnEnable)
             {
                 Activate();
             }
+            ActivationState = activateOnEnable;
             TryEmitVisibilityEvent();
             UpdateRenderData();
         }
 
         protected virtual void OnDisable()
         {
-            Deactivate();
+            TryDeactivate(true);
         }
 
         protected virtual void Update()
@@ -318,25 +327,25 @@
             TryEmitVisibilityEvent();
         }
 
-        protected virtual void OnEntered(PointsCastData data)
+        protected virtual void OnEntered(PointsCastData data, bool ignoreBehaviourState = false)
         {
-            if (isActiveAndEnabled)
+            if (isActiveAndEnabled || ignoreBehaviourState)
             {
                 Entered?.Invoke(GetPayload(data), this);
             }
         }
 
-        protected virtual void OnExited(PointsCastData data)
+        protected virtual void OnExited(PointsCastData data, bool ignoreBehaviourState = false)
         {
-            if (isActiveAndEnabled)
+            if (isActiveAndEnabled || ignoreBehaviourState)
             {
                 Exited?.Invoke(GetPayload(data), this);
             }
         }
 
-        protected virtual void OnHovering(PointsCastData data)
+        protected virtual void OnHovering(PointsCastData data, bool ignoreBehaviourState = false)
         {
-            if (isActiveAndEnabled)
+            if (isActiveAndEnabled || ignoreBehaviourState)
             {
                 Hovering?.Invoke(GetPayload(data), this);
             }
@@ -402,17 +411,39 @@
         }
 
         /// <summary>
+        /// Attempts to deactivate the <see cref="ObjectPointer"/>.
+        /// </summary>
+        /// <param name="ignoreBehaviourState">Determines if the events should be emitted based on the <see cref="Behaviour.enabled"/> state.</param>
+        protected virtual void TryDeactivate(bool ignoreBehaviourState = false)
+        {
+            if (ActivationState)
+            {
+                UpdateRenderData();
+                if (isActiveAndEnabled || ignoreBehaviourState)
+                {
+                    TryEmitExit(previousPointsCastData, ignoreBehaviourState);
+                    Deactivated?.Invoke(HoverTarget, this);
+                }
+                ActivationState = false;
+                activePointsCastData = null;
+                previousPointsCastData = null;
+                UpdateRenderData();
+            }
+        }
+
+        /// <summary>
         /// Checks to see if the <see cref="ObjectPointer"/> is not currently colliding with a valid target and emits the <see cref="Exited"/> event.
         /// </summary>
         /// <param name="data">The current points cast data.</param>
-        protected virtual void TryEmitExit(PointsCastData data)
+        /// <param name="ignoreBehaviourState">Determines if the events should be emitted based on the <see cref="Behaviour.enabled"/> state.</param>
+        protected virtual void TryEmitExit(PointsCastData data, bool ignoreBehaviourState = false)
         {
             if (activePointsCastData?.targetHit?.transform == null)
             {
                 return;
             }
+            OnExited(data, ignoreBehaviourState);
             HoverDuration = 0f;
-            OnExited(data);
             IsHovering = false;
         }
 
@@ -466,7 +497,7 @@
         /// <returns>A <see cref="PointerData"/> object of the <see cref="ObjectPointer"/>'s current state.</returns>
         protected virtual PointerData GetPayload(PointsCastData data)
         {
-            Transform targetTransform = data.targetHit?.transform;
+            Transform targetTransform = data?.targetHit?.transform;
             Transform validDestinationTransform = (destination != null && destination.validObject != null ? destination.validObject.transform : null);
 
             return new PointerData
@@ -477,7 +508,7 @@
                 localScaleOverride = (validDestinationTransform != null ? validDestinationTransform.localScale : Vector3.one),
                 origin = transform.position,
                 direction = transform.forward,
-                CollisionData = data.targetHit ?? default(RaycastHit),
+                CollisionData = data?.targetHit ?? default(RaycastHit),
                 isActive = ActivationState,
                 isHovering = IsHovering,
                 hoverDuration = HoverDuration,
