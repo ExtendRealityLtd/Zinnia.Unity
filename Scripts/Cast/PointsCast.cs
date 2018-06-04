@@ -88,7 +88,10 @@
 
         protected virtual void OnCastResultsChanged()
         {
-            CastResultsChanged?.Invoke(GetPayload(), this);
+            if (isActiveAndEnabled)
+            {
+                CastResultsChanged?.Invoke(GetPayload(), this);
+            }
         }
 
         /// <summary>

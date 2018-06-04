@@ -83,66 +83,99 @@
         /// <inheritdoc />
         public override void Process()
         {
-            OnBeforeProcessed();
-            if (followModifier != null && followModifier.ProcessFirstAndActiveOnly())
+            if (isActiveAndEnabled)
             {
-                ProcessFirstActiveComponent();
+                OnBeforeProcessed();
+                if (followModifier != null && followModifier.ProcessFirstAndActiveOnly())
+                {
+                    ProcessFirstActiveComponent();
+                }
+                else
+                {
+                    ProcessAllComponents();
+                }
+                OnAfterProcessed();
             }
-            else
-            {
-                ProcessAllComponents();
-            }
-            OnAfterProcessed();
         }
 
         protected virtual void OnBeforeProcessed()
         {
-            BeforeProcessed?.Invoke(null, null, this);
+            if (isActiveAndEnabled)
+            {
+                BeforeProcessed?.Invoke(null, null, this);
+            }
         }
 
         protected virtual void OnAfterProcessed()
         {
-            AfterProcessed?.Invoke(null, null, this);
+            if (isActiveAndEnabled)
+            {
+                AfterProcessed?.Invoke(null, null, this);
+            }
         }
 
         protected virtual void OnBeforeTransformUpdated(Transform source, Transform target)
         {
-            BeforeTransformUpdated?.Invoke(source, target, this);
+            if (isActiveAndEnabled)
+            {
+                BeforeTransformUpdated?.Invoke(source, target, this);
+            }
         }
 
         protected virtual void OnAfterTransformUpdated(Transform source, Transform target)
         {
-            AfterTransformUpdated?.Invoke(source, target, this);
+            if (isActiveAndEnabled)
+            {
+                AfterTransformUpdated?.Invoke(source, target, this);
+            }
         }
 
         protected virtual void OnBeforePositionUpdated(Transform source, Transform target)
         {
-            BeforePositionUpdated?.Invoke(source, target, this);
+            if (isActiveAndEnabled)
+            {
+                BeforePositionUpdated?.Invoke(source, target, this);
+            }
         }
 
         protected virtual void OnAfterPositionUpdated(Transform source, Transform target)
         {
-            AfterPositionUpdated?.Invoke(source, target, this);
+            if (isActiveAndEnabled)
+            {
+                AfterPositionUpdated?.Invoke(source, target, this);
+            }
         }
 
         protected virtual void OnBeforeRotationUpdated(Transform source, Transform target)
         {
-            BeforeRotationUpdated?.Invoke(source, target, this);
+            if (isActiveAndEnabled)
+            {
+                BeforeRotationUpdated?.Invoke(source, target, this);
+            }
         }
 
         protected virtual void OnAfterRotationUpdated(Transform source, Transform target)
         {
-            AfterRotationUpdated?.Invoke(source, target, this);
+            if (isActiveAndEnabled)
+            {
+                AfterRotationUpdated?.Invoke(source, target, this);
+            }
         }
 
         protected virtual void OnBeforeScaleUpdated(Transform source, Transform target)
         {
-            BeforeScaleUpdated?.Invoke(source, target, this);
+            if (isActiveAndEnabled)
+            {
+                BeforeScaleUpdated?.Invoke(source, target, this);
+            }
         }
 
         protected virtual void OnAfterScaleUpdated(Transform source, Transform target)
         {
-            AfterScaleUpdated?.Invoke(source, target, this);
+            if (isActiveAndEnabled)
+            {
+                AfterScaleUpdated?.Invoke(source, target, this);
+            }
         }
 
         /// <inheritdoc />

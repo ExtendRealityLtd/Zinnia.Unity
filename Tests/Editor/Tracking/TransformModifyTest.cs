@@ -154,5 +154,67 @@
             Assert.IsTrue(beforeTransformUpdatedMock.Received);
             Assert.IsTrue(afterTransformUpdatedMock.Received);
         }
+
+        [Test]
+        public void EventsNotEmittedOnInactiveGameObject()
+        {
+            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
+            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+
+            subject.source = sourceObject.transform;
+            subject.gameObject.SetActive(false);
+
+            subject.Modify(targetTransformData);
+
+            Assert.IsFalse(beforeTransformUpdatedMock.Received);
+            Assert.IsFalse(afterTransformUpdatedMock.Received);
+        }
+
+        [Test]
+        public void EventsNotEmittedOnDisabledComponent()
+        {
+            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
+            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+
+            subject.source = sourceObject.transform;
+            subject.enabled = false;
+
+            subject.Modify(targetTransformData);
+
+            Assert.IsFalse(beforeTransformUpdatedMock.Received);
+            Assert.IsFalse(afterTransformUpdatedMock.Received);
+        }
+
+        [Test]
+        public void NoModifyPositionOnInactiveGameObject()
+        {
+            targetTransformData.transform.position = Vector3.one;
+
+            subject.source = sourceObject.transform;
+            subject.applyTransformations = Data.Enum.TransformProperties.Position;
+            subject.gameObject.SetActive(false);
+
+            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
+            subject.Modify(targetTransformData);
+            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
+        }
+
+        [Test]
+        public void NoModifyPositionOnDisabledComponent()
+        {
+            targetTransformData.transform.position = Vector3.one;
+
+            subject.source = sourceObject.transform;
+            subject.applyTransformations = Data.Enum.TransformProperties.Position;
+            subject.enabled = false;
+
+            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
+            subject.Modify(targetTransformData);
+            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
+        }
     }
 }

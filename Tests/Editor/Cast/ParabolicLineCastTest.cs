@@ -157,5 +157,69 @@
             Assert.IsNull(subject.TargetHit);
             Assert.IsTrue(castResultsChangedMock.Received);
         }
+
+        [Test]
+        public void EventsNotEmittedOnInactiveGameObject()
+        {
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
+
+            subject.maximumLength = new Vector2(5f, 5f);
+            subject.segmentCount = 5;
+            subject.gameObject.SetActive(false);
+
+            subject.Process();
+
+            Vector3[] expectedPoints = new Vector3[]
+            {
+                Vector3.zero,
+                new Vector3(0f, -0.1f, 2.9f),
+                new Vector3(0f, -1.4f, 4.4f),
+                new Vector3(0f, -2.8f, 4.9f),
+                new Vector3(0f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
+            };
+
+            for (int i = 0; i < subject.Points.Count; i++)
+            {
+                Assert.AreEqual(expectedPoints[i].ToString(), subject.Points[i].ToString(), "Index " + i);
+            }
+
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsFalse(castResultsChangedMock.Received);
+        }
+
+        [Test]
+        public void EventsNotEmittedOnDisabledComponent()
+        {
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
+
+            subject.maximumLength = new Vector2(5f, 5f);
+            subject.segmentCount = 5;
+            subject.enabled = false;
+
+            subject.Process();
+
+            Vector3[] expectedPoints = new Vector3[]
+            {
+                Vector3.zero,
+                new Vector3(0f, -0.1f, 2.9f),
+                new Vector3(0f, -1.4f, 4.4f),
+                new Vector3(0f, -2.8f, 4.9f),
+                new Vector3(0f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
+            };
+
+            for (int i = 0; i < subject.Points.Count; i++)
+            {
+                Assert.AreEqual(expectedPoints[i].ToString(), subject.Points[i].ToString(), "Index " + i);
+            }
+
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsFalse(castResultsChangedMock.Received);
+        }
     }
 }

@@ -94,6 +94,48 @@
             Assert.IsNull(subject.TargetHit);
             Assert.IsTrue(castResultsChangedMock.Received);
         }
+
+        [Test]
+        public void EventsNotEmittedOnInactiveGameObject()
+        {
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.ManualAwake();
+            subject.gameObject.SetActive(false);
+            subject.Process();
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
+
+            Assert.AreEqual(expectedStart, subject.Points[0]);
+            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsFalse(castResultsChangedMock.Received);
+        }
+
+        [Test]
+        public void EventsNotEmittedOnDisabledComponent()
+        {
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.ManualAwake();
+            subject.enabled = false;
+            subject.Process();
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
+
+            Assert.AreEqual(expectedStart, subject.Points[0]);
+            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsFalse(castResultsChangedMock.Received);
+        }
     }
 
     public class StraightLineCastMock : StraightLineCast

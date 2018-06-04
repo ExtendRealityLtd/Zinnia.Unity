@@ -212,6 +212,94 @@
             subject.ManualUpdate();
             Assert.IsTrue(changedListenerMock.Received);
         }
+
+        [Test]
+        public void EventsNotEmittedOnInactiveGameObject()
+        {
+            MockAction actionA = containingObject.AddComponent<MockAction>();
+            MockAction actionB = containingObject.AddComponent<MockAction>();
+
+            actionA.SetState(false);
+            actionB.SetState(false);
+
+            subject.actions = new BaseAction[]
+            {
+                actionA,
+                actionB
+            };
+
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+
+            subject.Activated.AddListener(activatedListenerMock.Listen);
+            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            subject.Changed.AddListener(changedListenerMock.Listen);
+            subject.gameObject.SetActive(false);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            subject.ManualUpdate();
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            actionA.SetState(true);
+            actionB.SetState(true);
+
+            subject.ManualUpdate();
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+        }
+
+        [Test]
+        public void EventsNotEmittedOnDisabledComponent()
+        {
+            MockAction actionA = containingObject.AddComponent<MockAction>();
+            MockAction actionB = containingObject.AddComponent<MockAction>();
+
+            actionA.SetState(false);
+            actionB.SetState(false);
+
+            subject.actions = new BaseAction[]
+            {
+                actionA,
+                actionB
+            };
+
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+
+            subject.Activated.AddListener(activatedListenerMock.Listen);
+            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            subject.Changed.AddListener(changedListenerMock.Listen);
+            subject.enabled = false;
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            subject.ManualUpdate();
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            actionA.SetState(true);
+            actionB.SetState(true);
+
+            subject.ManualUpdate();
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+        }
     }
 
     public class CompoundAndActionMock : CompoundAndAction

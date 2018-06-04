@@ -59,5 +59,27 @@
             Assert.IsTrue(colorOverlayRemovedMock.Received);
             Assert.IsFalse(colorOverlayAddedMock.Received);
         }
+
+        [Test]
+        public void EventsNotEmittedOnInactiveGameObject()
+        {
+            UnityEventListenerMock colorOverlayAddedMock = new UnityEventListenerMock();
+            subject.ColorOverlayAdded.AddListener(colorOverlayAddedMock.Listen);
+            subject.gameObject.SetActive(false);
+            subject.AddColorOverlay();
+
+            Assert.IsFalse(colorOverlayAddedMock.Received);
+        }
+
+        [Test]
+        public void EventsNotEmittedOnDisabledComponent()
+        {
+            UnityEventListenerMock colorOverlayAddedMock = new UnityEventListenerMock();
+            subject.ColorOverlayAdded.AddListener(colorOverlayAddedMock.Listen);
+            subject.enabled = false;
+            subject.AddColorOverlay();
+
+            Assert.IsFalse(colorOverlayAddedMock.Received);
+        }
     }
 }

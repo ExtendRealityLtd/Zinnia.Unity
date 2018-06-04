@@ -109,17 +109,26 @@
 
         protected virtual void OnColorOverlayAdded(Color color)
         {
-            ColorOverlayAdded?.Invoke(color, this);
+            if (isActiveAndEnabled)
+            {
+                ColorOverlayAdded?.Invoke(color, this);
+            }
         }
 
         protected virtual void OnColorOverlayRemoved(Color color)
         {
-            ColorOverlayRemoved?.Invoke(color, this);
+            if (isActiveAndEnabled)
+            {
+                ColorOverlayRemoved?.Invoke(color, this);
+            }
         }
 
         protected virtual void OnColorOverlayChanged(Color color)
         {
-            ColorOverlayChanged?.Invoke(color, this);
+            if (isActiveAndEnabled)
+            {
+                ColorOverlayChanged?.Invoke(color, this);
+            }
         }
 
         /// <summary>
