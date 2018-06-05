@@ -42,7 +42,7 @@
             };
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.processFirstAndActiveOnly = true;
+            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.FirstActive);
 
             subject.follow = Data.Enum.TransformProperties.Position;
             subject.followModifier = followModifierMock;
@@ -72,7 +72,7 @@
             };
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.processFirstAndActiveOnly = true;
+            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.FirstActive);
 
             subject.follow = Data.Enum.TransformProperties.Position;
             subject.followModifier = followModifierMock;
@@ -115,7 +115,7 @@
             };
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.processFirstAndActiveOnly = false;
+            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
             subject.follow = Data.Enum.TransformProperties.Position;
             subject.followModifier = followModifierMock;
@@ -164,7 +164,7 @@
             };
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.processFirstAndActiveOnly = false;
+            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
             subject.follow = Data.Enum.TransformProperties.Position;
             subject.followModifier = followModifierMock;
@@ -223,7 +223,7 @@
             };
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.processFirstAndActiveOnly = false;
+            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
             subject.follow = Data.Enum.TransformProperties.Rotation;
             subject.followModifier = followModifierMock;
@@ -284,7 +284,7 @@
             };
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.processFirstAndActiveOnly = false;
+            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
             subject.follow = Data.Enum.TransformProperties.Scale;
             subject.followModifier = followModifierMock;
@@ -345,7 +345,7 @@
             };
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.processFirstAndActiveOnly = false;
+            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
             subject.follow = Data.Enum.TransformProperties.Position | Data.Enum.TransformProperties.Rotation;
             subject.followModifier = followModifierMock;
@@ -414,7 +414,7 @@
             };
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.processFirstAndActiveOnly = false;
+            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
             subject.follow = Data.Enum.TransformProperties.Position | Data.Enum.TransformProperties.Rotation | Data.Enum.TransformProperties.Scale;
             subject.followModifier = followModifierMock;
@@ -486,7 +486,7 @@
             };
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.processFirstAndActiveOnly = false;
+            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
             subject.follow = Data.Enum.TransformProperties.Position | Data.Enum.TransformProperties.Rotation | Data.Enum.TransformProperties.Scale;
             subject.followModifier = followModifierMock;
@@ -521,11 +521,9 @@
 
     public class FollowModifierMock : FollowModifier
     {
-        public bool processFirstAndActiveOnly;
-
-        public override bool ProcessFirstAndActiveOnly()
+        public virtual void SetProcessType(ProcessTarget type)
         {
-            return processFirstAndActiveOnly;
+            ProcessType = type;
         }
 
         public override void UpdatePosition(Transform source, Transform target)

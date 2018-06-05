@@ -7,6 +7,21 @@
     /// </summary>
     public abstract class FollowModifier : MonoBehaviour
     {
+        /// <summary>
+        /// The process logic for the target.
+        /// </summary>
+        public enum ProcessTarget
+        {
+            /// <summary>
+            /// Process all targets.
+            /// </summary>
+            All,
+            /// <summary>
+            /// Only process the first active target.
+            /// </summary>
+            FirstActive
+        }
+
         /// The current source <see cref="Transform"/> being used in the modifier process.
         public Transform CachedSource
         {
@@ -22,10 +37,14 @@
         }
 
         /// <summary>
-        /// Determines whether the <see cref="FollowModifier"/> should process all targets or just the first active target.
+        /// The mechanism of how to process the targets.
         /// </summary>
-        /// <returns><see langword="true"/> if only the first active target should be processed.</returns>
-        public abstract bool ProcessFirstAndActiveOnly();
+        public ProcessTarget ProcessType
+        {
+            get;
+            protected set;
+        } = ProcessTarget.All;
+
         /// <summary>
         /// Updates the source position based on the target position.
         /// </summary>

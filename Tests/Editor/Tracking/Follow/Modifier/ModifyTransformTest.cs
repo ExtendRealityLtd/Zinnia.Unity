@@ -3,34 +3,23 @@
     using UnityEngine;
     using NUnit.Framework;
 
-    public class TransformSourceFollowActiveTargetTest
+    public class ModifyTransformTest
     {
         private GameObject containingObject;
-        private SourceFollowActiveTargetMock subject;
-        private ModifyTransform modifier;
+        private ModifyTransform subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<SourceFollowActiveTargetMock>();
-            modifier = containingObject.AddComponent<ModifyTransform>();
-            subject.appliedModifier = modifier;
+            subject = containingObject.AddComponent<ModifyTransform>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(modifier);
             Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
-        }
-
-        [Test]
-        public void ProcessFirstAndActiveOnly()
-        {
-            subject.ManualAwake();
-            Assert.AreEqual(FollowModifier.ProcessTarget.FirstActive, subject.ProcessType);
         }
 
         [Test]
@@ -42,11 +31,10 @@
             source.transform.position = Vector3.zero;
             target.transform.position = Vector3.one;
 
-            subject.ManualAwake();
             subject.UpdatePosition(source.transform, target.transform);
 
-            Assert.AreEqual(source.transform.position, Vector3.one);
-            Assert.AreEqual(target.transform.position, Vector3.one);
+            Assert.AreEqual(Vector3.one, source.transform.position);
+            Assert.AreEqual(Vector3.one, target.transform.position);
             Assert.AreEqual(source.transform, subject.CachedSource);
             Assert.AreEqual(target.transform, subject.CachedTarget);
         }
@@ -62,11 +50,10 @@
             source.transform.rotation = Quaternion.identity;
             target.transform.rotation = targetRotation;
 
-            subject.ManualAwake();
             subject.UpdateRotation(source.transform, target.transform);
 
-            Assert.AreEqual(source.transform.rotation, targetRotation);
-            Assert.AreEqual(target.transform.rotation, targetRotation);
+            Assert.AreEqual(targetRotation, source.transform.rotation);
+            Assert.AreEqual(targetRotation, target.transform.rotation);
             Assert.AreEqual(source.transform, subject.CachedSource);
             Assert.AreEqual(target.transform, subject.CachedTarget);
         }
@@ -80,21 +67,12 @@
             source.transform.localScale = Vector3.zero;
             target.transform.localScale = Vector3.one;
 
-            subject.ManualAwake();
             subject.UpdateScale(source.transform, target.transform);
 
-            Assert.AreEqual(source.transform.localScale, Vector3.one);
-            Assert.AreEqual(target.transform.localScale, Vector3.one);
+            Assert.AreEqual(Vector3.one, source.transform.localScale);
+            Assert.AreEqual(Vector3.one, target.transform.localScale);
             Assert.AreEqual(source.transform, subject.CachedSource);
             Assert.AreEqual(target.transform, subject.CachedTarget);
-        }
-    }
-
-    public class SourceFollowActiveTargetMock : SourceFollowActiveTarget
-    {
-        public void ManualAwake()
-        {
-            Awake();
         }
     }
 }
