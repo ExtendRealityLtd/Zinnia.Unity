@@ -101,7 +101,10 @@
 
         protected virtual void OnSurfaceLocated(SurfaceData e)
         {
-            SurfaceLocated?.Invoke(e, this);
+            if (isActiveAndEnabled)
+            {
+                SurfaceLocated?.Invoke(e, this);
+            }
         }
 
         /// <summary>

@@ -119,6 +119,52 @@
             subject.Receive(new Vector2(0.2f, 0.2f), null);
             Assert.IsTrue(changedListenerMock.Received);
         }
+
+        [Test]
+        public void EventsNotEmittedOnInactiveGameObject()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+
+            subject.Activated.AddListener(activatedListenerMock.Listen);
+            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            subject.Changed.AddListener(changedListenerMock.Listen);
+            subject.gameObject.SetActive(false);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            subject.Receive(Vector2.one, null);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+        }
+
+        [Test]
+        public void EventsNotEmittedOnDisabledComponent()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+
+            subject.Activated.AddListener(activatedListenerMock.Listen);
+            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            subject.Changed.AddListener(changedListenerMock.Listen);
+            subject.enabled = false;
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            subject.Receive(Vector2.one, null);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+        }
     }
 
     public class Vector2ActionMock : Vector2Action

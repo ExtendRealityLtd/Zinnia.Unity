@@ -48,7 +48,7 @@
             subject.Process();
 
             Assert.IsTrue(surfaceLocatedMock.Received);
-            Assert.AreEqual(subject.SurfaceData.transform, validSurface.transform);
+            Assert.AreEqual(validSurface.transform, subject.SurfaceData.transform);
         }
 
         [Test]
@@ -83,6 +83,38 @@
             subject.targetValidity = exclusions;
 
             subject.Locate();
+            Assert.IsFalse(surfaceLocatedMock.Received);
+        }
+
+        [Test]
+        public void EventsNotEmittedOnInactiveGameObject()
+        {
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.searchOrigin = searchOrigin.transform;
+            subject.searchDirection = Vector3.forward;
+            subject.gameObject.SetActive(false);
+            subject.Process();
+
+            Assert.IsFalse(surfaceLocatedMock.Received);
+        }
+
+        [Test]
+        public void EventsNotEmittedOnDisabledComponent()
+        {
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.searchOrigin = searchOrigin.transform;
+            subject.searchDirection = Vector3.forward;
+            subject.enabled = false;
+            subject.Process();
+
             Assert.IsFalse(surfaceLocatedMock.Received);
         }
     }
