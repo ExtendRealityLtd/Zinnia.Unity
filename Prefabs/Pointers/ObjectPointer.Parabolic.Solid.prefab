@@ -19,8 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4622919941559180}
+  - component: {fileID: 114143654649734906}
+  - component: {fileID: 114424138616660126}
   - component: {fileID: 114787471753854276}
-  - component: {fileID: 114403715482923734}
   - component: {fileID: 114088149306012980}
   m_Layer: 0
   m_Name: FollowTarget
@@ -805,6 +806,17 @@ MonoBehaviour:
   process:
     field: {fileID: 114227604445383012}
   onlyProcessOnActiveAndEnabled: 1
+--- !u!114 &114143654649734906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1193110632382416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b312e4fdef6b0544a894200a87b3cd5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114206215443630188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1002,7 +1014,7 @@ MonoBehaviour:
   start: {fileID: 0}
   repeatedSegment: {fileID: 0}
   end: {fileID: 0}
---- !u!114 &114403715482923734
+--- !u!114 &114424138616660126
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1010,9 +1022,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1193110632382416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e093d4d35b5601240b6061e0c9cf78d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5db8c51ac64416541922dec0c674975a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  appliedModifier: {fileID: 114143654649734906}
 --- !u!114 &114625547486584738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1043,7 +1056,7 @@ MonoBehaviour:
   targetComponents:
   - {fileID: 0}
   follow: -1
-  followModifier: {fileID: 114403715482923734}
+  followModifier: {fileID: 114424138616660126}
   BeforeProcessed:
     m_PersistentCalls:
       m_Calls: []
