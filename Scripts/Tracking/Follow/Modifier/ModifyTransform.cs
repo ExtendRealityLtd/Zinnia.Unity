@@ -3,19 +3,10 @@
     using UnityEngine;
 
     /// <summary>
-    /// Forces the transformations of the source <see cref="Transform"/> to match those of the target <see cref="Transform"/>.
+    /// Modifies the source <see cref="Transform"/> data to equal the target <see cref="Transform"/> data.
     /// </summary>
-    public class TransformSourceFollowActiveTarget : FollowModifier
+    public class ModifyTransform : FollowModifier
     {
-        /// <summary>
-        /// Determines whether the <see cref="FollowModifier"/> should process all targets or just the first active target.
-        /// </summary>
-        /// <returns>Always <see langword="true"/>.</returns>
-        public override bool ProcessFirstAndActiveOnly()
-        {
-            return true;
-        }
-
         /// <summary>
         /// Sets the source <see cref="Transform.position"/> to the target <see cref="Transform.position"/>.
         /// </summary>

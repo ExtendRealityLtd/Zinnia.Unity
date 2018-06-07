@@ -86,13 +86,17 @@
             if (isActiveAndEnabled)
             {
                 OnBeforeProcessed();
-                if (followModifier != null && followModifier.ProcessFirstAndActiveOnly())
+                if (followModifier != null)
                 {
-                    ProcessFirstActiveComponent();
-                }
-                else
-                {
-                    ProcessAllComponents();
+                    switch (followModifier.ProcessType)
+                    {
+                        case FollowModifier.ProcessTarget.All:
+                            ProcessAllComponents();
+                            break;
+                        case FollowModifier.ProcessTarget.FirstActive:
+                            ProcessFirstActiveComponent();
+                            break;
+                    }
                 }
                 OnAfterProcessed();
             }

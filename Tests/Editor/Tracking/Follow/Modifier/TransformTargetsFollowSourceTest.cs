@@ -6,18 +6,22 @@
     public class TransformTargetsFollowSourceTest
     {
         private GameObject containingObject;
-        private TransformTargetsFollowSource subject;
+        private TargetsFollowSourceMock subject;
+        private ModifyTransform modifier;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<TransformTargetsFollowSource>();
+            subject = containingObject.AddComponent<TargetsFollowSourceMock>();
+            modifier = containingObject.AddComponent<ModifyTransform>();
+            subject.appliedModifier = modifier;
         }
 
         [TearDown]
         public void TearDown()
         {
+            Object.DestroyImmediate(modifier);
             Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
@@ -25,7 +29,8 @@
         [Test]
         public void ProcessAll()
         {
-            Assert.IsFalse(subject.ProcessFirstAndActiveOnly());
+            subject.ManualAwake();
+            Assert.AreEqual(FollowModifier.ProcessTarget.All, subject.ProcessType);
         }
 
         [Test]
@@ -37,6 +42,7 @@
             source.transform.position = Vector3.one;
             target.transform.position = Vector3.zero;
 
+            subject.ManualAwake();
             subject.UpdatePosition(source.transform, target.transform);
 
             Assert.AreEqual(source.transform.position, Vector3.one);
@@ -56,6 +62,7 @@
             source.transform.rotation = targetRotation;
             target.transform.rotation = Quaternion.identity;
 
+            subject.ManualAwake();
             subject.UpdateRotation(source.transform, target.transform);
 
             Assert.AreEqual(source.transform.rotation, targetRotation);
@@ -73,12 +80,21 @@
             source.transform.localScale = Vector3.one;
             target.transform.localScale = Vector3.zero;
 
+            subject.ManualAwake();
             subject.UpdateScale(source.transform, target.transform);
 
             Assert.AreEqual(source.transform.localScale, Vector3.one);
             Assert.AreEqual(target.transform.localScale, Vector3.one);
             Assert.AreEqual(source.transform, subject.CachedSource);
             Assert.AreEqual(target.transform, subject.CachedTarget);
+        }
+    }
+
+    public class TargetsFollowSourceMock : TargetsFollowSource
+    {
+        public void ManualAwake()
+        {
+            Awake();
         }
     }
 }
