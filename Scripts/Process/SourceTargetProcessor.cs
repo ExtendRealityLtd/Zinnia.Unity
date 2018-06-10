@@ -1,7 +1,8 @@
 ﻿namespace VRTK.Core.Process
 {
     using UnityEngine;
-    using System;
+    using System.Collections.Generic;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// An <see cref="IProcessable"/> that runs a set method on a source <see cref="Component"/> against an array of target <see cref="Component"/>s.
@@ -19,7 +20,7 @@
         /// The target <see cref="Component"/>s to apply the source to within the process.
         /// </summary>
         [Tooltip("The target Components to apply the source to within the process.")]
-        public Component[] targetComponents = Array.Empty<Component>();
+        public List<Component> targetComponents = new List<Component>();
 
         /// <summary>
         /// The <see cref="Component"/> that is currently the active target for the process.
@@ -42,7 +43,7 @@
         /// </summary>
         protected virtual void ProcessAllComponents()
         {
-            foreach (Component currentComponent in targetComponents)
+            foreach (Component currentComponent in targetComponents.EmptyIfNull())
             {
                 if (sourceComponent != null)
                 {
@@ -57,7 +58,7 @@
         protected virtual void ProcessFirstActiveComponent()
         {
             ActiveTargetComponent = null;
-            foreach (Component currentComponent in targetComponents)
+            foreach (Component currentComponent in targetComponents.EmptyIfNull())
             {
                 if (sourceComponent != null && currentComponent != null && currentComponent.gameObject.activeInHierarchy)
                 {

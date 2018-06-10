@@ -1,10 +1,11 @@
 ﻿namespace VRTK.Core.Prefabs.Locomotion.Teleporters
 {
     using UnityEngine;
-    using System;
+    using System.Collections.Generic;
     using VRTK.Core.Tracking;
     using VRTK.Core.Visual;
     using VRTK.Core.Data.Type;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Provides internal settings for the teleporter prefabs.
@@ -30,17 +31,17 @@
         /// The <see cref="SurfaceLocator"/> to set aliases on.
         /// </summary>
         [Tooltip("The Surface Locators to set aliases on.")]
-        public SurfaceLocator[] surfaceLocatorAliases = Array.Empty<SurfaceLocator>();
+        public List<SurfaceLocator> surfaceLocatorAliases = new List<SurfaceLocator>();
         /// <summary>
         /// The <see cref="TransformModify"/> to set aliases on.
         /// </summary>
         [Tooltip("The Transform Modifiers to set aliases on.")]
-        public TransformModify[] transformModifierAliases = Array.Empty<TransformModify>();
+        public List<TransformModify> transformModifierAliases = new List<TransformModify>();
         /// <summary>
         /// The scene <see cref="Camera"/>s to set the <see cref="CameraColorOverlay"/>s to affect.
         /// </summary>
         [Tooltip("The scene Cameras to set the CameraColorOverlays to affect.")]
-        public CameraColorOverlay[] cameraColorOverlays = Array.Empty<CameraColorOverlay>();
+        public List<CameraColorOverlay> cameraColorOverlays = new List<CameraColorOverlay>();
 
         /// <summary>
         /// Attempts to teleport the <see cref="userSetup.playAreaAlias"/>.
@@ -62,18 +63,18 @@
 
         protected virtual void OnEnable()
         {
-            foreach (SurfaceLocator currentLocator in surfaceLocatorAliases)
+            foreach (SurfaceLocator currentLocator in surfaceLocatorAliases.EmptyIfNull())
             {
                 currentLocator.searchOrigin = userSetup.headsetAlias;
             }
 
-            foreach (TransformModify currentModifier in transformModifierAliases)
+            foreach (TransformModify currentModifier in transformModifierAliases.EmptyIfNull())
             {
                 currentModifier.source = userSetup.playAreaAlias;
                 currentModifier.offset = userSetup.headsetAlias;
             }
 
-            foreach (CameraColorOverlay currentOverlay in cameraColorOverlays)
+            foreach (CameraColorOverlay currentOverlay in cameraColorOverlays.EmptyIfNull())
             {
                 currentOverlay.validCameras = userSetup.sceneCameras;
             }

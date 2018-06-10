@@ -40,25 +40,22 @@
             const string xrDeviceName = "XR Device";
 
             subject.xrDeviceName = xrDeviceName;
-            subject.relations = new[]
+            subject.relations.Add(new XrDeviceRelationActivator.XrDeviceRelation
             {
-                new XrDeviceRelationActivator.XrDeviceRelation
-                {
-                    xrDeviceName = xrDeviceName,
-                    gameObjects = new[]
+                xrDeviceName = xrDeviceName,
+                gameObjects = new[]
                     {
                         new GameObject()
                     }
-                },
-                new XrDeviceRelationActivator.XrDeviceRelation
-                {
-                    xrDeviceName = xrDeviceName,
-                    gameObjects = new[]
+            });
+            subject.relations.Add(new XrDeviceRelationActivator.XrDeviceRelation
+            {
+                xrDeviceName = xrDeviceName,
+                gameObjects = new[]
                     {
                         new GameObject()
                     }
-                }
-            };
+            });
 
             LogAssert.Expect(LogType.Warning, new Regex("multiple relation"));
             subject.ManualAwake();
@@ -95,11 +92,8 @@
             };
 
             subject.xrDeviceName = expectedXrDeviceName;
-            subject.relations = new[]
-            {
-                unexpectedRelation,
-                expectedRelation
-            };
+            subject.relations.Add(unexpectedRelation);
+            subject.relations.Add(expectedRelation);
 
             Assert.AreEqual(subject.CurrentRelation, null);
 
@@ -140,11 +134,8 @@
             };
 
             subject.xrDeviceName = xrDeviceName;
-            subject.relations = new[]
-            {
-                unexpectedRelation,
-                expectedRelation
-            };
+            subject.relations.Add(unexpectedRelation);
+            subject.relations.Add(expectedRelation);
 
             subject.ManualUpdate();
             subject.Activate(expectedRelation);
@@ -176,11 +167,8 @@
             };
 
             subject.xrDeviceName = expectedXrDeviceName;
-            subject.relations = new[]
-            {
-                unexpectedRelation,
-                expectedRelation
-            };
+            subject.relations.Add(unexpectedRelation);
+            subject.relations.Add(expectedRelation);
 
             subject.ManualUpdate();
 
@@ -211,10 +199,7 @@
             };
 
             subject.xrDeviceName = xrDeviceName;
-            subject.relations = new[]
-            {
-                unexpectedRelation
-            };
+            subject.relations.Add(unexpectedRelation);
 
             subject.ManualUpdate();
             subject.Activate(expectedRelation);
@@ -246,10 +231,7 @@
             };
 
             subject.xrDeviceName = expectedXrDeviceName;
-            subject.relations = new[]
-            {
-                expectedRelation
-            };
+            subject.relations.Add(expectedRelation);
 
             subject.ManualUpdate();
 
@@ -281,11 +263,8 @@
             };
 
             subject.xrDeviceName = unexpectedXrDeviceName;
-            subject.relations = new[]
-            {
-                unexpectedRelation,
-                expectedRelation
-            };
+            subject.relations.Add(unexpectedRelation);
+            subject.relations.Add(expectedRelation);
 
             subject.ManualUpdate();
             subject.xrDeviceName = expectedXrDeviceName;
@@ -309,10 +288,7 @@
             };
 
             subject.xrDeviceName = xrDeviceName;
-            subject.relations = new[]
-            {
-                relation
-            };
+            subject.relations.Add(relation);
 
             subject.ManualUpdate();
             subject.ManualOnDisable();

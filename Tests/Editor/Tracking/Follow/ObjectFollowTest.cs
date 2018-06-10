@@ -36,10 +36,9 @@
             };
 
             subject.sourceComponent = source.transform;
-            subject.targetComponents = new Component[]
-            {
-                targets[0].transform, targets[1].transform, targets[2].transform
-            };
+            subject.targetComponents.Add(targets[0].transform);
+            subject.targetComponents.Add(targets[1].transform);
+            subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.FirstActive);
@@ -66,10 +65,9 @@
             };
 
             subject.sourceComponent = source.transform;
-            subject.targetComponents = new Component[]
-            {
-                targets[0].transform, targets[1].transform, targets[2].transform
-            };
+            subject.targetComponents.Add(targets[0].transform);
+            subject.targetComponents.Add(targets[1].transform);
+            subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.FirstActive);
@@ -109,10 +107,9 @@
             };
 
             subject.sourceComponent = source.transform;
-            subject.targetComponents = new Component[]
-            {
-                targets[0].transform, targets[1].transform, targets[2].transform
-            };
+            subject.targetComponents.Add(targets[0].transform);
+            subject.targetComponents.Add(targets[1].transform);
+            subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
@@ -158,10 +155,9 @@
             };
 
             subject.sourceComponent = source.transform;
-            subject.targetComponents = new Component[]
-            {
-                targets[0].transform, targets[1].transform, targets[2].transform
-            };
+            subject.targetComponents.Add(targets[0].transform);
+            subject.targetComponents.Add(targets[1].transform);
+            subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
@@ -217,10 +213,9 @@
             };
 
             subject.sourceComponent = source.transform;
-            subject.targetComponents = new Component[]
-            {
-                targets[0].transform, targets[1].transform, targets[2].transform
-            };
+            subject.targetComponents.Add(targets[0].transform);
+            subject.targetComponents.Add(targets[1].transform);
+            subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
@@ -278,10 +273,9 @@
             };
 
             subject.sourceComponent = source.transform;
-            subject.targetComponents = new Component[]
-            {
-                targets[0].transform, targets[1].transform, targets[2].transform
-            };
+            subject.targetComponents.Add(targets[0].transform);
+            subject.targetComponents.Add(targets[1].transform);
+            subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
@@ -339,10 +333,9 @@
             };
 
             subject.sourceComponent = source.transform;
-            subject.targetComponents = new Component[]
-            {
-                targets[0].transform, targets[1].transform, targets[2].transform
-            };
+            subject.targetComponents.Add(targets[0].transform);
+            subject.targetComponents.Add(targets[1].transform);
+            subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
@@ -408,10 +401,9 @@
             };
 
             subject.sourceComponent = source.transform;
-            subject.targetComponents = new Component[]
-            {
-                targets[0].transform, targets[1].transform, targets[2].transform
-            };
+            subject.targetComponents.Add(targets[0].transform);
+            subject.targetComponents.Add(targets[1].transform);
+            subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
@@ -480,10 +472,9 @@
             };
 
             subject.sourceComponent = source.transform;
-            subject.targetComponents = new Component[]
-            {
-                targets[0].transform, targets[1].transform, targets[2].transform
-            };
+            subject.targetComponents.Add(targets[0].transform);
+            subject.targetComponents.Add(targets[1].transform);
+            subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);

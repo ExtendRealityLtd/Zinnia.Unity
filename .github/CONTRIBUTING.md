@@ -169,6 +169,13 @@ instantiated so it is not null at runtime.
 
 `public MyEventClass MyEventAction = new MyEventClass();`
 
+Public fields that are collections should favour the
+`System.Collections.Generic.List` data type over a simple `array` as
+the `List` offers helper operators for mutating the contents of the
+list (e.g. `Add` `Remove` `Clear`). This makes it easier when accessing
+the collection via another script when the contents of the collection
+requires changing.
+
 ## Documentation
 
 All core scripts, abstractions, controls and prefabs should contain

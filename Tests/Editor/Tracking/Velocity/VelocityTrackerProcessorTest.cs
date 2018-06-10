@@ -29,7 +29,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(1f, 1f, 1f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -46,7 +48,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(2f, 2f, 2f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -63,7 +67,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(3f, 3f, 3f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -80,7 +86,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);
@@ -108,7 +116,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
             subject.GetVelocity();
 
             VelocityTrackerMock expectedResult = trackerThree;
@@ -126,7 +136,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
             subject.GetAngularVelocity();
 
             VelocityTrackerMock expectedResult = trackerTwo;
@@ -144,7 +156,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(1f, 1f, 1f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -161,7 +175,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(2f, 2f, 2f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -178,7 +194,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(3f, 3f, 3f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -195,7 +213,9 @@
             VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = MockVelocityTracker(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers = new VelocityTracker[] { trackerOne, trackerTwo, trackerThree };
+            subject.velocityTrackers.Add(trackerOne);
+            subject.velocityTrackers.Add(trackerTwo);
+            subject.velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);
