@@ -14,12 +14,12 @@
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
         public override void UpdatePosition(Transform source, Transform target)
         {
+            CachedSource = source;
+            CachedTarget = target;
             if (source != null && target != null)
             {
                 source.position = target.position;
             }
-            CachedSource = source;
-            CachedTarget = target;
         }
 
         /// <summary>
@@ -29,12 +29,12 @@
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
         public override void UpdateRotation(Transform source, Transform target)
         {
+            CachedSource = source;
+            CachedTarget = target;
             if (source != null && target != null)
             {
                 source.rotation = target.rotation;
             }
-            CachedSource = source;
-            CachedTarget = target;
         }
 
         /// <summary>
@@ -44,12 +44,12 @@
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
         public override void UpdateScale(Transform source, Transform target)
         {
+            CachedSource = source;
+            CachedTarget = target;
             if (source != null && target != null)
             {
                 source.localScale = target.localScale;
             }
-            CachedSource = source;
-            CachedTarget = target;
         }
     }
 }
