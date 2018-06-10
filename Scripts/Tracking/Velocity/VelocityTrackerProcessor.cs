@@ -1,18 +1,19 @@
 ﻿namespace VRTK.Core.Tracking.Velocity
 {
     using UnityEngine;
-    using System;
+    using System.Collections.Generic;
+    using VRTK.Core.Extension;
 
     /// <summary>
-    /// A proxy for reporting on velocity data on the first active <see cref="VelocityTracker"/> that is provided in the array.
+    /// A proxy for reporting on velocity data on the first active <see cref="VelocityTracker"/> that is provided in the collection.
     /// </summary>
     public class VelocityTrackerProcessor : VelocityTracker
     {
         /// <summary>
-        /// Process the first active <see cref="VelocityTracker"/> found in the array.
+        /// Process the first active <see cref="VelocityTracker"/> found in the collection.
         /// </summary>
         [Tooltip("Process the first active VelocityTracker found in the array.")]
-        public VelocityTracker[] velocityTrackers = Array.Empty<VelocityTracker>();
+        public List<VelocityTracker> velocityTrackers = new List<VelocityTracker>();
         protected VelocityTracker cachedTracker;
 
         /// <inheritdoc />
@@ -29,7 +30,7 @@
         {
             Vector3 currentVelocity = Vector3.zero;
             cachedTracker = null;
-            foreach (VelocityTracker currentTracker in velocityTrackers)
+            foreach (VelocityTracker currentTracker in velocityTrackers.EmptyIfNull())
             {
                 if (currentTracker != null && currentTracker.IsActive())
                 {
@@ -49,7 +50,7 @@
         {
             Vector3 currentAngularVelocity = Vector3.zero;
             cachedTracker = null;
-            foreach (VelocityTracker currentTracker in velocityTrackers)
+            foreach (VelocityTracker currentTracker in velocityTrackers.EmptyIfNull())
             {
                 if (currentTracker != null && currentTracker.IsActive())
                 {

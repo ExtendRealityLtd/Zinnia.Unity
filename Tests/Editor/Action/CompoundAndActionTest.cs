@@ -32,11 +32,8 @@
             actionA.SetState(false);
             actionB.SetState(false);
 
-            subject.actions = new BaseAction[]
-            {
-                actionA,
-                actionB
-            };
+            subject.actions.Add(actionA);
+            subject.actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -75,11 +72,8 @@
             actionA.SetState(false);
             actionB.SetState(false);
 
-            subject.actions = new BaseAction[]
-            {
-                actionA,
-                actionB
-            };
+            subject.actions.Add(actionA);
+            subject.actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -121,11 +115,8 @@
             actionA.SetState(true);
             actionB.SetState(true);
 
-            subject.actions = new BaseAction[]
-            {
-                actionA,
-                actionB
-            };
+            subject.actions.Add(actionA);
+            subject.actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -164,11 +155,8 @@
             actionA.SetState(false);
             actionB.SetState(false);
 
-            subject.actions = new BaseAction[]
-            {
-                actionA,
-                actionB
-            };
+            subject.actions.Add(actionA);
+            subject.actions.Add(actionB);
 
             UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
 
@@ -222,11 +210,8 @@
             actionA.SetState(false);
             actionB.SetState(false);
 
-            subject.actions = new BaseAction[]
-            {
-                actionA,
-                actionB
-            };
+            subject.actions.Add(actionA);
+            subject.actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -266,11 +251,8 @@
             actionA.SetState(false);
             actionB.SetState(false);
 
-            subject.actions = new BaseAction[]
-            {
-                actionA,
-                actionB
-            };
+            subject.actions.Add(actionA);
+            subject.actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();

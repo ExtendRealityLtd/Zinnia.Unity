@@ -1,7 +1,8 @@
 ﻿namespace VRTK.Core.Action
 {
     using UnityEngine;
-    using System;
+    using System.Collections.Generic;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value when all given actions are in their active state.
@@ -12,7 +13,7 @@
         /// BaseActions to check the active state on.
         /// </summary>
         [Tooltip("BaseActions to check the active state on.")]
-        public BaseAction[] actions = Array.Empty<BaseAction>();
+        public List<BaseAction> actions = new List<BaseAction>();
 
         /// <summary>
         /// Not used.
@@ -26,7 +27,7 @@
         protected virtual void Update()
         {
             bool isValid = true;
-            foreach (BaseAction action in actions)
+            foreach (BaseAction action in actions.EmptyIfNull())
             {
                 if (!action.State)
                 {

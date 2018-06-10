@@ -2,6 +2,8 @@
 {
     using UnityEngine;
     using System;
+    using System.Collections.Generic;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Iterates through the given <see cref="MomentProcess"/> array and executes the <see cref="MomentProcess.process"/> method on the given Unity game loop moment.
@@ -48,7 +50,7 @@
         /// A collection of <see cref="MomentProcess"/> to process.
         /// </summary>
         [Tooltip("A collection of MomentProcess to process.")]
-        public MomentProcess[] processes = Array.Empty<MomentProcess>();
+        public List<MomentProcess> processes = new List<MomentProcess>();
 
         protected Moment subscribedMoment;
 
@@ -149,7 +151,7 @@
         /// </summary>
         protected virtual void Process()
         {
-            foreach (MomentProcess currentProcess in processes)
+            foreach (MomentProcess currentProcess in processes.EmptyIfNull())
             {
                 if (currentProcess != null && currentProcess.process != null)
                 {

@@ -31,12 +31,9 @@
             GameObject target3 = new GameObject();
 
             subject.sourceComponent = source.GetComponent<Component>();
-            subject.targetComponents = new Component[]
-            {
-                target1.GetComponent<Component>(),
-                target2.GetComponent<Component>(),
-                target3.GetComponent<Component>()
-            };
+            subject.targetComponents.Add(target1.GetComponent<Component>());
+            subject.targetComponents.Add(target2.GetComponent<Component>());
+            subject.targetComponents.Add(target3.GetComponent<Component>());
 
             source.gameObject.SetActive(true);
 
@@ -66,12 +63,9 @@
             GameObject target3 = new GameObject();
 
             subject.sourceComponent = source.GetComponent<Component>();
-            subject.targetComponents = new Component[]
-            {
-                target1.GetComponent<Component>(),
-                target2.GetComponent<Component>(),
-                target3.GetComponent<Component>()
-            };
+            subject.targetComponents.Add(target1.GetComponent<Component>());
+            subject.targetComponents.Add(target2.GetComponent<Component>());
+            subject.targetComponents.Add(target3.GetComponent<Component>());
 
             source.gameObject.SetActive(false);
 
@@ -101,12 +95,9 @@
             GameObject target3 = new GameObject();
 
             subject.sourceComponent = source.GetComponent<Component>();
-            subject.targetComponents = new Component[]
-            {
-                target1.GetComponent<Component>(),
-                target2.GetComponent<Component>(),
-                target3.GetComponent<Component>()
-            };
+            subject.targetComponents.Add(target1.GetComponent<Component>());
+            subject.targetComponents.Add(target2.GetComponent<Component>());
+            subject.targetComponents.Add(target3.GetComponent<Component>());
 
             source.gameObject.SetActive(true);
 

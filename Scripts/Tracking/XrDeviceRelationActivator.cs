@@ -5,6 +5,7 @@
     using System.Linq;
     using UnityEngine;
     using UnityEngine.XR;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Activates and deactivates <see cref="GameObject"/>s based on the currently loaded XR device automatically and allows to override the active <see cref="GameObject"/> manually.
@@ -33,7 +34,7 @@
         /// The relations in order they will be activated if their XR device name matches the currently loaded one.
         /// </summary>
         [Tooltip("The relations in order they will be activated if their XR device name matches the currently loaded one.")]
-        public XrDeviceRelation[] relations = Array.Empty<XrDeviceRelation>();
+        public List<XrDeviceRelation> relations = new List<XrDeviceRelation>();
 
         protected XrDeviceRelation currentRelation;
 
@@ -56,7 +57,7 @@
 
             currentRelation = relation;
 
-            IEnumerable<XrDeviceRelation> otherRelations = relations.Except(
+            IEnumerable<XrDeviceRelation> otherRelations = relations.EmptyIfNull().Except(
                 new[]
                 {
                     relation
@@ -77,7 +78,7 @@
         /// </summary>
         public virtual void Deactivate()
         {
-            foreach (GameObject relationObject in relations.Append(currentRelation).Where(relation => relation != null).SelectMany(relation => relation.gameObjects).Where(relationObject => relationObject != null))
+            foreach (GameObject relationObject in relations.EmptyIfNull().Append(currentRelation).Where(relation => relation != null).SelectMany(relation => relation.gameObjects).Where(relationObject => relationObject != null))
             {
                 relationObject.SetActive(false);
             }
@@ -87,7 +88,7 @@
 
         protected virtual void Awake()
         {
-            if (relations.Any(relation => relation.gameObjects.Any(relationObject => relationObject.activeInHierarchy)))
+            if (relations.EmptyIfNull().Any(relation => relation.gameObjects.Any(relationObject => relationObject.activeInHierarchy)))
             {
                 Debug.LogWarning($"At least one relation object is active in the scene on {nameof(Awake)} of this {nameof(XrDeviceRelationActivator)}. Having multiple relation objects active at the same time will most likely lead to issues. Make sure to deactivate them all before you play or create a build.");
             }
@@ -101,7 +102,7 @@
         protected virtual void Update()
         {
             string loadedDeviceName = GetLoadedDeviceName();
-            XrDeviceRelation desiredRelation = relations.FirstOrDefault(relation => relation.xrDeviceName == loadedDeviceName);
+            XrDeviceRelation desiredRelation = relations.EmptyIfNull().FirstOrDefault(relation => relation.xrDeviceName == loadedDeviceName);
             if (desiredRelation != null)
             {
                 Activate(desiredRelation);
