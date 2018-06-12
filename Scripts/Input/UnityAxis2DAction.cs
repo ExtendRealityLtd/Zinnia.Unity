@@ -21,10 +21,7 @@
 
         protected virtual void Update()
         {
-            Value = new Vector2(Input.GetAxis(xAxisName), Input.GetAxis(yAxisName));
-            EmitEvents();
-            State = IsActive();
-            previousValue = Value;
+            Receive(new Vector2(Input.GetAxis(xAxisName), Input.GetAxis(yAxisName)), this);
         }
     }
 }

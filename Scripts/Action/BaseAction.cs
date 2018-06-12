@@ -1,84 +1,140 @@
 ﻿namespace VRTK.Core.Action
 {
     using UnityEngine;
+    using UnityEngine.Events;
+    using System.Collections.Generic;
 
     /// <summary>
     /// A generic type that forms as the basis for all action types.
     /// </summary>
-    /// <typeparam name="T">The variable type the action will be utilising.</typeparam>
-    public abstract class BaseAction<T> : BaseAction
+    /// <typeparam name="TValue">The variable type the action will be utilizing.</typeparam>
+    /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type the action will be utilizing.</typeparam>
+    public abstract class BaseAction<TValue, TEvent> : BaseAction where TEvent : UnityEvent<TValue, object>, new()
     {
         /// <summary>
-        /// The state value of the action.
+        /// Emitted when the <see cref="BaseAction{TValue,TEvent}"/> becomes active.
         /// </summary>
-        public T Value
+        public TEvent Activated = new TEvent();
+        /// <summary>
+        /// Emitted when the <see cref="Value"/> of the <see cref="BaseAction{TValue,TEvent}"/> changes.
+        /// </summary>
+        public TEvent Changed = new TEvent();
+        /// <summary>
+        /// Emitted when the <see cref="BaseAction{TValue,TEvent}"/> becomes inactive.
+        /// </summary>
+        public TEvent Deactivated = new TEvent();
+
+        /// <summary>
+        /// The initial value of the action.
+        /// </summary>
+        public TValue DefaultValue;
+
+        /// <summary>
+        /// The value of the action.
+        /// </summary>
+        public TValue Value
         {
             get;
             protected set;
-        } = default(T);
+        }
 
         /// <summary>
-        /// The previous state value of the action.
+        /// The comparer to use for equality comparisons of <see cref="Value"/>.
         /// </summary>
-        protected T previousValue = default(T);
+        protected IEqualityComparer<TValue> equalityComparer = EqualityComparer<TValue>.Default;
+
+        /// <summary>
+        /// The previous value of the action.
+        /// </summary>
+        protected TValue previousValue;
 
         /// <summary>
         /// Allows an action to receive the payload from another action to enable action chaining.
         /// </summary>
         /// <param name="value">The value from the action.</param>
         /// <param name="sender">The sender of the action.</param>
-        public abstract void Receive(T value, object sender = null);
-
-        /// <summary>
-        /// Calls the appropriate Activated event.
-        /// </summary>
-        /// <param name="value">The value to pass to the event.</param>
-        protected abstract void OnActivated(T value);
-
-        /// <summary>
-        /// Calls the appropriate Changed event.
-        /// </summary>
-        /// <param name="value">The value to pass to the event.</param>
-        protected abstract void OnChanged(T value);
-
-        /// <summary>
-        /// Calls the appropriate Deactivated event.
-        /// </summary>
-        /// <param name="value">The value to pass to the event.</param>
-        protected abstract void OnDeactivated(T value);
-
-        /// <summary>
-        /// Determines if the action state has changed from the previous state.
-        /// </summary>
-        /// <returns><see langword="true"/> if the action state has changed.</returns>
-        protected virtual bool HasChanged()
+        public virtual void Receive(TValue value, object sender = null)
         {
-            return (!Value.Equals(previousValue));
+            if (equalityComparer.Equals(Value, value))
+            {
+                return;
+            }
+
+            previousValue = Value;
+            Value = value;
+
+            sender = sender ?? this;
+
+            bool isActivated = !equalityComparer.Equals(Value, DefaultValue);
+            if (IsActivated != isActivated)
+            {
+                IsActivated = isActivated;
+
+                if (IsActivated)
+                {
+                    OnActivated(value, sender);
+                }
+                else
+                {
+                    OnDeactivated(value, sender);
+                }
+            }
+
+            OnChanged(value, sender);
         }
 
+        protected virtual void Awake()
+        {
+            previousValue = DefaultValue;
+            Value = DefaultValue;
+        }
+
+        protected virtual void OnActivated(TValue value, object sender)
+        {
+            if (CanEmit())
+            {
+                Activated?.Invoke(value, sender);
+            }
+        }
+
+        protected virtual void OnChanged(TValue value, object sender)
+        {
+            if (CanEmit())
+            {
+                Changed?.Invoke(value, sender);
+            }
+        }
+
+        protected virtual void OnDeactivated(TValue value, object sender)
+        {
+            if (CanEmit())
+            {
+                Deactivated?.Invoke(value, sender);
+            }
+        }
     }
 
     /// <summary>
-    /// The basis for all action types.
+    /// The basis for all action types. Don't subclass this, inherit from <see cref="BaseAction{TValue,TEvent}"/> instead.
     /// </summary>
     public abstract class BaseAction : MonoBehaviour
     {
         /// <summary>
-        /// The current state of the action.
+        /// Whether the action is activated.
         /// </summary>
-        public bool State
+        public bool IsActivated
         {
             get;
             protected set;
         }
 
         /// <summary>
-        /// Determines whether the event should be emitted.
+        /// Determines whether any event should be emitted.
         /// </summary>
         /// <returns><see langword="true"/> if the event should be emitted.</returns>
         protected virtual bool CanEmit()
         {
-            return (isActiveAndEnabled);
+            return isActiveAndEnabled;
         }
     }
 }

@@ -95,15 +95,15 @@
             if (givenOrigin != null && givenOrigin.Valid && CastRay(givenOrigin.Position, searchDirection) && PositionChanged(DISTANCE_VARIANCE))
             {
                 SurfaceData.rotationOverride = givenOrigin.Rotation;
-                OnSurfaceLocated(SurfaceData);
+                OnSurfaceLocated(SurfaceData, initiator);
             }
         }
 
-        protected virtual void OnSurfaceLocated(SurfaceData e)
+        protected virtual void OnSurfaceLocated(SurfaceData data, object sender)
         {
             if (isActiveAndEnabled)
             {
-                SurfaceLocated?.Invoke(e, this);
+                SurfaceLocated?.Invoke(data, sender);
             }
         }
 

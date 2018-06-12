@@ -16,10 +16,7 @@
 
         protected virtual void Update()
         {
-            Value = Input.GetAxis(axisName);
-            EmitEvents();
-            State = IsActive();
-            previousValue = Value;
+            Receive(Input.GetAxis(axisName), this);
         }
     }
 }

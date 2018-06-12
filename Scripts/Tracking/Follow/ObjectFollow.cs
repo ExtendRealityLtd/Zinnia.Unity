@@ -85,7 +85,7 @@
         {
             if (isActiveAndEnabled)
             {
-                OnBeforeProcessed();
+                OnBeforeProcessed(null, null, this);
                 if (followModifier != null)
                 {
                     switch (followModifier.ProcessType)
@@ -98,11 +98,11 @@
                             break;
                     }
                 }
-                OnAfterProcessed();
+                OnAfterProcessed(null, null, this);
             }
         }
 
-        protected virtual void OnBeforeProcessed()
+        protected virtual void OnBeforeProcessed(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -110,7 +110,7 @@
             }
         }
 
-        protected virtual void OnAfterProcessed()
+        protected virtual void OnAfterProcessed(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -118,7 +118,7 @@
             }
         }
 
-        protected virtual void OnBeforeTransformUpdated(Transform source, Transform target)
+        protected virtual void OnBeforeTransformUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -126,7 +126,7 @@
             }
         }
 
-        protected virtual void OnAfterTransformUpdated(Transform source, Transform target)
+        protected virtual void OnAfterTransformUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -134,7 +134,7 @@
             }
         }
 
-        protected virtual void OnBeforePositionUpdated(Transform source, Transform target)
+        protected virtual void OnBeforePositionUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -142,7 +142,7 @@
             }
         }
 
-        protected virtual void OnAfterPositionUpdated(Transform source, Transform target)
+        protected virtual void OnAfterPositionUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -150,7 +150,7 @@
             }
         }
 
-        protected virtual void OnBeforeRotationUpdated(Transform source, Transform target)
+        protected virtual void OnBeforeRotationUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -158,7 +158,7 @@
             }
         }
 
-        protected virtual void OnAfterRotationUpdated(Transform source, Transform target)
+        protected virtual void OnAfterRotationUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -166,7 +166,7 @@
             }
         }
 
-        protected virtual void OnBeforeScaleUpdated(Transform source, Transform target)
+        protected virtual void OnBeforeScaleUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -174,7 +174,7 @@
             }
         }
 
-        protected virtual void OnAfterScaleUpdated(Transform source, Transform target)
+        protected virtual void OnAfterScaleUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
@@ -190,13 +190,13 @@
 
             if (followModifier != null)
             {
-                OnBeforeTransformUpdated(sourceTransform, targetTransform);
+                OnBeforeTransformUpdated(sourceTransform, targetTransform, this);
 
                 UpdateScale(sourceTransform, targetTransform);
                 UpdateRotation(sourceTransform, targetTransform);
                 UpdatePosition(sourceTransform, targetTransform);
 
-                OnAfterTransformUpdated(sourceTransform, targetTransform);
+                OnAfterTransformUpdated(sourceTransform, targetTransform, this);
             }
         }
 
@@ -209,9 +209,9 @@
         {
             if (follow.HasFlag(TransformProperties.Position))
             {
-                OnBeforePositionUpdated(sourceTransform, targetTransform);
+                OnBeforePositionUpdated(sourceTransform, targetTransform, this);
                 followModifier.UpdatePosition(sourceTransform, targetTransform);
-                OnAfterPositionUpdated(sourceTransform, targetTransform);
+                OnAfterPositionUpdated(sourceTransform, targetTransform, this);
             }
         }
 
@@ -224,9 +224,9 @@
         {
             if (follow.HasFlag(TransformProperties.Rotation))
             {
-                OnBeforeRotationUpdated(sourceTransform, targetTransform);
+                OnBeforeRotationUpdated(sourceTransform, targetTransform, this);
                 followModifier.UpdateRotation(sourceTransform, targetTransform);
-                OnAfterRotationUpdated(sourceTransform, targetTransform);
+                OnAfterRotationUpdated(sourceTransform, targetTransform, this);
             }
         }
 
@@ -239,9 +239,9 @@
         {
             if (follow.HasFlag(TransformProperties.Scale))
             {
-                OnBeforeScaleUpdated(sourceTransform, targetTransform);
+                OnBeforeScaleUpdated(sourceTransform, targetTransform, this);
                 followModifier.UpdateScale(sourceTransform, targetTransform);
-                OnAfterScaleUpdated(sourceTransform, targetTransform);
+                OnAfterScaleUpdated(sourceTransform, targetTransform, this);
             }
         }
     }

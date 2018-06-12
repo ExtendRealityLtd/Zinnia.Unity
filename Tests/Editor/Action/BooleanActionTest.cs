@@ -46,9 +46,9 @@
         }
 
         [Test]
-        public void DectivatedEmitted()
+        public void DeactivatedEmitted()
         {
-            subject.SetState(true);
+            subject.SetIsActivated(true);
             subject.SetValue(true);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
@@ -154,9 +154,9 @@
 
     public class BooleanActionMock : BooleanAction
     {
-        public virtual void SetState(bool value)
+        public virtual void SetIsActivated(bool value)
         {
-            State = value;
+            IsActivated = value;
         }
 
         public virtual void SetValue(bool value)

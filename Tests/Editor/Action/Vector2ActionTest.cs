@@ -46,9 +46,9 @@
         }
 
         [Test]
-        public void DectivatedEmittedAtNonZero()
+        public void DeactivatedEmittedAtNonZero()
         {
-            subject.SetState(true);
+            subject.SetIsActivated(true);
             subject.SetValue(Vector2.one);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
@@ -71,9 +71,9 @@
         }
 
         [Test]
-        public void DectivatedEmittedAtZero()
+        public void DeactivatedEmittedAtZero()
         {
-            subject.SetState(true);
+            subject.SetIsActivated(true);
             subject.SetValue(Vector2.one);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
@@ -169,9 +169,9 @@
 
     public class Vector2ActionMock : Vector2Action
     {
-        public virtual void SetState(bool value)
+        public virtual void SetIsActivated(bool value)
         {
-            State = value;
+            IsActivated = value;
         }
 
         public virtual void SetValue(Vector2 value)
