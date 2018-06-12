@@ -10,7 +10,7 @@
     public class FloatAction : BaseAction<float>
     {
         /// <summary>
-        /// Defines the event with the <see cref="float"/> value and sender <see cref="object"/>.
+        /// Defines the event with the <see cref="float"/> value and initiator <see cref="object"/>.
         /// </summary>
         [Serializable]
         public class FloatActionUnityEvent : UnityEvent<float, object>
@@ -31,7 +31,7 @@
         public FloatActionUnityEvent Deactivated = new FloatActionUnityEvent();
 
         /// <inheritdoc />
-        public override void Receive(float value, object sender = null)
+        public override void Receive(float value, object initiator = null)
         {
             previousValue = Value;
             Value = value;
@@ -40,29 +40,29 @@
         }
 
         /// <inheritdoc />
-        protected override void OnActivated(float value)
+        protected override void OnActivated(float value, object sender)
         {
             if (CanEmit())
             {
-                Activated?.Invoke(value, this);
+                Activated?.Invoke(value, sender);
             }
         }
 
         /// <inheritdoc />
-        protected override void OnChanged(float value)
+        protected override void OnChanged(float value, object sender)
         {
             if (CanEmit())
             {
-                Changed?.Invoke(value, this);
+                Changed?.Invoke(value, sender);
             }
         }
 
         /// <inheritdoc />
-        protected override void OnDeactivated(float value)
+        protected override void OnDeactivated(float value, object sender)
         {
             if (CanEmit())
             {
-                Deactivated?.Invoke(value, this);
+                Deactivated?.Invoke(value, sender);
             }
         }
 
@@ -73,17 +73,17 @@
         {
             if (Activate())
             {
-                OnActivated(Value);
+                OnActivated(Value, this);
             }
 
             if (HasChanged())
             {
-                OnChanged(Value);
+                OnChanged(Value, this);
             }
 
             if (Deactivate())
             {
-                OnDeactivated(Value);
+                OnDeactivated(Value, this);
             }
         }
 

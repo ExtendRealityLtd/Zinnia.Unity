@@ -19,17 +19,17 @@
             Value = Input.GetKey(keyCode);
             if (Input.GetKeyDown(keyCode))
             {
-                OnActivated(true);
+                OnActivated(true, this);
             }
 
             if (HasChanged())
             {
-                OnChanged(Value);
+                OnChanged(Value, this);
             }
 
             if (Input.GetKeyUp(keyCode))
             {
-                OnDeactivated(false);
+                OnDeactivated(false, this);
             }
             previousValue = Value;
         }

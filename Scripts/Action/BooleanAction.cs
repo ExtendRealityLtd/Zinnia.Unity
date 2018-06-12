@@ -9,7 +9,7 @@
     public class BooleanAction : BaseAction<bool>
     {
         /// <summary>
-        /// Defines the event with the <see cref="bool"/> state and sender <see cref="object"/>.
+        /// Defines the event with the <see cref="bool"/> state and initiator <see cref="object"/>.
         /// </summary>
         [Serializable]
         public class BooleanActionUnityEvent : UnityEvent<bool, object>
@@ -30,52 +30,52 @@
         public BooleanActionUnityEvent Deactivated = new BooleanActionUnityEvent();
 
         /// <inheritdoc />
-        public override void Receive(bool value, object sender = null)
+        public override void Receive(bool value, object initiator = null)
         {
             previousValue = Value;
             Value = value;
             State = Value;
             if (State)
             {
-                OnActivated(true);
+                OnActivated(true, initiator);
             }
             else
             {
-                OnDeactivated(false);
+                OnDeactivated(false, initiator);
             }
 
             if (HasChanged())
             {
-                OnChanged(value);
+                OnChanged(value, initiator);
             }
         }
 
         /// <inheritdoc />
-        protected override void OnActivated(bool value)
+        protected override void OnActivated(bool value, object sender)
         {
             State = value;
             if (CanEmit())
             {
-                Activated?.Invoke(value, this);
+                Activated?.Invoke(value, sender);
             }
         }
 
         /// <inheritdoc />
-        protected override void OnChanged(bool value)
+        protected override void OnChanged(bool value, object sender)
         {
             if (CanEmit())
             {
-                Changed?.Invoke(value, this);
+                Changed?.Invoke(value, sender);
             }
         }
 
         /// <inheritdoc />
-        protected override void OnDeactivated(bool value)
+        protected override void OnDeactivated(bool value, object sender)
         {
             State = value;
             if (CanEmit())
             {
-                Deactivated?.Invoke(value, this);
+                Deactivated?.Invoke(value, sender);
             }
         }
     }

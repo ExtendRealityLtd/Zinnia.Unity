@@ -19,8 +19,8 @@
         /// Not used.
         /// </summary>
         /// <param name="value">The value from the action.</param>
-        /// <param name="sender">The sender of the action.</param>
-        public override void Receive(bool value, object sender = null)
+        /// <param name="initiator">The initiator of the action.</param>
+        public override void Receive(bool value, object initiator = null)
         {
         }
 
@@ -38,12 +38,12 @@
 
             if (isValid && !State)
             {
-                OnActivated(true);
+                OnActivated(true, this);
             }
 
             if (!isValid && State)
             {
-                OnDeactivated(true);
+                OnDeactivated(true, this);
             }
 
             State = isValid;
@@ -52,7 +52,7 @@
 
             if (HasChanged())
             {
-                OnChanged(Value);
+                OnChanged(Value, this);
             }
         }
     }

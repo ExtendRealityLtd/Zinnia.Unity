@@ -6,21 +6,21 @@
     public class ToggleAction : BooleanAction
     {
         /// <inheritdoc />
-        public override void Receive(bool value, object sender = null)
+        public override void Receive(bool value, object initiator = null)
         {
             previousValue = Value;
             Value = value;
 
             if (!State)
             {
-                OnActivated(true);
+                OnActivated(true, initiator);
             }
             else
             {
-                OnDeactivated(false);
+                OnDeactivated(false, initiator);
             }
 
-            OnChanged(value);
+            OnChanged(value, initiator);
         }
     }
 }

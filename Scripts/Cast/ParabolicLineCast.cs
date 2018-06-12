@@ -152,7 +152,7 @@
                 break;
             }
 
-            OnCastResultsChanged();
+            OnCastResultsChanged(GetPayload(), this);
         }
 
         /// <summary>

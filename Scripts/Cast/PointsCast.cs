@@ -86,11 +86,11 @@
             CastPoints();
         }
 
-        protected virtual void OnCastResultsChanged()
+        protected virtual void OnCastResultsChanged(PointsCastData data, object sender)
         {
             if (isActiveAndEnabled)
             {
-                CastResultsChanged?.Invoke(GetPayload(), this);
+                CastResultsChanged?.Invoke(data, sender);
             }
         }
 
