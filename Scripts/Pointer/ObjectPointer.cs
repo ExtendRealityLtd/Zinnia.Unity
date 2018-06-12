@@ -147,13 +147,13 @@
         /// </summary>
         public PointsRendererUnityEvent RenderDataChanged = new PointsRendererUnityEvent();
         /// <summary>
-        /// Emitted when the <see cref="ObjectPointer"/> becomes visible.
+        /// Emitted when the <see cref="ObjectPointer"/> appears and becomes visible.
         /// </summary>
-        public PointerUnityEvent BecameVisible = new PointerUnityEvent();
+        public PointerUnityEvent Appeared = new PointerUnityEvent();
         /// <summary>
-        /// Emitted when the <see cref="ObjectPointer"/> becomes hidden.
+        /// Emitted when the <see cref="ObjectPointer"/> disappears and becomes hidden.
         /// </summary>
-        public PointerUnityEvent BecameHidden = new PointerUnityEvent();
+        public PointerUnityEvent Disappeared = new PointerUnityEvent();
 
         /// <summary>
         /// The activation state of the <see cref="ObjectPointer"/>.
@@ -461,11 +461,11 @@
 
             if (IsVisible)
             {
-                BecameVisible?.Invoke(HoverTarget, this);
+                Appeared?.Invoke(HoverTarget, this);
             }
             else
             {
-                BecameHidden?.Invoke(HoverTarget, this);
+                Disappeared?.Invoke(HoverTarget, this);
             }
         }
 
