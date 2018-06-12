@@ -54,15 +54,15 @@
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> is added.
         /// </summary>
-        public CameraColorOverlayUnityEvent ColorOverlayAdded = new CameraColorOverlayUnityEvent();
+        public CameraColorOverlayUnityEvent Added = new CameraColorOverlayUnityEvent();
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> is removed.
         /// </summary>
-        public CameraColorOverlayUnityEvent ColorOverlayRemoved = new CameraColorOverlayUnityEvent();
+        public CameraColorOverlayUnityEvent Removed = new CameraColorOverlayUnityEvent();
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> has changed from the previous render frame.
         /// </summary>
-        public CameraColorOverlayUnityEvent ColorOverlayChanged = new CameraColorOverlayUnityEvent();
+        public CameraColorOverlayUnityEvent Changed = new CameraColorOverlayUnityEvent();
 
         protected float targetDuration;
         protected Color targetColor = new Color(0f, 0f, 0f, 0f);
@@ -84,7 +84,7 @@
         public virtual void RemoveColorOverlay()
         {
             AddColorOverlay(Color.clear, removeDuration);
-            OnColorOverlayRemoved(Color.clear);
+            OnRemoved(Color.clear, this);
         }
 
         /// <summary>
@@ -107,27 +107,27 @@
             Camera.onPostRender -= PostRender;
         }
 
-        protected virtual void OnColorOverlayAdded(Color color)
+        protected virtual void OnAdded(Color color, object sender)
         {
             if (isActiveAndEnabled)
             {
-                ColorOverlayAdded?.Invoke(color, this);
+                Added?.Invoke(color, sender);
             }
         }
 
-        protected virtual void OnColorOverlayRemoved(Color color)
+        protected virtual void OnRemoved(Color color, object sender)
         {
             if (isActiveAndEnabled)
             {
-                ColorOverlayRemoved?.Invoke(color, this);
+                Removed?.Invoke(color, sender);
             }
         }
 
-        protected virtual void OnColorOverlayChanged(Color color)
+        protected virtual void OnChanged(Color color, object sender)
         {
             if (isActiveAndEnabled)
             {
-                ColorOverlayChanged?.Invoke(color, this);
+                Changed?.Invoke(color, sender);
             }
         }
 
@@ -155,7 +155,7 @@
 
                 if (newColor != Color.clear)
                 {
-                    OnColorOverlayAdded(overlayColor);
+                    OnAdded(overlayColor, this);
                 }
             }
         }
@@ -204,7 +204,7 @@
                 {
                     currentColor += deltaColor * Time.deltaTime;
                 }
-                OnColorOverlayChanged(currentColor);
+                OnChanged(currentColor, this);
             }
 
             if (currentColor.a > 0f && overlayMaterial != null)

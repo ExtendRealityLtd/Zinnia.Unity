@@ -54,7 +54,7 @@
         /// </summary>
         public TransformModifyUnityEvent BeforeTransformUpdated = new TransformModifyUnityEvent();
         /// <summary>
-        /// Emitted after the transformation process has occured.
+        /// Emitted after the transformation process has occurred.
         /// </summary>
         public TransformModifyUnityEvent AfterTransformUpdated = new TransformModifyUnityEvent();
 
@@ -64,7 +64,7 @@
         protected Coroutine transitionRoutine;
 
         /// <summary>
-        /// Applys the properties of the target <see cref="Transform"/> to the source <see cref="Transform"/>.
+        /// Applies the properties of the target <see cref="Transform"/> to the source <see cref="Transform"/>.
         /// </summary>
         /// <param name="target">The target <see cref="TransformData"/> to obtain the transformation properties from.</param>
         /// <param name="initiator">Tne object that initiated the modification.</param>
@@ -73,7 +73,7 @@
             if (source != null && target != null && isActiveAndEnabled)
             {
                 TransformData sourceData = new TransformData(source);
-                OnBeforeTransformUpdated(sourceData, target);
+                OnBeforeTransformUpdated(sourceData, target, initiator);
                 SetScale(sourceData, target);
                 SetPosition(sourceData, target);
                 SetRotation(sourceData, target);
@@ -86,14 +86,14 @@
             CancelTransition();
         }
 
-        protected virtual void OnBeforeTransformUpdated(TransformData givenSource, TransformData givenTarget)
+        protected virtual void OnBeforeTransformUpdated(TransformData sourceData, TransformData targetData, object sender)
         {
-            BeforeTransformUpdated?.Invoke(givenSource, givenTarget, this);
+            BeforeTransformUpdated?.Invoke(sourceData, targetData, sender);
         }
 
-        protected virtual void OnAfterTransformUpdated(TransformData givenSource, TransformData givenTarget)
+        protected virtual void OnAfterTransformUpdated(TransformData sourceData, TransformData targetData, object sender)
         {
-            AfterTransformUpdated?.Invoke(givenSource, givenTarget, this);
+            AfterTransformUpdated?.Invoke(sourceData, targetData, sender);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@
                 givenSource.transform.localScale = finalScale;
                 givenSource.transform.position = finalPosition;
                 givenSource.transform.rotation = finalRotation;
-                OnAfterTransformUpdated(givenSource, givenTarget);
+                OnAfterTransformUpdated(givenSource, givenTarget, this);
             }
             else
             {
@@ -222,7 +222,7 @@
         /// <param name="useTargetValue">Determines whether to utilize the target value.</param>
         /// <param name="targetValue">The target value to apply.</param>
         /// <param name="sourceValue">The source value to apply.</param>
-        /// <returns>Modified position which is either the given `targetValue` or given `sourceValue`.</returns>
+        /// <returns>Modified position which is either <paramref name="targetValue"/> or <paramref name="sourceValue"/>.</returns>
         protected virtual float GetModifiedPositionValue(bool useTargetValue, float targetValue, float sourceValue)
         {
             return (useTargetValue ? targetValue : sourceValue);
@@ -297,7 +297,7 @@
             affectTransform.transform.localScale = destinationScale;
             affectTransform.transform.position = destinationPosition;
             affectTransform.transform.rotation = destinationRotation;
-            OnAfterTransformUpdated(affectTransform, givenTarget);
+            OnAfterTransformUpdated(affectTransform, givenTarget, this);
         }
     }
 }

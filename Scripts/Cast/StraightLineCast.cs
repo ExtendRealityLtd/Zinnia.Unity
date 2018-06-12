@@ -25,7 +25,7 @@
             points[0] = transform.position;
             points[1] = (hasCollided ? hitData.point : transform.position + transform.forward * maximumLength);
 
-            OnCastResultsChanged();
+            OnCastResultsChanged(GetPayload(), this);
         }
 
         protected virtual void Awake()

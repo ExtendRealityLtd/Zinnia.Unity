@@ -16,22 +16,7 @@
 
         protected virtual void Update()
         {
-            Value = Input.GetKey(keyCode);
-            if (Input.GetKeyDown(keyCode))
-            {
-                OnActivated(true);
-            }
-
-            if (HasChanged())
-            {
-                OnChanged(Value);
-            }
-
-            if (Input.GetKeyUp(keyCode))
-            {
-                OnDeactivated(false);
-            }
-            previousValue = Value;
+            Receive(Input.GetKey(keyCode));
         }
     }
 }

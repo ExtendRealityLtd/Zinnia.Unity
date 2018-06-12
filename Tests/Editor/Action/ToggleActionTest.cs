@@ -24,13 +24,13 @@
         }
 
         [Test]
-        public void ToggleState()
+        public void ToggleIsActivated()
         {
-            Assert.IsFalse(subject.State);
+            Assert.IsFalse(subject.IsActivated);
             subject.Receive(true, null);
-            Assert.IsTrue(subject.State);
+            Assert.IsTrue(subject.IsActivated);
             subject.Receive(true, null);
-            Assert.IsFalse(subject.State);
+            Assert.IsFalse(subject.IsActivated);
         }
 
         [Test]
@@ -56,9 +56,9 @@
         }
 
         [Test]
-        public void DectivatedEmitted()
+        public void DeactivatedEmitted()
         {
-            subject.SetState(true);
+            subject.SetIsActivated(true);
             subject.SetValue(true);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
@@ -154,9 +154,9 @@
 
     public class ToggleActionMock : ToggleAction
     {
-        public virtual void SetState(bool value)
+        public virtual void SetIsActivated(bool value)
         {
-            State = value;
+            IsActivated = value;
         }
 
         public virtual void SetValue(bool value)

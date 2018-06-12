@@ -29,8 +29,8 @@
             MockAction actionA = containingObject.AddComponent<MockAction>();
             MockAction actionB = containingObject.AddComponent<MockAction>();
 
-            actionA.SetState(false);
-            actionB.SetState(false);
+            actionA.SetIsActivated(false);
+            actionB.SetIsActivated(false);
 
             subject.actions.Add(actionA);
             subject.actions.Add(actionB);
@@ -53,8 +53,8 @@
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
-            actionA.SetState(true);
-            actionB.SetState(true);
+            actionA.SetIsActivated(true);
+            actionB.SetIsActivated(true);
 
             subject.ManualUpdate();
 
@@ -69,8 +69,8 @@
             MockAction actionA = containingObject.AddComponent<MockAction>();
             MockAction actionB = containingObject.AddComponent<MockAction>();
 
-            actionA.SetState(false);
-            actionB.SetState(false);
+            actionA.SetIsActivated(false);
+            actionB.SetIsActivated(false);
 
             subject.actions.Add(actionA);
             subject.actions.Add(actionB);
@@ -93,8 +93,8 @@
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
-            actionA.SetState(true);
-            actionB.SetState(false);
+            actionA.SetIsActivated(true);
+            actionB.SetIsActivated(false);
 
             subject.ManualUpdate();
 
@@ -104,16 +104,16 @@
         }
 
         [Test]
-        public void DectivatedEmitted()
+        public void DeactivatedEmitted()
         {
-            subject.SetState(true);
+            subject.SetIsActivated(true);
             subject.SetValue(true);
 
             MockAction actionA = containingObject.AddComponent<MockAction>();
             MockAction actionB = containingObject.AddComponent<MockAction>();
 
-            actionA.SetState(true);
-            actionB.SetState(true);
+            actionA.SetIsActivated(true);
+            actionB.SetIsActivated(true);
 
             subject.actions.Add(actionA);
             subject.actions.Add(actionB);
@@ -136,8 +136,8 @@
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
-            actionA.SetState(false);
-            actionB.SetState(true);
+            actionA.SetIsActivated(false);
+            actionB.SetIsActivated(true);
 
             subject.ManualUpdate();
 
@@ -152,8 +152,8 @@
             MockAction actionA = containingObject.AddComponent<MockAction>();
             MockAction actionB = containingObject.AddComponent<MockAction>();
 
-            actionA.SetState(false);
-            actionB.SetState(false);
+            actionA.SetIsActivated(false);
+            actionB.SetIsActivated(false);
 
             subject.actions.Add(actionA);
             subject.actions.Add(actionB);
@@ -167,14 +167,14 @@
             subject.ManualUpdate();
             Assert.IsFalse(changedListenerMock.Received);
 
-            actionA.SetState(true);
-            actionB.SetState(true);
+            actionA.SetIsActivated(true);
+            actionB.SetIsActivated(true);
             subject.ManualUpdate();
             Assert.IsTrue(changedListenerMock.Received);
             changedListenerMock.Reset();
 
-            actionA.SetState(false);
-            actionB.SetState(true);
+            actionA.SetIsActivated(false);
+            actionB.SetIsActivated(true);
             subject.ManualUpdate();
             Assert.IsTrue(changedListenerMock.Received);
             changedListenerMock.Reset();
@@ -183,20 +183,20 @@
             Assert.IsFalse(changedListenerMock.Received);
             changedListenerMock.Reset();
 
-            actionA.SetState(false);
-            actionB.SetState(false);
+            actionA.SetIsActivated(false);
+            actionB.SetIsActivated(false);
             subject.ManualUpdate();
             Assert.IsFalse(changedListenerMock.Received);
             changedListenerMock.Reset();
 
-            actionA.SetState(true);
-            actionB.SetState(false);
+            actionA.SetIsActivated(true);
+            actionB.SetIsActivated(false);
             subject.ManualUpdate();
             Assert.IsFalse(changedListenerMock.Received);
             changedListenerMock.Reset();
 
-            actionA.SetState(true);
-            actionB.SetState(true);
+            actionA.SetIsActivated(true);
+            actionB.SetIsActivated(true);
             subject.ManualUpdate();
             Assert.IsTrue(changedListenerMock.Received);
         }
@@ -207,8 +207,8 @@
             MockAction actionA = containingObject.AddComponent<MockAction>();
             MockAction actionB = containingObject.AddComponent<MockAction>();
 
-            actionA.SetState(false);
-            actionB.SetState(false);
+            actionA.SetIsActivated(false);
+            actionB.SetIsActivated(false);
 
             subject.actions.Add(actionA);
             subject.actions.Add(actionB);
@@ -232,8 +232,8 @@
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
-            actionA.SetState(true);
-            actionB.SetState(true);
+            actionA.SetIsActivated(true);
+            actionB.SetIsActivated(true);
 
             subject.ManualUpdate();
 
@@ -248,8 +248,8 @@
             MockAction actionA = containingObject.AddComponent<MockAction>();
             MockAction actionB = containingObject.AddComponent<MockAction>();
 
-            actionA.SetState(false);
-            actionB.SetState(false);
+            actionA.SetIsActivated(false);
+            actionB.SetIsActivated(false);
 
             subject.actions.Add(actionA);
             subject.actions.Add(actionB);
@@ -273,8 +273,8 @@
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
-            actionA.SetState(true);
-            actionB.SetState(true);
+            actionA.SetIsActivated(true);
+            actionB.SetIsActivated(true);
 
             subject.ManualUpdate();
 
@@ -291,9 +291,9 @@
             Update();
         }
 
-        public virtual void SetState(bool value)
+        public virtual void SetIsActivated(bool value)
         {
-            State = value;
+            IsActivated = value;
         }
 
         public virtual void SetValue(bool value)
@@ -304,9 +304,9 @@
 
     public class MockAction : BaseAction
     {
-        public virtual void SetState(bool value)
+        public virtual void SetIsActivated(bool value)
         {
-            State = value;
+            IsActivated = value;
         }
     }
 }
