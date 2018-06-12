@@ -27,7 +27,7 @@
         public void AddColorOverlay()
         {
             UnityEventListenerMock colorOverlayAddedMock = new UnityEventListenerMock();
-            subject.ColorOverlayAdded.AddListener(colorOverlayAddedMock.Listen);
+            subject.Added.AddListener(colorOverlayAddedMock.Listen);
 
             subject.AddColorOverlay();
 
@@ -50,9 +50,9 @@
         public void RemoveColorOverlay()
         {
             UnityEventListenerMock colorOverlayAddedMock = new UnityEventListenerMock();
-            subject.ColorOverlayAdded.AddListener(colorOverlayAddedMock.Listen);
+            subject.Added.AddListener(colorOverlayAddedMock.Listen);
             UnityEventListenerMock colorOverlayRemovedMock = new UnityEventListenerMock();
-            subject.ColorOverlayRemoved.AddListener(colorOverlayRemovedMock.Listen);
+            subject.Removed.AddListener(colorOverlayRemovedMock.Listen);
 
             subject.RemoveColorOverlay();
 
@@ -64,7 +64,7 @@
         public void EventsNotEmittedOnInactiveGameObject()
         {
             UnityEventListenerMock colorOverlayAddedMock = new UnityEventListenerMock();
-            subject.ColorOverlayAdded.AddListener(colorOverlayAddedMock.Listen);
+            subject.Added.AddListener(colorOverlayAddedMock.Listen);
             subject.gameObject.SetActive(false);
             subject.AddColorOverlay();
 
@@ -75,7 +75,7 @@
         public void EventsNotEmittedOnDisabledComponent()
         {
             UnityEventListenerMock colorOverlayAddedMock = new UnityEventListenerMock();
-            subject.ColorOverlayAdded.AddListener(colorOverlayAddedMock.Listen);
+            subject.Added.AddListener(colorOverlayAddedMock.Listen);
             subject.enabled = false;
             subject.AddColorOverlay();
 
