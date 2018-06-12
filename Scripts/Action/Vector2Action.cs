@@ -31,7 +31,7 @@
         public Vector2ActionUnityEvent Deactivated = new Vector2ActionUnityEvent();
 
         /// <inheritdoc />
-        public override void Receive(Vector2 value, object sender = null)
+        public override void Receive(Vector2 value, object initiator = null)
         {
             previousValue = Value;
             Value = value;
@@ -40,29 +40,29 @@
         }
 
         /// <inheritdoc />
-        protected override void OnActivated(Vector2 value)
+        protected override void OnActivated(Vector2 value, object sender)
         {
             if (CanEmit())
             {
-                Activated?.Invoke(value, this);
+                Activated?.Invoke(value, sender);
             }
         }
 
         /// <inheritdoc />
-        protected override void OnChanged(Vector2 value)
+        protected override void OnChanged(Vector2 value, object sender)
         {
             if (CanEmit())
             {
-                Changed?.Invoke(value, this);
+                Changed?.Invoke(value, sender);
             }
         }
 
         /// <inheritdoc />
-        protected override void OnDeactivated(Vector2 value)
+        protected override void OnDeactivated(Vector2 value, object sender)
         {
             if (CanEmit())
             {
-                Deactivated?.Invoke(value, this);
+                Deactivated?.Invoke(value, sender);
             }
         }
 
@@ -73,17 +73,17 @@
         {
             if (Activate())
             {
-                OnActivated(Value);
+                OnActivated(Value, this);
             }
 
             if (HasChanged())
             {
-                OnChanged(Value);
+                OnChanged(Value, this);
             }
 
             if (Deactivate())
             {
-                OnDeactivated(Value);
+                OnDeactivated(Value, this);
             }
         }
 

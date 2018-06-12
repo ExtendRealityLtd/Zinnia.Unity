@@ -84,7 +84,7 @@
         public virtual void RemoveColorOverlay()
         {
             AddColorOverlay(Color.clear, removeDuration);
-            OnRemoved(Color.clear);
+            OnRemoved(Color.clear, this);
         }
 
         /// <summary>
@@ -107,27 +107,27 @@
             Camera.onPostRender -= PostRender;
         }
 
-        protected virtual void OnAdded(Color color)
+        protected virtual void OnAdded(Color color, object sender)
         {
             if (isActiveAndEnabled)
             {
-                Added?.Invoke(color, this);
+                Added?.Invoke(color, sender);
             }
         }
 
-        protected virtual void OnRemoved(Color color)
+        protected virtual void OnRemoved(Color color, object sender)
         {
             if (isActiveAndEnabled)
             {
-                Removed?.Invoke(color, this);
+                Removed?.Invoke(color, sender);
             }
         }
 
-        protected virtual void OnChanged(Color color)
+        protected virtual void OnChanged(Color color, object sender)
         {
             if (isActiveAndEnabled)
             {
-                Changed?.Invoke(color, this);
+                Changed?.Invoke(color, sender);
             }
         }
 
@@ -155,7 +155,7 @@
 
                 if (newColor != Color.clear)
                 {
-                    OnAdded(overlayColor);
+                    OnAdded(overlayColor, this);
                 }
             }
         }
@@ -204,7 +204,7 @@
                 {
                     currentColor += deltaColor * Time.deltaTime;
                 }
-                OnChanged(currentColor);
+                OnChanged(currentColor, this);
             }
 
             if (currentColor.a > 0f && overlayMaterial != null)

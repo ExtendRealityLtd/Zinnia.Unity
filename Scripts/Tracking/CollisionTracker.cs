@@ -1,8 +1,8 @@
 ﻿namespace VRTK.Core.Tracking
 {
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
 
     /// <summary>
     /// Holds information about a tracked collision.
@@ -69,7 +69,8 @@
                     isTrigger = false,
                     collision = collision,
                     collider = collision.collider
-                });
+                },
+                this);
         }
 
         protected virtual void OnCollisionStay(Collision collision)
@@ -80,7 +81,8 @@
                     isTrigger = false,
                     collision = collision,
                     collider = collision.collider
-                });
+                },
+                this);
         }
 
         protected virtual void OnCollisionExit(Collision collision)
@@ -91,7 +93,8 @@
                     isTrigger = false,
                     collision = collision,
                     collider = collision.collider
-                });
+                },
+                this);
         }
 
         protected virtual void OnTriggerEnter(Collider collider)
@@ -102,7 +105,8 @@
                     isTrigger = true,
                     collision = null,
                     collider = collider
-                });
+                },
+                this);
         }
 
         protected virtual void OnTriggerStay(Collider collider)
@@ -113,7 +117,8 @@
                     isTrigger = true,
                     collision = null,
                     collider = collider
-                });
+                },
+                this);
         }
 
         protected virtual void OnTriggerExit(Collider collider)
@@ -124,54 +129,55 @@
                     isTrigger = true,
                     collision = null,
                     collider = collider
-                });
+                },
+                this);
         }
 
-        protected void OnCollisionEnterEvent(CollisionTrackerData data)
+        protected void OnCollisionEnterEvent(CollisionTrackerData data, object sender)
         {
             if (isActiveAndEnabled)
             {
-                CollisionEnter?.Invoke(data, this);
+                CollisionEnter?.Invoke(data, sender);
             }
         }
 
-        protected void OnCollisionStayEvent(CollisionTrackerData data)
+        protected void OnCollisionStayEvent(CollisionTrackerData data, object sender)
         {
             if (isActiveAndEnabled)
             {
-                CollisionStay?.Invoke(data, this);
+                CollisionStay?.Invoke(data, sender);
             }
         }
 
-        protected void OnCollisionExitEvent(CollisionTrackerData data)
+        protected void OnCollisionExitEvent(CollisionTrackerData data, object sender)
         {
             if (isActiveAndEnabled)
             {
-                CollisionExit?.Invoke(data, this);
+                CollisionExit?.Invoke(data, sender);
             }
         }
 
-        protected void OnTriggerEnterEvent(CollisionTrackerData data)
+        protected void OnTriggerEnterEvent(CollisionTrackerData data, object sender)
         {
             if (isActiveAndEnabled)
             {
-                TriggerEnter?.Invoke(data, this);
+                TriggerEnter?.Invoke(data, sender);
             }
         }
 
-        protected void OnTriggerStayEvent(CollisionTrackerData data)
+        protected void OnTriggerStayEvent(CollisionTrackerData data, object sender)
         {
             if (isActiveAndEnabled)
             {
-                TriggerStay?.Invoke(data, this);
+                TriggerStay?.Invoke(data, sender);
             }
         }
 
-        protected void OnTriggerExitEvent(CollisionTrackerData data)
+        protected void OnTriggerExitEvent(CollisionTrackerData data, object sender)
         {
             if (isActiveAndEnabled)
             {
-                TriggerExit?.Invoke(data, this);
+                TriggerExit?.Invoke(data, sender);
             }
         }
     }

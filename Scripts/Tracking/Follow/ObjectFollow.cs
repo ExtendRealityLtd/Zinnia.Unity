@@ -85,7 +85,7 @@
         {
             if (isActiveAndEnabled)
             {
-                OnBeforeProcessed();
+                OnBeforeProcessed(null, null, this);
                 if (followModifier != null)
                 {
                     switch (followModifier.ProcessType)
@@ -98,87 +98,87 @@
                             break;
                     }
                 }
-                OnAfterProcessed();
+                OnAfterProcessed(null, null, this);
             }
         }
 
-        protected virtual void OnBeforeProcessed()
+        protected virtual void OnBeforeProcessed(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                BeforeProcessed?.Invoke(null, null, this);
+                BeforeProcessed?.Invoke(source, target, sender);
             }
         }
 
-        protected virtual void OnAfterProcessed()
+        protected virtual void OnAfterProcessed(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                AfterProcessed?.Invoke(null, null, this);
+                AfterProcessed?.Invoke(source, target, sender);
             }
         }
 
-        protected virtual void OnBeforeTransformUpdated(Transform source, Transform target)
+        protected virtual void OnBeforeTransformUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                BeforeTransformUpdated?.Invoke(source, target, this);
+                BeforeTransformUpdated?.Invoke(source, target, sender);
             }
         }
 
-        protected virtual void OnAfterTransformUpdated(Transform source, Transform target)
+        protected virtual void OnAfterTransformUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                AfterTransformUpdated?.Invoke(source, target, this);
+                AfterTransformUpdated?.Invoke(source, target, sender);
             }
         }
 
-        protected virtual void OnBeforePositionUpdated(Transform source, Transform target)
+        protected virtual void OnBeforePositionUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                BeforePositionUpdated?.Invoke(source, target, this);
+                BeforePositionUpdated?.Invoke(source, target, sender);
             }
         }
 
-        protected virtual void OnAfterPositionUpdated(Transform source, Transform target)
+        protected virtual void OnAfterPositionUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                AfterPositionUpdated?.Invoke(source, target, this);
+                AfterPositionUpdated?.Invoke(source, target, sender);
             }
         }
 
-        protected virtual void OnBeforeRotationUpdated(Transform source, Transform target)
+        protected virtual void OnBeforeRotationUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                BeforeRotationUpdated?.Invoke(source, target, this);
+                BeforeRotationUpdated?.Invoke(source, target, sender);
             }
         }
 
-        protected virtual void OnAfterRotationUpdated(Transform source, Transform target)
+        protected virtual void OnAfterRotationUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                AfterRotationUpdated?.Invoke(source, target, this);
+                AfterRotationUpdated?.Invoke(source, target, sender);
             }
         }
 
-        protected virtual void OnBeforeScaleUpdated(Transform source, Transform target)
+        protected virtual void OnBeforeScaleUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                BeforeScaleUpdated?.Invoke(source, target, this);
+                BeforeScaleUpdated?.Invoke(source, target, sender);
             }
         }
 
-        protected virtual void OnAfterScaleUpdated(Transform source, Transform target)
+        protected virtual void OnAfterScaleUpdated(Transform source, Transform target, object sender)
         {
             if (isActiveAndEnabled)
             {
-                AfterScaleUpdated?.Invoke(source, target, this);
+                AfterScaleUpdated?.Invoke(source, target, sender);
             }
         }
 
@@ -190,13 +190,13 @@
 
             if (followModifier != null)
             {
-                OnBeforeTransformUpdated(sourceTransform, targetTransform);
+                OnBeforeTransformUpdated(sourceTransform, targetTransform, this);
 
                 UpdateScale(sourceTransform, targetTransform);
                 UpdateRotation(sourceTransform, targetTransform);
                 UpdatePosition(sourceTransform, targetTransform);
 
-                OnAfterTransformUpdated(sourceTransform, targetTransform);
+                OnAfterTransformUpdated(sourceTransform, targetTransform, this);
             }
         }
 
@@ -209,9 +209,9 @@
         {
             if (follow.HasFlag(TransformProperties.Position))
             {
-                OnBeforePositionUpdated(sourceTransform, targetTransform);
+                OnBeforePositionUpdated(sourceTransform, targetTransform, this);
                 followModifier.UpdatePosition(sourceTransform, targetTransform);
-                OnAfterPositionUpdated(sourceTransform, targetTransform);
+                OnAfterPositionUpdated(sourceTransform, targetTransform, this);
             }
         }
 
@@ -224,9 +224,9 @@
         {
             if (follow.HasFlag(TransformProperties.Rotation))
             {
-                OnBeforeRotationUpdated(sourceTransform, targetTransform);
+                OnBeforeRotationUpdated(sourceTransform, targetTransform, this);
                 followModifier.UpdateRotation(sourceTransform, targetTransform);
-                OnAfterRotationUpdated(sourceTransform, targetTransform);
+                OnAfterRotationUpdated(sourceTransform, targetTransform, this);
             }
         }
 
@@ -239,9 +239,9 @@
         {
             if (follow.HasFlag(TransformProperties.Scale))
             {
-                OnBeforeScaleUpdated(sourceTransform, targetTransform);
+                OnBeforeScaleUpdated(sourceTransform, targetTransform, this);
                 followModifier.UpdateScale(sourceTransform, targetTransform);
-                OnAfterScaleUpdated(sourceTransform, targetTransform);
+                OnAfterScaleUpdated(sourceTransform, targetTransform, this);
             }
         }
     }

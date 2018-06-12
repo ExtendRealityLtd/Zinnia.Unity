@@ -73,7 +73,7 @@
             if (source != null && target != null && isActiveAndEnabled)
             {
                 TransformData sourceData = new TransformData(source);
-                OnBeforeTransformUpdated(sourceData, target);
+                OnBeforeTransformUpdated(sourceData, target, initiator);
                 SetScale(sourceData, target);
                 SetPosition(sourceData, target);
                 SetRotation(sourceData, target);
@@ -86,14 +86,14 @@
             CancelTransition();
         }
 
-        protected virtual void OnBeforeTransformUpdated(TransformData givenSource, TransformData givenTarget)
+        protected virtual void OnBeforeTransformUpdated(TransformData sourceData, TransformData targetData, object sender)
         {
-            BeforeTransformUpdated?.Invoke(givenSource, givenTarget, this);
+            BeforeTransformUpdated?.Invoke(sourceData, targetData, sender);
         }
 
-        protected virtual void OnAfterTransformUpdated(TransformData givenSource, TransformData givenTarget)
+        protected virtual void OnAfterTransformUpdated(TransformData sourceData, TransformData targetData, object sender)
         {
-            AfterTransformUpdated?.Invoke(givenSource, givenTarget, this);
+            AfterTransformUpdated?.Invoke(sourceData, targetData, sender);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@
                 givenSource.transform.localScale = finalScale;
                 givenSource.transform.position = finalPosition;
                 givenSource.transform.rotation = finalRotation;
-                OnAfterTransformUpdated(givenSource, givenTarget);
+                OnAfterTransformUpdated(givenSource, givenTarget, this);
             }
             else
             {
@@ -297,7 +297,7 @@
             affectTransform.transform.localScale = destinationScale;
             affectTransform.transform.position = destinationPosition;
             affectTransform.transform.rotation = destinationRotation;
-            OnAfterTransformUpdated(affectTransform, givenTarget);
+            OnAfterTransformUpdated(affectTransform, givenTarget, this);
         }
     }
 }

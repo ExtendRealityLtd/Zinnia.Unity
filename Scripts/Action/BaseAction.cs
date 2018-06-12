@@ -26,26 +26,29 @@
         /// Allows an action to receive the payload from another action to enable action chaining.
         /// </summary>
         /// <param name="value">The value from the action.</param>
-        /// <param name="sender">The sender of the action.</param>
-        public abstract void Receive(T value, object sender = null);
+        /// <param name="initiator">The initiator of the action.</param>
+        public abstract void Receive(T value, object initiator = null);
 
         /// <summary>
         /// Calls the appropriate Activated event.
         /// </summary>
         /// <param name="value">The value to pass to the event.</param>
-        protected abstract void OnActivated(T value);
+        /// <param name="sender">The sender of the event.</param>
+        protected abstract void OnActivated(T value, object sender);
 
         /// <summary>
         /// Calls the appropriate Changed event.
         /// </summary>
         /// <param name="value">The value to pass to the event.</param>
-        protected abstract void OnChanged(T value);
+        /// <param name="sender">The sender of the event.</param>
+        protected abstract void OnChanged(T value, object sender);
 
         /// <summary>
         /// Calls the appropriate Deactivated event.
         /// </summary>
         /// <param name="value">The value to pass to the event.</param>
-        protected abstract void OnDeactivated(T value);
+        /// <param name="sender">The sender of the event.</param>
+        protected abstract void OnDeactivated(T value, object sender);
 
         /// <summary>
         /// Determines if the action state has changed from the previous state.

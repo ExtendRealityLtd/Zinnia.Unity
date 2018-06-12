@@ -873,7 +873,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointsRendererUnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  BecameVisible:
+  Appeared:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114279091701298828}
@@ -889,7 +889,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointerUnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  BecameHidden:
+  Disappeared:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114279091701298828}
