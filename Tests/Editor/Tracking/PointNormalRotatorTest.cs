@@ -37,7 +37,7 @@
                 normal = Vector3.forward * 90f
             };
 
-            PointsCastData data = new PointsCastData
+            PointsCast.EventData data = new PointsCast.EventData
             {
                 targetHit = cast
             };
@@ -63,7 +63,7 @@
                 normal = Vector3.forward * 90f
             };
 
-            PointsCastData data = new PointsCastData
+            PointsCast.EventData data = new PointsCast.EventData
             {
                 targetHit = cast
             };

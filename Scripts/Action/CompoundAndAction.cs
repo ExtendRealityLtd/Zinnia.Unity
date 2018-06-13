@@ -1,6 +1,7 @@
 ﻿namespace VRTK.Core.Action
 {
     using UnityEngine;
+    using System.Linq;
     using System.Collections.Generic;
     using VRTK.Core.Extension;
 
@@ -15,44 +16,12 @@
         [Tooltip("BaseActions to check the active state on.")]
         public List<BaseAction> actions = new List<BaseAction>();
 
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        /// <param name="value">The value from the action.</param>
-        /// <param name="sender">The sender of the action.</param>
-        public override void Receive(bool value, object sender = null)
-        {
-        }
-
         protected virtual void Update()
         {
-            bool isValid = true;
-            foreach (BaseAction action in actions.EmptyIfNull())
+            bool areAllActionsActivated = actions.EmptyIfNull().All(action => action.IsActivated);
+            if (areAllActionsActivated != IsActivated)
             {
-                if (!action.State)
-                {
-                    isValid = false;
-                    break;
-                }
-            }
-
-            if (isValid && !State)
-            {
-                OnActivated(true);
-            }
-
-            if (!isValid && State)
-            {
-                OnDeactivated(true);
-            }
-
-            State = isValid;
-            previousValue = Value;
-            Value = State;
-
-            if (HasChanged())
-            {
-                OnChanged(Value);
+                Receive(areAllActionsActivated);
             }
         }
     }

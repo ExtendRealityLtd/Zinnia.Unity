@@ -830,33 +830,65 @@ MonoBehaviour:
   Activated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointerUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Pointer.ObjectPointer+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   Deactivated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointerUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Pointer.ObjectPointer+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   Entered:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointerUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Pointer.ObjectPointer+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   Exited:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointerUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Pointer.ObjectPointer+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   Hovering:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointerUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Pointer.ObjectPointer+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   Selected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointerUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Pointer.ObjectPointer+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  Appeared:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114279091701298828}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: VRTK.Core.Pointer.ObjectPointer+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  Disappeared:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114279091701298828}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VRTK.Core.Pointer.ObjectPointer+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   RenderDataChanged:
     m_PersistentCalls:
       m_Calls:
@@ -872,38 +904,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointsRendererUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  Appeared:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114279091701298828}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-    m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointerUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  Disappeared:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114279091701298828}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: VRTK.Core.Pointer.ObjectPointer+PointerUnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114279091701298828
 MonoBehaviour:
@@ -932,7 +932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicsCast: {fileID: 0}
   targetValidity: {fileID: 0}
-  CastResultsChanged:
+  ResultsChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114197183415454534}
@@ -946,7 +946,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Cast.PointsCast+PointsCastUnityEvent, Assembly-CSharp, Version=0.0.0.0,
+    m_TypeName: VRTK.Core.Cast.PointsCast+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   maximumLength: 100
 --- !u!114 &114576982716752166
@@ -983,52 +983,52 @@ MonoBehaviour:
   BeforeProcessed:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   AfterProcessed:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   BeforeTransformUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterTransformUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BeforePositionUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterPositionUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BeforeRotationUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterRotationUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BeforeScaleUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterScaleUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+ObjectFollowUnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114594640125399382
 MonoBehaviour:

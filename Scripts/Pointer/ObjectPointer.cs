@@ -10,33 +10,60 @@
     using VRTK.Core.Visual;
 
     /// <summary>
-    /// Contains information about the current <see cref="ObjectPointer"/> state.
-    /// </summary>
-    public class PointerData : SurfaceData
-    {
-        /// <summary>
-        /// Whether the <see cref="ObjectPointer"/> is currently activated.
-        /// </summary>
-        public bool isActive;
-        /// <summary>
-        /// Whether the <see cref="ObjectPointer"/> is currently hovering over a target.
-        /// </summary>
-        public bool isHovering;
-        /// <summary>
-        /// The duration that the <see cref="ObjectPointer"/> has been hovering over it's current target.
-        /// </summary>
-        public float hoverDuration;
-        /// <summary>
-        /// The points cast data given to the <see cref="ObjectPointer"/>.
-        /// </summary>
-        public PointsCastData pointsCastData;
-    }
-
-    /// <summary>
     /// Allows pointing at objects and notifies when a target is hit, continues to be hit or stops being hit by listening to a <see cref="PointsCast"/>.
     /// </summary>
     public class ObjectPointer : MonoBehaviour
     {
+        /// <summary>
+        /// Holds data about a <see cref="ObjectPointer"/> event.
+        /// </summary>
+        [Serializable]
+        public class EventData : SurfaceData
+        {
+            /// <summary>
+            /// Whether the <see cref="ObjectPointer"/> is currently activated.
+            /// </summary>
+            public bool isActive;
+            /// <summary>
+            /// Whether the <see cref="ObjectPointer"/> is currently hovering over a target.
+            /// </summary>
+            public bool isHovering;
+            /// <summary>
+            /// The duration that the <see cref="ObjectPointer"/> has been hovering over it's current target.
+            /// </summary>
+            public float hoverDuration;
+            /// <summary>
+            /// The points cast data given to the <see cref="ObjectPointer"/>.
+            /// </summary>
+            public PointsCast.EventData pointsCastData;
+
+            public EventData Set(bool isActive, bool isHovering, float hoverDuration, PointsCast.EventData pointsCastData)
+            {
+                this.isActive = isActive;
+                this.isHovering = isHovering;
+                this.hoverDuration = hoverDuration;
+                this.pointsCastData = pointsCastData;
+                return this;
+            }
+        }
+
+        /// <summary>
+        /// Defines the event with the <see cref="EventData"/>.
+        /// </summary>
+        /// <remarks>The <see cref="ObjectPointer"/> data is <see langword="null"/> in case the <see cref="ObjectPointer"/> isn't hitting any target.</remarks>
+        [Serializable]
+        public class UnityEvent : UnityEvent<EventData>
+        {
+        }
+
+        /// <summary>
+        /// Defines the event with the <see cref="PointsRendererData"/> state.
+        /// </summary>
+        [Serializable]
+        public class PointsRendererUnityEvent : UnityEvent<PointsRenderer.PointsData>
+        {
+        }
+
         /// <summary>
         /// Describes an element of the rendered <see cref="ObjectPointer"/>.
         /// </summary>
@@ -102,58 +129,41 @@
         public Element destination = new Element();
 
         /// <summary>
-        /// Defines the event with the <see cref="PointerData"/> state and sender <see cref="object"/>.
-        /// </summary>
-        /// <remarks>The <see cref="ObjectPointer"/> data is <see langword="null"/> in case the <see cref="ObjectPointer"/> isn't hitting any target.</remarks>
-        [Serializable]
-        public class PointerUnityEvent : UnityEvent<PointerData, object>
-        {
-        }
-
-        /// <summary>
-        /// Defines the event with the <see cref="PointsRendererData"/> state and sender <see cref="object"/>.
-        /// </summary>
-        [Serializable]
-        public class PointsRendererUnityEvent : UnityEvent<PointsRendererData, object>
-        {
-        }
-
-        /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> becomes active.
         /// </summary>
-        public PointerUnityEvent Activated = new PointerUnityEvent();
+        public UnityEvent Activated = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> becomes inactive.
         /// </summary>
-        public PointerUnityEvent Deactivated = new PointerUnityEvent();
+        public UnityEvent Deactivated = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> collides with a new target.
         /// </summary>
-        public PointerUnityEvent Entered = new PointerUnityEvent();
+        public UnityEvent Entered = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> stops colliding with an existing target.
         /// </summary>
-        public PointerUnityEvent Exited = new PointerUnityEvent();
+        public UnityEvent Exited = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> changes its hovering position over an existing target.
         /// </summary>
-        public PointerUnityEvent Hovering = new PointerUnityEvent();
+        public UnityEvent Hovering = new UnityEvent();
         /// <summary>
         /// Emitted whenever <see cref="Select"/> is called.
         /// </summary>
-        public PointerUnityEvent Selected = new PointerUnityEvent();
+        public UnityEvent Selected = new UnityEvent();
+        /// <summary>
+        /// Emitted when the <see cref="ObjectPointer"/> appears and becomes visible.
+        /// </summary>
+        public UnityEvent Appeared = new UnityEvent();
+        /// <summary>
+        /// Emitted when the <see cref="ObjectPointer"/> disappears and becomes hidden.
+        /// </summary>
+        public UnityEvent Disappeared = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> elements change.
         /// </summary>
         public PointsRendererUnityEvent RenderDataChanged = new PointsRendererUnityEvent();
-        /// <summary>
-        /// Emitted when the <see cref="ObjectPointer"/> appears and becomes visible.
-        /// </summary>
-        public PointerUnityEvent Appeared = new PointerUnityEvent();
-        /// <summary>
-        /// Emitted when the <see cref="ObjectPointer"/> disappears and becomes hidden.
-        /// </summary>
-        public PointerUnityEvent Disappeared = new PointerUnityEvent();
 
         /// <summary>
         /// The activation state of the <see cref="ObjectPointer"/>.
@@ -176,12 +186,12 @@
         /// <summary>
         /// The target that the <see cref="ObjectPointer"/> is currently hovering over. If there is no target then it is <see langword="null"/>.
         /// </summary>
-        public PointerData HoverTarget => (IsHovering ? GetPayload(activePointsCastData) : null);
+        public EventData HoverTarget => (IsHovering ? GetEventData(activePointsCastData) : null);
 
         /// <summary>
         /// The target that the <see cref="ObjectPointer"/> has most recently selected.
         /// </summary>
-        public PointerData SelectedTarget
+        public EventData SelectedTarget
         {
             get;
             protected set;
@@ -227,21 +237,25 @@
             }
         }
 
-        protected PointsCastData activePointsCastData;
-        protected PointsCastData previousPointsCastData;
+        protected PointsCast.EventData activePointsCastData;
+        protected PointsCast.EventData previousPointsCastData;
         protected bool? previousVisibility;
+        protected EventData eventData = new EventData();
+        PointsRenderer.PointsData pointsData = new PointsRenderer.PointsData();
 
         /// <summary>
         /// The Activate method turns on the <see cref="ObjectPointer"/>.
         /// </summary>
         public virtual void Activate()
         {
-            if (isActiveAndEnabled && !ActivationState)
+            if (!isActiveAndEnabled || ActivationState)
             {
-                ActivationState = true;
-                UpdateRenderData();
-                Activated?.Invoke(HoverTarget, this);
+                return;
             }
+
+            ActivationState = true;
+            UpdateRenderData();
+            Activated?.Invoke(HoverTarget);
         }
 
         /// <summary>
@@ -249,7 +263,7 @@
         /// </summary>
         public virtual void Deactivate()
         {
-            TryDeactivate();
+            TryDeactivate(false);
         }
 
         /// <summary>
@@ -257,53 +271,57 @@
         /// </summary>
         public virtual void Select()
         {
-            if (isActiveAndEnabled)
+            if (!isActiveAndEnabled)
             {
-                SelectedTarget = (ActivationState ? HoverTarget : null);
-                Selected?.Invoke(SelectedTarget, this);
+                return;
             }
+
+            SelectedTarget = (ActivationState ? HoverTarget : null);
+            Selected?.Invoke(SelectedTarget);
         }
 
         /// <summary>
         /// Handles the provided data to transition state and emit the <see cref="ObjectPointer"/> events.
         /// </summary>
         /// <param name="data">The data describing the results of the most recent cast.</param>
-        /// <param name="initiator">The initiator of this method.</param>
-        public virtual void HandleData(PointsCastData data, object initiator = null)
+        public virtual void HandleData(PointsCast.EventData data)
         {
-            if (isActiveAndEnabled)
+            if (!isActiveAndEnabled)
             {
-                if (IsVisible)
-                {
-                    previousPointsCastData = activePointsCastData;
-                    if (data.targetHit != null)
-                    {
-                        Transform targetTransform = data.targetHit.Value.transform;
-                        if (targetTransform != null && targetTransform != activePointsCastData?.targetHit?.transform)
-                        {
-                            TryEmitExit(previousPointsCastData);
-                            OnEntered(data);
-                        }
+                return;
+            }
 
-                        HoverDuration += Time.deltaTime;
-                        OnHovering(data);
-                        IsHovering = true;
-                    }
-                    else
+            if (IsVisible)
+            {
+                previousPointsCastData = activePointsCastData;
+                if (data.targetHit != null)
+                {
+                    Transform targetTransform = data.targetHit.Value.transform;
+                    if (targetTransform != null && targetTransform != activePointsCastData?.targetHit?.transform)
                     {
                         TryEmitExit(previousPointsCastData);
+                        Entered?.Invoke(GetEventData(data));
                     }
 
-                    activePointsCastData = data;
+                    HoverDuration += Time.deltaTime;
+                    IsHovering = true;
+                    Hovering?.Invoke(GetEventData(data));
                 }
                 else
                 {
-                    activePointsCastData = null;
-                    previousPointsCastData = null;
+                    TryEmitExit(previousPointsCastData);
                 }
 
-                UpdateRenderData();
+                activePointsCastData = data;
             }
+            else
+            {
+                activePointsCastData = null;
+                previousPointsCastData = null;
+            }
+
+            UpdateRenderData();
+
         }
 
         protected virtual void OnEnable()
@@ -327,42 +345,15 @@
             TryEmitVisibilityEvent();
         }
 
-        protected virtual void OnEntered(PointsCastData data, bool ignoreBehaviourState = false)
-        {
-            if (isActiveAndEnabled || ignoreBehaviourState)
-            {
-                Entered?.Invoke(GetPayload(data), this);
-            }
-        }
-
-        protected virtual void OnExited(PointsCastData data, bool ignoreBehaviourState = false)
-        {
-            if (isActiveAndEnabled || ignoreBehaviourState)
-            {
-                Exited?.Invoke(GetPayload(data), this);
-            }
-        }
-
-        protected virtual void OnHovering(PointsCastData data, bool ignoreBehaviourState = false)
-        {
-            if (isActiveAndEnabled || ignoreBehaviourState)
-            {
-                Hovering?.Invoke(GetPayload(data), this);
-            }
-        }
-
         /// <summary>
         /// Updates the <see cref="Element"/>'s <see cref="GameObject"/>'s visibility and emits the <see cref="RenderDataChanged"/> event with the <see cref="GameObject"/>s used for the <see cref="Element"/>s.
         /// </summary>
         protected virtual void UpdateRenderData()
         {
-            PointsRendererData data = new PointsRendererData
-            {
-                points = activePointsCastData?.points ?? Array.Empty<Vector3>(),
-                start = GetElementRepresentation(origin),
-                repeatedSegment = GetElementRepresentation(repeatedSegment),
-                end = GetElementRepresentation(destination)
-            };
+            pointsData.points = activePointsCastData?.points ?? Array.Empty<Vector3>();
+            pointsData.start = GetElementRepresentation(origin);
+            pointsData.repeatedSegment = GetElementRepresentation(repeatedSegment);
+            pointsData.end = GetElementRepresentation(destination);
 
             GameObject[] gameObjects =
             {
@@ -377,9 +368,9 @@
             IEnumerable<GameObject> unusedGameObjects = gameObjects.Except(
                     new[]
                     {
-                        data.start,
-                        data.repeatedSegment,
-                        data.end
+                        pointsData.start,
+                        pointsData.repeatedSegment,
+                        pointsData.end
                     })
                 .Concat(
                     new[]
@@ -396,9 +387,9 @@
 
             IEnumerable<GameObject> usedGameObjects = new[]
             {
-                data.start,
-                data.repeatedSegment,
-                data.end
+                pointsData.start,
+                pointsData.repeatedSegment,
+                pointsData.end
             }.Where(@object => @object != null);
 
             foreach (GameObject usedGameObject in usedGameObjects)
@@ -406,7 +397,7 @@
                 usedGameObject.SetActive(true);
             }
 
-            RenderDataChanged?.Invoke(data, this);
+            RenderDataChanged?.Invoke(pointsData);
             TryEmitVisibilityEvent();
         }
 
@@ -414,37 +405,34 @@
         /// Attempts to deactivate the <see cref="ObjectPointer"/>.
         /// </summary>
         /// <param name="ignoreBehaviourState">Determines if the events should be emitted based on the <see cref="Behaviour.enabled"/> state.</param>
-        protected virtual void TryDeactivate(bool ignoreBehaviourState = false)
+        protected virtual void TryDeactivate(bool ignoreBehaviourState)
         {
-            if (ActivationState)
+            if ((!isActiveAndEnabled && !ignoreBehaviourState) || !ActivationState)
             {
-                UpdateRenderData();
-                if (isActiveAndEnabled || ignoreBehaviourState)
-                {
-                    TryEmitExit(previousPointsCastData, ignoreBehaviourState);
-                    Deactivated?.Invoke(HoverTarget, this);
-                }
-                ActivationState = false;
-                activePointsCastData = null;
-                previousPointsCastData = null;
-                UpdateRenderData();
+                return;
             }
+
+            UpdateRenderData();
+            TryEmitExit(previousPointsCastData);
+            Deactivated?.Invoke(HoverTarget);
+            ActivationState = false;
+            activePointsCastData = null;
+            previousPointsCastData = null;
+            UpdateRenderData();
         }
 
         /// <summary>
         /// Checks to see if the <see cref="ObjectPointer"/> is not currently colliding with a valid target and emits the <see cref="Exited"/> event.
         /// </summary>
         /// <param name="data">The current points cast data.</param>
-        /// <param name="ignoreBehaviourState">Determines if the events should be emitted based on the <see cref="Behaviour.enabled"/> state.</param>
-        protected virtual void TryEmitExit(PointsCastData data, bool ignoreBehaviourState = false)
+        protected virtual void TryEmitExit(PointsCast.EventData data)
         {
-            if (activePointsCastData?.targetHit?.transform == null)
+            if (activePointsCastData?.targetHit?.transform != null)
             {
-                return;
+                Exited?.Invoke(GetEventData(data));
+                IsHovering = false;
+                HoverDuration = 0f;
             }
-            OnExited(data, ignoreBehaviourState);
-            HoverDuration = 0f;
-            IsHovering = false;
         }
 
         /// <summary>
@@ -461,11 +449,11 @@
 
             if (IsVisible)
             {
-                Appeared?.Invoke(HoverTarget, this);
+                Appeared?.Invoke(HoverTarget);
             }
             else
             {
-                Disappeared?.Invoke(HoverTarget, this);
+                Disappeared?.Invoke(HoverTarget);
             }
         }
 
@@ -494,26 +482,20 @@
         /// <summary>
         /// Builds a valid <see cref="ObjectPointer"/> payload to use in the events.
         /// </summary>
-        /// <returns>A <see cref="PointerData"/> object of the <see cref="ObjectPointer"/>'s current state.</returns>
-        protected virtual PointerData GetPayload(PointsCastData data)
+        /// <returns>A <see cref="EventData"/> object of the <see cref="ObjectPointer"/>'s current state.</returns>
+        protected virtual EventData GetEventData(PointsCast.EventData data)
         {
             Transform targetTransform = data?.targetHit?.transform;
             Transform validDestinationTransform = (destination != null && destination.validObject != null ? destination.validObject.transform : null);
 
-            return new PointerData
-            {
-                transform = transform,
-                positionOverride = (validDestinationTransform != null ? (Vector3?)validDestinationTransform.position : data.targetHit?.point),
-                rotationOverride = (validDestinationTransform != null ? validDestinationTransform.localRotation : Quaternion.identity),
-                localScaleOverride = (validDestinationTransform != null ? validDestinationTransform.localScale : Vector3.one),
-                origin = transform.position,
-                direction = transform.forward,
-                CollisionData = data?.targetHit ?? default(RaycastHit),
-                isActive = ActivationState,
-                isHovering = IsHovering,
-                hoverDuration = HoverDuration,
-                pointsCastData = data
-            };
+            eventData.transform = transform;
+            eventData.positionOverride = (validDestinationTransform != null ? (Vector3?)validDestinationTransform.position : data.targetHit?.point);
+            eventData.rotationOverride = (validDestinationTransform != null ? validDestinationTransform.localRotation : Quaternion.identity);
+            eventData.localScaleOverride = (validDestinationTransform != null ? validDestinationTransform.localScale : Vector3.one);
+            eventData.origin = transform.position;
+            eventData.direction = transform.forward;
+            eventData.CollisionData = data?.targetHit ?? default(RaycastHit);
+            return eventData.Set(ActivationState, IsHovering, HoverDuration, data);
         }
     }
 }

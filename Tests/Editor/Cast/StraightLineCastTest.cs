@@ -33,11 +33,11 @@
         public void CastPointsValidTarget()
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
-            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.ManualAwake();
+            subject.ManualOnEnable();
             subject.Process();
 
             Vector3 expectedStart = Vector3.zero;
@@ -53,12 +53,12 @@
         public void CastPointsInsufficientBeamLength()
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
-            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
 
             validSurface.transform.position = Vector3.forward * 5f;
             subject.maximumLength = validSurface.transform.position.z / 2f;
 
-            subject.ManualAwake();
+            subject.ManualOnEnable();
             subject.Process();
 
             Vector3 expectedStart = Vector3.zero;
@@ -74,7 +74,7 @@
         public void CastPointsInvalidTarget()
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
-            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
 
             validSurface.transform.position = Vector3.forward * 5f;
             validSurface.AddComponent<ExclusionRuleStub>();
@@ -83,7 +83,7 @@
             exclusions.identifiers = new List<string>() { "ExclusionRuleStub" };
             subject.targetValidity = exclusions;
 
-            subject.ManualAwake();
+            subject.ManualOnEnable();
             subject.Process();
 
             Vector3 expectedStart = Vector3.zero;
@@ -99,20 +99,17 @@
         public void EventsNotEmittedOnInactiveGameObject()
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
-            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.ManualAwake();
+            subject.ManualOnEnable();
             subject.gameObject.SetActive(false);
+            subject.ManualOnDisable();
             subject.Process();
 
-            Vector3 expectedStart = Vector3.zero;
-            Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
-
-            Assert.AreEqual(expectedStart, subject.Points[0]);
-            Assert.AreEqual(expectedEnd, subject.Points[1]);
-            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.AreEqual(0, subject.Points.Count);
+            Assert.IsNull(subject.TargetHit);
             Assert.IsFalse(castResultsChangedMock.Received);
         }
 
@@ -120,29 +117,31 @@
         public void EventsNotEmittedOnDisabledComponent()
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
-            subject.CastResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.ManualAwake();
+            subject.ManualOnEnable();
             subject.enabled = false;
+            subject.ManualOnDisable();
             subject.Process();
 
-            Vector3 expectedStart = Vector3.zero;
-            Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
-
-            Assert.AreEqual(expectedStart, subject.Points[0]);
-            Assert.AreEqual(expectedEnd, subject.Points[1]);
-            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.AreEqual(0, subject.Points.Count);
+            Assert.IsNull(subject.TargetHit);
             Assert.IsFalse(castResultsChangedMock.Received);
         }
     }
 
     public class StraightLineCastMock : StraightLineCast
     {
-        public void ManualAwake()
+        public void ManualOnEnable()
         {
-            Awake();
+            OnEnable();
+        }
+
+        public void ManualOnDisable()
+        {
+            OnDisable();
         }
     }
 }

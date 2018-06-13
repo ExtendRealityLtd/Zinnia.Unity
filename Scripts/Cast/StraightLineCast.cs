@@ -17,6 +17,11 @@
         /// <inheritdoc />
         public override void CastPoints()
         {
+            if (!isActiveAndEnabled)
+            {
+                return;
+            }
+
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hitData;
             bool hasCollided = PhysicsCast.Raycast(physicsCast, ray, out hitData, maximumLength, Physics.IgnoreRaycastLayer);
@@ -25,13 +30,17 @@
             points[0] = transform.position;
             points[1] = (hasCollided ? hitData.point : transform.position + transform.forward * maximumLength);
 
-            OnCastResultsChanged();
+            ResultsChanged?.Invoke(eventData.Set(TargetHit, Points));
         }
 
-        protected virtual void Awake()
+        protected virtual void OnEnable()
+        {
+            points.AddRange(Enumerable.Repeat(Vector3.zero, 2));
+        }
+
+        protected virtual void OnDisable()
         {
             points.Clear();
-            points.AddRange(Enumerable.Repeat(Vector3.zero, 2));
         }
     }
 }

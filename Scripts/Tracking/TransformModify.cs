@@ -15,6 +15,37 @@
     public class TransformModify : MonoBehaviour
     {
         /// <summary>
+        /// Holds data about a <see cref="TransformModify"/> event.
+        /// </summary>
+        [Serializable]
+        public class EventData
+        {
+            /// <summary>
+            /// The source <see cref="TransformData"/> to apply transformations to.
+            /// </summary>
+            public TransformData source;
+            /// <summary>
+            /// The target <see cref="TransformData"/> to obtain the transformation properties from.
+            /// </summary>
+            public TransformData target;
+
+            public EventData Set(TransformData source, TransformData target)
+            {
+                this.source = source;
+                this.target = target;
+                return this;
+            }
+        }
+
+        /// <summary>
+        /// Defines the event with the <see cref="EventData"/>.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<EventData>
+        {
+        }
+
+        /// <summary>
         /// The source <see cref="Transform"/> to apply the transformations to.
         /// </summary>
         [Tooltip("The source Transform to apply the transformations to.")]
@@ -42,58 +73,42 @@
         public float transitionDuration = 0f;
 
         /// <summary>
-        /// Defines the event with the source <see cref="TransformData"/>, target <see cref="TransformData"/> and sender <see cref="object"/>.
-        /// </summary>
-        [Serializable]
-        public class TransformModifyUnityEvent : UnityEvent<TransformData, TransformData, object>
-        {
-        }
-
-        /// <summary>
         /// Emitted before the transformation process occurs.
         /// </summary>
-        public TransformModifyUnityEvent BeforeTransformUpdated = new TransformModifyUnityEvent();
+        public UnityEvent BeforeTransformUpdated = new UnityEvent();
         /// <summary>
         /// Emitted after the transformation process has occured.
         /// </summary>
-        public TransformModifyUnityEvent AfterTransformUpdated = new TransformModifyUnityEvent();
+        public UnityEvent AfterTransformUpdated = new UnityEvent();
 
         protected Vector3 finalPosition;
         protected Quaternion finalRotation;
         protected Vector3 finalScale;
         protected Coroutine transitionRoutine;
+        protected EventData eventData = new EventData();
 
         /// <summary>
         /// Applys the properties of the target <see cref="Transform"/> to the source <see cref="Transform"/>.
         /// </summary>
         /// <param name="target">The target <see cref="TransformData"/> to obtain the transformation properties from.</param>
-        /// <param name="initiator">Tne object that initiated the modification.</param>
-        public virtual void Modify(TransformData target, object initiator = null)
+        public virtual void Modify(TransformData target)
         {
-            if (source != null && target != null && isActiveAndEnabled)
+            if (!isActiveAndEnabled || source == null || target == null)
             {
-                TransformData sourceData = new TransformData(source);
-                OnBeforeTransformUpdated(sourceData, target);
-                SetScale(sourceData, target);
-                SetPosition(sourceData, target);
-                SetRotation(sourceData, target);
-                ProcessTransform(sourceData, target);
+                return;
             }
+
+            TransformData sourceData = new TransformData(source);
+            BeforeTransformUpdated?.Invoke(eventData.Set(sourceData, target));
+            SetScale(sourceData, target);
+            SetPosition(sourceData, target);
+            SetRotation(sourceData, target);
+            ProcessTransform(sourceData, target);
         }
 
         protected virtual void OnDisable()
         {
             CancelTransition();
-        }
-
-        protected virtual void OnBeforeTransformUpdated(TransformData givenSource, TransformData givenTarget)
-        {
-            BeforeTransformUpdated?.Invoke(givenSource, givenTarget, this);
-        }
-
-        protected virtual void OnAfterTransformUpdated(TransformData givenSource, TransformData givenTarget)
-        {
-            AfterTransformUpdated?.Invoke(givenSource, givenTarget, this);
         }
 
         /// <summary>
@@ -108,7 +123,7 @@
                 givenSource.transform.localScale = finalScale;
                 givenSource.transform.position = finalPosition;
                 givenSource.transform.rotation = finalRotation;
-                OnAfterTransformUpdated(givenSource, givenTarget);
+                AfterTransformUpdated?.Invoke(eventData.Set(givenSource, givenTarget));
             }
             else
             {
@@ -297,7 +312,7 @@
             affectTransform.transform.localScale = destinationScale;
             affectTransform.transform.position = destinationPosition;
             affectTransform.transform.rotation = destinationRotation;
-            OnAfterTransformUpdated(affectTransform, givenTarget);
+            AfterTransformUpdated?.Invoke(eventData.Set(affectTransform, givenTarget));
         }
     }
 }

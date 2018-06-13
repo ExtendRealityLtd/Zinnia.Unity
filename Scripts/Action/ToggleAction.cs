@@ -6,21 +6,9 @@
     public class ToggleAction : BooleanAction
     {
         /// <inheritdoc />
-        public override void Receive(bool value, object sender = null)
+        public override void Receive(bool value)
         {
-            previousValue = Value;
-            Value = value;
-
-            if (!State)
-            {
-                OnActivated(true);
-            }
-            else
-            {
-                OnDeactivated(false);
-            }
-
-            OnChanged(value);
+            base.Receive(!Value);
         }
     }
 }

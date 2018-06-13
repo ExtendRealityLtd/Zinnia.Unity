@@ -15,6 +15,14 @@
     public class SurfaceLocator : MonoBehaviour, IProcessable
     {
         /// <summary>
+        /// Defines the event with the <see cref="SurfaceData"/>.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<SurfaceData>
+        {
+        }
+
+        /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
         [Tooltip("The origin of where to begin the cast to locate the nearest surface.")]
@@ -45,20 +53,10 @@
         [Tooltip("An optional custom PhysicsCast object to affect the Ray.")]
         public PhysicsCast physicsCast;
 
-        protected const float DISTANCE_VARIANCE = 0.0001f;
-
-        /// <summary>
-        /// Defines the event with the <see cref="SurfaceData"/> and sender <see cref="object"/>.
-        /// </summary>
-        [Serializable]
-        public class SurfaceLocatorUnityEvent : UnityEvent<SurfaceData, object>
-        {
-        }
-
         /// <summary>
         /// Emitted when a new surface is located.
         /// </summary>
-        public SurfaceLocatorUnityEvent SurfaceLocated = new SurfaceLocatorUnityEvent();
+        public UnityEvent SurfaceLocated = new UnityEvent();
 
         /// <summary>
         /// The located surface.
@@ -68,6 +66,8 @@
             get;
             protected set;
         }
+
+        protected const float DISTANCE_VARIANCE = 0.0001f;
 
         /// <summary>
         /// Locates the nearest available surface upon a <see cref="MomentProcess"/>.
@@ -89,21 +89,17 @@
         /// Locates the nearest available surface with the given <see cref="TransformData"/>.
         /// </summary>
         /// <param name="givenOrigin">The <see cref="TransformData"/> object to use as the origin for the surface search.</param>
-        /// <param name="initiator">The <see cref="object"/> which initiated the method.</param>
-        public virtual void Locate(TransformData givenOrigin, object initiator = null)
+        public virtual void Locate(TransformData givenOrigin)
         {
-            if (givenOrigin != null && givenOrigin.Valid && CastRay(givenOrigin.Position, searchDirection) && PositionChanged(DISTANCE_VARIANCE))
+            if (!isActiveAndEnabled || givenOrigin == null || !givenOrigin.Valid)
+            {
+                return;
+            }
+
+            if (CastRay(givenOrigin.Position, searchDirection) && PositionChanged(DISTANCE_VARIANCE))
             {
                 SurfaceData.rotationOverride = givenOrigin.Rotation;
-                OnSurfaceLocated(SurfaceData);
-            }
-        }
-
-        protected virtual void OnSurfaceLocated(SurfaceData e)
-        {
-            if (isActiveAndEnabled)
-            {
-                SurfaceLocated?.Invoke(e, this);
+                SurfaceLocated?.Invoke(SurfaceData);
             }
         }
 

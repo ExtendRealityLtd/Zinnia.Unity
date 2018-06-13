@@ -50,7 +50,7 @@
                 new Vector3(0f, 5f, 5f)
             };
 
-            PointsRendererData data = new PointsRendererData()
+            PointsRenderer.PointsData data = new PointsRenderer.PointsData()
             {
                 start = start,
                 repeatedSegment = segment,
@@ -104,7 +104,7 @@
                 new Vector3(0f, 5f, 5f)
            };
 
-            PointsRendererData data = new PointsRendererData()
+            PointsRenderer.PointsData data = new PointsRenderer.PointsData()
             {
                 start = start,
                 repeatedSegment = segment,

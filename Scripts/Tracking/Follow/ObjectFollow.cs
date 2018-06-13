@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
+    using EmptyUnityEvent = UnityEngine.Events.UnityEvent;
     using System;
     using VRTK.Core.Data.Attribute;
     using VRTK.Core.Data.Enum;
@@ -14,6 +15,37 @@
     /// </summary>
     public class ObjectFollow : SourceTargetProcessor
     {
+        /// <summary>
+        /// Holds data about a <see cref="ObjectFollow"/> event.
+        /// </summary>
+        [Serializable]
+        public class EventData
+        {
+            /// <summary>
+            /// The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.
+            /// </summary>
+            public Transform source;
+            /// <summary>
+            /// The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.
+            /// </summary>
+            public Transform target;
+
+            public EventData Set(Transform source, Transform target)
+            {
+                this.source = source;
+                this.target = target;
+                return this;
+            }
+        }
+
+        /// <summary>
+        /// Defines the event with the <see cref="EventData"/>.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<EventData>
+        {
+        }
+
         [Header("Object Follow Settings")]
 
         /// <summary>
@@ -28,158 +60,73 @@
         [Tooltip("The FollowModifier to apply.")]
         public FollowModifier followModifier;
 
-        /// <summary>
-        /// Defines the event with the source <see cref="Transform"/>, target <see cref="Transform"/> and sender <see cref="object"/>.
-        /// </summary>
-        [Serializable]
-        public class ObjectFollowUnityEvent : UnityEvent<Transform, Transform, object>
-        {
-        }
-
         [Header("Object Follow Events")]
 
         /// <summary>
         /// Emitted before any processing.
         /// </summary>
-        public ObjectFollowUnityEvent BeforeProcessed = new ObjectFollowUnityEvent();
+        public EmptyUnityEvent BeforeProcessed = new EmptyUnityEvent();
         /// <summary>
         /// Emitted after all processing is complete.
         /// </summary>
-        public ObjectFollowUnityEvent AfterProcessed = new ObjectFollowUnityEvent();
+        public EmptyUnityEvent AfterProcessed = new EmptyUnityEvent();
         /// <summary>
         /// Emitted before the Transform is updated.
         /// </summary>
-        public ObjectFollowUnityEvent BeforeTransformUpdated = new ObjectFollowUnityEvent();
+        public UnityEvent BeforeTransformUpdated = new UnityEvent();
         /// <summary>
         /// Emitted after the Transform is updated.
         /// </summary>
-        public ObjectFollowUnityEvent AfterTransformUpdated = new ObjectFollowUnityEvent();
+        public UnityEvent AfterTransformUpdated = new UnityEvent();
         /// <summary>
         /// Emitted before the Transform's position is updated.
         /// </summary>
-        public ObjectFollowUnityEvent BeforePositionUpdated = new ObjectFollowUnityEvent();
+        public UnityEvent BeforePositionUpdated = new UnityEvent();
         /// <summary>
         /// Emitted after the Transform's position is updated.
         /// </summary>
-        public ObjectFollowUnityEvent AfterPositionUpdated = new ObjectFollowUnityEvent();
+        public UnityEvent AfterPositionUpdated = new UnityEvent();
         /// <summary>
         /// Emitted before the Transform's rotation is updated.
         /// </summary>
-        public ObjectFollowUnityEvent BeforeRotationUpdated = new ObjectFollowUnityEvent();
+        public UnityEvent BeforeRotationUpdated = new UnityEvent();
         /// <summary>
         /// Emitted after the Transform's rotation is updated.
         /// </summary>
-        public ObjectFollowUnityEvent AfterRotationUpdated = new ObjectFollowUnityEvent();
+        public UnityEvent AfterRotationUpdated = new UnityEvent();
         /// <summary>
         /// Emitted before the Transform's scale is updated.
         /// </summary>
-        public ObjectFollowUnityEvent BeforeScaleUpdated = new ObjectFollowUnityEvent();
+        public UnityEvent BeforeScaleUpdated = new UnityEvent();
         /// <summary>
         /// Emitted after the Transform's scale is updated.
         /// </summary>
-        public ObjectFollowUnityEvent AfterScaleUpdated = new ObjectFollowUnityEvent();
+        public UnityEvent AfterScaleUpdated = new UnityEvent();
 
+        protected EventData eventData = new EventData();
 
         /// <inheritdoc />
         public override void Process()
         {
-            if (isActiveAndEnabled)
+            if (!isActiveAndEnabled)
             {
-                OnBeforeProcessed();
-                if (followModifier != null)
+                return;
+            }
+
+            BeforeProcessed?.Invoke();
+            if (followModifier != null)
+            {
+                switch (followModifier.ProcessType)
                 {
-                    switch (followModifier.ProcessType)
-                    {
-                        case FollowModifier.ProcessTarget.All:
-                            ProcessAllComponents();
-                            break;
-                        case FollowModifier.ProcessTarget.FirstActive:
-                            ProcessFirstActiveComponent();
-                            break;
-                    }
+                    case FollowModifier.ProcessTarget.All:
+                        ProcessAllComponents();
+                        break;
+                    case FollowModifier.ProcessTarget.FirstActive:
+                        ProcessFirstActiveComponent();
+                        break;
                 }
-                OnAfterProcessed();
             }
-        }
-
-        protected virtual void OnBeforeProcessed()
-        {
-            if (isActiveAndEnabled)
-            {
-                BeforeProcessed?.Invoke(null, null, this);
-            }
-        }
-
-        protected virtual void OnAfterProcessed()
-        {
-            if (isActiveAndEnabled)
-            {
-                AfterProcessed?.Invoke(null, null, this);
-            }
-        }
-
-        protected virtual void OnBeforeTransformUpdated(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled)
-            {
-                BeforeTransformUpdated?.Invoke(source, target, this);
-            }
-        }
-
-        protected virtual void OnAfterTransformUpdated(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled)
-            {
-                AfterTransformUpdated?.Invoke(source, target, this);
-            }
-        }
-
-        protected virtual void OnBeforePositionUpdated(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled)
-            {
-                BeforePositionUpdated?.Invoke(source, target, this);
-            }
-        }
-
-        protected virtual void OnAfterPositionUpdated(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled)
-            {
-                AfterPositionUpdated?.Invoke(source, target, this);
-            }
-        }
-
-        protected virtual void OnBeforeRotationUpdated(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled)
-            {
-                BeforeRotationUpdated?.Invoke(source, target, this);
-            }
-        }
-
-        protected virtual void OnAfterRotationUpdated(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled)
-            {
-                AfterRotationUpdated?.Invoke(source, target, this);
-            }
-        }
-
-        protected virtual void OnBeforeScaleUpdated(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled)
-            {
-                BeforeScaleUpdated?.Invoke(source, target, this);
-            }
-        }
-
-        protected virtual void OnAfterScaleUpdated(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled)
-            {
-                AfterScaleUpdated?.Invoke(source, target, this);
-            }
+            AfterProcessed?.Invoke();
         }
 
         /// <inheritdoc />
@@ -190,58 +137,58 @@
 
             if (followModifier != null)
             {
-                OnBeforeTransformUpdated(sourceTransform, targetTransform);
+                BeforeTransformUpdated?.Invoke(eventData.Set(sourceTransform, targetTransform));
 
                 UpdateScale(sourceTransform, targetTransform);
                 UpdateRotation(sourceTransform, targetTransform);
                 UpdatePosition(sourceTransform, targetTransform);
 
-                OnAfterTransformUpdated(sourceTransform, targetTransform);
+                AfterTransformUpdated?.Invoke(eventData.Set(sourceTransform, targetTransform));
             }
         }
 
         /// <summary>
         /// Executes the specified <see cref="FollowModifier.UpdatePosition(Transform, Transform)"/>.
         /// </summary>
-        /// <param name="sourceTransform">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
-        /// <param name="targetTransform">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
-        protected virtual void UpdatePosition(Transform sourceTransform, Transform targetTransform)
+        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
+        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
+        protected virtual void UpdatePosition(Transform source, Transform target)
         {
             if (follow.HasFlag(TransformProperties.Position))
             {
-                OnBeforePositionUpdated(sourceTransform, targetTransform);
-                followModifier.UpdatePosition(sourceTransform, targetTransform);
-                OnAfterPositionUpdated(sourceTransform, targetTransform);
+                BeforePositionUpdated?.Invoke(eventData.Set(source, target));
+                followModifier.UpdatePosition(source, target);
+                AfterPositionUpdated?.Invoke(eventData.Set(source, target));
             }
         }
 
         /// <summary>
         /// Executes the specified <see cref="FollowModifier.UpdateRotation(Transform, Transform)"/>.
         /// </summary>
-        /// <param name="sourceTransform">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
-        /// <param name="targetTransform">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
-        protected virtual void UpdateRotation(Transform sourceTransform, Transform targetTransform)
+        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
+        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
+        protected virtual void UpdateRotation(Transform source, Transform target)
         {
             if (follow.HasFlag(TransformProperties.Rotation))
             {
-                OnBeforeRotationUpdated(sourceTransform, targetTransform);
-                followModifier.UpdateRotation(sourceTransform, targetTransform);
-                OnAfterRotationUpdated(sourceTransform, targetTransform);
+                BeforeRotationUpdated?.Invoke(eventData.Set(source, target));
+                followModifier.UpdateRotation(source, target);
+                AfterRotationUpdated?.Invoke(eventData.Set(source, target));
             }
         }
 
         /// <summary>
         /// Executes the specified <see cref="FollowModifier.UpdateScale(Transform, Transform)"/>.
         /// </summary>
-        /// <param name="sourceTransform">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
-        /// <param name="targetTransform">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
-        protected virtual void UpdateScale(Transform sourceTransform, Transform targetTransform)
+        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
+        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
+        protected virtual void UpdateScale(Transform source, Transform target)
         {
             if (follow.HasFlag(TransformProperties.Scale))
             {
-                OnBeforeScaleUpdated(sourceTransform, targetTransform);
-                followModifier.UpdateScale(sourceTransform, targetTransform);
-                OnAfterScaleUpdated(sourceTransform, targetTransform);
+                BeforeScaleUpdated?.Invoke(eventData.Set(source, target));
+                followModifier.UpdateScale(source, target);
+                AfterScaleUpdated?.Invoke(eventData.Set(source, target));
             }
         }
     }
