@@ -37,6 +37,11 @@
             /// </summary>
             public PointsCast.EventData pointsCastData;
 
+            public EventData Set(EventData source)
+            {
+                return Set(source.isActive, source.isHovering, source.hoverDuration, source.pointsCastData);
+            }
+
             public EventData Set(bool isActive, bool isHovering, float hoverDuration, PointsCast.EventData pointsCastData)
             {
                 this.isActive = isActive;
@@ -44,6 +49,11 @@
                 this.hoverDuration = hoverDuration;
                 this.pointsCastData = pointsCastData;
                 return this;
+            }
+
+            public void Clear()
+            {
+                Set(default(bool), default(bool), default(float), default(PointsCast.EventData));
             }
         }
 
@@ -237,8 +247,8 @@
             }
         }
 
-        protected PointsCast.EventData activePointsCastData;
-        protected PointsCast.EventData previousPointsCastData;
+        protected PointsCast.EventData activePointsCastData = new PointsCast.EventData();
+        protected PointsCast.EventData previousPointsCastData = new PointsCast.EventData();
         protected bool? previousVisibility;
         protected EventData eventData = new EventData();
         PointsRenderer.PointsData pointsData = new PointsRenderer.PointsData();
@@ -293,7 +303,7 @@
 
             if (IsVisible)
             {
-                previousPointsCastData = activePointsCastData;
+                previousPointsCastData.Set(activePointsCastData);
                 if (data.targetHit != null)
                 {
                     Transform targetTransform = data.targetHit.Value.transform;
@@ -312,12 +322,12 @@
                     TryEmitExit(previousPointsCastData);
                 }
 
-                activePointsCastData = data;
+                activePointsCastData.Set(data);
             }
             else
             {
-                activePointsCastData = null;
-                previousPointsCastData = null;
+                activePointsCastData.Clear();
+                previousPointsCastData.Clear();
             }
 
             UpdateRenderData();
@@ -350,7 +360,7 @@
         /// </summary>
         protected virtual void UpdateRenderData()
         {
-            pointsData.points = activePointsCastData?.points ?? Array.Empty<Vector3>();
+            pointsData.points = (activePointsCastData.points ?? Array.Empty<Vector3>());
             pointsData.start = GetElementRepresentation(origin);
             pointsData.repeatedSegment = GetElementRepresentation(repeatedSegment);
             pointsData.end = GetElementRepresentation(destination);
@@ -416,8 +426,8 @@
             TryEmitExit(previousPointsCastData);
             Deactivated?.Invoke(HoverTarget);
             ActivationState = false;
-            activePointsCastData = null;
-            previousPointsCastData = null;
+            activePointsCastData.Clear();
+            previousPointsCastData.Clear();
             UpdateRenderData();
         }
 
@@ -427,7 +437,7 @@
         /// <param name="data">The current points cast data.</param>
         protected virtual void TryEmitExit(PointsCast.EventData data)
         {
-            if (activePointsCastData?.targetHit?.transform != null)
+            if (activePointsCastData.targetHit?.transform != null)
             {
                 Exited?.Invoke(GetEventData(data));
                 IsHovering = false;
@@ -464,7 +474,7 @@
         /// <returns>A <see cref="GameObject"/> to represent <paramref name="element"/>.</returns>
         protected virtual GameObject GetElementRepresentation(Element element)
         {
-            bool isValid = (activePointsCastData?.targetHit != null);
+            bool isValid = (activePointsCastData.targetHit != null);
 
             switch (element.visibility)
             {

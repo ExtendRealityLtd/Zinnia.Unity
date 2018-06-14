@@ -23,10 +23,20 @@
             /// </summary>
             public Color color;
 
+            public EventData Set(EventData source)
+            {
+                return Set(source.color);
+            }
+
             public EventData Set(Color color)
             {
                 this.color = color;
                 return this;
+            }
+
+            public void Clear()
+            {
+                Set(default(Color));
             }
         }
 

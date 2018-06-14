@@ -27,11 +27,21 @@
             /// </summary>
             public IReadOnlyList<Vector3> points;
 
+            public EventData Set(EventData source)
+            {
+                return Set(source.targetHit, source.points);
+            }
+
             public EventData Set(RaycastHit? targetHit, IReadOnlyList<Vector3> points)
             {
                 this.targetHit = targetHit;
                 this.points = points;
                 return this;
+            }
+
+            public void Clear()
+            {
+                Set(default(RaycastHit?), default(IReadOnlyList<Vector3>));
             }
         }
 
