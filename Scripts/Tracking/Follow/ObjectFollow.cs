@@ -30,11 +30,21 @@
             /// </summary>
             public Transform target;
 
+            public EventData Set(EventData source)
+            {
+                return Set(source.source, source.target);
+            }
+
             public EventData Set(Transform source, Transform target)
             {
                 this.source = source;
                 this.target = target;
                 return this;
+            }
+
+            public void Clear()
+            {
+                Set(default(Transform), default(Transform));
             }
         }
 

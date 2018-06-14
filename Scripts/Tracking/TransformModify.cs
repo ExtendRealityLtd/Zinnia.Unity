@@ -29,11 +29,21 @@
             /// </summary>
             public TransformData target;
 
+            public EventData Set(EventData source)
+            {
+                return Set(source.source, source.target);
+            }
+
             public EventData Set(TransformData source, TransformData target)
             {
                 this.source = source;
                 this.target = target;
                 return this;
+            }
+
+            public void Clear()
+            {
+                Set(default(TransformData), default(TransformData));
             }
         }
 
@@ -184,8 +194,8 @@
         {
             if (!applyTransformations.HasFlag(TransformProperties.Position) && offset != null)
             {
-                target.transform.position = GetModifiedPosition(givenSource);
-                finalPosition = CalculatePosition(givenSource, target.Position, target.Rotation, finalScale);
+                Vector3 updatedPosition = GetModifiedPosition(givenSource);
+                finalPosition = CalculatePosition(givenSource, updatedPosition, target.Rotation, finalScale);
             }
         }
 

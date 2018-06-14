@@ -28,12 +28,22 @@
             /// </summary>
             public Collider collider;
 
+            public EventData Set(EventData source)
+            {
+                return Set(source.isTrigger, source.collision, source.collider);
+            }
+
             public EventData Set(bool isTrigger, Collision collision, Collider collider)
             {
                 this.isTrigger = isTrigger;
                 this.collision = collision;
                 this.collider = collider;
                 return this;
+            }
+
+            public void Clear()
+            {
+                Set(default(bool), default(Collision), default(Collider));
             }
         }
 
