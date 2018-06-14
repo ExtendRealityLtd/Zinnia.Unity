@@ -517,17 +517,17 @@
             ProcessType = type;
         }
 
-        public override void UpdatePosition(Transform source, Transform target)
+        protected override void DoUpdatePosition(Transform source, Transform target)
         {
             target.position = Vector3.one;
         }
 
-        public override void UpdateRotation(Transform source, Transform target)
+        protected override void DoUpdateRotation(Transform source, Transform target)
         {
             target.rotation = new Quaternion(1f, 0f, 0f, 0f);
         }
 
-        public override void UpdateScale(Transform source, Transform target)
+        protected override void DoUpdateScale(Transform source, Transform target)
         {
             target.localScale = new Vector3(2f, 2f, 2f);
         }
