@@ -153,17 +153,17 @@
         {
             foreach (MomentProcess currentProcess in processes.EmptyIfNull())
             {
-                if (currentProcess != null && currentProcess.process != null)
+                if (currentProcess == null || currentProcess.process == null || (currentProcess.onlyProcessOnActiveAndEnabled && !currentProcess.isActiveAndEnabled))
                 {
-                    if (currentProcess.process.Interface == null)
-                    {
-                        throw new ArgumentNullException(String.Format("The MomentProcess.field on {0} cannot be null", currentProcess.name));
-                    }
-                    else if (!currentProcess.onlyProcessOnActiveAndEnabled || currentProcess.isActiveAndEnabled)
-                    {
-                        currentProcess.process.Interface.Process();
-                    }
+                    continue;
                 }
+
+                if (currentProcess.process.Interface == null)
+                {
+                    throw new ArgumentNullException(String.Format("The MomentProcess.field on {0} cannot be null", currentProcess.name));
+                }
+
+                currentProcess.process.Interface.Process();
             }
         }
     }

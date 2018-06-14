@@ -20,12 +20,14 @@
         /// <param name="target">The target <see cref="Transform"/> to modify.</param>
         public override void UpdatePosition(Transform source, Transform target)
         {
-            if (appliedModifier != null && isActiveAndEnabled)
+            if (!isActiveAndEnabled || appliedModifier == null)
             {
-                appliedModifier.UpdatePosition(target, source);
-                CachedSource = appliedModifier.CachedSource;
-                CachedTarget = appliedModifier.CachedTarget;
+                return;
             }
+
+            appliedModifier.UpdatePosition(target, source);
+            CachedSource = appliedModifier.CachedSource;
+            CachedTarget = appliedModifier.CachedTarget;
         }
 
         /// <summary>
@@ -35,12 +37,14 @@
         /// <param name="target">The target <see cref="Transform"/> to modify.</param>
         public override void UpdateRotation(Transform source, Transform target)
         {
-            if (appliedModifier != null && isActiveAndEnabled)
+            if (!isActiveAndEnabled || appliedModifier == null)
             {
-                appliedModifier.UpdateRotation(target, source);
-                CachedSource = appliedModifier.CachedSource;
-                CachedTarget = appliedModifier.CachedTarget;
+                return;
             }
+
+            appliedModifier.UpdateRotation(target, source);
+            CachedSource = appliedModifier.CachedSource;
+            CachedTarget = appliedModifier.CachedTarget;
         }
 
         /// <summary>
@@ -50,12 +54,14 @@
         /// <param name="target">The target <see cref="Transform"/> to modify.</param>
         public override void UpdateScale(Transform source, Transform target)
         {
-            if (appliedModifier != null && isActiveAndEnabled)
+            if (!isActiveAndEnabled || appliedModifier == null)
             {
-                appliedModifier.UpdateScale(target, source);
-                CachedSource = appliedModifier.CachedSource;
-                CachedTarget = appliedModifier.CachedTarget;
+                return;
             }
+
+            appliedModifier.UpdateScale(target, source);
+            CachedSource = appliedModifier.CachedSource;
+            CachedTarget = appliedModifier.CachedTarget;
         }
 
         protected virtual void Awake()

@@ -8,25 +8,41 @@
     using VRTK.Core.Utility;
 
     /// <summary>
-    /// Contains information about the current <see cref="PointsCast"/> state.
-    /// </summary>
-    public class PointsCastData
-    {
-        /// <summary>
-        /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything.
-        /// </summary>
-        public RaycastHit? targetHit;
-        /// <summary>
-        /// The points along the the most recent cast.
-        /// </summary>
-        public IReadOnlyList<Vector3> points;
-    }
-
-    /// <summary>
     /// The base of casting components that result in points along the cast.
     /// </summary>
     public abstract class PointsCast : MonoBehaviour, IProcessable
     {
+        /// <summary>
+        /// Holds data about a <see cref="PointsCast"/> event.
+        /// </summary>
+        [Serializable]
+        public class EventData
+        {
+            /// <summary>
+            /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything.
+            /// </summary>
+            public RaycastHit? targetHit;
+            /// <summary>
+            /// The points along the the most recent cast.
+            /// </summary>
+            public IReadOnlyList<Vector3> points;
+
+            public EventData Set(RaycastHit? targetHit, IReadOnlyList<Vector3> points)
+            {
+                this.targetHit = targetHit;
+                this.points = points;
+                return this;
+            }
+        }
+
+        /// <summary>
+        /// Defines the event with the <see cref="EventData"/>.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<EventData>
+        {
+        }
+
         /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
@@ -39,17 +55,9 @@
         public ExclusionRule targetValidity;
 
         /// <summary>
-        /// Defines the event with the <see cref="PointsCastData"/> state and sender <see cref="object"/>.
-        /// </summary>
-        [Serializable]
-        public class PointsCastUnityEvent : UnityEvent<PointsCastData, object>
-        {
-        }
-
-        /// <summary>
         /// Emitted whenever the cast result changes.
         /// </summary>
-        public PointsCastUnityEvent CastResultsChanged = new PointsCastUnityEvent();
+        public UnityEvent ResultsChanged = new UnityEvent();
 
         /// <summary>
         /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="targetValidity"/>.
@@ -72,6 +80,7 @@
         public IReadOnlyList<Vector3> Points => points;
 
         protected List<Vector3> points = new List<Vector3>();
+        protected EventData eventData = new EventData();
 
         private RaycastHit? targetHit;
 
@@ -84,27 +93,6 @@
         public void Process()
         {
             CastPoints();
-        }
-
-        protected virtual void OnCastResultsChanged()
-        {
-            if (isActiveAndEnabled)
-            {
-                CastResultsChanged?.Invoke(GetPayload(), this);
-            }
-        }
-
-        /// <summary>
-        /// Builds the event payload for the current state of the cast.
-        /// </summary>
-        /// <returns>The current state of the cast.</returns>
-        protected virtual PointsCastData GetPayload()
-        {
-            return new PointsCastData
-            {
-                targetHit = TargetHit,
-                points = Points
-            };
         }
     }
 }

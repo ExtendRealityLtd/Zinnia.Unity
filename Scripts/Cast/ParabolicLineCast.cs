@@ -45,6 +45,11 @@
         /// <inheritdoc />
         public override void CastPoints()
         {
+            if (!isActiveAndEnabled)
+            {
+                return;
+            }
+
             Vector3 forward = ProjectForward();
             Vector3 down = ProjectDown(forward);
             GeneratePointsIncludingSegments(forward, down);
@@ -152,7 +157,7 @@
                 break;
             }
 
-            OnCastResultsChanged();
+            ResultsChanged?.Invoke(eventData.Set(TargetHit, Points));
         }
 
         /// <summary>

@@ -24,8 +24,7 @@
         /// Digests <see cref="SurfaceData"/> and compares the current surface to the previous surface to determine if a change has occured.
         /// </summary>
         /// <param name="surfaceData">The <see cref="SurfaceData"/> to check on.</param>
-        /// <param name="sender">The sender of the action.</param>
-        public virtual void Receive(SurfaceData surfaceData, object sender = null)
+        public virtual void Receive(SurfaceData surfaceData)
         {
             if (ValidSurfaceData(surfaceData))
             {
@@ -33,7 +32,7 @@
                 Vector3 generatedTarget = GeneratePoint(surfaceData.Position);
 
                 bool result = !generatedOrigin.ApproxEquals(generatedTarget, changeDistance);
-                Receive(result, sender);
+                Receive(result);
             }
         }
 

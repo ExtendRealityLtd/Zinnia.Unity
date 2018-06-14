@@ -47,17 +47,16 @@
         /// Attempts to teleport the <see cref="userSetup.playAreaAlias"/>.
         /// </summary>
         /// <param name="givenLocation">The location to attempt to teleport to.</param>
-        /// <param name="initiator">The <see cref="object"/> which initiated the method.</param>
-        public virtual void Teleport(TransformData givenLocation, object initiator = null)
+        public virtual void Teleport(TransformData givenLocation)
         {
             if (surfaceTeleporter != null)
             {
-                surfaceTeleporter.Locate(givenLocation, initiator);
+                surfaceTeleporter.Locate(givenLocation);
             }
 
             if (modifyTeleporter != null)
             {
-                modifyTeleporter.Modify(givenLocation, initiator);
+                modifyTeleporter.Modify(givenLocation);
             }
         }
 

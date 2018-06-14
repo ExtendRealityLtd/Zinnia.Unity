@@ -95,7 +95,7 @@
                 blocker.transform.position
             };
 
-            PointsCastData straightCast = CastPoints(castPoints);
+            PointsCast.EventData straightCast = CastPoints(castPoints);
 
             subject.HandleData(straightCast);
             subject.ManualUpdate();
@@ -162,7 +162,7 @@
                 blocker.transform.position
             };
 
-            PointsCastData straightCast = CastPoints(castPoints);
+            PointsCast.EventData straightCast = CastPoints(castPoints);
 
             subject.HandleData(straightCast);
             subject.ManualUpdate();
@@ -751,7 +751,7 @@
                 blocker.transform.position
             };
 
-            PointsCastData straightCast;
+            PointsCast.EventData straightCast;
 
             straightCast = CastPoints(castPoints, true, new Ray(Vector3.zero, Vector3.forward));
 
@@ -781,7 +781,7 @@
             Object.DestroyImmediate(blocker);
         }
 
-        protected PointsCastData CastPoints(Vector3[] points, bool validHit = true, Ray? realRay = null)
+        protected PointsCast.EventData CastPoints(Vector3[] points, bool validHit = true, Ray? realRay = null)
         {
             if (validHit)
             {
@@ -790,7 +790,7 @@
                 {
                     Physics.Raycast((Ray)realRay, out hit);
                 }
-                return new PointsCastData()
+                return new PointsCast.EventData()
                 {
                     points = points,
                     targetHit = hit
@@ -798,7 +798,7 @@
             }
             else
             {
-                return new PointsCastData()
+                return new PointsCast.EventData()
                 {
                     points = points
                 };

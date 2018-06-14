@@ -7,37 +7,37 @@
     using VRTK.Core.Extension;
 
     /// <summary>
-    /// Contains all the data needed for a <see cref="PointsRenderer"/> to render.
-    /// </summary>
-    public class PointsRendererData
-    {
-        /// <summary>
-        /// Represents the start, i.e. the first rendered point.
-        /// </summary>
-        [Tooltip("Represents the start, i.e. the first rendered point.")]
-        public GameObject start;
-        /// <summary>
-        /// Represents the segments between <see cref="start"/> and <see cref="end"/>. This will get cloned to create all the segments.
-        /// </summary>
-        [Tooltip("Represents the segments between start and end. This will get cloned to create all the segments.")]
-        public GameObject repeatedSegment;
-        /// <summary>
-        /// Represents the end, i.e. the last rendered point.
-        /// </summary>
-        [Tooltip("Represents the end, i.e. the last rendered point.")]
-        public GameObject end;
-
-        /// <summary>
-        /// The points along the the most recent cast.
-        /// </summary>
-        public IReadOnlyList<Vector3> points;
-    }
-
-    /// <summary>
     /// Renders points using <see cref="GameObject"/>s.
     /// </summary>
     public class PointsRenderer : MonoBehaviour
     {
+        /// <summary>
+        /// Contains all the data needed for a <see cref="PointsRenderer"/> to render.
+        /// </summary>
+        [Serializable]
+        public class PointsData
+        {
+            /// <summary>
+            /// Represents the start, i.e. the first rendered point.
+            /// </summary>
+            [Tooltip("Represents the start, i.e. the first rendered point.")]
+            public GameObject start;
+            /// <summary>
+            /// Represents the segments between <see cref="start"/> and <see cref="end"/>. This will get cloned to create all the segments.
+            /// </summary>
+            [Tooltip("Represents the segments between start and end. This will get cloned to create all the segments.")]
+            public GameObject repeatedSegment;
+            /// <summary>
+            /// Represents the end, i.e. the last rendered point.
+            /// </summary>
+            [Tooltip("Represents the end, i.e. the last rendered point.")]
+            public GameObject end;
+            /// <summary>
+            /// The points along the the most recent cast.
+            /// </summary>
+            public IReadOnlyList<Vector3> points;
+        }
+
         /// <summary>
         /// The direction to scale the segment <see cref="GameObject"/>s in. Set axes to 0 to disable scaling on that axis.
         /// </summary>
@@ -65,31 +65,32 @@
         /// Renders the given points.
         /// </summary>
         /// <param name="data">The data to render.</param>
-        /// <param name="initiator">The initiator of this method.</param>
-        public virtual void RenderData(PointsRendererData data, object initiator = null)
+        public virtual void RenderData(PointsData data)
         {
-            if (isActiveAndEnabled)
+            if (!isActiveAndEnabled)
             {
-                start = data.start;
-                end = data.end;
+                return;
+            }
 
-                if (repeatedSegment != data.repeatedSegment)
-                {
-                    segmentClones.ForEach(Destroy);
-                    segmentClones.Clear();
+            start = data.start;
+            end = data.end;
 
-                    repeatedSegment = data.repeatedSegment;
-                }
+            if (repeatedSegment != data.repeatedSegment)
+            {
+                segmentClones.ForEach(Destroy);
+                segmentClones.Clear();
 
-                UpdateNumberOfClones(data.points);
+                repeatedSegment = data.repeatedSegment;
+            }
 
-                UpdateElement(data.points, 0, false, start);
-                UpdateElement(data.points, data.points.Count - 1, false, end);
+            UpdateNumberOfClones(data.points);
 
-                for (int index = 0; index < segmentClones.Count; index++)
-                {
-                    UpdateElement(data.points, index, true, segmentClones[index]);
-                }
+            UpdateElement(data.points, 0, false, start);
+            UpdateElement(data.points, data.points.Count - 1, false, end);
+
+            for (int index = 0; index < segmentClones.Count; index++)
+            {
+                UpdateElement(data.points, index, true, segmentClones[index]);
             }
         }
 

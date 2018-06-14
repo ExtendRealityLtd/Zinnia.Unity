@@ -5,174 +5,101 @@
     using System;
 
     /// <summary>
-    /// Holds information about a tracked collision.
-    /// </summary>
-    public struct CollisionTrackerData
-    {
-        /// <summary>
-        /// Whether the collision was observed through a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
-        /// </summary>
-        public bool isTrigger;
-        /// <summary>
-        /// The observed <see cref="Collision"/>. <see langword="null"/> if <see cref="isTrigger"/> is <see langword="true"/>.
-        /// </summary>
-        public Collision collision;
-        /// <summary>
-        /// The observed <see cref="Collider"/>.
-        /// </summary>
-        public Collider collider;
-    }
-
-    /// <summary>
     /// Tracks collisions on the <see cref="GameObject"/> this component is on.
     /// </summary>
     public class CollisionTracker : MonoBehaviour
     {
         /// <summary>
-        /// Defines the event with the <see cref="CollisionTrackerData"/> and sender <see cref="object"/>.
+        /// Holds data about a <see cref="CollisionTracker"/> event.
         /// </summary>
         [Serializable]
-        public class CollisionTrackerUnityEvent : UnityEvent<CollisionTrackerData, object>
+        public class EventData
+        {
+            /// <summary>
+            /// Whether the collision was observed through a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
+            /// </summary>
+            public bool isTrigger;
+            /// <summary>
+            /// The observed <see cref="Collision"/>. <see langword="null"/> if <see cref="isTrigger"/> is <see langword="true"/>.
+            /// </summary>
+            public Collision collision;
+            /// <summary>
+            /// The observed <see cref="Collider"/>.
+            /// </summary>
+            public Collider collider;
+
+            public EventData Set(bool isTrigger, Collision collision, Collider collider)
+            {
+                this.isTrigger = isTrigger;
+                this.collision = collision;
+                this.collider = collider;
+                return this;
+            }
+        }
+
+        /// <summary>
+        /// Defines the event with the <see cref="EventData"/>.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<EventData>
         {
         }
 
         /// <summary>
         /// Emitted when entering a collision.
         /// </summary>
-        public CollisionTrackerUnityEvent CollisionEnter = new CollisionTrackerUnityEvent();
+        public UnityEvent CollisionEnter = new UnityEvent();
         /// <summary>
         /// Emitted as long as a collision happens.
         /// </summary>
-        public CollisionTrackerUnityEvent CollisionStay = new CollisionTrackerUnityEvent();
+        public UnityEvent CollisionStay = new UnityEvent();
         /// <summary>
         /// Emitted when exiting a collision.
         /// </summary>
-        public CollisionTrackerUnityEvent CollisionExit = new CollisionTrackerUnityEvent();
+        public UnityEvent CollisionExit = new UnityEvent();
         /// <summary>
         /// Emitted when entering a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
         /// </summary>
-        public CollisionTrackerUnityEvent TriggerEnter = new CollisionTrackerUnityEvent();
+        public UnityEvent TriggerEnter = new UnityEvent();
         /// <summary>
         /// Emitted as long as a collision with a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set happens.
         /// </summary>
-        public CollisionTrackerUnityEvent TriggerStay = new CollisionTrackerUnityEvent();
+        public UnityEvent TriggerStay = new UnityEvent();
         /// <summary>
         /// Emitted when exiting a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
         /// </summary>
-        public CollisionTrackerUnityEvent TriggerExit = new CollisionTrackerUnityEvent();
+        public UnityEvent TriggerExit = new UnityEvent();
+
+        protected EventData eventData = new EventData();
 
         protected virtual void OnCollisionEnter(Collision collision)
         {
-            OnCollisionEnterEvent(
-                new CollisionTrackerData
-                {
-                    isTrigger = false,
-                    collision = collision,
-                    collider = collision.collider
-                });
+            CollisionEnter?.Invoke(eventData.Set(false, collision, collision.collider));
         }
 
         protected virtual void OnCollisionStay(Collision collision)
         {
-            OnCollisionStayEvent(
-                new CollisionTrackerData
-                {
-                    isTrigger = false,
-                    collision = collision,
-                    collider = collision.collider
-                });
+            CollisionStay?.Invoke(eventData.Set(false, collision, collision.collider));
         }
 
         protected virtual void OnCollisionExit(Collision collision)
         {
-            OnCollisionExitEvent(
-                new CollisionTrackerData
-                {
-                    isTrigger = false,
-                    collision = collision,
-                    collider = collision.collider
-                });
+            CollisionExit?.Invoke(eventData.Set(false, collision, collision.collider));
         }
 
         protected virtual void OnTriggerEnter(Collider collider)
         {
-            OnTriggerEnterEvent(
-                new CollisionTrackerData
-                {
-                    isTrigger = true,
-                    collision = null,
-                    collider = collider
-                });
+            TriggerEnter?.Invoke(eventData.Set(true, null, collider));
         }
 
         protected virtual void OnTriggerStay(Collider collider)
         {
-            OnTriggerStayEvent(
-                new CollisionTrackerData
-                {
-                    isTrigger = true,
-                    collision = null,
-                    collider = collider
-                });
+            TriggerStay?.Invoke(eventData.Set(true, null, collider));
         }
 
         protected virtual void OnTriggerExit(Collider collider)
         {
-            OnTriggerExitEvent(
-                new CollisionTrackerData
-                {
-                    isTrigger = true,
-                    collision = null,
-                    collider = collider
-                });
-        }
-
-        protected void OnCollisionEnterEvent(CollisionTrackerData data)
-        {
-            if (isActiveAndEnabled)
-            {
-                CollisionEnter?.Invoke(data, this);
-            }
-        }
-
-        protected void OnCollisionStayEvent(CollisionTrackerData data)
-        {
-            if (isActiveAndEnabled)
-            {
-                CollisionStay?.Invoke(data, this);
-            }
-        }
-
-        protected void OnCollisionExitEvent(CollisionTrackerData data)
-        {
-            if (isActiveAndEnabled)
-            {
-                CollisionExit?.Invoke(data, this);
-            }
-        }
-
-        protected void OnTriggerEnterEvent(CollisionTrackerData data)
-        {
-            if (isActiveAndEnabled)
-            {
-                TriggerEnter?.Invoke(data, this);
-            }
-        }
-
-        protected void OnTriggerStayEvent(CollisionTrackerData data)
-        {
-            if (isActiveAndEnabled)
-            {
-                TriggerStay?.Invoke(data, this);
-            }
-        }
-
-        protected void OnTriggerExitEvent(CollisionTrackerData data)
-        {
-            if (isActiveAndEnabled)
-            {
-                TriggerExit?.Invoke(data, this);
-            }
+            TriggerExit?.Invoke(eventData.Set(true, null, collider));
         }
     }
 }

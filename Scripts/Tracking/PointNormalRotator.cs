@@ -18,13 +18,14 @@
         /// Handles the provided data to rotate the <see cref="GameObject"/>.
         /// </summary>
         /// <param name="data">The data to take the rotation info from.</param>
-        /// <param name="initiator">The initiator of this method.</param>
-        public virtual void HandleData(PointsCastData data, object initiator = null)
+        public virtual void HandleData(PointsCast.EventData data)
         {
-            if (isActiveAndEnabled && source != null && data.targetHit != null)
+            if (!isActiveAndEnabled || source == null || data.targetHit == null)
             {
-                source.rotation = Quaternion.FromToRotation(Vector3.up, data.targetHit.Value.normal);
+                return;
             }
+
+            source.rotation = Quaternion.FromToRotation(Vector3.up, data.targetHit.Value.normal);
         }
     }
 }

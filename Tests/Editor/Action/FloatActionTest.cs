@@ -32,13 +32,13 @@
 
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
-            subject.Changed.AddListener(changedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
-            subject.Receive(1f, null);
+            subject.Receive(1f);
 
             Assert.IsTrue(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -46,9 +46,9 @@
         }
 
         [Test]
-        public void DectivatedEmittedAtNonZero()
+        public void DectivatedEmitted()
         {
-            subject.SetState(true);
+            subject.SetIsActivated(true);
             subject.SetValue(1f);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
@@ -57,38 +57,13 @@
 
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
-            subject.Changed.AddListener(changedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
-            subject.Receive(1f, null);
-
-            Assert.IsFalse(activatedListenerMock.Received);
-            Assert.IsTrue(deactivatedListenerMock.Received);
-            Assert.IsFalse(changedListenerMock.Received);
-        }
-
-        [Test]
-        public void DectivatedEmittedAtZero()
-        {
-            subject.SetState(true);
-            subject.SetValue(1f);
-
-            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
-            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
-            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
-
-            subject.Activated.AddListener(activatedListenerMock.Listen);
-            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
-            subject.Changed.AddListener(changedListenerMock.Listen);
-
-            Assert.IsFalse(activatedListenerMock.Received);
-            Assert.IsFalse(deactivatedListenerMock.Received);
-            Assert.IsFalse(changedListenerMock.Received);
-
-            subject.Receive(0f, null);
+            subject.Receive(0f);
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsTrue(deactivatedListenerMock.Received);
@@ -100,23 +75,23 @@
         {
             UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
 
-            subject.Changed.AddListener(changedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
 
             Assert.IsFalse(changedListenerMock.Received);
 
-            subject.Receive(0.1f, null);
+            subject.Receive(0.1f);
             Assert.IsTrue(changedListenerMock.Received);
 
             changedListenerMock.Reset();
             Assert.IsFalse(changedListenerMock.Received);
 
-            subject.Receive(0.1f, null);
+            subject.Receive(0.1f);
             Assert.IsFalse(changedListenerMock.Received);
 
             changedListenerMock.Reset();
             Assert.IsFalse(changedListenerMock.Received);
 
-            subject.Receive(0.2f, null);
+            subject.Receive(0.2f);
             Assert.IsTrue(changedListenerMock.Received);
         }
 
@@ -129,14 +104,14 @@
 
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
-            subject.Changed.AddListener(changedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
             subject.gameObject.SetActive(false);
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
-            subject.Receive(1f, null);
+            subject.Receive(1f);
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -152,14 +127,14 @@
 
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
-            subject.Changed.AddListener(changedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
             subject.enabled = false;
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
-            subject.Receive(1f, null);
+            subject.Receive(1f);
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -169,9 +144,9 @@
 
     public class FloatActionMock : FloatAction
     {
-        public virtual void SetState(bool value)
+        public virtual void SetIsActivated(bool value)
         {
-            State = value;
+            IsActivated = value;
         }
 
         public virtual void SetValue(float value)

@@ -39,7 +39,7 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return (source != null && source.gameObject.activeInHierarchy && isActiveAndEnabled);
+            return (isActiveAndEnabled && source != null && source.gameObject.activeInHierarchy);
         }
 
         /// <inheritdoc />

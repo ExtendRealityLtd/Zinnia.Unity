@@ -49,7 +49,7 @@
             surfaceData.CollisionData = ray;
             surfaceData.positionOverride = ray.point;
 
-            subject.Receive(surfaceData, null);
+            subject.Receive(surfaceData);
 
             Assert.IsTrue(activatedListenerMock.Received);
         }
@@ -79,7 +79,7 @@
             surfaceData.CollisionData = ray;
             surfaceData.positionOverride = ray.point;
 
-            subject.Receive(surfaceData, null);
+            subject.Receive(surfaceData);
 
             Assert.IsFalse(activatedListenerMock.Received);
         }
