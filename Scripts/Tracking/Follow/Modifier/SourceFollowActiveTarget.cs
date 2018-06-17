@@ -18,16 +18,12 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        public override void UpdatePosition(Transform source, Transform target)
+        protected override void DoUpdatePosition(Transform source, Transform target)
         {
-            if (!isActiveAndEnabled || appliedModifier == null)
+            if (appliedModifier != null)
             {
-                return;
+                appliedModifier.UpdatePosition(source, target);
             }
-
-            appliedModifier.UpdatePosition(source, target);
-            CachedSource = appliedModifier.CachedSource;
-            CachedTarget = appliedModifier.CachedTarget;
         }
 
         /// <summary>
@@ -35,16 +31,12 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        public override void UpdateRotation(Transform source, Transform target)
+        protected override void DoUpdateRotation(Transform source, Transform target)
         {
-            if (!isActiveAndEnabled || appliedModifier == null)
+            if (appliedModifier != null)
             {
-                return;
+                appliedModifier.UpdateRotation(source, target);
             }
-
-            appliedModifier.UpdateRotation(source, target);
-            CachedSource = appliedModifier.CachedSource;
-            CachedTarget = appliedModifier.CachedTarget;
         }
 
         /// <summary>
@@ -52,16 +44,12 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        public override void UpdateScale(Transform source, Transform target)
+        protected override void DoUpdateScale(Transform source, Transform target)
         {
-            if (!isActiveAndEnabled || appliedModifier == null)
+            if (appliedModifier != null)
             {
-                return;
+                appliedModifier.UpdateScale(source, target);
             }
-
-            appliedModifier.UpdateScale(source, target);
-            CachedSource = appliedModifier.CachedSource;
-            CachedTarget = appliedModifier.CachedTarget;
         }
 
         protected virtual void Awake()

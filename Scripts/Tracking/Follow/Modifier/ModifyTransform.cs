@@ -12,14 +12,9 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        public override void UpdatePosition(Transform source, Transform target)
+        protected override void DoUpdatePosition(Transform source, Transform target)
         {
-            CachedSource = source;
-            CachedTarget = target;
-            if (source != null && target != null)
-            {
-                source.position = target.position;
-            }
+            source.position = target.position;
         }
 
         /// <summary>
@@ -27,14 +22,9 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        public override void UpdateRotation(Transform source, Transform target)
+        protected override void DoUpdateRotation(Transform source, Transform target)
         {
-            CachedSource = source;
-            CachedTarget = target;
-            if (source != null && target != null)
-            {
-                source.rotation = target.rotation;
-            }
+            source.rotation = target.rotation;
         }
 
         /// <summary>
@@ -42,14 +32,9 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        public override void UpdateScale(Transform source, Transform target)
+        protected override void DoUpdateScale(Transform source, Transform target)
         {
-            CachedSource = source;
-            CachedTarget = target;
-            if (source != null && target != null)
-            {
-                source.localScale = target.localScale;
-            }
+            source.localScale = target.localScale;
         }
     }
 }

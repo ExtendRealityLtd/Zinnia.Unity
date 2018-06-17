@@ -46,20 +46,20 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        public override void UpdatePosition(Transform source, Transform target)
+        protected override void DoUpdatePosition(Transform source, Transform target)
         {
-            CachedSource = source;
-            CachedTarget = target;
-            if (source != null && target != null && SourceRigidbody != null)
+            if (SourceRigidbody == null)
             {
-                Vector3 positionDelta = target.position - source.position;
-                Vector3 velocityTarget = positionDelta / Time.fixedDeltaTime;
-                Vector3 calculatedVelocity = Vector3.MoveTowards(SourceRigidbody.velocity, velocityTarget, maxDistanceDelta);
+                return;
+            }
 
-                if (calculatedVelocity.sqrMagnitude < velocityLimit)
-                {
-                    SourceRigidbody.velocity = calculatedVelocity;
-                }
+            Vector3 positionDelta = target.position - source.position;
+            Vector3 velocityTarget = positionDelta / Time.fixedDeltaTime;
+            Vector3 calculatedVelocity = Vector3.MoveTowards(SourceRigidbody.velocity, velocityTarget, maxDistanceDelta);
+
+            if (calculatedVelocity.sqrMagnitude < velocityLimit)
+            {
+                SourceRigidbody.velocity = calculatedVelocity;
             }
         }
 
@@ -68,38 +68,37 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        public override void UpdateRotation(Transform source, Transform target)
+        protected override void DoUpdateRotation(Transform source, Transform target)
         {
-            CachedSource = source;
-            CachedTarget = target;
-            if (source != null && target != null && SourceRigidbody != null)
+            if (SourceRigidbody == null)
             {
-                Quaternion rotationDelta = target.rotation * Quaternion.Inverse(source.rotation);
+                return;
+            }
 
-                float angle;
-                Vector3 axis;
-                rotationDelta.ToAngleAxis(out angle, out axis);
+            Quaternion rotationDelta = target.rotation * Quaternion.Inverse(source.rotation);
+            float angle;
+            Vector3 axis;
 
-                angle = ((angle > 180f) ? angle - 360f : angle);
+            rotationDelta.ToAngleAxis(out angle, out axis);
+            angle = ((angle > 180f) ? angle - 360f : angle);
 
-                if (!angle.ApproxEquals(0))
+            if (!angle.ApproxEquals(0))
+            {
+                Vector3 angularTarget = angle * axis;
+                Vector3 calculatedAngularVelocity = Vector3.MoveTowards(SourceRigidbody.angularVelocity, angularTarget, maxDistanceDelta);
+                if (angularVelocityLimit == float.PositiveInfinity || calculatedAngularVelocity.sqrMagnitude < angularVelocityLimit)
                 {
-                    Vector3 angularTarget = angle * axis;
-                    Vector3 calculatedAngularVelocity = Vector3.MoveTowards(SourceRigidbody.angularVelocity, angularTarget, maxDistanceDelta);
-                    if (angularVelocityLimit == float.PositiveInfinity || calculatedAngularVelocity.sqrMagnitude < angularVelocityLimit)
-                    {
-                        SourceRigidbody.angularVelocity = calculatedAngularVelocity;
-                    }
+                    SourceRigidbody.angularVelocity = calculatedAngularVelocity;
                 }
             }
         }
 
         /// <summary>
-        /// Does not perform any modification
+        /// Does not perform any modification.
         /// </summary>
         /// <param name="source">Unused.</param>
         /// <param name="target">Unused.</param>
-        public override void UpdateScale(Transform source, Transform target)
+        protected override void DoUpdateScale(Transform source, Transform target)
         {
         }
     }
