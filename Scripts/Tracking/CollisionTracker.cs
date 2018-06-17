@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using VRTK.Core.Data.Attribute;
 
     /// <summary>
     /// Tracks collisions on the <see cref="GameObject"/> this component is on.
@@ -56,60 +57,71 @@
         }
 
         /// <summary>
-        /// Emitted when entering a collision.
+        /// The types of collisions that events will be emitted for.
         /// </summary>
-        public UnityEvent CollisionEnter = new UnityEvent();
+        [Flags]
+        public enum CollisionTypes
+        {
+            /// <summary>
+            /// A regular, non-trigger collision.
+            /// </summary>
+            Collision = 1 << 0,
+            /// <summary>
+            /// A trigger collision
+            /// </summary>
+            Trigger = 1 << 1
+        }
+
         /// <summary>
-        /// Emitted as long as a collision happens.
+        /// The types of collisions that events will be emitted for.
         /// </summary>
-        public UnityEvent CollisionStay = new UnityEvent();
+        [UnityFlag]
+        [Tooltip("The types of collisions that events will be emitted for.")]
+        public CollisionTypes emittedTypes = (CollisionTypes)(-1);
+
         /// <summary>
-        /// Emitted when exiting a collision.
+        /// Emitted when a collision starts.
         /// </summary>
-        public UnityEvent CollisionExit = new UnityEvent();
+        public UnityEvent CollisionStarted = new UnityEvent();
         /// <summary>
-        /// Emitted when entering a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
+        /// Emitted when the current collision changes.
         /// </summary>
-        public UnityEvent TriggerEnter = new UnityEvent();
+        public UnityEvent CollisionChanged = new UnityEvent();
         /// <summary>
-        /// Emitted as long as a collision with a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set happens.
+        /// Emitted when the current collision stops.
         /// </summary>
-        public UnityEvent TriggerStay = new UnityEvent();
-        /// <summary>
-        /// Emitted when exiting a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
-        /// </summary>
-        public UnityEvent TriggerExit = new UnityEvent();
+        public UnityEvent CollisionStopped = new UnityEvent();
 
         protected EventData eventData = new EventData();
 
         protected virtual void OnCollisionEnter(Collision collision)
         {
-            CollisionEnter?.Invoke(eventData.Set(false, collision, collision.collider));
+            CollisionStarted?.Invoke(eventData.Set(false, collision, collision.collider));
         }
 
         protected virtual void OnCollisionStay(Collision collision)
         {
-            CollisionStay?.Invoke(eventData.Set(false, collision, collision.collider));
+            CollisionChanged?.Invoke(eventData.Set(false, collision, collision.collider));
         }
 
         protected virtual void OnCollisionExit(Collision collision)
         {
-            CollisionExit?.Invoke(eventData.Set(false, collision, collision.collider));
+            CollisionStopped?.Invoke(eventData.Set(false, collision, collision.collider));
         }
 
         protected virtual void OnTriggerEnter(Collider collider)
         {
-            TriggerEnter?.Invoke(eventData.Set(true, null, collider));
+            CollisionStarted?.Invoke(eventData.Set(true, null, collider));
         }
 
         protected virtual void OnTriggerStay(Collider collider)
         {
-            TriggerStay?.Invoke(eventData.Set(true, null, collider));
+            CollisionChanged?.Invoke(eventData.Set(true, null, collider));
         }
 
         protected virtual void OnTriggerExit(Collider collider)
         {
-            TriggerExit?.Invoke(eventData.Set(true, null, collider));
+            CollisionStopped?.Invoke(eventData.Set(true, null, collider));
         }
     }
 }
