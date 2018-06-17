@@ -15,8 +15,6 @@
             SerializedProperty yState = property.FindPropertyRelative("yState");
             SerializedProperty zState = property.FindPropertyRelative("zState");
 
-            int indent = EditorGUI.indentLevel;
-            EditorGUI.indentLevel = 0;
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             float updatePositionX = position.x;
             float labelWidth = 15f;
@@ -36,8 +34,6 @@
             updatePositionX += labelWidth;
             zState.boolValue = EditorGUI.Toggle(new Rect(updatePositionX, position.y, fieldWidth, position.height), zState.boolValue);
             updatePositionX += fieldWidth;
-
-            EditorGUI.indentLevel = indent;
         }
     }
 }
