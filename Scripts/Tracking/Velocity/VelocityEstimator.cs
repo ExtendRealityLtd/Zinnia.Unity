@@ -42,18 +42,6 @@
             return (isActiveAndEnabled && source != null && source.gameObject.activeInHierarchy);
         }
 
-        /// <inheritdoc />
-        public override Vector3 GetVelocity()
-        {
-            return GetEstimate(velocitySamples);
-        }
-
-        /// <inheritdoc />
-        public override Vector3 GetAngularVelocity()
-        {
-            return GetEstimate(angularVelocitySamples);
-        }
-
         /// <summary>
         /// Manually enables the collecting of samples for the estimation process.
         /// </summary>
@@ -85,6 +73,11 @@
         /// <returns>Acceleration of the <see cref="source"/>.</returns>
         public virtual Vector3 GetAcceleration()
         {
+            if (!IsActive())
+            {
+                return Vector3.zero;
+            }
+
             Vector3 average = Vector3.zero;
             for (int i = 2 + currentSampleCount - velocitySamples.Length; i < currentSampleCount; i++)
             {
@@ -114,6 +107,18 @@
         protected virtual void LateUpdate()
         {
             ProcessEstimation();
+        }
+
+        /// <inheritdoc />
+        protected override Vector3 DoGetVelocity()
+        {
+            return GetEstimate(velocitySamples);
+        }
+
+        /// <inheritdoc />
+        protected override Vector3 DoGetAngularVelocity()
+        {
+            return GetEstimate(angularVelocitySamples);
         }
 
         /// <summary>
