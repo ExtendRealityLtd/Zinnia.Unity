@@ -9,8 +9,8 @@
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            TooltipAttribute currentTooltip = EditorHelper.GetTooltipAttribute(fieldInfo);
-            label.tooltip = (currentTooltip != null ? currentTooltip.tooltip : "");
+            label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;
+
             SerializedProperty xState = property.FindPropertyRelative("xState");
             SerializedProperty yState = property.FindPropertyRelative("yState");
             SerializedProperty zState = property.FindPropertyRelative("zState");
