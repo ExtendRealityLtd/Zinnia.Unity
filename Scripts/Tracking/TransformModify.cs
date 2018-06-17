@@ -75,7 +75,7 @@
         /// </summary>
         [UnityFlags]
         [Tooltip("The Transform properties to apply the transformations on.")]
-        public TransformProperties applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
+        public TransformProperties applyTransformations = (TransformProperties)(-1);
         /// <summary>
         /// The amount of time to take when transitioning from the current <see cref="Transform"/> state to the modified <see cref="Transform"/> state.
         /// </summary>
