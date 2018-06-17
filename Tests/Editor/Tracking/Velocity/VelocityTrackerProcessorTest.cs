@@ -263,12 +263,12 @@
             return mockActive;
         }
 
-        public override Vector3 GetVelocity()
+        protected override Vector3 DoGetVelocity()
         {
             return mockVelocity;
         }
 
-        public override Vector3 GetAngularVelocity()
+        protected override Vector3 DoGetAngularVelocity()
         {
             return mockAngularVelocity;
         }

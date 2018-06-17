@@ -23,10 +23,19 @@
         }
 
         /// <summary>
+        /// The current active <see cref="VelocityTracker"/> that is reporting velocities.
+        /// </summary>
+        /// <returns>The current active <see cref="VelocityTracker"/>.</returns>
+        public virtual VelocityTracker GetActiveVelocityTracker()
+        {
+            return (cachedTracker != null && cachedTracker.IsActive() ? cachedTracker : null);
+        }
+
+        /// <summary>
         /// The reported velocity on the first active <see cref="VelocityTracker"/>.
         /// </summary>
         /// <returns>The current velocity.</returns>
-        public override Vector3 GetVelocity()
+        protected override Vector3 DoGetVelocity()
         {
             Vector3 currentVelocity = Vector3.zero;
             cachedTracker = null;
@@ -46,7 +55,7 @@
         /// The reported angular velocity on the first active <see cref="VelocityTracker"/>.
         /// </summary>
         /// <returns>The current angular velocity.</returns>
-        public override Vector3 GetAngularVelocity()
+        protected override Vector3 DoGetAngularVelocity()
         {
             Vector3 currentAngularVelocity = Vector3.zero;
             cachedTracker = null;
@@ -60,15 +69,6 @@
                 }
             }
             return currentAngularVelocity;
-        }
-
-        /// <summary>
-        /// The current active <see cref="VelocityTracker"/> that is reporting velocities.
-        /// </summary>
-        /// <returns>The current active <see cref="VelocityTracker"/>.</returns>
-        public virtual VelocityTracker GetActiveVelocityTracker()
-        {
-            return (cachedTracker != null && cachedTracker.IsActive() ? cachedTracker : null);
         }
     }
 }
