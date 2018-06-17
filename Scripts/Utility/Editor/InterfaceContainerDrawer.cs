@@ -28,9 +28,11 @@
                 throw new ArgumentException();
             }
 
+            label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;
+
             using (new EditorGUI.PropertyScope(position, label, property))
             {
-                EditorGUI.ObjectField(position, property.FindPropertyRelative("field"), type.GenericTypeArguments.Single());
+                EditorGUI.ObjectField(position, property.FindPropertyRelative("field"), type.GenericTypeArguments.Single(), label);
             }
         }
     }

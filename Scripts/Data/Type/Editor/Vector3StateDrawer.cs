@@ -9,14 +9,12 @@
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            TooltipAttribute currentTooltip = EditorHelper.GetTooltipAttribute(fieldInfo);
-            label.tooltip = (currentTooltip != null ? currentTooltip.tooltip : "");
+            label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;
+
             SerializedProperty xState = property.FindPropertyRelative("xState");
             SerializedProperty yState = property.FindPropertyRelative("yState");
             SerializedProperty zState = property.FindPropertyRelative("zState");
 
-            int indent = EditorGUI.indentLevel;
-            EditorGUI.indentLevel = 0;
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             float updatePositionX = position.x;
             float labelWidth = 15f;
@@ -36,8 +34,6 @@
             updatePositionX += labelWidth;
             zState.boolValue = EditorGUI.Toggle(new Rect(updatePositionX, position.y, fieldWidth, position.height), zState.boolValue);
             updatePositionX += fieldWidth;
-
-            EditorGUI.indentLevel = indent;
         }
     }
 }

@@ -53,7 +53,7 @@
         /// <summary>
         /// The element type on the <see cref="GameObject"/> to check against.
         /// </summary>
-        [UnityFlag]
+        [UnityFlags]
         [Tooltip("The element type on the GameObject to check against.")]
         public CheckTypes checkType = CheckTypes.Tag;
         /// <summary>
