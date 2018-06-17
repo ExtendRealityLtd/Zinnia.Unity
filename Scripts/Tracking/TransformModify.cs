@@ -73,7 +73,7 @@
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
         /// </summary>
-        [UnityFlag]
+        [UnityFlags]
         [Tooltip("The Transform properties to apply the transformations on.")]
         public TransformProperties applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
         /// <summary>

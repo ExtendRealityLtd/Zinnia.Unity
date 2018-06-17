@@ -61,7 +61,7 @@
         /// <summary>
         /// The <see cref="Transform"/> properties to follow.
         /// </summary>
-        [UnityFlag]
+        [UnityFlags]
         [Tooltip("The Transform properties to follow.")]
         public TransformProperties follow = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
         /// <summary>
