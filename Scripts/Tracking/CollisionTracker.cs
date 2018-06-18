@@ -75,7 +75,7 @@
         /// <summary>
         /// The types of collisions that events will be emitted for.
         /// </summary>
-        [UnityFlag]
+        [UnityFlags]
         [Tooltip("The types of collisions that events will be emitted for.")]
         public CollisionTypes emittedTypes = (CollisionTypes)(-1);
 
