@@ -96,32 +96,50 @@
 
         protected virtual void OnCollisionEnter(Collision collision)
         {
-            CollisionStarted?.Invoke(eventData.Set(false, collision, collision.collider));
+            if (emittedTypes.HasFlag(CollisionTypes.Collision))
+            {
+                CollisionStarted?.Invoke(eventData.Set(false, collision, collision.collider));
+            }
         }
 
         protected virtual void OnCollisionStay(Collision collision)
         {
-            CollisionChanged?.Invoke(eventData.Set(false, collision, collision.collider));
+            if (emittedTypes.HasFlag(CollisionTypes.Collision))
+            {
+                CollisionChanged?.Invoke(eventData.Set(false, collision, collision.collider));
+            }
         }
 
         protected virtual void OnCollisionExit(Collision collision)
         {
-            CollisionStopped?.Invoke(eventData.Set(false, collision, collision.collider));
+            if (emittedTypes.HasFlag(CollisionTypes.Collision))
+            {
+                CollisionStopped?.Invoke(eventData.Set(false, collision, collision.collider));
+            }
         }
 
         protected virtual void OnTriggerEnter(Collider collider)
         {
-            CollisionStarted?.Invoke(eventData.Set(true, null, collider));
+            if (emittedTypes.HasFlag(CollisionTypes.Trigger))
+            {
+                CollisionStarted?.Invoke(eventData.Set(true, null, collider));
+            }
         }
 
         protected virtual void OnTriggerStay(Collider collider)
         {
-            CollisionChanged?.Invoke(eventData.Set(true, null, collider));
+            if (emittedTypes.HasFlag(CollisionTypes.Trigger))
+            {
+                CollisionChanged?.Invoke(eventData.Set(true, null, collider));
+            }
         }
 
         protected virtual void OnTriggerExit(Collider collider)
         {
-            CollisionStopped?.Invoke(eventData.Set(true, null, collider));
+            if (emittedTypes.HasFlag(CollisionTypes.Trigger))
+            {
+                CollisionStopped?.Invoke(eventData.Set(true, null, collider));
+            }
         }
     }
 }
