@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Input
+﻿namespace VRTK.Core.Prefabs.UnityXRCameraRig.Input
 {
     using UnityEngine;
     using VRTK.Core.Action;
