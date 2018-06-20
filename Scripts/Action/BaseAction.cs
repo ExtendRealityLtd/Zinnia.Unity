@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The basis for all action types.
@@ -30,9 +31,10 @@
     /// <summary>
     /// A generic type that forms as the basis for all action types.
     /// </summary>
+    /// <typeparam name="TSelf">This type itself.</typeparam>
     /// <typeparam name="TValue">The variable type the action will be utilizing.</typeparam>
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type the action will be utilizing.</typeparam>
-    public abstract class BaseAction<TValue, TEvent> : BaseAction where TEvent : UnityEvent<TValue>, new()
+    public abstract class BaseAction<TSelf, TValue, TEvent> : BaseAction where TSelf : BaseAction<TSelf, TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
     {
         /// <summary>
         /// The value of the action.
@@ -50,15 +52,21 @@
         public TValue defaultValue;
 
         /// <summary>
-        /// Emitted when the <see cref="BaseAction{TValue,TEvent}"/> becomes active.
+        /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
+        /// </summary>
+        [Tooltip("Actions to subscribe to when this action is enabled. Allows chaining the source actions to this action.")]
+        public List<TSelf> sources = new List<TSelf>();
+
+        /// <summary>
+        /// Emitted when the action becomes active.
         /// </summary>
         public TEvent Activated = new TEvent();
         /// <summary>
-        /// Emitted when the <see cref="Value"/> of the <see cref="BaseAction{TValue,TEvent}"/> changes.
+        /// Emitted when the <see cref="Value"/> of the action changes.
         /// </summary>
         public TEvent ValueChanged = new TEvent();
         /// <summary>
-        /// Emitted when the <see cref="BaseAction{TValue,TEvent}"/> becomes deactivated.
+        /// Emitted when the action becomes deactivated.
         /// </summary>
         public TEvent Deactivated = new TEvent();
 
@@ -85,6 +93,44 @@
             {
                 ValueChanged?.Invoke(Value);
             }
+        }
+
+        protected virtual void OnEnable()
+        {
+            SubscribeToSources();
+        }
+
+        protected virtual void OnDisable()
+        {
+            UnsubscribeFromSources();
+        }
+
+        /// <summary>
+        /// Subscribes to all events on each action in <see cref="sources"/>.
+        /// </summary>
+        protected virtual void SubscribeToSources()
+        {
+            sources.ForEach(
+                source =>
+                {
+                    source.Activated.AddListener(Receive);
+                    source.ValueChanged.AddListener(Receive);
+                    source.Deactivated.AddListener(Receive);
+                });
+        }
+
+        /// <summary>
+        /// Unsubscribes from all events on each action in <see cref="sources"/>.
+        /// </summary>
+        protected virtual void UnsubscribeFromSources()
+        {
+            sources.ForEach(
+                source =>
+                {
+                    source.Activated.RemoveListener(Receive);
+                    source.ValueChanged.RemoveListener(Receive);
+                    source.Deactivated.RemoveListener(Receive);
+                });
         }
 
         /// <summary>

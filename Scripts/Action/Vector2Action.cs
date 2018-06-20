@@ -8,7 +8,7 @@
     /// <summary>
     /// Emits a <see cref="Vector2"/> value.
     /// </summary>
-    public class Vector2Action : BaseAction<Vector2, Vector2Action.UnityEvent>
+    public class Vector2Action : BaseAction<Vector2Action, Vector2, Vector2Action.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the <see cref="Vector2"/> state.

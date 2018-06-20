@@ -8,7 +8,7 @@
     /// <summary>
     /// Emits a <see cref="float"/> value.
     /// </summary>
-    public class FloatAction : BaseAction<float, FloatAction.UnityEvent>
+    public class FloatAction : BaseAction<FloatAction, float, FloatAction.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the <see cref="float"/> state.
