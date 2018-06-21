@@ -3,8 +3,11 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using VRTK.Core.Data.Attribute;
     using VRTK.Core.Utility;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Allows emitting collision data via events.
@@ -15,7 +18,7 @@
         /// Holds data about a <see cref="CollisionTracker"/> event.
         /// </summary>
         [Serializable]
-        public class EventData
+        public class EventData : IEquatable<EventData>
         {
             /// <summary>
             /// The source of this event in case it was forwarded.
@@ -53,6 +56,52 @@
             {
                 Set(default(Component), default(bool), default(Collision), default(Collider));
             }
+
+            /// <inheritdoc />
+            public bool Equals(EventData other)
+            {
+                if (ReferenceEquals(null, other))
+                {
+                    return false;
+                }
+
+                if (ReferenceEquals(this, other))
+                {
+                    return true;
+                }
+
+                return Equals(collider.GetContainingTransform(), other.collider.GetContainingTransform());
+            }
+
+            /// <inheritdoc />
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+
+                if (ReferenceEquals(this, obj))
+                {
+                    return true;
+                }
+
+                if (obj.GetType() != this.GetType())
+                {
+                    return false;
+                }
+
+                return Equals((EventData)obj);
+            }
+
+            /// <inheritdoc />
+            public override int GetHashCode()
+            {
+                return collider.GetContainingTransform().GetHashCode();
+            }
+
+            public static bool operator ==(EventData left, EventData right) => Equals(left, right);
+            public static bool operator !=(EventData left, EventData right) => !Equals(left, right);
         }
 
         /// <summary>
@@ -119,6 +168,23 @@
                     || !ExclusionRule.ShouldExclude(data.forwardSource.gameObject, forwardingSourceValidity));
         }
 
+        /// <summary>
+        /// Returns a <see cref="CollisionNotifier"/> collection for the given <see cref="EventData"/> containing <see cref="Transform"/>
+        /// </summary>
+        /// <param name="data">The <see cref="EventData"/> that holds the containing <see cref="Transform"/></param>
+        /// <returns>A <see cref="CollisionNotifier"/> collection for items found on the containing <see cref="Transform"/> component.</returns>
+        protected virtual IEnumerable<CollisionNotifier> GetNotifiers(EventData data)
+        {
+            Transform reference = data.collider.GetContainingTransform();
+
+            if (transform.IsChildOf(reference))
+            {
+                return Enumerable.Empty<CollisionNotifier>();
+            }
+
+            return reference.GetComponentsInChildren<CollisionNotifier>();
+        }
+
         protected virtual void OnCollisionStarted(EventData data)
         {
             if (!CanEmit(data))
@@ -128,12 +194,7 @@
 
             CollisionStarted?.Invoke(data);
 
-            if (transform.IsChildOf(data.collider.transform))
-            {
-                return;
-            }
-
-            foreach (CollisionNotifier notifier in data.collider.gameObject.GetComponentsInChildren<CollisionNotifier>())
+            foreach (CollisionNotifier notifier in GetNotifiers(data))
             {
                 notifier.OnCollisionStarted(data);
             }
@@ -148,12 +209,7 @@
 
             CollisionChanged?.Invoke(data);
 
-            if (transform.IsChildOf(data.collider.transform))
-            {
-                return;
-            }
-
-            foreach (CollisionNotifier notifier in data.collider.gameObject.GetComponentsInChildren<CollisionNotifier>())
+            foreach (CollisionNotifier notifier in GetNotifiers(data))
             {
                 notifier.OnCollisionChanged(data);
             }
@@ -168,12 +224,7 @@
 
             CollisionStopped?.Invoke(data);
 
-            if (transform.IsChildOf(data.collider.transform))
-            {
-                return;
-            }
-
-            foreach (CollisionNotifier notifier in data.collider.gameObject.GetComponentsInChildren<CollisionNotifier>())
+            foreach (CollisionNotifier notifier in GetNotifiers(data))
             {
                 notifier.OnCollisionStopped(data);
             }
