@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using NUnit.Framework;
+    using VRTK.Core.Utility.Mock;
 
     public class VelocityTrackerProcessorTest
     {
@@ -25,9 +26,9 @@
         [Test]
         public void GetVelocityFromFirstActive()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(true, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(true, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -39,14 +40,18 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
         public void GetVelocityFromSecondActive()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -58,14 +63,18 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
         public void GetVelocityFromThirdActive()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -77,14 +86,18 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
         public void GetVelocityFromNoneActive()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -96,6 +109,10 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
@@ -112,9 +129,9 @@
         [Test]
         public void GetActiveVelocityTrackerAfterGetVelocity()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -127,14 +144,18 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
         public void GetActiveVelocityTrackerAfterGetAngularVelocity()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -147,14 +168,18 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
         public void GetAngularVelocityFromFirstActive()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(true, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(true, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -166,14 +191,18 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
         public void GetAngularVelocityFromSecondActive()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -185,14 +214,18 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
         public void GetAngularVelocityFromThirdActive()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -204,14 +237,18 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
         public void GetAngularVelocityFromNoneActive()
         {
-            VelocityTrackerMock trackerOne = MockVelocityTracker(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
-            VelocityTrackerMock trackerTwo = MockVelocityTracker(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
-            VelocityTrackerMock trackerThree = MockVelocityTracker(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
+            VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
+            VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
+            VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
             subject.velocityTrackers.Add(trackerOne);
             subject.velocityTrackers.Add(trackerTwo);
@@ -223,6 +260,10 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
+
+            Object.DestroyImmediate(trackerOne.gameObject);
+            Object.DestroyImmediate(trackerTwo.gameObject);
+            Object.DestroyImmediate(trackerThree.gameObject);
         }
 
         [Test]
@@ -234,43 +275,6 @@
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
-        }
-
-        private VelocityTrackerMock MockVelocityTracker(bool mockActive, Vector3 mockVelocity, Vector3 mockAngularVelocity)
-        {
-            GameObject mockObject = new GameObject();
-            VelocityTrackerMock mock = mockObject.AddComponent<VelocityTrackerMock>();
-            mock.Construct(mockActive, mockVelocity, mockAngularVelocity);
-            return mock;
-        }
-    }
-
-    public class VelocityTrackerMock : VelocityTracker
-    {
-        private bool mockActive;
-        private Vector3 mockVelocity;
-        private Vector3 mockAngularVelocity;
-
-        public virtual void Construct(bool active, Vector3 velocity, Vector3 angularVelocity)
-        {
-            mockActive = active;
-            mockVelocity = velocity;
-            mockAngularVelocity = angularVelocity;
-        }
-
-        public override bool IsActive()
-        {
-            return mockActive;
-        }
-
-        protected override Vector3 DoGetVelocity()
-        {
-            return mockVelocity;
-        }
-
-        protected override Vector3 DoGetAngularVelocity()
-        {
-            return mockAngularVelocity;
         }
     }
 }
