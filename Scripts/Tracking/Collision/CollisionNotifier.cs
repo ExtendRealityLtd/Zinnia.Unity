@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Tracking
+﻿namespace VRTK.Core.Tracking.Collision
 {
     using UnityEngine;
     using UnityEngine.Events;
