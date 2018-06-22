@@ -1,8 +1,10 @@
-﻿namespace VRTK.Core.Action
+﻿using VRTK.Core.Action;
+
+namespace Test.VRTK.Core.Action
 {
     using UnityEngine;
     using NUnit.Framework;
-    using VRTK.Core.Utility.Mock;
+    using Test.VRTK.Core.Utility.Mock;
 
     public class Vector2ActionTest
     {

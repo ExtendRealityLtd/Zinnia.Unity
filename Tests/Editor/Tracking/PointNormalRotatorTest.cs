@@ -1,8 +1,10 @@
-﻿namespace VRTK.Core.Tracking
+﻿using VRTK.Core.Tracking;
+using VRTK.Core.Cast;
+
+namespace Test.VRTK.Core.Tracking
 {
     using UnityEngine;
     using NUnit.Framework;
-    using VRTK.Core.Cast;
 
     public class PointNormalRotatorTest
     {

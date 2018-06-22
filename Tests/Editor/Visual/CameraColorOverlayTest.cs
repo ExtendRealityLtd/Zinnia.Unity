@@ -1,8 +1,10 @@
-﻿namespace VRTK.Core.Visual
+﻿using VRTK.Core.Visual;
+
+namespace Test.VRTK.Core.Visual
 {
     using UnityEngine;
     using NUnit.Framework;
-    using VRTK.Core.Utility.Mock;
+    using Test.VRTK.Core.Utility.Mock;
 
     public class CameraColorOverlayTest
     {

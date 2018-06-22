@@ -1,4 +1,6 @@
-﻿namespace VRTK.Core.Tracking
+﻿using VRTK.Core.Tracking;
+
+namespace Test.VRTK.Core.Tracking
 {
     using System;
     using System.Linq;

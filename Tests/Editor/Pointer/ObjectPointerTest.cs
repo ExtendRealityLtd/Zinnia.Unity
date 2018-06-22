@@ -1,9 +1,11 @@
-﻿namespace VRTK.Core.Pointer
+﻿using VRTK.Core.Pointer;
+using VRTK.Core.Cast;
+
+namespace Test.VRTK.Core.Pointer
 {
     using UnityEngine;
     using NUnit.Framework;
-    using VRTK.Core.Cast;
-    using VRTK.Core.Utility.Mock;
+    using Test.VRTK.Core.Utility.Mock;
 
     public class PointerTest
     {

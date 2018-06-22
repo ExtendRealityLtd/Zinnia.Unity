@@ -1,9 +1,12 @@
-﻿namespace VRTK.Core.Tracking.Follow
+﻿using VRTK.Core.Tracking.Follow;
+using VRTK.Core.Tracking.Follow.Modifier;
+using VRTK.Core.Data.Enum;
+
+namespace Test.VRTK.Core.Tracking.Follow
 {
     using UnityEngine;
     using NUnit.Framework;
-    using VRTK.Core.Tracking.Follow.Modifier;
-    using VRTK.Core.Utility.Mock;
+    using Test.VRTK.Core.Utility.Mock;
 
     public class ObjectFollowTest
     {
@@ -43,7 +46,7 @@
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.FirstActive);
 
-            subject.follow = Data.Enum.TransformProperties.Position;
+            subject.follow = TransformProperties.Position;
             subject.followModifier = followModifierMock;
 
             subject.Process();
@@ -72,7 +75,7 @@
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.FirstActive);
 
-            subject.follow = Data.Enum.TransformProperties.Position;
+            subject.follow = TransformProperties.Position;
             subject.followModifier = followModifierMock;
 
             targets[0].SetActive(false);
@@ -114,7 +117,7 @@
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = Data.Enum.TransformProperties.Position;
+            subject.follow = TransformProperties.Position;
             subject.followModifier = followModifierMock;
 
             subject.Process();
@@ -162,7 +165,7 @@
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = Data.Enum.TransformProperties.Position;
+            subject.follow = TransformProperties.Position;
             subject.followModifier = followModifierMock;
 
             subject.Process();
@@ -220,7 +223,7 @@
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = Data.Enum.TransformProperties.Rotation;
+            subject.follow = TransformProperties.Rotation;
             subject.followModifier = followModifierMock;
 
             subject.Process();
@@ -280,7 +283,7 @@
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = Data.Enum.TransformProperties.Scale;
+            subject.follow = TransformProperties.Scale;
             subject.followModifier = followModifierMock;
 
             subject.Process();
@@ -340,7 +343,7 @@
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = Data.Enum.TransformProperties.Position | Data.Enum.TransformProperties.Rotation;
+            subject.follow = TransformProperties.Position | TransformProperties.Rotation;
             subject.followModifier = followModifierMock;
 
             subject.Process();
@@ -408,7 +411,7 @@
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = Data.Enum.TransformProperties.Position | Data.Enum.TransformProperties.Rotation | Data.Enum.TransformProperties.Scale;
+            subject.follow = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
             subject.followModifier = followModifierMock;
             subject.gameObject.SetActive(false);
 
@@ -479,7 +482,7 @@
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = Data.Enum.TransformProperties.Position | Data.Enum.TransformProperties.Rotation | Data.Enum.TransformProperties.Scale;
+            subject.follow = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
             subject.followModifier = followModifierMock;
             subject.enabled = false;
 

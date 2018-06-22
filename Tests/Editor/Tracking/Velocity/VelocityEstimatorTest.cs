@@ -1,4 +1,6 @@
-﻿namespace VRTK.Core.Tracking.Velocity
+﻿using VRTK.Core.Tracking.Velocity;
+
+namespace Test.VRTK.Core.Tracking.Velocity
 {
     using UnityEngine;
     using NUnit.Framework;

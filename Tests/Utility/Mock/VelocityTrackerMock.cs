@@ -1,7 +1,8 @@
-﻿namespace VRTK.Core.Utility.Mock
+﻿using VRTK.Core.Tracking.Velocity;
+
+namespace Test.VRTK.Core.Utility.Mock
 {
     using UnityEngine;
-    using VRTK.Core.Tracking.Velocity;
 
     public class VelocityTrackerMock : VelocityTracker
     {

@@ -1,9 +1,11 @@
-﻿namespace VRTK.Core.Action
+﻿using VRTK.Core.Data.Type;
+using VRTK.Core.Action;
+
+namespace Test.VRTK.Core.Action
 {
     using UnityEngine;
     using NUnit.Framework;
-    using VRTK.Core.Utility.Mock;
-    using VRTK.Core.Data.Type;
+    using Test.VRTK.Core.Utility.Mock;
 
     public class SurfaceChangeActionTest
     {

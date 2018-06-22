@@ -1,9 +1,12 @@
-﻿namespace VRTK.Core.Tracking
+﻿using VRTK.Core.Tracking;
+using VRTK.Core.Data.Type;
+using VRTK.Core.Data.Enum;
+
+namespace Test.VRTK.Core.Tracking
 {
     using UnityEngine;
     using NUnit.Framework;
-    using VRTK.Core.Data.Type;
-    using VRTK.Core.Utility.Mock;
+    using Test.VRTK.Core.Utility.Mock;
 
     public class TransformModifyTest
     {
@@ -44,7 +47,7 @@
             targetTransformData.transform.position = Vector3.one;
 
             subject.source = sourceObject.transform;
-            subject.applyTransformations = Data.Enum.TransformProperties.Position;
+            subject.applyTransformations = TransformProperties.Position;
 
             Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
             subject.Modify(targetTransformData);
@@ -59,7 +62,7 @@
             targetTransformData.transform.rotation = targetRotation;
 
             subject.source = sourceObject.transform;
-            subject.applyTransformations = Data.Enum.TransformProperties.Rotation;
+            subject.applyTransformations = TransformProperties.Rotation;
 
             Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
             Assert.AreEqual(Quaternion.identity, sourceObject.transform.rotation);
@@ -76,7 +79,7 @@
             targetTransformData.transform.localScale = Vector3.one * 2f;
 
             subject.source = sourceObject.transform;
-            subject.applyTransformations = Data.Enum.TransformProperties.Scale;
+            subject.applyTransformations = TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
             Assert.AreEqual(Quaternion.identity, sourceObject.transform.rotation);
@@ -99,7 +102,7 @@
 
             subject.source = sourceObject.transform;
             subject.offset = offsetObject.transform;
-            subject.applyTransformations = Data.Enum.TransformProperties.Position | Data.Enum.TransformProperties.Rotation | Data.Enum.TransformProperties.Scale;
+            subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
             subject.Modify(targetTransformData);
             Assert.AreEqual(new Vector3(-1f, -1f, 5f).ToString(), sourceObject.transform.position.ToString());
@@ -120,7 +123,7 @@
             subject.source = sourceObject.transform;
             subject.offset = offsetObject.transform;
             subject.applyOffsetOnAxis = new Vector3State(true, false, false);
-            subject.applyTransformations = Data.Enum.TransformProperties.Position | Data.Enum.TransformProperties.Rotation | Data.Enum.TransformProperties.Scale;
+            subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
             subject.Modify(targetTransformData);
             Assert.AreEqual(new Vector3(2f, -1f, 2f).ToString(), sourceObject.transform.position.ToString());
@@ -195,7 +198,7 @@
             targetTransformData.transform.position = Vector3.one;
 
             subject.source = sourceObject.transform;
-            subject.applyTransformations = Data.Enum.TransformProperties.Position;
+            subject.applyTransformations = TransformProperties.Position;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
@@ -209,7 +212,7 @@
             targetTransformData.transform.position = Vector3.one;
 
             subject.source = sourceObject.transform;
-            subject.applyTransformations = Data.Enum.TransformProperties.Position;
+            subject.applyTransformations = TransformProperties.Position;
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, sourceObject.transform.position);

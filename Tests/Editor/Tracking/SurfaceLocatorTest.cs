@@ -1,11 +1,13 @@
-﻿namespace VRTK.Core.Tracking
+﻿using VRTK.Core.Tracking;
+using VRTK.Core.Utility;
+
+namespace Test.VRTK.Core.Tracking
 {
     using UnityEngine;
     using NUnit.Framework;
     using System.Collections.Generic;
-    using VRTK.Core.Utility;
-    using VRTK.Core.Utility.Mock;
-    using VRTK.Core.Utility.Stub;
+    using Test.VRTK.Core.Utility.Mock;
+    using Test.VRTK.Core.Utility.Stub;
 
     public class SurfaceLocatorTest
     {

@@ -1,11 +1,13 @@
-﻿namespace VRTK.Core.Cast
+﻿using VRTK.Core.Cast;
+using VRTK.Core.Utility;
+
+namespace Test.VRTK.Core.Cast
 {
     using UnityEngine;
     using NUnit.Framework;
     using System.Collections.Generic;
-    using VRTK.Core.Utility;
-    using VRTK.Core.Utility.Mock;
-    using VRTK.Core.Utility.Stub;
+    using Test.VRTK.Core.Utility.Mock;
+    using Test.VRTK.Core.Utility.Stub;
 
     public class StraightLineCastTest
     {
