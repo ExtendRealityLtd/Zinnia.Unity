@@ -1,4 +1,6 @@
-﻿namespace VRTK.Core.Utility
+﻿using VRTK.Core.Utility;
+
+namespace Test.VRTK.Core.Utility
 {
     using UnityEngine;
     using NUnit.Framework;

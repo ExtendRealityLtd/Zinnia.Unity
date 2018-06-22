@@ -1,7 +1,8 @@
-﻿namespace VRTK.Core.Utility
+﻿namespace Test.VRTK.Core.Utility
 {
     using UnityEngine;
 
+    [AddComponentMenu("")]
     public class TimeSettingOverride
     {
         private float savedFixedDeltaTime;

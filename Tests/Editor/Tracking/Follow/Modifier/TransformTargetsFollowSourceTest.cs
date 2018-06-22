@@ -1,4 +1,6 @@
-﻿namespace VRTK.Core.Tracking.Follow.Modifier
+﻿using VRTK.Core.Tracking.Follow.Modifier;
+
+namespace Test.VRTK.Core.Tracking.Follow.Modifier
 {
     using UnityEngine;
     using NUnit.Framework;

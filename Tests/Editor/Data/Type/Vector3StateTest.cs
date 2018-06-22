@@ -1,4 +1,6 @@
-﻿namespace VRTK.Core.Data.Type
+﻿using VRTK.Core.Data.Type;
+
+namespace Test.VRTK.Core.Data.Type
 {
     using NUnit.Framework;
 
