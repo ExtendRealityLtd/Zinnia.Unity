@@ -81,6 +81,26 @@
                 return;
             }
 
+            ProcessValue(value);
+        }
+
+        protected virtual void OnEnable()
+        {
+            SubscribeToSources();
+        }
+
+        protected virtual void OnDisable()
+        {
+            ProcessValue(defaultValue);
+            UnsubscribeFromSources();
+        }
+
+        /// <summary>
+        /// Processes the given value and emits the appropriate events.
+        /// </summary>
+        /// <param name="value">The new value.</param>
+        protected virtual void ProcessValue(TValue value)
+        {
             Value = value;
 
             bool shouldActivate = ShouldActivate(value);
@@ -93,16 +113,6 @@
             {
                 ValueChanged?.Invoke(Value);
             }
-        }
-
-        protected virtual void OnEnable()
-        {
-            SubscribeToSources();
-        }
-
-        protected virtual void OnDisable()
-        {
-            UnsubscribeFromSources();
         }
 
         /// <summary>

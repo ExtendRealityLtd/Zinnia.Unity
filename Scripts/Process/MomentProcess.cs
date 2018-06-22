@@ -17,5 +17,10 @@
         /// </summary>
         [Tooltip("Only run the process if the process is on an active GameObject and the Component is enabled.")]
         public bool onlyProcessOnActiveAndEnabled = true;
+
+        private void OnEnable()
+        {
+            // This empty implementation tells Unity to draw the enabled checkbox for this component, allowing to disable the component at edit-time.
+        }
     }
 }
