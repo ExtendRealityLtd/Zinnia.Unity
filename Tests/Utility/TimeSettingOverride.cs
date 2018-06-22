@@ -2,6 +2,7 @@
 {
     using UnityEngine;
 
+    [AddComponentMenu("")]
     public class TimeSettingOverride
     {
         private float savedFixedDeltaTime;

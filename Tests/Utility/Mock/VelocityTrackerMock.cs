@@ -4,6 +4,7 @@ namespace Test.VRTK.Core.Utility.Mock
 {
     using UnityEngine;
 
+    [AddComponentMenu("")]
     public class VelocityTrackerMock : VelocityTracker
     {
         private bool mockActive;

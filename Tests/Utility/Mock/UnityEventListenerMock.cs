@@ -1,8 +1,11 @@
 ﻿namespace Test.VRTK.Core.Utility.Mock
 {
+    using UnityEngine;
+
     /// <summary>
     /// The UnityEventListenerMock creates a simple mechanism of registering a listener with a UnityEvent and checking if the event was emitted.
     /// </summary>
+    [AddComponentMenu("")]
     public class UnityEventListenerMock
     {
         /// <summary>

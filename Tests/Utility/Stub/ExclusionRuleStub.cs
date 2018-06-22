@@ -2,6 +2,7 @@
 {
     using UnityEngine;
 
+    [AddComponentMenu("")]
     public class ExclusionRuleStub : MonoBehaviour
     {
     }
