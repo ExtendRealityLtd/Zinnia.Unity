@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Process
+﻿namespace VRTK.Core.Process.Component
 {
     using UnityEngine;
     using System.Collections.Generic;
