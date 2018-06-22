@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using NUnit.Framework;
+    using VRTK.Core.Utility;
 
     public class ModifyRigidbodyVelocityTest
     {
@@ -9,9 +10,13 @@
         private ModifyRigidbodyVelocity subject;
         private Rigidbody subjectRigidbody;
 
+        private TimeSettingOverride timeOverride;
+
         [SetUp]
         public void SetUp()
         {
+            timeOverride = new TimeSettingOverride(0.02f, 0.3333333f, 1f, 0.03f);
+
             containingObject = new GameObject();
             subject = containingObject.AddComponent<ModifyRigidbodyVelocity>();
             subjectRigidbody = containingObject.AddComponent<Rigidbody>();
@@ -23,6 +28,8 @@
             Object.DestroyImmediate(subjectRigidbody);
             Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
+
+            timeOverride.ResetTime();
         }
 
         [Test]
