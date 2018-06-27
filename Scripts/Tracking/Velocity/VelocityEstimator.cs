@@ -99,8 +99,8 @@
         {
             velocitySamples = new Vector3[velocityAverageFrames];
             angularVelocitySamples = new Vector3[angularVelocityAverageFrames];
-            previousPosition = (source != null ? source.localPosition : Vector3.zero);
-            previousRotation = (source != null ? source.localRotation : Quaternion.identity);
+            previousPosition = (source != null ? source.position : Vector3.zero);
+            previousRotation = (source != null ? source.rotation : Quaternion.identity);
             collectSamples = autoStartSampling;
         }
 
@@ -174,7 +174,7 @@
         /// <param name="factor">The multiplier to apply to the transform difference.</param>
         protected virtual void EstimateVelocity(float factor)
         {
-            Vector3 currentPosition = (source != null ? source.localPosition : Vector3.zero);
+            Vector3 currentPosition = (source != null ? source.position : Vector3.zero);
             if (velocitySamples.Length > 0)
             {
                 int sampleIndex = currentSampleCount % velocitySamples.Length;
@@ -189,7 +189,7 @@
         /// <param name="factor">The multiplier to apply to the transform difference.</param>
         protected virtual void EstimateAngularVelocity(float factor)
         {
-            Quaternion currentRotation = (source != null ? source.localRotation : Quaternion.identity);
+            Quaternion currentRotation = (source != null ? source.rotation : Quaternion.identity);
             Quaternion deltaRotation = currentRotation * Quaternion.Inverse(previousRotation);
             float theta = 2.0f * Mathf.Acos(Mathf.Clamp(deltaRotation.w, -1.0f, 1.0f));
             if (theta > Mathf.PI)
