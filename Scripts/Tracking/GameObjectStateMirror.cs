@@ -1,7 +1,7 @@
 ﻿namespace VRTK.Core.Tracking
 {
     using UnityEngine;
-    using VRTK.Core.Process;
+    using VRTK.Core.Process.Component;
 
     /// <summary>
     /// Mirrors the <see cref="GameObject.activeInHierarchy"/> state of the source <see cref="GameObject"/> across all of the given target <see cref="GameObject"/>s.

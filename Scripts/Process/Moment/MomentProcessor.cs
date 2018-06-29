@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Process
+﻿namespace VRTK.Core.Process.Moment
 {
     using UnityEngine;
     using System;

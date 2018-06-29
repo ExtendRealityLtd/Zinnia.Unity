@@ -7,7 +7,7 @@
     using VRTK.Core.Data.Attribute;
     using VRTK.Core.Data.Enum;
     using VRTK.Core.Extension;
-    using VRTK.Core.Process;
+    using VRTK.Core.Process.Component;
     using VRTK.Core.Tracking.Follow.Modifier;
 
     /// <summary>
