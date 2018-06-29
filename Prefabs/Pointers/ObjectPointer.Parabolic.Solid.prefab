@@ -185,6 +185,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4803560057932974}
+  - component: {fileID: 114082998435215688}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -230,6 +231,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4499763694358890}
+  - component: {fileID: 114143776512287112}
   - component: {fileID: 114206215443630188}
   m_Layer: 0
   m_Name: ObjectPointer.Parabolic.Solid
@@ -778,6 +780,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1897072728865122}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114082998435215688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1734268726895190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd85da9f52060d242b31329cf514503d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userSetup: {fileID: 114143776512287112}
+  objectFollow: {fileID: 114787471753854276}
 --- !u!114 &114088149306012980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -817,6 +832,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b312e4fdef6b0544a894200a87b3cd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114143776512287112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1833726096160516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ecd51ac6076c54194ff327a81bc301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTarget: {fileID: 0}
 --- !u!114 &114206215443630188
 MonoBehaviour:
   m_ObjectHideFlags: 1

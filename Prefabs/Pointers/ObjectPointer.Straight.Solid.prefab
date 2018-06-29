@@ -195,6 +195,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4577846633394596}
+  - component: {fileID: 114338097798873102}
   - component: {fileID: 114197183415454534}
   m_Layer: 0
   m_Name: ObjectPointer.Straight.Solid
@@ -280,6 +281,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4672520991212470}
+  - component: {fileID: 114365416445008756}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -919,6 +921,31 @@ MonoBehaviour:
   process:
     field: {fileID: 114575586969449166}
   onlyProcessOnActiveAndEnabled: 1
+--- !u!114 &114338097798873102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1727323965789784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ecd51ac6076c54194ff327a81bc301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTarget: {fileID: 0}
+--- !u!114 &114365416445008756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1946040649675228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd85da9f52060d242b31329cf514503d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userSetup: {fileID: 114338097798873102}
+  objectFollow: {fileID: 114592943992436606}
 --- !u!114 &114575586969449166
 MonoBehaviour:
   m_ObjectHideFlags: 1
