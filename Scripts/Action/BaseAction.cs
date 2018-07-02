@@ -10,6 +10,29 @@
     public abstract class BaseAction : MonoBehaviour
     {
         /// <summary>
+        /// Adds a given action to the sources collection.
+        /// </summary>
+        /// <param name="action">The action to add.</param>
+        public abstract void AddSource(BaseAction action);
+        /// <summary>
+        /// Removes the given action from the sources collection.
+        /// </summary>
+        /// <param name="action">The action to remove.</param>
+        public abstract void RemoveSource(BaseAction action);
+        /// <summary>
+        /// Clears all sources.
+        /// </summary>
+        public abstract void ClearSources();
+        /// <summary>
+        /// Attempts to subscribe listeners to each of the source actions.
+        /// </summary>
+        public abstract void SubscribeToSources();
+        /// <summary>
+        /// Attempts to unsubscribe existing listeners from each of the source actions.
+        /// </summary>
+        public abstract void UnsubscribeFromSources();
+
+        /// <summary>
         /// Determines whether the action is currently activated.
         /// </summary>
         public bool IsActivated
@@ -70,6 +93,48 @@
         /// </summary>
         public TEvent Deactivated = new TEvent();
 
+        /// <inheritdoc />
+        public override void AddSource(BaseAction action)
+        {
+            sources.Add((TSelf)action);
+        }
+
+        /// <inheritdoc />
+        public override void RemoveSource(BaseAction action)
+        {
+            sources.Remove((TSelf)action);
+        }
+
+        /// <inheritdoc />
+        public override void ClearSources()
+        {
+            sources.Clear();
+        }
+
+        /// <inheritdoc />
+        public override void SubscribeToSources()
+        {
+            sources.ForEach(
+                source =>
+                {
+                    source.Activated.AddListener(Receive);
+                    source.ValueChanged.AddListener(Receive);
+                    source.Deactivated.AddListener(Receive);
+                });
+        }
+
+        /// <inheritdoc />
+        public override void UnsubscribeFromSources()
+        {
+            sources.ForEach(
+                source =>
+                {
+                    source.Activated.RemoveListener(Receive);
+                    source.ValueChanged.RemoveListener(Receive);
+                    source.Deactivated.RemoveListener(Receive);
+                });
+        }
+
         /// <summary>
         /// Acts on the value.
         /// </summary>
@@ -113,34 +178,6 @@
             {
                 ValueChanged?.Invoke(Value);
             }
-        }
-
-        /// <summary>
-        /// Subscribes to all events on each action in <see cref="sources"/>.
-        /// </summary>
-        protected virtual void SubscribeToSources()
-        {
-            sources.ForEach(
-                source =>
-                {
-                    source.Activated.AddListener(Receive);
-                    source.ValueChanged.AddListener(Receive);
-                    source.Deactivated.AddListener(Receive);
-                });
-        }
-
-        /// <summary>
-        /// Unsubscribes from all events on each action in <see cref="sources"/>.
-        /// </summary>
-        protected virtual void UnsubscribeFromSources()
-        {
-            sources.ForEach(
-                source =>
-                {
-                    source.Activated.RemoveListener(Receive);
-                    source.ValueChanged.RemoveListener(Receive);
-                    source.Deactivated.RemoveListener(Receive);
-                });
         }
 
         /// <summary>

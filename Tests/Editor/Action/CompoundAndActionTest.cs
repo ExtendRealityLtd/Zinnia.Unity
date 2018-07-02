@@ -306,6 +306,26 @@ namespace Test.VRTK.Core.Action
 
     public class MockAction : BaseAction
     {
+        public override void AddSource(BaseAction action)
+        {
+        }
+
+        public override void RemoveSource(BaseAction action)
+        {
+        }
+
+        public override void ClearSources()
+        {
+        }
+
+        public override void SubscribeToSources()
+        {
+        }
+
+        public override void UnsubscribeFromSources()
+        {
+        }
+
         public virtual void SetIsActivated(bool value)
         {
             IsActivated = value;
