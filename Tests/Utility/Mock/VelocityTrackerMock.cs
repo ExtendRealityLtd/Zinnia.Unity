@@ -13,7 +13,13 @@ namespace Test.VRTK.Core.Utility.Mock
 
         public static VelocityTrackerMock Generate(bool active, Vector3 velocity, Vector3 angularVelocity)
         {
-            GameObject container = new GameObject();
+            GameObject container;
+            return Generate(active, velocity, angularVelocity, out container);
+        }
+
+        public static VelocityTrackerMock Generate(bool active, Vector3 velocity, Vector3 angularVelocity, out GameObject container)
+        {
+            container = new GameObject();
             VelocityTrackerMock mock = container.AddComponent<VelocityTrackerMock>();
             mock.Set(active, velocity, angularVelocity);
             return mock;
