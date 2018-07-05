@@ -56,7 +56,7 @@
                 {
                     if (receiver.isActiveAndEnabled)
                     {
-                        receiver.Receive(this);
+                        receiver.Receive(this, currentCollision);
                     }
                 }
             }

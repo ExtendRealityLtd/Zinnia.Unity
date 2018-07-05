@@ -11,6 +11,47 @@
     public class ActiveCollisionsBroadcastReceiver : MonoBehaviour
     {
         /// <summary>
+        /// Holds data about a <see cref="ActiveCollisionsBroadcastReceiver"/> event.
+        /// </summary>
+        [Serializable]
+        public class EventData
+        {
+            /// <summary>
+            /// The broadcaster that is calling the receiver.
+            /// </summary>
+            public ActiveCollisionsBroadcaster broadcaster;
+            /// <summary>
+            /// The current collision data.
+            /// </summary>
+            public CollisionNotifier.EventData currentCollision;
+
+            public EventData Set(EventData source)
+            {
+                return Set(source.broadcaster, source.currentCollision);
+            }
+
+            public EventData Set(ActiveCollisionsBroadcaster broadcaster, CollisionNotifier.EventData currentCollision)
+            {
+                this.broadcaster = broadcaster;
+                this.currentCollision = currentCollision;
+                return this;
+            }
+
+            public void Clear()
+            {
+                Set(default(ActiveCollisionsBroadcaster), default(CollisionNotifier.EventData));
+            }
+        }
+
+        /// <summary>
+        /// Defines the event with the <see cref="EventData"/>.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<EventData>
+        {
+        }
+
+        /// <summary>
         /// Determines whether to digest the received broadcast from specific broadcasters.
         /// </summary>
         [Tooltip("Determines whether to digest the received broadcast from specific broadcasters.")]
@@ -26,11 +67,12 @@
         }
 
         /// <summary>
-        /// Defines the event with a <see cref="GameObject"/> that is initiating the collision.
+        /// The current collision data from the broadcaster.
         /// </summary>
-        [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
+        public CollisionNotifier.EventData CurrentCollision
         {
+            get;
+            protected set;
         }
 
         /// <summary>
@@ -46,11 +88,14 @@
         /// </summary>
         public UnityEvent Cleared = new UnityEvent();
 
+        protected EventData eventData = new EventData();
+
         /// <summary>
         /// Receives a broadcast from a <see cref="ActiveCollisionsBroadcaster"/>.
         /// </summary>
         /// <param name="broadcaster">The broadcaster of the message.</param>
-        public virtual void Receive(ActiveCollisionsBroadcaster broadcaster)
+        /// <param name="currentCollision">The current collision within the received broadcast.</param>
+        public virtual void Receive(ActiveCollisionsBroadcaster broadcaster, CollisionNotifier.EventData currentCollision)
         {
             if (!isActiveAndEnabled || ExclusionRule.ShouldExclude(broadcaster.gameObject, broadcasterValidity))
             {
@@ -58,9 +103,10 @@
             }
 
             BroadcastSource = broadcaster;
+            CurrentCollision = currentCollision;
             if (BroadcastSource.collisionInitiator != null)
             {
-                CollisionInitiatorSet?.Invoke(BroadcastSource.collisionInitiator);
+                CollisionInitiatorSet?.Invoke(eventData.Set(BroadcastSource, currentCollision));
             }
             else
             {
@@ -78,9 +124,10 @@
                 return;
             }
 
-            Cleared?.Invoke(BroadcastSource?.collisionInitiator);
-            CollisionInitiatorUnset?.Invoke(null);
+            Cleared?.Invoke(eventData.Set(BroadcastSource, CurrentCollision));
+            CollisionInitiatorUnset?.Invoke(eventData.Set(null, null));
             BroadcastSource = null;
+            CurrentCollision = null;
         }
     }
 }

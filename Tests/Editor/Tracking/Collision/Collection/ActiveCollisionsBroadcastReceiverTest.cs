@@ -49,7 +49,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Collection
 
             Assert.IsNull(subject.BroadcastSource);
 
-            subject.Receive(broadcaster);
+            subject.Receive(broadcaster, null);
 
             Assert.IsTrue(collisionInitiatorSetMock.Received);
             Assert.IsFalse(collisionInitiatorUnsetMock.Received);
@@ -81,7 +81,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Collection
 
             Assert.IsNull(subject.BroadcastSource);
 
-            subject.Receive(broadcaster);
+            subject.Receive(broadcaster, null);
 
             Assert.IsFalse(collisionInitiatorSetMock.Received);
             Assert.IsTrue(collisionInitiatorUnsetMock.Received);
@@ -119,7 +119,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Collection
 
             Assert.IsNull(subject.BroadcastSource);
 
-            subject.Receive(broadcaster);
+            subject.Receive(broadcaster, null);
 
             Assert.IsFalse(collisionInitiatorSetMock.Received);
             Assert.IsFalse(collisionInitiatorUnsetMock.Received);
@@ -146,7 +146,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Collection
             broadcaster.collisionInitiator = broadcasterObject;
 
             subject.gameObject.SetActive(false);
-            subject.Receive(broadcaster);
+            subject.Receive(broadcaster, null);
 
             Assert.IsFalse(collisionInitiatorSetMock.Received);
             Assert.IsFalse(collisionInitiatorUnsetMock.Received);
@@ -173,7 +173,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Collection
             broadcaster.collisionInitiator = broadcasterObject;
 
             subject.enabled = false;
-            subject.Receive(broadcaster);
+            subject.Receive(broadcaster, null);
 
             Assert.IsFalse(collisionInitiatorSetMock.Received);
             Assert.IsFalse(collisionInitiatorUnsetMock.Received);

@@ -23,14 +23,6 @@
         /// Clears all sources.
         /// </summary>
         public abstract void ClearSources();
-        /// <summary>
-        /// Attempts to subscribe listeners to each of the source actions.
-        /// </summary>
-        public abstract void SubscribeToSources();
-        /// <summary>
-        /// Attempts to unsubscribe existing listeners from each of the source actions.
-        /// </summary>
-        public abstract void UnsubscribeFromSources();
 
         /// <summary>
         /// Determines whether the action is currently activated.
@@ -97,42 +89,21 @@
         public override void AddSource(BaseAction action)
         {
             sources.Add((TSelf)action);
+            SubscribeToSource((TSelf)action);
         }
 
         /// <inheritdoc />
         public override void RemoveSource(BaseAction action)
         {
+            UnsubscribeFromSource((TSelf)action);
             sources.Remove((TSelf)action);
         }
 
         /// <inheritdoc />
         public override void ClearSources()
         {
+            UnsubscribeFromSources();
             sources.Clear();
-        }
-
-        /// <inheritdoc />
-        public override void SubscribeToSources()
-        {
-            sources.ForEach(
-                source =>
-                {
-                    source.Activated.AddListener(Receive);
-                    source.ValueChanged.AddListener(Receive);
-                    source.Deactivated.AddListener(Receive);
-                });
-        }
-
-        /// <inheritdoc />
-        public override void UnsubscribeFromSources()
-        {
-            sources.ForEach(
-                source =>
-                {
-                    source.Activated.RemoveListener(Receive);
-                    source.ValueChanged.RemoveListener(Receive);
-                    source.Deactivated.RemoveListener(Receive);
-                });
         }
 
         /// <summary>
@@ -158,6 +129,52 @@
         {
             ProcessValue(defaultValue);
             UnsubscribeFromSources();
+        }
+
+        /// <summary>
+        /// Subscribes the current action as a listener to the given action.
+        /// </summary>
+        /// <param name="source">The source action to subscribe listeners on.</param>
+        protected virtual void SubscribeToSource(TSelf source)
+        {
+            source.Activated.AddListener(Receive);
+            source.ValueChanged.AddListener(Receive);
+            source.Deactivated.AddListener(Receive);
+        }
+
+        /// <summary>
+        /// Unsubscribes the current action from listening to the given action.
+        /// </summary>
+        /// <param name="source">The source action to unsubscribe listeners on.</param>
+        protected virtual void UnsubscribeFromSource(TSelf source)
+        {
+            source.Activated.RemoveListener(Receive);
+            source.ValueChanged.RemoveListener(Receive);
+            source.Deactivated.RemoveListener(Receive);
+        }
+
+        /// <summary>
+        /// Attempts to subscribe listeners to each of the source actions.
+        /// </summary>
+        protected virtual void SubscribeToSources()
+        {
+            sources.ForEach(
+                source =>
+                {
+                    SubscribeToSource(source);
+                });
+        }
+
+        /// <summary>
+        /// Attempts to unsubscribe existing listeners from each of the source actions.
+        /// </summary>
+        protected virtual void UnsubscribeFromSources()
+        {
+            sources.ForEach(
+                source =>
+                {
+                    UnsubscribeFromSource(source);
+                });
         }
 
         /// <summary>

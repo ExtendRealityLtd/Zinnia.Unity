@@ -267,7 +267,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Collection
     {
         public bool received = false;
 
-        public override void Receive(ActiveCollisionsBroadcaster broadcaster)
+        public override void Receive(ActiveCollisionsBroadcaster broadcaster, CollisionNotifier.EventData currentCollision)
         {
             received = true;
         }

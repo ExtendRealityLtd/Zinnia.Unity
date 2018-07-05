@@ -59,8 +59,6 @@
         public void Register(GameObject validSource = null)
         {
             ActiveSource = validSource;
-            target.UnsubscribeFromSources();
-            target.ClearSources();
             foreach (ActionSource actionSource in actionSources)
             {
                 if (validSource == null || validSource == actionSource.container)
@@ -68,7 +66,17 @@
                     target.AddSource(actionSource.action);
                 }
             }
-            target.SubscribeToSources();
+        }
+
+        public void Unregister(GameObject validSource)
+        {
+            foreach (ActionSource actionSource in actionSources)
+            {
+                if (validSource == actionSource.container)
+                {
+                    target.RemoveSource(actionSource.action);
+                }
+            }
         }
 
         /// <summary>
@@ -76,7 +84,6 @@
         /// </summary>
         public void Clear()
         {
-            target.UnsubscribeFromSources();
             target.ClearSources();
             ActiveSource = null;
         }
