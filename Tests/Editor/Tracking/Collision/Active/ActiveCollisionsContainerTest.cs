@@ -1,7 +1,7 @@
 ﻿using VRTK.Core.Tracking.Collision;
-using VRTK.Core.Tracking.Collision.Collection;
+using VRTK.Core.Tracking.Collision.Active;
 
-namespace Test.VRTK.Core.Tracking.Collision.Collection
+namespace Test.VRTK.Core.Tracking.Collision.Active
 {
     using UnityEngine;
     using NUnit.Framework;
