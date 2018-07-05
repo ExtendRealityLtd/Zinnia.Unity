@@ -139,6 +139,36 @@
             AfterProcessed?.Invoke();
         }
 
+        /// <summary>
+        /// Sets the source component to the the given <see cref="GameObject"/>
+        /// </summary>
+        /// <param name="source">The new source.</param>
+        public virtual void SetSource(GameObject source)
+        {
+            sourceComponent = source.GetComponent<Component>();
+        }
+
+        /// <summary>
+        /// Adds a new target to the target components.
+        /// </summary>
+        /// <param name="target">The new target.</param>
+        public virtual void AddTarget(GameObject target)
+        {
+            Component addTarget = target.GetComponent<Component>();
+            if (addTarget != null)
+            {
+                targetComponents.Add(addTarget);
+            }
+        }
+
+        /// <summary>
+        /// Clears the existing target components.
+        /// </summary>
+        public virtual void ClearTargets()
+        {
+            targetComponents.Clear();
+        }
+
         /// <inheritdoc />
         protected override void ProcessComponent(Component source, Component target)
         {
