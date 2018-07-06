@@ -53,6 +53,9 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
 
             Assert.AreEqual(expectedVelocity.ToString(), subjectRigidbody.velocity.ToString());
             Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
 
         [Test]
@@ -74,6 +77,9 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
 
             Assert.AreEqual(expectedVelocity.ToString(), subjectRigidbody.velocity.ToString());
             Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
 
         [Test]
@@ -94,6 +100,9 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
             Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
             Assert.AreEqual(Vector3.zero, source.transform.localScale);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
     }
 }
