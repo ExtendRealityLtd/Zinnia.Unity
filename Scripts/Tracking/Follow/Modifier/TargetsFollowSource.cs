@@ -18,11 +18,12 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to utilize in the modification.</param>
         /// <param name="target">The target <see cref="Transform"/> to modify.</param>
-        protected override void DoUpdatePosition(Transform source, Transform target)
+        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        protected override void DoUpdatePosition(Transform source, Transform target, Transform offset = null)
         {
             if (appliedModifier != null)
             {
-                appliedModifier.UpdatePosition(target, source);
+                appliedModifier.UpdatePosition(target, source, offset);
             }
         }
 
@@ -31,11 +32,12 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to utilize in the modification.</param>
         /// <param name="target">The target <see cref="Transform"/> to modify.</param>
-        protected override void DoUpdateRotation(Transform source, Transform target)
+        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        protected override void DoUpdateRotation(Transform source, Transform target, Transform offset = null)
         {
             if (appliedModifier != null)
             {
-                appliedModifier.UpdateRotation(target, source);
+                appliedModifier.UpdateRotation(target, source, offset);
             }
         }
 
@@ -44,11 +46,12 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to utilize in the modification.</param>
         /// <param name="target">The target <see cref="Transform"/> to modify.</param>
-        protected override void DoUpdateScale(Transform source, Transform target)
+        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        protected override void DoUpdateScale(Transform source, Transform target, Transform offset = null)
         {
             if (appliedModifier != null)
             {
-                appliedModifier.UpdateScale(target, source);
+                appliedModifier.UpdateScale(target, source, offset);
             }
         }
 

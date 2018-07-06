@@ -28,6 +28,20 @@ namespace Test.VRTK.Core.Tracking.Follow
         }
 
         [Test]
+        public void SetFollowOffset()
+        {
+            GameObject offset = new GameObject("offset");
+
+            Assert.IsNull(subject.followOffset);
+
+            subject.SetFollowOffset(offset);
+
+            Assert.AreEqual(offset.transform, subject.followOffset);
+
+            Object.DestroyImmediate(offset);
+        }
+
+        [Test]
         public void ProcessFirstActiveTargetAllActive()
         {
             GameObject source = new GameObject("source");
@@ -54,6 +68,12 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.AreEqual(Vector3.one, targets[0].transform.position);
             Assert.AreEqual(Vector3.zero, targets[1].transform.position);
             Assert.AreEqual(Vector3.zero, targets[2].transform.position);
+
+            Object.DestroyImmediate(source);
+            foreach (GameObject target in targets)
+            {
+                Object.DestroyImmediate(target);
+            }
         }
 
         [Test]
@@ -86,6 +106,12 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.AreEqual(Vector3.zero, targets[0].transform.position);
             Assert.AreEqual(Vector3.zero, targets[1].transform.position);
             Assert.AreEqual(Vector3.one, targets[2].transform.position);
+
+            Object.DestroyImmediate(source);
+            foreach (GameObject target in targets)
+            {
+                Object.DestroyImmediate(target);
+            }
         }
 
         [Test]
@@ -130,6 +156,12 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsTrue(afterProcessedMock.Received);
             Assert.IsTrue(beforeTransformUpdatedMock.Received);
             Assert.IsTrue(afterTransformUpdatedMock.Received);
+
+            Object.DestroyImmediate(source);
+            foreach (GameObject target in targets)
+            {
+                Object.DestroyImmediate(target);
+            }
         }
 
         [Test]
@@ -188,6 +220,12 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(afterRotationUpdatedMock.Received);
             Assert.IsFalse(beforeScaleUpdatedMock.Received);
             Assert.IsFalse(afterScaleUpdatedMock.Received);
+
+            Object.DestroyImmediate(source);
+            foreach (GameObject target in targets)
+            {
+                Object.DestroyImmediate(target);
+            }
         }
 
         [Test]
@@ -248,6 +286,12 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsTrue(afterRotationUpdatedMock.Received);
             Assert.IsFalse(beforeScaleUpdatedMock.Received);
             Assert.IsFalse(afterScaleUpdatedMock.Received);
+
+            Object.DestroyImmediate(source);
+            foreach (GameObject target in targets)
+            {
+                Object.DestroyImmediate(target);
+            }
         }
 
         [Test]
@@ -308,6 +352,12 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(afterRotationUpdatedMock.Received);
             Assert.IsTrue(beforeScaleUpdatedMock.Received);
             Assert.IsTrue(afterScaleUpdatedMock.Received);
+
+            Object.DestroyImmediate(source);
+            foreach (GameObject target in targets)
+            {
+                Object.DestroyImmediate(target);
+            }
         }
 
         [Test]
@@ -368,6 +418,12 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsTrue(afterRotationUpdatedMock.Received);
             Assert.IsFalse(beforeScaleUpdatedMock.Received);
             Assert.IsFalse(afterScaleUpdatedMock.Received);
+
+            Object.DestroyImmediate(source);
+            foreach (GameObject target in targets)
+            {
+                Object.DestroyImmediate(target);
+            }
         }
 
         [Test]
@@ -439,6 +495,12 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(afterRotationUpdatedMock.Received);
             Assert.IsFalse(beforeScaleUpdatedMock.Received);
             Assert.IsFalse(afterScaleUpdatedMock.Received);
+
+            Object.DestroyImmediate(source);
+            foreach (GameObject target in targets)
+            {
+                Object.DestroyImmediate(target);
+            }
         }
 
         [Test]
@@ -510,6 +572,12 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(afterRotationUpdatedMock.Received);
             Assert.IsFalse(beforeScaleUpdatedMock.Received);
             Assert.IsFalse(afterScaleUpdatedMock.Received);
+
+            Object.DestroyImmediate(source);
+            foreach (GameObject target in targets)
+            {
+                Object.DestroyImmediate(target);
+            }
         }
     }
 
@@ -520,17 +588,17 @@ namespace Test.VRTK.Core.Tracking.Follow
             ProcessType = type;
         }
 
-        protected override void DoUpdatePosition(Transform source, Transform target)
+        protected override void DoUpdatePosition(Transform source, Transform target, Transform offset = null)
         {
             target.position = Vector3.one;
         }
 
-        protected override void DoUpdateRotation(Transform source, Transform target)
+        protected override void DoUpdateRotation(Transform source, Transform target, Transform offset = null)
         {
             target.rotation = new Quaternion(1f, 0f, 0f, 0f);
         }
 
-        protected override void DoUpdateScale(Transform source, Transform target)
+        protected override void DoUpdateScale(Transform source, Transform target, Transform offset = null)
         {
             target.localScale = new Vector3(2f, 2f, 2f);
         }

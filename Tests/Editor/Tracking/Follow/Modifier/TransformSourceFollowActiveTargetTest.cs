@@ -51,6 +51,9 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             Assert.AreEqual(target.transform.position, Vector3.one);
             Assert.AreEqual(source.transform, subject.CachedSource);
             Assert.AreEqual(target.transform, subject.CachedTarget);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
 
         [Test]
@@ -71,6 +74,9 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             Assert.AreEqual(target.transform.rotation, targetRotation);
             Assert.AreEqual(source.transform, subject.CachedSource);
             Assert.AreEqual(target.transform, subject.CachedTarget);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
 
         [Test]
@@ -89,6 +95,9 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             Assert.AreEqual(target.transform.localScale, Vector3.one);
             Assert.AreEqual(source.transform, subject.CachedSource);
             Assert.AreEqual(target.transform, subject.CachedTarget);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
     }
 

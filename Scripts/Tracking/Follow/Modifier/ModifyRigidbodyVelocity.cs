@@ -46,14 +46,15 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        protected override void DoUpdatePosition(Transform source, Transform target)
+        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        protected override void DoUpdatePosition(Transform source, Transform target, Transform offset = null)
         {
             if (SourceRigidbody == null)
             {
                 return;
             }
 
-            Vector3 positionDelta = target.position - source.position;
+            Vector3 positionDelta = target.position - (offset != null ? offset.position : source.position);
             Vector3 velocityTarget = positionDelta / Time.fixedDeltaTime;
             Vector3 calculatedVelocity = Vector3.MoveTowards(SourceRigidbody.velocity, velocityTarget, maxDistanceDelta);
 
@@ -68,14 +69,15 @@
         /// </summary>
         /// <param name="source">The source <see cref="Transform"/> to modify.</param>
         /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        protected override void DoUpdateRotation(Transform source, Transform target)
+        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        protected override void DoUpdateRotation(Transform source, Transform target, Transform offset = null)
         {
             if (SourceRigidbody == null)
             {
                 return;
             }
 
-            Quaternion rotationDelta = target.rotation * Quaternion.Inverse(source.rotation);
+            Quaternion rotationDelta = target.rotation * Quaternion.Inverse((offset != null ? offset.rotation : source.rotation));
             float angle;
             Vector3 axis;
 
@@ -98,7 +100,8 @@
         /// </summary>
         /// <param name="source">Unused.</param>
         /// <param name="target">Unused.</param>
-        protected override void DoUpdateScale(Transform source, Transform target)
+        /// <param name="target">Unused.</param>
+        protected override void DoUpdateScale(Transform source, Transform target, Transform offset = null)
         {
         }
     }
