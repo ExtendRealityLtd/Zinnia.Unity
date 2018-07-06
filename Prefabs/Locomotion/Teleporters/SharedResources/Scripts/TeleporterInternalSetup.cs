@@ -46,17 +46,17 @@
         /// <summary>
         /// Attempts to teleport the <see cref="userSetup.playAreaAlias"/>.
         /// </summary>
-        /// <param name="givenLocation">The location to attempt to teleport to.</param>
-        public virtual void Teleport(TransformData givenLocation)
+        /// <param name="destination">The location to attempt to teleport to.</param>
+        public virtual void Teleport(TransformData destination)
         {
             if (surfaceTeleporter != null)
             {
-                surfaceTeleporter.Locate(givenLocation);
+                surfaceTeleporter.Locate(destination);
             }
 
             if (modifyTeleporter != null)
             {
-                modifyTeleporter.Modify(givenLocation);
+                modifyTeleporter.Modify(destination);
             }
         }
 
@@ -69,7 +69,7 @@
 
             foreach (TransformModify currentModifier in transformModifierAliases.EmptyIfNull())
             {
-                currentModifier.source = userSetup.playAreaAlias;
+                currentModifier.target = userSetup.playAreaAlias;
                 currentModifier.offset = userSetup.headsetAlias;
             }
 
