@@ -16,7 +16,7 @@ namespace Test.VRTK.Core.Tracking
         private GameObject sourceObject;
         private GameObject offsetObject;
         private GameObject targetObject;
-        private TransformData targetTransformData;
+        private TransformData sourceTransformData;
 
         [SetUp]
         public void SetUp()
@@ -27,7 +27,7 @@ namespace Test.VRTK.Core.Tracking
             sourceObject = new GameObject();
             offsetObject = new GameObject();
             targetObject = new GameObject();
-            targetTransformData = new TransformData(targetObject.transform);
+            sourceTransformData = new TransformData(sourceObject.transform);
         }
 
         [TearDown]
@@ -44,104 +44,205 @@ namespace Test.VRTK.Core.Tracking
         [Test]
         public void ModifyPositionNoOffsetInstantTransition()
         {
-            targetTransformData.transform.position = Vector3.one;
-
             subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
             subject.applyTransformations = TransformProperties.Position;
 
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
-            subject.Modify(targetTransformData);
-            Assert.AreEqual(Vector3.one, sourceObject.transform.position);
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+
+            Vector3 finalPosition = Vector3.one + Vector3.forward;
+            sourceTransformData.transform.position = finalPosition;
+
+            subject.Modify();
+
+            Assert.AreEqual(finalPosition, targetObject.transform.position);
         }
 
         [Test]
         public void ModifyRotationNoOffsetInstantTransition()
         {
-            Quaternion targetRotation = new Quaternion(1f, 0f, 0f, 0f);
-            targetTransformData.transform.position = Vector3.one;
-            targetTransformData.transform.rotation = targetRotation;
-
             subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
             subject.applyTransformations = TransformProperties.Rotation;
 
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, sourceObject.transform.rotation);
-            subject.Modify(targetTransformData);
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
-            Assert.AreEqual(targetRotation, sourceObject.transform.rotation);
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+
+            Quaternion finalRotation = new Quaternion(1f, 0f, 0f, 0f);
+            sourceTransformData.transform.position = Vector3.one;
+            sourceTransformData.transform.rotation = finalRotation;
+            subject.Modify();
+
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(finalRotation, targetObject.transform.rotation);
         }
 
         [Test]
         public void ModifyScaleNoOffsetInstantTransition()
         {
-            targetTransformData.transform.position = Vector3.one;
-            targetTransformData.transform.rotation = new Quaternion(1f, 0f, 0f, 0f);
-            targetTransformData.transform.localScale = Vector3.one * 2f;
-
             subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
             subject.applyTransformations = TransformProperties.Scale;
 
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, sourceObject.transform.rotation);
-            Assert.AreEqual(Vector3.one, sourceObject.transform.localScale);
-            subject.Modify(targetTransformData);
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, sourceObject.transform.rotation);
-            Assert.AreEqual(Vector3.one * 2f, sourceObject.transform.localScale);
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+
+            Vector3 finalScale = (Vector3.one * 2f) + Vector3.forward;
+            sourceTransformData.transform.position = Vector3.one;
+            sourceTransformData.transform.rotation = new Quaternion(1f, 0f, 0f, 0f);
+            sourceTransformData.transform.localScale = finalScale;
+
+            subject.Modify();
+
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.AreEqual(finalScale, targetObject.transform.localScale);
+        }
+
+        [Test]
+        public void ModifyTransformWithOffsetInjectedSource()
+        {
+            subject.target = targetObject.transform;
+            subject.offset = offsetObject.transform;
+            subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
+
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+
+            sourceTransformData.transform.position = Vector3.one * 2f;
+            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.transform.localScale = Vector3.one * 3f;
+
+            offsetObject.transform.position = Vector3.one;
+            offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
+
+            subject.Modify(sourceObject.transform);
+
+            Assert.AreEqual(new Vector3(-1f, -1f, 5f).ToString(), targetObject.transform.position.ToString());
+            Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), targetObject.transform.rotation.ToString());
+            Assert.AreEqual(Vector3.one * 3f, targetObject.transform.localScale);
         }
 
         [Test]
         public void ModifyTransformWithOffset()
         {
-            offsetObject.transform.position = Vector3.one;
-            offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
-
-            targetTransformData.transform.position = Vector3.one * 2f;
-            targetTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            targetTransformData.transform.localScale = Vector3.one * 3f;
-
             subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
             subject.offset = offsetObject.transform;
             subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
-            subject.Modify(targetTransformData);
-            Assert.AreEqual(new Vector3(-1f, -1f, 5f).ToString(), sourceObject.transform.position.ToString());
-            Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), sourceObject.transform.rotation.ToString());
-            Assert.AreEqual(Vector3.one * 3f, sourceObject.transform.localScale);
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+
+            sourceTransformData.transform.position = Vector3.one * 2f;
+            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.transform.localScale = Vector3.one * 3f;
+
+            offsetObject.transform.position = Vector3.one;
+            offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
+
+            subject.Modify();
+
+            Assert.AreEqual(new Vector3(-1f, -1f, 5f).ToString(), targetObject.transform.position.ToString());
+            Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), targetObject.transform.rotation.ToString());
+            Assert.AreEqual(Vector3.one * 3f, targetObject.transform.localScale);
+        }
+
+        [Test]
+        public void ModifyTransformWithOffsetNoRotation()
+        {
+            subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
+            subject.offset = offsetObject.transform;
+            subject.applyTransformations = TransformProperties.Position | TransformProperties.Scale;
+
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+
+            sourceTransformData.transform.position = Vector3.one * 2f;
+            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.transform.localScale = Vector3.one * 3f;
+
+            offsetObject.transform.position = Vector3.one;
+            offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
+
+            subject.Modify();
+
+            Assert.AreEqual(new Vector3(1f, 1f, 1f).ToString(), targetObject.transform.position.ToString());
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.AreEqual(Vector3.one * 3f, targetObject.transform.localScale);
         }
 
         [Test]
         public void ModifyTransformWithXOffsetOnly()
         {
-            offsetObject.transform.position = Vector3.one;
-            offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
-
-            targetTransformData.transform.position = Vector3.one * 2f;
-            targetTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            targetTransformData.transform.localScale = Vector3.one * 3f;
-
             subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
             subject.offset = offsetObject.transform;
             subject.applyOffsetOnAxis = new Vector3State(true, false, false);
             subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
-            subject.Modify(targetTransformData);
-            Assert.AreEqual(new Vector3(2f, -1f, 2f).ToString(), sourceObject.transform.position.ToString());
-            Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), sourceObject.transform.rotation.ToString());
-            Assert.AreEqual(Vector3.one * 3f, sourceObject.transform.localScale);
+            sourceTransformData.transform.position = Vector3.one * 2f;
+            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.transform.localScale = Vector3.one * 3f;
+
+            offsetObject.transform.position = Vector3.one;
+            offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
+
+            subject.Modify();
+            Assert.AreEqual(new Vector3(2f, -1f, 2f).ToString(), targetObject.transform.position.ToString());
+            Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), targetObject.transform.rotation.ToString());
+            Assert.AreEqual(Vector3.one * 3f, targetObject.transform.localScale);
+        }
+
+        [Test]
+        public void ModifyTransformNoSourceOrTarget()
+        {
+            sourceTransformData.transform.position = Vector3.one * 2f;
+            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.transform.localScale = Vector3.one * 3f;
+
+            subject.Modify();
+
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
         }
 
         [Test]
         public void ModifyTransformNoSource()
         {
-            targetTransformData.transform.position = Vector3.one * 2f;
-            targetTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            targetTransformData.transform.localScale = Vector3.one * 3f;
+            subject.target = targetObject.transform;
 
-            subject.Modify(targetTransformData);
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, sourceObject.transform.rotation);
-            Assert.AreEqual(Vector3.one, sourceObject.transform.localScale);
+            sourceTransformData.transform.position = Vector3.one * 2f;
+            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.transform.localScale = Vector3.one * 3f;
+
+            subject.Modify();
+
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+        }
+
+        [Test]
+        public void ModifyTransformNoTarget()
+        {
+            subject.source = sourceObject.transform;
+
+            sourceTransformData.transform.position = Vector3.one * 2f;
+            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.transform.localScale = Vector3.one * 3f;
+
+            subject.Modify();
+
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
         }
 
         [Test]
@@ -153,7 +254,8 @@ namespace Test.VRTK.Core.Tracking
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
 
             subject.source = sourceObject.transform;
-            subject.Modify(targetTransformData);
+            subject.target = targetObject.transform;
+            subject.Modify();
             Assert.IsTrue(beforeTransformUpdatedMock.Received);
             Assert.IsTrue(afterTransformUpdatedMock.Received);
         }
@@ -167,9 +269,10 @@ namespace Test.VRTK.Core.Tracking
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
 
             subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
             subject.gameObject.SetActive(false);
 
-            subject.Modify(targetTransformData);
+            subject.Modify();
 
             Assert.IsFalse(beforeTransformUpdatedMock.Received);
             Assert.IsFalse(afterTransformUpdatedMock.Received);
@@ -184,9 +287,10 @@ namespace Test.VRTK.Core.Tracking
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
 
             subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
             subject.enabled = false;
 
-            subject.Modify(targetTransformData);
+            subject.Modify();
 
             Assert.IsFalse(beforeTransformUpdatedMock.Received);
             Assert.IsFalse(afterTransformUpdatedMock.Received);
@@ -195,29 +299,31 @@ namespace Test.VRTK.Core.Tracking
         [Test]
         public void NoModifyPositionOnInactiveGameObject()
         {
-            targetTransformData.transform.position = Vector3.one;
+            sourceTransformData.transform.position = Vector3.one;
 
             subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
             subject.applyTransformations = TransformProperties.Position;
             subject.gameObject.SetActive(false);
 
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
-            subject.Modify(targetTransformData);
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            subject.Modify();
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
         }
 
         [Test]
         public void NoModifyPositionOnDisabledComponent()
         {
-            targetTransformData.transform.position = Vector3.one;
+            sourceTransformData.transform.position = Vector3.one;
 
             subject.source = sourceObject.transform;
+            subject.target = targetObject.transform;
             subject.applyTransformations = TransformProperties.Position;
             subject.enabled = false;
 
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
-            subject.Modify(targetTransformData);
-            Assert.AreEqual(Vector3.zero, sourceObject.transform.position);
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            subject.Modify();
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
         }
     }
 }
