@@ -35,7 +35,7 @@
         /// <summary>
         /// The action that will have the sources populated by the given <see cref="sources"/>.
         /// </summary>
-        [Tooltip("The action that will have the sources populated by the given `actionSources`.")]
+        [Tooltip("The action that will have the sources populated by the given sources.")]
         public BaseAction target;
         /// <summary>
         /// A list of action sources to populate the target sources list with.
@@ -69,7 +69,7 @@
         }
 
         /// <summary>
-        /// Unregisters the actions from the given active soure.
+        /// Unregisters the actions from the given active source.
         /// </summary>
         /// <param name="sourceContainer">The source containing the actions to unregister the subscriptions from.</param>
         public void Unregister(GameObject sourceContainer)
