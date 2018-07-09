@@ -57,7 +57,7 @@
         /// </summary>
         public UnityEvent ContentsChanged = new UnityEvent();
         /// <summary>
-        /// Emitted when there are no more collisions occuring.
+        /// Emitted when there are no more collisions occurring.
         /// </summary>
         public UnityEvent AllStopped = new UnityEvent();
 

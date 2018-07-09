@@ -38,7 +38,7 @@ namespace Test.VRTK.Core.Visual
 
             subject.AddColorOverlay();
 
-            //Shouldn't be true if it's called with the same parameters and the colour matches the existing target color
+            //Shouldn't be true if it's called with the same parameters and the color matches the existing target color
             Assert.IsFalse(colorOverlayAddedMock.Received);
             colorOverlayAddedMock.Reset();
 

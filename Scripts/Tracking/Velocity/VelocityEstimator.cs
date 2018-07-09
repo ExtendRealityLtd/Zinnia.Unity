@@ -122,7 +122,7 @@
         }
 
         /// <summary>
-        /// Calulates the multiplication factor for the velocities.
+        /// Calculates the multiplication factor for the velocities.
         /// </summary>
         /// <returns>Multiplication value.</returns>
         protected virtual float GetFactor()
@@ -131,7 +131,7 @@
         }
 
         /// <summary>
-        /// Calculates the average estiamte for the given sample set.
+        /// Calculates the average estimate for the given sample set.
         /// </summary>
         /// <param name="samples">An array of samples to estimate with.</param>
         /// <returns>The estimated result.</returns>

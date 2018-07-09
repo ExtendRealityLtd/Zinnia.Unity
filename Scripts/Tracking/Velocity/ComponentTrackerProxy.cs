@@ -3,7 +3,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// Attempts to utilise the first <see cref="VelocityTracker"/> found on the given proxy <see cref="Component"/>.
+    /// Attempts to utilize the first <see cref="VelocityTracker"/> found on the given proxy <see cref="Component"/>.
     /// </summary>
     public class ComponentTrackerProxy : VelocityTracker
     {
