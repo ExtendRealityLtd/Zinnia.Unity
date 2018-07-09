@@ -160,11 +160,7 @@
         /// </summary>
         protected virtual void SubscribeToSources()
         {
-            Sources.ForEach(
-                source =>
-                {
-                    SubscribeToSource(source);
-                });
+            sources.ForEach(SubscribeToSource);
         }
 
         /// <summary>
@@ -172,11 +168,7 @@
         /// </summary>
         protected virtual void UnsubscribeFromSources()
         {
-            Sources.ForEach(
-                source =>
-                {
-                    UnsubscribeFromSource(source);
-                });
+            sources.ForEach(UnsubscribeFromSource);
         }
 
         /// <summary>
