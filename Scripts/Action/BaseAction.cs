@@ -10,6 +10,11 @@
     public abstract class BaseAction : MonoBehaviour
     {
         /// <summary>
+        /// Determines whether the action is currently activated.
+        /// </summary>
+        public bool IsActivated { get; protected set; }
+
+        /// <summary>
         /// Adds a given action to the sources collection.
         /// </summary>
         /// <param name="action">The action to add.</param>
@@ -23,15 +28,6 @@
         /// Clears all sources.
         /// </summary>
         public abstract void ClearSources();
-
-        /// <summary>
-        /// Determines whether the action is currently activated.
-        /// </summary>
-        public bool IsActivated
-        {
-            get;
-            protected set;
-        }
 
         /// <summary>
         /// Determines whether the event should be emitted.
