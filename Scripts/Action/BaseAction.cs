@@ -63,15 +63,9 @@
         public TValue defaultValue;
 
         /// <summary>
-        /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
+        /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public List<TSelf> Sources
-        {
-            get
-            {
-                return sources;
-            }
-        }
+        public IReadOnlyList<TSelf> Sources => sources;
 
         /// <summary>
         /// Emitted when the action becomes active.
