@@ -43,7 +43,7 @@
         /// <param name="proxySource">The <see cref="GameObject"/> that contains a <see cref="VelocityTracker"/>.</param>
         public virtual void SetProxySource(GameObject proxySource)
         {
-            SetProxySource(proxySource?.GetComponent<Component>());
+            SetProxySource(proxySource == null ? null : proxySource.GetComponent<Component>());
         }
 
         /// <summary>
