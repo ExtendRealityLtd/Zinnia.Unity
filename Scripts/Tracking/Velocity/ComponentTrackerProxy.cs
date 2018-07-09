@@ -31,10 +31,7 @@
         public virtual void SetProxySource(Component proxySource)
         {
             this.proxySource = proxySource;
-            if (this.proxySource != null)
-            {
-                cachedVelocityTracker = proxySource.GetComponentInChildren<VelocityTracker>();
-            }
+            cachedVelocityTracker = proxySource == null ? null : proxySource.GetComponentInChildren<VelocityTracker>();
         }
 
         /// <summary>
