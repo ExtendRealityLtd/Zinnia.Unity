@@ -55,7 +55,7 @@
         /// <summary>
         /// Registers the actions on the given active source if it is contained in the <see cref="sources"/> list.
         /// </summary>
-        /// <param name="sourceLimit">A container of actions to limit the action subscription to.</param>
+        /// <param name="sourceLimit">A container of actions to limit the action subscription to or <see langword="null"/> to not limit.</param>
         public void Register(GameObject sourceLimit = null)
         {
             SourceLimit = sourceLimit;
