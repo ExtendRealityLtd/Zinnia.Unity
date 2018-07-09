@@ -52,17 +52,14 @@
 
             foreach (CollisionNotifier.EventData currentCollision in ActiveCollisions)
             {
-                foreach (ActiveCollisionConsumer receiver in GetNotifiers(currentCollision))
+                foreach (ActiveCollisionConsumer consumer in GetConsumers(currentCollision))
                 {
-                    if (receiver.isActiveAndEnabled)
-                    {
-                        receiver.Consume(this, currentCollision);
-                    }
+                    consumer.Consume(this, currentCollision);
                 }
             }
         }
 
-        protected virtual IEnumerable<ActiveCollisionConsumer> GetNotifiers(CollisionNotifier.EventData data)
+        protected virtual IEnumerable<ActiveCollisionConsumer> GetConsumers(CollisionNotifier.EventData data)
         {
             Transform reference = data.collider.GetContainingTransform();
 

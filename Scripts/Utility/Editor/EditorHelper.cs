@@ -53,7 +53,7 @@
         /// The AddHeader method attempts to add a header label.
         /// </summary>
         /// <param name="header">The string for the header label.</param>
-        /// <param name="spaceBeforeHeader">Dertermines whether a line space should be added before the header.</param>
+        /// <param name="spaceBeforeHeader">Determines whether a line space should be added before the header.</param>
         public static void AddHeader(string header, bool spaceBeforeHeader = true)
         {
             if (spaceBeforeHeader)

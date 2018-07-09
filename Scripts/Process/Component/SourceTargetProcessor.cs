@@ -42,7 +42,7 @@
         /// <param name="source">The new source.</param>
         public virtual void SetSource(GameObject source)
         {
-            sourceComponent = source?.GetComponent<Component>();
+            sourceComponent = source == null ? null : source.GetComponent<Component>();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@
         /// <param name="target">The target to add.</param>
         public virtual void AddTarget(GameObject target)
         {
-            Component addTarget = target?.GetComponent<Component>();
+            Component addTarget = target == null ? null : target.GetComponent<Component>();
             if (addTarget != null)
             {
                 targetComponents.Add(addTarget);
@@ -64,7 +64,7 @@
         /// <param name="target">The target to remove.</param>
         public virtual void RemoveTarget(GameObject target)
         {
-            Component removeTarget = target?.GetComponent<Component>();
+            Component removeTarget = target == null ? null : target.GetComponent<Component>();
             if (removeTarget != null)
             {
                 targetComponents.Remove(removeTarget);

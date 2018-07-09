@@ -21,7 +21,7 @@
         public Vector3State checkAxis = Vector3State.True;
 
         /// <summary>
-        /// Digests <see cref="SurfaceData"/> and compares the current surface to the previous surface to determine if a change has occured.
+        /// Digests <see cref="SurfaceData"/> and compares the current surface to the previous surface to determine if a change has occurred.
         /// </summary>
         /// <param name="surfaceData">The <see cref="SurfaceData"/> to check on.</param>
         public virtual void Receive(SurfaceData surfaceData)

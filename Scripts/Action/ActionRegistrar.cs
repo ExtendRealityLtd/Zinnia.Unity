@@ -35,7 +35,7 @@
         /// <summary>
         /// The action that will have the sources populated by the given <see cref="sources"/>.
         /// </summary>
-        [Tooltip("The action that will have the sources populated by the given `actionSources`.")]
+        [Tooltip("The action that will have the sources populated by the given sources.")]
         public BaseAction target;
         /// <summary>
         /// A list of action sources to populate the target sources list with.
@@ -55,7 +55,7 @@
         /// <summary>
         /// Registers the actions on the given active source if it is contained in the <see cref="sources"/> list.
         /// </summary>
-        /// <param name="sourceLimit">A container of actions to limit the action subscription to.</param>
+        /// <param name="sourceLimit">A container of actions to limit the action subscription to or <see langword="null"/> to not limit.</param>
         public void Register(GameObject sourceLimit = null)
         {
             SourceLimit = sourceLimit;
@@ -69,20 +69,22 @@
         }
 
         /// <summary>
-        /// Unregisters the actions from the given active soure.
+        /// Unregisters the actions from the given active source.
         /// </summary>
         /// <param name="sourceContainer">The source containing the actions to unregister the subscriptions from.</param>
         public void Unregister(GameObject sourceContainer)
         {
             foreach (ActionSource actionSource in sources)
             {
-                if (sourceContainer == actionSource.container)
+                if (sourceContainer != actionSource.container)
                 {
-                    target.RemoveSource(actionSource.action);
-                    if (SourceLimit == sourceContainer)
-                    {
-                        SourceLimit = null;
-                    }
+                    continue;
+                }
+
+                target.RemoveSource(actionSource.action);
+                if (SourceLimit == sourceContainer)
+                {
+                    SourceLimit = null;
                 }
             }
         }

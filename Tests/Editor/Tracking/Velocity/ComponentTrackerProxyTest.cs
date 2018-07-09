@@ -29,7 +29,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
         public void GetVelocity()
         {
             GameObject sourceObject;
-            VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
+            VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
 
             subject.SetProxySource(sourceObject);
             Assert.AreEqual(Vector3.one, subject.GetVelocity());
@@ -41,7 +41,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
         public void GetAngularVelocity()
         {
             GameObject sourceObject;
-            VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
+            VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
 
             subject.SetProxySource(sourceObject);
             Assert.AreEqual(Vector3.one, subject.GetAngularVelocity());
@@ -53,7 +53,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
         public void ClearProxySource()
         {
             GameObject sourceObject;
-            VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
+            VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
 
             subject.SetProxySource(sourceObject);
             Assert.AreEqual(sourceObject.GetComponent<Component>(), subject.proxySource);
@@ -72,7 +72,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
         public void SourceInactiveGameObject()
         {
             GameObject sourceObject;
-            VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
+            VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
             sourceObject.SetActive(false);
 
             subject.SetProxySource(sourceObject);
@@ -100,7 +100,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
         public void InactiveGameObject()
         {
             GameObject sourceObject;
-            VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
+            VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
             subject.gameObject.SetActive(false);
 
             subject.SetProxySource(sourceObject);
@@ -114,7 +114,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
         public void InactiveComponent()
         {
             GameObject sourceObject;
-            VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
+            VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
             subject.enabled = false;
 
             subject.SetProxySource(sourceObject);

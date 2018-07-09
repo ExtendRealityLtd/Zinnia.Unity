@@ -71,9 +71,9 @@
         [Tooltip("A Transform to use as an offset/pivot when applying the transformations.")]
         public Transform offset;
         /// <summary>
-        /// Determines which axes to apply on when utilising the offset.
+        /// Determines which axes to apply on when utilizing the offset.
         /// </summary>
-        [Tooltip("Determines which axes to apply on when utilising the offset.")]
+        [Tooltip("Determines which axes to apply on when utilizing the offset.")]
         public Vector3State applyOffsetOnAxis = new Vector3State(true, true, true);
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
@@ -92,7 +92,7 @@
         /// </summary>
         public UnityEvent BeforeTransformUpdated = new UnityEvent();
         /// <summary>
-        /// Emitted after the transformation process has occured.
+        /// Emitted after the transformation process has occurred.
         /// </summary>
         public UnityEvent AfterTransformUpdated = new UnityEvent();
 
@@ -123,7 +123,7 @@
         }
 
         /// <summary>
-        /// Applys the properties of the given source <see cref="TransformData"/> to the target <see cref="Transform"/>.
+        /// Applies the properties of the given source <see cref="TransformData"/> to the target <see cref="Transform"/>.
         /// </summary>
         /// <param name="sourceData">The source <see cref="TransformData"/> to obtain the transformation properties from.</param>
         public virtual void Modify(TransformData sourceData)

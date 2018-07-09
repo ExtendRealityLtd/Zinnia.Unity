@@ -28,7 +28,7 @@
         public UnityEvent Cleared = new UnityEvent();
 
         /// <summary>
-        /// The created container;
+        /// The created container.
         /// </summary>
         public GameObject Container
         {
@@ -42,16 +42,15 @@
         /// <param name="eventData">Contains data about the collision.</param>
         public virtual void Create(ActiveCollisionConsumer.EventData eventData)
         {
-            if (!isActiveAndEnabled || eventData.publisher?.sourceContainer == null || eventData.currentCollision?.collider?.GetContainingTransform() == null)
+            GameObject collisionInitiator = eventData.publisher == null ? null : eventData.publisher.sourceContainer;
+            GameObject collidingObject = eventData.currentCollision?.collider == null ? null : eventData.currentCollision.collider.GetContainingTransform().gameObject;
+            if (!isActiveAndEnabled || collisionInitiator == null || collidingObject == null)
             {
                 return;
             }
 
-            GameObject collisionInitiator = eventData.publisher.sourceContainer;
-            GameObject collidingObject = eventData.currentCollision?.collider?.GetContainingTransform().gameObject;
-
             DestroyContainer();
-            Container = new GameObject(String.Format("[VRTK][CollisionPointContainer][{0}][{1}]", collisionInitiator.name, collidingObject.name));
+            Container = new GameObject($"[VRTK][CollisionPointContainer][{collisionInitiator.name}][{collidingObject.name}]");
             Container.transform.SetParent(collisionInitiator.transform);
             Container.transform.position = collidingObject.transform.position;
             Container.transform.rotation = collidingObject.transform.rotation;

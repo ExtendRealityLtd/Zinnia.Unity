@@ -3,7 +3,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// Attempts to utilise the first <see cref="VelocityTracker"/> found on the given proxy <see cref="Component"/>.
+    /// Attempts to utilize the first <see cref="VelocityTracker"/> found on the given proxy <see cref="Component"/>.
     /// </summary>
     public class ComponentTrackerProxy : VelocityTracker
     {
@@ -31,10 +31,7 @@
         public virtual void SetProxySource(Component proxySource)
         {
             this.proxySource = proxySource;
-            if (this.proxySource != null)
-            {
-                cachedVelocityTracker = proxySource.GetComponentInChildren<VelocityTracker>();
-            }
+            cachedVelocityTracker = proxySource == null ? null : proxySource.GetComponentInChildren<VelocityTracker>();
         }
 
         /// <summary>
@@ -43,7 +40,7 @@
         /// <param name="proxySource">The <see cref="GameObject"/> that contains a <see cref="VelocityTracker"/>.</param>
         public virtual void SetProxySource(GameObject proxySource)
         {
-            SetProxySource(proxySource?.GetComponent<Component>());
+            SetProxySource(proxySource == null ? null : proxySource.GetComponent<Component>());
         }
 
         /// <summary>

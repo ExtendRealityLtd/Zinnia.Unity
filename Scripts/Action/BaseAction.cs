@@ -10,6 +10,11 @@
     public abstract class BaseAction : MonoBehaviour
     {
         /// <summary>
+        /// Determines whether the action is currently activated.
+        /// </summary>
+        public bool IsActivated { get; protected set; }
+
+        /// <summary>
         /// Adds a given action to the sources collection.
         /// </summary>
         /// <param name="action">The action to add.</param>
@@ -23,15 +28,6 @@
         /// Clears all sources.
         /// </summary>
         public abstract void ClearSources();
-
-        /// <summary>
-        /// Determines whether the action is currently activated.
-        /// </summary>
-        public bool IsActivated
-        {
-            get;
-            protected set;
-        }
 
         /// <summary>
         /// Determines whether the event should be emitted.
@@ -67,15 +63,9 @@
         public TValue defaultValue;
 
         /// <summary>
-        /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
+        /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public List<TSelf> Sources
-        {
-            get
-            {
-                return sources;
-            }
-        }
+        public IReadOnlyList<TSelf> Sources => sources;
 
         /// <summary>
         /// Emitted when the action becomes active.
@@ -170,11 +160,7 @@
         /// </summary>
         protected virtual void SubscribeToSources()
         {
-            Sources.ForEach(
-                source =>
-                {
-                    SubscribeToSource(source);
-                });
+            sources.ForEach(SubscribeToSource);
         }
 
         /// <summary>
@@ -182,11 +168,7 @@
         /// </summary>
         protected virtual void UnsubscribeFromSources()
         {
-            Sources.ForEach(
-                source =>
-                {
-                    UnsubscribeFromSource(source);
-                });
+            sources.ForEach(UnsubscribeFromSource);
         }
 
         /// <summary>
