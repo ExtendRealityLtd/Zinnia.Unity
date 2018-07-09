@@ -76,13 +76,15 @@
         {
             foreach (ActionSource actionSource in sources)
             {
-                if (sourceContainer == actionSource.container)
+                if (sourceContainer != actionSource.container)
                 {
-                    target.RemoveSource(actionSource.action);
-                    if (SourceLimit == sourceContainer)
-                    {
-                        SourceLimit = null;
-                    }
+                    continue;
+                }
+
+                target.RemoveSource(actionSource.action);
+                if (SourceLimit == sourceContainer)
+                {
+                    SourceLimit = null;
                 }
             }
         }
