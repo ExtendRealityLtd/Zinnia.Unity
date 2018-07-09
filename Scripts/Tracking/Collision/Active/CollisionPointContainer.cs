@@ -50,7 +50,7 @@
             }
 
             DestroyContainer();
-            Container = new GameObject(String.Format("[VRTK][CollisionPointContainer][{0}][{1}]", collisionInitiator.name, collidingObject.name));
+            Container = new GameObject($"[VRTK][CollisionPointContainer][{collisionInitiator.name}][{collidingObject.name}]");
             Container.transform.SetParent(collisionInitiator.transform);
             Container.transform.position = collidingObject.transform.position;
             Container.transform.rotation = collidingObject.transform.rotation;
