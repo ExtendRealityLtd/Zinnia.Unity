@@ -28,7 +28,7 @@
         public UnityEvent Cleared = new UnityEvent();
 
         /// <summary>
-        /// The created container;
+        /// The created container.
         /// </summary>
         public GameObject Container
         {
