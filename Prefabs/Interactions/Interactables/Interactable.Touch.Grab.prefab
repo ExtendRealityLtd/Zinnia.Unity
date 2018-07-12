@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4927728024940440}
   - component: {fileID: 114532694433465576}
   - component: {fileID: 114965666550973810}
-  - component: {fileID: 114431334926133014}
+  - component: {fileID: 114266527215346644}
   m_Layer: 0
   m_Name: StopGrabbing
   m_TagString: Untagged
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 114039499970826312}
   - component: {fileID: 114543972740120078}
   - component: {fileID: 114807433027908384}
-  - component: {fileID: 114465636037885044}
+  - component: {fileID: 114389946478014072}
   m_Layer: 0
   m_Name: StartGrabbing
   m_TagString: Untagged
@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 4056843917823330}
   - component: {fileID: 114755140371545782}
   - component: {fileID: 114388444623129090}
-  - component: {fileID: 114065866721568468}
+  - component: {fileID: 114366542852170546}
   m_Layer: 0
   m_Name: StopTouching
   m_TagString: Untagged
@@ -305,7 +305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4838735691475768}
   - component: {fileID: 114665997295377216}
-  - component: {fileID: 114836140929694972}
+  - component: {fileID: 114087726619581004}
   m_Layer: 0
   m_Name: StartTouching
   m_TagString: Untagged
@@ -697,7 +697,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa137d9d2e1abe54d9e5d08dba007194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  publisherValidity: {fileID: 114465636037885044}
+  publisherValidity:
+    field: {fileID: 114389946478014072}
   Consumed:
     m_PersistentCalls:
       m_Calls:
@@ -741,21 +742,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Collision.Active.ActiveCollisionConsumer+UnityEvent,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &114065866721568468
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1754938066491166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e93473fc500c8f4e98a5858bcb43c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  operation: 1
-  checkType: 2
-  identifiers:
-  - StopTouchingTag
 --- !u!114 &114070835745536320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -791,6 +777,20 @@ MonoBehaviour:
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   touchInteractableSetup: {fileID: 114350257912765992}
   grabInteractableSetup: {fileID: 114449470978446108}
+--- !u!114 &114087726619581004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1917302597419396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9a5cea3d73a4234aa48131d662d170b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentTypes:
+  - assemblyQualifiedTypeName: VRTK.Core.Prefabs.Interactions.Interactors.ComponentTags.StartTouchingTag,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114113829353633374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -968,6 +968,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: VRTK.Core.Tracking.Collision.Active.CollisionPointContainer+UnityEvent,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114266527215346644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1271073505985546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9a5cea3d73a4234aa48131d662d170b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentTypes:
+  - assemblyQualifiedTypeName: VRTK.Core.Prefabs.Interactions.Interactors.ComponentTags.StopGrabbingTag,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114338012230111584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -994,7 +1008,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emittedTypes: -1
-  forwardingSourceValidity: {fileID: 0}
+  forwardingSourceValidity:
+    field: {fileID: 0}
   CollisionStarted:
     m_PersistentCalls:
       m_Calls:
@@ -1078,6 +1093,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facade: {fileID: 114070835745536320}
   activeCollisionsContainer: {fileID: 114709990667411602}
+--- !u!114 &114366542852170546
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1754938066491166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9a5cea3d73a4234aa48131d662d170b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentTypes:
+  - assemblyQualifiedTypeName: VRTK.Core.Prefabs.Interactions.Interactors.ComponentTags.StopTouchingTag,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114388444623129090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1105,21 +1134,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: VRTK.Core.Tracking.Collision.Active.Operation.PublisherContainerExtractor+UnityEvent,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &114431334926133014
+--- !u!114 &114389946478014072
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1271073505985546}
+  m_GameObject: {fileID: 1383950977976072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e93473fc500c8f4e98a5858bcb43c83, type: 3}
+  m_Script: {fileID: 11500000, guid: d9a5cea3d73a4234aa48131d662d170b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  operation: 1
-  checkType: 2
-  identifiers:
-  - StopGrabbingTag
+  componentTypes:
+  - assemblyQualifiedTypeName: VRTK.Core.Prefabs.Interactions.Interactors.ComponentTags.StartGrabbingTag,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114449470978446108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1141,21 +1169,6 @@ MonoBehaviour:
   precisionGrabLogic: {fileID: 1415400352816862}
   snapHandleLogic: {fileID: 1828875548442014}
   attachmentLogic: {fileID: 114184802174148794}
---- !u!114 &114465636037885044
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1383950977976072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e93473fc500c8f4e98a5858bcb43c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  operation: 1
-  checkType: 2
-  identifiers:
-  - StartGrabbingTag
 --- !u!114 &114532694433465576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1167,7 +1180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa137d9d2e1abe54d9e5d08dba007194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  publisherValidity: {fileID: 114431334926133014}
+  publisherValidity:
+    field: {fileID: 114266527215346644}
   Consumed:
     m_PersistentCalls:
       m_Calls:
@@ -1227,7 +1241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa137d9d2e1abe54d9e5d08dba007194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  publisherValidity: {fileID: 114836140929694972}
+  publisherValidity:
+    field: {fileID: 114087726619581004}
   Consumed:
     m_PersistentCalls:
       m_Calls: []
@@ -1294,7 +1309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa137d9d2e1abe54d9e5d08dba007194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  publisherValidity: {fileID: 114065866721568468}
+  publisherValidity:
+    field: {fileID: 114366542852170546}
   Consumed:
     m_PersistentCalls:
       m_Calls:
@@ -1464,21 +1480,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: VRTK.Core.Event.GameObjectEventProxyEmitter+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &114836140929694972
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1917302597419396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e93473fc500c8f4e98a5858bcb43c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  operation: 1
-  checkType: 2
-  identifiers:
-  - StartTouchingTag
 --- !u!114 &114837995175658154
 MonoBehaviour:
   m_ObjectHideFlags: 1

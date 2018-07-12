@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEditor;
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
 
     /// <summary>
@@ -110,6 +111,86 @@
                     width = GUILayoutUtility.GetLastRect().width;
                 }
             }
+        }
+
+        /// <summary>
+        /// Allows accessing the <see cref="TagManager"/>'s tags list through a <see cref="SerializedProperty"/>.
+        /// </summary>
+        /// <returns>The <see cref="TagManager"/>'s tags list.</returns>
+        public static SerializedProperty GetTagManagerTagsProperty()
+        {
+            SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadMainAssetAtPath("ProjectSettings/TagManager.asset"));
+            return tagManager.FindProperty("tags");
+        }
+
+        /// <summary>
+        /// Adds tags to the <see cref="TagManager"/>.
+        /// </summary>
+        /// <param name="tags">The tags to add.</param>
+        /// <returns>The tags that were added. A provided tag is only included if it was not already in the tags list of the <see cref="TagManager"/>.</returns>
+        public static List<string> AddTags(params string[] tags)
+        {
+            List<string> results = new List<string>(tags.Length);
+            SerializedProperty tagsProperty = GetTagManagerTagsProperty();
+
+            foreach (string tag in tags)
+            {
+                bool found = false;
+                for (int index = 0; index < tagsProperty.arraySize; index++)
+                {
+                    if (tagsProperty.GetArrayElementAtIndex(index).stringValue != tag)
+                    {
+                        continue;
+                    }
+
+                    found = true;
+                    break;
+                }
+
+                if (found)
+                {
+                    continue;
+                }
+
+                int addIndex = tagsProperty.arraySize;
+                tagsProperty.InsertArrayElementAtIndex(addIndex);
+                tagsProperty.GetArrayElementAtIndex(addIndex).stringValue = tag;
+
+                results.Add(tag);
+            }
+
+            tagsProperty.serializedObject.ApplyModifiedPropertiesWithoutUndo();
+
+            return results;
+        }
+
+        /// <summary>
+        /// Removes tags from the <see cref="TagManager"/>.
+        /// </summary>
+        /// <param name="tags">The tags to remove.</param>
+        /// <returns>The tags that were removed. A provided tag is only included if it was in the tags list of the <see cref="TagManager"/>.</returns>
+        public static List<string> RemoveTags(params string[] tags)
+        {
+            List<string> results = new List<string>(tags.Length);
+            SerializedProperty tagsProperty = GetTagManagerTagsProperty();
+
+            foreach (string tag in tags)
+            {
+                for (int index = 0; index < tagsProperty.arraySize; index++)
+                {
+                    if (tagsProperty.GetArrayElementAtIndex(index).stringValue != tag)
+                    {
+                        continue;
+                    }
+
+                    tagsProperty.DeleteArrayElementAtIndex(index);
+                    results.Add(tag);
+                }
+            }
+
+            tagsProperty.serializedObject.ApplyModifiedPropertiesWithoutUndo();
+
+            return results;
         }
     }
 }

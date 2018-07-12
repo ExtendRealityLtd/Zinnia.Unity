@@ -3,7 +3,8 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using VRTK.Core.Utility;
+    using VRTK.Core.Extension;
+    using VRTK.Core.Rule;
 
     /// <summary>
     /// Consumes a published <see cref="ActiveCollisionPublisher"/>.
@@ -55,7 +56,7 @@
         /// Determines whether to consume the received call from specific publishers.
         /// </summary>
         [Tooltip("Determines whether to consume the received call from specific publishers.")]
-        public ExclusionRule publisherValidity;
+        public RuleContainer publisherValidity;
 
         /// <summary>
         /// The publisher that last initiated the receive.
@@ -93,7 +94,7 @@
         /// <param name="currentCollision">The current collision within published data.</param>
         public virtual void Consume(ActiveCollisionPublisher publisher, CollisionNotifier.EventData currentCollision)
         {
-            if (!isActiveAndEnabled || ExclusionRule.ShouldExclude(publisher.gameObject, publisherValidity))
+            if (!isActiveAndEnabled || !publisherValidity.Accepts(publisher.gameObject))
             {
                 return;
             }

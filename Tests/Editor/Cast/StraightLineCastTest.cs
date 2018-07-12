@@ -1,11 +1,10 @@
 ﻿using VRTK.Core.Cast;
-using VRTK.Core.Utility;
+using VRTK.Core.Rule;
 
 namespace Test.VRTK.Core.Cast
 {
     using UnityEngine;
     using NUnit.Framework;
-    using System.Collections.Generic;
     using Test.VRTK.Core.Utility.Mock;
     using Test.VRTK.Core.Utility.Stub;
 
@@ -79,11 +78,18 @@ namespace Test.VRTK.Core.Cast
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
 
             validSurface.transform.position = Vector3.forward * 5f;
-            validSurface.AddComponent<ExclusionRuleStub>();
-            ExclusionRule exclusions = validSurface.AddComponent<ExclusionRule>();
-            exclusions.checkType = ExclusionRule.CheckTypes.Script;
-            exclusions.identifiers = new List<string>() { "ExclusionRuleStub" };
-            subject.targetValidity = exclusions;
+            validSurface.AddComponent<RuleStub>();
+            NegationRule negationRule = validSurface.AddComponent<NegationRule>();
+            AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
+            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
+            negationRule.rule = new RuleContainer
+            {
+                Interface = anyComponentTypeRule
+            };
+            subject.targetValidity = new RuleContainer
+            {
+                Interface = negationRule
+            };
 
             subject.ManualOnEnable();
             subject.Process();

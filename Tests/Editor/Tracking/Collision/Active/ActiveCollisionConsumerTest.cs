@@ -1,11 +1,10 @@
 ﻿using VRTK.Core.Tracking.Collision.Active;
-using VRTK.Core.Utility;
+using VRTK.Core.Rule;
 
 namespace Test.VRTK.Core.Tracking.Collision.Active
 {
     using UnityEngine;
     using NUnit.Framework;
-    using System.Collections.Generic;
     using Test.VRTK.Core.Utility.Mock;
     using Test.VRTK.Core.Utility.Stub;
 
@@ -69,11 +68,18 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             ActiveCollisionPublisher publisher = publisherObject.AddComponent<ActiveCollisionPublisher>();
             publisher.sourceContainer = publisherObject;
 
-            publisherObject.AddComponent<ExclusionRuleStub>();
-            ExclusionRule exclusions = containingObject.AddComponent<ExclusionRule>();
-            exclusions.checkType = ExclusionRule.CheckTypes.Script;
-            exclusions.identifiers = new List<string>() { "ExclusionRuleStub" };
-            subject.publisherValidity = exclusions;
+            publisherObject.AddComponent<RuleStub>();
+            NegationRule negationRule = containingObject.AddComponent<NegationRule>();
+            AnyComponentTypeRule anyComponentTypeRule = containingObject.AddComponent<AnyComponentTypeRule>();
+            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
+            negationRule.rule = new RuleContainer
+            {
+                Interface = anyComponentTypeRule
+            };
+            subject.publisherValidity = new RuleContainer
+            {
+                Interface = negationRule
+            };
 
             Assert.IsFalse(consumedMock.Received);
             Assert.IsFalse(clearedMock.Received);
