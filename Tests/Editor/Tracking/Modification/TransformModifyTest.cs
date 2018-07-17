@@ -1,8 +1,8 @@
-﻿using VRTK.Core.Tracking;
+﻿using VRTK.Core.Tracking.Modification;
 using VRTK.Core.Data.Type;
 using VRTK.Core.Data.Enum;
 
-namespace Test.VRTK.Core.Tracking
+namespace Test.VRTK.Core.Tracking.Modification
 {
     using UnityEngine;
     using NUnit.Framework;

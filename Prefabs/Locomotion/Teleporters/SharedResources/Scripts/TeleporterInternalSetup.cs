@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using VRTK.Core.Tracking;
+    using VRTK.Core.Tracking.Modification;
     using VRTK.Core.Visual;
     using VRTK.Core.Data.Type;
     using VRTK.Core.Extension;
