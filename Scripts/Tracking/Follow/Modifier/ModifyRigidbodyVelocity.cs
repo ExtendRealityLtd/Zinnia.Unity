@@ -4,7 +4,7 @@
     using VRTK.Core.Extension;
 
     /// <summary>
-    /// Updates the position and rotation of the source <see cref="Transform"/> by applying velocity and angular velocity to its <see cref="Rigidbody"/> to track the target <see cref="Transform"/> position and rotation.
+    /// Updates the position and rotation of the target <see cref="Transform"/> by applying velocity and angular velocity to its <see cref="Rigidbody"/> to track the source <see cref="Transform"/> position and rotation.
     /// </summary>
     public class ModifyRigidbodyVelocity : FollowModifier
     {
@@ -25,59 +25,59 @@
         public float maxDistanceDelta = 10f;
 
         /// <summary>
-        /// The <see cref="Rigidbody"/> of the current source <see cref="Transform"/>.
+        /// The <see cref="Rigidbody"/> of the current target <see cref="Transform"/>.
         /// </summary>
-        public Rigidbody SourceRigidbody
+        public Rigidbody TargetRigidbody
         {
             get
             {
-                if (cachedSourceRigidbody == null)
+                if (cachedTargetRigidbody == null)
                 {
-                    cachedSourceRigidbody = (CachedSource != null ? CachedSource.GetComponentInChildren<Rigidbody>() : null);
+                    cachedTargetRigidbody = (CachedTarget != null ? CachedTarget.GetComponentInChildren<Rigidbody>() : null);
                 }
-                return cachedSourceRigidbody;
+                return cachedTargetRigidbody;
             }
         }
 
-        protected Rigidbody cachedSourceRigidbody;
+        protected Rigidbody cachedTargetRigidbody;
 
         /// <summary>
-        /// Moves the source <see cref="Rigidbody"/> by applying velocity so it tracks the to the target <see cref="Transform.position"/>.
+        /// Moves the target <see cref="Rigidbody"/> by applying velocity so it tracks the to the source <see cref="Transform.position"/>.
         /// </summary>
-        /// <param name="source">The source <see cref="Transform"/> to modify.</param>
-        /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoUpdatePosition(Transform source, Transform target, Transform offset = null)
         {
-            if (SourceRigidbody == null)
+            if (TargetRigidbody == null)
             {
                 return;
             }
 
-            Vector3 positionDelta = target.position - (offset != null ? offset.position : source.position);
+            Vector3 positionDelta = source.position - (offset != null ? offset.position : target.position);
             Vector3 velocityTarget = positionDelta / Time.fixedDeltaTime;
-            Vector3 calculatedVelocity = Vector3.MoveTowards(SourceRigidbody.velocity, velocityTarget, maxDistanceDelta);
+            Vector3 calculatedVelocity = Vector3.MoveTowards(TargetRigidbody.velocity, velocityTarget, maxDistanceDelta);
 
             if (calculatedVelocity.sqrMagnitude < velocityLimit)
             {
-                SourceRigidbody.velocity = calculatedVelocity;
+                TargetRigidbody.velocity = calculatedVelocity;
             }
         }
 
         /// <summary>
-        /// Rotates the source <see cref="Rigidbody"/> by applying angular velocity so it tracks the to the target <see cref="Transform.rotation"/>.
+        /// Rotates the target <see cref="Rigidbody"/> by applying angular velocity so it tracks the to the source <see cref="Transform.rotation"/>.
         /// </summary>
-        /// <param name="source">The source <see cref="Transform"/> to modify.</param>
-        /// <param name="target">The target <see cref="Transform"/> to utilize in the modification.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoUpdateRotation(Transform source, Transform target, Transform offset = null)
         {
-            if (SourceRigidbody == null)
+            if (TargetRigidbody == null)
             {
                 return;
             }
 
-            Quaternion rotationDelta = target.rotation * Quaternion.Inverse((offset != null ? offset.rotation : source.rotation));
+            Quaternion rotationDelta = source.rotation * Quaternion.Inverse((offset != null ? offset.rotation : target.rotation));
             float angle;
             Vector3 axis;
 
@@ -87,10 +87,10 @@
             if (!angle.ApproxEquals(0))
             {
                 Vector3 angularTarget = angle * axis;
-                Vector3 calculatedAngularVelocity = Vector3.MoveTowards(SourceRigidbody.angularVelocity, angularTarget, maxDistanceDelta);
+                Vector3 calculatedAngularVelocity = Vector3.MoveTowards(TargetRigidbody.angularVelocity, angularTarget, maxDistanceDelta);
                 if (angularVelocityLimit == float.PositiveInfinity || calculatedAngularVelocity.sqrMagnitude < angularVelocityLimit)
                 {
-                    SourceRigidbody.angularVelocity = calculatedAngularVelocity;
+                    TargetRigidbody.angularVelocity = calculatedAngularVelocity;
                 }
             }
         }

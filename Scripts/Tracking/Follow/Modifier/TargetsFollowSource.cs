@@ -16,42 +16,42 @@
         /// <summary>
         /// Updates the target <see cref="Transform"/> position using the source <see cref="Transform"/>.
         /// </summary>
-        /// <param name="source">The source <see cref="Transform"/> to utilize in the modification.</param>
-        /// <param name="target">The target <see cref="Transform"/> to modify.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoUpdatePosition(Transform source, Transform target, Transform offset = null)
         {
             if (appliedModifier != null)
             {
-                appliedModifier.UpdatePosition(target, source, offset);
+                appliedModifier.UpdatePosition(source, target, offset);
             }
         }
 
         /// <summary>
         /// Updates the target <see cref="Transform"/> rotation using the source <see cref="Transform"/>.
         /// </summary>
-        /// <param name="source">The source <see cref="Transform"/> to utilize in the modification.</param>
-        /// <param name="target">The target <see cref="Transform"/> to modify.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoUpdateRotation(Transform source, Transform target, Transform offset = null)
         {
             if (appliedModifier != null)
             {
-                appliedModifier.UpdateRotation(target, source, offset);
+                appliedModifier.UpdateRotation(source, target, offset);
             }
         }
 
         /// <summary>
         /// Updates the target <see cref="Transform"/> scale using the source <see cref="Transform"/>.
         /// </summary>
-        /// <param name="source">The source <see cref="Transform"/> to utilize in the modification.</param>
-        /// <param name="target">The target <see cref="Transform"/> to modify.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoUpdateScale(Transform source, Transform target, Transform offset = null)
         {
             if (appliedModifier != null)
             {
-                appliedModifier.UpdateScale(target, source, offset);
+                appliedModifier.UpdateScale(source, target, offset);
             }
         }
 

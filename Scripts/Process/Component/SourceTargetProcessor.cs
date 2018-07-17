@@ -87,6 +87,11 @@
             targetComponents.Clear();
         }
 
+        /// <summary>
+        /// Processes the source against the target.
+        /// </summary>
+        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
+        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
         protected abstract void ProcessComponent(Component source, Component target);
 
         /// <summary>

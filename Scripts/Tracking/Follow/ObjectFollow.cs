@@ -22,15 +22,15 @@
         public class EventData
         {
             /// <summary>
-            /// The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.
+            /// The source <see cref="Transform"/> utilize within the <see cref="FollowModifier"/>.
             /// </summary>
             public Transform source;
             /// <summary>
-            /// The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.
-            /// </summary>
+            /// The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.
+            /// </summary>            
             public Transform target;
             /// <summary>
-            /// An optional <see cref="Transform"/> to offset the source follow against the target.
+            /// An optional <see cref="Transform"/> to offset the target follow against the source.
             /// </summary>
             public Transform followOffset;
 
@@ -64,9 +64,9 @@
         [Header("Object Follow Settings")]
 
         /// <summary>
-        /// An optional <see cref="Transform"/> to offset the source against the target when following.
+        /// An optional <see cref="Transform"/> to offset the target against the source when following.
         /// </summary>
-        [Tooltip("An optional Transform to offset the source against the target when following.")]
+        [Tooltip("An optional Transform to offset the target against the source when following.")]
         public Transform followOffset;
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the follow offset to.
@@ -198,9 +198,9 @@
         /// <summary>
         /// Executes the specified <see cref="FollowModifier.UpdatePosition(Transform, Transform)"/>.
         /// </summary>
-        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
-        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
-        /// <param name="offset">The <see cref="Transform"/> to offset the source against the target when following.</param>
+        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
+        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
+        /// <param name="offset">The <see cref="Transform"/> to offset the target against the source when following.</param>
         protected virtual void UpdatePosition(Transform source, Transform target, Transform offset = null)
         {
             TransformProperties flag = TransformProperties.Position;
@@ -216,9 +216,9 @@
         /// <summary>
         /// Executes the specified <see cref="FollowModifier.UpdateRotation(Transform, Transform)"/>.
         /// </summary>
-        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
-        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
-        /// <param name="offset">The <see cref="Transform"/> to offset the source against the target when following.</param>
+        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
+        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
+        /// <param name="offset">The <see cref="Transform"/> to offset the target against the source when following.</param>
         protected virtual void UpdateRotation(Transform source, Transform target, Transform offset = null)
         {
             TransformProperties flag = TransformProperties.Rotation;
@@ -234,9 +234,9 @@
         /// <summary>
         /// Executes the specified <see cref="FollowModifier.UpdateScale(Transform, Transform)"/>.
         /// </summary>
-        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
-        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
-        /// <param name="offset">The <see cref="Transform"/> to offset the source against the target when following.</param>
+        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
+        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
+        /// <param name="offset">The <see cref="Transform"/> to offset the target against the source when following.</param>
         protected virtual void UpdateScale(Transform source, Transform target, Transform offset = null)
         {
             TransformProperties flag = TransformProperties.Scale;

@@ -57,9 +57,9 @@
         /// <summary>
         /// Updates the source position based on the target position.
         /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         public virtual void UpdatePosition(Transform source, Transform target, Transform offset = null)
         {
             if (isActiveAndEnabled && ValidateCache(source, target, offset))
@@ -70,9 +70,9 @@
 
         /// Updates the source rotation based on the target rotation.
         /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         public virtual void UpdateRotation(Transform source, Transform target, Transform offset = null)
         {
             if (isActiveAndEnabled && ValidateCache(source, target, offset))
@@ -83,9 +83,9 @@
 
         /// Updates the source scale based on the target scale.
         /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         public virtual void UpdateScale(Transform source, Transform target, Transform offset = null)
         {
             if (isActiveAndEnabled && ValidateCache(source, target, offset))
@@ -97,29 +97,29 @@
         /// <summary>
         /// Updates the source position based on the target position.
         /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected abstract void DoUpdatePosition(Transform source, Transform target, Transform offset = null);
         /// Updates the source rotation based on the target rotation.
         /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected abstract void DoUpdateRotation(Transform source, Transform target, Transform offset = null);
         /// Updates the source scale based on the target scale.
         /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected abstract void DoUpdateScale(Transform source, Transform target, Transform offset = null);
 
         /// <summary>
         /// Caches the given source <see cref="Transform"/> and target <see cref="Transform"/> and determines if the set cache is valid.
         /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        /// <param name="offset">The offset of the source against the target when modifying.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         /// <returns><see langword="true"/> if the cache contains a valid source and target.</returns>
         protected virtual bool ValidateCache(Transform source, Transform target, Transform offset = null)
         {

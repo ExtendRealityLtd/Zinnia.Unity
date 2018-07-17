@@ -37,11 +37,11 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
         [Test]
         public void UpdatePosition()
         {
-            GameObject source = subject.gameObject;
-            GameObject target = new GameObject();
+            GameObject source = new GameObject();
+            GameObject target = subject.gameObject;
 
-            source.transform.position = Vector3.zero;
-            target.transform.position = Vector3.one;
+            source.transform.position = Vector3.one;
+            target.transform.position = Vector3.zero;
 
             Vector3 expectedVelocity = Vector3.one * 5.8f;
             Vector3 expectedAngularVelocity = Vector3.zero;
@@ -61,11 +61,11 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
         [Test]
         public void UpdateRotation()
         {
-            GameObject source = subject.gameObject;
-            GameObject target = new GameObject();
+            GameObject source = new GameObject();
+            GameObject target = subject.gameObject;
 
-            source.transform.rotation = Quaternion.identity;
-            target.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+            source.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+            target.transform.rotation = Quaternion.identity;
 
             Vector3 expectedVelocity = Vector3.zero;
             Vector3 expectedAngularVelocity = Vector3.right * 10f;

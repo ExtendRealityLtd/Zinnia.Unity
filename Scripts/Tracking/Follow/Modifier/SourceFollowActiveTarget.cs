@@ -23,7 +23,7 @@
         {
             if (appliedModifier != null)
             {
-                appliedModifier.UpdatePosition(source, target, offset);
+                appliedModifier.UpdatePosition(target, source, offset);
             }
         }
 
@@ -37,7 +37,7 @@
         {
             if (appliedModifier != null)
             {
-                appliedModifier.UpdateRotation(source, target, offset);
+                appliedModifier.UpdateRotation(target, source, offset);
             }
         }
 
@@ -51,7 +51,7 @@
         {
             if (appliedModifier != null)
             {
-                appliedModifier.UpdateScale(source, target, offset);
+                appliedModifier.UpdateScale(target, source, offset);
             }
         }
 
