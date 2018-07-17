@@ -1013,7 +1013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2d46c695564b1dae524f8cb1455301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 4014468347667678}
+  target: {fileID: 4014468347667678}
 --- !u!114 &114355350898141886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1025,7 +1025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2d46c695564b1dae524f8cb1455301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 4996519945204894}
+  target: {fileID: 4996519945204894}
 --- !u!114 &114400600543216116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1082,6 +1082,8 @@ MonoBehaviour:
   sourceComponent: {fileID: 4505946952437074}
   targetComponents:
   - {fileID: 0}
+  followOffset: {fileID: 0}
+  applyOffset: 3
   follow: -1
   followModifier: {fileID: 114424138616660126}
   BeforeProcessed:

@@ -28,11 +28,11 @@ namespace Test.VRTK.Core.Tracking
         [Test]
         public void HandleData()
         {
-            Transform source = new GameObject().transform;
+            Transform target = new GameObject().transform;
 
-            subject.source = source;
+            subject.target = target;
 
-            Assert.AreEqual(Quaternion.identity, source.rotation);
+            Assert.AreEqual(Quaternion.identity, target.rotation);
 
             RaycastHit cast = new RaycastHit
             {
@@ -46,19 +46,19 @@ namespace Test.VRTK.Core.Tracking
 
             subject.HandleData(data);
 
-            Assert.AreEqual(Quaternion.Euler(90f, 0f, 0f).ToString(), source.rotation.ToString());
+            Assert.AreEqual(Quaternion.Euler(90f, 0f, 0f).ToString(), target.rotation.ToString());
 
-            Object.DestroyImmediate(source.gameObject);
+            Object.DestroyImmediate(target.gameObject);
         }
 
         [Test]
         public void NoHandleDataOnDisabledComponent()
         {
-            Transform source = new GameObject().transform;
+            Transform target = new GameObject().transform;
 
-            subject.source = source;
+            subject.target = target;
 
-            Assert.AreEqual(Quaternion.identity, source.rotation);
+            Assert.AreEqual(Quaternion.identity, target.rotation);
 
             RaycastHit cast = new RaycastHit
             {
@@ -73,9 +73,9 @@ namespace Test.VRTK.Core.Tracking
             subject.enabled = false;
             subject.HandleData(data);
 
-            Assert.AreEqual(Quaternion.identity, source.rotation);
+            Assert.AreEqual(Quaternion.identity, target.rotation);
 
-            Object.DestroyImmediate(source.gameObject);
+            Object.DestroyImmediate(target.gameObject);
         }
     }
 }

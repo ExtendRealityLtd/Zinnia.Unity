@@ -9,10 +9,10 @@
     public class PointNormalRotator : MonoBehaviour
     {
         /// <summary>
-        /// The source to apply the rotations to.
+        /// The target to apply the rotations to.
         /// </summary>
-        [Tooltip("The source to apply the rotations to.")]
-        public Transform source;
+        [Tooltip("The target to apply the rotations to.")]
+        public Transform target;
 
         /// <summary>
         /// Handles the provided data to rotate the <see cref="GameObject"/>.
@@ -20,12 +20,12 @@
         /// <param name="data">The data to take the rotation info from.</param>
         public virtual void HandleData(PointsCast.EventData data)
         {
-            if (!isActiveAndEnabled || source == null || data.targetHit == null)
+            if (!isActiveAndEnabled || target == null || data.targetHit == null)
             {
                 return;
             }
 
-            source.rotation = Quaternion.FromToRotation(Vector3.up, data.targetHit.Value.normal);
+            target.rotation = Quaternion.FromToRotation(Vector3.up, data.targetHit.Value.normal);
         }
     }
 }
