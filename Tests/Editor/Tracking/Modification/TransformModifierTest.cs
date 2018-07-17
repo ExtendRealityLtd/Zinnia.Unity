@@ -8,10 +8,10 @@ namespace Test.VRTK.Core.Tracking.Modification
     using NUnit.Framework;
     using Test.VRTK.Core.Utility.Mock;
 
-    public class TransformModifyTest
+    public class TransformModifierTest
     {
         private GameObject containingObject;
-        private TransformModify subject;
+        private TransformModifier subject;
 
         private GameObject sourceObject;
         private GameObject offsetObject;
@@ -22,7 +22,7 @@ namespace Test.VRTK.Core.Tracking.Modification
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<TransformModify>();
+            subject = containingObject.AddComponent<TransformModifier>();
 
             sourceObject = new GameObject();
             offsetObject = new GameObject();

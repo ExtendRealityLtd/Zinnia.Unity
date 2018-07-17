@@ -12,10 +12,10 @@
     /// <summary>
     /// Applies a transformation onto a given target <see cref="Transform"/> based on a given source <see cref="Transform"/>.
     /// </summary>
-    public class TransformModify : MonoBehaviour
+    public class TransformModifier : MonoBehaviour
     {
         /// <summary>
-        /// Holds data about a <see cref="TransformModify"/> event.
+        /// Holds data about a <see cref="TransformModifier"/> event.
         /// </summary>
         [Serializable]
         public class EventData

@@ -24,20 +24,20 @@
         [Tooltip("The Surface Locator to use for the teleporting event.")]
         public SurfaceLocator surfaceTeleporter;
         /// <summary>
-        /// The <see cref="TransformModify"/> to use for the teleporting event.
+        /// The <see cref="TransformModifier"/> to use for the teleporting event.
         /// </summary>
-        [Tooltip("The Transform Modify to use for the teleporting event.")]
-        public TransformModify modifyTeleporter;
+        [Tooltip("The Transform Modifier to use for the teleporting event.")]
+        public TransformModifier modifyTeleporter;
         /// <summary>
         /// The <see cref="SurfaceLocator"/> to set aliases on.
         /// </summary>
         [Tooltip("The Surface Locators to set aliases on.")]
         public List<SurfaceLocator> surfaceLocatorAliases = new List<SurfaceLocator>();
         /// <summary>
-        /// The <see cref="TransformModify"/> to set aliases on.
+        /// The <see cref="TransformModifier"/> to set aliases on.
         /// </summary>
         [Tooltip("The Transform Modifiers to set aliases on.")]
-        public List<TransformModify> transformModifierAliases = new List<TransformModify>();
+        public List<TransformModifier> transformModifierAliases = new List<TransformModifier>();
         /// <summary>
         /// The scene <see cref="Camera"/>s to set the <see cref="CameraColorOverlay"/>s to affect.
         /// </summary>
@@ -68,7 +68,7 @@
                 currentLocator.searchOrigin = userSetup.headsetAlias;
             }
 
-            foreach (TransformModify currentModifier in transformModifierAliases.EmptyIfNull())
+            foreach (TransformModifier currentModifier in transformModifierAliases.EmptyIfNull())
             {
                 currentModifier.target = userSetup.playAreaAlias;
                 currentModifier.offset = userSetup.headsetAlias;
