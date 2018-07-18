@@ -1,6 +1,5 @@
 ﻿using VRTK.Core.Tracking.Follow;
 using VRTK.Core.Tracking.Follow.Modifier;
-using VRTK.Core.Data.Enum;
 
 namespace Test.VRTK.Core.Tracking.Follow
 {
@@ -33,10 +32,22 @@ namespace Test.VRTK.Core.Tracking.Follow
             GameObject offset = new GameObject("offset");
 
             Assert.IsNull(subject.followOffset);
-
             subject.SetFollowOffset(offset);
-
             Assert.AreEqual(offset.transform, subject.followOffset);
+
+            Object.DestroyImmediate(offset);
+        }
+
+        [Test]
+        public void ClearFollowOffset()
+        {
+            GameObject offset = new GameObject("offset");
+
+            Assert.IsNull(subject.followOffset);
+            subject.SetFollowOffset(offset);
+            Assert.AreEqual(offset.transform, subject.followOffset);
+            subject.ClearFollowOffset();
+            Assert.IsNull(subject.followOffset);
 
             Object.DestroyImmediate(offset);
         }
@@ -44,6 +55,11 @@ namespace Test.VRTK.Core.Tracking.Follow
         [Test]
         public void ProcessFirstActiveTargetAllActive()
         {
+            UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
+            UnityEventListenerMock processedMock = new UnityEventListenerMock();
+            subject.Preprocessed.AddListener(preprocessedMock.Listen);
+            subject.Processed.AddListener(processedMock.Listen);
+
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
             {
@@ -58,16 +74,19 @@ namespace Test.VRTK.Core.Tracking.Follow
             subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.FirstActive);
 
-            subject.follow = TransformProperties.Position;
+            subject.modificationType = ObjectFollow.ModificationType.ModifySourceUsingTarget;
+            subject.processTarget = ObjectFollow.ProcessTarget.FirstActive;
             subject.followModifier = followModifierMock;
 
             subject.Process();
 
-            Assert.AreEqual(Vector3.one, targets[0].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[1].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[2].transform.position);
+            Assert.IsTrue(preprocessedMock.Received);
+            Assert.IsTrue(processedMock.Received);
+            Assert.AreEqual(targets[0].transform, source.transform);
+            Assert.AreEqual(targets[1].transform, targets[1].transform);
+            Assert.AreEqual(targets[2].transform, targets[2].transform);
+            Assert.AreEqual(source.transform, followModifierMock.finalTarget);
 
             Object.DestroyImmediate(source);
             foreach (GameObject target in targets)
@@ -79,6 +98,11 @@ namespace Test.VRTK.Core.Tracking.Follow
         [Test]
         public void ProcessFirstActiveTargetOnlyLastActive()
         {
+            UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
+            UnityEventListenerMock processedMock = new UnityEventListenerMock();
+            subject.Preprocessed.AddListener(preprocessedMock.Listen);
+            subject.Processed.AddListener(processedMock.Listen);
+
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
             {
@@ -93,9 +117,9 @@ namespace Test.VRTK.Core.Tracking.Follow
             subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.FirstActive);
 
-            subject.follow = TransformProperties.Position;
+            subject.modificationType = ObjectFollow.ModificationType.ModifySourceUsingTarget;
+            subject.processTarget = ObjectFollow.ProcessTarget.FirstActive;
             subject.followModifier = followModifierMock;
 
             targets[0].SetActive(false);
@@ -103,9 +127,12 @@ namespace Test.VRTK.Core.Tracking.Follow
 
             subject.Process();
 
-            Assert.AreEqual(Vector3.zero, targets[0].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[1].transform.position);
-            Assert.AreEqual(Vector3.one, targets[2].transform.position);
+            Assert.IsTrue(preprocessedMock.Received);
+            Assert.IsTrue(processedMock.Received);
+            Assert.AreEqual(targets[0].transform, targets[0].transform);
+            Assert.AreEqual(targets[1].transform, targets[1].transform);
+            Assert.AreEqual(targets[2].transform, source.transform);
+            Assert.AreEqual(source.transform, followModifierMock.finalTarget);
 
             Object.DestroyImmediate(source);
             foreach (GameObject target in targets)
@@ -117,15 +144,10 @@ namespace Test.VRTK.Core.Tracking.Follow
         [Test]
         public void ProcessAllTargets()
         {
-            UnityEventListenerMock beforeProcessedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterProcessedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
-
-            subject.BeforeProcessed.AddListener(beforeProcessedMock.Listen);
-            subject.AfterProcessed.AddListener(afterProcessedMock.Listen);
-            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
-            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+            UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
+            UnityEventListenerMock processedMock = new UnityEventListenerMock();
+            subject.Preprocessed.AddListener(preprocessedMock.Listen);
+            subject.Processed.AddListener(processedMock.Listen);
 
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
@@ -141,21 +163,19 @@ namespace Test.VRTK.Core.Tracking.Follow
             subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = TransformProperties.Position;
+            subject.modificationType = ObjectFollow.ModificationType.ModifyTargetUsingSource;
+            subject.processTarget = ObjectFollow.ProcessTarget.All;
             subject.followModifier = followModifierMock;
 
             subject.Process();
 
-            Assert.AreEqual(Vector3.one, targets[0].transform.position);
-            Assert.AreEqual(Vector3.one, targets[1].transform.position);
-            Assert.AreEqual(Vector3.one, targets[2].transform.position);
-
-            Assert.IsTrue(beforeProcessedMock.Received);
-            Assert.IsTrue(afterProcessedMock.Received);
-            Assert.IsTrue(beforeTransformUpdatedMock.Received);
-            Assert.IsTrue(afterTransformUpdatedMock.Received);
+            Assert.IsTrue(preprocessedMock.Received);
+            Assert.IsTrue(processedMock.Received);
+            Assert.AreEqual(source.transform, targets[0].transform);
+            Assert.AreEqual(source.transform, targets[1].transform);
+            Assert.AreEqual(source.transform, targets[2].transform);
+            Assert.AreEqual(source.transform, followModifierMock.finalSource);
 
             Object.DestroyImmediate(source);
             foreach (GameObject target in targets)
@@ -165,21 +185,12 @@ namespace Test.VRTK.Core.Tracking.Follow
         }
 
         [Test]
-        public void ProcessPositionOnly()
+        public void ProcessNoFollowModifier()
         {
-            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
-
-            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
-            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
-            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
-            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
-            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
-            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
+            UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
+            UnityEventListenerMock processedMock = new UnityEventListenerMock();
+            subject.Preprocessed.AddListener(preprocessedMock.Listen);
+            subject.Processed.AddListener(processedMock.Listen);
 
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
@@ -194,32 +205,16 @@ namespace Test.VRTK.Core.Tracking.Follow
             subject.targetComponents.Add(targets[1].transform);
             subject.targetComponents.Add(targets[2].transform);
 
-            FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
-
-            subject.follow = TransformProperties.Position;
-            subject.followModifier = followModifierMock;
+            subject.modificationType = ObjectFollow.ModificationType.ModifyTargetUsingSource;
+            subject.processTarget = ObjectFollow.ProcessTarget.All;
 
             subject.Process();
 
-            Assert.AreEqual(Vector3.one, targets[0].transform.position);
-            Assert.AreEqual(Vector3.one, targets[1].transform.position);
-            Assert.AreEqual(Vector3.one, targets[2].transform.position);
-
-            Assert.AreEqual(Quaternion.identity, targets[0].transform.rotation);
-            Assert.AreEqual(Quaternion.identity, targets[1].transform.rotation);
-            Assert.AreEqual(Quaternion.identity, targets[2].transform.rotation);
-
-            Assert.AreEqual(Vector3.one, targets[0].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[1].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[2].transform.localScale);
-
-            Assert.IsTrue(beforePositionUpdatedMock.Received);
-            Assert.IsTrue(afterPositionUpdatedMock.Received);
-            Assert.IsFalse(beforeRotationUpdatedMock.Received);
-            Assert.IsFalse(afterRotationUpdatedMock.Received);
-            Assert.IsFalse(beforeScaleUpdatedMock.Received);
-            Assert.IsFalse(afterScaleUpdatedMock.Received);
+            Assert.IsFalse(preprocessedMock.Received);
+            Assert.IsFalse(processedMock.Received);
+            Assert.AreEqual(targets[0].transform, targets[0].transform);
+            Assert.AreEqual(targets[2].transform, targets[1].transform);
+            Assert.AreEqual(targets[2].transform, targets[2].transform);
 
             Object.DestroyImmediate(source);
             foreach (GameObject target in targets)
@@ -229,21 +224,12 @@ namespace Test.VRTK.Core.Tracking.Follow
         }
 
         [Test]
-        public void ProcessRotationOnly()
+        public void ProcessInactiveGameObject()
         {
-            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
-
-            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
-            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
-            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
-            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
-            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
-            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
+            UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
+            UnityEventListenerMock processedMock = new UnityEventListenerMock();
+            subject.Preprocessed.AddListener(preprocessedMock.Listen);
+            subject.Processed.AddListener(processedMock.Listen);
 
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
@@ -259,242 +245,21 @@ namespace Test.VRTK.Core.Tracking.Follow
             subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = TransformProperties.Rotation;
+            subject.modificationType = ObjectFollow.ModificationType.ModifyTargetUsingSource;
+            subject.processTarget = ObjectFollow.ProcessTarget.All;
             subject.followModifier = followModifierMock;
 
-            subject.Process();
-
-            Quaternion expectedRotation = new Quaternion(1f, 0f, 0f, 0f);
-
-            Assert.AreEqual(Vector3.zero, targets[0].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[1].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[2].transform.position);
-
-            Assert.AreEqual(expectedRotation, targets[0].transform.rotation);
-            Assert.AreEqual(expectedRotation, targets[1].transform.rotation);
-            Assert.AreEqual(expectedRotation, targets[2].transform.rotation);
-
-            Assert.AreEqual(Vector3.one, targets[0].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[1].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[2].transform.localScale);
-
-            Assert.IsFalse(beforePositionUpdatedMock.Received);
-            Assert.IsFalse(afterPositionUpdatedMock.Received);
-            Assert.IsTrue(beforeRotationUpdatedMock.Received);
-            Assert.IsTrue(afterRotationUpdatedMock.Received);
-            Assert.IsFalse(beforeScaleUpdatedMock.Received);
-            Assert.IsFalse(afterScaleUpdatedMock.Received);
-
-            Object.DestroyImmediate(source);
-            foreach (GameObject target in targets)
-            {
-                Object.DestroyImmediate(target);
-            }
-        }
-
-        [Test]
-        public void ProcessScaleOnly()
-        {
-            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
-
-            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
-            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
-            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
-            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
-            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
-            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
-
-            GameObject source = new GameObject("source");
-            GameObject[] targets = new GameObject[]
-            {
-                new GameObject("target1"),
-                new GameObject("target2"),
-                new GameObject("target3")
-            };
-
-            subject.sourceComponent = source.transform;
-            subject.targetComponents.Add(targets[0].transform);
-            subject.targetComponents.Add(targets[1].transform);
-            subject.targetComponents.Add(targets[2].transform);
-
-            FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
-
-            subject.follow = TransformProperties.Scale;
-            subject.followModifier = followModifierMock;
-
-            subject.Process();
-
-            Vector3 expectedScale = new Vector3(2f, 2f, 2f);
-
-            Assert.AreEqual(Vector3.zero, targets[0].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[1].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[2].transform.position);
-
-            Assert.AreEqual(Quaternion.identity, targets[0].transform.rotation);
-            Assert.AreEqual(Quaternion.identity, targets[1].transform.rotation);
-            Assert.AreEqual(Quaternion.identity, targets[2].transform.rotation);
-
-            Assert.AreEqual(expectedScale, targets[0].transform.localScale);
-            Assert.AreEqual(expectedScale, targets[1].transform.localScale);
-            Assert.AreEqual(expectedScale, targets[2].transform.localScale);
-
-            Assert.IsFalse(beforePositionUpdatedMock.Received);
-            Assert.IsFalse(afterPositionUpdatedMock.Received);
-            Assert.IsFalse(beforeRotationUpdatedMock.Received);
-            Assert.IsFalse(afterRotationUpdatedMock.Received);
-            Assert.IsTrue(beforeScaleUpdatedMock.Received);
-            Assert.IsTrue(afterScaleUpdatedMock.Received);
-
-            Object.DestroyImmediate(source);
-            foreach (GameObject target in targets)
-            {
-                Object.DestroyImmediate(target);
-            }
-        }
-
-        [Test]
-        public void ProcessPositionAndRotationOnly()
-        {
-            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
-
-            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
-            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
-            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
-            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
-            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
-            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
-
-            GameObject source = new GameObject("source");
-            GameObject[] targets = new GameObject[]
-            {
-                new GameObject("target1"),
-                new GameObject("target2"),
-                new GameObject("target3")
-            };
-
-            subject.sourceComponent = source.transform;
-            subject.targetComponents.Add(targets[0].transform);
-            subject.targetComponents.Add(targets[1].transform);
-            subject.targetComponents.Add(targets[2].transform);
-
-            FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
-
-            subject.follow = TransformProperties.Position | TransformProperties.Rotation;
-            subject.followModifier = followModifierMock;
-
-            subject.Process();
-
-            Quaternion expectedRotation = new Quaternion(1f, 0f, 0f, 0f);
-
-            Assert.AreEqual(Vector3.one, targets[0].transform.position);
-            Assert.AreEqual(Vector3.one, targets[1].transform.position);
-            Assert.AreEqual(Vector3.one, targets[2].transform.position);
-
-            Assert.AreEqual(expectedRotation, targets[0].transform.rotation);
-            Assert.AreEqual(expectedRotation, targets[1].transform.rotation);
-            Assert.AreEqual(expectedRotation, targets[2].transform.rotation);
-
-            Assert.AreEqual(Vector3.one, targets[0].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[1].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[2].transform.localScale);
-
-            Assert.IsTrue(beforePositionUpdatedMock.Received);
-            Assert.IsTrue(afterPositionUpdatedMock.Received);
-            Assert.IsTrue(beforeRotationUpdatedMock.Received);
-            Assert.IsTrue(afterRotationUpdatedMock.Received);
-            Assert.IsFalse(beforeScaleUpdatedMock.Received);
-            Assert.IsFalse(afterScaleUpdatedMock.Received);
-
-            Object.DestroyImmediate(source);
-            foreach (GameObject target in targets)
-            {
-                Object.DestroyImmediate(target);
-            }
-        }
-
-        [Test]
-        public void EventsNotEmittedOnInactiveGameObject()
-        {
-            UnityEventListenerMock beforeProcessedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterProcessedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
-
-            subject.BeforeProcessed.AddListener(beforeProcessedMock.Listen);
-            subject.AfterProcessed.AddListener(afterProcessedMock.Listen);
-            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
-            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
-            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
-            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
-            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
-            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
-            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
-            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
-
-            GameObject source = new GameObject("source");
-            GameObject[] targets = new GameObject[]
-            {
-                new GameObject("target1"),
-                new GameObject("target2"),
-                new GameObject("target3")
-            };
-
-            subject.sourceComponent = source.transform;
-            subject.targetComponents.Add(targets[0].transform);
-            subject.targetComponents.Add(targets[1].transform);
-            subject.targetComponents.Add(targets[2].transform);
-
-            FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
-
-            subject.follow = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
-            subject.followModifier = followModifierMock;
             subject.gameObject.SetActive(false);
-
             subject.Process();
 
-            Assert.AreEqual(Vector3.zero, targets[0].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[1].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[2].transform.position);
-
-            Assert.AreEqual(Quaternion.identity, targets[0].transform.rotation);
-            Assert.AreEqual(Quaternion.identity, targets[1].transform.rotation);
-            Assert.AreEqual(Quaternion.identity, targets[2].transform.rotation);
-
-            Assert.AreEqual(Vector3.one, targets[0].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[1].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[2].transform.localScale);
-
-            Assert.IsFalse(beforeProcessedMock.Received);
-            Assert.IsFalse(afterProcessedMock.Received);
-            Assert.IsFalse(beforeTransformUpdatedMock.Received);
-            Assert.IsFalse(afterTransformUpdatedMock.Received);
-            Assert.IsFalse(beforePositionUpdatedMock.Received);
-            Assert.IsFalse(afterPositionUpdatedMock.Received);
-            Assert.IsFalse(beforeRotationUpdatedMock.Received);
-            Assert.IsFalse(afterRotationUpdatedMock.Received);
-            Assert.IsFalse(beforeScaleUpdatedMock.Received);
-            Assert.IsFalse(afterScaleUpdatedMock.Received);
+            Assert.IsFalse(preprocessedMock.Received);
+            Assert.IsFalse(processedMock.Received);
+            Assert.AreEqual(targets[0].transform, targets[0].transform);
+            Assert.AreEqual(targets[2].transform, targets[1].transform);
+            Assert.AreEqual(targets[2].transform, targets[2].transform);
+            Assert.IsNull(followModifierMock.finalSource);
+            Assert.IsNull(followModifierMock.finalTarget);
 
             Object.DestroyImmediate(source);
             foreach (GameObject target in targets)
@@ -504,29 +269,12 @@ namespace Test.VRTK.Core.Tracking.Follow
         }
 
         [Test]
-        public void EventsNotEmittedOnDisabledComponent()
+        public void ProcessInactiveComponent()
         {
-            UnityEventListenerMock beforeProcessedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterProcessedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforePositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterPositionUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterRotationUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock beforeScaleUpdatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock afterScaleUpdatedMock = new UnityEventListenerMock();
-
-            subject.BeforeProcessed.AddListener(beforeProcessedMock.Listen);
-            subject.AfterProcessed.AddListener(afterProcessedMock.Listen);
-            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
-            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
-            subject.BeforePositionUpdated.AddListener(beforePositionUpdatedMock.Listen);
-            subject.AfterPositionUpdated.AddListener(afterPositionUpdatedMock.Listen);
-            subject.BeforeRotationUpdated.AddListener(beforeRotationUpdatedMock.Listen);
-            subject.AfterRotationUpdated.AddListener(afterRotationUpdatedMock.Listen);
-            subject.BeforeScaleUpdated.AddListener(beforeScaleUpdatedMock.Listen);
-            subject.AfterScaleUpdated.AddListener(afterScaleUpdatedMock.Listen);
+            UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
+            UnityEventListenerMock processedMock = new UnityEventListenerMock();
+            subject.Preprocessed.AddListener(preprocessedMock.Listen);
+            subject.Processed.AddListener(processedMock.Listen);
 
             GameObject source = new GameObject("source");
             GameObject[] targets = new GameObject[]
@@ -542,36 +290,21 @@ namespace Test.VRTK.Core.Tracking.Follow
             subject.targetComponents.Add(targets[2].transform);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            followModifierMock.SetProcessType(FollowModifier.ProcessTarget.All);
 
-            subject.follow = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
+            subject.modificationType = ObjectFollow.ModificationType.ModifyTargetUsingSource;
+            subject.processTarget = ObjectFollow.ProcessTarget.All;
             subject.followModifier = followModifierMock;
-            subject.enabled = false;
 
+            subject.enabled = false;
             subject.Process();
 
-            Assert.AreEqual(Vector3.zero, targets[0].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[1].transform.position);
-            Assert.AreEqual(Vector3.zero, targets[2].transform.position);
-
-            Assert.AreEqual(Quaternion.identity, targets[0].transform.rotation);
-            Assert.AreEqual(Quaternion.identity, targets[1].transform.rotation);
-            Assert.AreEqual(Quaternion.identity, targets[2].transform.rotation);
-
-            Assert.AreEqual(Vector3.one, targets[0].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[1].transform.localScale);
-            Assert.AreEqual(Vector3.one, targets[2].transform.localScale);
-
-            Assert.IsFalse(beforeProcessedMock.Received);
-            Assert.IsFalse(afterProcessedMock.Received);
-            Assert.IsFalse(beforeTransformUpdatedMock.Received);
-            Assert.IsFalse(afterTransformUpdatedMock.Received);
-            Assert.IsFalse(beforePositionUpdatedMock.Received);
-            Assert.IsFalse(afterPositionUpdatedMock.Received);
-            Assert.IsFalse(beforeRotationUpdatedMock.Received);
-            Assert.IsFalse(afterRotationUpdatedMock.Received);
-            Assert.IsFalse(beforeScaleUpdatedMock.Received);
-            Assert.IsFalse(afterScaleUpdatedMock.Received);
+            Assert.IsFalse(preprocessedMock.Received);
+            Assert.IsFalse(processedMock.Received);
+            Assert.AreEqual(targets[0].transform, targets[0].transform);
+            Assert.AreEqual(targets[2].transform, targets[1].transform);
+            Assert.AreEqual(targets[2].transform, targets[2].transform);
+            Assert.IsNull(followModifierMock.finalSource);
+            Assert.IsNull(followModifierMock.finalTarget);
 
             Object.DestroyImmediate(source);
             foreach (GameObject target in targets)
@@ -579,28 +312,23 @@ namespace Test.VRTK.Core.Tracking.Follow
                 Object.DestroyImmediate(target);
             }
         }
-    }
 
-    public class FollowModifierMock : FollowModifier
-    {
-        public virtual void SetProcessType(ProcessTarget type)
+        public class FollowModifierMock : FollowModifier
         {
-            ProcessType = type;
-        }
+            public Transform finalSource;
+            public Transform finalTarget;
 
-        protected override void DoUpdatePosition(Transform source, Transform target, Transform offset = null)
-        {
-            target.position = Vector3.one;
-        }
+            public override void Modify(Transform source, Transform target, Transform offset = null)
+            {
+                finalSource = source;
+                finalTarget = target;
+            }
 
-        protected override void DoUpdateRotation(Transform source, Transform target, Transform offset = null)
-        {
-            target.rotation = new Quaternion(1f, 0f, 0f, 0f);
-        }
-
-        protected override void DoUpdateScale(Transform source, Transform target, Transform offset = null)
-        {
-            target.localScale = new Vector3(2f, 2f, 2f);
+            public virtual void ResetMock()
+            {
+                finalSource = null;
+                finalTarget = null;
+            }
         }
     }
 }

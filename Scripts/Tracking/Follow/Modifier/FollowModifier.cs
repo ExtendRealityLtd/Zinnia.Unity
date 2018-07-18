@@ -1,26 +1,37 @@
 ﻿namespace VRTK.Core.Tracking.Follow.Modifier
 {
     using UnityEngine;
+    using VRTK.Core.Tracking.Follow.Modifier.Property;
 
     /// <summary>
-    /// Describes logic to modify the position, rotation and scale of a <see cref="Transform"/>.
+    /// Composes the logic to modify the position, rotation and scale of a <see cref="Transform"/>.
     /// </summary>
-    public abstract class FollowModifier : MonoBehaviour
+    public class FollowModifier : MonoBehaviour
     {
         /// <summary>
-        /// The process logic for the target.
+        /// The modifier to change the position.
         /// </summary>
-        public enum ProcessTarget
-        {
-            /// <summary>
-            /// Process all targets.
-            /// </summary>
-            All,
-            /// <summary>
-            /// Only process the first active target.
-            /// </summary>
-            FirstActive
-        }
+        [Tooltip("The modifier to change the position.")]
+        public PropertyModifier positionModifier;
+        /// <summary>
+        /// The modifier to change the rotation.
+        /// </summary>
+        [Tooltip("The modifier to change the rotation.")]
+        public PropertyModifier rotationModifier;
+        /// <summary>
+        /// The modifier to change the scale.
+        /// </summary>
+        [Tooltip("The modifier to change the scale.")]
+        public PropertyModifier scaleModifier;
+
+        /// <summary>
+        /// Emitted before the follow is modified.
+        /// </summary>
+        public ObjectFollow.UnityEvent Premodified = new ObjectFollow.UnityEvent();
+        /// <summary>
+        /// Emitted after the follow is modified.
+        /// </summary>
+        public ObjectFollow.UnityEvent Modified = new ObjectFollow.UnityEvent();
 
         /// The current source <see cref="Transform"/> being used in the modifier process.
         public Transform CachedSource
@@ -45,74 +56,29 @@
             protected set;
         }
 
-        /// <summary>
-        /// The mechanism of how to process the targets.
-        /// </summary>
-        public ProcessTarget ProcessType
-        {
-            get;
-            protected set;
-        } = ProcessTarget.All;
+        protected ObjectFollow.EventData eventData = new ObjectFollow.EventData();
 
         /// <summary>
-        /// Updates the source position based on the target position.
+        /// Attempts to call each of the given <see cref="PropertyModifier"/> options to modify the target <see cref="Transform"/>.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        public virtual void UpdatePosition(Transform source, Transform target, Transform offset = null)
+        public virtual void Modify(Transform source, Transform target, Transform offset = null)
         {
-            if (isActiveAndEnabled && ValidateCache(source, target, offset))
+            if (!isActiveAndEnabled || !ValidateCache(source, target, offset))
             {
-                DoUpdatePosition(source, target, offset);
+                return;
             }
-        }
 
-        /// Updates the source rotation based on the target rotation.
-        /// </summary>
-        /// <param name="source">The source to utilize in the modification.</param>
-        /// <param name="target">The target to modify.</param>
-        /// <param name="offset">The offset of the target against the source when modifying.</param>
-        public virtual void UpdateRotation(Transform source, Transform target, Transform offset = null)
-        {
-            if (isActiveAndEnabled && ValidateCache(source, target, offset))
-            {
-                DoUpdateRotation(source, target, offset);
-            }
-        }
+            Premodified?.Invoke(eventData.Set(source, target, offset));
 
-        /// Updates the source scale based on the target scale.
-        /// </summary>
-        /// <param name="source">The source to utilize in the modification.</param>
-        /// <param name="target">The target to modify.</param>
-        /// <param name="offset">The offset of the target against the source when modifying.</param>
-        public virtual void UpdateScale(Transform source, Transform target, Transform offset = null)
-        {
-            if (isActiveAndEnabled && ValidateCache(source, target, offset))
-            {
-                DoUpdateScale(source, target, offset);
-            }
-        }
+            positionModifier?.Modify(source, target, offset);
+            rotationModifier?.Modify(source, target, offset);
+            scaleModifier?.Modify(source, target, offset);
 
-        /// <summary>
-        /// Updates the source position based on the target position.
-        /// </summary>
-        /// <param name="source">The source to utilize in the modification.</param>
-        /// <param name="target">The target to modify.</param>
-        /// <param name="offset">The offset of the target against the source when modifying.</param>
-        protected abstract void DoUpdatePosition(Transform source, Transform target, Transform offset = null);
-        /// Updates the source rotation based on the target rotation.
-        /// </summary>
-        /// <param name="source">The source to utilize in the modification.</param>
-        /// <param name="target">The target to modify.</param>
-        /// <param name="offset">The offset of the target against the source when modifying.</param>
-        protected abstract void DoUpdateRotation(Transform source, Transform target, Transform offset = null);
-        /// Updates the source scale based on the target scale.
-        /// </summary>
-        /// <param name="source">The source to utilize in the modification.</param>
-        /// <param name="target">The target to modify.</param>
-        /// <param name="offset">The offset of the target against the source when modifying.</param>
-        protected abstract void DoUpdateScale(Transform source, Transform target, Transform offset = null);
+            Modified?.Invoke(eventData.Set(source, target, offset));
+        }
 
         /// <summary>
         /// Caches the given source <see cref="Transform"/> and target <see cref="Transform"/> and determines if the set cache is valid.
