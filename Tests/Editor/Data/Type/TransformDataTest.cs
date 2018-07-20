@@ -51,9 +51,9 @@ namespace Test.VRTK.Core.Data.Type
         {
             Transform defaultTransform = new GameObject().transform;
             TransformData transformData = new TransformData(defaultTransform);
-            Assert.AreEqual(Vector3.one, transformData.LocalScale);
-            transformData.localScaleOverride = Vector3.zero;
-            Assert.AreEqual(Vector3.zero, transformData.LocalScale);
+            Assert.AreEqual(Vector3.one, transformData.Scale);
+            transformData.scaleOverride = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, transformData.Scale);
             Object.DestroyImmediate(defaultTransform.gameObject);
         }
     }

@@ -170,7 +170,7 @@
         {
             if (transitionDuration.ApproxEquals(0f))
             {
-                givenTarget.transform.localScale = finalScale;
+                givenTarget.transform.SetGlobalScale(finalScale);
                 givenTarget.transform.position = finalPosition;
                 givenTarget.transform.rotation = finalRotation;
                 AfterTransformUpdated?.Invoke(eventData.Set(givenSource, givenTarget));
@@ -178,7 +178,7 @@
             else
             {
                 CancelTransition();
-                transitionRoutine = StartCoroutine(TransitionTransform(givenSource, givenTarget, givenTarget.Position, finalPosition, givenTarget.Rotation, finalRotation, givenTarget.LocalScale, finalScale));
+                transitionRoutine = StartCoroutine(TransitionTransform(givenSource, givenTarget, givenTarget.Position, finalPosition, givenTarget.Rotation, finalRotation, givenTarget.Scale, finalScale));
             }
         }
 
@@ -218,10 +218,10 @@
         /// <param name="givenTarget">The target <see cref="TransformData"/> that will have the scale transformations applied to.</param>
         protected virtual void SetScale(TransformData givenSource, TransformData givenTarget)
         {
-            finalScale = givenTarget.LocalScale;
+            finalScale = givenTarget.Scale;
             if (applyTransformations.HasFlag(TransformProperties.Scale))
             {
-                finalScale = givenSource.LocalScale;
+                finalScale = givenSource.Scale;
             }
         }
 
@@ -262,7 +262,7 @@
             Vector3 calculatedOffset = GetOffsetPosition(Vector3.zero, givenTarget.Position, offset.position) * -1f;
             Quaternion relativeRotation = Quaternion.Inverse(givenTarget.Rotation) * sourceRotation;
             Vector3 adjustedOffset = relativeRotation * calculatedOffset;
-            Vector3 scaleFactor = new Vector3(sourceScale.x / givenTarget.LocalScale.x, sourceScale.y / givenTarget.LocalScale.y, sourceScale.z / givenTarget.LocalScale.z);
+            Vector3 scaleFactor = new Vector3(sourceScale.x / givenTarget.Scale.x, sourceScale.y / givenTarget.Scale.y, sourceScale.z / givenTarget.Scale.z);
             Vector3 scaledOffset = Vector3.Scale(adjustedOffset, scaleFactor);
             return sourcePosition - scaledOffset;
         }
@@ -352,14 +352,14 @@
             while (elapsedTime < transitionDuration)
             {
                 float lerpFrame = (elapsedTime / transitionDuration);
-                givenTarget.transform.localScale = Vector3.Lerp(startScale, destinationScale, lerpFrame);
+                givenTarget.transform.SetGlobalScale(Vector3.Lerp(startScale, destinationScale, lerpFrame));
                 givenTarget.transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
                 givenTarget.transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
                 elapsedTime += Time.deltaTime;
                 yield return delayInstruction;
             }
 
-            givenTarget.transform.localScale = destinationScale;
+            givenTarget.transform.SetGlobalScale(destinationScale);
             givenTarget.transform.position = destinationPosition;
             givenTarget.transform.rotation = destinationRotation;
             AfterTransformUpdated?.Invoke(eventData.Set(givenSource, givenTarget));

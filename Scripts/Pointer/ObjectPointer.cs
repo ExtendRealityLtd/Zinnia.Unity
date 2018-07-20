@@ -501,7 +501,7 @@
             eventData.transform = transform;
             eventData.positionOverride = (validDestinationTransform != null ? (Vector3?)validDestinationTransform.position : data.targetHit?.point);
             eventData.rotationOverride = (validDestinationTransform != null ? validDestinationTransform.localRotation : Quaternion.identity);
-            eventData.localScaleOverride = (validDestinationTransform != null ? validDestinationTransform.localScale : Vector3.one);
+            eventData.scaleOverride = (validDestinationTransform != null ? validDestinationTransform.lossyScale : Vector3.one);
             eventData.origin = transform.position;
             eventData.direction = transform.forward;
             eventData.CollisionData = data?.targetHit ?? default(RaycastHit);

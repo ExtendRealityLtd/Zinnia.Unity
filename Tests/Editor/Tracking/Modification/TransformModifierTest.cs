@@ -122,7 +122,7 @@ namespace Test.VRTK.Core.Tracking.Modification
 
             Assert.AreEqual(new Vector3(-1f, -1f, 5f).ToString(), targetObject.transform.position.ToString());
             Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), targetObject.transform.rotation.ToString());
-            Assert.AreEqual(Vector3.one * 3f, targetObject.transform.localScale);
+            Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
         }
 
         [Test]
@@ -148,7 +148,7 @@ namespace Test.VRTK.Core.Tracking.Modification
 
             Assert.AreEqual(new Vector3(-1f, -1f, 5f).ToString(), targetObject.transform.position.ToString());
             Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), targetObject.transform.rotation.ToString());
-            Assert.AreEqual(Vector3.one * 3f, targetObject.transform.localScale);
+            Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace Test.VRTK.Core.Tracking.Modification
 
             Assert.AreEqual(new Vector3(1f, 1f, 1f).ToString(), targetObject.transform.position.ToString());
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual(Vector3.one * 3f, targetObject.transform.localScale);
+            Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.Modify();
             Assert.AreEqual(new Vector3(2f, -1f, 2f).ToString(), targetObject.transform.position.ToString());
             Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), targetObject.transform.rotation.ToString());
-            Assert.AreEqual(Vector3.one * 3f, targetObject.transform.localScale);
+            Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
         }
 
         [Test]
