@@ -9,7 +9,7 @@
     public class RigidbodyVelocity : PropertyModifier
     {
         /// <summary>
-        /// The maximum squared magnitude of velocity that can be applied to the source <see cref="Transform"/>.
+        /// The maximum squared magnitude of velocity that can be applied to the source.
         /// </summary>
         [Tooltip("The maximum squared magnitude of velocity that can be applied to the source Transform.")]
         public float velocityLimit = float.PositiveInfinity;
@@ -20,20 +20,20 @@
         public float maxDistanceDelta = 10f;
 
         protected Rigidbody cachedTargetRigidbody;
-        protected Transform cachedTarget;
+        protected GameObject cachedTarget;
 
         /// <summary>
-        /// Modifies the target <see cref="Rigidbody"/> velocity to move towards the given source <see cref="Transform"/>.
+        /// Modifies the target <see cref="Rigidbody"/> velocity to move towards the given source.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        protected override void DoModify(Transform source, Transform target, Transform offset = null)
+        protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
-            cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.FindRigidbody() : cachedTargetRigidbody);
+            cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.transform.FindRigidbody() : cachedTargetRigidbody);
             cachedTarget = target;
 
-            Vector3 positionDelta = source.position - (offset != null ? offset.position : target.position);
+            Vector3 positionDelta = source.transform.position - (offset != null ? offset.transform.position : target.transform.position);
             Vector3 velocityTarget = positionDelta / Time.fixedDeltaTime;
             Vector3 calculatedVelocity = Vector3.MoveTowards(cachedTargetRigidbody.velocity, velocityTarget, maxDistanceDelta);
 

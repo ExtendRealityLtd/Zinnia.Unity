@@ -33,7 +33,7 @@ namespace Test.VRTK.Core.Tracking.Follow
 
             Assert.IsNull(subject.followOffset);
             subject.SetFollowOffset(offset);
-            Assert.AreEqual(offset.transform, subject.followOffset);
+            Assert.AreEqual(offset, subject.followOffset);
 
             Object.DestroyImmediate(offset);
         }
@@ -45,7 +45,7 @@ namespace Test.VRTK.Core.Tracking.Follow
 
             Assert.IsNull(subject.followOffset);
             subject.SetFollowOffset(offset);
-            Assert.AreEqual(offset.transform, subject.followOffset);
+            Assert.AreEqual(offset, subject.followOffset);
             subject.ClearFollowOffset();
             Assert.IsNull(subject.followOffset);
 
@@ -86,7 +86,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.AreEqual(targets[0].transform, source.transform);
             Assert.AreEqual(targets[1].transform, targets[1].transform);
             Assert.AreEqual(targets[2].transform, targets[2].transform);
-            Assert.AreEqual(source.transform, followModifierMock.finalTarget);
+            Assert.AreEqual(source, followModifierMock.finalTarget);
 
             Object.DestroyImmediate(source);
             foreach (GameObject target in targets)
@@ -132,7 +132,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.AreEqual(targets[0].transform, targets[0].transform);
             Assert.AreEqual(targets[1].transform, targets[1].transform);
             Assert.AreEqual(targets[2].transform, source.transform);
-            Assert.AreEqual(source.transform, followModifierMock.finalTarget);
+            Assert.AreEqual(source, followModifierMock.finalTarget);
 
             Object.DestroyImmediate(source);
             foreach (GameObject target in targets)
@@ -175,7 +175,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.AreEqual(source.transform, targets[0].transform);
             Assert.AreEqual(source.transform, targets[1].transform);
             Assert.AreEqual(source.transform, targets[2].transform);
-            Assert.AreEqual(source.transform, followModifierMock.finalSource);
+            Assert.AreEqual(source, followModifierMock.finalSource);
 
             Object.DestroyImmediate(source);
             foreach (GameObject target in targets)
@@ -315,10 +315,10 @@ namespace Test.VRTK.Core.Tracking.Follow
 
         public class FollowModifierMock : FollowModifier
         {
-            public Transform finalSource;
-            public Transform finalTarget;
+            public GameObject finalSource;
+            public GameObject finalTarget;
 
-            public override void Modify(Transform source, Transform target, Transform offset = null)
+            public override void Modify(GameObject source, GameObject target, GameObject offset = null)
             {
                 finalSource = source;
                 finalTarget = target;

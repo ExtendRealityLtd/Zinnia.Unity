@@ -12,7 +12,7 @@
         /// The target to apply the rotations to.
         /// </summary>
         [Tooltip("The target to apply the rotations to.")]
-        public Transform target;
+        public GameObject target;
 
         /// <summary>
         /// Handles the provided data to rotate the <see cref="GameObject"/>.
@@ -25,7 +25,7 @@
                 return;
             }
 
-            target.rotation = Quaternion.FromToRotation(Vector3.up, data.targetHit.Value.normal);
+            target.transform.rotation = Quaternion.FromToRotation(Vector3.up, data.targetHit.Value.normal);
         }
     }
 }

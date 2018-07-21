@@ -33,7 +33,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Scale
             target.transform.localScale = Vector3.zero;
             source.transform.localScale = Vector3.one;
 
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(Vector3.one, source.transform.localScale);
             Assert.AreEqual(Vector3.one, target.transform.localScale);
@@ -53,7 +53,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Scale
             target.transform.localScale = Vector3.zero;
             offset.transform.localScale = Vector3.one * 0.5f;
 
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.AreEqual(Vector3.one * 2f, source.transform.localScale);
             Assert.AreEqual(Vector3.one * 1.5f, target.transform.localScale);
@@ -75,7 +75,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Scale
             offset.transform.localScale = Vector3.one * 0.5f;
 
             subject.applyOffset = false;
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.AreEqual(Vector3.one, source.transform.localScale);
             Assert.AreEqual(Vector3.one, target.transform.localScale);
@@ -94,7 +94,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Scale
             source.transform.localScale = Vector3.one;
 
             subject.gameObject.SetActive(false);
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(Vector3.one, source.transform.localScale);
             Assert.AreEqual(Vector3.zero, target.transform.localScale);
@@ -113,7 +113,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Scale
             source.transform.localScale = Vector3.one;
 
             subject.enabled = false;
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(Vector3.one, source.transform.localScale);
             Assert.AreEqual(Vector3.zero, target.transform.localScale);

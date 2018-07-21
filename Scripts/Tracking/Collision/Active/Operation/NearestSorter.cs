@@ -9,10 +9,10 @@
     public class NearestSorter : MonoBehaviour
     {
         /// <summary>
-        /// The source <see cref="Transform"/> to determine the closest collision to.
+        /// The source to determine the closest collision to.
         /// </summary>
-        [Tooltip("The source Transform to determine the closest collision to.")]
-        public Transform source;
+        [Tooltip("The source to determine the closest collision to.")]
+        public GameObject source;
 
         /// <summary>
         /// Emitted when the collection is sorted.
@@ -20,6 +20,23 @@
         public ActiveCollisionsContainer.UnityEvent Sorted = new ActiveCollisionsContainer.UnityEvent();
 
         protected ActiveCollisionsContainer.EventData sortedList = new ActiveCollisionsContainer.EventData();
+
+        /// <summary>
+        /// Sets the <see cref="source"/> parameter.
+        /// </summary>
+        /// <param name="source">The new source value.</param>
+        public virtual void SetSource(GameObject source)
+        {
+            this.source = source;
+        }
+
+        /// <summary>
+        /// Clears the <see cref="source"/> parameter.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            source = null;
+        }
 
         /// <summary>
         /// Sorts the given collision collection by the collisions that are nearest to the source <see cref="Transform"/>.
@@ -47,8 +64,8 @@
             sortedList.activeCollisions.Sort(
             (data1, data2) =>
                 {
-                    float distance1 = Vector3.Distance(data1.collider.GetContainingTransform().position, source.position);
-                    float distance2 = Vector3.Distance(data2.collider.GetContainingTransform().position, source.position);
+                    float distance1 = Vector3.Distance(data1.collider.GetContainingTransform().position, source.transform.position);
+                    float distance2 = Vector3.Distance(data2.collider.GetContainingTransform().position, source.transform.position);
                     return distance1.CompareTo(distance2);
                 }
             );

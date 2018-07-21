@@ -8,9 +8,9 @@
     public class PointerUserSetup : MonoBehaviour
     {
         /// <summary>
-        /// The <see cref="Transform"/> target for the pointer to follow around.
+        /// The target for the pointer to follow around.
         /// </summary>
-        [Tooltip("The Transform target for the pointer to follow around.")]
-        public Transform followTarget;
+        [Tooltip("The target for the pointer to follow around.")]
+        public GameObject followTarget;
     }
 }

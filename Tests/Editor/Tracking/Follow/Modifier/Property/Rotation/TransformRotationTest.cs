@@ -35,7 +35,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Rotation
             source.transform.rotation = sourceRotation;
             target.transform.rotation = Quaternion.identity;
 
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(sourceRotation, source.transform.rotation);
             Assert.AreEqual(sourceRotation, target.transform.rotation);
@@ -56,7 +56,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Rotation
             target.transform.rotation = Quaternion.identity;
             offset.transform.rotation = Quaternion.Euler(0f, 45f, 0f);
 
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.AreEqual(sourceRotation, source.transform.rotation);
             Assert.AreEqual(new Quaternion(0.9f, 0f, -0.4f, 0f).ToString(), target.transform.rotation.ToString());
@@ -80,7 +80,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Rotation
             offset.transform.rotation = Quaternion.Euler(0f, 45f, 0f);
 
             subject.applyOffset = false;
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.AreEqual(sourceRotation, source.transform.rotation);
             Assert.AreEqual(sourceRotation, target.transform.rotation);
@@ -102,7 +102,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Rotation
             target.transform.rotation = Quaternion.identity;
 
             subject.gameObject.SetActive(false);
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(sourceRotation, source.transform.rotation);
             Assert.AreEqual(Quaternion.identity, target.transform.rotation);
@@ -123,7 +123,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Rotation
             target.transform.rotation = Quaternion.identity;
 
             subject.enabled = false;
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(sourceRotation, source.transform.rotation);
             Assert.AreEqual(Quaternion.identity, target.transform.rotation);

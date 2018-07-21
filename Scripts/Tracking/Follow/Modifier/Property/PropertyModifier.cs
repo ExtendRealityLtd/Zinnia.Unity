@@ -28,12 +28,12 @@
         }
 
         /// <summary>
-        /// Attempts modify the target <see cref="Transform"/>.
+        /// Attempts modify the target.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        public virtual void Modify(Transform source, Transform target, Transform offset = null)
+        public virtual void Modify(GameObject source, GameObject target, GameObject offset = null)
         {
             if (!isActiveAndEnabled || source == null || target == null)
             {
@@ -48,11 +48,11 @@
         }
 
         /// <summary>
-        /// Attempts modify the target <see cref="Transform"/>.
+        /// Attempts modify the target.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        protected abstract void DoModify(Transform source, Transform target, Transform offset = null);
+        protected abstract void DoModify(GameObject source, GameObject target, GameObject offset = null);
     }
 }

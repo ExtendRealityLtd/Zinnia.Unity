@@ -48,7 +48,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
             Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
 
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(expectedVelocity.ToString(), subjectRigidbody.velocity.ToString());
             Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);
@@ -74,7 +74,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
             Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
 
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.AreEqual(expectedVelocity.ToString(), subjectRigidbody.velocity.ToString());
             Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);
@@ -102,7 +102,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
 
             subject.applyOffset = false;
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.AreEqual(expectedVelocity.ToString(), subjectRigidbody.velocity.ToString());
             Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);
@@ -128,7 +128,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
 
             subject.gameObject.SetActive(false);
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
             Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);
@@ -153,7 +153,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
 
             subject.enabled = false;
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
             Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);

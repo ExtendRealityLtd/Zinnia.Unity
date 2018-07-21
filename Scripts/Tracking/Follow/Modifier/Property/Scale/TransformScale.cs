@@ -15,20 +15,20 @@
         public bool useLocalScale;
 
         /// <summary>
-        /// Modifies the target <see cref="Transform.localScale"/> to match the given source <see cref="Transform.localScale"/>.
+        /// Modifies the target scale to match the given source scale.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        protected override void DoModify(Transform source, Transform target, Transform offset = null)
+        protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
             if (useLocalScale)
             {
-                target.localScale = (offset != null ? (source.localScale - (offset.localScale - target.localScale)) : source.localScale);
+                target.transform.localScale = (offset != null ? (source.transform.localScale - (offset.transform.localScale - target.transform.localScale)) : source.transform.localScale);
             }
             else
             {
-                target.SetGlobalScale((offset != null ? (source.lossyScale - (offset.lossyScale - target.lossyScale)) : source.lossyScale));
+                target.transform.SetGlobalScale((offset != null ? (source.transform.lossyScale - (offset.transform.lossyScale - target.transform.lossyScale)) : source.transform.lossyScale));
             }
         }
     }

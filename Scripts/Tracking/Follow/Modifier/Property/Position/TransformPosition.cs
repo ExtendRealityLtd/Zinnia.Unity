@@ -14,20 +14,20 @@
         public bool useLocalPosition;
 
         /// <summary>
-        /// Modifies the target <see cref="Transform.position"/> to match the given source <see cref="Transform.position"/>.
+        /// Modifies the target position to match the given source position.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        protected override void DoModify(Transform source, Transform target, Transform offset = null)
+        protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
             if (useLocalPosition)
             {
-                target.localPosition = (offset != null ? (source.localPosition - (offset.localPosition - target.localPosition)) : source.localPosition);
+                target.transform.localPosition = (offset != null ? (source.transform.localPosition - (offset.transform.localPosition - target.transform.localPosition)) : source.transform.localPosition);
             }
             else
             {
-                target.position = (offset != null ? (source.position - (offset.position - target.position)) : source.position);
+                target.transform.position = (offset != null ? (source.transform.position - (offset.transform.position - target.transform.position)) : source.transform.position);
             }
         }
     }

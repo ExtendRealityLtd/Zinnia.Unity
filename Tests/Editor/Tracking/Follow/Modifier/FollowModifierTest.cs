@@ -55,11 +55,11 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             subject.rotationModifier = rotationMock;
             subject.scaleModifier = scaleMock;
 
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
-            Assert.AreEqual(source.transform, subject.CachedSource);
-            Assert.AreEqual(target.transform, subject.CachedTarget);
-            Assert.AreEqual(offset.transform, subject.CachedOffset);
+            Assert.AreEqual(source, subject.CachedSource);
+            Assert.AreEqual(target, subject.CachedTarget);
+            Assert.AreEqual(offset, subject.CachedOffset);
             Assert.IsTrue(premodifiedMock.Received);
             Assert.IsTrue(modifiedMock.Received);
             Assert.IsTrue(positionMock.modified);
@@ -99,10 +99,10 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             subject.rotationModifier = rotationMock;
             subject.scaleModifier = scaleMock;
 
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
-            Assert.AreEqual(source.transform, subject.CachedSource);
-            Assert.AreEqual(target.transform, subject.CachedTarget);
+            Assert.AreEqual(source, subject.CachedSource);
+            Assert.AreEqual(target, subject.CachedTarget);
             Assert.IsNull(subject.CachedOffset);
             Assert.IsTrue(premodifiedMock.Received);
             Assert.IsTrue(modifiedMock.Received);
@@ -142,11 +142,11 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             subject.rotationModifier = rotationMock;
             subject.scaleModifier = scaleMock;
 
-            subject.Modify(null, target.transform, offset.transform);
+            subject.Modify(null, target, offset);
 
             Assert.IsNull(subject.CachedSource);
-            Assert.AreEqual(target.transform, subject.CachedTarget);
-            Assert.AreEqual(offset.transform, subject.CachedOffset);
+            Assert.AreEqual(target, subject.CachedTarget);
+            Assert.AreEqual(offset, subject.CachedOffset);
             Assert.IsFalse(premodifiedMock.Received);
             Assert.IsFalse(modifiedMock.Received);
             Assert.IsFalse(positionMock.modified);
@@ -186,11 +186,11 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             subject.rotationModifier = rotationMock;
             subject.scaleModifier = scaleMock;
 
-            subject.Modify(source.transform, null, offset.transform);
+            subject.Modify(source, null, offset);
 
-            Assert.AreEqual(source.transform, subject.CachedSource);
+            Assert.AreEqual(source, subject.CachedSource);
             Assert.IsNull(subject.CachedTarget);
-            Assert.AreEqual(offset.transform, subject.CachedOffset);
+            Assert.AreEqual(offset, subject.CachedOffset);
             Assert.IsFalse(premodifiedMock.Received);
             Assert.IsFalse(modifiedMock.Received);
             Assert.IsFalse(positionMock.modified);
@@ -231,7 +231,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             subject.scaleModifier = scaleMock;
 
             subject.gameObject.SetActive(false);
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.IsNull(subject.CachedSource);
             Assert.IsNull(subject.CachedTarget);
@@ -277,7 +277,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
             subject.scaleModifier = scaleMock;
 
             subject.enabled = false;
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.IsNull(subject.CachedSource);
             Assert.IsNull(subject.CachedTarget);
@@ -298,7 +298,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier
     {
         public bool modified = false;
 
-        protected override void DoModify(Transform source, Transform target, Transform offset = null)
+        protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
             modified = true;
         }

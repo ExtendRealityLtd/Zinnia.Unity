@@ -1,4 +1,5 @@
 ﻿using VRTK.Core.Tracking.Velocity;
+using VRTK.Core.Extension;
 
 namespace Test.VRTK.Core.Tracking.Velocity
 {
@@ -56,7 +57,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
             VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
 
             subject.SetProxySource(sourceObject);
-            Assert.AreEqual(sourceObject.GetComponent<Component>(), subject.proxySource);
+            Assert.AreEqual(sourceObject.TryGetComponent(), subject.proxySource);
             subject.ClearProxySource();
             Assert.IsNull(subject.proxySource);
             Object.DestroyImmediate(sourceObject);

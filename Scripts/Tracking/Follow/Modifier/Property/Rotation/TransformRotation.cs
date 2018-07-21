@@ -14,20 +14,20 @@
         public bool useLocalRotation;
 
         /// <summary>
-        /// Modifies the target <see cref="Transform.rotation"/> to match the given source <see cref="Transform.rotation"/>.
+        /// Modifies the target rotation to match the given source rotation.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        protected override void DoModify(Transform source, Transform target, Transform offset = null)
+        protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
             if (useLocalRotation)
             {
-                target.localRotation = (offset != null ? source.localRotation * Quaternion.Inverse(offset.localRotation) : source.localRotation);
+                target.transform.localRotation = (offset != null ? source.transform.localRotation * Quaternion.Inverse(offset.transform.localRotation) : source.transform.localRotation);
             }
             else
             {
-                target.rotation = (offset != null ? source.rotation * Quaternion.Inverse(offset.localRotation) : source.rotation);
+                target.transform.rotation = (offset != null ? source.transform.rotation * Quaternion.Inverse(offset.transform.localRotation) : source.transform.rotation);
             }
         }
     }

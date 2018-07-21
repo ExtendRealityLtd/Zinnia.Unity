@@ -12,12 +12,12 @@
         /// The alias for the CameraRig Play Area.
         /// </summary>
         [Tooltip("The alias for the CameraRig Play Area.")]
-        public Transform playAreaAlias;
+        public GameObject playAreaAlias;
         /// <summary>
         /// The alias for the CameraRig Headset.
         /// </summary>
         [Tooltip("The alias for the CameraRig Headset.")]
-        public Transform headsetAlias;
+        public GameObject headsetAlias;
         /// <summary>
         /// The <see cref="CameraList"/> of scene <see cref="Camera"/>s to apply a fade to.
         /// </summary>

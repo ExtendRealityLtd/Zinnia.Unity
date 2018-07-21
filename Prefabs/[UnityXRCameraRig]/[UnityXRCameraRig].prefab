@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f27fc0668d79644c93af545a243c86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 4509080931372404}
+  source: {fileID: 1085192622640384}
   autoStartSampling: 1
   velocityAverageFrames: 5
   angularVelocityAverageFrames: 10
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f27fc0668d79644c93af545a243c86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 4484799805633602}
+  source: {fileID: 1907295252762062}
   autoStartSampling: 1
   velocityAverageFrames: 5
   angularVelocityAverageFrames: 10
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f27fc0668d79644c93af545a243c86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 4361118032042482}
+  source: {fileID: 1056323152614116}
   autoStartSampling: 1
   velocityAverageFrames: 5
   angularVelocityAverageFrames: 10

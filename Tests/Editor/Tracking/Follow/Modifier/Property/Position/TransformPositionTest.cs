@@ -33,7 +33,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             source.transform.position = Vector3.one;
             target.transform.position = Vector3.zero;
 
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(Vector3.one, source.transform.position);
             Assert.AreEqual(Vector3.one, target.transform.position);
@@ -53,7 +53,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             target.transform.position = Vector3.zero;
             offset.transform.position = Vector3.one * 0.5f;
 
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.AreEqual(Vector3.one * 2f, source.transform.position);
             Assert.AreEqual(Vector3.one * 1.5f, target.transform.position);
@@ -75,7 +75,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             offset.transform.position = Vector3.one * 0.5f;
 
             subject.applyOffset = false;
-            subject.Modify(source.transform, target.transform, offset.transform);
+            subject.Modify(source, target, offset);
 
             Assert.AreEqual(Vector3.one, source.transform.position);
             Assert.AreEqual(Vector3.one, target.transform.position);
@@ -95,7 +95,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             target.transform.position = Vector3.zero;
 
             subject.gameObject.SetActive(false);
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(Vector3.one, source.transform.position);
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -114,7 +114,7 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
             target.transform.position = Vector3.zero;
 
             subject.enabled = false;
-            subject.Modify(source.transform, target.transform);
+            subject.Modify(source, target);
 
             Assert.AreEqual(Vector3.one, source.transform.position);
             Assert.AreEqual(Vector3.zero, target.transform.position);

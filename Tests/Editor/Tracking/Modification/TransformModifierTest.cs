@@ -44,8 +44,8 @@ namespace Test.VRTK.Core.Tracking.Modification
         [Test]
         public void ModifyPositionNoOffsetInstantTransition()
         {
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
             subject.applyTransformations = TransformProperties.Position;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -61,8 +61,8 @@ namespace Test.VRTK.Core.Tracking.Modification
         [Test]
         public void ModifyRotationNoOffsetInstantTransition()
         {
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
             subject.applyTransformations = TransformProperties.Rotation;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -80,8 +80,8 @@ namespace Test.VRTK.Core.Tracking.Modification
         [Test]
         public void ModifyScaleNoOffsetInstantTransition()
         {
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
             subject.applyTransformations = TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -101,36 +101,11 @@ namespace Test.VRTK.Core.Tracking.Modification
         }
 
         [Test]
-        public void ModifyTransformWithOffsetInjectedSource()
-        {
-            subject.target = targetObject.transform;
-            subject.offset = offsetObject.transform;
-            subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
-
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
-
-            sourceTransformData.transform.position = Vector3.one * 2f;
-            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            sourceTransformData.transform.localScale = Vector3.one * 3f;
-
-            offsetObject.transform.position = Vector3.one;
-            offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
-
-            subject.Modify(sourceObject.transform);
-
-            Assert.AreEqual(new Vector3(-1f, -1f, 5f).ToString(), targetObject.transform.position.ToString());
-            Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), targetObject.transform.rotation.ToString());
-            Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
-        }
-
-        [Test]
         public void ModifyTransformWithOffset()
         {
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
-            subject.offset = offsetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
+            subject.offset = offsetObject;
             subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -154,9 +129,9 @@ namespace Test.VRTK.Core.Tracking.Modification
         [Test]
         public void ModifyTransformWithOffsetNoRotation()
         {
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
-            subject.offset = offsetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
+            subject.offset = offsetObject;
             subject.applyTransformations = TransformProperties.Position | TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -180,9 +155,9 @@ namespace Test.VRTK.Core.Tracking.Modification
         [Test]
         public void ModifyTransformWithXOffsetOnly()
         {
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
-            subject.offset = offsetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
+            subject.offset = offsetObject;
             subject.applyOffsetOnAxis = new Vector3State(true, false, false);
             subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
@@ -216,7 +191,7 @@ namespace Test.VRTK.Core.Tracking.Modification
         [Test]
         public void ModifyTransformNoSource()
         {
-            subject.target = targetObject.transform;
+            subject.target = targetObject;
 
             sourceTransformData.transform.position = Vector3.one * 2f;
             sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
@@ -232,7 +207,7 @@ namespace Test.VRTK.Core.Tracking.Modification
         [Test]
         public void ModifyTransformNoTarget()
         {
-            subject.source = sourceObject.transform;
+            subject.source = new TransformData(sourceObject);
 
             sourceTransformData.transform.position = Vector3.one * 2f;
             sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
@@ -253,8 +228,8 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
 
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
             subject.Modify();
             Assert.IsTrue(beforeTransformUpdatedMock.Received);
             Assert.IsTrue(afterTransformUpdatedMock.Received);
@@ -268,8 +243,8 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
 
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
             subject.gameObject.SetActive(false);
 
             subject.Modify();
@@ -286,8 +261,8 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
 
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
             subject.enabled = false;
 
             subject.Modify();
@@ -301,8 +276,8 @@ namespace Test.VRTK.Core.Tracking.Modification
         {
             sourceTransformData.transform.position = Vector3.one;
 
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
             subject.applyTransformations = TransformProperties.Position;
             subject.gameObject.SetActive(false);
 
@@ -316,8 +291,8 @@ namespace Test.VRTK.Core.Tracking.Modification
         {
             sourceTransformData.transform.position = Vector3.one;
 
-            subject.source = sourceObject.transform;
-            subject.target = targetObject.transform;
+            subject.source = new TransformData(sourceObject);
+            subject.target = targetObject;
             subject.applyTransformations = TransformProperties.Position;
             subject.enabled = false;
 

@@ -8,7 +8,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
     public class VelocityEstimatorTest
     {
         private GameObject containingObject;
-        private Transform source;
+        private GameObject source;
         private VelocityEstimatorMock subject;
 
         private Vector3[] exampleSourcePositions = new Vector3[]
@@ -33,7 +33,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
         public void SetUp()
         {
             containingObject = new GameObject();
-            source = containingObject.transform;
+            source = containingObject;
             subject = containingObject.AddComponent<VelocityEstimatorMock>();
         }
 
@@ -354,7 +354,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
             //Loop through the set custom positions and update the source's position then manually process the subject emulating an update loop
             foreach (Vector3 updatedPosition in positions)
             {
-                source.localPosition = updatedPosition;
+                source.transform.localPosition = updatedPosition;
                 subject.ManualLateUpdate();
             }
         }
@@ -364,7 +364,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
             //Loop through the set custom rotations and update the source's rotation then manually process the subject emulating an update loop
             foreach (Quaternion updatedRotation in rotations)
             {
-                source.localRotation = updatedRotation;
+                source.transform.localRotation = updatedRotation;
                 subject.ManualLateUpdate();
             }
         }

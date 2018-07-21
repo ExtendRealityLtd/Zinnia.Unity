@@ -1,6 +1,7 @@
 ﻿namespace VRTK.Core.Prefabs.Pointers
 {
     using UnityEngine;
+    using VRTK.Core.Extension;
     using VRTK.Core.Tracking.Follow;
 
     /// <summary>
@@ -21,11 +22,13 @@
 
         protected virtual void OnEnable()
         {
-            if (objectFollow != null)
+            if (objectFollow == null || userSetup == null || userSetup.followTarget == null)
             {
-                objectFollow.targetComponents.Clear();
-                objectFollow.targetComponents.Add(userSetup.followTarget);
+                return;
             }
+
+            objectFollow.targetComponents.Clear();
+            objectFollow.targetComponents.Add(userSetup.followTarget.TryGetComponent());
         }
     }
 }

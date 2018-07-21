@@ -43,7 +43,7 @@ namespace Test.VRTK.Core.Tracking
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.searchOrigin = searchOrigin.transform;
+            subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
 
             //Process just calls Locate() so may as well just test the first point
@@ -61,7 +61,7 @@ namespace Test.VRTK.Core.Tracking
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.searchOrigin = searchOrigin.transform;
+            subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.down;
 
             subject.Locate();
@@ -80,7 +80,7 @@ namespace Test.VRTK.Core.Tracking
             exclusions.checkType = ExclusionRule.CheckTypes.Script;
             exclusions.identifiers = new List<string>() { "ExclusionRuleStub" };
 
-            subject.searchOrigin = searchOrigin.transform;
+            subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
             subject.targetValidity = exclusions;
 
@@ -96,7 +96,7 @@ namespace Test.VRTK.Core.Tracking
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.searchOrigin = searchOrigin.transform;
+            subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
             subject.gameObject.SetActive(false);
             subject.Process();
@@ -112,7 +112,7 @@ namespace Test.VRTK.Core.Tracking
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.searchOrigin = searchOrigin.transform;
+            subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
             subject.enabled = false;
             subject.Process();

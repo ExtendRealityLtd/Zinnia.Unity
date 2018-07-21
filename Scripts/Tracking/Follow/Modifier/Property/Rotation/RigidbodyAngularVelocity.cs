@@ -20,20 +20,20 @@
         public float maxDistanceDelta = 10f;
 
         protected Rigidbody cachedTargetRigidbody;
-        protected Transform cachedTarget;
+        protected GameObject cachedTarget;
 
         /// <summary>
-        /// Modifies the target <see cref="Rigidbody"/> angular velocity to rotate towards the given source <see cref="Transform"/>.
+        /// Modifies the target <see cref="Rigidbody"/> angular velocity to rotate towards the given source.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        protected override void DoModify(Transform source, Transform target, Transform offset = null)
+        protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
-            cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.FindRigidbody() : cachedTargetRigidbody);
+            cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.transform.FindRigidbody() : cachedTargetRigidbody);
             cachedTarget = target;
 
-            Quaternion rotationDelta = source.rotation * Quaternion.Inverse((offset != null ? offset.rotation : target.rotation));
+            Quaternion rotationDelta = source.transform.rotation * Quaternion.Inverse((offset != null ? offset.transform.rotation : target.transform.rotation));
             float angle;
             Vector3 axis;
 

@@ -56,20 +56,20 @@
         }
 
         /// <summary>
-        /// The source <see cref="Transform"/> to obtain the transformation properties from.
+        /// The source to obtain the transformation properties from.
         /// </summary>
-        [Tooltip("The source Transform to obtain the transformation properties from.")]
-        public Transform source;
+        [Tooltip("The source to obtain the transformation properties from.")]
+        public TransformData source;
         /// <summary>
-        /// The target <see cref="Transform"/> to apply the transformations to.
+        /// The target to apply the transformations to.
         /// </summary>
-        [Tooltip("The target Transform to apply the transformations to.")]
-        public Transform target;
+        [Tooltip("The target to apply the transformations to.")]
+        public GameObject target;
         /// <summary>
-        /// A <see cref="Transform"/> to use as an offset/pivot when applying the transformations.
+        /// The offset/pivot when applying the transformations.
         /// </summary>
-        [Tooltip("A Transform to use as an offset/pivot when applying the transformations.")]
-        public Transform offset;
+        [Tooltip("The offset/pivot when applying the transformations.")]
+        public GameObject offset;
         /// <summary>
         /// Determines which axes to apply on when utilising the offset.
         /// </summary>
@@ -103,57 +103,99 @@
         protected EventData eventData = new EventData();
 
         /// <summary>
-        /// Applies the properties of the <see cref="source"/> parameter to the target <see cref="Transform"/>.
+        /// Sets the <see cref="source"/> parameter.
+        /// </summary>
+        /// <param name="source">The new source value.</param>
+        public virtual void SetSource(GameObject source)
+        {
+            SetSource(new TransformData((gameObject != null ? gameObject : null)));
+        }
+
+        /// <summary>
+        /// Sets the <see cref="source"/> parameter.
+        /// </summary>
+        /// <param name="source">The new source value.</param>
+        public virtual void SetSource(TransformData source)
+        {
+            this.source = source;
+        }
+
+        /// <summary>
+        /// Clears the <see cref="source"/> parameter.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            source = null;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="target"/> parameter.
+        /// </summary>
+        /// <param name="target">The new target value.</param>
+        public virtual void SetTarget(GameObject target)
+        {
+            this.target = target;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="target"/> parameter.
+        /// </summary>
+        /// <param name="target">The new target value.</param>
+        public virtual void SetTarget(TransformData target)
+        {
+            SetTarget((target?.transform != null ? target.transform.gameObject : null));
+        }
+
+        /// <summary>
+        /// Clears the <see cref="target"/> parameter.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            target = null;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="offset"/> parameter.
+        /// </summary>
+        /// <param name="offset">The new offset value.</param>
+        public virtual void SetOffset(GameObject offset)
+        {
+            this.offset = offset;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="offset"/> parameter.
+        /// </summary>
+        /// <param name="offset">The new offset value.</param>
+        public virtual void SetOffset(TransformData offset)
+        {
+            SetOffset((offset?.transform != null ? offset.transform.gameObject : null));
+        }
+
+        /// <summary>
+        /// Clears the <see cref="offset"/> parameter.
+        /// </summary>
+        public virtual void ClearOffset()
+        {
+            offset = null;
+        }
+
+        /// <summary>
+        /// Applies the properties of the <see cref="source"/> parameter to the target.
         /// </summary>
         public virtual void Modify()
         {
-            if (source != null)
-            {
-                Modify(new TransformData(source));
-            }
-        }
-
-        /// <summary>
-        /// Applys the properties of the given source <see cref="Transform"/> to the target <see cref="Transform"/>.
-        /// </summary>
-        /// <param name="sourceData">The source <see cref="Transform"/> to obtain the transformation properties from.</param>
-        public virtual void Modify(Transform sourceData)
-        {
-            if (sourceData != null)
-            {
-                Modify(new TransformData(sourceData));
-            }
-        }
-
-        /// <summary>
-        /// Applys the properties of the given source <see cref="GameObject"/> to the target <see cref="Transform"/>.
-        /// </summary>
-        /// <param name="sourceData">The source <see cref="GameObject"/> to obtain the transformation properties from.</param>
-        public virtual void Modify(GameObject sourceData)
-        {
-            if (sourceData != null)
-            {
-                Modify(new TransformData(sourceData.transform));
-            }
-        }
-
-        /// <summary>
-        /// Applys the properties of the given source <see cref="TransformData"/> to the target <see cref="Transform"/>.
-        /// </summary>
-        /// <param name="sourceData">The source <see cref="TransformData"/> to obtain the transformation properties from.</param>
-        public virtual void Modify(TransformData sourceData)
-        {
-            if (!isActiveAndEnabled || target == null || sourceData == null)
+            if (!isActiveAndEnabled || target == null || source?.transform == null)
             {
                 return;
             }
 
             TransformData targetData = new TransformData(target);
-            BeforeTransformUpdated?.Invoke(eventData.Set(sourceData, targetData));
-            SetScale(sourceData, targetData);
-            SetPosition(sourceData, targetData);
-            SetRotation(sourceData, targetData);
-            ProcessTransform(sourceData, targetData);
+            BeforeTransformUpdated?.Invoke(eventData.Set(source, targetData));
+            SetScale(source, targetData);
+            SetPosition(source, targetData);
+            SetRotation(source, targetData);
+            ProcessTransform(source, targetData);
         }
 
         protected virtual void OnDisable()
@@ -256,10 +298,10 @@
 
             if (!applyTransformations.HasFlag(TransformProperties.Rotation))
             {
-                return GetOffsetPosition(sourcePosition, givenTarget.Position, offset.position);
+                return GetOffsetPosition(sourcePosition, givenTarget.Position, offset.transform.position);
             }
 
-            Vector3 calculatedOffset = GetOffsetPosition(Vector3.zero, givenTarget.Position, offset.position) * -1f;
+            Vector3 calculatedOffset = GetOffsetPosition(Vector3.zero, givenTarget.Position, offset.transform.position) * -1f;
             Quaternion relativeRotation = Quaternion.Inverse(givenTarget.Rotation) * sourceRotation;
             Vector3 adjustedOffset = relativeRotation * calculatedOffset;
             Vector3 scaleFactor = new Vector3(sourceScale.x / givenTarget.Scale.x, sourceScale.y / givenTarget.Scale.y, sourceScale.z / givenTarget.Scale.z);
@@ -275,9 +317,9 @@
         protected virtual Vector3 GetModifiedPosition(TransformData givenTarget)
         {
             return new Vector3(
-                GetModifiedPositionValue(applyOffsetOnAxis.xState, offset.position.x, givenTarget.Position.x),
-                GetModifiedPositionValue(applyOffsetOnAxis.yState, offset.position.y, givenTarget.Position.y),
-                GetModifiedPositionValue(applyOffsetOnAxis.zState, offset.position.z, givenTarget.Position.z)
+                GetModifiedPositionValue(applyOffsetOnAxis.xState, offset.transform.position.x, givenTarget.Position.x),
+                GetModifiedPositionValue(applyOffsetOnAxis.yState, offset.transform.position.y, givenTarget.Position.y),
+                GetModifiedPositionValue(applyOffsetOnAxis.zState, offset.transform.position.z, givenTarget.Position.z)
                 );
         }
 

@@ -33,24 +33,24 @@
         /// </summary>
         public ObjectFollow.UnityEvent Modified = new ObjectFollow.UnityEvent();
 
-        /// The current source <see cref="Transform"/> being used in the modifier process.
-        public Transform CachedSource
+        /// The current source being used in the modifier process.
+        public GameObject CachedSource
         {
             get;
             protected set;
         }
 
-        /// The current target <see cref="Transform"/> being used in the modifier process.
-        public Transform CachedTarget
+        /// The current target being used in the modifier process.
+        public GameObject CachedTarget
         {
             get;
             protected set;
         }
 
         /// <summary>
-        /// The current <see cref="Transform"/> being used as the offset in the modifier process.
+        /// The current being used as the offset in the modifier process.
         /// </summary>
-        public Transform CachedOffset
+        public GameObject CachedOffset
         {
             get;
             protected set;
@@ -59,12 +59,12 @@
         protected ObjectFollow.EventData eventData = new ObjectFollow.EventData();
 
         /// <summary>
-        /// Attempts to call each of the given <see cref="PropertyModifier"/> options to modify the target <see cref="Transform"/>.
+        /// Attempts to call each of the given <see cref="PropertyModifier"/> options to modify the target.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        public virtual void Modify(Transform source, Transform target, Transform offset = null)
+        public virtual void Modify(GameObject source, GameObject target, GameObject offset = null)
         {
             if (!isActiveAndEnabled || !ValidateCache(source, target, offset))
             {
@@ -81,13 +81,13 @@
         }
 
         /// <summary>
-        /// Caches the given source <see cref="Transform"/> and target <see cref="Transform"/> and determines if the set cache is valid.
+        /// Caches the given source and target then determines if the set cache is valid.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
         /// <returns><see langword="true"/> if the cache contains a valid source and target.</returns>
-        protected virtual bool ValidateCache(Transform source, Transform target, Transform offset = null)
+        protected virtual bool ValidateCache(GameObject source, GameObject target, GameObject offset = null)
         {
             CachedSource = source;
             CachedTarget = target;

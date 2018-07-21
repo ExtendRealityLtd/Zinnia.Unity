@@ -57,7 +57,8 @@
 
             if (modifyTeleporter != null)
             {
-                modifyTeleporter.Modify(destination);
+                modifyTeleporter.SetSource(destination);
+                modifyTeleporter.Modify();
             }
         }
 

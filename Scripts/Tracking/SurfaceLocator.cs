@@ -26,7 +26,7 @@
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
         [Tooltip("The origin of where to begin the cast to locate the nearest surface.")]
-        public Transform searchOrigin;
+        public GameObject searchOrigin;
         /// <summary>
         /// The direction in which to cast to locate the nearest surface.
         /// </summary>
@@ -68,6 +68,23 @@
         }
 
         protected const float DISTANCE_VARIANCE = 0.0001f;
+
+        /// <summary>
+        /// Sets the <see cref="searchOrigin"/> parameter.
+        /// </summary>
+        /// <param name="searchOrigin">The new searchOrigin value.</param>
+        public virtual void SetSearchOrigin(GameObject searchOrigin)
+        {
+            this.searchOrigin = searchOrigin;
+        }
+
+        /// <summary>
+        /// Clears the <see cref="searchOrigin"/> parameter.
+        /// </summary>
+        public virtual void ClearSearchOrigin()
+        {
+            searchOrigin = null;
+        }
 
         /// <summary>
         /// Locates the nearest available surface upon a <see cref="MomentProcess"/>.

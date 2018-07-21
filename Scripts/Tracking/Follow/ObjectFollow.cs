@@ -20,24 +20,24 @@
         public class EventData
         {
             /// <summary>
-            /// The source <see cref="Transform"/> utilize within the <see cref="FollowModifier"/>.
+            /// The source utilize within the <see cref="FollowModifier"/>.
             /// </summary>
-            public Transform source;
+            public GameObject source;
             /// <summary>
-            /// The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.
+            /// The target to apply the <see cref="FollowModifier"/> on.
             /// </summary>            
-            public Transform target;
+            public GameObject target;
             /// <summary>
-            /// An optional <see cref="Transform"/> to offset the target follow against the source.
+            /// The optional offset the target follow against the source.
             /// </summary>
-            public Transform followOffset;
+            public GameObject followOffset;
 
             public EventData Set(EventData source)
             {
                 return Set(source.source, source.target, source.followOffset);
             }
 
-            public EventData Set(Transform source, Transform target, Transform followOffset = null)
+            public EventData Set(GameObject source, GameObject target, GameObject followOffset = null)
             {
                 this.source = source;
                 this.target = target;
@@ -47,7 +47,7 @@
 
             public void Clear()
             {
-                Set(default(Transform), default(Transform), default(Transform));
+                Set(default(GameObject), default(GameObject), default(GameObject));
             }
         }
 
@@ -89,10 +89,10 @@
         }
 
         /// <summary>
-        /// An optional <see cref="Transform"/> to offset the target against the source when following.
+        /// An offset on the target against the source when following.
         /// </summary>
-        [Tooltip("An optional Transform to offset the target against the source when following.")]
-        public Transform followOffset;
+        [Tooltip("An offset on the target against the source when following.")]
+        public GameObject followOffset;
         /// <summary>
         /// The <see cref="FollowModifier"/> to apply.
         /// </summary>
@@ -142,12 +142,12 @@
         }
 
         /// <summary>
-        /// Sets the <see cref="followOffset"/> to the the given <see cref="GameObject.transform"/>.
+        /// Sets the <see cref="followOffset"/> to the the given offset.
         /// </summary>
         /// <param name="offset">The new offset.</param>
         public virtual void SetFollowOffset(GameObject offset)
         {
-            followOffset = (offset == null ? null : offset.transform);
+            followOffset = offset;
         }
 
         /// <summary>
@@ -161,10 +161,10 @@
         /// <inheritdoc />
         protected override void ProcessComponent(Component source, Component target)
         {
-            Transform sourceTransform = (modificationType == ModificationType.ModifyTargetUsingSource ? source.TryGetTransform() : target.TryGetTransform());
-            Transform targetTransform = (modificationType == ModificationType.ModifyTargetUsingSource ? target.TryGetTransform() : source.TryGetTransform());
+            GameObject sourceGameObject = (modificationType == ModificationType.ModifyTargetUsingSource ? source.TryGetGameObject() : target.TryGetGameObject());
+            GameObject targetGameObject = (modificationType == ModificationType.ModifyTargetUsingSource ? target.TryGetGameObject() : source.TryGetGameObject());
 
-            followModifier?.Modify(sourceTransform, targetTransform, followOffset);
+            followModifier?.Modify(sourceGameObject, targetGameObject, followOffset);
         }
     }
 }

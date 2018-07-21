@@ -997,6 +997,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  useLocalScale: 0
 --- !u!114 &114206215443630188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1166,7 +1167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2d46c695564b1dae524f8cb1455301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 4014468347667678}
+  target: {fileID: 1584024684148808}
 --- !u!114 &114355350898141886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1178,7 +1179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2d46c695564b1dae524f8cb1455301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 4996519945204894}
+  target: {fileID: 1897072728865122}
 --- !u!114 &114400600543216116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1231,6 +1232,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  useLocalRotation: 0
 --- !u!114 &114769971407447336
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1253,6 +1255,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  useLocalPosition: 0
 --- !u!114 &114787471753854276
 MonoBehaviour:
   m_ObjectHideFlags: 1
