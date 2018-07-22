@@ -1,8 +1,7 @@
-﻿namespace VRTK.Core.Prefabs.UnityXRCameraRig
+﻿namespace VRTK.Core.Prefabs.CameraRig.UnityXRCameraRig
 {
     using UnityEngine;
     using UnityEngine.XR;
-    using VRTK.Core.Extension;
 
     /// <summary>
     /// Provides configuration for the Unity Engine in XR.

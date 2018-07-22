@@ -321,7 +321,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultValue: 0
-  sources: []
   Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -337,6 +336,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   keyCode: 333
 --- !u!114 &114231540651661280
 MonoBehaviour:
@@ -350,7 +350,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultValue: 0
-  sources: []
   Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -366,6 +365,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   keyCode: 342
 --- !u!114 &114360925809025306
 MonoBehaviour:
@@ -379,7 +379,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultValue: 0
-  sources: []
   Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -395,6 +394,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   keyCode: 337
 --- !u!114 &114388481974091436
 MonoBehaviour:
@@ -408,7 +408,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultValue: 0
-  sources: []
   Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -424,6 +423,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   keyCode: 344
 --- !u!114 &114419751696510924
 MonoBehaviour:
@@ -437,7 +437,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultValue: 0
-  sources: []
   Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -453,6 +452,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   keyCode: 348
 --- !u!114 &114570209224105218
 MonoBehaviour:
@@ -466,7 +466,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultValue: 0
-  sources: []
   Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -482,6 +481,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   keyCode: 346
 --- !u!114 &114610906455507864
 MonoBehaviour:
@@ -495,7 +495,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultValue: 0
-  sources: []
   Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -511,6 +510,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   keyCode: 332
 --- !u!114 &114920151736014300
 MonoBehaviour:
@@ -524,7 +524,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultValue: 0
-  sources: []
   Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -540,6 +539,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   keyCode: 338
 --- !u!114 &114999723297846686
 MonoBehaviour:
@@ -553,7 +553,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultValue: 0
-  sources: []
   Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -569,4 +568,5 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   keyCode: 343
