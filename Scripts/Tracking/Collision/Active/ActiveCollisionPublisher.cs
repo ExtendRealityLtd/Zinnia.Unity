@@ -17,6 +17,11 @@
         public GameObject sourceContainer;
 
         /// <summary>
+        /// Emitted the collision data is published.
+        /// </summary>
+        public CollisionNotifier.UnityEvent Published = new CollisionNotifier.UnityEvent();
+
+        /// <summary>
         /// The active collisions.
         /// </summary>
         public List<CollisionNotifier.EventData> ActiveCollisions
@@ -56,6 +61,7 @@
                 {
                     consumer.Consume(this, currentCollision);
                 }
+                Published?.Invoke(currentCollision);
             }
         }
 

@@ -15,11 +15,18 @@
         public GameObject source;
 
         /// <summary>
+        /// The sorted list.
+        /// </summary>
+        public ActiveCollisionsContainer.EventData SortedList
+        {
+            get;
+            protected set;
+        } = new ActiveCollisionsContainer.EventData();
+
+        /// <summary>
         /// Emitted when the collection is sorted.
         /// </summary>
         public ActiveCollisionsContainer.UnityEvent Sorted = new ActiveCollisionsContainer.UnityEvent();
-
-        protected ActiveCollisionsContainer.EventData sortedList = new ActiveCollisionsContainer.EventData();
 
         /// <summary>
         /// Sets the <see cref="source"/> parameter.
@@ -59,9 +66,9 @@
                 return originalList;
             }
 
-            sortedList.Set(originalList);
+            SortedList.Set(originalList);
 
-            sortedList.activeCollisions.Sort(
+            SortedList.activeCollisions.Sort(
             (data1, data2) =>
                 {
                     float distance1 = Vector3.Distance(data1.collider.GetContainingTransform().position, source.transform.position);
@@ -70,8 +77,8 @@
                 }
             );
 
-            Sorted?.Invoke(sortedList);
-            return sortedList;
+            Sorted?.Invoke(SortedList);
+            return SortedList;
         }
     }
 }

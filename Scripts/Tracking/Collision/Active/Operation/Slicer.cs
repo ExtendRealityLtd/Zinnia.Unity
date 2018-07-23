@@ -20,6 +20,23 @@
         public uint length = 1;
 
         /// <summary>
+        /// The elements that have been sliced out of the list.
+        /// </summary>
+        public ActiveCollisionsContainer.EventData SlicedList
+        {
+            get;
+            protected set;
+        } = new ActiveCollisionsContainer.EventData();
+        /// <summary>
+        /// The elements that are still remaining in the list after a slice.
+        /// </summary>
+        public ActiveCollisionsContainer.EventData RemainingList
+        {
+            get;
+            protected set;
+        } = new ActiveCollisionsContainer.EventData();
+
+        /// <summary>
         /// Emitted when the sliced elements are taken from the collection.
         /// </summary>
         public ActiveCollisionsContainer.UnityEvent Sliced = new ActiveCollisionsContainer.UnityEvent();
@@ -27,9 +44,6 @@
         /// Emitted when the remaining elements are left after slicing.
         /// </summary>
         public ActiveCollisionsContainer.UnityEvent Remained = new ActiveCollisionsContainer.UnityEvent();
-
-        protected ActiveCollisionsContainer.EventData slicedList = new ActiveCollisionsContainer.EventData();
-        protected ActiveCollisionsContainer.EventData remainingList = new ActiveCollisionsContainer.EventData();
 
         /// <summary>
         /// Slices the collision collection.
@@ -47,25 +61,25 @@
         /// <returns>The sliced collection.</returns>
         public virtual ActiveCollisionsContainer.EventData Slice(ActiveCollisionsContainer.EventData originalList)
         {
-            slicedList.Clear();
-            remainingList.Clear();
+            SlicedList.Clear();
+            RemainingList.Clear();
 
             if (!isActiveAndEnabled)
             {
-                return slicedList;
+                return SlicedList;
             }
 
             uint collectionCount = (uint)originalList.activeCollisions.Count;
             uint actualStartIndex = GetStartIndex(startIndex, collectionCount);
             uint actualLength = GetRangeLength(actualStartIndex, length, collectionCount);
 
-            slicedList.activeCollisions.AddRange(originalList.activeCollisions.GetRange((int)actualStartIndex, (int)actualLength));
-            Sliced?.Invoke(slicedList);
+            SlicedList.activeCollisions.AddRange(originalList.activeCollisions.GetRange((int)actualStartIndex, (int)actualLength));
+            Sliced?.Invoke(SlicedList);
 
-            remainingList.activeCollisions.AddRange(originalList.activeCollisions.Except(slicedList.activeCollisions));
-            Remained?.Invoke(remainingList);
+            RemainingList.activeCollisions.AddRange(originalList.activeCollisions.Except(SlicedList.activeCollisions));
+            Remained?.Invoke(RemainingList);
 
-            return slicedList;
+            return SlicedList;
         }
 
         /// <summary>
@@ -77,7 +91,7 @@
         public virtual ActiveCollisionsContainer.EventData Slice(ActiveCollisionsContainer.EventData originalList, out ActiveCollisionsContainer.EventData remaining)
         {
             ActiveCollisionsContainer.EventData returnList = Slice(originalList);
-            remaining = (isActiveAndEnabled ? remainingList : originalList);
+            remaining = (isActiveAndEnabled ? RemainingList : originalList);
             return returnList;
         }
 
