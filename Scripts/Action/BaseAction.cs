@@ -137,6 +137,23 @@
             ProcessValue(value);
         }
 
+        /// <summary>
+        /// Emits the appropriate event for when the activation state changes from Activated or Deactivated.
+        /// </summary>
+        public virtual void EmitActivationState()
+        {
+            if (IsActivated)
+            {
+                Activated?.Invoke(Value);
+                ValueChanged?.Invoke(Value);
+            }
+            else
+            {
+                ValueChanged?.Invoke(Value);
+                Deactivated?.Invoke(Value);
+            }
+        }
+
         protected virtual void OnEnable()
         {
             SubscribeToSources();
@@ -230,23 +247,6 @@
         protected virtual bool ShouldActivate(TValue value)
         {
             return !defaultValue.Equals(value);
-        }
-
-        /// <summary>
-        /// Emits the appropriate event for when the activation state changes from Activated or Deactivated.
-        /// </summary>
-        protected virtual void EmitActivationState()
-        {
-            if (IsActivated)
-            {
-                Activated?.Invoke(Value);
-                ValueChanged?.Invoke(Value);
-            }
-            else
-            {
-                ValueChanged?.Invoke(Value);
-                Deactivated?.Invoke(Value);
-            }
         }
     }
 }
