@@ -48,7 +48,7 @@ namespace Test.VRTK.Core.Action
         }
 
         [Test]
-        public void DectivatedEmitted()
+        public void DeactivatedEmitted()
         {
             subject.SetIsActivated(true);
             subject.SetValue(Vector2.one);
