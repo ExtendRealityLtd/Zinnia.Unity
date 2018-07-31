@@ -14,6 +14,11 @@
         /// <returns>The container.</returns>
         public static Transform GetContainingTransform(this Collider collider)
         {
+            if (collider == null)
+            {
+                return null;
+            }
+
             return (collider.attachedRigidbody != null ? collider.attachedRigidbody.transform : collider.transform);
         }
     }

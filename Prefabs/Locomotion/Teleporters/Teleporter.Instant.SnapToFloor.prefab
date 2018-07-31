@@ -55,8 +55,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4519582534682404}
-  - component: {fileID: 114954064134629572}
-  - component: {fileID: 114204860816396958}
+  - component: {fileID: 114698125830759554}
   m_Layer: 0
   m_Name: Teleporter.Instant.SnapToFloor
   m_TagString: Untagged
@@ -81,6 +80,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1638529300158548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4778052528346782}
+  - component: {fileID: 114497746677586058}
+  m_Layer: 0
+  m_Name: Internal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4191650829071564
 Transform:
   m_ObjectHideFlags: 1
@@ -92,7 +107,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4519582534682404}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4259578288778306
 Transform:
@@ -105,7 +120,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4519582534682404}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4519582534682404
 Transform:
@@ -117,6 +132,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4778052528346782}
   - {fileID: 4191650829071564}
   - {fileID: 4259578288778306}
   - {fileID: 4634521794038816}
@@ -134,7 +150,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4519582534682404}
-  m_RootOrder: 2
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4778052528346782
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1638529300158548}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4519582534682404}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114111823538436678
 MonoBehaviour:
@@ -174,32 +203,12 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Action.BooleanAction+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  sources: []
   changeDistance: 0.5
   checkAxis:
     xState: 0
     yState: 1
     zState: 0
---- !u!114 &114204860816396958
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1238978832092882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98154869f39f00941bc8fecde4898876, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  userSetup: {fileID: 114954064134629572}
-  surfaceTeleporter: {fileID: 114671045609980380}
-  modifyTeleporter: {fileID: 0}
-  surfaceLocatorAliases:
-  - {fileID: 114302476225177798}
-  transformModifierAliases:
-  - {fileID: 114228719762159142}
-  - {fileID: 114389553745756508}
-  cameraColorOverlays:
-  - {fileID: 114895205429108944}
 --- !u!114 &114228719762159142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,7 +220,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dec536a0cacdc84b84a384ca98d6493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
+  source:
+    transform: {fileID: 0}
+  target: {fileID: 0}
   offset: {fileID: 0}
   applyOffsetOnAxis:
     xState: 1
@@ -222,13 +233,13 @@ MonoBehaviour:
   BeforeTransformUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.TransformModify+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterTransformUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.TransformModify+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114302476225177798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,8 +261,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114228719762159142}
-        m_MethodName: Modify
+        m_MethodName: SetSource
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114228719762159142}
+        m_MethodName: Modify
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -298,7 +320,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dec536a0cacdc84b84a384ca98d6493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
+  source:
+    transform: {fileID: 0}
+  target: {fileID: 0}
   offset: {fileID: 0}
   applyOffsetOnAxis:
     xState: 1
@@ -331,8 +355,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Tracking.TransformModify+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+      - m_Target: {fileID: 114497746677586058}
+        m_MethodName: NotifyTeleporting
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterTransformUpdated:
     m_PersistentCalls:
       m_Calls:
@@ -358,8 +393,40 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-    m_TypeName: VRTK.Core.Tracking.TransformModify+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+      - m_Target: {fileID: 114497746677586058}
+        m_MethodName: NotifyTeleported
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114497746677586058
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1638529300158548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98154869f39f00941bc8fecde4898876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  facade: {fileID: 114698125830759554}
+  surfaceTeleporter: {fileID: 114671045609980380}
+  modifyTeleporter: {fileID: 0}
+  surfaceLocatorAliases:
+  - {fileID: 114302476225177798}
+  transformModifierAliases:
+  - {fileID: 114228719762159142}
+  - {fileID: 114389553745756508}
+  cameraColorOverlays:
+  - {fileID: 114895205429108944}
 --- !u!114 &114671045609980380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -381,8 +448,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114389553745756508}
-        m_MethodName: Modify
+        m_MethodName: SetSource
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114389553745756508}
+        m_MethodName: Modify
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -404,6 +482,31 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: VRTK.Core.Tracking.SurfaceLocator+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114698125830759554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1238978832092882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a11803ae5247db04b8ba76bdf0e5c67d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playAreaAlias: {fileID: 0}
+  headsetAlias: {fileID: 0}
+  sceneCameras: {fileID: 0}
+  Teleporting:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  Teleported:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  internalSetup: {fileID: 114497746677586058}
 --- !u!114 &114831062959513986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -450,17 +553,3 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Visual.CameraColorOverlay+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114954064134629572
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1238978832092882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37168890bcec99f40a35e5dc224a30bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playAreaAlias: {fileID: 0}
-  headsetAlias: {fileID: 0}
-  sceneCameras: {fileID: 0}

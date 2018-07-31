@@ -9,6 +9,7 @@
     /// </summary>
     public abstract class BaseAction : MonoBehaviour
     {
+
         /// <summary>
         /// Determines whether the action is currently activated.
         /// </summary>
@@ -17,6 +18,21 @@
             get;
             protected set;
         }
+
+        /// <summary>
+        /// Adds a given action to the sources collection.
+        /// </summary>
+        /// <param name="action">The action to add.</param>
+        public abstract void AddSource(BaseAction action);
+        /// <summary>
+        /// Removes the given action from the sources collection.
+        /// </summary>
+        /// <param name="action">The action to remove.</param>
+        public abstract void RemoveSource(BaseAction action);
+        /// <summary>
+        /// Clears all sources.
+        /// </summary>
+        public abstract void ClearSources();
 
         /// <summary>
         /// Determines whether the event should be emitted.
@@ -52,10 +68,9 @@
         public TValue defaultValue;
 
         /// <summary>
-        /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
+        /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        [Tooltip("Actions to subscribe to when this action is enabled. Allows chaining the source actions to this action.")]
-        public List<TSelf> sources = new List<TSelf>();
+        public IReadOnlyList<TSelf> Sources => sources;
 
         /// <summary>
         /// Emitted when the action becomes active.
@@ -71,6 +86,44 @@
         public TEvent Deactivated = new TEvent();
 
         /// <summary>
+        /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
+        /// </summary>
+        [Tooltip("Actions to subscribe to when this action is enabled. Allows chaining the source actions to this action.")]
+        [SerializeField]
+        protected List<TSelf> sources = new List<TSelf>();
+
+        /// <inheritdoc />
+        public override void AddSource(BaseAction action)
+        {
+            if (action == null)
+            {
+                return;
+            }
+
+            sources.Add((TSelf)action);
+            SubscribeToSource((TSelf)action);
+        }
+
+        /// <inheritdoc />
+        public override void RemoveSource(BaseAction action)
+        {
+            if (action == null)
+            {
+                return;
+            }
+
+            UnsubscribeFromSource((TSelf)action);
+            sources.Remove((TSelf)action);
+        }
+
+        /// <inheritdoc />
+        public override void ClearSources()
+        {
+            UnsubscribeFromSources();
+            sources.Clear();
+        }
+
+        /// <summary>
         /// Acts on the value.
         /// </summary>
         /// <param name="value">The value to act on.</param>
@@ -84,6 +137,23 @@
             ProcessValue(value);
         }
 
+        /// <summary>
+        /// Emits the appropriate event for when the activation state changes from Activated or Deactivated.
+        /// </summary>
+        public virtual void EmitActivationState()
+        {
+            if (IsActivated)
+            {
+                Activated?.Invoke(Value);
+                ValueChanged?.Invoke(Value);
+            }
+            else
+            {
+                ValueChanged?.Invoke(Value);
+                Deactivated?.Invoke(Value);
+            }
+        }
+
         protected virtual void OnEnable()
         {
             SubscribeToSources();
@@ -93,6 +163,50 @@
         {
             ProcessValue(defaultValue);
             UnsubscribeFromSources();
+        }
+
+        /// <summary>
+        /// Subscribes the current action as a listener to the given action.
+        /// </summary>
+        /// <param name="source">The source action to subscribe listeners on.</param>
+        protected virtual void SubscribeToSource(TSelf source)
+        {
+            if (source == null)
+            {
+                return;
+            }
+
+            source.ValueChanged.AddListener(Receive);
+        }
+
+        /// <summary>
+        /// Unsubscribes the current action from listening to the given action.
+        /// </summary>
+        /// <param name="source">The source action to unsubscribe listeners on.</param>
+        protected virtual void UnsubscribeFromSource(TSelf source)
+        {
+            if (source == null)
+            {
+                return;
+            }
+
+            source.ValueChanged.RemoveListener(Receive);
+        }
+
+        /// <summary>
+        /// Attempts to subscribe listeners to each of the source actions.
+        /// </summary>
+        protected virtual void SubscribeToSources()
+        {
+            sources.ForEach(SubscribeToSource);
+        }
+
+        /// <summary>
+        /// Attempts to unsubscribe existing listeners from each of the source actions.
+        /// </summary>
+        protected virtual void UnsubscribeFromSources()
+        {
+            sources.ForEach(UnsubscribeFromSource);
         }
 
         /// <summary>
@@ -116,34 +230,6 @@
         }
 
         /// <summary>
-        /// Subscribes to all events on each action in <see cref="sources"/>.
-        /// </summary>
-        protected virtual void SubscribeToSources()
-        {
-            sources.ForEach(
-                source =>
-                {
-                    source.Activated.AddListener(Receive);
-                    source.ValueChanged.AddListener(Receive);
-                    source.Deactivated.AddListener(Receive);
-                });
-        }
-
-        /// <summary>
-        /// Unsubscribes from all events on each action in <see cref="sources"/>.
-        /// </summary>
-        protected virtual void UnsubscribeFromSources()
-        {
-            sources.ForEach(
-                source =>
-                {
-                    source.Activated.RemoveListener(Receive);
-                    source.ValueChanged.RemoveListener(Receive);
-                    source.Deactivated.RemoveListener(Receive);
-                });
-        }
-
-        /// <summary>
         /// Determines if the given <see cref="TValue"/> is equal to the action's cached <see cref="Value"/>.
         /// </summary>
         /// <param name="value">The value to check equality for.</param>
@@ -161,23 +247,6 @@
         protected virtual bool ShouldActivate(TValue value)
         {
             return !defaultValue.Equals(value);
-        }
-
-        /// <summary>
-        /// Emits the appropriate event for when the activation state changes from Activated or Deactivated.
-        /// </summary>
-        protected virtual void EmitActivationState()
-        {
-            if (IsActivated)
-            {
-                Activated?.Invoke(Value);
-                ValueChanged?.Invoke(Value);
-            }
-            else
-            {
-                ValueChanged?.Invoke(Value);
-                Deactivated?.Invoke(Value);
-            }
         }
     }
 }

@@ -107,6 +107,7 @@ namespace Test.VRTK.Core.Action
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
+
             subject.gameObject.SetActive(false);
             subject.Receive(true);
 
@@ -135,6 +136,7 @@ namespace Test.VRTK.Core.Action
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
+
             subject.enabled = false;
             subject.Receive(true);
 
@@ -151,6 +153,130 @@ namespace Test.VRTK.Core.Action
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
+        }
+
+        [Test]
+        public void AddSource()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+
+            subject.Activated.AddListener(activatedListenerMock.Listen);
+            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
+
+            GameObject sourceObject = new GameObject();
+            BooleanActionMock sourceMock = sourceObject.AddComponent<BooleanActionMock>();
+
+            Assert.AreEqual(0, subject.Sources.Count);
+
+            sourceMock.Receive(true);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            sourceMock.SetIsActivated(false);
+            sourceMock.SetValue(false);
+
+            subject.AddSource(sourceMock);
+
+            Assert.AreEqual(1, subject.Sources.Count);
+
+            sourceMock.Receive(true);
+
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+
+            Object.DestroyImmediate(sourceObject);
+        }
+
+        [Test]
+        public void RemoveSource()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+
+            subject.Activated.AddListener(activatedListenerMock.Listen);
+            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
+
+            GameObject sourceObject = new GameObject();
+            BooleanActionMock sourceMock = sourceObject.AddComponent<BooleanActionMock>();
+
+            subject.AddSource(sourceMock);
+
+            Assert.AreEqual(1, subject.Sources.Count);
+
+            sourceMock.Receive(true);
+
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+
+            subject.RemoveSource(sourceMock);
+
+            sourceMock.SetIsActivated(false);
+            sourceMock.SetValue(false);
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+
+            Assert.AreEqual(0, subject.Sources.Count);
+
+            sourceMock.Receive(true);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            Object.DestroyImmediate(sourceObject);
+        }
+
+        [Test]
+        public void ClearSources()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+
+            subject.Activated.AddListener(activatedListenerMock.Listen);
+            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
+
+            GameObject sourceObject = new GameObject();
+            BooleanActionMock sourceMock = sourceObject.AddComponent<BooleanActionMock>();
+
+            subject.AddSource(sourceMock);
+
+            Assert.AreEqual(1, subject.Sources.Count);
+
+            sourceMock.Receive(true);
+
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+
+            subject.ClearSources();
+
+            sourceMock.SetIsActivated(false);
+            sourceMock.SetValue(false);
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+
+            Assert.AreEqual(0, subject.Sources.Count);
+
+            sourceMock.Receive(true);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            Object.DestroyImmediate(sourceObject);
         }
     }
 

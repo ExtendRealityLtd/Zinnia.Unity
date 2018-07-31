@@ -9,10 +9,10 @@
     public class VelocityEstimator : VelocityTracker
     {
         /// <summary>
-        /// The source <see cref="Transform"/> to track and estimate velocities for.
+        /// The source to track and estimate velocities for.
         /// </summary>
-        [Tooltip("The source Transform to track and estimate velocities for.")]
-        public Transform source;
+        [Tooltip("The source to track and estimate velocities for.")]
+        public GameObject source;
         /// <summary>
         /// Automatically begin collecting samples for estimation.
         /// </summary>
@@ -40,6 +40,23 @@
         public override bool IsActive()
         {
             return (isActiveAndEnabled && source != null && source.gameObject.activeInHierarchy);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="source"/> parameter.
+        /// </summary>
+        /// <param name="source">The new source value.</param>
+        public virtual void SetSource(GameObject source)
+        {
+            this.source = source;
+        }
+
+        /// <summary>
+        /// Clears the <see cref="source"/> parameter.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            source = null;
         }
 
         /// <summary>
@@ -99,8 +116,8 @@
         {
             velocitySamples = new Vector3[velocityAverageFrames];
             angularVelocitySamples = new Vector3[angularVelocityAverageFrames];
-            previousPosition = (source != null ? source.position : Vector3.zero);
-            previousRotation = (source != null ? source.rotation : Quaternion.identity);
+            previousPosition = (source != null ? source.transform.position : Vector3.zero);
+            previousRotation = (source != null ? source.transform.rotation : Quaternion.identity);
             collectSamples = autoStartSampling;
         }
 
@@ -174,7 +191,7 @@
         /// <param name="factor">The multiplier to apply to the transform difference.</param>
         protected virtual void EstimateVelocity(float factor)
         {
-            Vector3 currentPosition = (source != null ? source.position : Vector3.zero);
+            Vector3 currentPosition = (source != null ? source.transform.position : Vector3.zero);
             if (velocitySamples.Length > 0)
             {
                 int sampleIndex = currentSampleCount % velocitySamples.Length;
@@ -189,7 +206,7 @@
         /// <param name="factor">The multiplier to apply to the transform difference.</param>
         protected virtual void EstimateAngularVelocity(float factor)
         {
-            Quaternion currentRotation = (source != null ? source.rotation : Quaternion.identity);
+            Quaternion currentRotation = (source != null ? source.transform.rotation : Quaternion.identity);
             Quaternion deltaRotation = currentRotation * Quaternion.Inverse(previousRotation);
             float theta = 2.0f * Mathf.Acos(Mathf.Clamp(deltaRotation.w, -1.0f, 1.0f));
             if (theta > Mathf.PI)

@@ -1,4 +1,5 @@
 ﻿using VRTK.Core.Tracking;
+using VRTK.Core.Extension;
 
 namespace Test.VRTK.Core.Tracking
 {
@@ -32,10 +33,10 @@ namespace Test.VRTK.Core.Tracking
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.sourceComponent = source.GetComponent<Component>();
-            subject.targetComponents.Add(target1.GetComponent<Component>());
-            subject.targetComponents.Add(target2.GetComponent<Component>());
-            subject.targetComponents.Add(target3.GetComponent<Component>());
+            subject.sourceComponent = source.TryGetComponent();
+            subject.targetComponents.Add(target1.TryGetComponent());
+            subject.targetComponents.Add(target2.TryGetComponent());
+            subject.targetComponents.Add(target3.TryGetComponent());
 
             source.gameObject.SetActive(true);
 
@@ -64,10 +65,10 @@ namespace Test.VRTK.Core.Tracking
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.sourceComponent = source.GetComponent<Component>();
-            subject.targetComponents.Add(target1.GetComponent<Component>());
-            subject.targetComponents.Add(target2.GetComponent<Component>());
-            subject.targetComponents.Add(target3.GetComponent<Component>());
+            subject.sourceComponent = source.TryGetComponent();
+            subject.targetComponents.Add(target1.TryGetComponent());
+            subject.targetComponents.Add(target2.TryGetComponent());
+            subject.targetComponents.Add(target3.TryGetComponent());
 
             source.gameObject.SetActive(false);
 
@@ -96,10 +97,10 @@ namespace Test.VRTK.Core.Tracking
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.sourceComponent = source.GetComponent<Component>();
-            subject.targetComponents.Add(target1.GetComponent<Component>());
-            subject.targetComponents.Add(target2.GetComponent<Component>());
-            subject.targetComponents.Add(target3.GetComponent<Component>());
+            subject.sourceComponent = source.TryGetComponent();
+            subject.targetComponents.Add(target1.TryGetComponent());
+            subject.targetComponents.Add(target2.TryGetComponent());
+            subject.targetComponents.Add(target3.TryGetComponent());
 
             source.gameObject.SetActive(true);
 

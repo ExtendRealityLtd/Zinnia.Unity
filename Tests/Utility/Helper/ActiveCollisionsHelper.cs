@@ -1,5 +1,5 @@
 ﻿using VRTK.Core.Tracking.Collision;
-using VRTK.Core.Tracking.Collision.Collection;
+using VRTK.Core.Tracking.Collision.Active;
 
 namespace Test.VRTK.Core.Utility.Helper
 {

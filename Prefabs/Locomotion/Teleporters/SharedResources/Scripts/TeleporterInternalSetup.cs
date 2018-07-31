@@ -3,40 +3,49 @@
     using UnityEngine;
     using System.Collections.Generic;
     using VRTK.Core.Tracking;
+    using VRTK.Core.Tracking.Modification;
     using VRTK.Core.Visual;
     using VRTK.Core.Data.Type;
     using VRTK.Core.Extension;
 
     /// <summary>
-    /// Provides internal settings for the teleporter prefabs.
+    /// Sets up the Teleport Prefab based on the provided user settings.
     /// </summary>
     public class TeleporterInternalSetup : MonoBehaviour
     {
+        [Header("Facade Settings")]
+
         /// <summary>
-        /// The <see cref="TeleporterUserSetup"/> for providing required alias information.
+        /// The public interface facade.
         /// </summary>
-        [Tooltip("The Teleporter User Setup for providing required alias information.")]
-        public TeleporterUserSetup userSetup;
+        [Tooltip("The public interface facade.")]
+        public TeleporterFacade facade;
+
+        [Header("Teleporter Settings")]
+
         /// <summary>
         /// The <see cref="SurfaceLocator"/> to use for the teleporting event.
         /// </summary>
         [Tooltip("The Surface Locator to use for the teleporting event.")]
         public SurfaceLocator surfaceTeleporter;
         /// <summary>
-        /// The <see cref="TransformModify"/> to use for the teleporting event.
+        /// The <see cref="TransformModifier"/> to use for the teleporting event.
         /// </summary>
-        [Tooltip("The Transform Modify to use for the teleporting event.")]
-        public TransformModify modifyTeleporter;
+        [Tooltip("The Transform Modifier to use for the teleporting event.")]
+        public TransformModifier modifyTeleporter;
+
+        [Header("Alias Settings")]
+
         /// <summary>
         /// The <see cref="SurfaceLocator"/> to set aliases on.
         /// </summary>
         [Tooltip("The Surface Locators to set aliases on.")]
         public List<SurfaceLocator> surfaceLocatorAliases = new List<SurfaceLocator>();
         /// <summary>
-        /// The <see cref="TransformModify"/> to set aliases on.
+        /// The <see cref="TransformModifier"/> to set aliases on.
         /// </summary>
         [Tooltip("The Transform Modifiers to set aliases on.")]
-        public List<TransformModify> transformModifierAliases = new List<TransformModify>();
+        public List<TransformModifier> transformModifierAliases = new List<TransformModifier>();
         /// <summary>
         /// The scene <see cref="Camera"/>s to set the <see cref="CameraColorOverlay"/>s to affect.
         /// </summary>
@@ -44,39 +53,109 @@
         public List<CameraColorOverlay> cameraColorOverlays = new List<CameraColorOverlay>();
 
         /// <summary>
-        /// Attempts to teleport the <see cref="userSetup.playAreaAlias"/>.
+        /// Sets up the Teleporter prefab with the specified settings.
         /// </summary>
-        /// <param name="givenLocation">The location to attempt to teleport to.</param>
-        public virtual void Teleport(TransformData givenLocation)
+        public virtual void Setup()
+        {
+            if (InvalidParameters())
+            {
+                return;
+            }
+
+            ApplySettings(facade.playAreaAlias, facade.headsetAlias, facade.sceneCameras);
+        }
+
+        /// <summary>
+        /// Clears all of the settings from the Teleporter prefab.
+        /// </summary>
+        public virtual void Clear()
+        {
+            if (InvalidParameters())
+            {
+                return;
+            }
+
+            ApplySettings(null, null, null);
+        }
+
+        /// <summary>
+        /// Attempts to teleport the <see cref="playAreaAlias"/>.
+        /// </summary>
+        /// <param name="destination">The location to attempt to teleport to.</param>
+        public virtual void Teleport(TransformData destination)
         {
             if (surfaceTeleporter != null)
             {
-                surfaceTeleporter.Locate(givenLocation);
+                surfaceTeleporter.Locate(destination);
             }
 
             if (modifyTeleporter != null)
             {
-                modifyTeleporter.Modify(givenLocation);
+                modifyTeleporter.SetSource(destination);
+                modifyTeleporter.Modify();
+            }
+        }
+
+        /// <summary>
+        /// Notifies that the teleporter is about to initiate.
+        /// </summary>
+        /// <param name="data">The location data.</param>
+        public virtual void NotifyTeleporting(TransformModifier.EventData data)
+        {
+            facade?.Teleporting.Invoke(data);
+        }
+
+        /// <summary>
+        /// Notifies that the teleporter has completed.
+        /// </summary>
+        /// <param name="data">The location data.</param>
+        public virtual void NotifyTeleported(TransformModifier.EventData data)
+        {
+            facade?.Teleported.Invoke(data);
+        }
+
+        /// <summary>
+        /// Applies the provided settings to the Teleporter prefab.
+        /// </summary>
+        /// <param name="playAreaAlias">The PlayArea alias.</param>
+        /// <param name="headsetAlias">The Headset alias.</param>
+        /// <param name="sceneCameras">The scene cameras.</param>
+        protected virtual void ApplySettings(GameObject playAreaAlias, GameObject headsetAlias, CameraList sceneCameras)
+        {
+            foreach (SurfaceLocator currentLocator in surfaceLocatorAliases.EmptyIfNull())
+            {
+                currentLocator.searchOrigin = headsetAlias;
+            }
+
+            foreach (TransformModifier currentModifier in transformModifierAliases.EmptyIfNull())
+            {
+                currentModifier.target = playAreaAlias;
+                currentModifier.offset = headsetAlias;
+            }
+
+            foreach (CameraColorOverlay currentOverlay in cameraColorOverlays.EmptyIfNull())
+            {
+                currentOverlay.validCameras = sceneCameras;
             }
         }
 
         protected virtual void OnEnable()
         {
-            foreach (SurfaceLocator currentLocator in surfaceLocatorAliases.EmptyIfNull())
-            {
-                currentLocator.searchOrigin = userSetup.headsetAlias;
-            }
+            Setup();
+        }
 
-            foreach (TransformModify currentModifier in transformModifierAliases.EmptyIfNull())
-            {
-                currentModifier.source = userSetup.playAreaAlias;
-                currentModifier.offset = userSetup.headsetAlias;
-            }
+        protected virtual void OnDisable()
+        {
+            Clear();
+        }
 
-            foreach (CameraColorOverlay currentOverlay in cameraColorOverlays.EmptyIfNull())
-            {
-                currentOverlay.validCameras = userSetup.sceneCameras;
-            }
+        /// <summary>
+        /// Determines if the setup parameters are invalid.
+        /// </summary>
+        /// <returns><see langword="true"/> if the parameters are invalid.</returns>
+        protected virtual bool InvalidParameters()
+        {
+            return (facade == null || facade.playAreaAlias == null || facade.headsetAlias == null || facade.sceneCameras == null);
         }
     }
 }

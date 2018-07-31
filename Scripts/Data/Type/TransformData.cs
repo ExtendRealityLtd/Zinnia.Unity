@@ -24,7 +24,7 @@
         /// <summary>
         /// Scale override of the <see cref="Transform"/> object.
         /// </summary>
-        public Vector3? localScaleOverride = null;
+        public Vector3? scaleOverride = null;
 
         /// <summary>
         /// The position of the <see cref="Transform"/> or the <see cref="positionOverride"/> if it is set.
@@ -37,9 +37,9 @@
         public Quaternion Rotation => rotationOverride ?? transform.rotation;
 
         /// <summary>
-        /// The localScale of the <see cref="Transform"/> or the <see cref="localScaleOverride"/> if it is set.
+        /// The scale of the <see cref="Transform"/> or the <see cref="scaleOverride"/> if it is set.
         /// </summary>
-        public Vector3 LocalScale => localScaleOverride ?? transform.localScale;
+        public Vector3 Scale => scaleOverride ?? transform.lossyScale;
 
         /// <summary>
         /// The state of whether the <see cref="TransformData"/> is valid.
@@ -66,6 +66,14 @@
         public TransformData(Transform transform)
         {
             this.transform = transform;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="TransformData"/> from an existing <see cref="GameObject"/>.
+        /// </summary>
+        /// <param name="gameobject">The <see cref="GameObject"/> to create the <see cref="TransformData"/> from.</param>
+        public TransformData(GameObject gameobject) : this(gameobject != null ? gameobject.transform : null)
+        {
         }
     }
 }

@@ -1,114 +1,97 @@
 ﻿namespace VRTK.Core.Tracking.Follow.Modifier
 {
     using UnityEngine;
+    using VRTK.Core.Tracking.Follow.Modifier.Property;
 
     /// <summary>
-    /// Describes logic to modify the position, rotation and scale of a <see cref="Transform"/>.
+    /// Composes the logic to modify the position, rotation and scale of a <see cref="Transform"/>.
     /// </summary>
-    public abstract class FollowModifier : MonoBehaviour
+    public class FollowModifier : MonoBehaviour
     {
         /// <summary>
-        /// The process logic for the target.
+        /// The modifier to change the position.
         /// </summary>
-        public enum ProcessTarget
-        {
-            /// <summary>
-            /// Process all targets.
-            /// </summary>
-            All,
-            /// <summary>
-            /// Only process the first active target.
-            /// </summary>
-            FirstActive
-        }
+        [Tooltip("The modifier to change the position.")]
+        public PropertyModifier positionModifier;
+        /// <summary>
+        /// The modifier to change the rotation.
+        /// </summary>
+        [Tooltip("The modifier to change the rotation.")]
+        public PropertyModifier rotationModifier;
+        /// <summary>
+        /// The modifier to change the scale.
+        /// </summary>
+        [Tooltip("The modifier to change the scale.")]
+        public PropertyModifier scaleModifier;
 
-        /// The current source <see cref="Transform"/> being used in the modifier process.
-        public Transform CachedSource
+        /// <summary>
+        /// Emitted before the follow is modified.
+        /// </summary>
+        public ObjectFollower.UnityEvent Premodified = new ObjectFollower.UnityEvent();
+        /// <summary>
+        /// Emitted after the follow is modified.
+        /// </summary>
+        public ObjectFollower.UnityEvent Modified = new ObjectFollower.UnityEvent();
+
+        /// The current source being used in the modifier process.
+        public GameObject CachedSource
         {
             get;
             protected set;
         }
 
-        /// The current target <see cref="Transform"/> being used in the modifier process.
-        public Transform CachedTarget
+        /// The current target being used in the modifier process.
+        public GameObject CachedTarget
         {
             get;
             protected set;
         }
 
         /// <summary>
-        /// The mechanism of how to process the targets.
+        /// The current being used as the offset in the modifier process.
         /// </summary>
-        public ProcessTarget ProcessType
+        public GameObject CachedOffset
         {
             get;
             protected set;
-        } = ProcessTarget.All;
+        }
+
+        protected ObjectFollower.EventData eventData = new ObjectFollower.EventData();
 
         /// <summary>
-        /// Updates the source position based on the target position.
+        /// Attempts to call each of the given <see cref="PropertyModifier"/> options to modify the target.
         /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        public virtual void UpdatePosition(Transform source, Transform target)
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
+        public virtual void Modify(GameObject source, GameObject target, GameObject offset = null)
         {
-            if (isActiveAndEnabled && ValidateCache(source, target))
+            if (!isActiveAndEnabled || !ValidateCache(source, target, offset))
             {
-                DoUpdatePosition(source, target);
+                return;
             }
-        }
 
-        /// Updates the source rotation based on the target rotation.
-        /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        public virtual void UpdateRotation(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled && ValidateCache(source, target))
-            {
-                DoUpdateRotation(source, target);
-            }
-        }
+            Premodified?.Invoke(eventData.Set(source, target, offset));
 
-        /// Updates the source scale based on the target scale.
-        /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        public virtual void UpdateScale(Transform source, Transform target)
-        {
-            if (isActiveAndEnabled && ValidateCache(source, target))
-            {
-                DoUpdateScale(source, target);
-            }
+            positionModifier?.Modify(source, target, offset);
+            rotationModifier?.Modify(source, target, offset);
+            scaleModifier?.Modify(source, target, offset);
+
+            Modified?.Invoke(eventData.Set(source, target, offset));
         }
 
         /// <summary>
-        /// Updates the source position based on the target position.
+        /// Caches the given source and target then determines if the set cache is valid.
         /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        protected abstract void DoUpdatePosition(Transform source, Transform target);
-        /// Updates the source rotation based on the target rotation.
-        /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        protected abstract void DoUpdateRotation(Transform source, Transform target);
-        /// Updates the source scale based on the target scale.
-        /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
-        protected abstract void DoUpdateScale(Transform source, Transform target);
-
-        /// <summary>
-        /// Caches the given source <see cref="Transform"/> and target <see cref="Transform"/> and determines if the set cache is valid.
-        /// </summary>
-        /// <param name="source">The source to modify.</param>
-        /// <param name="target">The target to utilize in the modification.</param>
+        /// <param name="source">The source to utilize in the modification.</param>
+        /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         /// <returns><see langword="true"/> if the cache contains a valid source and target.</returns>
-        protected virtual bool ValidateCache(Transform source, Transform target)
+        protected virtual bool ValidateCache(GameObject source, GameObject target, GameObject offset = null)
         {
             CachedSource = source;
             CachedTarget = target;
+            CachedOffset = offset;
             return (CachedSource != null && CachedTarget != null);
         }
     }
