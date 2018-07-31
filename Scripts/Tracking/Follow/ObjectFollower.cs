@@ -11,10 +11,10 @@
     /// <summary>
     /// Mirrors the <see cref="Transform"/> properties of another <see cref="Transform"/> based on the given <see cref="FollowModifier"/>.
     /// </summary>
-    public class ObjectFollow : SourceTargetProcessor
+    public class ObjectFollower : SourceTargetProcessor
     {
         /// <summary>
-        /// Holds data about a <see cref="ObjectFollow"/> event.
+        /// Holds data about a <see cref="ObjectFollower"/> event.
         /// </summary>
         [Serializable]
         public class EventData

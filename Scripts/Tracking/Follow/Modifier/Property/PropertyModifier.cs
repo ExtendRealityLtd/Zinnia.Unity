@@ -10,13 +10,13 @@
         /// <summary>
         /// Emitted before the property is modified.
         /// </summary>
-        public ObjectFollow.UnityEvent Premodified = new ObjectFollow.UnityEvent();
+        public ObjectFollower.UnityEvent Premodified = new ObjectFollower.UnityEvent();
         /// <summary>
         /// Emitted after the property is modified.
         /// </summary>
-        public ObjectFollow.UnityEvent Modified = new ObjectFollow.UnityEvent();
+        public ObjectFollower.UnityEvent Modified = new ObjectFollower.UnityEvent();
 
-        protected ObjectFollow.EventData eventData = new ObjectFollow.EventData();
+        protected ObjectFollower.EventData eventData = new ObjectFollower.EventData();
 
         /// <summary>
         /// Determines whether the offset will be applied on the modification.

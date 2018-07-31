@@ -54,10 +54,10 @@
         [Tooltip("The GameObject that contains the snap handles logic.")]
         public GameObject snapHandleLogic;
         /// <summary>
-        /// The <see cref="ObjectFollow"/> script used for the attachment logic.
+        /// The <see cref="ObjectFollower"/> script used for the attachment logic.
         /// </summary>
-        [Tooltip("The ObjectFollow script used for the attachment logic.")]
-        public ObjectFollow attachmentLogic;
+        [Tooltip("The ObjectFollower script used for the attachment logic.")]
+        public ObjectFollower attachmentLogic;
 
         /// <summary>
         /// The Interactor that is grabbing the Interactable.

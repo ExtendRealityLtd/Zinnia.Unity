@@ -1034,12 +1034,12 @@ MonoBehaviour:
   Premodified:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Modified:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114079437485869372
 MonoBehaviour:
@@ -1139,12 +1139,12 @@ MonoBehaviour:
   Premodified:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Modified:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   useLocalScale: 0
 --- !u!114 &114206215443630188
@@ -1429,12 +1429,12 @@ MonoBehaviour:
   Premodified:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Modified:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   useLocalRotation: 0
 --- !u!114 &114769971407447336
@@ -1452,12 +1452,12 @@ MonoBehaviour:
   Premodified:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Modified:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollow+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   useLocalPosition: 0
 --- !u!114 &114787471753854276

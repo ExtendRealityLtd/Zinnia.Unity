@@ -7,16 +7,16 @@ namespace Test.VRTK.Core.Tracking.Follow
     using NUnit.Framework;
     using Test.VRTK.Core.Utility.Mock;
 
-    public class ObjectFollowTest
+    public class ObjectFollowerTest
     {
         private GameObject containingObject;
-        private ObjectFollow subject;
+        private ObjectFollower subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<ObjectFollow>();
+            subject = containingObject.AddComponent<ObjectFollower>();
         }
 
         [TearDown]
@@ -75,8 +75,8 @@ namespace Test.VRTK.Core.Tracking.Follow
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
 
-            subject.modificationType = ObjectFollow.ModificationType.ModifySourceUsingTarget;
-            subject.processTarget = ObjectFollow.ProcessTarget.FirstActive;
+            subject.modificationType = ObjectFollower.ModificationType.ModifySourceUsingTarget;
+            subject.processTarget = ObjectFollower.ProcessTarget.FirstActive;
             subject.followModifier = followModifierMock;
 
             subject.Process();
@@ -118,8 +118,8 @@ namespace Test.VRTK.Core.Tracking.Follow
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
 
-            subject.modificationType = ObjectFollow.ModificationType.ModifySourceUsingTarget;
-            subject.processTarget = ObjectFollow.ProcessTarget.FirstActive;
+            subject.modificationType = ObjectFollower.ModificationType.ModifySourceUsingTarget;
+            subject.processTarget = ObjectFollower.ProcessTarget.FirstActive;
             subject.followModifier = followModifierMock;
 
             targets[0].SetActive(false);
@@ -164,8 +164,8 @@ namespace Test.VRTK.Core.Tracking.Follow
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
 
-            subject.modificationType = ObjectFollow.ModificationType.ModifyTargetUsingSource;
-            subject.processTarget = ObjectFollow.ProcessTarget.All;
+            subject.modificationType = ObjectFollower.ModificationType.ModifyTargetUsingSource;
+            subject.processTarget = ObjectFollower.ProcessTarget.All;
             subject.followModifier = followModifierMock;
 
             subject.Process();
@@ -205,8 +205,8 @@ namespace Test.VRTK.Core.Tracking.Follow
             subject.targetComponents.Add(targets[1].transform);
             subject.targetComponents.Add(targets[2].transform);
 
-            subject.modificationType = ObjectFollow.ModificationType.ModifyTargetUsingSource;
-            subject.processTarget = ObjectFollow.ProcessTarget.All;
+            subject.modificationType = ObjectFollower.ModificationType.ModifyTargetUsingSource;
+            subject.processTarget = ObjectFollower.ProcessTarget.All;
 
             subject.Process();
 
@@ -246,8 +246,8 @@ namespace Test.VRTK.Core.Tracking.Follow
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
 
-            subject.modificationType = ObjectFollow.ModificationType.ModifyTargetUsingSource;
-            subject.processTarget = ObjectFollow.ProcessTarget.All;
+            subject.modificationType = ObjectFollower.ModificationType.ModifyTargetUsingSource;
+            subject.processTarget = ObjectFollower.ProcessTarget.All;
             subject.followModifier = followModifierMock;
 
             subject.gameObject.SetActive(false);
@@ -291,8 +291,8 @@ namespace Test.VRTK.Core.Tracking.Follow
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
 
-            subject.modificationType = ObjectFollow.ModificationType.ModifyTargetUsingSource;
-            subject.processTarget = ObjectFollow.ProcessTarget.All;
+            subject.modificationType = ObjectFollower.ModificationType.ModifyTargetUsingSource;
+            subject.processTarget = ObjectFollower.ProcessTarget.All;
             subject.followModifier = followModifierMock;
 
             subject.enabled = false;

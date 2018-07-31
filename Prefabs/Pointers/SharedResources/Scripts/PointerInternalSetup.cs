@@ -21,10 +21,10 @@
         [Header("Object Follow Settings")]
 
         /// <summary>
-        /// The <see cref="ObjectFollow"/> component for the Pointer.
+        /// The <see cref="ObjectFollower"/> component for the Pointer.
         /// </summary>
-        [Tooltip("The ObjectFollow component for the Pointer.")]
-        public ObjectFollow objectFollow;
+        [Tooltip("The ObjectFollower component for the Pointer.")]
+        public ObjectFollower objectFollow;
 
         [Header("Action Settions")]
 

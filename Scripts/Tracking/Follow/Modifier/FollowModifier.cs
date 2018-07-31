@@ -27,11 +27,11 @@
         /// <summary>
         /// Emitted before the follow is modified.
         /// </summary>
-        public ObjectFollow.UnityEvent Premodified = new ObjectFollow.UnityEvent();
+        public ObjectFollower.UnityEvent Premodified = new ObjectFollower.UnityEvent();
         /// <summary>
         /// Emitted after the follow is modified.
         /// </summary>
-        public ObjectFollow.UnityEvent Modified = new ObjectFollow.UnityEvent();
+        public ObjectFollower.UnityEvent Modified = new ObjectFollower.UnityEvent();
 
         /// The current source being used in the modifier process.
         public GameObject CachedSource
@@ -56,7 +56,7 @@
             protected set;
         }
 
-        protected ObjectFollow.EventData eventData = new ObjectFollow.EventData();
+        protected ObjectFollower.EventData eventData = new ObjectFollower.EventData();
 
         /// <summary>
         /// Attempts to call each of the given <see cref="PropertyModifier"/> options to modify the target.

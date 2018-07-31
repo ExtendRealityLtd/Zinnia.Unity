@@ -602,7 +602,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceContainer: {fileID: 1637717827307990}
-  emitEvents: 1
   Published:
     m_PersistentCalls:
       m_Calls:
@@ -631,7 +630,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceContainer: {fileID: 1637717827307990}
-  emitEvents: 1
   Published:
     m_PersistentCalls:
       m_Calls:
@@ -671,7 +669,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceContainer: {fileID: 0}
-  emitEvents: 0
   Published:
     m_PersistentCalls:
       m_Calls: []
@@ -836,7 +833,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceContainer: {fileID: 0}
-  emitEvents: 0
   Published:
     m_PersistentCalls:
       m_Calls: []

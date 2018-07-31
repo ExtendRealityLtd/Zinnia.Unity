@@ -21,25 +21,25 @@
         [Header("Object Follow Settings")]
 
         /// <summary>
-        /// The <see cref="ObjectFollow"/> component for the PlayArea.
+        /// The <see cref="ObjectFollower"/> component for the PlayArea.
         /// </summary>
-        [Tooltip("The ObjectFollow component for the PlayArea.")]
-        public ObjectFollow playArea;
+        [Tooltip("The ObjectFollower component for the PlayArea.")]
+        public ObjectFollower playArea;
         /// <summary>
-        /// The <see cref="ObjectFollow"/> component for the Headset.
+        /// The <see cref="ObjectFollower"/> component for the Headset.
         /// </summary>
-        [Tooltip("The ObjectFollow component for the Headset.")]
-        public ObjectFollow headset;
+        [Tooltip("The ObjectFollower component for the Headset.")]
+        public ObjectFollower headset;
         /// <summary>
-        /// The <see cref="ObjectFollow"/> component for the Left Controller.
+        /// The <see cref="ObjectFollower"/> component for the Left Controller.
         /// </summary>
-        [Tooltip("The ObjectFollow component for the Left Controller.")]
-        public ObjectFollow leftController;
+        [Tooltip("The ObjectFollower component for the Left Controller.")]
+        public ObjectFollower leftController;
         /// <summary>
-        /// The <see cref="ObjectFollow"/> component for the Right Controller.
+        /// The <see cref="ObjectFollower"/> component for the Right Controller.
         /// </summary>
-        [Tooltip("The ObjectFollow component for the Right Controller.")]
-        public ObjectFollow rightController;
+        [Tooltip("The ObjectFollower component for the Right Controller.")]
+        public ObjectFollower rightController;
 
         [Header("Velocity Tracker Settings")]
 
