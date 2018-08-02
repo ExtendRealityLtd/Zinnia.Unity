@@ -3,10 +3,9 @@
     using UnityEngine;
     using System.Collections.Generic;
     using VRTK.Core.Extension;
-    using VRTK.Core.Tracking;
+    using VRTK.Core.Tracking.CameraRig;
     using VRTK.Core.Tracking.Velocity;
     using System.Linq;
-    using System;
 
     /// <summary>
     /// The public interface into the Tracked Alias Prefab.
@@ -16,10 +15,10 @@
         [Header("Tracked Alias Settings")]
 
         /// <summary>
-        /// The linked CameraRigs to track.
+        /// The associated CameraRigs to track.
         /// </summary>
-        [Tooltip("The linked CameraRigs to track.")]
-        public List<CameraRigAliasLinker> cameraRigs = new List<CameraRigAliasLinker>();
+        [Tooltip("The associated CameraRigs to track.")]
+        public List<BaseAliasAssociationCollection> cameraRigs = new List<BaseAliasAssociationCollection>();
 
         [Header("Internal Settings")]
 
