@@ -1,72 +1,71 @@
-﻿namespace VRTK.Core.Prefabs.CameraRig.UnityXRCameraRig.Tracking
+﻿namespace VRTK.Core.Tracking.CameraRig
 {
     using UnityEngine;
-    using VRTK.Core.Tracking;
     using VRTK.Core.Tracking.Velocity;
 
     /// <summary>
-    /// Provides the basis for describing the default Unity XR CameraRig prefab.
+    /// Provides the basis for describing a CameraRig Alias Association by providing the linked elements of the CameraRig.
     /// </summary>
-    public class UnityXRCameraRigAliasLinker : CameraRigAliasLinker
+    public class LinkedAliasAssociationCollection : BaseAliasAssociationCollection
     {
         [Header("PlayArea Settings")]
 
         /// <summary>
-        /// The PlayArea associated with the Unity XR CameraRig.
+        /// The associated PlayArea.
         /// </summary>
         [SerializeField]
-        [Tooltip("The PlayArea associated with the Unity XR CameraRig.")]
+        [Tooltip("The associated PlayArea.")]
         protected GameObject playArea;
 
         [Header("Headset Settings")]
 
         /// <summary>
-        /// The Headset associated with the Unity XR CameraRig.
+        /// The associated Headset.
         /// </summary>
         [SerializeField]
-        [Tooltip("The Headset associated with the Unity XR CameraRig.")]
+        [Tooltip("The associated Headset.")]
         protected GameObject headset;
         /// <summary>
-        /// The Headset Camera associated with the Unity XR CameraRig.
+        /// The associated Headset Camera.
         /// </summary>
         [SerializeField]
-        [Tooltip("The Headset Camera associated with the Unity XR CameraRig.")]
+        [Tooltip("The associated Headset Camera.")]
         protected Camera headsetCamera;
         /// <summary>
-        /// The Headset Velocity Tracker associated with the Unity XR CameraRig.
+        /// The associated Headset Velocity Tracker.
         /// </summary>
         [SerializeField]
-        [Tooltip("The Headset Velocity Tracker associated with the Unity XR CameraRig.")]
+        [Tooltip("The associated Headset Velocity Tracker.")]
         protected VelocityTracker headsetVelocity;
 
         [Header("Left Controller Settings")]
 
         /// <summary>
-        /// The Left Controller associated with the Unity XR CameraRig.
+        /// The associated Left Controller.
         /// </summary>
         [SerializeField]
-        [Tooltip("The Left Controller associated with the Unity XR CameraRig.")]
+        [Tooltip("The associated Left Controller.")]
         protected GameObject leftController;
         /// <summary>
-        /// The Left Controller Velocity Tracker associated with the Unity XR CameraRig.
+        /// The associated Left Controller Velocity Tracker.
         /// </summary>
         [SerializeField]
-        [Tooltip("The Left Controller Velocity Tracker associated with the Unity XR CameraRig.")]
+        [Tooltip("The associated Left Controller Velocity Tracker.")]
         protected VelocityTracker leftControllerVelocity;
 
         [Header("Right Controller Settings")]
 
         /// <summary>
-        /// The Right Controller associated with the Unity XR CameraRig.
+        /// The associated Right Controller.
         /// </summary>
         [SerializeField]
-        [Tooltip("The Right Controller associated with the Unity XR CameraRig.")]
+        [Tooltip("The associated Right Controller.")]
         protected GameObject rightController;
         /// <summary>
-        /// The Right Controller Velocity Tracker associated with the Unity XR CameraRig.
+        /// The associated Right Controller Velocity Tracker.
         /// </summary>
         [SerializeField]
-        [Tooltip("The Right Controller Velocity Tracker associated with the Unity XR CameraRig.")]
+        [Tooltip("The associated Right Controller Velocity Tracker.")]
         protected VelocityTracker rightControllerVelocity;
 
         /// <inheritdoc />

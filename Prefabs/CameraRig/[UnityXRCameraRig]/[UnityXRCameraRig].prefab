@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4938262979527042}
   - component: {fileID: 114331813819599554}
-  - component: {fileID: 114716620386403144}
+  - component: {fileID: 114703236085601920}
   m_Layer: 0
   m_Name: '[UnityXRCameraRig]'
   m_TagString: Untagged
@@ -269,7 +269,7 @@ MonoBehaviour:
   autoStartSampling: 1
   velocityAverageFrames: 5
   angularVelocityAverageFrames: 10
---- !u!114 &114716620386403144
+--- !u!114 &114703236085601920
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1467290445770872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8974cac7ef6a84e42bb187fa70cf34e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 34c0cb8bdc24787439e43b7f145ac31c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playArea: {fileID: 1467290445770872}
