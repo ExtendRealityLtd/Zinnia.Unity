@@ -121,9 +121,6 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Rotation
             source.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
             target.transform.rotation = Quaternion.identity;
 
-            Vector3 expectedVelocity = Vector3.zero;
-            Vector3 expectedAngularVelocity = Vector3.right * 10f;
-
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
             Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
 
@@ -145,9 +142,6 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Rotation
 
             source.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
             target.transform.rotation = Quaternion.identity;
-
-            Vector3 expectedVelocity = Vector3.zero;
-            Vector3 expectedAngularVelocity = Vector3.right * 10f;
 
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
             Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
