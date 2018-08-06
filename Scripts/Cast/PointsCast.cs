@@ -4,8 +4,9 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using VRTK.Core.Extension;
     using VRTK.Core.Process;
-    using VRTK.Core.Utility;
+    using VRTK.Core.Rule;
 
     /// <summary>
     /// The base of casting components that result in points along the cast.
@@ -62,7 +63,7 @@
         /// Allows to optionally determine targets based on the set rules.
         /// </summary>
         [Tooltip("Allows to optionally determine targets based on the set rules.")]
-        public ExclusionRule targetValidity;
+        public RuleContainer targetValidity;
 
         /// <summary>
         /// Emitted whenever the cast result changes.
@@ -80,7 +81,7 @@
             }
             protected set
             {
-                targetHit = (value != null && !ExclusionRule.ShouldExclude(value.Value.transform.gameObject, targetValidity) ? value : null);
+                targetHit = (value != null && targetValidity.Accepts(value.Value.transform.gameObject) ? value : null);
             }
         }
 

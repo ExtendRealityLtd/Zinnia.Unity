@@ -6,8 +6,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using VRTK.Core.Data.Attribute;
-    using VRTK.Core.Utility;
     using VRTK.Core.Extension;
+    using VRTK.Core.Rule;
 
     /// <summary>
     /// Allows emitting collision data via events.
@@ -138,7 +138,7 @@
         /// Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.
         /// </summary>
         [Tooltip("Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.")]
-        public ExclusionRule forwardingSourceValidity;
+        public RuleContainer forwardingSourceValidity;
 
         /// <summary>
         /// Emitted when a collision starts.
@@ -165,7 +165,7 @@
             return (data.isTrigger && emittedTypes.HasFlag(CollisionTypes.Trigger)
                     || !data.isTrigger && emittedTypes.HasFlag(CollisionTypes.Collision))
                 && (data.forwardSource == null
-                    || !ExclusionRule.ShouldExclude(data.forwardSource.gameObject, forwardingSourceValidity));
+                    || forwardingSourceValidity.Accepts(data.forwardSource.gameObject));
         }
 
         /// <summary>

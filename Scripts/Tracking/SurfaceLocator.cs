@@ -4,10 +4,10 @@
     using UnityEngine.Events;
     using System;
     using VRTK.Core.Cast;
-    using VRTK.Core.Utility;
     using VRTK.Core.Data.Type;
-    using VRTK.Core.Process;
     using VRTK.Core.Extension;
+    using VRTK.Core.Process;
+    using VRTK.Core.Rule;
 
     /// <summary>
     /// Casts a <see cref="Ray"/> in a given direction and looks for the nearest valid surface.
@@ -43,10 +43,10 @@
         [Tooltip("The maximum distance to cast the ray.")]
         public float maximumDistance = 50f;
         /// <summary>
-        /// An optional <see cref="ExclusionRule"/> to determine valid and invalid targets based on the set rules.
+        /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
         /// </summary>
-        [Tooltip("An optional ExclusionRule to determine valid and invalid targets based on the set rules.")]
-        public ExclusionRule targetValidity;
+        [Tooltip("An optional RuleContainer to determine valid and invalid targets based on the set rules.")]
+        public RuleContainer targetValidity;
         /// <summary>
         /// An optional custom <see cref="PhysicsCast"/> object to affect the <see cref="Ray"/>.
         /// </summary>
@@ -168,7 +168,7 @@
         {
             if (targetValidity != null && collisionData.transform != null)
             {
-                return !ExclusionRule.ShouldExclude(collisionData.transform.gameObject, targetValidity);
+                return targetValidity.Accepts(collisionData.transform.gameObject);
             }
             return true;
         }

@@ -1,11 +1,10 @@
-﻿using VRTK.Core.Tracking;
-using VRTK.Core.Utility;
+﻿using VRTK.Core.Rule;
+using VRTK.Core.Tracking;
 
 namespace Test.VRTK.Core.Tracking
 {
     using UnityEngine;
     using NUnit.Framework;
-    using System.Collections.Generic;
     using Test.VRTK.Core.Utility.Mock;
     using Test.VRTK.Core.Utility.Stub;
 
@@ -75,14 +74,21 @@ namespace Test.VRTK.Core.Tracking
             subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
 
             validSurface.transform.position = Vector3.forward * 5f;
-            validSurface.AddComponent<ExclusionRuleStub>();
-            ExclusionRule exclusions = validSurface.AddComponent<ExclusionRule>();
-            exclusions.checkType = ExclusionRule.CheckTypes.Script;
-            exclusions.identifiers = new List<string>() { "ExclusionRuleStub" };
+            validSurface.AddComponent<RuleStub>();
+            NegationRule negationRule = validSurface.AddComponent<NegationRule>();
+            AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
+            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
+            negationRule.rule = new RuleContainer
+            {
+                Interface = anyComponentTypeRule
+            };
+            subject.targetValidity = new RuleContainer
+            {
+                Interface = negationRule
+            };
 
             subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
-            subject.targetValidity = exclusions;
 
             subject.Locate();
             Assert.IsFalse(surfaceLocatedMock.Received);
