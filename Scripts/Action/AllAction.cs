@@ -8,7 +8,7 @@
     /// <summary>
     /// Emits a <see cref="bool"/> value when all given actions are in their active state.
     /// </summary>
-    public class CompoundAndAction : BooleanAction
+    public class AllAction : BooleanAction
     {
         /// <summary>
         /// BaseActions to check the active state on.
