@@ -233,13 +233,13 @@ MonoBehaviour:
   BeforeTransformUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterTransformUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114302476225177798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,7 +255,8 @@ MonoBehaviour:
   searchDirection: {x: 0, y: -1, z: 0}
   originOffset: -0.05
   maximumDistance: 50
-  targetValidity: {fileID: 0}
+  targetValidity:
+    field: {fileID: 0}
   physicsCast: {fileID: 0}
   SurfaceLocated:
     m_PersistentCalls:
@@ -272,7 +273,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114228719762159142}
-        m_MethodName: Modify
+        m_MethodName: Apply
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -366,8 +367,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterTransformUpdated:
     m_PersistentCalls:
       m_Calls:
@@ -404,8 +405,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114497746677586058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -422,7 +423,7 @@ MonoBehaviour:
   modifyTeleporter: {fileID: 0}
   surfaceLocatorAliases:
   - {fileID: 114302476225177798}
-  transformModifierAliases:
+  transformPropertyApplierAliases:
   - {fileID: 114228719762159142}
   - {fileID: 114389553745756508}
   cameraColorOverlays:
@@ -442,7 +443,8 @@ MonoBehaviour:
   searchDirection: {x: 0, y: -1, z: 0}
   originOffset: -0.01
   maximumDistance: 50
-  targetValidity: {fileID: 0}
+  targetValidity:
+    field: {fileID: 0}
   physicsCast: {fileID: 0}
   SurfaceLocated:
     m_PersistentCalls:
@@ -459,7 +461,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114389553745756508}
-        m_MethodName: Modify
+        m_MethodName: Apply
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -499,13 +501,13 @@ MonoBehaviour:
   Teleporting:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Teleported:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   internalSetup: {fileID: 114497746677586058}
 --- !u!114 &114831062959513986
 MonoBehaviour:

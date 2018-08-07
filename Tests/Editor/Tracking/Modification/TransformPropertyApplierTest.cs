@@ -8,10 +8,10 @@ namespace Test.VRTK.Core.Tracking.Modification
     using NUnit.Framework;
     using Test.VRTK.Core.Utility.Mock;
 
-    public class TransformModifierTest
+    public class TransformPropertyApplierTest
     {
         private GameObject containingObject;
-        private TransformModifier subject;
+        private TransformPropertyApplier subject;
 
         private GameObject sourceObject;
         private GameObject offsetObject;
@@ -22,7 +22,7 @@ namespace Test.VRTK.Core.Tracking.Modification
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<TransformModifier>();
+            subject = containingObject.AddComponent<TransformPropertyApplier>();
 
             sourceObject = new GameObject();
             offsetObject = new GameObject();
@@ -53,7 +53,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             Vector3 finalPosition = Vector3.one + Vector3.forward;
             sourceTransformData.transform.position = finalPosition;
 
-            subject.Modify();
+            subject.Apply();
 
             Assert.AreEqual(finalPosition, targetObject.transform.position);
         }
@@ -71,7 +71,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             Quaternion finalRotation = new Quaternion(1f, 0f, 0f, 0f);
             sourceTransformData.transform.position = Vector3.one;
             sourceTransformData.transform.rotation = finalRotation;
-            subject.Modify();
+            subject.Apply();
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(finalRotation, targetObject.transform.rotation);
@@ -93,7 +93,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             sourceTransformData.transform.rotation = new Quaternion(1f, 0f, 0f, 0f);
             sourceTransformData.transform.localScale = finalScale;
 
-            subject.Modify();
+            subject.Apply();
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
@@ -119,7 +119,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             offsetObject.transform.position = Vector3.one;
             offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
 
-            subject.Modify();
+            subject.Apply();
 
             Assert.AreEqual(new Vector3(-1f, -1f, 5f).ToString(), targetObject.transform.position.ToString());
             Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), targetObject.transform.rotation.ToString());
@@ -145,7 +145,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             offsetObject.transform.position = Vector3.one;
             offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
 
-            subject.Modify();
+            subject.Apply();
 
             Assert.AreEqual(new Vector3(1f, 1f, 1f).ToString(), targetObject.transform.position.ToString());
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
@@ -168,7 +168,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             offsetObject.transform.position = Vector3.one;
             offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
 
-            subject.Modify();
+            subject.Apply();
             Assert.AreEqual(new Vector3(2f, -1f, 2f).ToString(), targetObject.transform.position.ToString());
             Assert.AreEqual(new Quaternion(0.7f, 0.7f, 0f, 0f).ToString(), targetObject.transform.rotation.ToString());
             Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
@@ -181,7 +181,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
             sourceTransformData.transform.localScale = Vector3.one * 3f;
 
-            subject.Modify();
+            subject.Apply();
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
@@ -197,7 +197,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
             sourceTransformData.transform.localScale = Vector3.one * 3f;
 
-            subject.Modify();
+            subject.Apply();
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
@@ -213,7 +213,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
             sourceTransformData.transform.localScale = Vector3.one * 3f;
 
-            subject.Modify();
+            subject.Apply();
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
@@ -230,7 +230,7 @@ namespace Test.VRTK.Core.Tracking.Modification
 
             subject.source = new TransformData(sourceObject);
             subject.target = targetObject;
-            subject.Modify();
+            subject.Apply();
             Assert.IsTrue(beforeTransformUpdatedMock.Received);
             Assert.IsTrue(afterTransformUpdatedMock.Received);
         }
@@ -247,7 +247,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.target = targetObject;
             subject.gameObject.SetActive(false);
 
-            subject.Modify();
+            subject.Apply();
 
             Assert.IsFalse(beforeTransformUpdatedMock.Received);
             Assert.IsFalse(afterTransformUpdatedMock.Received);
@@ -265,7 +265,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.target = targetObject;
             subject.enabled = false;
 
-            subject.Modify();
+            subject.Apply();
 
             Assert.IsFalse(beforeTransformUpdatedMock.Received);
             Assert.IsFalse(afterTransformUpdatedMock.Received);
@@ -282,7 +282,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            subject.Modify();
+            subject.Apply();
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
         }
 
@@ -297,7 +297,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            subject.Modify();
+            subject.Apply();
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
         }
     }

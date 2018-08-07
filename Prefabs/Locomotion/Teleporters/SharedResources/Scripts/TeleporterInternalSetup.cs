@@ -29,10 +29,10 @@
         [Tooltip("The Surface Locator to use for the teleporting event.")]
         public SurfaceLocator surfaceTeleporter;
         /// <summary>
-        /// The <see cref="TransformModifier"/> to use for the teleporting event.
+        /// The <see cref="TransformPropertyApplier"/> to use for the teleporting event.
         /// </summary>
-        [Tooltip("The Transform Modifier to use for the teleporting event.")]
-        public TransformModifier modifyTeleporter;
+        [Tooltip("The Transform Property Applier to use for the teleporting event.")]
+        public TransformPropertyApplier modifyTeleporter;
 
         [Header("Alias Settings")]
 
@@ -42,10 +42,10 @@
         [Tooltip("The Surface Locators to set aliases on.")]
         public List<SurfaceLocator> surfaceLocatorAliases = new List<SurfaceLocator>();
         /// <summary>
-        /// The <see cref="TransformModifier"/> to set aliases on.
+        /// The <see cref="TransformPropertyApplier"/> collection to set aliases on.
         /// </summary>
-        [Tooltip("The Transform Modifiers to set aliases on.")]
-        public List<TransformModifier> transformModifierAliases = new List<TransformModifier>();
+        [Tooltip("The Transform Property Applier collection to set aliases on.")]
+        public List<TransformPropertyApplier> transformPropertyApplierAliases = new List<TransformPropertyApplier>();
         /// <summary>
         /// The scene <see cref="Camera"/>s to set the <see cref="CameraColorOverlay"/>s to affect.
         /// </summary>
@@ -92,7 +92,7 @@
             if (modifyTeleporter != null)
             {
                 modifyTeleporter.SetSource(destination);
-                modifyTeleporter.Modify();
+                modifyTeleporter.Apply();
             }
         }
 
@@ -100,7 +100,7 @@
         /// Notifies that the teleporter is about to initiate.
         /// </summary>
         /// <param name="data">The location data.</param>
-        public virtual void NotifyTeleporting(TransformModifier.EventData data)
+        public virtual void NotifyTeleporting(TransformPropertyApplier.EventData data)
         {
             facade?.Teleporting.Invoke(data);
         }
@@ -109,7 +109,7 @@
         /// Notifies that the teleporter has completed.
         /// </summary>
         /// <param name="data">The location data.</param>
-        public virtual void NotifyTeleported(TransformModifier.EventData data)
+        public virtual void NotifyTeleported(TransformPropertyApplier.EventData data)
         {
             facade?.Teleported.Invoke(data);
         }
@@ -127,10 +127,10 @@
                 currentLocator.searchOrigin = headsetAlias;
             }
 
-            foreach (TransformModifier currentModifier in transformModifierAliases.EmptyIfNull())
+            foreach (TransformPropertyApplier currentApplier in transformPropertyApplierAliases.EmptyIfNull())
             {
-                currentModifier.target = playAreaAlias;
-                currentModifier.offset = headsetAlias;
+                currentApplier.target = playAreaAlias;
+                currentApplier.offset = headsetAlias;
             }
 
             foreach (CameraColorOverlay currentOverlay in cameraColorOverlays.EmptyIfNull())

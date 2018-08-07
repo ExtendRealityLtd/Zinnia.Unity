@@ -180,7 +180,8 @@ MonoBehaviour:
   searchDirection: {x: 0, y: -1, z: 0}
   originOffset: -0.01
   maximumDistance: 50
-  targetValidity: {fileID: 0}
+  targetValidity:
+    field: {fileID: 0}
   physicsCast: {fileID: 0}
   SurfaceLocated:
     m_PersistentCalls:
@@ -197,7 +198,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114898619257496582}
-        m_MethodName: Modify
+        m_MethodName: Apply
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -323,13 +324,13 @@ MonoBehaviour:
   BeforeTransformUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterTransformUpdated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114833483784811346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -345,7 +346,8 @@ MonoBehaviour:
   searchDirection: {x: 0, y: -1, z: 0}
   originOffset: -0.05
   maximumDistance: 50
-  targetValidity: {fileID: 0}
+  targetValidity:
+    field: {fileID: 0}
   physicsCast: {fileID: 0}
   SurfaceLocated:
     m_PersistentCalls:
@@ -362,7 +364,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114595092254332754}
-        m_MethodName: Modify
+        m_MethodName: Apply
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -442,8 +444,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   AfterTransformUpdated:
     m_PersistentCalls:
       m_Calls:
@@ -480,8 +482,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114963258211199080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -512,7 +514,7 @@ MonoBehaviour:
   modifyTeleporter: {fileID: 0}
   surfaceLocatorAliases:
   - {fileID: 114833483784811346}
-  transformModifierAliases:
+  transformPropertyApplierAliases:
   - {fileID: 114595092254332754}
   - {fileID: 114898619257496582}
   cameraColorOverlays:
@@ -534,11 +536,11 @@ MonoBehaviour:
   Teleporting:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Teleported:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Modification.TransformModifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Modification.TransformPropertyApplier+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   internalSetup: {fileID: 114973425399694208}

@@ -32,11 +32,11 @@
         /// <summary>
         /// Emitted when the teleporting is about to initiate.
         /// </summary>
-        public TransformModifier.UnityEvent Teleporting = new TransformModifier.UnityEvent();
+        public TransformPropertyApplier.UnityEvent Teleporting = new TransformPropertyApplier.UnityEvent();
         /// <summary>
         /// Emitted when the teleporting has completed.
         /// </summary>
-        public TransformModifier.UnityEvent Teleported = new TransformModifier.UnityEvent();
+        public TransformPropertyApplier.UnityEvent Teleported = new TransformPropertyApplier.UnityEvent();
 
         [Header("Internal Settings")]
 
