@@ -6,9 +6,9 @@
     using VRTK.Core.Process;
 
     /// <summary>
-    /// Controls the given target direction by rotating it to look at a point in space whilst pivoting on another point in space.
+    /// Modifies the given target direction by rotating it to look at a point in space whilst pivoting on another point in space.
     /// </summary>
-    public class DirectionController : MonoBehaviour, IProcessable
+    public class DirectionModifier : MonoBehaviour, IProcessable
     {
         /// <summary>
         /// The target to rotate.
@@ -45,7 +45,7 @@
         protected Coroutine resetOrientationRoutine;
 
         /// <summary>
-        /// Processes the current direction control.
+        /// Processes the current direction modification.
         /// </summary>
         public virtual void Process()
         {

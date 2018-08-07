@@ -6,16 +6,16 @@ namespace Test.VRTK.Core.Tracking.Modification
     using NUnit.Framework;
     using Test.VRTK.Core.Utility.Mock;
 
-    public class DirectionControllerTest
+    public class DirectionModifierTest
     {
         private GameObject containingObject;
-        private DirectionController subject;
+        private DirectionModifier subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<DirectionController>();
+            subject = containingObject.AddComponent<DirectionModifier>();
         }
 
         [TearDown]
