@@ -6,7 +6,7 @@
     /// Allows a boolean to be set per <see cref="UnityEngine.Vector3"/> element to provide a state reference.
     /// </summary>
     [Serializable]
-    public class Vector3State
+    public struct Vector3State
     {
         /// <summary>
         /// The X State of the <see cref="UnityEngine.Vector3"/>.
