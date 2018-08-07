@@ -318,6 +318,10 @@ namespace Test.VRTK.Core.Action
         {
         }
 
+        public override void EmitActivationState()
+        {
+        }
+
         public virtual void SetIsActivated(bool value)
         {
             IsActivated = value;
