@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Tracking
+﻿namespace VRTK.Core.Tracking.Modification
 {
     using UnityEngine;
     using VRTK.Core.Process.Component;
