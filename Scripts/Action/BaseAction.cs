@@ -130,6 +130,11 @@
         /// <inheritdoc />
         public override void EmitActivationState()
         {
+            if (!isActiveAndEnabled)
+            {
+                return;
+            }
+
             if (IsActivated)
             {
                 Activated?.Invoke(Value);
