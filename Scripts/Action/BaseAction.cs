@@ -33,6 +33,10 @@
         /// Clears all sources.
         /// </summary>
         public abstract void ClearSources();
+        /// <summary>
+        /// Emits the appropriate event for when the activation state changes from Activated or Deactivated.
+        /// </summary>
+        public abstract void EmitActivationState();
 
         /// <summary>
         /// Determines whether the event should be emitted.
@@ -123,6 +127,26 @@
             sources.Clear();
         }
 
+        /// <inheritdoc />
+        public override void EmitActivationState()
+        {
+            if (!isActiveAndEnabled)
+            {
+                return;
+            }
+
+            if (IsActivated)
+            {
+                Activated?.Invoke(Value);
+                ValueChanged?.Invoke(Value);
+            }
+            else
+            {
+                ValueChanged?.Invoke(Value);
+                Deactivated?.Invoke(Value);
+            }
+        }
+
         /// <summary>
         /// Acts on the value.
         /// </summary>
@@ -135,23 +159,6 @@
             }
 
             ProcessValue(value);
-        }
-
-        /// <summary>
-        /// Emits the appropriate event for when the activation state changes from Activated or Deactivated.
-        /// </summary>
-        public virtual void EmitActivationState()
-        {
-            if (IsActivated)
-            {
-                Activated?.Invoke(Value);
-                ValueChanged?.Invoke(Value);
-            }
-            else
-            {
-                ValueChanged?.Invoke(Value);
-                Deactivated?.Invoke(Value);
-            }
         }
 
         protected virtual void OnEnable()

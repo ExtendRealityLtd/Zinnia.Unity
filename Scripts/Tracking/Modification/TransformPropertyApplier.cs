@@ -10,12 +10,12 @@
     using VRTK.Core.Extension;
 
     /// <summary>
-    /// Applies a transformation onto a given target <see cref="Transform"/> based on a given source <see cref="Transform"/>.
+    /// Applies the transform properties from a given source <see cref="Transform"/> onto the given target <see cref="Transform"/>.
     /// </summary>
-    public class TransformModifier : MonoBehaviour
+    public class TransformPropertyApplier : MonoBehaviour
     {
         /// <summary>
-        /// Holds data about a <see cref="TransformModifier"/> event.
+        /// Holds data about a <see cref="TransformPropertyApplier"/> event.
         /// </summary>
         [Serializable]
         public class EventData
@@ -183,7 +183,7 @@
         /// <summary>
         /// Applies the properties of the <see cref="source"/> parameter to the target.
         /// </summary>
-        public virtual void Modify()
+        public virtual void Apply()
         {
             if (!isActiveAndEnabled || target == null || source?.transform == null)
             {

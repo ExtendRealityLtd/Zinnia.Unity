@@ -6,16 +6,16 @@ namespace Test.VRTK.Core.Action
     using NUnit.Framework;
     using Test.VRTK.Core.Utility.Mock;
 
-    public class CompoundAndActionTest
+    public class AllActionTest
     {
         private GameObject containingObject;
-        private CompoundAndActionMock subject;
+        private AllActionMock subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<CompoundAndActionMock>();
+            subject = containingObject.AddComponent<AllActionMock>();
         }
 
         [TearDown]
@@ -286,7 +286,7 @@ namespace Test.VRTK.Core.Action
         }
     }
 
-    public class CompoundAndActionMock : CompoundAndAction
+    public class AllActionMock : AllAction
     {
         public virtual void ManualUpdate()
         {
@@ -315,6 +315,10 @@ namespace Test.VRTK.Core.Action
         }
 
         public override void RemoveSource(BaseAction action)
+        {
+        }
+
+        public override void EmitActivationState()
         {
         }
 

@@ -333,8 +333,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4630152940897288}
-  - component: {fileID: 114915093737925394}
   - component: {fileID: 114920339522517492}
+  - component: {fileID: 114468426491943046}
   m_Layer: 0
   m_Name: ControlDirection
   m_TagString: Untagged
@@ -1303,7 +1303,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114915093737925394}
+      - m_Target: {fileID: 114468426491943046}
         m_MethodName: SetPivot
         m_Mode: 0
         m_Arguments:
@@ -1364,7 +1364,7 @@ MonoBehaviour:
   Emitted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114915093737925394}
+      - m_Target: {fileID: 114468426491943046}
         m_MethodName: SaveOrientation
         m_Mode: 6
         m_Arguments:
@@ -1375,7 +1375,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114915093737925394}
+      - m_Target: {fileID: 114468426491943046}
         m_MethodName: SetLookAt
         m_Mode: 0
         m_Arguments:
@@ -1639,6 +1639,42 @@ MonoBehaviour:
   process:
     field: {fileID: 114299584138073736}
   onlyProcessOnActiveAndEnabled: 1
+--- !u!114 &114468426491943046
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1545893446985058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31632a13cff666148b35025b6298fb62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1908407583906876}
+  lookAt: {fileID: 0}
+  pivot: {fileID: 0}
+  resetOrientationSpeed: 0.1
+  OrientationReset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1055289007680114}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OrientationResetCancelled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114503065617409136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1864,7 +1900,7 @@ MonoBehaviour:
   Emitted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114915093737925394}
+      - m_Target: {fileID: 114468426491943046}
         m_MethodName: ResetOrientation
         m_Mode: 1
         m_Arguments:
@@ -2092,7 +2128,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114915093737925394}
+      - m_Target: {fileID: 114468426491943046}
         m_MethodName: ClearPivot
         m_Mode: 1
         m_Arguments:
@@ -2103,7 +2139,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114915093737925394}
+      - m_Target: {fileID: 114468426491943046}
         m_MethodName: CancelResetOrientation
         m_Mode: 1
         m_Arguments:
@@ -2288,42 +2324,6 @@ MonoBehaviour:
   processes:
   - {fileID: 114467163625446918}
   - {fileID: 114920339522517492}
---- !u!114 &114915093737925394
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1545893446985058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 751003f2efb681f4e99a5da6a3ec65d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1908407583906876}
-  lookAt: {fileID: 0}
-  pivot: {fileID: 0}
-  resetOrientationSpeed: 0.1
-  OrientationReset:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1055289007680114}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OrientationResetCancelled:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114920339522517492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2336,7 +2336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   process:
-    field: {fileID: 114915093737925394}
+    field: {fileID: 114468426491943046}
   onlyProcessOnActiveAndEnabled: 1
 --- !u!114 &114926305317292866
 MonoBehaviour:
@@ -2413,7 +2413,7 @@ MonoBehaviour:
   Emitted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114915093737925394}
+      - m_Target: {fileID: 114468426491943046}
         m_MethodName: ClearLookAt
         m_Mode: 1
         m_Arguments:
