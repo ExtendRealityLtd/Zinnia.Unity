@@ -108,7 +108,10 @@
         /// <param name="source">The new source value.</param>
         public virtual void SetSource(GameObject source)
         {
-            SetSource(new TransformData((gameObject != null ? gameObject : null)));
+            if (source != null)
+            {
+                SetSource(new TransformData(source));
+            }
         }
 
         /// <summary>
@@ -143,7 +146,7 @@
         /// <param name="target">The new target value.</param>
         public virtual void SetTarget(TransformData target)
         {
-            SetTarget((target?.transform != null ? target.transform.gameObject : null));
+            SetTarget(target.TryGetGameObject());
         }
 
         /// <summary>
@@ -169,7 +172,7 @@
         /// <param name="offset">The new offset value.</param>
         public virtual void SetOffset(TransformData offset)
         {
-            SetOffset((offset?.transform != null ? offset.transform.gameObject : null));
+            SetOffset(offset.TryGetGameObject());
         }
 
         /// <summary>

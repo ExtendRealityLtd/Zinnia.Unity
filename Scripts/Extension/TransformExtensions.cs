@@ -2,6 +2,9 @@
 {
     using UnityEngine;
 
+    /// <summary>
+    /// Extended methods for the <see cref="Transform"/> Type.
+    /// </summary>
     public static class TransformExtensions
     {
         /// <summary>
