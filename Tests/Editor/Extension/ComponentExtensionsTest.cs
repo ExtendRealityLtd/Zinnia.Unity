@@ -10,17 +10,33 @@ namespace Test.VRTK.Core.Extension
         [Test]
         public void TryGetTransformValid()
         {
-            Transform validTransform = new GameObject().transform;
-            Assert.NotNull(validTransform.TryGetTransform());
-            Object.DestroyImmediate(validTransform.gameObject);
+            Component valid = new GameObject().transform;
+            Assert.NotNull(valid.TryGetTransform());
+            Object.DestroyImmediate(valid.gameObject);
         }
 
         [Test]
         public void TryGetTransformInvalid()
         {
-            Component invalidComponent = new Component();
-            Assert.IsNull(invalidComponent.TryGetTransform());
-            Object.DestroyImmediate(invalidComponent);
+            Component invalid = new Component();
+            Assert.IsNull(invalid.TryGetTransform());
+            Object.DestroyImmediate(invalid);
+        }
+
+        [Test]
+        public void TryGetGameObjectValid()
+        {
+            Component valid = new GameObject().GetComponent<Component>();
+            Assert.NotNull(valid.TryGetGameObject());
+            Object.DestroyImmediate(valid.gameObject);
+        }
+
+        [Test]
+        public void TryGetGameObjectInvalid()
+        {
+            Component invalid = new Component();
+            Assert.IsNull(invalid.TryGetTransform());
+            Object.DestroyImmediate(invalid);
         }
     }
 }
