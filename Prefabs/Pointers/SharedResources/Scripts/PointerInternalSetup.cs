@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using VRTK.Core.Action;
+    using VRTK.Core.Cast;
     using VRTK.Core.Extension;
     using VRTK.Core.Tracking.Follow;
 
@@ -25,6 +26,14 @@
         /// </summary>
         [Tooltip("The ObjectFollower component for the Pointer.")]
         public ObjectFollower objectFollow;
+
+        [Header("Cast Settings")]
+
+        /// <summary>
+        /// The <see cref="PointsCast"/> component for the Pointer.
+        /// </summary>
+        [Tooltip("The PointsCast component for the Pointer.")]
+        public PointsCast caster;
 
         [Header("Action Settions")]
 
@@ -54,15 +63,27 @@
                 return;
             }
 
-            objectFollow.targetComponents.Clear();
-            objectFollow.targetComponents.Add(facade.followTarget.TryGetComponent());
+            caster.targetValidity = facade.targetValidity;
 
-            activationAction.ClearSources();
-            activationAction.AddSource(facade.activationAction);
-            selectOnActivatedAction.ClearSources();
-            selectOnActivatedAction.AddSource(facade.selectionAction);
-            selectOnDeactivatedAction.ClearSources();
-            selectOnDeactivatedAction.AddSource(facade.selectionAction);
+            if (facade.followTarget != null)
+            {
+                objectFollow.targetComponents.Clear();
+                objectFollow.targetComponents.Add(facade.followTarget.TryGetComponent());
+            }
+
+            if (facade.selectionAction != null)
+            {
+                selectOnActivatedAction.ClearSources();
+                selectOnActivatedAction.AddSource(facade.selectionAction);
+                selectOnDeactivatedAction.ClearSources();
+                selectOnDeactivatedAction.AddSource(facade.selectionAction);
+            }
+
+            if (facade.activationAction != null)
+            {
+                activationAction.ClearSources();
+                activationAction.AddSource(facade.activationAction);
+            }
 
             switch (facade.selectionType)
             {
@@ -109,7 +130,7 @@
         /// <returns><see langword="true"/> if the parameters are invalid.</returns>
         protected virtual bool InvalidParameters()
         {
-            return (objectFollow == null || facade == null || facade.followTarget == null || facade.activationAction == null || facade.selectionAction == null);
+            return (objectFollow == null || caster == null || facade == null);
         }
     }
 }

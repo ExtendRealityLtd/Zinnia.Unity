@@ -1093,6 +1093,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facade: {fileID: 114373529376802120}
   objectFollow: {fileID: 114787471753854276}
+  caster: {fileID: 114227604445383012}
   activationAction: {fileID: 114837038652518644}
   selectOnActivatedAction: {fileID: 114079437485869372}
   selectOnDeactivatedAction: {fileID: 114544469887352568}
@@ -1261,7 +1262,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicsCast: {fileID: 0}
-  targetValidity: {fileID: 0}
+  targetValidity:
+    field: {fileID: 0}
   ResultsChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1344,6 +1346,8 @@ MonoBehaviour:
   activationAction: {fileID: 0}
   selectionAction: {fileID: 0}
   selectionType: 0
+  targetValidity:
+    field: {fileID: 0}
   internalSetup: {fileID: 114082998435215688}
 --- !u!114 &114400600543216116
 MonoBehaviour:

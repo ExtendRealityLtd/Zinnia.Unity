@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using VRTK.Core.Action;
+    using VRTK.Core.Rule;
 
     /// <summary>
     /// The public interface into the Pointer Prefab.
@@ -45,6 +46,11 @@
         /// </summary>
         [Tooltip("The action moment when to initiate the select action.")]
         public SelectionType selectionType = SelectionType.SelectOnActivate;
+        /// <summary>
+        /// Allows to optionally determine targets based on the set rules.
+        /// </summary>
+        [Tooltip("Allows to optionally determine targets based on the set rules.")]
+        public RuleContainer targetValidity;
 
         [Header("Internal Settings")]
 
