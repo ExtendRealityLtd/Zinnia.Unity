@@ -42,6 +42,60 @@ namespace Test.VRTK.Core.Tracking.Modification
         }
 
         [Test]
+        public void SetSourceValid()
+        {
+            TransformData source = new TransformData(sourceObject);
+            Assert.IsNull(subject.source);
+            subject.SetSource(source);
+            Assert.AreEqual(source, subject.source);
+        }
+
+        [Test]
+        public void SetSourceInvalid()
+        {
+            TransformData source = null;
+            Assert.IsNull(subject.source);
+            subject.SetSource(source);
+            Assert.IsNull(subject.source);
+        }
+
+        [Test]
+        public void SetTargetValid()
+        {
+            TransformData target = new TransformData(targetObject);
+            Assert.IsNull(subject.target);
+            subject.SetTarget(target);
+            Assert.AreEqual(targetObject, subject.target);
+        }
+
+        [Test]
+        public void SetTargetInvalid()
+        {
+            TransformData target = null;
+            Assert.IsNull(subject.target);
+            subject.SetTarget(target);
+            Assert.IsNull(subject.target);
+        }
+
+        [Test]
+        public void SetOffsetValid()
+        {
+            TransformData offset = new TransformData(offsetObject);
+            Assert.IsNull(subject.offset);
+            subject.SetOffset(offset);
+            Assert.AreEqual(offsetObject, subject.offset);
+        }
+
+        [Test]
+        public void SetOffsetInvalid()
+        {
+            TransformData offset = null;
+            Assert.IsNull(subject.offset);
+            subject.SetOffset(offset);
+            Assert.IsNull(subject.offset);
+        }
+
+        [Test]
         public void ModifyPositionNoOffsetInstantTransition()
         {
             subject.source = new TransformData(sourceObject);
