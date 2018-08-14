@@ -1436,7 +1436,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 114782824498073660}
         m_MethodName: DoGetValue
-        m_Mode: 0
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
