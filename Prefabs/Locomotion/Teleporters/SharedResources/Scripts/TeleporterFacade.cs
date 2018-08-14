@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using VRTK.Core.Data.Type;
+    using VRTK.Core.Rule;
     using VRTK.Core.Tracking.Modification;
 
     /// <summary>
@@ -26,6 +27,11 @@
         /// </summary>
         [Tooltip("The list of scene Cameras to apply a fade to.")]
         public CameraList sceneCameras;
+        /// <summary>
+        /// Allows to optionally determine targets based on the set rules.
+        /// </summary>
+        [Tooltip("Allows to optionally determine targets based on the set rules.")]
+        public RuleContainer targetValidity;
 
         [Header("Teleporter Events")]
 

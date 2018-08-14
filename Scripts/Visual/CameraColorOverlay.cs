@@ -93,6 +93,7 @@
         public UnityEvent Changed = new UnityEvent();
 
         protected float targetDuration;
+        protected Color originalColor;
         protected Color targetColor = new Color(0f, 0f, 0f, 0f);
         protected Color currentColor = new Color(0f, 0f, 0f, 0f);
         protected Color deltaColor = new Color(0f, 0f, 0f, 0f);
@@ -142,6 +143,7 @@
 
         protected virtual void OnEnable()
         {
+            originalColor = overlayMaterial.color;
             Camera.onPostRender += PostRender;
         }
 
@@ -149,6 +151,7 @@
         {
             CancelBlinkRoutine();
             Camera.onPostRender -= PostRender;
+            overlayMaterial.color = originalColor;
         }
 
         /// <summary>

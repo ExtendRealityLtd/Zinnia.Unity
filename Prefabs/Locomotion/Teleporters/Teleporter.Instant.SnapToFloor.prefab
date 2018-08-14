@@ -423,6 +423,9 @@ MonoBehaviour:
   modifyTeleporter: {fileID: 0}
   surfaceLocatorAliases:
   - {fileID: 114302476225177798}
+  surfaceLocatorRules:
+  - {fileID: 114302476225177798}
+  - {fileID: 114671045609980380}
   transformPropertyApplierAliases:
   - {fileID: 114228719762159142}
   - {fileID: 114389553745756508}
@@ -498,6 +501,8 @@ MonoBehaviour:
   playAreaAlias: {fileID: 0}
   headsetAlias: {fileID: 0}
   sceneCameras: {fileID: 0}
+  targetValidity:
+    field: {fileID: 0}
   Teleporting:
     m_PersistentCalls:
       m_Calls: []
