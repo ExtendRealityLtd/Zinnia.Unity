@@ -7,6 +7,7 @@
     using VRTK.Core.Visual;
     using VRTK.Core.Data.Type;
     using VRTK.Core.Extension;
+    using VRTK.Core.Rule;
 
     /// <summary>
     /// Sets up the Teleport Prefab based on the provided user settings.
@@ -42,6 +43,11 @@
         [Tooltip("The Surface Locators to set aliases on.")]
         public List<SurfaceLocator> surfaceLocatorAliases = new List<SurfaceLocator>();
         /// <summary>
+        /// The <see cref="SurfaceLocator"/> to set rules on.
+        /// </summary>
+        [Tooltip("The Surface Locators to set rules on.")]
+        public List<SurfaceLocator> surfaceLocatorRules = new List<SurfaceLocator>();
+        /// <summary>
         /// The <see cref="TransformPropertyApplier"/> collection to set aliases on.
         /// </summary>
         [Tooltip("The Transform Property Applier collection to set aliases on.")]
@@ -62,7 +68,7 @@
                 return;
             }
 
-            ApplySettings(facade.playAreaAlias, facade.headsetAlias, facade.sceneCameras);
+            ApplySettings(facade.playAreaAlias, facade.headsetAlias, facade.sceneCameras, facade.targetValidity);
         }
 
         /// <summary>
@@ -75,7 +81,7 @@
                 return;
             }
 
-            ApplySettings(null, null, null);
+            ApplySettings(null, null, null, null);
         }
 
         /// <summary>
@@ -120,11 +126,17 @@
         /// <param name="playAreaAlias">The PlayArea alias.</param>
         /// <param name="headsetAlias">The Headset alias.</param>
         /// <param name="sceneCameras">The scene cameras.</param>
-        protected virtual void ApplySettings(GameObject playAreaAlias, GameObject headsetAlias, CameraList sceneCameras)
+        /// <param name="targetValidity">The rules to determine validity.</param>
+        protected virtual void ApplySettings(GameObject playAreaAlias, GameObject headsetAlias, CameraList sceneCameras, RuleContainer targetValidity)
         {
             foreach (SurfaceLocator currentLocator in surfaceLocatorAliases.EmptyIfNull())
             {
                 currentLocator.searchOrigin = headsetAlias;
+            }
+
+            foreach (SurfaceLocator currentLocator in surfaceLocatorRules.EmptyIfNull())
+            {
+                currentLocator.targetValidity = targetValidity;
             }
 
             foreach (TransformPropertyApplier currentApplier in transformPropertyApplierAliases.EmptyIfNull())
