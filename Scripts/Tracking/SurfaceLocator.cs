@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using System.Linq;
     using VRTK.Core.Cast;
     using VRTK.Core.Data.Type;
     using VRTK.Core.Extension;
@@ -146,17 +147,52 @@
             SurfaceData.origin = givenOrigin;
             SurfaceData.direction = givenDirection;
             Ray tracerRaycast = new Ray(givenOrigin, givenDirection);
-            RaycastHit collision;
-            bool collided = PhysicsCast.Raycast(physicsCast, tracerRaycast, out collision, maximumDistance, Physics.IgnoreRaycastLayer);
-            SurfaceData.CollisionData = collision;
+            return (targetValidity == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast));
+        }
 
-            if (collided && ValidSurface(SurfaceData.CollisionData))
+        /// <summary>
+        /// Casts a ray to find the first collision.
+        /// </summary>
+        /// <param name="tracerRaycast">The ray to cast with.</param>
+        /// <returns><see langword="true"/> if a valid surface is located.</returns>
+        protected virtual bool FindFirstCollision(Ray tracerRaycast)
+        {
+            RaycastHit collision;
+            if (PhysicsCast.Raycast(physicsCast, tracerRaycast, out collision, maximumDistance, Physics.IgnoreRaycastLayer))
             {
-                SurfaceData.transform = SurfaceData.CollisionData.transform;
-                SurfaceData.positionOverride = SurfaceData.CollisionData.point;
+                SetSurfaceData(collision);
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Casts a ray to find all collisions.
+        /// </summary>
+        /// <param name="tracerRaycast">The ray to cast with.</param>
+        /// <returns><see langword="true"/> if a valid surface is located.</returns>
+        protected virtual bool FindAllCollisions(Ray tracerRaycast)
+        {
+            foreach (RaycastHit collision in PhysicsCast.RaycastAll(physicsCast, tracerRaycast, maximumDistance, Physics.IgnoreRaycastLayer).OrderBy(hit => hit.distance))
+            {
+                if (ValidSurface(collision))
+                {
+                    SetSurfaceData(collision);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="SurfaceData"/> collision information.
+        /// </summary>
+        /// <param name="collision">The data to use when setting the SurfaceData.</param>
+        protected virtual void SetSurfaceData(RaycastHit collision)
+        {
+            SurfaceData.CollisionData = collision;
+            SurfaceData.transform = SurfaceData.CollisionData.transform;
+            SurfaceData.positionOverride = SurfaceData.CollisionData.point;
         }
 
         /// <summary>
