@@ -107,6 +107,7 @@
         public virtual void ClearPrimaryPoint()
         {
             primaryPoint = null;
+            initialized = false;
         }
 
         /// <summary>
@@ -124,6 +125,7 @@
         public virtual void ClearSecondaryPoint()
         {
             secondaryPoint = null;
+            initialized = false;
         }
 
         protected virtual void OnEnable()
