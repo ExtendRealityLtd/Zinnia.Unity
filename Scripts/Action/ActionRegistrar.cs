@@ -16,6 +16,11 @@
         public struct ActionSource
         {
             /// <summary>
+            /// Determines if the source can be used.
+            /// </summary>
+            [Tooltip("Determines if the source can be used.")]
+            public bool enabled;
+            /// <summary>
             /// The main container of the action.
             /// </summary>
             [Tooltip("The main container of the action.")]
@@ -53,6 +58,40 @@
         }
 
         /// <summary>
+        /// Enables the <see cref="ActionSource"/> that has a container matching the source <see cref="GameObject"/>.
+        /// </summary>
+        /// <param name="source">The source to match the container to enable.</param>
+        public virtual void EnableSource(GameObject source)
+        {
+            SetSourceEnabledState(source, true);
+        }
+
+        /// <summary>
+        /// Disables the <see cref="ActionSource"/> that has a container matching the source <see cref="GameObject"/>.
+        /// </summary>
+        /// <param name="source">The source to match the container to disable.</param>
+        public virtual void DisableSource(GameObject source)
+        {
+            SetSourceEnabledState(source, false);
+        }
+
+        /// <summary>
+        /// Enables all <see cref="ActionSource"/> elements.
+        /// </summary>
+        public virtual void EnableAllSources()
+        {
+            SetSourceEnabledState(null, true, true);
+        }
+
+        /// <summary>
+        /// Disables all <see cref="ActionSource"/> elements.
+        /// </summary>
+        public virtual void DisableAllSources()
+        {
+            SetSourceEnabledState(null, false, true);
+        }
+
+        /// <summary>
         /// <param name="sourceLimit">A container of actions to limit the action subscription to or <see langword="null"/> to not limit.</param>
         /// </summary>
         /// <param name="sourceLimit">A container of actions to limit the action subscription to.</param>
@@ -61,7 +100,7 @@
             SourceLimit = sourceLimit;
             foreach (ActionSource actionSource in sources)
             {
-                if (sourceLimit == null || sourceLimit == actionSource.container)
+                if (actionSource.enabled && (sourceLimit == null || sourceLimit == actionSource.container))
                 {
                     target.AddSource(actionSource.action);
                 }
@@ -103,6 +142,25 @@
             if (registerOnEnable)
             {
                 Register();
+            }
+        }
+
+        /// <summary>
+        /// Sets the enabled state of an <see cref="ActionSource"/>.
+        /// </summary>
+        /// <param name="source">The source to match the container to set the state of.</param>
+        /// <param name="state">The state to set enabled to.</param>
+        /// <param name="setAll">Determines whether to ignore the source and just set all sources to the given state.</param>
+        protected virtual void SetSourceEnabledState(GameObject source, bool state, bool setAll = false)
+        {
+            for (int i = 0; i < sources.Count; i++)
+            {
+                ActionSource actionSource = sources[i];
+                if (actionSource.container == source || setAll)
+                {
+                    actionSource.enabled = state;
+                }
+                sources[i] = actionSource;
             }
         }
     }

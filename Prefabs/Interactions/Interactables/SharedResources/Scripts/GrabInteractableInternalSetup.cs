@@ -83,6 +83,7 @@
             {
                 ActionRegistrar.ActionSource actionSource = new ActionRegistrar.ActionSource()
                 {
+                    enabled = true,
                     container = validInteractor.grabInteractorSetup.attachPoint,
                     action = validInteractor.grabInteractorSetup.grabAction
                 };
