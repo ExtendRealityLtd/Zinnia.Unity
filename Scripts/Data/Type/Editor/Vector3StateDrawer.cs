@@ -20,20 +20,35 @@
             float labelWidth = 15f;
             float fieldWidth = (position.width / 3f) - labelWidth;
 
-            EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "X");
-            updatePositionX += labelWidth;
-            xState.boolValue = EditorGUI.Toggle(new Rect(updatePositionX, position.y, fieldWidth, position.height), xState.boolValue);
-            updatePositionX += fieldWidth;
+            using (new EditorGUI.PropertyScope(position, GUIContent.none, xState))
+            {
+                EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "X");
+                updatePositionX += labelWidth;
+                xState.boolValue = EditorGUI.Toggle(
+                    new Rect(updatePositionX, position.y, fieldWidth, position.height),
+                    xState.boolValue);
+                updatePositionX += fieldWidth;
+            }
 
-            EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "Y");
-            updatePositionX += labelWidth;
-            yState.boolValue = EditorGUI.Toggle(new Rect(updatePositionX, position.y, fieldWidth, position.height), yState.boolValue);
-            updatePositionX += fieldWidth;
+            using (new EditorGUI.PropertyScope(position, GUIContent.none, yState))
+            {
+                EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "Y");
+                updatePositionX += labelWidth;
+                yState.boolValue = EditorGUI.Toggle(
+                    new Rect(updatePositionX, position.y, fieldWidth, position.height),
+                    yState.boolValue);
+                updatePositionX += fieldWidth;
+            }
 
-            EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "Z");
-            updatePositionX += labelWidth;
-            zState.boolValue = EditorGUI.Toggle(new Rect(updatePositionX, position.y, fieldWidth, position.height), zState.boolValue);
-            updatePositionX += fieldWidth;
+            using (new EditorGUI.PropertyScope(position, GUIContent.none, zState))
+            {
+                EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "Z");
+                updatePositionX += labelWidth;
+                zState.boolValue = EditorGUI.Toggle(
+                    new Rect(updatePositionX, position.y, fieldWidth, position.height),
+                    zState.boolValue);
+                updatePositionX += fieldWidth;
+            }
         }
     }
 }

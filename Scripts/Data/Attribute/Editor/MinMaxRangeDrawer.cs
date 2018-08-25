@@ -3,9 +3,9 @@
     using UnityEngine;
     using UnityEditor;
     using System.Globalization;
+    using VRTK.Core.Data.Type;
     using VRTK.Core.Lib.Supyrb;
     using VRTK.Core.Utility;
-    using VRTK.Core.Data.Type;
 
     [CustomPropertyDrawer(typeof(MinMaxRangeAttribute))]
     class MinMaxRangeDrawer : PropertyDrawer
@@ -13,38 +13,45 @@
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;
-            bool foundGeneric = false;
-            bool valid = false;
-            try
+            using (new EditorGUI.PropertyScope(position, GUIContent.none, property))
             {
-                Vector2 input = SerializedPropertyExtensions.GetValue<FloatRange>(property).ToVector2();
-                Vector2 output = BuildSlider(position, label, input, out valid);
-                if (valid)
+                bool foundGeneric = false;
+                bool valid;
+                try
                 {
-                    SerializedPropertyExtensions.SetValue<FloatRange>(property, new FloatRange(output));
-                }
-                foundGeneric = true;
-            }
-            catch (System.Exception)
-            {
-                Error(position, label);
-            }
+                    Vector2 input = property.GetValue<FloatRange>().ToVector2();
+                    Vector2 output = BuildSlider(position, label, input, out valid);
+                    if (valid)
+                    {
+                        Undo.RecordObject(property.serializedObject.targetObject, property.displayName);
+                        property.SetValue(new FloatRange(output));
+                    }
 
-            if (!foundGeneric)
-            {
-                switch (property.propertyType)
+                    foundGeneric = true;
+                }
+                catch
                 {
-                    case SerializedPropertyType.Vector2:
-                        Vector2 input = property.vector2Value;
-                        Vector2 output = BuildSlider(position, label, input, out valid);
-                        if (valid)
-                        {
-                            property.vector2Value = output;
-                        }
-                        break;
-                    default:
-                        Error(position, label);
-                        break;
+                    Error(position, label);
+                }
+
+                if (!foundGeneric)
+                {
+                    switch (property.propertyType)
+                    {
+                        case SerializedPropertyType.Vector2:
+                            Vector2 input = property.vector2Value;
+                            Vector2 output = BuildSlider(position, label, input, out valid);
+                            if (valid)
+                            {
+                                Undo.RecordObject(property.serializedObject.targetObject, property.displayName);
+                                property.vector2Value = output;
+                            }
+
+                            break;
+                        default:
+                            Error(position, label);
+                            break;
+                    }
                 }
             }
         }

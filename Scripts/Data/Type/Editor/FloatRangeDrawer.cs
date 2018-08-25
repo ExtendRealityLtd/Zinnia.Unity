@@ -20,15 +20,25 @@
             float labelWidth = 30f;
             float fieldWidth = (position.width / 3f) - labelWidth;
 
-            EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "Min");
-            updatePositionX += labelWidth;
-            minimum.floatValue = EditorGUI.FloatField(new Rect(updatePositionX, position.y, fieldWidth, position.height), minimum.floatValue);
-            updatePositionX += fieldWidth;
+            using (new EditorGUI.PropertyScope(position, GUIContent.none, minimum))
+            {
+                EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "Min");
+                updatePositionX += labelWidth;
+                minimum.floatValue = EditorGUI.FloatField(
+                    new Rect(updatePositionX, position.y, fieldWidth, position.height),
+                    minimum.floatValue);
+                updatePositionX += fieldWidth;
+            }
 
-            EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "Max");
-            updatePositionX += labelWidth;
-            maximum.floatValue = EditorGUI.FloatField(new Rect(updatePositionX, position.y, fieldWidth, position.height), maximum.floatValue);
-            updatePositionX += fieldWidth;
+            using (new EditorGUI.PropertyScope(position, GUIContent.none, maximum))
+            {
+                EditorGUI.LabelField(new Rect(updatePositionX, position.y, labelWidth, position.height), "Max");
+                updatePositionX += labelWidth;
+                maximum.floatValue = EditorGUI.FloatField(
+                    new Rect(updatePositionX, position.y, fieldWidth, position.height),
+                    maximum.floatValue);
+                updatePositionX += fieldWidth;
+            }
 
             EditorGUI.indentLevel = indent;
         }
