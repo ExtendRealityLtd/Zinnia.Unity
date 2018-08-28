@@ -10,20 +10,19 @@
     /// </summary>
     public class TrackedAliasInternalSetup : MonoBehaviour
     {
-        [Header("Facade Settings")]
-
+        #region Facade Settings
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Tooltip("The public interface facade.")]
+        [Header("Facade Settings"), Tooltip("The public interface facade.")]
         public TrackedAliasFacade facade;
+        #endregion
 
-        [Header("Object Follow Settings")]
-
+        #region Object Follow Settings
         /// <summary>
         /// The <see cref="ObjectFollower"/> component for the PlayArea.
         /// </summary>
-        [Tooltip("The ObjectFollower component for the PlayArea.")]
+        [Header("Object Follow Settings"), Tooltip("The ObjectFollower component for the PlayArea.")]
         public ObjectFollower playArea;
         /// <summary>
         /// The <see cref="ObjectFollower"/> component for the Headset.
@@ -40,13 +39,13 @@
         /// </summary>
         [Tooltip("The ObjectFollower component for the Right Controller.")]
         public ObjectFollower rightController;
+        #endregion
 
-        [Header("Velocity Tracker Settings")]
-
+        #region Velocity Tracker Settings
         /// <summary>
         /// The <see cref="VelocityTrackerProcessor"/> component containing the Headset Velocity Trackers.
         /// </summary>
-        [Tooltip("The VelocityTrackerProcessor component containing the Headset Velocity Trackers.")]
+        [Header("Velocity Tracker Settings"), Tooltip("The VelocityTrackerProcessor component containing the Headset Velocity Trackers.")]
         public VelocityTrackerProcessor headsetVelocityTrackers;
         /// <summary>
         /// The <see cref="VelocityTrackerProcessor"/> component containing the Left Controller Velocity Trackers.
@@ -58,14 +57,15 @@
         /// </summary>
         [Tooltip("The VelocityTrackerProcessor component containing the Right Controller Velocity Trackers.")]
         public VelocityTrackerProcessor rightControllerVelocityTrackers;
+        #endregion
 
-        [Header("Other Settings")]
-
+        #region Other Settings
         /// <summary>
         /// The <see cref="CameraList"/> component containing the valid scene cameras.
         /// </summary>
-        [Tooltip("The CameraList component containing the valid scene cameras.")]
+        [Header("Other Settings"), Tooltip("The CameraList component containing the valid scene cameras.")]
         public CameraList sceneCameras;
+        #endregion
 
         /// <summary>
         /// Sets up the TrackedAlias prefab with the specified settings.

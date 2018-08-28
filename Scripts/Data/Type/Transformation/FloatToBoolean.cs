@@ -26,9 +26,7 @@
         /// <summary>
         /// The bounds in which the float must be to be considered a positive boolean.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The bounds in which the float must be to be considered a positive boolean.")]
-        [MinMaxRange(0f, 1f)]
+        [Tooltip("The bounds in which the float must be to be considered a positive boolean."), MinMaxRange(0f, 1f), SerializeField]
         protected FloatRange positiveBounds = new FloatRange(0f, 1f);
 
         /// <summary>

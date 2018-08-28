@@ -11,20 +11,19 @@
     /// </summary>
     public class GrabInteractorInternalSetup : MonoBehaviour
     {
-        [Header("Facade Settings")]
-
+        #region Facade Settings
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Tooltip("The public interface facade.")]
+        [Header("Facade Settings"), Tooltip("The public interface facade.")]
         public InteractorFacade facade;
+        #endregion
 
-        [Header("Grab Settings")]
-
+        #region Grab Settings
         /// <summary>
         /// The <see cref="BooleanAction"/> that will initiate the Interactor grab mechanism.
         /// </summary>
-        [Tooltip("The BooleanAction that will initiate the Interactor grab mechanism.")]
+        [Header("Grab Settings"), Tooltip("The BooleanAction that will initiate the Interactor grab mechanism.")]
         public BooleanAction grabAction;
         /// <summary>
         /// The point in which to attach a grabbed Interactable to the Interactor.
@@ -46,6 +45,7 @@
         /// </summary>
         [Tooltip("The ActiveCollisionPublisher for checking valid stop touching collisions.")]
         public ActiveCollisionPublisher stopGrabbingPublisher;
+        #endregion
 
         /// <summary>
         /// Configures the action used to control grabbing.

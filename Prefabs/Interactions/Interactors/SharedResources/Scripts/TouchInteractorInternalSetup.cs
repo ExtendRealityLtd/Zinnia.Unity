@@ -12,20 +12,19 @@
     /// </summary>
     public class TouchInteractorInternalSetup : MonoBehaviour
     {
-        [Header("Facade Settings")]
-
+        #region Facade Settings
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Tooltip("The public interface facade.")]
+        [Header("Facade Settings"), Tooltip("The public interface facade.")]
         public InteractorFacade facade;
+        #endregion
 
-        [Header("Touch Settings")]
-
+        #region Touch Settings
         /// <summary>
         /// The <see cref="ActiveCollisionsContainer"/> that holds all current collisions.
         /// </summary>
-        [Tooltip("The ActiveCollisionsContainer that holds all current collisions.")]
+        [Header("Touch Settings"), Tooltip("The ActiveCollisionsContainer that holds all current collisions.")]
         public ActiveCollisionsContainer activeCollisionsContainer;
         /// <summary>
         /// The <see cref="Slicer"/> that holds the current active collision.
@@ -42,6 +41,7 @@
         /// </summary>
         [Tooltip("The ActiveCollisionPublisher for checking valid stop touching collisions.")]
         public ActiveCollisionPublisher stopTouchingPublisher;
+        #endregion
 
         /// <summary>
         /// A collection of currently touched GameObjects.

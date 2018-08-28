@@ -14,33 +14,32 @@
     /// </summary>
     public class TeleporterInternalSetup : MonoBehaviour
     {
-        [Header("Facade Settings")]
-
+        #region Facade Settings
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Tooltip("The public interface facade.")]
+        [Header("Facade Settings"), Tooltip("The public interface facade.")]
         public TeleporterFacade facade;
+        #endregion
 
-        [Header("Teleporter Settings")]
-
+        #region Teleporter Settings
         /// <summary>
         /// The <see cref="SurfaceLocator"/> to use for the teleporting event.
         /// </summary>
-        [Tooltip("The Surface Locator to use for the teleporting event.")]
+        [Header("Teleporter Settings"), Tooltip("The Surface Locator to use for the teleporting event.")]
         public SurfaceLocator surfaceTeleporter;
         /// <summary>
         /// The <see cref="TransformPropertyApplier"/> to use for the teleporting event.
         /// </summary>
         [Tooltip("The Transform Property Applier to use for the teleporting event.")]
         public TransformPropertyApplier modifyTeleporter;
+        #endregion
 
-        [Header("Alias Settings")]
-
+        #region Alias Settings
         /// <summary>
         /// The <see cref="SurfaceLocator"/> to set aliases on.
         /// </summary>
-        [Tooltip("The Surface Locators to set aliases on.")]
+        [Header("Alias Settings"), Tooltip("The Surface Locators to set aliases on.")]
         public List<SurfaceLocator> surfaceLocatorAliases = new List<SurfaceLocator>();
         /// <summary>
         /// The <see cref="SurfaceLocator"/> to set rules on.
@@ -57,6 +56,7 @@
         /// </summary>
         [Tooltip("The scene Cameras to set the CameraColorOverlays to affect.")]
         public List<CameraColorOverlay> cameraColorOverlays = new List<CameraColorOverlay>();
+        #endregion
 
         /// <summary>
         /// Sets up the Teleporter prefab with the specified settings.

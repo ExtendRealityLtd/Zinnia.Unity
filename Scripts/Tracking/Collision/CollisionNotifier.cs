@@ -131,8 +131,7 @@
         /// <summary>
         /// The types of collisions that events will be emitted for.
         /// </summary>
-        [UnityFlags]
-        [Tooltip("The types of collisions that events will be emitted for.")]
+        [Tooltip("The types of collisions that events will be emitted for."), UnityFlags]
         public CollisionTypes emittedTypes = (CollisionTypes)(-1);
         /// <summary>
         /// Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.

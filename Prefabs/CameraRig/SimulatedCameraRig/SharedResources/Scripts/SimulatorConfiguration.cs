@@ -5,12 +5,44 @@
     using VRTK.Core.Extension;
     using VRTK.Core.Prefabs.CameraRig.TrackedAlias;
     using VRTK.Core.Mutation.TransformProperty;
+    using VRTK.Core.Data.Attribute;
 
     /// <summary>
     /// Provides configuration for the Simulated CameraRig.
     /// </summary>
     public class SimulatorConfiguration : MonoBehaviour
     {
+        #region Simulator Settings
+        /// <summary>
+        /// The optional Tracked Alias prefab, must be provided if one is used in the scene.
+        /// </summary>
+        [Header("Simulator Settings"), Tooltip("The optional Tracked Alias prefab, must be provided if one is used in the scene.")]
+        public TrackedAliasFacade trackedAlias;
+        /// <summary>
+        /// Determines whether to disable the XRSettings.
+        /// </summary>
+        [Tooltip("Determines whether to disable the XRSettings."), SerializeField]
+        protected bool disableXRSettings = true;
+        /// <summary>
+        /// The frame rate to simulate with fixedDeltaTime.
+        /// </summary>
+        [Tooltip("The frame rate to simulate with fixedDeltaTime."), SerializeField]
+        protected float simulatedFrameRate = 90f;
+        #endregion
+
+        #region Internal Settings
+        /// <summary>
+        /// The linked PositionProperty.
+        /// </summary>
+        [Header("Internal Settings"), Tooltip("The linked PositionProperty."), InternalSetting]
+        public PositionProperty playareaPosition;
+        /// <summary>
+        /// The linked TransformPropertyResetter.
+        /// </summary>
+        [Tooltip("The linked TransformPropertyResetter."), InternalSetting]
+        public TransformPropertyResetter playareaResetter;
+        #endregion
+
         /// <summary>
         /// Determines whether to disable the XRSettings.
         /// </summary>
@@ -43,34 +75,13 @@
             }
         }
 
-        [Header("Simulator Settings")]
-
-        [SerializeField]
-        [Tooltip("Determines whether to disable the XRSettings.")]
-        protected bool disableXRSettings = true;
-        [SerializeField]
-        [Tooltip("The frame rate to simulate with fixedDeltaTime.")]
-        protected float simulatedFrameRate = 90f;
         /// <summary>
-        /// The optional Tracked Alias prefab, must be provided if one is used in the scene.
+        /// The original configuration of XRSettings.
         /// </summary>
-        [Tooltip("The optional Tracked Alias prefab, must be provided if one is used in the scene.")]
-        public TrackedAliasFacade trackedAlias;
-
-        [Header("Internal Settings")]
-
-        /// <summary>
-        /// **DO NOT CHANGE** - The linked PositionProperty.
-        /// </summary>
-        [Tooltip("**DO NOT CHANGE** - The linked PositionProperty.")]
-        public PositionProperty playareaPosition;
-        /// <summary>
-        /// **DO NOT CHANGE** - The linked TransformPropertyResetter.
-        /// </summary>
-        [Tooltip("**DO NOT CHANGE** - The linked TransformPropertyResetter.")]
-        public TransformPropertyResetter playareaResetter;
-
         protected bool originalXRSettings;
+        /// <summary>
+        /// The original configuration of FixedDeltaTime.
+        /// </summary>
         protected float originalFixedDeltaTime;
 
         protected virtual void OnEnable()
@@ -109,6 +120,10 @@
             UpdateSimulatedFrameRate(simulatedFrameRate);
         }
 
+        /// <summary>
+        /// Updates the XRSettings.
+        /// </summary>
+        /// <param name="state">The new value for the setting.</param>
         protected virtual void UpdateXRSettings(bool state)
         {
             if (state)
@@ -122,6 +137,10 @@
             }
         }
 
+        /// <summary>
+        /// Updates the simulated frame rate.
+        /// </summary>
+        /// <param name="rate">The new frame rate.</param>
         protected virtual void UpdateSimulatedFrameRate(float rate)
         {
             Time.fixedDeltaTime = Time.timeScale / rate;

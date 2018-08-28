@@ -40,13 +40,17 @@
             }
         }
 
-        [SerializeField]
-        [Tooltip("Represents the type of physical space available for XR.")]
-        private TrackingSpaceType trackingSpaceType = TrackingSpaceType.RoomScale;
+        /// <summary>
+        /// Represents the type of physical space available for XR.
+        /// </summary>
+        [Tooltip("Represents the type of physical space available for XR."), SerializeField]
+        protected TrackingSpaceType trackingSpaceType = TrackingSpaceType.RoomScale;
 
-        [SerializeField]
-        [Tooltip("Automatically set the Unity Physics Fixed Timestep value based on the headset render frequency.")]
-        private bool lockPhysicsUpdateRateToRenderFrequency = true;
+        /// <summary>
+        /// Automatically set the Unity Physics Fixed Timestep value based on the headset render frequency.
+        /// </summary>
+        [Tooltip("Automatically set the Unity Physics Fixed Timestep value based on the headset render frequency."), SerializeField]
+        protected bool lockPhysicsUpdateRateToRenderFrequency = true;
 
         protected virtual void OnEnable()
         {

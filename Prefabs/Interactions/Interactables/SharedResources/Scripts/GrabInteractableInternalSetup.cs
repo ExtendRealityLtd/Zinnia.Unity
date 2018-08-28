@@ -16,28 +16,27 @@
     /// </summary>
     public class GrabInteractableInternalSetup : MonoBehaviour
     {
-        [Header("Facade Settings")]
-
+        #region Facade Settings
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Tooltip("The public interface facade.")]
+        [Header("Facade Settings"), Tooltip("The public interface facade.")]
         public InteractableFacade facade;
+        #endregion
 
-        [Header("Grab Settings")]
-
+        #region Grab Settings
         /// <summary>
         /// The <see cref="GameObjectEventStack"/> that deals with the grabbing actions.
         /// </summary>
-        [Tooltip("The GameObjectEventStack that deals with the grabbing actions.")]
+        [Header("Grab Settings"), Tooltip("The GameObjectEventStack that deals with the grabbing actions.")]
         public GameObjectEventStack gameObjectEventStack;
+        #endregion
 
-        [Header("Attachment Logic")]
-
+        #region Attachment Logic
         /// <summary>
         /// The <see cref="GameObject"/> that contains the precision grab mode logic.
         /// </summary>
-        [Tooltip("The GameObject that contains the precision grab mode logic.")]
+        [Header("Attachment Logic"), Tooltip("The GameObject that contains the precision grab mode logic.")]
         public GameObject precisionGrabLogic;
         /// <summary>
         /// The <see cref="GameObject"/> that contains the snap handles logic.
@@ -49,26 +48,26 @@
         /// </summary>
         [Tooltip("The ObjectFollower script used for the attachment logic.")]
         public ObjectFollower attachmentLogic;
+        #endregion
 
-        [Header("Tracking Logic")]
-
+        #region Tracking Logic
         /// <summary>
         /// The <see cref="FollowModifier"/> that deals with the Transform Follow tracking.
         /// </summary>
-        [Tooltip("The FollowModifier that deals with the Transform Follow tracking.")]
+        [Header("Tracking Logic"), Tooltip("The FollowModifier that deals with the Transform Follow tracking.")]
         public FollowModifier TransformTracking;
         /// <summary>
         /// The <see cref="FollowModifier"/> that deals with the Rigidbody Velocity tracking.
         /// </summary>
         [Tooltip("The FollowModifier that deals with the Rigidbody Velocity tracking.")]
         public FollowModifier RigidbodyTracking;
+        #endregion
 
-        [Header("Grab Action Settings")]
-
+        #region Grab Action Settings
         /// <summary>
         /// The <see cref="ActiveCollisionConsumerEventProxyEmitter"/> that deals with grabbing flow.
         /// </summary>
-        [Tooltip("The ActiveCollisionConsumerEventProxyEmitter that deals with grabbing flow.")]
+        [Header("Grab Action Settings"), Tooltip("The ActiveCollisionConsumerEventProxyEmitter that deals with grabbing flow.")]
         public ActiveCollisionConsumerEventProxyEmitter doGrab;
         /// <summary>
         /// The <see cref="ActiveCollisionConsumerEventProxyEmitter"/> that deals with ungrabbing flow.
@@ -80,13 +79,13 @@
         /// </summary>
         [Tooltip("The ListContainsRule used to determine the grab validity.")]
         public ListContainsRule grabValidity;
+        #endregion
 
-        [Header("Active Type Settings")]
-
+        #region Active Type Settings
         /// <summary>
         /// The <see cref="GameObject"/> containing the logic for starting HoldTillRelease grabbing.
         /// </summary>
-        [Tooltip("The GameObject containing the logic for starting HoldTillRelease grabbing.")]
+        [Header("Active Type Settings"), Tooltip("The GameObject containing the logic for starting HoldTillRelease grabbing.")]
         public GameObject StartStateGrab;
         /// <summary>
         /// The <see cref="GameObject"/> containing the logic for ending HoldTillRelease grabbing.
@@ -98,6 +97,7 @@
         /// </summary>
         [Tooltip("The GameObject containing the logic for starting and ending Toggle grabbing")]
         public GameObject ToggleGrab;
+        #endregion
 
         /// <summary>
         /// A collection of Interactors that are currently grabbing the Interactable.

@@ -7,6 +7,7 @@
     using VRTK.Core.Action;
     using VRTK.Core.Tracking.Velocity;
     using VRTK.Core.Prefabs.Interactions.Interactables;
+    using VRTK.Core.Data.Attribute;
 
     /// <summary>
     /// The public interface into the Interactable Prefab.
@@ -21,24 +22,24 @@
         {
         }
 
-        [Header("Interactor Settings")]
-
+        #region Interactor Settings
         /// <summary>
         /// The <see cref="BooleanAction"/> that will initiate the Interactor grab mechanism.
         /// </summary>
-        [Tooltip("The BooleanAction that will initiate the Interactor grab mechanism.")]
+        [Header("Interactor Settings"), Tooltip("The BooleanAction that will initiate the Interactor grab mechanism.")]
         public BooleanAction grabAction;
         /// <summary>
         /// The <see cref="VelocityTrackerProcessor"/> to measure the interactors current velocity.
         /// </summary>
         [Tooltip("The VelocityTrackerProcessor to measure the interactors current velocity.")]
         public VelocityTrackerProcessor velocityTracker;
+        #endregion
 
-        [Header("Interactor Events")]
-
+        #region Interactor Events
         /// <summary>
         /// Emitted when a new collision occurs.
         /// </summary>
+        [Header("Interactor Events")]
         public UnityEvent Touched = new UnityEvent();
         /// <summary>
         /// Emitted when an existing collision ends.
@@ -52,19 +53,20 @@
         /// Emitted when an existing collision ends.
         /// </summary>
         public UnityEvent Ungrabbed = new UnityEvent();
+        #endregion
 
-        [Header("Internal Settings")]
-
+        #region Internal Settings
         /// <summary>
-        /// **DO NOT CHANGE** - The linked Touch Internal Setup.
+        /// The linked Touch Internal Setup.
         /// </summary>
-        [Tooltip("**DO NOT CHANGE** - The linked Touch Internal Setup.")]
+        [Header("Internal Settings"), Tooltip("The linked Touch Internal Setup."), InternalSetting]
         public TouchInteractorInternalSetup touchInteractorSetup;
         /// <summary>
-        /// **DO NOT CHANGE** - The linked Grab Internal Setup.
+        /// The linked Grab Internal Setup.
         /// </summary>
-        [Tooltip("**DO NOT CHANGE** - The linked Grab Internal Setup.")]
+        [Tooltip("The linked Grab Internal Setup."), InternalSetting]
         public GrabInteractorInternalSetup grabInteractorSetup;
+        #endregion
 
         /// <summary>
         /// A collection of currently touched GameObjects.

@@ -75,7 +75,9 @@ with lowercase -> `public Type myField` as this is inline with Unity's
 naming convention.
 
 Class methods and parameters should always denote their accessibility
-level using the `public` `protected` `private` keywords.
+level using the `public` `protected` `private` keywords. Methods should
+also always be defined as virtual in concrete classes to allow
+overriding.
 
   > **Incorrect:**
   ```
@@ -84,7 +86,7 @@ level using the `public` `protected` `private` keywords.
 
   > **Correct:**
   ```
-  private void MyMethod()
+  protected virtual void MyMethod()
   ```
 
 All core classes should be within the relevant `VRTK` namespace. Any
@@ -96,8 +98,8 @@ required `using` lines should be within the namespace block.
   namespace X.Y.Z
   {
     public class MyClass
-	{
-	}
+    {
+    }
   }
   ```
 
@@ -107,13 +109,30 @@ required `using` lines should be within the namespace block.
   {
     using System;
     public class MyClass
-	{
-	}
+    {
+    }
   }
   ```
 
-Parameters should be defined at the top of the class before any methods
-are defined.
+The order elements are defined in a class should be as follows:
+
+  * nested classes
+  * public enums
+  * public fields
+  * protected serialized fields
+  * public events
+  * public properties
+  * protected enums
+  * protected fields
+  * protected properties
+  * private fields
+  * private properties
+  * public MonoBehaviour message methods
+  * public methods
+  * protected MonoBehaviour message methods
+  * protected methods
+  * private MonoBehaviour message methods
+  * private methods
 
 It is acceptable to have multiple classes defined in the same file as
 long as the subsequent defined classes are only used by the main class
@@ -188,21 +207,52 @@ lines included in `<remarks>`.
 
 Public serialized parameters that appear in the inspector also require
 XML comments and an additional `[Tooltip("")]` which is displayed in
-the Unity Editor inspector panel. The order of documentation and
-parameter attributes should be:
+the Unity Editor inspector panel. All parameter attributes should
+appear in the same attribute block and comma separated with the
+`Tooltip` attribute first followed by the remaining attributes in an
+order that makes most sense when read as a sentence. The order of
+documentation and parameter attributes should be:
 
   * XML documentation
-  * Optional attributes
-  * Tooltip attribute
+  * Parameter attributes
 
-```
-/// <summary>
-/// Description here.
-/// </summary>
-[Optional-Attributes...]
-[Tooltip("Description here.")]
-public Type myType;
-```
+  > **Example:**
+  ```
+  /// <summary>
+  /// Description here.
+  /// </summary>
+  [Tooltip("Description here."), InternalSetting, SerializeField]
+  protected Type myType;
+  ```
+
+If a `[Header]` attribute is to be used to group fields in the Unity
+Inspector, then the attribute must preceed the `Tooltip` attribute in
+the comma separated list and not be on it's own line above the XML
+summary as the MSDN specification dictates that attributes must
+annotate members. It is also advised to wrap `Header` sections using
+the `#region` directive to denote the block assoicated.
+The following shows a valid and invalid example:
+
+  > **Incorrect:**
+  ```
+  [Header("My Header")]
+  /// <summary>
+  /// Description here.
+  /// </summary>
+  [Tooltip("Description here."), InternalSetting, SerializeField]
+  protected Type myType;
+  ```
+
+  > **Correct:**
+  ```
+  #region My Header
+  /// <summary>
+  /// Description here.
+  /// </summary>
+  [Header("My Header"), Tooltip("Description here."), InternalSetting, SerializeField]
+  protected Type myType;
+  #endregion
+  ```
 
 Whenever an inherited field, method, etc. is overridden then the
 documentation should avoid repeating itself from the base class and
@@ -223,12 +273,13 @@ any issues.
 The commit message lines should never exceed 72 characters and should
 be entered in the following format:
 
-```
-<type>(<scope>): <subject>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-```
+  > **Example:**
+  ```
+  <type>(<scope>): <subject>
+  <BLANK LINE>
+  <body>
+  <BLANK LINE>
+  ```
 
 ### Type
 

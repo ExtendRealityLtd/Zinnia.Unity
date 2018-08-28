@@ -9,18 +9,18 @@
     /// </summary>
     public abstract class SourceTargetProcessor : MonoBehaviour, IProcessable
     {
-        [Header("Processor Component Settings")]
-
+        #region Processor Component Settings
         /// <summary>
         /// The source <see cref="Component"/> to apply against the source within the process.
         /// </summary>
-        [Tooltip("The source Component to apply against the source within the process.")]
+        [Header("Processor Component Settings"), Tooltip("The source Component to apply against the source within the process.")]
         public Component sourceComponent;
         /// <summary>
         /// The target <see cref="Component"/>s to apply the source to within the process.
         /// </summary>
         [Tooltip("The target Components to apply the source to within the process.")]
         public List<Component> targetComponents = new List<Component>();
+        #endregion
 
         /// <summary>
         /// The <see cref="Component"/> that is currently the active target for the process.

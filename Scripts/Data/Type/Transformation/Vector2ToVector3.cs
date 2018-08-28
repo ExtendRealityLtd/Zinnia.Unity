@@ -56,14 +56,12 @@
         /// <summary>
         /// The mechanism for mapping the Vector2 coordinates to the Vector3 coordinates.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The mechanism for mapping the Vector2 coordinates to the Vector3 coordinates.")]
+        [Tooltip("The mechanism for mapping the Vector2 coordinates to the Vector3 coordinates."), SerializeField]
         protected CoordinateMap coordinateMap = CoordinateMap.XToXAndYToY;
         /// <summary>
         /// The value to set the unused coordinate to during the conversion.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The value to set the unused coordinate to during the conversion.")]
+        [Tooltip("The value to set the unused coordinate to during the conversion."), SerializeField]
         protected float unusedCoordinateValue = 0f;
 
         /// <summary>

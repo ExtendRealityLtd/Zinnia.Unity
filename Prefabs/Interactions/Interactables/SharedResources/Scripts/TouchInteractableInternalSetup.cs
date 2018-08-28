@@ -9,26 +9,26 @@
 
     public class TouchInteractableInternalSetup : MonoBehaviour
     {
-        [Header("Facade Settings")]
-
+        #region Facade Settings
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Tooltip("The public interface facade.")]
+        [Header("Facade Settings"), Tooltip("The public interface facade.")]
         public InteractableFacade facade;
+        #endregion
 
-        [Header("Touch Settings")]
-
+        #region Touch Settings
         /// <summary>
         /// The <see cref="GameObjectSet"/> that holds the current touching objects data.
         /// </summary>
-        [Tooltip("The GameObjectSet that holds the current touching objects data.")]
+        [Header("Touch Settings"), Tooltip("The GameObjectSet that holds the current touching objects data.")]
         public GameObjectSet currentTouchingObjects;
         /// <summary>
         /// The <see cref="ListContainsRule"/> used to determine the touch validity.
         /// </summary>
         [Tooltip("The ListContainsRule used to determine the touch validity.")]
         public ListContainsRule touchValidity;
+        #endregion
 
         /// <summary>
         /// A collection of Interactors that are currently touching the Interactable.

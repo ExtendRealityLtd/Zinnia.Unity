@@ -69,12 +69,11 @@
             SnapHandle
         }
 
-        [Header("Interactable Settings")]
-
+        #region Interactable Settings
         /// <summary>
         /// The mechanism of how to keep the grab action active.
         /// </summary>
-        [Tooltip("The mechanism of how to keep the grab action active.")]
+        [Header("Interactable Settings"), Tooltip("The mechanism of how to keep the grab action active.")]
         public ActiveType grabType = ActiveType.HoldTillRelease;
         /// <summary>
         /// Determines how to track the interactable to the interactor.
@@ -86,26 +85,26 @@
         /// </summary>
         [Tooltip("The offset to apply when grabbing the Interactable.")]
         public GrabOffset grabOffset = GrabOffset.None;
+        #endregion
 
-        [Header("Restriction Settings")]
-
+        #region Restriction Settings
         /// <summary>
         /// A collection of interactors that are not allowed to touch this interactable.
         /// </summary>
-        [Tooltip("A collection of interactors that are not allowed to touch this interactable.")]
+        [Header("Restriction Settings"), Tooltip("A collection of interactors that are not allowed to touch this interactable.")]
         public List<InteractorFacade> disallowedTouchInteractors = new List<InteractorFacade>();
-
         /// <summary>
         /// A collection of interactors that are not allowed to grab this interactable.
         /// </summary>
         [Tooltip("A collection of interactors that are not allowed to grab this interactable.")]
         public List<InteractorFacade> disallowedGrabInteractors = new List<InteractorFacade>();
+        #endregion
 
-        [Header("Touch Events")]
-
+        #region Touch Events
         /// <summary>
         /// Emitted when the Interactable is touched for the first time by an Interactor.
         /// </summary>
+        [Header("Touch Events")]
         public UnityEvent FirstTouched = new UnityEvent();
         /// <summary>
         /// Emitted when an Interactor touches the Interactable.
@@ -119,12 +118,13 @@
         /// Emitted when the Interactable is untouched for the last time by an Interactor.
         /// </summary>
         public UnityEvent LastUntouched = new UnityEvent();
+        #endregion
 
-        [Header("Grab Events")]
-
+        #region Grab Events
         /// <summary>
         /// Emitted when the Interactable is grabbed for the first time by an Interactor.
         /// </summary>
+        [Header("Grab Events")]
         public UnityEvent FirstGrabbed = new UnityEvent();
         /// <summary>
         /// Emitted when an Interactor grabs the Interactable.
@@ -138,19 +138,20 @@
         /// Emitted when the Interactable is ungrabbed for the last time by an Interactor.
         /// </summary>
         public UnityEvent LastUngrabbed = new UnityEvent();
+        #endregion
 
-        [Header("Internal Settings")]
-
+        #region Internal Settings
         /// <summary>
         /// The linked Touch Internal Setup.
         /// </summary>
-        [Tooltip("The linked Touch Internal Setup."), InternalSetting, SerializeField]
+        [Header("Internal Settings"), Tooltip("The linked Touch Internal Setup."), InternalSetting, SerializeField]
         protected TouchInteractableInternalSetup touchInteractableSetup;
         /// <summary>
         /// The linked Grab Internal Setup.
         /// </summary>
         [Tooltip("The linked Grab Internal Setup."), InternalSetting, SerializeField]
         protected GrabInteractableInternalSetup grabInteractableSetup;
+        #endregion
 
         /// <summary>
         /// A collection of Interactors that are currently touching the Interactable.

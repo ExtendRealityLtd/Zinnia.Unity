@@ -1,6 +1,7 @@
 ﻿namespace VRTK.Core.Prefabs.Locomotion.Teleporters
 {
     using UnityEngine;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Data.Type;
     using VRTK.Core.Rule;
     using VRTK.Core.Tracking.Modification;
@@ -10,12 +11,11 @@
     /// </summary>
     public class TeleporterFacade : MonoBehaviour
     {
-        [Header("Teleporter Settings")]
-
+        #region Teleporter Settings
         /// <summary>
         /// The alias for the CameraRig Play Area.
         /// </summary>
-        [Tooltip("The alias for the CameraRig Play Area.")]
+        [Header("Teleporter Settings"), Tooltip("The alias for the CameraRig Play Area.")]
         public GameObject playAreaAlias;
         /// <summary>
         /// The alias for the CameraRig Headset.
@@ -32,25 +32,27 @@
         /// </summary>
         [Tooltip("Allows to optionally determine targets based on the set rules.")]
         public RuleContainer targetValidity;
+        #endregion
 
-        [Header("Teleporter Events")]
-
+        #region Teleporter Events
         /// <summary>
         /// Emitted when the teleporting is about to initiate.
         /// </summary>
+        [Header("Teleporter Events")]
         public TransformPropertyApplier.UnityEvent Teleporting = new TransformPropertyApplier.UnityEvent();
         /// <summary>
         /// Emitted when the teleporting has completed.
         /// </summary>
         public TransformPropertyApplier.UnityEvent Teleported = new TransformPropertyApplier.UnityEvent();
+        #endregion
 
-        [Header("Internal Settings")]
-
+        #region Internal Settings
         /// <summary>
-        /// **DO NOT CHANGE** - The linked Internal Setup.
+        /// The linked Internal Setup.
         /// </summary>
-        [Tooltip("**DO NOT CHANGE** - The linked Internal Setup.")]
+        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting]
         public TeleporterInternalSetup internalSetup;
+        #endregion
 
         /// <summary>
         /// Attempts to teleport the <see cref="playAreaAlias"/>.
