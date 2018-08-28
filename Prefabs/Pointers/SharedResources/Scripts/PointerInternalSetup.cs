@@ -68,7 +68,7 @@
             if (facade.followTarget != null)
             {
                 objectFollow.targetComponents.Clear();
-                objectFollow.targetComponents.Add(facade.followTarget.TryGetComponent());
+                objectFollow.targetComponents.Add(facade.followTarget.TryGetComponent<Component>());
             }
 
             if (facade.selectionAction != null)

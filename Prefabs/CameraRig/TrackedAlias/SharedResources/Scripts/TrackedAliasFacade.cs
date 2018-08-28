@@ -64,11 +64,11 @@
         /// <summary>
         /// Retreives all of the linked CameraRig PlayAreas.
         /// </summary>
-        public List<Component> PlayAreas => cameraRigs.Select(rig => rig.PlayArea).Where(value => value != null).Select(GameObjectExtensions.TryGetComponent).ToList();
+        public List<Component> PlayAreas => cameraRigs.Select(rig => rig.PlayArea).Where(value => value != null).Select(value => GameObjectExtensions.TryGetComponent<Component>(value)).ToList();
         /// <summary>
         /// Retreives all of the linked CameraRig Headsets.
         /// </summary>
-        public List<Component> Headsets => cameraRigs.Select(rig => rig.Headset).Where(value => value != null).Select(GameObjectExtensions.TryGetComponent).ToList();
+        public List<Component> Headsets => cameraRigs.Select(rig => rig.Headset).Where(value => value != null).Select(value => GameObjectExtensions.TryGetComponent<Component>(value)).ToList();
         /// <summary>
         /// Retreives all of the linked CameraRig Headset Cameras.
         /// </summary>
@@ -80,11 +80,11 @@
         /// <summary>
         /// Retreives all of the linked CameraRig Left Controllers.
         /// </summary>
-        public List<Component> LeftControllers => cameraRigs.Select(rig => rig.LeftController).Where(value => value != null).Select(GameObjectExtensions.TryGetComponent).ToList();
+        public List<Component> LeftControllers => cameraRigs.Select(rig => rig.LeftController).Where(value => value != null).Select(value => GameObjectExtensions.TryGetComponent<Component>(value)).ToList();
         /// <summary>
         /// Retreives all of the linked CameraRig Right Controllers.
         /// </summary>
-        public List<Component> RightControllers => cameraRigs.Select(rig => rig.RightController).Where(value => value != null).Select(GameObjectExtensions.TryGetComponent).ToList();
+        public List<Component> RightControllers => cameraRigs.Select(rig => rig.RightController).Where(value => value != null).Select(value => GameObjectExtensions.TryGetComponent<Component>(value)).ToList();
         /// <summary>
         /// Retreives all of the linked CameraRig Left Controller Velocity Trackers.
         /// </summary>

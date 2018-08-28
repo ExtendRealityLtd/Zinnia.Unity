@@ -8,16 +8,6 @@
     public static class GameObjectExtensions
     {
         /// <summary>
-        /// Attempts to retrieve the <see cref="Component"/> from a given <see cref="GameObject"/>.
-        /// </summary>
-        /// <param name="gameObject">The <see cref="GameObject"/> to retrieve the <see cref="Component"/> from.</param>
-        /// <returns>The <see cref="Component"/> if one exists on the given <see cref="GameObject"/>.</returns>
-        public static Component TryGetComponent(this GameObject gameObject)
-        {
-            return (gameObject == null ? null : gameObject.GetComponent<Component>());
-        }
-
-        /// <summary>
         /// Attempts to set the active state.
         /// </summary>
         /// <param name="gameObject">The <see cref="GameObject"/> to set the active state on.</param>
@@ -31,32 +21,32 @@
         }
 
         /// <summary>
-        /// Attempts to retreive the <see cref="Rigidbody"/> or if one is not found then optionally search children then search parents.
+        /// Attempts to retreive the component or if one is not found then optionally search children then search parents for the component.
         /// </summary>
         /// <param name="gameObject">The reference <see cref="GameObject"/> to search on.</param>
-        /// <param name="searchAncestors">Optionally searches all ancestors in the hierarchy for a rigidbody.</param>
-        /// <param name="searchDescendants">Optionally searches all descendants in the hierarchy for a rigidbody.</param>
-        /// <returns>The found <see cref="Rigidbody"/></returns>
-        public static Rigidbody FindRigidbody(this GameObject gameObject, bool searchDescendants = true, bool searchAncestors = false)
+        /// <param name="searchAncestors">Optionally searches all ancestors in the hierarchy for the component.</param>
+        /// <param name="searchDescendants">Optionally searches all descendants in the hierarchy for component.</param>
+        /// <returns>The component if one exists.</returns>
+        public static T TryGetComponent<T>(this GameObject gameObject, bool searchDescendants = false, bool searchAncestors = false) where T : Component
         {
             if (gameObject == null)
             {
-                return null;
+                return default(T);
             }
 
-            Rigidbody foundRigidbody = gameObject.GetComponent<Rigidbody>();
+            T foundComponent = gameObject.GetComponent<T>();
 
-            if (foundRigidbody == null && searchDescendants)
+            if (foundComponent == null && searchDescendants)
             {
-                foundRigidbody = gameObject.GetComponentInChildren<Rigidbody>();
+                foundComponent = gameObject.GetComponentInChildren<T>();
             }
 
-            if (foundRigidbody == null && searchAncestors)
+            if (foundComponent == null && searchAncestors)
             {
-                foundRigidbody = gameObject.GetComponentInParent<Rigidbody>();
+                foundComponent = gameObject.GetComponentInParent<T>();
             }
 
-            return foundRigidbody;
+            return foundComponent;
         }
     }
 }

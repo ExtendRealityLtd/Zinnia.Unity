@@ -11,7 +11,7 @@ namespace Test.VRTK.Core.Extension
         public void TryGetComponentValid()
         {
             GameObject valid = new GameObject();
-            Assert.AreEqual(valid.GetComponent<Component>(), valid.TryGetComponent());
+            Assert.AreEqual(valid.GetComponent<Component>(), valid.TryGetComponent<Component>());
             Object.DestroyImmediate(valid);
         }
 
@@ -19,7 +19,7 @@ namespace Test.VRTK.Core.Extension
         public void TryGetComponentInvalid()
         {
             GameObject invalid = null;
-            Assert.IsNull(invalid.TryGetComponent());
+            Assert.IsNull(invalid.TryGetComponent<Component>());
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace Test.VRTK.Core.Extension
             GameObject valid = new GameObject();
             Rigidbody rigidbody = valid.AddComponent<Rigidbody>();
 
-            Assert.AreEqual(rigidbody, valid.FindRigidbody());
+            Assert.AreEqual(rigidbody, valid.TryGetComponent<Rigidbody>(true));
 
             Object.DestroyImmediate(valid);
         }
@@ -49,7 +49,7 @@ namespace Test.VRTK.Core.Extension
         public void FindRigidbodyInvalid()
         {
             GameObject invalid = null;
-            Assert.IsNull(invalid.FindRigidbody());
+            Assert.IsNull(invalid.TryGetComponent<Rigidbody>(true));
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Test.VRTK.Core.Extension
 
             Rigidbody rigidbody = child.AddComponent<Rigidbody>();
 
-            Assert.AreEqual(rigidbody, parent.FindRigidbody(true));
+            Assert.AreEqual(rigidbody, parent.TryGetComponent<Rigidbody>(true));
 
             Object.DestroyImmediate(child);
             Object.DestroyImmediate(parent);
@@ -76,7 +76,7 @@ namespace Test.VRTK.Core.Extension
 
             Rigidbody rigidbody = parent.AddComponent<Rigidbody>();
 
-            Assert.AreEqual(rigidbody, child.FindRigidbody(false, true));
+            Assert.AreEqual(rigidbody, child.TryGetComponent<Rigidbody>(false, true));
 
             Object.DestroyImmediate(child);
             Object.DestroyImmediate(parent);
@@ -94,7 +94,7 @@ namespace Test.VRTK.Core.Extension
             parent.AddComponent<Rigidbody>();
             Rigidbody rigidbody = grandchild.AddComponent<Rigidbody>();
 
-            Assert.AreEqual(rigidbody, child.FindRigidbody(true, true));
+            Assert.AreEqual(rigidbody, child.TryGetComponent<Rigidbody>(true, true));
 
             Object.DestroyImmediate(grandchild);
             Object.DestroyImmediate(child);
@@ -113,7 +113,7 @@ namespace Test.VRTK.Core.Extension
             Rigidbody rigidbody = parent.AddComponent<Rigidbody>();
             grandchild.AddComponent<Rigidbody>();
 
-            Assert.AreEqual(rigidbody, child.FindRigidbody(false, true));
+            Assert.AreEqual(rigidbody, child.TryGetComponent<Rigidbody>(false, true));
 
             Object.DestroyImmediate(grandchild);
             Object.DestroyImmediate(child);
@@ -131,7 +131,7 @@ namespace Test.VRTK.Core.Extension
 
             parent.AddComponent<Rigidbody>();
 
-            Assert.IsNull(child.FindRigidbody(true, false));
+            Assert.IsNull(child.TryGetComponent<Rigidbody>(true, false));
 
             Object.DestroyImmediate(grandchild);
             Object.DestroyImmediate(child);
@@ -149,7 +149,7 @@ namespace Test.VRTK.Core.Extension
 
             grandchild.AddComponent<Rigidbody>();
 
-            Assert.IsNull(child.FindRigidbody(false, true));
+            Assert.IsNull(child.TryGetComponent<Rigidbody>(false, true));
 
             Object.DestroyImmediate(grandchild);
             Object.DestroyImmediate(child);
