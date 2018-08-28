@@ -30,11 +30,18 @@
         public virtual void Receive(TValue payload)
         {
             Payload = payload;
+            EmitPayload();
+        }
+
+        /// <summary>
+        /// Emits the last received payload.
+        /// </summary>
+        public virtual void EmitPayload()
+        {
             if (!IsValid())
             {
                 return;
             }
-
             Emitted?.Invoke(Payload);
         }
     }

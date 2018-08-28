@@ -53,49 +53,19 @@
         public GameObject ActiveTouchedObject => GetActiveTouchedObject();
 
         /// <summary>
-        /// Sets up the Interactor prefab with the specified settings.
+        /// Configures the <see cref="ActiveCollisionPublisher"/> components for touching and untouching.
         /// </summary>
-        public virtual void Setup()
+        public virtual void ConfigurePublishers()
         {
-            if (InvalidParameters())
+            if (startTouchingPublisher != null)
             {
-                return;
+                startTouchingPublisher.payload.sourceContainer = facade?.gameObject;
             }
 
-            startTouchingPublisher.sourceContainer = facade.interactorContainer;
-            stopTouchingPublisher.sourceContainer = facade.interactorContainer;
-        }
-
-        /// <summary>
-        /// Clears all of the settings from the Interactor prefab.
-        /// </summary>
-        public virtual void Clear()
-        {
-            if (InvalidParameters())
+            if (stopTouchingPublisher != null)
             {
-                return;
+                stopTouchingPublisher.payload.sourceContainer = facade?.gameObject;
             }
-
-            startTouchingPublisher.sourceContainer = null;
-            stopTouchingPublisher.sourceContainer = null;
-        }
-
-        /// <summary>
-        /// Notifies that the Interactor is touching an object.
-        /// </summary>
-        /// <param name="data">The collision data.</param>
-        public virtual void NotifyTouch(CollisionNotifier.EventData data)
-        {
-            facade?.Touched?.Invoke(data);
-        }
-
-        /// <summary>
-        /// Notifies that the Interactor is no longer touching the object.
-        /// </summary>
-        /// <param name="data">The collision data.</param>
-        public virtual void NotifyUntouch(CollisionNotifier.EventData data)
-        {
-            facade?.Untouched?.Invoke(data);
         }
 
         /// <summary>
@@ -135,21 +105,7 @@
 
         protected virtual void OnEnable()
         {
-            Setup();
-        }
-
-        protected virtual void OnDisable()
-        {
-            Clear();
-        }
-
-        /// <summary>
-        /// Determines if the setup parameters are invalid.
-        /// </summary>
-        /// <returns><see langword="true"/> if the parameters are invalid.</returns>
-        protected virtual bool InvalidParameters()
-        {
-            return (activeCollisionsContainer == null || currentActiveCollision == null || startTouchingPublisher == null || stopTouchingPublisher == null || facade == null || facade.interactorContainer == null || facade.grabAction == null || facade.velocityTracker == null);
+            ConfigurePublishers();
         }
     }
 }

@@ -5,7 +5,7 @@
     using System;
 
     /// <summary>
-    /// Extracts the source container from a given <see cref="ActiveCollisionPublisher"/>.
+    /// Extracts the source container from a given <see cref="ActiveCollisionPublisher.PayloadData"/>.
     /// </summary>
     public class PublisherContainerExtractor : MonoBehaviour
     {
@@ -32,13 +32,13 @@
         }
 
         /// <summary>
-        /// Extracts the source container from the given publisher.
+        /// Extracts the source container from the given publisher payload data.
         /// </summary>
-        /// <param name="publisher">The publisher to extract from.</param>
+        /// <param name="publisher">The publisher payload data to extract from.</param>
         /// <returns>The source container within the publisher.</returns>
-        public virtual GameObject Extract(ActiveCollisionPublisher publisher)
+        public virtual GameObject Extract(ActiveCollisionPublisher.PayloadData publisher)
         {
-            if (!isActiveAndEnabled || publisher == null)
+            if (!isActiveAndEnabled || publisher == null || publisher.sourceContainer == null)
             {
                 SourceContainer = null;
                 return null;
@@ -60,10 +60,10 @@
         }
 
         /// <summary>
-        /// Extracts the source container from the given publisher.
+        /// Extracts the source container from the given publisher payload data.
         /// </summary>
-        /// <param name="publisher">The publisher to extract from.</param>
-        public virtual void DoExtract(ActiveCollisionPublisher publisher)
+        /// <param name="publisher">The publisher payload data to extract from.</param>
+        public virtual void DoExtract(ActiveCollisionPublisher.PayloadData publisher)
         {
             Extract(publisher);
         }

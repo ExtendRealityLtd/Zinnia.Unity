@@ -29,7 +29,7 @@
         /// <inheritdoc />
         protected override bool IsValid()
         {
-            return (base.IsValid() && publisherValidity.Accepts(Payload?.publisher?.gameObject));
+            return (base.IsValid() && publisherValidity.Accepts(Payload?.publisher?.PublisherContainer));
         }
     }
 }

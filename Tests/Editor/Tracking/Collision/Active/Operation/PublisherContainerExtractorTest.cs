@@ -35,7 +35,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             GameObject publisherSource = new GameObject();
             GameObject publisherChild = new GameObject();
             publisherChild.transform.SetParent(publisherSource.transform);
-            ActiveCollisionPublisher publisher = publisherChild.AddComponent<ActiveCollisionPublisher>();
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
             publisher.sourceContainer = publisherSource;
 
@@ -46,6 +46,9 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
 
             Assert.AreEqual(publisherSource, subject.SourceContainer);
             Assert.IsTrue(extractedMock.Received);
+
+            Object.DestroyImmediate(publisherSource);
+            Object.DestroyImmediate(publisherChild);
         }
 
         [Test]
@@ -57,7 +60,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             GameObject publisherSource = new GameObject();
             GameObject publisherChild = new GameObject();
             publisherChild.transform.SetParent(publisherSource.transform);
-            ActiveCollisionPublisher publisher = publisherChild.AddComponent<ActiveCollisionPublisher>();
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
             publisher.sourceContainer = publisherSource;
 
@@ -71,6 +74,9 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
 
             Assert.AreEqual(publisherSource, subject.SourceContainer);
             Assert.IsTrue(extractedMock.Received);
+
+            Object.DestroyImmediate(publisherSource);
+            Object.DestroyImmediate(publisherChild);
         }
 
         [Test]
@@ -82,7 +88,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             GameObject publisherSource = new GameObject();
             GameObject publisherChild = new GameObject();
             publisherChild.transform.SetParent(publisherSource.transform);
-            ActiveCollisionPublisher publisher = publisherChild.AddComponent<ActiveCollisionPublisher>();
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
             publisher.sourceContainer = publisherSource;
 
@@ -94,6 +100,9 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
 
             Assert.IsNull(subject.SourceContainer);
             Assert.IsFalse(extractedMock.Received);
+
+            Object.DestroyImmediate(publisherSource);
+            Object.DestroyImmediate(publisherChild);
         }
 
         [Test]
@@ -105,7 +114,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             GameObject publisherSource = new GameObject();
             GameObject publisherChild = new GameObject();
             publisherChild.transform.SetParent(publisherSource.transform);
-            ActiveCollisionPublisher publisher = publisherChild.AddComponent<ActiveCollisionPublisher>();
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
             publisher.sourceContainer = publisherSource;
 
@@ -117,6 +126,9 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
 
             Assert.IsNull(subject.SourceContainer);
             Assert.IsFalse(extractedMock.Received);
+
+            Object.DestroyImmediate(publisherSource);
+            Object.DestroyImmediate(publisherChild);
         }
 
         [Test]
@@ -125,7 +137,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            ActiveCollisionPublisher publisher = null;
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
             Assert.IsNull(subject.SourceContainer);
             Assert.IsFalse(extractedMock.Received);

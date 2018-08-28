@@ -37,9 +37,9 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             eventData.activeCollisions.Add(oneData);
             eventData.activeCollisions.Add(twoData);
 
-            Assert.AreEqual(0, subject.ActiveCollisions.Count);
+            Assert.AreEqual(0, subject.payload.ActiveCollisions.Count);
             subject.SetActiveCollisions(eventData);
-            Assert.AreEqual(2, subject.ActiveCollisions.Count);
+            Assert.AreEqual(2, subject.payload.ActiveCollisions.Count);
 
             Object.DestroyImmediate(oneContainer);
             Object.DestroyImmediate(twoContainer);
@@ -48,15 +48,16 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
         [Test]
         public void SetActiveCollisionsNoData()
         {
-            Assert.AreEqual(0, subject.ActiveCollisions.Count);
-            subject.SetActiveCollisions(null);
-            Assert.AreEqual(0, subject.ActiveCollisions.Count);
+            ActiveCollisionsContainer.EventData nullEventData = null;
+            Assert.AreEqual(0, subject.payload.ActiveCollisions.Count);
+            subject.SetActiveCollisions(nullEventData);
+            Assert.AreEqual(0, subject.payload.ActiveCollisions.Count);
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
             eventData.activeCollisions = null;
 
             subject.SetActiveCollisions(eventData);
-            Assert.AreEqual(0, subject.ActiveCollisions.Count);
+            Assert.AreEqual(0, subject.payload.ActiveCollisions.Count);
         }
 
         [Test]
@@ -70,10 +71,10 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             eventData.activeCollisions.Add(oneData);
             eventData.activeCollisions.Add(twoData);
 
-            Assert.AreEqual(0, subject.ActiveCollisions.Count);
+            Assert.AreEqual(0, subject.payload.ActiveCollisions.Count);
             subject.gameObject.SetActive(false);
             subject.SetActiveCollisions(eventData);
-            Assert.AreEqual(0, subject.ActiveCollisions.Count);
+            Assert.AreEqual(0, subject.payload.ActiveCollisions.Count);
 
             Object.DestroyImmediate(oneContainer);
             Object.DestroyImmediate(twoContainer);
@@ -90,10 +91,10 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             eventData.activeCollisions.Add(oneData);
             eventData.activeCollisions.Add(twoData);
 
-            Assert.AreEqual(0, subject.ActiveCollisions.Count);
+            Assert.AreEqual(0, subject.payload.ActiveCollisions.Count);
             subject.enabled = false;
             subject.SetActiveCollisions(eventData);
-            Assert.AreEqual(0, subject.ActiveCollisions.Count);
+            Assert.AreEqual(0, subject.payload.ActiveCollisions.Count);
 
             Object.DestroyImmediate(oneContainer);
             Object.DestroyImmediate(twoContainer);
@@ -267,7 +268,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
     {
         public bool received = false;
 
-        public override void Consume(ActiveCollisionPublisher publisher, CollisionNotifier.EventData currentCollision)
+        public override void Consume(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
         {
             if (isActiveAndEnabled)
             {

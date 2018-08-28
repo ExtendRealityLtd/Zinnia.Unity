@@ -3,6 +3,7 @@
     using UnityEngine;
     using VRTK.Core.Action;
     using VRTK.Core.Tracking.Collision;
+    using VRTK.Core.Tracking.Collision.Active;
     using VRTK.Core.Tracking.Velocity;
 
     /// <summary>
@@ -35,71 +36,61 @@
         /// </summary>
         [Tooltip("The VelocityTrackerProcessor to measure the interactors current velocity for throwing on release.")]
         public VelocityTrackerProcessor velocityTracker;
+        /// <summary>
+        /// The <see cref="ActiveCollisionPublisher"/> for checking valid start grabbing action.
+        /// </summary>
+        [Tooltip("The ActiveCollisionPublisher for checking valid start touching collisions.")]
+        public ActiveCollisionPublisher startGrabbingPublisher;
+        /// <summary>
+        /// The <see cref="ActiveCollisionPublisher"/> for checking valid stop grabbing action.
+        /// </summary>
+        [Tooltip("The ActiveCollisionPublisher for checking valid stop touching collisions.")]
+        public ActiveCollisionPublisher stopGrabbingPublisher;
 
         /// <summary>
-        /// Sets up the Interactor prefab with the specified settings.
+        /// Configures the action used to control grabbing.
         /// </summary>
-        public virtual void Setup()
+        public virtual void ConfigureGrabAction()
         {
-            if (InvalidParameters())
+            if (grabAction != null && facade != null && facade.grabAction != null)
             {
-                return;
+                grabAction.AddSource(facade?.grabAction);
+            }
+        }
+
+        /// <summary>
+        /// Configures the velocity tracker used for grabbing.
+        /// </summary>
+        public virtual void ConfigureVelocityTrackers()
+        {
+            if (velocityTracker != null && facade != null && facade.velocityTracker != null)
+            {
+                velocityTracker.velocityTrackers.Clear();
+                velocityTracker.velocityTrackers.Add(facade.velocityTracker);
+            }
+        }
+
+        /// <summary>
+        /// Configures the <see cref="ActiveCollisionPublisher"/> components for touching and untouching.
+        /// </summary>
+        public virtual void ConfigurePublishers()
+        {
+            if (startGrabbingPublisher != null)
+            {
+                startGrabbingPublisher.payload.sourceContainer = attachPoint;
             }
 
-            grabAction.AddSource(facade.grabAction);
-            velocityTracker.velocityTrackers.Clear();
-            velocityTracker.velocityTrackers.Add(facade.velocityTracker);
-        }
-
-        /// <summary>
-        /// Clears all of the settings from the Interactor prefab.
-        /// </summary>
-        public virtual void Clear()
-        {
-            if (InvalidParameters())
+            if (stopGrabbingPublisher != null)
             {
-                return;
+                stopGrabbingPublisher.payload.sourceContainer = attachPoint;
             }
-
-            grabAction.ClearSources();
-            velocityTracker.velocityTrackers.Clear();
-        }
-
-        /// <summary>
-        /// Determines an object is being grabbed.
-        /// </summary>
-        /// <param name="data">The collision data.</param>
-        public virtual void Grab(CollisionNotifier.EventData data)
-        {
-            facade?.Grabbed?.Invoke(data);
-        }
-
-        /// <summary>
-        /// Determines an object is being ungrabbed.
-        /// </summary>
-        /// <param name="data">The collision data.</param>
-        public virtual void Ungrab(CollisionNotifier.EventData data)
-        {
-            facade?.Ungrabbed?.Invoke(data);
         }
 
         protected virtual void OnEnable()
         {
-            Setup();
-        }
-
-        protected virtual void OnDisable()
-        {
-            Clear();
-        }
-
-        /// <summary>
-        /// Determines if the setup parameters are invalid.
-        /// </summary>
-        /// <returns><see langword="true"/> if the parameters are invalid.</returns>
-        protected virtual bool InvalidParameters()
-        {
-            return (grabAction == null || attachPoint == null || velocityTracker == null || facade == null || facade.interactorContainer == null || facade.grabAction == null || facade.velocityTracker == null);
+            ConfigureGrabAction();
+            ConfigureVelocityTrackers();
+            ConfigurePublishers();
         }
     }
 }

@@ -4,7 +4,6 @@ namespace Test.VRTK.Core.Data.Collection
 {
     using UnityEngine;
     using NUnit.Framework;
-    using System.Collections.Generic;
     using Test.VRTK.Core.Utility.Mock;
 
     public class GameObjectEventStackTest
@@ -641,26 +640,32 @@ namespace Test.VRTK.Core.Data.Collection
             UnityEventListenerMock elementOnePushedMock = new UnityEventListenerMock();
             UnityEventListenerMock elementOnePoppedMock = new UnityEventListenerMock();
             UnityEventListenerMock elementOneForcePoppedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementOneRestoredMock = new UnityEventListenerMock();
             GameObjectEventStack.ElementEvents eventsOne = new GameObjectEventStack.ElementEvents();
             eventsOne.Pushed.AddListener(elementOnePushedMock.Listen);
             eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
             eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
+            eventsOne.Restored.AddListener(elementOneRestoredMock.Listen);
 
             UnityEventListenerMock elementTwoPushedMock = new UnityEventListenerMock();
             UnityEventListenerMock elementTwoPoppedMock = new UnityEventListenerMock();
             UnityEventListenerMock elementTwoForcePoppedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementTwoRestoredMock = new UnityEventListenerMock();
             GameObjectEventStack.ElementEvents eventsTwo = new GameObjectEventStack.ElementEvents();
             eventsTwo.Pushed.AddListener(elementTwoPushedMock.Listen);
             eventsTwo.Popped.AddListener(elementTwoPoppedMock.Listen);
             eventsTwo.ForcePopped.AddListener(elementTwoForcePoppedMock.Listen);
+            eventsTwo.Restored.AddListener(elementTwoRestoredMock.Listen);
 
             UnityEventListenerMock elementThreePushedMock = new UnityEventListenerMock();
             UnityEventListenerMock elementThreePoppedMock = new UnityEventListenerMock();
             UnityEventListenerMock elementThreeForcePoppedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementThreeRestoredMock = new UnityEventListenerMock();
             GameObjectEventStack.ElementEvents eventsThree = new GameObjectEventStack.ElementEvents();
             eventsThree.Pushed.AddListener(elementThreePushedMock.Listen);
             eventsThree.Popped.AddListener(elementThreePoppedMock.Listen);
             eventsThree.ForcePopped.AddListener(elementThreeForcePoppedMock.Listen);
+            eventsThree.Restored.AddListener(elementThreeRestoredMock.Listen);
 
             GameObject objectOne = new GameObject();
             GameObject objectTwo = new GameObject();
@@ -687,24 +692,30 @@ namespace Test.VRTK.Core.Data.Collection
             Assert.IsFalse(elementOnePushedMock.Received);
             Assert.IsFalse(elementOnePoppedMock.Received);
             Assert.IsFalse(elementOneForcePoppedMock.Received);
+            Assert.IsFalse(elementOneRestoredMock.Received);
             Assert.IsFalse(elementTwoPushedMock.Received);
             Assert.IsFalse(elementTwoPoppedMock.Received);
             Assert.IsFalse(elementTwoForcePoppedMock.Received);
+            Assert.IsFalse(elementTwoRestoredMock.Received);
             Assert.IsFalse(elementThreePushedMock.Received);
             Assert.IsFalse(elementThreePoppedMock.Received);
             Assert.IsFalse(elementThreeForcePoppedMock.Received);
+            Assert.IsFalse(elementThreeRestoredMock.Received);
 
             subject.PopAt(1);
 
             Assert.IsFalse(elementOnePushedMock.Received);
             Assert.IsFalse(elementOnePoppedMock.Received);
             Assert.IsFalse(elementOneForcePoppedMock.Received);
+            Assert.IsTrue(elementOneRestoredMock.Received);
             Assert.IsFalse(elementTwoPushedMock.Received);
             Assert.IsTrue(elementTwoPoppedMock.Received);
             Assert.IsFalse(elementTwoForcePoppedMock.Received);
+            Assert.IsFalse(elementTwoRestoredMock.Received);
             Assert.IsFalse(elementThreePushedMock.Received);
             Assert.IsFalse(elementThreePoppedMock.Received);
             Assert.IsTrue(elementThreeForcePoppedMock.Received);
+            Assert.IsFalse(elementThreeRestoredMock.Received);
 
             Object.DestroyImmediate(objectOne);
             Object.DestroyImmediate(objectTwo);

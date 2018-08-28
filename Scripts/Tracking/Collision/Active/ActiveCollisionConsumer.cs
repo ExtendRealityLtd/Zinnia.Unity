@@ -18,9 +18,9 @@
         public class EventData
         {
             /// <summary>
-            /// The publisher that is pushing to the consumer.
+            /// The publisher payload data that is being pushed to the consumer.
             /// </summary>
-            public ActiveCollisionPublisher publisher;
+            public ActiveCollisionPublisher.PayloadData publisher;
             /// <summary>
             /// The current collision data.
             /// </summary>
@@ -31,7 +31,7 @@
                 return Set(source.publisher, source.currentCollision);
             }
 
-            public EventData Set(ActiveCollisionPublisher publisher, CollisionNotifier.EventData currentCollision)
+            public EventData Set(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
             {
                 this.publisher = publisher;
                 this.currentCollision = currentCollision;
@@ -40,7 +40,7 @@
 
             public void Clear()
             {
-                Set(default(ActiveCollisionPublisher), default(CollisionNotifier.EventData));
+                Set(default(ActiveCollisionPublisher.PayloadData), default(CollisionNotifier.EventData));
             }
         }
 
@@ -59,9 +59,9 @@
         public RuleContainer publisherValidity;
 
         /// <summary>
-        /// The publisher that last initiated the receive.
+        /// The publisher payload that was last received from.
         /// </summary>
-        public ActiveCollisionPublisher PublisherSource
+        public ActiveCollisionPublisher.PayloadData PublisherSource
         {
             get;
             protected set;
@@ -90,11 +90,11 @@
         /// <summary>
         /// Consumes data from a from a <see cref="ActiveCollisionPublisher"/>.
         /// </summary>
-        /// <param name="publisher">The publisher of the data.</param>
+        /// <param name="publisher">The publisher payload data.</param>
         /// <param name="currentCollision">The current collision within published data.</param>
-        public virtual void Consume(ActiveCollisionPublisher publisher, CollisionNotifier.EventData currentCollision)
+        public virtual void Consume(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
         {
-            if (!isActiveAndEnabled || !publisherValidity.Accepts(publisher.gameObject))
+            if (!isActiveAndEnabled || !publisherValidity.Accepts(publisher.PublisherContainer))
             {
                 return;
             }

@@ -36,6 +36,10 @@
             /// Emitted when the <see cref="GameObject"/> is removed from the stack due to a <see cref="GameObject"/> lower down in the stack being removed.
             /// </summary>
             public UnityEvent ForcePopped = new UnityEvent();
+            /// <summary>
+            /// Emitted when the element of the stack is restored to being at the top after elements above it being popped off.
+            /// </summary>
+            public UnityEvent Restored = new UnityEvent();
         }
 
         /// <summary>
@@ -56,7 +60,11 @@
         /// <summary>
         /// A representation of the <see cref="GameObject"/> stack.
         /// </summary>
-        protected List<GameObject> stack = new List<GameObject>();
+        public List<GameObject> Stack
+        {
+            get;
+            protected set;
+        } = new List<GameObject>();
 
         /// <summary>
         /// Push an element onto the stack and emit the related events.
@@ -64,14 +72,14 @@
         /// <param name="element">The element to push onto the stack and to become the payload of the related event.</param>
         public virtual void Push(GameObject element)
         {
-            if (!isActiveAndEnabled || EventIndex >= elementEvents.Count || stack.Contains(element))
+            if (!isActiveAndEnabled || EventIndex >= elementEvents.Count || Stack.Contains(element))
             {
                 return;
             }
 
-            elementEvents[EventIndex].Pushed?.Invoke(element);
-            stack.Add(element);
+            Stack.Add(element);
             EventIndex++;
+            elementEvents[Stack.Count - 1].Pushed?.Invoke(element);
         }
 
         /// <summary>
@@ -79,9 +87,9 @@
         /// </summary>
         public virtual void Pop()
         {
-            if (stack.Count > 0)
+            if (Stack.Count > 0)
             {
-                PopAt(stack[stack.Count - 1]);
+                PopAt(Stack[Stack.Count - 1]);
             }
         }
 
@@ -91,9 +99,9 @@
         /// <param name="index">The index at which to pop the stack at.</param>
         public virtual void PopAt(int index)
         {
-            if (index < stack.Count && index <= EventIndex)
+            if (index < Stack.Count && index <= EventIndex)
             {
-                PopAt(stack[index]);
+                PopAt(Stack[index]);
             }
         }
 
@@ -103,7 +111,7 @@
         /// <param name="element">The element to pop from the stack.</param>
         public virtual void PopAt(GameObject element)
         {
-            int elementIndex = stack.IndexOf(element);
+            int elementIndex = Stack.IndexOf(element);
             if (!isActiveAndEnabled || elementIndex < 0)
             {
                 return;
@@ -111,9 +119,11 @@
 
             for (int i = elementEvents.Count - 1; i >= elementIndex; i--)
             {
-                if (elementIndex < stack.Count && i < stack.Count)
+                if (elementIndex < Stack.Count && i < Stack.Count)
                 {
-                    GameObject currentElement = stack[i];
+                    GameObject currentElement = Stack[i];
+                    Stack.Remove(currentElement);
+                    EventIndex = elementIndex;
                     if (i == elementIndex)
                     {
                         elementEvents[i].Popped?.Invoke(currentElement);
@@ -122,14 +132,16 @@
                     {
                         elementEvents[i].ForcePopped?.Invoke(currentElement);
                     }
-                    stack.Remove(currentElement);
                 }
             }
 
-            EventIndex = elementIndex;
             if (EventIndex < 0)
             {
                 EventIndex = 0;
+            }
+            else if (EventIndex > 0)
+            {
+                elementEvents[EventIndex - 1].Restored?.Invoke(Stack[EventIndex - 1]);
             }
         }
     }

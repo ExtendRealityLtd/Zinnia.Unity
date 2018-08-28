@@ -1,23 +1,28 @@
 ﻿namespace VRTK.Core.Prefabs.Interactions.Interactors
 {
     using UnityEngine;
+    using UnityEngine.Events;
+    using System;
     using System.Collections.Generic;
     using VRTK.Core.Action;
     using VRTK.Core.Tracking.Velocity;
-    using VRTK.Core.Tracking.Collision;
+    using VRTK.Core.Prefabs.Interactions.Interactables;
 
     /// <summary>
     /// The public interface into the Interactable Prefab.
     /// </summary>
     public class InteractorFacade : MonoBehaviour
     {
+        /// <summary>
+        /// Defines the event with the <see cref="InteractableFacade"/>.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<InteractableFacade>
+        {
+        }
+
         [Header("Interactor Settings")]
 
-        /// <summary>
-        /// The parent container of the Interactor prefab.
-        /// </summary>
-        [Tooltip("The parent container of the Interactor prefab.")]
-        public GameObject interactorContainer;
         /// <summary>
         /// The <see cref="BooleanAction"/> that will initiate the Interactor grab mechanism.
         /// </summary>
@@ -34,19 +39,19 @@
         /// <summary>
         /// Emitted when a new collision occurs.
         /// </summary>
-        public CollisionNotifier.UnityEvent Touched = new CollisionNotifier.UnityEvent();
+        public UnityEvent Touched = new UnityEvent();
         /// <summary>
         /// Emitted when an existing collision ends.
         /// </summary>
-        public CollisionNotifier.UnityEvent Untouched = new CollisionNotifier.UnityEvent();
+        public UnityEvent Untouched = new UnityEvent();
         /// <summary>
         /// Emitted when a new collision occurs.
         /// </summary>
-        public CollisionNotifier.UnityEvent Grabbed = new CollisionNotifier.UnityEvent();
+        public UnityEvent Grabbed = new UnityEvent();
         /// <summary>
         /// Emitted when an existing collision ends.
         /// </summary>
-        public CollisionNotifier.UnityEvent Ungrabbed = new CollisionNotifier.UnityEvent();
+        public UnityEvent Ungrabbed = new UnityEvent();
 
         [Header("Internal Settings")]
 
@@ -69,10 +74,6 @@
         /// The currently active touched GameObject.
         /// </summary>
         public GameObject ActiveTouchedObject => touchInteractorSetup?.ActiveTouchedObject;
-        /// <summary>
-        /// The currently active grabbed GameObject.
-        /// </summary>
-        public GameObject ActiveGrabbedObject => GetActiveGrabbedObject();
 
         /// <summary>
         /// Attempts to retrieve from a given GameObject.
@@ -96,20 +97,6 @@
             }
 
             return returnFacade;
-        }
-
-        /// <summary>
-        /// Retreives the currently active grabbed GameObject.
-        /// </summary>
-        /// <returns>The currently active grabbed GameObject.</returns>
-        protected virtual GameObject GetActiveGrabbedObject()
-        {
-            if (grabAction == null || !grabAction.Value)
-            {
-                return null;
-            }
-
-            return ActiveTouchedObject;
         }
     }
 }
