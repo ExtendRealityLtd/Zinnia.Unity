@@ -29,5 +29,34 @@
                 gameObject.SetActive(state);
             }
         }
+
+        /// <summary>
+        /// Attempts to retreive the <see cref="Rigidbody"/> or if one is not found then optionally search children then search parents.
+        /// </summary>
+        /// <param name="gameObject">The reference <see cref="GameObject"/> to search on.</param>
+        /// <param name="searchAncestors">Optionally searches all ancestors in the hierarchy for a rigidbody.</param>
+        /// <param name="searchDescendants">Optionally searches all descendants in the hierarchy for a rigidbody.</param>
+        /// <returns>The found <see cref="Rigidbody"/></returns>
+        public static Rigidbody FindRigidbody(this GameObject gameObject, bool searchDescendants = true, bool searchAncestors = false)
+        {
+            if (gameObject == null)
+            {
+                return null;
+            }
+
+            Rigidbody foundRigidbody = gameObject.GetComponent<Rigidbody>();
+
+            if (foundRigidbody == null && searchDescendants)
+            {
+                foundRigidbody = gameObject.GetComponentInChildren<Rigidbody>();
+            }
+
+            if (foundRigidbody == null && searchAncestors)
+            {
+                foundRigidbody = gameObject.GetComponentInParent<Rigidbody>();
+            }
+
+            return foundRigidbody;
+        }
     }
 }
