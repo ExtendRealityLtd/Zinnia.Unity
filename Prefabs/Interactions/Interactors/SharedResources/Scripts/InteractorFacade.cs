@@ -76,6 +76,10 @@
         /// The currently active touched GameObject.
         /// </summary>
         public GameObject ActiveTouchedObject => touchInteractorSetup?.ActiveTouchedObject;
+        /// <summary>
+        /// A collection of currently grabbed GameObjects.
+        /// </summary>
+        public List<GameObject> GrabbedObjects => grabInteractorSetup?.GrabbedObjects;
 
         /// <summary>
         /// Attempts to retrieve from a given GameObject.

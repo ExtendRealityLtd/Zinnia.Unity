@@ -240,6 +240,7 @@
             {
                 facade?.Grabbed?.Invoke(interactor);
                 interactor.Grabbed?.Invoke(facade);
+                interactor.grabInteractorSetup?.grabbedObjects?.AddElement(facade?.gameObject);
             }
         }
 
@@ -254,6 +255,7 @@
             {
                 facade?.Ungrabbed?.Invoke(interactor);
                 interactor.Ungrabbed?.Invoke(facade);
+                interactor.grabInteractorSetup?.grabbedObjects?.RemoveElement(facade?.gameObject);
             }
         }
 

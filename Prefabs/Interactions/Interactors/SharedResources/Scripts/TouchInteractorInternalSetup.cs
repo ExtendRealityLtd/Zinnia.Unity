@@ -68,6 +68,11 @@
             }
         }
 
+        protected virtual void OnEnable()
+        {
+            ConfigurePublishers();
+        }
+
         /// <summary>
         /// Retreives a collection of currently touched GameObjects.
         /// </summary>
@@ -101,11 +106,6 @@
             }
 
             return currentActiveCollision.SlicedList.activeCollisions[0].collider.GetContainingTransform().gameObject;
-        }
-
-        protected virtual void OnEnable()
-        {
-            ConfigurePublishers();
         }
     }
 }

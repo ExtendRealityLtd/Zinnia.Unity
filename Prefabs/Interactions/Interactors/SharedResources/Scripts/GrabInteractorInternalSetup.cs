@@ -1,8 +1,9 @@
 ﻿namespace VRTK.Core.Prefabs.Interactions.Interactors
 {
     using UnityEngine;
+    using System.Collections.Generic;
     using VRTK.Core.Action;
-    using VRTK.Core.Tracking.Collision;
+    using VRTK.Core.Data.Collection;
     using VRTK.Core.Tracking.Collision.Active;
     using VRTK.Core.Tracking.Velocity;
 
@@ -45,7 +46,17 @@
         /// </summary>
         [Tooltip("The ActiveCollisionPublisher for checking valid stop touching collisions.")]
         public ActiveCollisionPublisher stopGrabbingPublisher;
+        /// <summary>
+        /// The <see cref="GameObjectSet"/> containing the currently grabbed objects.
+        /// </summary>
+        [Tooltip("The GameObjectSet containing the currently grabbed objects.")]
+        public GameObjectSet grabbedObjects;
         #endregion
+
+        /// <summary>
+        /// A collection of currently grabbed GameObjects.
+        /// </summary>
+        public List<GameObject> GrabbedObjects => GetGrabbedObjects();
 
         /// <summary>
         /// Configures the action used to control grabbing.
@@ -91,6 +102,23 @@
             ConfigureGrabAction();
             ConfigureVelocityTrackers();
             ConfigurePublishers();
+        }
+
+        /// <summary>
+        /// Retreives a collection of currently grabbed GameObjects.
+        /// </summary>
+        /// <returns>The currently grabbed GameObjects.</returns>
+        protected virtual List<GameObject> GetGrabbedObjects()
+        {
+            List<GameObject> returnList = new List<GameObject>();
+
+            if (grabbedObjects == null)
+            {
+                return returnList;
+            }
+
+            returnList.AddRange(grabbedObjects.Elements);
+            return returnList;
         }
     }
 }
