@@ -23,14 +23,12 @@
         /// <summary>
         /// The value to multiply the x coordinate by.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The value to multiply the x coordinate by.")]
+        [Tooltip("The value to multiply the x coordinate by."), SerializeField]
         protected float xMultiplier = 1f;
         /// <summary>
         /// The value to multiply the y coordinate by.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The value to multiply the y coordinate by.")]
+        [Tooltip("The value to multiply the y coordinate by."), SerializeField]
         protected float yMultiplier = 1f;
 
         /// <summary>

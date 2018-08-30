@@ -57,15 +57,6 @@
     public abstract class BaseAction<TSelf, TValue, TEvent> : BaseAction where TSelf : BaseAction<TSelf, TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
     {
         /// <summary>
-        /// The value of the action.
-        /// </summary>
-        public TValue Value
-        {
-            get;
-            protected set;
-        }
-
-        /// <summary>
         /// The initial value of the action.
         /// </summary>
         [Tooltip("The initial value of the action.")]
@@ -92,9 +83,17 @@
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        [Tooltip("Actions to subscribe to when this action is enabled. Allows chaining the source actions to this action.")]
-        [SerializeField]
+        [Tooltip("Actions to subscribe to when this action is enabled. Allows chaining the source actions to this action."), SerializeField]
         protected List<TSelf> sources = new List<TSelf>();
+
+        /// <summary>
+        /// The value of the action.
+        /// </summary>
+        public TValue Value
+        {
+            get;
+            protected set;
+        }
 
         /// <inheritdoc />
         public override void AddSource(BaseAction action)

@@ -1,16 +1,23 @@
 ﻿namespace VRTK.Core.Event
 {
-    using UnityEngine;
     using UnityEngine.Events;
 
     /// <summary>
     /// Emits a UnityEvent with a single payload whenever the Receive method is called.
     /// </summary>
-    /// <typeparam name="TSelf">The type of ProxyEmitter to emit.</typeparam>
     /// <typeparam name="TValue">The value for Receive,</typeparam>
     /// <typeparam name="TEvent">The event type to emit.</typeparam>
-    public abstract class SingleEventProxyEmitter<TSelf, TValue, TEvent> : MonoBehaviour where TSelf : SingleEventProxyEmitter<TSelf, TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
+    public abstract class SingleEventProxyEmitter<TValue, TEvent> : BaseEventProxyEmitter where TEvent : UnityEvent<TValue>, new()
     {
+        /// <summary>
+        /// The most recent received payload.
+        /// </summary>
+        public TValue Payload
+        {
+            get;
+            protected set;
+        }
+
         /// <summary>
         /// Is emitted when Receive is called.
         /// </summary>
@@ -22,7 +29,20 @@
         /// <param name="payload"></param>
         public virtual void Receive(TValue payload)
         {
-            Emitted?.Invoke(payload);
+            Payload = payload;
+            EmitPayload();
+        }
+
+        /// <summary>
+        /// Emits the last received payload.
+        /// </summary>
+        public virtual void EmitPayload()
+        {
+            if (!IsValid())
+            {
+                return;
+            }
+            Emitted?.Invoke(Payload);
         }
     }
 }

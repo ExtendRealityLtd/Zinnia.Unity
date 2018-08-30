@@ -9,18 +9,18 @@
     /// </summary>
     public abstract class SourceTargetProcessor : MonoBehaviour, IProcessable
     {
-        [Header("Processor Component Settings")]
-
+        #region Processor Component Settings
         /// <summary>
         /// The source <see cref="Component"/> to apply against the source within the process.
         /// </summary>
-        [Tooltip("The source Component to apply against the source within the process.")]
+        [Header("Processor Component Settings"), Tooltip("The source Component to apply against the source within the process.")]
         public Component sourceComponent;
         /// <summary>
         /// The target <see cref="Component"/>s to apply the source to within the process.
         /// </summary>
         [Tooltip("The target Components to apply the source to within the process.")]
         public List<Component> targetComponents = new List<Component>();
+        #endregion
 
         /// <summary>
         /// The <see cref="Component"/> that is currently the active target for the process.
@@ -42,7 +42,7 @@
         /// <param name="source">The new source.</param>
         public virtual void SetSource(GameObject source)
         {
-            sourceComponent = source.TryGetComponent();
+            sourceComponent = source.TryGetComponent<Component>();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@
         /// <param name="target">The target to add.</param>
         public virtual void AddTarget(GameObject target)
         {
-            Component addTarget = target.TryGetComponent();
+            Component addTarget = target.TryGetComponent<Component>();
             if (addTarget != null)
             {
                 targetComponents.Add(addTarget);
@@ -72,7 +72,7 @@
         /// <param name="target">The target to remove.</param>
         public virtual void RemoveTarget(GameObject target)
         {
-            targetComponents.Remove(target.TryGetComponent());
+            targetComponents.Remove(target.TryGetComponent<Component>());
         }
 
         /// <summary>

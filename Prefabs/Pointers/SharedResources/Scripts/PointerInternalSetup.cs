@@ -11,36 +11,35 @@
     /// </summary>
     public class PointerInternalSetup : MonoBehaviour
     {
-        [Header("Facade Settings")]
-
+        #region Facade Settings
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Tooltip("The public interface facade.")]
+        [Header("Facade Settings"), Tooltip("The public interface facade.")]
         public PointerFacade facade;
+        #endregion
 
-        [Header("Object Follow Settings")]
-
+        #region Object Follow Settings
         /// <summary>
         /// The <see cref="ObjectFollower"/> component for the Pointer.
         /// </summary>
-        [Tooltip("The ObjectFollower component for the Pointer.")]
+        [Header("Object Follow Settings"), Tooltip("The ObjectFollower component for the Pointer.")]
         public ObjectFollower objectFollow;
+        #endregion
 
-        [Header("Cast Settings")]
-
+        #region Cast Settings
         /// <summary>
         /// The <see cref="PointsCast"/> component for the Pointer.
         /// </summary>
-        [Tooltip("The PointsCast component for the Pointer.")]
+        [Header("Cast Settings"), Tooltip("The PointsCast component for the Pointer.")]
         public PointsCast caster;
+        #endregion
 
-        [Header("Action Settions")]
-
+        #region Action Settings
         /// <summary>
         /// The <see cref="BooleanAction"/> that will activate/deactivate the pointer.
         /// </summary>
-        [Tooltip("The BooleanAction that will activate/deactivate the pointer.")]
+        [Header("Action Settions"), Tooltip("The BooleanAction that will activate/deactivate the pointer.")]
         public BooleanAction activationAction;
         /// <summary>
         /// The <see cref="BooleanAction"/> that initiates the pointer selection when the action is activated.
@@ -52,6 +51,7 @@
         /// </summary>
         [Tooltip("The BooleanAction that initiates the pointer selection when the action is deactivated.")]
         public BooleanAction selectOnDeactivatedAction;
+        #endregion
 
         /// <summary>
         /// Sets up the Pointer prefab with the specified settings.
@@ -68,7 +68,7 @@
             if (facade.followTarget != null)
             {
                 objectFollow.targetComponents.Clear();
-                objectFollow.targetComponents.Add(facade.followTarget.TryGetComponent());
+                objectFollow.targetComponents.Add(facade.followTarget.TryGetComponent<Component>());
             }
 
             if (facade.selectionAction != null)

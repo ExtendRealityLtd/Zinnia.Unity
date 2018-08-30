@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using VRTK.Core.Action;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Rule;
 
     /// <summary>
@@ -24,12 +25,11 @@
             SelectOnDeactivate
         }
 
-        [Header("Pointer Settings")]
-
+        #region Pointer Settings
         /// <summary>
         /// The target for the pointer to follow around.
         /// </summary>
-        [Tooltip("The target for the pointer to follow around.")]
+        [Header("Pointer Settings"), Tooltip("The target for the pointer to follow around.")]
         public GameObject followTarget;
         /// <summary>
         /// The <see cref="BooleanAction"/> that will activate/deactivate the pointer.
@@ -51,13 +51,14 @@
         /// </summary>
         [Tooltip("Allows to optionally determine targets based on the set rules.")]
         public RuleContainer targetValidity;
+        #endregion
 
-        [Header("Internal Settings")]
-
+        #region Internal Settings
         /// <summary>
-        /// **DO NOT CHANGE** - The linked Internal Setup.
+        /// The linked Internal Setup.
         /// </summary>
-        [Tooltip("**DO NOT CHANGE** - The linked Internal Setup.")]
+        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting]
         public PointerInternalSetup internalSetup;
+        #endregion
     }
 }

@@ -36,11 +36,11 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             subject.Destroyed.AddListener(clearedMock.Listen);
 
             GameObject publisherObject = new GameObject();
-            ActiveCollisionPublisher publisher = publisherObject.AddComponent<ActiveCollisionPublisher>();
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.sourceContainer = publisherObject;
             publisherObject.transform.position = Vector3.one;
 
-            GameObject collisionNotifierContainer;
+            GameObject collisionNotifierContainer = new GameObject(); ;
             CollisionNotifier.EventData collisionNotifierEventData = CollisionNotifierHelper.GetEventData(out collisionNotifierContainer);
             collisionNotifierContainer.transform.position = Vector3.one * 2f;
             collisionNotifierContainer.transform.rotation = Quaternion.Euler(Vector3.forward * 90f);

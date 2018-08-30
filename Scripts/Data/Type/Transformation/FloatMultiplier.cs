@@ -23,8 +23,7 @@
         /// <summary>
         /// The value to multiply the input by.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The value to multiply the input by.")]
+        [Tooltip("The value to multiply the input by."), SerializeField]
         protected float multiplier;
 
         /// <summary>

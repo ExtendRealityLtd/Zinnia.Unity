@@ -2,31 +2,32 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using System.Linq;
     using VRTK.Core.Extension;
     using VRTK.Core.Tracking.CameraRig;
     using VRTK.Core.Tracking.Velocity;
-    using System.Linq;
+    using VRTK.Core.Data.Attribute;
 
     /// <summary>
     /// The public interface into the Tracked Alias Prefab.
     /// </summary>
     public class TrackedAliasFacade : MonoBehaviour
     {
-        [Header("Tracked Alias Settings")]
-
+        #region Tracked Alias Settings
         /// <summary>
         /// The associated CameraRigs to track.
         /// </summary>
-        [Tooltip("The associated CameraRigs to track.")]
+        [Header("Tracked Alias Settings"), Tooltip("The associated CameraRigs to track.")]
         public List<BaseAliasAssociationCollection> cameraRigs = new List<BaseAliasAssociationCollection>();
+        #endregion
 
-        [Header("Internal Settings")]
-
+        #region Internal Settings
         /// <summary>
-        /// **DO NOT CHANGE** - The linked Internal Setup.
+        /// The linked Internal Setup.
         /// </summary>
-        [Tooltip("**DO NOT CHANGE** - The linked Internal Setup.")]
+        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting]
         public TrackedAliasInternalSetup internalSetup;
+        #endregion
 
         /// <summary>
         /// Retrieves the active PlayArea that the TrackedAlias is using.
@@ -64,11 +65,11 @@
         /// <summary>
         /// Retreives all of the linked CameraRig PlayAreas.
         /// </summary>
-        public List<Component> PlayAreas => cameraRigs.Select(rig => rig.PlayArea).Where(value => value != null).Select(GameObjectExtensions.TryGetComponent).ToList();
+        public List<Component> PlayAreas => cameraRigs.Select(rig => rig.PlayArea).Where(value => value != null).Select(value => GameObjectExtensions.TryGetComponent<Component>(value)).ToList();
         /// <summary>
         /// Retreives all of the linked CameraRig Headsets.
         /// </summary>
-        public List<Component> Headsets => cameraRigs.Select(rig => rig.Headset).Where(value => value != null).Select(GameObjectExtensions.TryGetComponent).ToList();
+        public List<Component> Headsets => cameraRigs.Select(rig => rig.Headset).Where(value => value != null).Select(value => GameObjectExtensions.TryGetComponent<Component>(value)).ToList();
         /// <summary>
         /// Retreives all of the linked CameraRig Headset Cameras.
         /// </summary>
@@ -80,11 +81,11 @@
         /// <summary>
         /// Retreives all of the linked CameraRig Left Controllers.
         /// </summary>
-        public List<Component> LeftControllers => cameraRigs.Select(rig => rig.LeftController).Where(value => value != null).Select(GameObjectExtensions.TryGetComponent).ToList();
+        public List<Component> LeftControllers => cameraRigs.Select(rig => rig.LeftController).Where(value => value != null).Select(value => GameObjectExtensions.TryGetComponent<Component>(value)).ToList();
         /// <summary>
         /// Retreives all of the linked CameraRig Right Controllers.
         /// </summary>
-        public List<Component> RightControllers => cameraRigs.Select(rig => rig.RightController).Where(value => value != null).Select(GameObjectExtensions.TryGetComponent).ToList();
+        public List<Component> RightControllers => cameraRigs.Select(rig => rig.RightController).Where(value => value != null).Select(value => GameObjectExtensions.TryGetComponent<Component>(value)).ToList();
         /// <summary>
         /// Retreives all of the linked CameraRig Left Controller Velocity Trackers.
         /// </summary>

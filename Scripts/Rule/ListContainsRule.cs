@@ -15,7 +15,7 @@
         public List<Object> objects = new List<Object>();
 
         /// <inheritdoc />
-        public bool Accepts(object target)
+        public virtual bool Accepts(object target)
         {
             Object targetObject = target as Object;
             return targetObject != null && objects.Contains(targetObject);

@@ -45,24 +45,21 @@
         /// <summary>
         /// The console scrollable <see cref="ScrollRect"/> area.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The console scrollable ScrollRect area.")]
+        [Tooltip("The console scrollable ScrollRect area."), SerializeField]
         protected ScrollRect scrollWindow;
         /// <summary>
         /// The output content <see cref="RectTransform"/>.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The output content RectTransform.")]
+        [Tooltip("The output content RectTransform."), SerializeField]
         protected RectTransform consoleRect;
         /// <summary>
         /// The <see cref="Text "/> element to output the console to.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The Text element to output the console to.")]
+        [Tooltip("The Text element to output the console to."), SerializeField]
         protected Text consoleOutput;
 
-        protected Dictionary<LogType, Color> logTypeColors;
         protected const string NEWLINE = "\n";
+        protected Dictionary<LogType, Color> logTypeColors;
         protected int lineBuffer = 50;
         protected int currentBuffer;
         protected string lastMessage;

@@ -37,7 +37,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             subject.Cleared.AddListener(clearedMock.Listen);
 
             GameObject publisherObject = new GameObject();
-            ActiveCollisionPublisher publisher = publisherObject.AddComponent<ActiveCollisionPublisher>();
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.sourceContainer = publisherObject;
 
             Assert.IsFalse(consumedMock.Received);
@@ -65,8 +65,8 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             subject.Cleared.AddListener(clearedMock.Listen);
 
             GameObject publisherObject = new GameObject();
-            ActiveCollisionPublisher publisher = publisherObject.AddComponent<ActiveCollisionPublisher>();
-            publisher.sourceContainer = publisherObject;
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
+            publisher.PublisherContainer = publisherObject;
 
             publisherObject.AddComponent<RuleStub>();
             NegationRule negationRule = containingObject.AddComponent<NegationRule>();
@@ -106,7 +106,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             subject.Cleared.AddListener(clearedMock.Listen);
 
             GameObject publisherObject = new GameObject();
-            ActiveCollisionPublisher publisher = publisherObject.AddComponent<ActiveCollisionPublisher>();
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.sourceContainer = publisherObject;
 
             subject.gameObject.SetActive(false);
@@ -130,7 +130,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             subject.Cleared.AddListener(clearedMock.Listen);
 
             GameObject publisherObject = new GameObject();
-            ActiveCollisionPublisher publisher = publisherObject.AddComponent<ActiveCollisionPublisher>();
+            ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.sourceContainer = publisherObject;
 
             subject.enabled = false;

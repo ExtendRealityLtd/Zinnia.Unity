@@ -78,8 +78,7 @@
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
         /// </summary>
-        [UnityFlags]
-        [Tooltip("The Transform properties to apply the transformations on.")]
+        [Tooltip("The Transform properties to apply the transformations on."), UnityFlags]
         public TransformProperties applyTransformations = (TransformProperties)(-1);
         /// <summary>
         /// The amount of time to take when transitioning from the current <see cref="Transform"/> state to the modified <see cref="Transform"/> state.

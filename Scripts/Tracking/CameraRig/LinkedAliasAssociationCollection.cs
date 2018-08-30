@@ -8,65 +8,57 @@
     /// </summary>
     public class LinkedAliasAssociationCollection : BaseAliasAssociationCollection
     {
-        [Header("PlayArea Settings")]
-
+        #region PlayArea Settings
         /// <summary>
         /// The associated PlayArea.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The associated PlayArea.")]
+        [Header("PlayArea Settings"), Tooltip("The associated PlayArea."), SerializeField]
         protected GameObject playArea;
+        #endregion
 
-        [Header("Headset Settings")]
-
+        #region Headset Settings
         /// <summary>
         /// The associated Headset.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The associated Headset.")]
+        [Header("Headset Settings"), Tooltip("The associated Headset."), SerializeField]
         protected GameObject headset;
         /// <summary>
         /// The associated Headset Camera.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The associated Headset Camera.")]
+        [Tooltip("The associated Headset Camera."), SerializeField]
         protected Camera headsetCamera;
         /// <summary>
         /// The associated Headset Velocity Tracker.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The associated Headset Velocity Tracker.")]
+        [Tooltip("The associated Headset Velocity Tracker."), SerializeField]
         protected VelocityTracker headsetVelocity;
+        #endregion
 
-        [Header("Left Controller Settings")]
-
+        #region Left Controller Settings
         /// <summary>
         /// The associated Left Controller.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The associated Left Controller.")]
+        [Header("Left Controller Settings"), Tooltip("The associated Left Controller."), SerializeField]
         protected GameObject leftController;
         /// <summary>
         /// The associated Left Controller Velocity Tracker.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The associated Left Controller Velocity Tracker.")]
+        [Tooltip("The associated Left Controller Velocity Tracker."), SerializeField]
         protected VelocityTracker leftControllerVelocity;
+        #endregion
 
-        [Header("Right Controller Settings")]
-
+        #region Right Controller Settings
         /// <summary>
         /// The associated Right Controller.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The associated Right Controller.")]
+        [Header("Right Controller Settings"), Tooltip("The associated Right Controller."), SerializeField]
         protected GameObject rightController;
         /// <summary>
         /// The associated Right Controller Velocity Tracker.
         /// </summary>
-        [SerializeField]
-        [Tooltip("The associated Right Controller Velocity Tracker.")]
+        [Tooltip("The associated Right Controller Velocity Tracker."), SerializeField]
         protected VelocityTracker rightControllerVelocity;
+        #endregion
 
         /// <inheritdoc />
         protected override GameObject GetPlayArea()

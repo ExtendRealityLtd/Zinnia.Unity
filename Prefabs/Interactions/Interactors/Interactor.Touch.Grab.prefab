@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 4351035135735922}
   - component: {fileID: 114018472156867038}
   - component: {fileID: 114317349907672854}
+  - component: {fileID: 114811110059610386}
   m_Layer: 0
   m_Name: Grabbing
   m_TagString: Untagged
@@ -348,6 +349,9 @@ MonoBehaviour:
   grabAction: {fileID: 114317349907672854}
   attachPoint: {fileID: 1637717827307990}
   velocityTracker: {fileID: 114286894336646836}
+  startGrabbingPublisher: {fileID: 114649944185369056}
+  stopGrabbingPublisher: {fileID: 114577655653771234}
+  grabbedObjects: {fileID: 114811110059610386}
 --- !u!114 &114112214267209262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -392,17 +396,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114649944185369056}
-        m_MethodName: SetActiveCollisions
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114577655653771234}
         m_MethodName: SetActiveCollisions
         m_Mode: 0
         m_Arguments:
@@ -543,29 +536,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa8f36bc7d05684daf439b863eeb4da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactorContainer: {fileID: 0}
   grabAction: {fileID: 0}
   velocityTracker: {fileID: 0}
   Touched:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Collision.CollisionNotifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Prefabs.Interactions.Interactors.InteractorFacade+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Untouched:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Collision.CollisionNotifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Prefabs.Interactions.Interactors.InteractorFacade+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Grabbed:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Collision.CollisionNotifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Prefabs.Interactions.Interactors.InteractorFacade+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Ungrabbed:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Collision.CollisionNotifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Prefabs.Interactions.Interactors.InteractorFacade+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   touchInteractorSetup: {fileID: 114112214267209262}
   grabInteractorSetup: {fileID: 114018472156867038}
 --- !u!114 &114501833288299414
@@ -601,23 +593,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6fd5befed6fbe4bb0fb3dd748133aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceContainer: {fileID: 1637717827307990}
+  payload:
+    sourceContainer: {fileID: 0}
   Published:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114018472156867038}
-        m_MethodName: Ungrab
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: VRTK.Core.Tracking.Collision.CollisionNotifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_Calls: []
+    m_TypeName: VRTK.Core.Tracking.Collision.Active.ActiveCollisionPublisher+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114649944185369056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -629,12 +611,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6fd5befed6fbe4bb0fb3dd748133aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceContainer: {fileID: 1637717827307990}
+  payload:
+    sourceContainer: {fileID: 0}
   Published:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114018472156867038}
-        m_MethodName: Grab
+      - m_Target: {fileID: 114577655653771234}
+        m_MethodName: SetActiveCollisions
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -644,8 +627,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Tracking.Collision.CollisionNotifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Collision.Active.ActiveCollisionPublisher+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114690075658398980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -668,12 +651,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6fd5befed6fbe4bb0fb3dd748133aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceContainer: {fileID: 0}
+  payload:
+    sourceContainer: {fileID: 0}
   Published:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Collision.CollisionNotifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Collision.Active.ActiveCollisionPublisher+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114788826510361200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -686,23 +670,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emittedTypes: -1
-  forwardingSourceValidity: {fileID: 0}
+  forwardingSourceValidity:
+    field: {fileID: 0}
   CollisionStarted:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114829534263718348}
         m_MethodName: Add
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114112214267209262}
-        m_MethodName: NotifyTouch
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -744,18 +718,38 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114112214267209262}
-        m_MethodName: NotifyUntouch
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: VRTK.Core.Tracking.Collision.CollisionNotifier+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &114811110059610386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1127206129866070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e38906e03882d44bea5c07f798a277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ElementFound:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  ElementNotFound:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  BecameEmpty:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  BecamePopulated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114829534263718348
 MonoBehaviour:
@@ -832,9 +826,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6fd5befed6fbe4bb0fb3dd748133aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceContainer: {fileID: 0}
+  payload:
+    sourceContainer: {fileID: 0}
   Published:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Tracking.Collision.CollisionNotifier+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Tracking.Collision.Active.ActiveCollisionPublisher+UnityEvent,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

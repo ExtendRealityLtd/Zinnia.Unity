@@ -30,7 +30,7 @@
         /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
-            cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.transform.FindRigidbody() : cachedTargetRigidbody);
+            cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.TryGetComponent<Rigidbody>(true) : cachedTargetRigidbody);
             cachedTarget = target;
 
             Vector3 positionDelta = source.transform.position - (offset != null ? offset.transform.position : target.transform.position);

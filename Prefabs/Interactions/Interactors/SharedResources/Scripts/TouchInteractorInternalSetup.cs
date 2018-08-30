@@ -12,20 +12,19 @@
     /// </summary>
     public class TouchInteractorInternalSetup : MonoBehaviour
     {
-        [Header("Facade Settings")]
-
+        #region Facade Settings
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Tooltip("The public interface facade.")]
+        [Header("Facade Settings"), Tooltip("The public interface facade.")]
         public InteractorFacade facade;
+        #endregion
 
-        [Header("Touch Settings")]
-
+        #region Touch Settings
         /// <summary>
         /// The <see cref="ActiveCollisionsContainer"/> that holds all current collisions.
         /// </summary>
-        [Tooltip("The ActiveCollisionsContainer that holds all current collisions.")]
+        [Header("Touch Settings"), Tooltip("The ActiveCollisionsContainer that holds all current collisions.")]
         public ActiveCollisionsContainer activeCollisionsContainer;
         /// <summary>
         /// The <see cref="Slicer"/> that holds the current active collision.
@@ -42,6 +41,7 @@
         /// </summary>
         [Tooltip("The ActiveCollisionPublisher for checking valid stop touching collisions.")]
         public ActiveCollisionPublisher stopTouchingPublisher;
+        #endregion
 
         /// <summary>
         /// A collection of currently touched GameObjects.
@@ -53,49 +53,24 @@
         public GameObject ActiveTouchedObject => GetActiveTouchedObject();
 
         /// <summary>
-        /// Sets up the Interactor prefab with the specified settings.
+        /// Configures the <see cref="ActiveCollisionPublisher"/> components for touching and untouching.
         /// </summary>
-        public virtual void Setup()
+        public virtual void ConfigurePublishers()
         {
-            if (InvalidParameters())
+            if (startTouchingPublisher != null)
             {
-                return;
+                startTouchingPublisher.payload.sourceContainer = facade?.gameObject;
             }
 
-            startTouchingPublisher.sourceContainer = facade.interactorContainer;
-            stopTouchingPublisher.sourceContainer = facade.interactorContainer;
-        }
-
-        /// <summary>
-        /// Clears all of the settings from the Interactor prefab.
-        /// </summary>
-        public virtual void Clear()
-        {
-            if (InvalidParameters())
+            if (stopTouchingPublisher != null)
             {
-                return;
+                stopTouchingPublisher.payload.sourceContainer = facade?.gameObject;
             }
-
-            startTouchingPublisher.sourceContainer = null;
-            stopTouchingPublisher.sourceContainer = null;
         }
 
-        /// <summary>
-        /// Notifies that the Interactor is touching an object.
-        /// </summary>
-        /// <param name="data">The collision data.</param>
-        public virtual void NotifyTouch(CollisionNotifier.EventData data)
+        protected virtual void OnEnable()
         {
-            facade?.Touched?.Invoke(data);
-        }
-
-        /// <summary>
-        /// Notifies that the Interactor is no longer touching the object.
-        /// </summary>
-        /// <param name="data">The collision data.</param>
-        public virtual void NotifyUntouch(CollisionNotifier.EventData data)
-        {
-            facade?.Untouched?.Invoke(data);
+            ConfigurePublishers();
         }
 
         /// <summary>
@@ -131,25 +106,6 @@
             }
 
             return currentActiveCollision.SlicedList.activeCollisions[0].collider.GetContainingTransform().gameObject;
-        }
-
-        protected virtual void OnEnable()
-        {
-            Setup();
-        }
-
-        protected virtual void OnDisable()
-        {
-            Clear();
-        }
-
-        /// <summary>
-        /// Determines if the setup parameters are invalid.
-        /// </summary>
-        /// <returns><see langword="true"/> if the parameters are invalid.</returns>
-        protected virtual bool InvalidParameters()
-        {
-            return (activeCollisionsContainer == null || currentActiveCollision == null || startTouchingPublisher == null || stopTouchingPublisher == null || facade == null || facade.interactorContainer == null || facade.grabAction == null || facade.velocityTracker == null);
         }
     }
 }
