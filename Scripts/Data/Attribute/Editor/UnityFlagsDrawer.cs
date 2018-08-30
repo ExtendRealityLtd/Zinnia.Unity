@@ -10,7 +10,11 @@
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;
-            property.intValue = EditorGUI.MaskField(position, label, property.intValue, property.enumNames);
+
+            using (new EditorGUI.PropertyScope(position, GUIContent.none, property))
+            {
+                property.intValue = EditorGUI.MaskField(position, label, property.intValue, property.enumNames);
+            }
         }
     }
 }
