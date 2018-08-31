@@ -40,8 +40,10 @@
         /// </summary>
         public UnityEvent OrientationResetCancelled = new UnityEvent();
 
-        protected Quaternion initialRotation;
-        protected Quaternion releaseRotation;
+        protected Quaternion targetInitialRotation;
+        protected Quaternion targetReleaseRotation;
+        protected Quaternion pivotInitialRotation;
+        protected Quaternion pivotReleaseRotation;
         protected Coroutine resetOrientationRoutine;
 
         /// <summary>
@@ -105,6 +107,7 @@
         /// </summary>
         public virtual void ClearPivot()
         {
+            pivotReleaseRotation = pivot.transform.rotation;
             pivot = null;
         }
 
@@ -119,7 +122,8 @@
                 return;
             }
 
-            initialRotation = target.transform.localRotation;
+            targetInitialRotation = target.transform.rotation;
+            pivotInitialRotation = pivot.transform.rotation;
             if (cancelResetOrientation)
             {
                 CancelResetOrientation();
@@ -135,6 +139,8 @@
             {
                 return;
             }
+
+            pivotReleaseRotation = (pivot != null ? pivot.transform.rotation : pivotReleaseRotation);
 
             if (resetOrientationSpeed < float.MaxValue && resetOrientationSpeed > 0f)
             {
@@ -169,7 +175,7 @@
         /// </summary>
         protected virtual void SetOrientationToSaved()
         {
-            target.transform.localRotation = initialRotation;
+            target.transform.rotation = GetActualInitialRotation();
             OrientationReset?.Invoke();
         }
 
@@ -188,16 +194,25 @@
         protected virtual IEnumerator ResetOrientationRoutine()
         {
             float elapsedTime = 0f;
-            releaseRotation = target.transform.localRotation;
+            targetReleaseRotation = target.transform.rotation;
 
             while (elapsedTime < resetOrientationSpeed)
             {
-                target.transform.localRotation = Quaternion.Lerp(releaseRotation, initialRotation, (elapsedTime / resetOrientationSpeed));
+                target.transform.rotation = Quaternion.Lerp(targetReleaseRotation, GetActualInitialRotation(), (elapsedTime / resetOrientationSpeed));
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
             SetOrientationToSaved();
+        }
+
+        /// <summary>
+        /// Gets the actial initial rotation of the target based on any changes to the pivot rotation.
+        /// </summary>
+        /// <returns>The actual initial rotation.</returns>
+        protected virtual Quaternion GetActualInitialRotation()
+        {
+            return targetInitialRotation * (pivotReleaseRotation * Quaternion.Inverse(pivotInitialRotation));
         }
     }
 }
