@@ -2933,6 +2933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa137d9d2e1abe54d9e5d08dba007194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  container: {fileID: 1918950024667638}
   publisherValidity:
     field: {fileID: 114769929145129356}
   Consumed:
@@ -3388,6 +3389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa137d9d2e1abe54d9e5d08dba007194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  container: {fileID: 1918950024667638}
   publisherValidity:
     field: {fileID: 114624861010582220}
   Consumed:
@@ -4132,6 +4134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa137d9d2e1abe54d9e5d08dba007194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  container: {fileID: 1918950024667638}
   publisherValidity:
     field: {fileID: 114954367846693230}
   Consumed:
@@ -4403,6 +4406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa137d9d2e1abe54d9e5d08dba007194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  container: {fileID: 1918950024667638}
   publisherValidity:
     field: {fileID: 114074465155471952}
   Consumed:

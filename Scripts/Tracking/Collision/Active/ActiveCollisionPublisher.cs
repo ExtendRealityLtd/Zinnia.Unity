@@ -104,9 +104,13 @@
             payload.PublisherContainer = gameObject;
             foreach (CollisionNotifier.EventData currentCollision in payload.ActiveCollisions)
             {
-                foreach (ActiveCollisionConsumer consumer in GetConsumers(currentCollision))
+                Transform reference = currentCollision.collider.GetContainingTransform();
+                foreach (ActiveCollisionConsumer consumer in GetConsumers(reference))
                 {
-                    consumer.Consume(payload, currentCollision);
+                    if (consumer.container == null || consumer.container == reference.gameObject)
+                    {
+                        consumer.Consume(payload, currentCollision);
+                    }
                 }
             }
             Published?.Invoke(payload);
@@ -115,12 +119,10 @@
         /// <summary>
         /// Gets a valid <see cref="ActiveCollisionConsumer"/> collection.
         /// </summary>
-        /// <param name="data">The data to obtain the collection from.</param>
+        /// <param name="reference">The reference to start searching for <see cref="ActiveCollisionConsumer"/> components in.</param>
         /// <returns>The obtained collection.</returns>
-        protected virtual IEnumerable<ActiveCollisionConsumer> GetConsumers(CollisionNotifier.EventData data)
+        protected virtual IEnumerable<ActiveCollisionConsumer> GetConsumers(Transform reference)
         {
-            Transform reference = data.collider.GetContainingTransform();
-
             if (transform.IsChildOf(reference))
             {
                 return Enumerable.Empty<ActiveCollisionConsumer>();
