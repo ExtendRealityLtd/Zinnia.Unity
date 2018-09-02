@@ -51,7 +51,7 @@
         /// </summary>
         public virtual void Process()
         {
-            if (!isActiveAndEnabled || target == null || lookAt == null || pivot == null)
+            if (!isActiveAndEnabled)
             {
                 return;
             }
@@ -107,7 +107,7 @@
         /// </summary>
         public virtual void ClearPivot()
         {
-            pivotReleaseRotation = pivot.transform.rotation;
+            pivotReleaseRotation = (pivot != null ? pivot.transform.rotation : Quaternion.identity);
             pivot = null;
         }
 
@@ -122,8 +122,8 @@
                 return;
             }
 
-            targetInitialRotation = target.transform.rotation;
-            pivotInitialRotation = pivot.transform.rotation;
+            targetInitialRotation = (target != null ? target.transform.rotation : Quaternion.identity);
+            pivotInitialRotation = (pivot != null ? pivot.transform.rotation : Quaternion.identity);
             if (cancelResetOrientation)
             {
                 CancelResetOrientation();
@@ -175,6 +175,11 @@
         /// </summary>
         protected virtual void SetOrientationToSaved()
         {
+            if (target == null)
+            {
+                return;
+            }
+
             target.transform.rotation = GetActualInitialRotation();
             OrientationReset?.Invoke();
         }
@@ -184,6 +189,11 @@
         /// </summary>
         protected virtual void SetTargetRotation()
         {
+            if (target == null || lookAt == null || pivot == null)
+            {
+                return;
+            }
+
             target.transform.rotation = Quaternion.LookRotation(lookAt.transform.position - pivot.transform.position, lookAt.transform.forward);
         }
 
@@ -193,6 +203,11 @@
         /// <returns>The enumerator.</returns>
         protected virtual IEnumerator ResetOrientationRoutine()
         {
+            if (target == null)
+            {
+                yield break;
+            }
+
             float elapsedTime = 0f;
             targetReleaseRotation = target.transform.rotation;
 
