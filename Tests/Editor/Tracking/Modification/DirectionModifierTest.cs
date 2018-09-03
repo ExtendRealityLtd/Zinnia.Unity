@@ -26,7 +26,7 @@ namespace Test.VRTK.Core.Tracking.Modification
         }
 
         [Test]
-        public void Process()
+        public void ProcessWithoutLookAtZRotation()
         {
             GameObject target = new GameObject();
             GameObject lookAt = new GameObject();
@@ -35,6 +35,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.target = target;
             subject.lookAt = lookAt;
             subject.pivot = pivot;
+            subject.preventLookAtZRotation = false;
 
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;
@@ -44,6 +45,32 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.Process();
 
             Assert.AreEqual(new Quaternion(0f, 0.6f, 0.8f, 0f).ToString(), target.transform.rotation.ToString());
+
+            Object.DestroyImmediate(target);
+            Object.DestroyImmediate(lookAt);
+            Object.DestroyImmediate(pivot);
+        }
+
+        [Test]
+        public void ProcessWithLookAtZRotation()
+        {
+            GameObject target = new GameObject();
+            GameObject lookAt = new GameObject();
+            GameObject pivot = new GameObject();
+
+            subject.target = target;
+            subject.lookAt = lookAt;
+            subject.pivot = pivot;
+            subject.preventLookAtZRotation = true;
+
+            lookAt.transform.position = Vector3.up * 2f;
+            pivot.transform.position = Vector3.back * 0.5f;
+
+            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+
+            subject.Process();
+
+            Assert.AreEqual(new Quaternion(-0.6f, 0f, 0f, 0.8f).ToString(), target.transform.rotation.ToString());
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(lookAt);
@@ -158,6 +185,7 @@ namespace Test.VRTK.Core.Tracking.Modification
             subject.lookAt = lookAt;
             subject.pivot = pivot;
             subject.resetOrientationSpeed = 0f;
+            subject.preventLookAtZRotation = false;
 
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;

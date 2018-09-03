@@ -30,6 +30,11 @@
         /// </summary>
         [Tooltip("The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.")]
         public float resetOrientationSpeed = 0.1f;
+        /// <summary>
+        /// Prevent z-axis rotation coming from the <see cref="lookAt"/> target.
+        /// </summary>
+        [Tooltip("Prevent z-axis rotation coming from the lookAt target.")]
+        public bool preventLookAtZRotation = true;
 
         /// <summary>
         /// Emitted when the orientation is reset.
@@ -56,7 +61,14 @@
                 return;
             }
 
-            SetTargetRotation();
+            if (preventLookAtZRotation)
+            {
+                SetTargetRotationWithZLocking();
+            }
+            else
+            {
+                SetTargetRotation();
+            }
         }
 
         /// <summary>
@@ -195,6 +207,42 @@
             }
 
             target.transform.rotation = Quaternion.LookRotation(lookAt.transform.position - pivot.transform.position, lookAt.transform.forward);
+        }
+
+        /// <summary>
+        /// Sets the target rotation to look at the specific point in space whilst applying z locking on the look at target.
+        /// </summary>
+        protected virtual void SetTargetRotationWithZLocking()
+        {
+            if (target == null || lookAt == null || pivot == null)
+            {
+                return;
+            }
+
+            Vector3 normalizedForward = (lookAt.transform.position - pivot.transform.position).normalized;
+            Quaternion rightLocked = Quaternion.LookRotation(normalizedForward, Vector3.Cross(-pivot.transform.right, normalizedForward).normalized);
+            Quaternion rightLockedDelta = Quaternion.Inverse(target.transform.rotation) * rightLocked;
+            Quaternion upLocked = Quaternion.LookRotation(normalizedForward, pivot.transform.forward);
+            Quaternion upLockedDelta = Quaternion.Inverse(target.transform.rotation) * upLocked;
+
+            target.transform.rotation = (CalculateLockedAngle(upLockedDelta) < CalculateLockedAngle(rightLockedDelta) ? upLocked : rightLocked);
+        }
+
+        /// <summary>
+        /// Calculates the locked angle.
+        /// </summary>
+        /// <param name="lockedDelta">The rotation delta to calculate the angle on.</param>
+        /// <returns>The calculated angle.</returns>
+        protected virtual float CalculateLockedAngle(Quaternion lockedDelta)
+        {
+            float lockedAngle;
+            Vector3 lockedAxis;
+            lockedDelta.ToAngleAxis(out lockedAngle, out lockedAxis);
+            if (lockedAngle > 180f)
+            {
+                lockedAngle -= 360f;
+            }
+            return Mathf.Abs(lockedAngle);
         }
 
         /// <summary>
