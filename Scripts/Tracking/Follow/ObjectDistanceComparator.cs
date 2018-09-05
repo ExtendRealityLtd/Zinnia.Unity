@@ -8,6 +8,9 @@
     /// <summary>
     /// Compares the distance between two GameObjects and emits an event when a given threshold is exceeded or falls within it.
     /// </summary>
+    /// <remarks>
+    /// If the <see cref="source"/> and the <see cref="target"/> are the same <see cref="GameObject"/> then the initial position of the <see cref="target"/> is used as the <see cref="source"/> position.
+    /// </remarks>
     public class ObjectDistanceComparator : MonoBehaviour, IProcessable
     {
         /// <summary>
@@ -62,6 +65,7 @@
         }
 
         protected bool previousState = false;
+        protected Vector3 sourcePosition;
 
         /// <summary>
         /// Checks to see if the distance between the source and target exceed the threshold.
@@ -73,7 +77,7 @@
                 return;
             }
 
-            Distance = Vector3.Distance(source.transform.position, target.transform.position);
+            Distance = Vector3.Distance(GetSourcePosition(), target.transform.position);
             Exceeding = (Distance >= distanceThreshold);
             if (previousState != Exceeding)
             {
@@ -97,6 +101,7 @@
         public virtual void SetSource(GameObject source)
         {
             this.source = source;
+            SavePosition();
         }
 
         /// <summary>
@@ -108,12 +113,27 @@
         }
 
         /// <summary>
+        /// Attempts to save the current <see cref="target"/> position as the initial position if the <see cref="source"/> and the <see cref="target"/> are the same <see cref="GameObject"/>.
+        /// </summary>
+        public virtual void SavePosition()
+        {
+            if (source == null || source != target)
+            {
+                return;
+            }
+
+            sourcePosition = target.transform.position;
+            previousState = false;
+        }
+
+        /// <summary>
         /// Sets the <see cref="target"/> parameter.
         /// </summary>
         /// <param name="target">The new target value.</param>
         public virtual void SetTarget(GameObject target)
         {
             this.target = target;
+            SavePosition();
         }
 
         /// <summary>
@@ -122,6 +142,25 @@
         public virtual void ClearTarget()
         {
             target = null;
+        }
+
+        protected virtual void OnEnable()
+        {
+            SavePosition();
+        }
+
+        /// <summary>
+        /// Gets the actual position for the <see cref="source"/> based on whether it's a different <see cref="GameObject"/> or whether it is set up to use the initial position of the <see cref="target"/>.
+        /// </summary>
+        /// <returns>The appropriate position.</returns>
+        protected virtual Vector3 GetSourcePosition()
+        {
+            if (source == null)
+            {
+                return Vector3.zero;
+            }
+
+            return (source == target ? sourcePosition : source.transform.position);
         }
     }
 }
