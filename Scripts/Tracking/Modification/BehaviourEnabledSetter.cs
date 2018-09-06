@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Utility
+﻿namespace VRTK.Core.Tracking.Modification
 {
     using System.Collections.Generic;
     using System.Linq;

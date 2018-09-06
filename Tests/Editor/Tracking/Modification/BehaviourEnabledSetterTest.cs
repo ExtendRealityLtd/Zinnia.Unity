@@ -1,6 +1,6 @@
-﻿using VRTK.Core.Utility;
+﻿using VRTK.Core.Tracking.Modification;
 
-namespace Test.VRTK.Core.Utility
+namespace Test.VRTK.Core.Tracking.Modification
 {
     using NUnit.Framework;
     using UnityEngine;
