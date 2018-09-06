@@ -1,36 +1,13 @@
 ﻿namespace VRTK.Core.Tracking.Collision.Active.Operation
 {
     using UnityEngine;
-    using UnityEngine.Events;
-    using System;
+    using VRTK.Core.Event;
 
     /// <summary>
     /// Extracts the source container from a given <see cref="ActiveCollisionPublisher.PayloadData"/>.
     /// </summary>
-    public class PublisherContainerExtractor : MonoBehaviour
+    public class PublisherContainerExtractor : BaseGameObjectEmitter
     {
-        /// <summary>
-        /// Defines the event with the source container <see cref="GameObject"/>.
-        /// </summary>
-        [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
-        {
-        }
-
-        /// <summary>
-        /// Emitted when the source container extracted from the publisher.
-        /// </summary>
-        public UnityEvent Extracted = new UnityEvent();
-
-        /// <summary>
-        /// The currently extracted source container.
-        /// </summary>
-        public GameObject SourceContainer
-        {
-            get;
-            protected set;
-        }
-
         /// <summary>
         /// Extracts the source container from the given publisher payload data.
         /// </summary>
@@ -38,15 +15,14 @@
         /// <returns>The source container within the publisher.</returns>
         public virtual GameObject Extract(ActiveCollisionPublisher.PayloadData publisher)
         {
-            if (!isActiveAndEnabled || publisher == null || publisher.sourceContainer == null)
+            if (publisher == null || publisher.sourceContainer == null)
             {
-                SourceContainer = null;
+                Result = null;
                 return null;
             }
 
-            SourceContainer = publisher.sourceContainer;
-            Extracted?.Invoke(SourceContainer);
-            return SourceContainer;
+            Result = publisher.sourceContainer;
+            return base.Extract();
         }
 
         /// <summary>

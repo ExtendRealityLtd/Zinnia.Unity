@@ -36,12 +36,12 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             CollisionNotifier.EventData notifier = new CollisionNotifier.EventData();
             notifier.forwardSource = forwardSource.GetComponent<Component>();
 
-            Assert.IsNull(subject.ForwardSourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             subject.Extract(notifier);
 
-            Assert.AreEqual(forwardSource, subject.ForwardSourceContainer);
+            Assert.AreEqual(forwardSource, subject.Result);
             Assert.IsTrue(extractedMock.Received);
 
             Object.DestroyImmediate(forwardSource);
@@ -57,13 +57,13 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             CollisionNotifier.EventData notifier = new CollisionNotifier.EventData();
             notifier.forwardSource = forwardSource.GetComponent<Component>();
 
-            Assert.IsNull(subject.ForwardSourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             subject.gameObject.SetActive(false);
             subject.Extract(notifier);
 
-            Assert.IsNull(subject.ForwardSourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             Object.DestroyImmediate(forwardSource);
@@ -79,13 +79,13 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             CollisionNotifier.EventData notifier = new CollisionNotifier.EventData();
             notifier.forwardSource = forwardSource.GetComponent<Component>();
 
-            Assert.IsNull(subject.ForwardSourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             subject.enabled = false;
             subject.Extract(notifier);
 
-            Assert.IsNull(subject.ForwardSourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             Object.DestroyImmediate(forwardSource);
@@ -100,12 +100,12 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             GameObject forwardSource = new GameObject();
             CollisionNotifier.EventData notifier = null;
 
-            Assert.IsNull(subject.ForwardSourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             subject.Extract(notifier);
 
-            Assert.IsNull(subject.ForwardSourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             Object.DestroyImmediate(forwardSource);

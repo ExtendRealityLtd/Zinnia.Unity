@@ -39,12 +39,12 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
 
             publisher.sourceContainer = publisherSource;
 
-            Assert.IsNull(subject.SourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             subject.Extract(publisher);
 
-            Assert.AreEqual(publisherSource, subject.SourceContainer);
+            Assert.AreEqual(publisherSource, subject.Result);
             Assert.IsTrue(extractedMock.Received);
 
             Object.DestroyImmediate(publisherSource);
@@ -67,12 +67,12 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
             ActiveCollisionConsumer.EventData eventData = new ActiveCollisionConsumer.EventData();
             eventData.Set(publisher, null);
 
-            Assert.IsNull(subject.SourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             subject.Extract(eventData);
 
-            Assert.AreEqual(publisherSource, subject.SourceContainer);
+            Assert.AreEqual(publisherSource, subject.Result);
             Assert.IsTrue(extractedMock.Received);
 
             Object.DestroyImmediate(publisherSource);
@@ -92,13 +92,13 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
 
             publisher.sourceContainer = publisherSource;
 
-            Assert.IsNull(subject.SourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             subject.gameObject.SetActive(false);
             subject.Extract(publisher);
 
-            Assert.IsNull(subject.SourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             Object.DestroyImmediate(publisherSource);
@@ -118,13 +118,13 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
 
             publisher.sourceContainer = publisherSource;
 
-            Assert.IsNull(subject.SourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             subject.enabled = false;
             subject.Extract(publisher);
 
-            Assert.IsNull(subject.SourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             Object.DestroyImmediate(publisherSource);
@@ -139,12 +139,12 @@ namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
 
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
-            Assert.IsNull(subject.SourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
 
             subject.Extract(publisher);
 
-            Assert.IsNull(subject.SourceContainer);
+            Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
         }
     }
