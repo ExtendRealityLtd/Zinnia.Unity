@@ -77,6 +77,54 @@ namespace Test.VRTK.Core.Tracking.Follow
         }
 
         [Test]
+        public void ProcessSourceTargetEquals()
+        {
+            UnityEventListenerMock thresholdExceededMock = new UnityEventListenerMock();
+            UnityEventListenerMock thresholdResumedMock = new UnityEventListenerMock();
+            subject.ThresholdExceeded.AddListener(thresholdExceededMock.Listen);
+            subject.ThresholdResumed.AddListener(thresholdResumedMock.Listen);
+
+            GameObject target = new GameObject();
+
+            subject.source = target;
+            subject.target = target;
+            subject.distanceThreshold = 0.5f;
+
+            target.transform.position = Vector3.zero;
+
+            subject.Process();
+
+            Assert.IsFalse(thresholdExceededMock.Received);
+            Assert.IsFalse(thresholdResumedMock.Received);
+            Assert.IsFalse(subject.Exceeding);
+            Assert.AreEqual(0f, subject.Distance);
+
+            target.transform.position = Vector3.forward * 1f;
+
+            subject.Process();
+
+            Assert.IsTrue(thresholdExceededMock.Received);
+            Assert.IsFalse(thresholdResumedMock.Received);
+            Assert.IsTrue(subject.Exceeding);
+            Assert.AreEqual(1f, subject.Distance);
+
+            thresholdExceededMock.Reset();
+            thresholdResumedMock.Reset();
+            subject.SavePosition();
+
+            target.transform.position = Vector3.zero;
+
+            subject.Process();
+
+            Assert.IsTrue(thresholdExceededMock.Received);
+            Assert.IsFalse(thresholdResumedMock.Received);
+            Assert.IsTrue(subject.Exceeding);
+            Assert.AreEqual(1f, subject.Distance);
+
+            Object.DestroyImmediate(target);
+        }
+
+        [Test]
         public void ProcessNoSource()
         {
             UnityEventListenerMock thresholdExceededMock = new UnityEventListenerMock();
