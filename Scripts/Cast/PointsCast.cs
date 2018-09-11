@@ -55,6 +55,11 @@
         }
 
         /// <summary>
+        /// The origin point for the cast.
+        /// </summary>
+        [Tooltip("The origin point for the cast.")]
+        public GameObject origin;
+        /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
         [Tooltip("Allows to optionally affect the cast.")]

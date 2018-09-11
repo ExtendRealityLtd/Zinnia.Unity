@@ -45,7 +45,7 @@
         /// <inheritdoc />
         public override void CastPoints()
         {
-            if (!isActiveAndEnabled)
+            if (!isActiveAndEnabled || origin == null)
             {
                 return;
             }
@@ -56,12 +56,12 @@
         }
 
         /// <summary>
-        /// Projects a straight line forward from the current <see cref="MonoBehaviour.transform" />.
+        /// Projects a straight line forward from the current origin.
         /// </summary>
         /// <returns>The collision point or the point being the furthest away on the cast line if nothing is hit.</returns>
         protected virtual Vector3 ProjectForward()
         {
-            float rotation = Vector3.Dot(Vector3.up, transform.forward.normalized);
+            float rotation = Vector3.Dot(Vector3.up, origin.transform.forward.normalized);
             float length = maximumLength.x;
 
             if ((rotation * 100f) > heightLimitAngle)
@@ -70,7 +70,7 @@
                 length = maximumLength.x * controllerRotationOffset * controllerRotationOffset;
             }
 
-            Ray ray = new Ray(transform.position, transform.forward);
+            Ray ray = new Ray(origin.transform.position, origin.transform.forward);
             RaycastHit hitData;
             bool hasCollided = PhysicsCast.Raycast(physicsCast, ray, out hitData, length, Physics.IgnoreRaycastLayer);
 
@@ -87,12 +87,12 @@
         /// <summary>
         /// Projects a straight line downwards from the provided point.
         /// </summary>
-        /// <param name="origin">The origin of the projected line.</param>
+        /// <param name="downwardOrigin">The origin of the projected line.</param>
         /// <returns>The collision point or the point being the furthest away on the cast line if nothing is hit.</returns>
-        protected virtual Vector3 ProjectDown(Vector3 origin)
+        protected virtual Vector3 ProjectDown(Vector3 downwardOrigin)
         {
             Vector3 point = Vector3.zero;
-            Ray ray = new Ray(origin, Vector3.down);
+            Ray ray = new Ray(downwardOrigin, Vector3.down);
             RaycastHit hitData;
 
             bool downRayHit = PhysicsCast.Raycast(physicsCast, ray, out hitData, maximumLength.y, Physics.IgnoreRaycastLayer);
@@ -170,7 +170,7 @@
         {
             Vector3[] curvePoints =
             {
-                transform.position,
+                origin.transform.position,
                 forward + new Vector3(0f, curveOffset, 0f),
                 down,
                 down

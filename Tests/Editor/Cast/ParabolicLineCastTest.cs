@@ -35,6 +35,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 
@@ -66,6 +67,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 
@@ -97,6 +99,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 
@@ -128,6 +131,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
             validSurface.AddComponent<RuleStub>();
@@ -171,6 +175,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 
@@ -190,6 +195,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 

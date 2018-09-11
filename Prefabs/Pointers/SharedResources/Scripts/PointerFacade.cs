@@ -2,8 +2,8 @@
 {
     using UnityEngine;
     using VRTK.Core.Action;
-    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Rule;
+    using VRTK.Core.Data.Attribute;
 
     /// <summary>
     /// The public interface into the Pointer Prefab.

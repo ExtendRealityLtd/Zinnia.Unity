@@ -35,6 +35,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
 
@@ -55,6 +56,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
             subject.maximumLength = validSurface.transform.position.z / 2f;
@@ -76,6 +78,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
             validSurface.AddComponent<RuleStub>();
@@ -108,6 +111,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
 
@@ -126,6 +130,7 @@ namespace Test.VRTK.Core.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
 

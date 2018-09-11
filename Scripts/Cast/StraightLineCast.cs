@@ -17,18 +17,18 @@
         /// <inheritdoc />
         public override void CastPoints()
         {
-            if (!isActiveAndEnabled)
+            if (!isActiveAndEnabled || origin == null)
             {
                 return;
             }
 
-            Ray ray = new Ray(transform.position, transform.forward);
+            Ray ray = new Ray(origin.transform.position, origin.transform.forward);
             RaycastHit hitData;
             bool hasCollided = PhysicsCast.Raycast(physicsCast, ray, out hitData, maximumLength, Physics.IgnoreRaycastLayer);
             TargetHit = (hasCollided ? hitData : (RaycastHit?)null);
 
-            points[0] = transform.position;
-            points[1] = (hasCollided ? hitData.point : transform.position + transform.forward * maximumLength);
+            points[0] = origin.transform.position;
+            points[1] = (hasCollided ? hitData.point : origin.transform.position + origin.transform.forward * maximumLength);
 
             ResultsChanged?.Invoke(eventData.Set(TargetHit, Points));
         }
