@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 4672520991212470}
   - component: {fileID: 114365416445008756}
   m_Layer: 0
-  m_Name: Scripts
+  m_Name: Internal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1333,6 +1333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7934e9d7f2f8434c9358d4d4e8a14b6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  origin: {fileID: 1731211792822088}
   physicsCast: {fileID: 0}
   targetValidity:
     field: {fileID: 0}

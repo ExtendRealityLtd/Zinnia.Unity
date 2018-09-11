@@ -55,6 +55,11 @@
         }
 
         /// <summary>
+        /// The origin point for the cast.
+        /// </summary>
+        [Tooltip("The origin point for the cast.")]
+        public GameObject origin;
+        /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
         [Tooltip("Allows to optionally affect the cast.")]
@@ -98,12 +103,24 @@
         /// <summary>
         /// Casts and creates points along the cast.
         /// </summary>
-        public abstract void CastPoints();
+        public virtual void CastPoints()
+        {
+            if (!isActiveAndEnabled || origin == null)
+            {
+                return;
+            }
+            DoCastPoints();
+        }
 
         /// <inheritdoc />
-        public void Process()
+        public virtual void Process()
         {
             CastPoints();
         }
+
+        /// <summary>
+        /// Performs the implementated way of casting points.
+        /// </summary>
+        protected abstract void DoCastPoints();
     }
 }
