@@ -106,12 +106,7 @@
 
             if (Elements.Remove(collisionData))
             {
-                if ((Elements.Count == 0))
-                {
-                    AllStopped?.Invoke(eventData.Set(Elements));
-                }
-                CountChanged?.Invoke(eventData.Set(Elements));
-                ProcessContentsChanged();
+                EmitEmptyEvents();
             }
         }
 
@@ -126,6 +121,22 @@
             }
 
             ContentsChanged?.Invoke(eventData.Set(Elements));
+        }
+
+        protected virtual void OnDisable()
+        {
+            Elements.Clear();
+            EmitEmptyEvents();
+        }
+
+        protected virtual void EmitEmptyEvents()
+        {
+            if ((Elements.Count == 0))
+            {
+                AllStopped?.Invoke(eventData.Set(Elements));
+            }
+            CountChanged?.Invoke(eventData.Set(Elements));
+            ProcessContentsChanged();
         }
 
         protected virtual CollisionNotifier.EventData CloneEventData(CollisionNotifier.EventData input)

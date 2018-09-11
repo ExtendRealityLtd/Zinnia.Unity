@@ -11,13 +11,13 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
     public class ActiveCollisionsContainerTest
     {
         private GameObject containingObject;
-        private ActiveCollisionsContainer subject;
+        private ActiveCollisionsContainerMock subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<ActiveCollisionsContainer>();
+            subject = containingObject.AddComponent<ActiveCollisionsContainerMock>();
         }
 
         [TearDown]
@@ -203,6 +203,52 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             Assert.IsFalse(countChangedMock.Received);
             Assert.IsTrue(contentsChangedMock.Received);
             Assert.IsFalse(allStoppedMock.Received);
+        }
+
+        [Test]
+        public void ClearsOnDisabled()
+        {
+            UnityEventListenerMock firstStartedMock = new UnityEventListenerMock();
+            UnityEventListenerMock countChangedMock = new UnityEventListenerMock();
+            UnityEventListenerMock contentsChangedMock = new UnityEventListenerMock();
+            UnityEventListenerMock allStoppedMock = new UnityEventListenerMock();
+
+            subject.FirstStarted.AddListener(firstStartedMock.Listen);
+            subject.CountChanged.AddListener(countChangedMock.Listen);
+            subject.ContentsChanged.AddListener(contentsChangedMock.Listen);
+            subject.AllStopped.AddListener(allStoppedMock.Listen);
+
+            GameObject oneContainer;
+            CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            GameObject twoContainer;
+            CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+
+            Assert.IsFalse(firstStartedMock.Received);
+            Assert.IsFalse(countChangedMock.Received);
+            Assert.IsFalse(contentsChangedMock.Received);
+            Assert.IsFalse(allStoppedMock.Received);
+
+            subject.Add(oneData);
+            subject.Add(twoData);
+
+            firstStartedMock.Reset();
+            countChangedMock.Reset();
+            contentsChangedMock.Reset();
+            allStoppedMock.Reset();
+
+            Assert.AreEqual(2, subject.Elements.Count);
+
+            subject.ManualOnDisable();
+
+            Assert.AreEqual(0, subject.Elements.Count);
+
+            Assert.IsFalse(firstStartedMock.Received);
+            Assert.IsTrue(countChangedMock.Received);
+            Assert.IsTrue(contentsChangedMock.Received);
+            Assert.IsTrue(allStoppedMock.Received);
+
+            Object.DestroyImmediate(oneContainer);
+            Object.DestroyImmediate(twoContainer);
         }
 
         [Test]
@@ -417,6 +463,14 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
             Assert.IsFalse(countChangedMock.Received);
             Assert.IsFalse(contentsChangedMock.Received);
             Assert.IsFalse(allStoppedMock.Received);
+        }
+    }
+
+    public class ActiveCollisionsContainerMock : ActiveCollisionsContainer
+    {
+        public virtual void ManualOnDisable()
+        {
+            base.OnDisable();
         }
     }
 }
