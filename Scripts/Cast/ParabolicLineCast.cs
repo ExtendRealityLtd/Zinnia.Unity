@@ -43,13 +43,8 @@
         protected const float ADJUSTMENT_OFFSET = 0.0001f;
 
         /// <inheritdoc />
-        public override void CastPoints()
+        protected override void DoCastPoints()
         {
-            if (!isActiveAndEnabled || origin == null)
-            {
-                return;
-            }
-
             Vector3 forward = ProjectForward();
             Vector3 down = ProjectDown(forward);
             GeneratePointsIncludingSegments(forward, down);
