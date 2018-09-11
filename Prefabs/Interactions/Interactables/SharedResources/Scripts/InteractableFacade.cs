@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using VRTK.Core.Extension;
     using VRTK.Core.Data.Attribute;
     using VRTK.Core.Prefabs.Interactions.Interactors;
 
@@ -163,6 +164,15 @@
         public List<InteractorFacade> GrabbingInteractors => grabInteractableSetup?.GrabbingInteractors;
 
         /// <summary>
+        /// Attempt to grab the Interactable to the given <see cref="GameObject"/> that contains an Interactor.
+        /// </summary>
+        /// <param name="interactor">The GameObject that the Interactor is on.</param>
+        public virtual void Grab(GameObject interactor)
+        {
+            Grab(interactor.TryGetComponent<InteractorFacade>(true, true));
+        }
+
+        /// <summary>
         /// Attempt to grab the Interactable to the given Interactor.
         /// </summary>
         /// <param name="interactor">The Interactor to attach the Interactable to.</param>
@@ -172,12 +182,30 @@
         }
 
         /// <summary>
+        /// Attempt to ungrab the Interactable to the given <see cref="GameObject"/> that contains an Interactor.
+        /// </summary>
+        /// <param name="interactor">The GameObject that the Interactor is on.</param>
+        public virtual void Ungrab(GameObject interactor)
+        {
+            Ungrab(interactor.TryGetComponent<InteractorFacade>(true, true));
+        }
+
+        /// <summary>
         /// Attempt to ungrab the Interactable.
+        /// </summary>
+        /// <param name="interactor">The Interactor to ungrab from.</param>
+        public virtual void Ungrab(InteractorFacade interactor)
+        {
+            grabInteractableSetup?.Ungrab(interactor);
+        }
+
+        /// <summary>
+        /// Attempt to ungrab the Interactable at a specific grabbing index.
         /// </summary>
         /// <param name="sequenceIndex">The Interactor sequence index to ungrab from.</param>
         public virtual void Ungrab(int sequenceIndex = 0)
         {
-            grabInteractableSetup.Ungrab(sequenceIndex);
+            grabInteractableSetup?.Ungrab(sequenceIndex);
         }
 
         /// <summary>

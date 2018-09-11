@@ -198,7 +198,7 @@
         /// <param name="interactor">The Interactor to attach the Interactable to.</param>
         public virtual void Grab(InteractorFacade interactor)
         {
-            doGrab?.Receive(ConsumerDataFromInteractor(interactor));
+            interactor?.Grab(facade);
         }
 
         /// <summary>
@@ -213,7 +213,16 @@
                 return;
             }
 
-            doUngrab.Receive(ConsumerDataFromInteractor(currentInteractors[sequenceIndex]));
+            Ungrab(currentInteractors[sequenceIndex]);
+        }
+
+        /// <summary>
+        /// Attempts to ungrab the Interactable.
+        /// </summary>
+        /// <param name="interactor">The Interactor to ungrab from.</param>
+        public virtual void Ungrab(InteractorFacade interactor)
+        {
+            interactor?.Ungrab();
         }
 
         /// <summary>
@@ -222,7 +231,7 @@
         /// <param name="data">The grabbing object.</param>
         public virtual void NotifyFirstGrab(GameObject data)
         {
-            InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(data);
+            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
                 facade?.FirstGrabbed?.Invoke(interactor);
@@ -235,7 +244,7 @@
         /// <param name="data">The grabbing object.</param>
         public virtual void NotifyGrab(GameObject data)
         {
-            InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(data);
+            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
                 facade?.Grabbed?.Invoke(interactor);
@@ -250,7 +259,7 @@
         /// <param name="data">The previous grabbing object.</param>
         public virtual void NotifyUngrab(GameObject data)
         {
-            InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(data);
+            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
                 facade?.Ungrabbed?.Invoke(interactor);
@@ -265,7 +274,7 @@
         /// <param name="data">The ungrabbing object.</param>
         public virtual void NotifyLastUngrab(GameObject data)
         {
-            InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(data);
+            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
                 facade?.LastUngrabbed?.Invoke(interactor);
@@ -280,7 +289,12 @@
             ConfigureGrabValidity();
         }
 
-        protected virtual ActiveCollisionConsumer.EventData ConsumerDataFromInteractor(InteractorFacade interactor)
+        /// <summary>
+        /// Creates consumer data from a given Interactor.
+        /// </summary>
+        /// <param name="interactor">The Interactor to create from.</param>
+        /// <returns>The created consumer data.</returns>
+        protected virtual ActiveCollisionConsumer.EventData CreateConsumerDataFromInteractor(InteractorFacade interactor)
         {
             ActiveCollisionPublisher.PayloadData interactorPublisher = new ActiveCollisionPublisher.PayloadData();
             interactorPublisher.sourceContainer = interactor?.grabInteractorSetup?.attachPoint;
@@ -302,7 +316,7 @@
 
             foreach (GameObject element in gameObjectEventStack.Stack)
             {
-                InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(element);
+                InteractorFacade interactor = element.TryGetComponent<InteractorFacade>(true, true);
                 if (interactor != null)
                 {
                     returnList.Add(interactor);
