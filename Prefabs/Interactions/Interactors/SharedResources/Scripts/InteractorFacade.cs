@@ -10,7 +10,7 @@
     using VRTK.Core.Data.Attribute;
 
     /// <summary>
-    /// The public interface into the Interactable Prefab.
+    /// The public interface into the Interactor Prefab.
     /// </summary>
     public class InteractorFacade : MonoBehaviour
     {
@@ -37,20 +37,20 @@
 
         #region Interactor Events
         /// <summary>
-        /// Emitted when a new collision occurs.
+        /// Emitted when the Interactor starts touching a valid Interactable.
         /// </summary>
         [Header("Interactor Events")]
         public UnityEvent Touched = new UnityEvent();
         /// <summary>
-        /// Emitted when an existing collision ends.
+        /// Emitted when the Interactor stops touching a valid Interactable.
         /// </summary>
         public UnityEvent Untouched = new UnityEvent();
         /// <summary>
-        /// Emitted when a new collision occurs.
+        /// Emitted when the Interactor starts grabbing a valid Interactable.
         /// </summary>
         public UnityEvent Grabbed = new UnityEvent();
         /// <summary>
-        /// Emitted when an existing collision ends.
+        /// Emitted when the Interactor stops grabbing a valid Interactable.
         /// </summary>
         public UnityEvent Ungrabbed = new UnityEvent();
         #endregion
