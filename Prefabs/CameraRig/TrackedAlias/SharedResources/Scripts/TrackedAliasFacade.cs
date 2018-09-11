@@ -1,6 +1,7 @@
 ﻿namespace VRTK.Core.Prefabs.CameraRig.TrackedAlias
 {
     using UnityEngine;
+    using UnityEngine.Events;
     using System.Collections.Generic;
     using System.Linq;
     using VRTK.Core.Extension;
@@ -19,6 +20,22 @@
         /// </summary>
         [Header("Tracked Alias Settings"), Tooltip("The associated CameraRigs to track.")]
         public List<BaseAliasAssociationCollection> cameraRigs = new List<BaseAliasAssociationCollection>();
+        #endregion
+
+        #region Tracking Begun Events
+        /// <summary>
+        /// Emitted when the headset starts tracking for the first time.
+        /// </summary>
+        [Header("Tracking Begun Events")]
+        public UnityEvent HeadsetTrackingBegun = new UnityEvent();
+        /// <summary>
+        /// Emitted when the left controller starts tracking for the first time.
+        /// </summary>
+        public UnityEvent LeftControllerTrackingBegun = new UnityEvent();
+        /// <summary>
+        /// Emitted when the right controller starts tracking for the first time.
+        /// </summary>
+        public UnityEvent RightControllerTrackingBegun = new UnityEvent();
         #endregion
 
         #region Internal Settings

@@ -107,6 +107,30 @@
             rightControllerVelocityTrackers.velocityTrackers.Clear();
         }
 
+        /// <summary>
+        /// Notifies that the headset has started being tracked.
+        /// </summary>
+        public virtual void NotifyHeadsetTrackingBegun()
+        {
+            facade?.HeadsetTrackingBegun?.Invoke();
+        }
+
+        /// <summary>
+        /// Notifies that the left controller has started being tracked.
+        /// </summary>
+        public virtual void NotifyLeftControllerTrackingBegun()
+        {
+            facade?.LeftControllerTrackingBegun?.Invoke();
+        }
+
+        /// <summary>
+        /// Notifies that the right controller has started being tracked.
+        /// </summary>
+        public virtual void NotifyRightControllerTrackingBegun()
+        {
+            facade?.RightControllerTrackingBegun?.Invoke();
+        }
+
         protected virtual void OnEnable()
         {
             Setup();
