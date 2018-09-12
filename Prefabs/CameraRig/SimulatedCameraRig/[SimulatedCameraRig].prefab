@@ -3382,8 +3382,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: VRTK.Core.Data.Type.Transformation.Vector2Multiplier+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  xMultiplier: 1
-  yMultiplier: -1
+  multiplier: {x: 1, y: -1}
 --- !u!114 &114886786870708734
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -21,15 +21,19 @@
         }
 
         /// <summary>
-        /// The value to multiply the x coordinate by.
+        /// The value to multiply the input by.
         /// </summary>
-        [Tooltip("The value to multiply the x coordinate by."), SerializeField]
-        protected float xMultiplier = 1f;
+        [Tooltip("The value to multiply the input by."), SerializeField]
+        protected Vector2 multiplier = Vector2.one;
+
         /// <summary>
-        /// The value to multiply the y coordinate by.
+        /// Sets the value to multiply the input by.
         /// </summary>
-        [Tooltip("The value to multiply the y coordinate by."), SerializeField]
-        protected float yMultiplier = 1f;
+        /// <param name="multiplier">The new multiplier value.</param>
+        public virtual void SetMultiplier(Vector2 multiplier)
+        {
+            this.multiplier = multiplier;
+        }
 
         /// <summary>
         /// Sets the x value to multiply the input x by.
@@ -37,7 +41,7 @@
         /// <param name="xMultiplier">The new x multiplier value.</param>
         public virtual void SetXMultiplier(float xMultiplier)
         {
-            this.xMultiplier = xMultiplier;
+            multiplier.x = xMultiplier;
         }
 
         /// <summary>
@@ -46,7 +50,7 @@
         /// <param name="yMultiplier">The new y multiplier value.</param>
         public virtual void SetYMultiplier(float yMultiplier)
         {
-            this.yMultiplier = yMultiplier;
+            multiplier.y = yMultiplier;
         }
 
         /// <summary>
@@ -56,7 +60,7 @@
         /// <returns>The transformed value.</returns>
         protected override Vector2 Process(Vector2 input)
         {
-            return new Vector2(input.x * xMultiplier, input.y * yMultiplier);
+            return Vector2.Scale(input, multiplier);
         }
     }
 }
