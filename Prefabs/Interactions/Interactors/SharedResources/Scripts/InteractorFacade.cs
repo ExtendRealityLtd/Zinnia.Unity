@@ -5,9 +5,10 @@
     using System;
     using System.Collections.Generic;
     using VRTK.Core.Action;
+    using VRTK.Core.Extension;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Tracking.Velocity;
     using VRTK.Core.Prefabs.Interactions.Interactables;
-    using VRTK.Core.Data.Attribute;
 
     /// <summary>
     /// The public interface into the Interactor Prefab.
@@ -82,27 +83,40 @@
         public List<GameObject> GrabbedObjects => grabInteractorSetup?.GrabbedObjects;
 
         /// <summary>
-        /// Attempts to retrieve from a given GameObject.
+        /// Attempt to grab a <see cref="GameObject"/> that contains an Interactable to the current Interactor.
         /// </summary>
-        /// <param name="data">The GameObject to retreive from.</param>
-        /// <param name="searchChildren">Optionally searches the children of the given GameObject.</param>
-        /// <param name="searchParents">Optionally searches the parents of the given GameObject.</param>
-        /// <returns>The found Interactor.</returns>
-        public static InteractorFacade TryGetFromGameObject(GameObject data, bool searchChildren = true, bool searchParents = true)
+        /// <param name="interactor">The GameObject that the Interactor is on.</param>
+        public virtual void Grab(GameObject interactable)
         {
-            InteractorFacade returnFacade = data.GetComponent<InteractorFacade>();
+            Grab(interactable.TryGetComponent<InteractableFacade>(true, true));
+        }
 
-            if (searchChildren && returnFacade == null)
-            {
-                returnFacade = data.GetComponentInChildren<InteractorFacade>();
-            }
+        /// <summary>
+        /// Attempt to grab an Interactable to the current Interactor.
+        /// </summary>
+        /// <param name="interactable">The Interactable to attempt to grab.</param>
+        public virtual void Grab(InteractableFacade interactable)
+        {
+            Grab(interactable, null, null);
+        }
 
-            if (searchParents && returnFacade == null)
-            {
-                returnFacade = data.GetComponentInParent<InteractorFacade>();
-            }
+        /// <summary>
+        /// Attempt to grab an Interactable to the current Interactor utilising custom collision data.
+        /// </summary>
+        /// <param name="interactable">The Interactable to attempt to grab.</param>
+        /// <param name="collision">Custom collision data.</param>
+        /// <param name="collider">Custom collider data.</param>
+        public virtual void Grab(InteractableFacade interactable, Collision collision, Collider collider)
+        {
+            grabInteractorSetup?.Grab(interactable, collision, collider);
+        }
 
-            return returnFacade;
+        /// <summary>
+        /// Attempt to ungrab currently grabbed Interactables to the current Interactor.
+        /// </summary>
+        public virtual void Ungrab()
+        {
+            grabInteractorSetup?.Ungrab();
         }
     }
 }

@@ -123,7 +123,7 @@
         /// <returns>The obtained collection.</returns>
         protected virtual IEnumerable<ActiveCollisionConsumer> GetConsumers(Transform reference)
         {
-            if (transform.IsChildOf(reference))
+            if (reference == null || transform.IsChildOf(reference))
             {
                 return Enumerable.Empty<ActiveCollisionConsumer>();
             }

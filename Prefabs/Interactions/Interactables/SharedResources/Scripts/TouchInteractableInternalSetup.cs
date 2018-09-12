@@ -3,8 +3,8 @@
     using UnityEngine;
     using System.Collections.Generic;
     using VRTK.Core.Rule;
+    using VRTK.Core.Extension;
     using VRTK.Core.Data.Collection;
-    using VRTK.Core.Tracking.Collision;
     using VRTK.Core.Prefabs.Interactions.Interactors;
 
     public class TouchInteractableInternalSetup : MonoBehaviour
@@ -59,7 +59,7 @@
         /// <param name="data">The touching object.</param>
         public virtual void NotifyFirstTouch(GameObject data)
         {
-            InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(data);
+            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
                 facade?.FirstTouched?.Invoke(interactor);
@@ -72,7 +72,7 @@
         /// <param name="data">The touching object.</param>
         public virtual void NotifyTouch(GameObject data)
         {
-            InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(data);
+            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
                 facade?.Touched?.Invoke(interactor);
@@ -86,7 +86,7 @@
         /// <param name="data">The previous touching object.</param>
         public virtual void NotifyUntouch(GameObject data)
         {
-            InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(data);
+            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
                 facade?.Untouched?.Invoke(interactor);
@@ -100,7 +100,7 @@
         /// <param name="data">The touching object.</param>
         public virtual void NotifyLastUntouch(GameObject data)
         {
-            InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(data);
+            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
                 facade?.LastUntouched?.Invoke(interactor);
@@ -127,7 +127,7 @@
 
             foreach (GameObject element in currentTouchingObjects.Elements)
             {
-                InteractorFacade interactor = InteractorFacade.TryGetFromGameObject(element);
+                InteractorFacade interactor = element.TryGetComponent<InteractorFacade>(true, true);
                 if (interactor != null)
                 {
                     returnList.Add(interactor);
