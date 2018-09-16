@@ -59,7 +59,7 @@
 
         protected virtual void OnValidate()
         {
-            if (!isActiveAndEnabled)
+            if (!isActiveAndEnabled || !Application.isPlaying)
             {
                 return;
             }
