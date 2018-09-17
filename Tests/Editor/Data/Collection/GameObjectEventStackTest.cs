@@ -507,6 +507,83 @@ namespace Test.VRTK.Core.Data.Collection
         }
 
         [Test]
+        public void AbortPop()
+        {
+            UnityEventListenerMock elementOnePushedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementOnePoppedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementOneForcePoppedMock = new UnityEventListenerMock();
+            GameObjectEventStack.ElementEvents eventsOne = new GameObjectEventStack.ElementEvents();
+            eventsOne.Pushed.AddListener(elementOnePushedMock.Listen);
+            eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
+            eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
+
+            UnityEventListenerMock elementTwoPushedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementTwoPoppedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementTwoForcePoppedMock = new UnityEventListenerMock();
+            GameObjectEventStack.ElementEvents eventsTwo = new GameObjectEventStack.ElementEvents();
+            eventsTwo.Pushed.AddListener(elementTwoPushedMock.Listen);
+            eventsTwo.Popped.AddListener(elementTwoPoppedMock.Listen);
+            eventsTwo.ForcePopped.AddListener(elementTwoForcePoppedMock.Listen);
+            eventsTwo.ForcePopped.AddListener(AbortPopAction);
+
+            UnityEventListenerMock elementThreePushedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementThreePoppedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementThreeForcePoppedMock = new UnityEventListenerMock();
+            GameObjectEventStack.ElementEvents eventsThree = new GameObjectEventStack.ElementEvents();
+            eventsThree.Pushed.AddListener(elementThreePushedMock.Listen);
+            eventsThree.Popped.AddListener(elementThreePoppedMock.Listen);
+            eventsThree.ForcePopped.AddListener(elementThreeForcePoppedMock.Listen);
+
+            GameObject objectOne = new GameObject();
+            GameObject objectTwo = new GameObject();
+            GameObject objectThree = new GameObject();
+
+            subject.elementEvents.Add(eventsOne);
+            subject.elementEvents.Add(eventsTwo);
+            subject.elementEvents.Add(eventsThree);
+
+            subject.Push(objectOne);
+            subject.Push(objectTwo);
+            subject.Push(objectThree);
+
+            elementOnePushedMock.Reset();
+            elementOnePoppedMock.Reset();
+            elementOneForcePoppedMock.Reset();
+            elementTwoPushedMock.Reset();
+            elementTwoPoppedMock.Reset();
+            elementTwoForcePoppedMock.Reset();
+            elementThreePushedMock.Reset();
+            elementThreePoppedMock.Reset();
+            elementThreeForcePoppedMock.Reset();
+
+            Assert.IsFalse(elementOnePushedMock.Received);
+            Assert.IsFalse(elementOnePoppedMock.Received);
+            Assert.IsFalse(elementOneForcePoppedMock.Received);
+            Assert.IsFalse(elementTwoPushedMock.Received);
+            Assert.IsFalse(elementTwoPoppedMock.Received);
+            Assert.IsFalse(elementTwoForcePoppedMock.Received);
+            Assert.IsFalse(elementThreePushedMock.Received);
+            Assert.IsFalse(elementThreePoppedMock.Received);
+            Assert.IsFalse(elementThreeForcePoppedMock.Received);
+
+            subject.PopAt(objectOne);
+
+            Assert.IsFalse(elementOnePushedMock.Received);
+            Assert.IsFalse(elementOnePoppedMock.Received);
+            Assert.IsFalse(elementOneForcePoppedMock.Received);
+            Assert.IsFalse(elementTwoPushedMock.Received);
+            Assert.IsFalse(elementTwoPoppedMock.Received);
+            Assert.IsTrue(elementTwoForcePoppedMock.Received);
+            Assert.IsFalse(elementThreePushedMock.Received);
+            Assert.IsFalse(elementThreePoppedMock.Received);
+            Assert.IsTrue(elementThreeForcePoppedMock.Received);
+
+            Object.DestroyImmediate(objectOne);
+            Object.DestroyImmediate(objectTwo);
+            Object.DestroyImmediate(objectThree);
+        }
+
+        [Test]
         public void PopAtInvalid()
         {
             UnityEventListenerMock elementOnePushedMock = new UnityEventListenerMock();
@@ -832,6 +909,11 @@ namespace Test.VRTK.Core.Data.Collection
             Object.DestroyImmediate(objectOne);
             Object.DestroyImmediate(objectTwo);
             Object.DestroyImmediate(objectThree);
+        }
+
+        protected void AbortPopAction(GameObject obj)
+        {
+            subject.AbortPop();
         }
     }
 }
