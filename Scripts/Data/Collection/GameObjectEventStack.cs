@@ -66,6 +66,8 @@
             protected set;
         } = new List<GameObject>();
 
+        protected bool abortPopProcess = false;
+
         /// <summary>
         /// Push an element onto the stack and emit the related events.
         /// </summary>
@@ -119,6 +121,12 @@
 
             for (int i = elementEvents.Count - 1; i >= elementIndex; i--)
             {
+                if (abortPopProcess)
+                {
+                    abortPopProcess = false;
+                    return;
+                }
+
                 if (elementIndex < Stack.Count && i < Stack.Count)
                 {
                     GameObject currentElement = Stack[i];
@@ -143,6 +151,14 @@
             {
                 elementEvents[EventIndex - 1].Restored?.Invoke(Stack[EventIndex - 1]);
             }
+        }
+
+        /// <summary>
+        /// Aborts the current stack pop process to prevent any further elements from being popped off the stack.
+        /// </summary>
+        public virtual void AbortPop()
+        {
+            abortPopProcess = true;
         }
     }
 }
