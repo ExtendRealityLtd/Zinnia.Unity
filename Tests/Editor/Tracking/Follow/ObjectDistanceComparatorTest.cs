@@ -49,6 +49,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
+            Assert.AreEqual(Vector3.zero, subject.Difference);
             Assert.AreEqual(0f, subject.Distance);
 
             target.transform.position = Vector3.forward * 1f;
@@ -58,6 +59,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsTrue(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsTrue(subject.Exceeding);
+            Assert.AreEqual(Vector3.forward * 1f, subject.Difference);
             Assert.AreEqual(1f, subject.Distance);
 
             thresholdExceededMock.Reset();
@@ -70,6 +72,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsTrue(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
+            Assert.AreEqual(Vector3.zero, subject.Difference);
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(source);
@@ -97,6 +100,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
+            Assert.AreEqual(Vector3.zero, subject.Difference);
             Assert.AreEqual(0f, subject.Distance);
 
             target.transform.position = Vector3.forward * 1f;
@@ -106,6 +110,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsTrue(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsTrue(subject.Exceeding);
+            Assert.AreEqual(Vector3.forward * 1f, subject.Difference);
             Assert.AreEqual(1f, subject.Distance);
 
             thresholdExceededMock.Reset();
@@ -119,6 +124,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsTrue(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsTrue(subject.Exceeding);
+            Assert.AreEqual(Vector3.forward * -1f, subject.Difference);
             Assert.AreEqual(1f, subject.Distance);
 
             Object.DestroyImmediate(target);
@@ -144,6 +150,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
+            Assert.AreEqual(Vector3.zero, subject.Difference);
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(target);
@@ -167,6 +174,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
+            Assert.AreEqual(Vector3.zero, subject.Difference);
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(source);
@@ -188,7 +196,6 @@ namespace Test.VRTK.Core.Tracking.Follow
             subject.distanceThreshold = 0.5f;
 
             source.transform.position = Vector3.zero;
-            target.transform.position = Vector3.zero;
             target.transform.position = Vector3.forward * 1f;
 
             subject.gameObject.SetActive(false);
@@ -198,6 +205,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
+            Assert.AreEqual(Vector3.zero, subject.Difference);
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(source);
@@ -220,7 +228,6 @@ namespace Test.VRTK.Core.Tracking.Follow
             subject.distanceThreshold = 0.5f;
 
             source.transform.position = Vector3.zero;
-            target.transform.position = Vector3.zero;
             target.transform.position = Vector3.forward * 1f;
 
             subject.enabled = false;
@@ -230,6 +237,7 @@ namespace Test.VRTK.Core.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
+            Assert.AreEqual(Vector3.zero, subject.Difference);
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(source);
