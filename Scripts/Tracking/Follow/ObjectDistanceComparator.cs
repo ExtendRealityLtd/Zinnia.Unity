@@ -14,10 +14,43 @@
     public class ObjectDistanceComparator : MonoBehaviour, IProcessable
     {
         /// <summary>
-        /// Defines the event with the <see cref="float"/>.
+        /// Holds data about a <see cref="ObjectDistanceComparator"/> event.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
+        public class EventData
+        {
+            /// <summary>
+            /// The difference of the positions of the target and source.
+            /// </summary>
+            public Vector3 difference;
+            /// <summary>
+            /// The distance between the source and target.
+            /// </summary>
+            public float distance;
+
+            public EventData Set(EventData source)
+            {
+                return Set(source.difference, source.distance);
+            }
+
+            public EventData Set(Vector3 difference, float distance)
+            {
+                this.difference = difference;
+                this.distance = distance;
+                return this;
+            }
+
+            public void Clear()
+            {
+                Set(default(Vector3), default(float));
+            }
+        }
+
+        /// <summary>
+        /// Defines the event with the <see cref="EventData"/>.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<EventData>
         {
         }
 
@@ -47,6 +80,15 @@
         public UnityEvent ThresholdResumed = new UnityEvent();
 
         /// <summary>
+        /// The difference of the positions of the target and source.
+        /// </summary>
+        public Vector3 Difference
+        {
+            get;
+            protected set;
+        }
+
+        /// <summary>
         /// The distance between the source and target.
         /// </summary>
         public float Distance
@@ -66,6 +108,7 @@
 
         protected bool previousState = false;
         protected Vector3 sourcePosition;
+        protected EventData eventData = new EventData();
 
         /// <summary>
         /// Checks to see if the distance between the source and target exceed the threshold.
@@ -77,17 +120,20 @@
                 return;
             }
 
-            Distance = Vector3.Distance(GetSourcePosition(), target.transform.position);
+            Difference = target.transform.position - GetSourcePosition();
+            Distance = Difference.magnitude;
             Exceeding = (Distance >= distanceThreshold);
-            if (previousState != Exceeding)
+            if (previousState != Exceeding || distanceThreshold <= 0f)
             {
+                eventData.Set(Difference, Distance);
+
                 if (Exceeding)
                 {
-                    ThresholdExceeded?.Invoke(Distance);
+                    ThresholdExceeded?.Invoke(eventData);
                 }
                 else
                 {
-                    ThresholdResumed?.Invoke(Distance);
+                    ThresholdResumed?.Invoke(eventData);
                 }
             }
 
