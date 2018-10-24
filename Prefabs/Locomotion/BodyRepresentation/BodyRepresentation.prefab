@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
+  sourceThickness: 0.05
   offset: {fileID: 0}
   ignoredColliders: []
   BecameGrounded:
