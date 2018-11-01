@@ -9,6 +9,7 @@
     using VRTK.Core.Tracking.Collision;
     using VRTK.Core.Tracking.Collision.Active;
     using VRTK.Core.Prefabs.Interactions.Interactables;
+    using VRTK.Core.Utility;
 
     /// <summary>
     /// Sets up the Interactor Prefab grab settings based on the provided user settings.
@@ -54,6 +55,16 @@
         /// </summary>
         [Tooltip("The GameObjectSet containing the currently grabbed objects.")]
         public GameObjectSet grabbedObjects;
+        /// <summary>
+        /// The <see cref="CountdownTimer"/> to determine grab precognition.
+        /// </summary>
+        [Tooltip("The CountdownTimer to determine grab precognition.")]
+        public CountdownTimer precognitionTimer;
+        /// <summary>
+        /// The minimum timer value for the grab precognition <see cref="CountdownTimer"/>.
+        /// </summary>
+        [Tooltip("The minimum timer value for the grab precognition CountdownTimer.")]
+        public float minPrecognitionTimer = 0.01f;
         #endregion
 
         /// <summary>
@@ -66,9 +77,10 @@
         /// </summary>
         public virtual void ConfigureGrabAction()
         {
-            if (grabAction != null && facade != null && facade.grabAction != null)
+            if (grabAction != null && facade != null && facade.GrabAction != null)
             {
-                grabAction.AddSource(facade?.grabAction);
+                grabAction.ClearSources();
+                grabAction.AddSource(facade?.GrabAction);
             }
         }
 
@@ -77,10 +89,10 @@
         /// </summary>
         public virtual void ConfigureVelocityTrackers()
         {
-            if (velocityTracker != null && facade != null && facade.velocityTracker != null)
+            if (velocityTracker != null && facade != null && facade.VelocityTracker != null)
             {
                 velocityTracker.velocityTrackers.Clear();
-                velocityTracker.velocityTrackers.Add(facade.velocityTracker);
+                velocityTracker.velocityTrackers.Add(facade.VelocityTracker);
             }
         }
 
@@ -98,6 +110,18 @@
             {
                 stopGrabbingPublisher.payload.sourceContainer = attachPoint;
             }
+        }
+
+        /// <summary>
+        /// Configures the <see cref="CountdownTimer"/> components for grab precognition.
+        /// </summary>
+        public virtual void ConfigureGrabPrecognition()
+        {
+            if (facade.GrabPrecognition < minPrecognitionTimer)
+            {
+                facade.GrabPrecognition = minPrecognitionTimer;
+            }
+            precognitionTimer.startTime = facade.GrabPrecognition;
         }
 
         /// <summary>
@@ -157,6 +181,7 @@
             ConfigureGrabAction();
             ConfigureVelocityTrackers();
             ConfigurePublishers();
+            ConfigureGrabPrecognition();
         }
 
         /// <summary>
