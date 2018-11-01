@@ -132,6 +132,11 @@
 
         protected virtual void OnValidate()
         {
+            if (!isActiveAndEnabled || !Application.isPlaying)
+            {
+                return;
+            }
+
             internalSetup.SetAxisSources();
             internalSetup.SetMultipliers();
         }
