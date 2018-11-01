@@ -264,9 +264,10 @@
 
             return Physics
                 .OverlapSphere(
-                    characterController.transform.position
-                    + (Vector3.up * (characterController.radius - characterController.skinWidth - 0.001f)),
-                    characterController.radius)
+                    characterController.transform.position + (Vector3.up * (characterController.radius - characterController.skinWidth - 0.001f)),
+                    characterController.radius,
+                    1 << characterController.gameObject.layer
+                    )
                 .Except(facade.ignoredColliders.EmptyIfNull())
                 .Except(
                     new Collider[]
