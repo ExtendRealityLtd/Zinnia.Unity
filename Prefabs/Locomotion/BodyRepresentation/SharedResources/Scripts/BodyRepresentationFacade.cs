@@ -1,10 +1,11 @@
 ﻿namespace VRTK.Core.Prefabs.Locomotion.BodyRepresentation
 {
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using System.Collections.Generic;
     using VRTK.Core.Data.Attribute;
     using VRTK.Core.Tracking.Follow;
+    using VRTK.Core.Prefabs.Interactions.Interactors;
 
     /// <summary>
     /// The public interface for the BodyRepresentation prefab.
@@ -28,10 +29,10 @@
         [Tooltip("An optional offset for the source to use.")]
         public GameObject offset;
         /// <summary>
-        /// The colliders to ignore body collisions with.
+        /// A collection of interactors to exclude from physics collision checks.
         /// </summary>
-        [Tooltip("The colliders to ignore body collisions with.")]
-        public List<Collider> ignoredColliders = new List<Collider>();
+        [Tooltip("A collection of interactors to exclude from physics collision checks."), SerializeField]
+        protected List<InteractorFacade> ignoredInteractors = new List<InteractorFacade>();
         #endregion
 
         #region Events
@@ -74,6 +75,11 @@
         /// Whether the body touches ground.
         /// </summary>
         public bool IsCharacterControllerGrounded => internalSetup.IsCharacterControllerGrounded;
+
+        /// <summary>
+        /// A collection of interactors to exclude from physics checks.
+        /// </summary>
+        public List<InteractorFacade> IgnoredInteractors => ignoredInteractors;
 
         /// <summary>
         /// An optional follower of <see cref="offset"/>.
