@@ -106,6 +106,10 @@
         public bool IsCharacterControllerGrounded => wasCharacterControllerGrounded == true;
 
         /// <summary>
+        /// Movement to apply to <see cref="characterController"/> to resolve collisions.
+        /// </summary>
+        protected static readonly Vector3 collisionResolutionMovement = new Vector3(0.001f, 0f, 0f);
+        /// <summary>
         /// The colliders to ignore body collisions with.
         /// </summary>
         protected HashSet<Collider> ignoredColliders = new HashSet<Collider>();
@@ -370,7 +374,13 @@
             }
             else
             {
-                characterController.Move(position - characterController.transform.position);
+                Vector3 movement = position - characterController.transform.position;
+                // The CharacterController doesn't resolve any potential collisions in case we don't move it.
+                characterController.Move(movement == Vector3.zero ? movement + collisionResolutionMovement : movement);
+                if (movement == Vector3.zero)
+                {
+                    characterController.Move(movement - collisionResolutionMovement);
+                }
             }
 
             characterController.height = height;
