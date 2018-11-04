@@ -129,6 +129,18 @@
             BecameEmpty?.Invoke(default(TElement));
         }
 
+        protected virtual void Start()
+        {
+            for (int i = 0; i < Elements.Count; i++)
+            {
+                if (i == 0)
+                {
+                    BecamePopulated?.Invoke(Elements[i]);
+                }
+                ElementAdded?.Invoke(Elements[i]);
+            }
+        }
+
         /// <summary>
         /// Always emits <see cref="ElementAdded"/> and additionally <see cref="BecamePopulated"/> if the first element was added to the collection.
         /// </summary>

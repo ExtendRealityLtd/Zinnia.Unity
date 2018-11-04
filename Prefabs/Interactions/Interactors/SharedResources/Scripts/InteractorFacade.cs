@@ -27,13 +27,18 @@
         /// <summary>
         /// The <see cref="BooleanAction"/> that will initiate the Interactor grab mechanism.
         /// </summary>
-        [Header("Interactor Settings"), Tooltip("The BooleanAction that will initiate the Interactor grab mechanism.")]
-        public BooleanAction grabAction;
+        [Header("Interactor Settings"), Tooltip("The BooleanAction that will initiate the Interactor grab mechanism."), SerializeField]
+        protected BooleanAction grabAction;
         /// <summary>
         /// The <see cref="VelocityTrackerProcessor"/> to measure the interactors current velocity.
         /// </summary>
-        [Tooltip("The VelocityTrackerProcessor to measure the interactors current velocity.")]
-        public VelocityTrackerProcessor velocityTracker;
+        [Tooltip("The VelocityTrackerProcessor to measure the interactors current velocity."), SerializeField]
+        protected VelocityTrackerProcessor velocityTracker;
+        /// <summary>
+        /// The time between initiating the <see cref="grabAction"/> and touching an Interactable to be considered a valid grab.
+        /// </summary>
+        [Tooltip("The time between initiating the grabAction and touching an Interactable to be considered a valid grab."), SerializeField]
+        protected float grabPrecognition = 0.01f;
         #endregion
 
         #region Interactor Events
@@ -68,6 +73,54 @@
         [Tooltip("The linked Grab Internal Setup."), InternalSetting]
         public GrabInteractorInternalSetup grabInteractorSetup;
         #endregion
+
+        /// <summary>
+        /// The <see cref="BooleanAction"/> that will initiate the Interactor grab mechanism.
+        /// </summary>
+        public BooleanAction GrabAction
+        {
+            get
+            {
+                return grabAction;
+            }
+            set
+            {
+                grabAction = value;
+                grabInteractorSetup.ConfigureGrabAction();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="VelocityTrackerProcessor"/> to measure the interactors current velocity.
+        /// </summary>
+        public VelocityTrackerProcessor VelocityTracker
+        {
+            get
+            {
+                return velocityTracker;
+            }
+            set
+            {
+                velocityTracker = value;
+                grabInteractorSetup.ConfigureVelocityTrackers();
+            }
+        }
+
+        /// <summary>
+        /// The time between initiating the <see cref="grabAction"/> and touching an Interactable to be considered a valid grab.
+        /// </summary>
+        public float GrabPrecognition
+        {
+            get
+            {
+                return grabPrecognition;
+            }
+            set
+            {
+                grabPrecognition = value;
+                grabInteractorSetup.ConfigureGrabPrecognition();
+            }
+        }
 
         /// <summary>
         /// A collection of currently touched GameObjects.
@@ -117,6 +170,18 @@
         public virtual void Ungrab()
         {
             grabInteractorSetup?.Ungrab();
+        }
+
+        protected virtual void OnValidate()
+        {
+            if (!isActiveAndEnabled || !Application.isPlaying)
+            {
+                return;
+            }
+
+            grabInteractorSetup.ConfigureGrabAction();
+            grabInteractorSetup.ConfigureVelocityTrackers();
+            grabInteractorSetup.ConfigureGrabPrecognition();
         }
     }
 }

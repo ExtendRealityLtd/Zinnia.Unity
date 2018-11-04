@@ -1,10 +1,14 @@
 ﻿namespace VRTK.Core.Prefabs.Locomotion.BodyRepresentation
 {
+    using UnityEngine;
     using System;
     using System.Linq;
-    using UnityEngine;
-    using VRTK.Core.Extension;
+    using System.Collections.Generic;
     using VRTK.Core.Process;
+    using VRTK.Core.Extension;
+    using VRTK.Core.Data.Collection;
+    using VRTK.Core.Prefabs.Interactions.Interactors;
+    using VRTK.Core.Prefabs.Interactions.Interactables;
 
     /// <summary>
     /// Sets up the BodyRepresentation prefab based on the provided user settings and implements the logic to represent a body.
@@ -58,6 +62,11 @@
         /// </summary>
         [Tooltip("The Rigidbody that acts as the physical collider representation of the body.")]
         public CapsuleCollider rigidbodyCollider;
+        /// <summary>
+        /// An observable list of GameObjects to ignore collisions on.
+        /// </summary>
+        [Tooltip("An observable list of GameObjects to ignore collisions on.")]
+        public ObservableGameObjectList ignoredGameObjectCollisions;
         #endregion
 
         /// <summary>
@@ -97,6 +106,18 @@
         public bool IsCharacterControllerGrounded => wasCharacterControllerGrounded == true;
 
         /// <summary>
+        /// Movement to apply to <see cref="characterController"/> to resolve collisions.
+        /// </summary>
+        protected static readonly Vector3 collisionResolutionMovement = new Vector3(0.001f, 0f, 0f);
+        /// <summary>
+        /// The colliders to ignore body collisions with.
+        /// </summary>
+        protected HashSet<Collider> ignoredColliders = new HashSet<Collider>();
+        /// <summary>
+        /// The colliders to restore after an ungrab.
+        /// </summary>
+        protected HashSet<Collider> RestoreColliders = new HashSet<Collider>();
+        /// <summary>
         /// The previous position of <see cref="rigidbody"/>.
         /// </summary>
         protected Vector3 previousRigidbodyPosition;
@@ -108,8 +129,83 @@
         /// The frame count of the last time <see cref="Interest"/> was set to <see cref="MovementInterest.Rigidbody"/> or <see cref="MovementInterest.RigidbodyUntilGrounded"/>.
         /// </summary>
         protected int rigidbodySetFrameCount;
+        /// <summary>
+        /// Stores the routine for ignoring interactor collisions.
+        /// </summary>
+        protected Coroutine ignoreInteractorCollisions;
 
         private MovementInterest interest = MovementInterest.CharacterControllerUntilAirborne;
+
+        /// <summary>
+        /// Ignores collisions from the given <see cref="GameObject"/> with the <see cref="rigidbodyCollider"/> and <see cref="characterController"/>.
+        /// </summary>
+        /// <param name="toIgnore">The object to ignore collisions from.</param>
+        public virtual void IgnoreCollisionsWith(GameObject toIgnore)
+        {
+            if (toIgnore == null)
+            {
+                return;
+            }
+
+            foreach (Collider foundCollider in toIgnore.GetComponentsInChildren<Collider>(true))
+            {
+                IgnoreCollisionsWith(foundCollider);
+            }
+        }
+
+        /// <summary>
+        /// Ignores collisions from the given <see cref="Collider"/> with the <see cref="rigidbodyCollider"/> and <see cref="characterController"/>.
+        /// </summary>
+        /// <param name="toIgnore">The collider to ignore collisions from.</param>
+        public virtual void IgnoreCollisionsWith(Collider toIgnore)
+        {
+            if (toIgnore == null)
+            {
+                return;
+            }
+
+            if (!ignoredColliders.Contains(toIgnore))
+            {
+                Physics.IgnoreCollision(toIgnore, rigidbodyCollider, true);
+                Physics.IgnoreCollision(toIgnore, characterController, true);
+                ignoredColliders.Add(toIgnore);
+            }
+        }
+
+        /// <summary>
+        /// Resumes collisions with the given <see cref="GameObject"/> with the <see cref="rigidbodyCollider"/> and <see cref="characterController"/>.
+        /// </summary>
+        /// <param name="toResume">The object to resume collisions with.</param>
+        public virtual void ResumeCollisionsWith(GameObject toResume)
+        {
+            if (toResume == null)
+            {
+                return;
+            }
+
+            foreach (Collider foundCollider in toResume.GetComponentsInChildren<Collider>(true))
+            {
+                ResumeCollisionsWith(foundCollider);
+            }
+        }
+
+        /// <summary>
+        /// Resumes collisions with the given <see cref="Collider"/> with the <see cref="rigidbodyCollider"/> and <see cref="characterController"/>.
+        /// </summary>
+        /// <param name="toResume">The collider to resume collisions with.</param>
+        public virtual void ResumeCollisionsWith(Collider toResume)
+        {
+            if (toResume == null)
+            {
+                return;
+            }
+
+            if (ignoredColliders.Remove(toResume))
+            {
+                Physics.IgnoreCollision(toResume, rigidbodyCollider, false);
+                Physics.IgnoreCollision(toResume, characterController, false);
+            }
+        }
 
         /// <summary>
         /// Positions, sizes and controls all variables necessary to make a body representation follow the given <see cref="BodyRepresentationFacade.source"/>.
@@ -194,6 +290,61 @@
             RememberCurrentPositions();
         }
 
+        protected virtual void Start()
+        {
+            IgnoreInteractorsCollisions();
+        }
+
+        /// <summary>
+        /// Ignores all of the colliders on the interactor collection.
+        /// </summary>
+        protected virtual void IgnoreInteractorsCollisions()
+        {
+            foreach (InteractorFacade interactor in facade.IgnoredInteractors)
+            {
+                IgnoreInteractorCollision(interactor);
+            }
+        }
+
+        /// <summary>
+        /// Ignores all of the colliders on the given <see cref="InteractorFacade"/>.
+        /// </summary>
+        /// <param name="interactor">The interactor to ignore.</param>
+        protected virtual void IgnoreInteractorCollision(InteractorFacade interactor)
+        {
+            ignoredGameObjectCollisions.AddToEnd(interactor.gameObject);
+            interactor.Grabbed.AddListener(IgnoreInteractorGrabbedCollision);
+            interactor.Ungrabbed.AddListener(ResumeInteractorUngrabbedCollision);
+        }
+
+        /// <summary>
+        /// Ignores the interactable grabbed by the interactor.
+        /// </summary>
+        /// <param name="interactable">The interactable to ignore.</param>
+        protected virtual void IgnoreInteractorGrabbedCollision(InteractableFacade interactable)
+        {
+            Collider[] interactableColliders = interactable.GetComponentsInChildren<Collider>(true);
+            foreach (Collider toRestore in interactableColliders.Except(ignoredColliders))
+            {
+                RestoreColliders.Add(toRestore);
+            }
+            IgnoreCollisionsWith(interactable.gameObject);
+        }
+
+        /// <summary>
+        /// Resumes the interactable ungrabbed by the interactor.
+        /// </summary>
+        /// <param name="interactable">The interactable to resume.</param>
+        protected virtual void ResumeInteractorUngrabbedCollision(InteractableFacade interactable)
+        {
+            Collider[] interactableColliders = interactable.GetComponentsInChildren<Collider>(true);
+            foreach (Collider resumeCollider in interactableColliders.Intersect(RestoreColliders))
+            {
+                ResumeCollisionsWith(resumeCollider);
+                RestoreColliders.Remove(resumeCollider);
+            }
+        }
+
         /// <summary>
         /// Changes the height and position of <see cref="characterController"/> to match <see cref="BodyRepresentationFacade.source"/>.
         /// </summary>
@@ -223,7 +374,13 @@
             }
             else
             {
-                characterController.Move(position - characterController.transform.position);
+                Vector3 movement = position - characterController.transform.position;
+                // The CharacterController doesn't resolve any potential collisions in case we don't move it.
+                characterController.Move(movement == Vector3.zero ? movement + collisionResolutionMovement : movement);
+                if (movement == Vector3.zero)
+                {
+                    characterController.Move(movement - collisionResolutionMovement);
+                }
             }
 
             characterController.height = height;
@@ -264,10 +421,11 @@
 
             return Physics
                 .OverlapSphere(
-                    characterController.transform.position
-                    + (Vector3.up * (characterController.radius - characterController.skinWidth - 0.001f)),
-                    characterController.radius)
-                .Except(facade.ignoredColliders.EmptyIfNull())
+                    characterController.transform.position + (Vector3.up * (characterController.radius - characterController.skinWidth - 0.001f)),
+                    characterController.radius,
+                    1 << characterController.gameObject.layer
+                    )
+                .Except(ignoredColliders.EmptyIfNull())
                 .Except(
                     new Collider[]
                     {
