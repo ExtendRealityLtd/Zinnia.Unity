@@ -30,6 +30,11 @@
         /// </summary>
         [Header("Grab Settings"), Tooltip("The GameObjectEventStack that deals with the grabbing actions.")]
         public GameObjectEventStack gameObjectEventStack;
+        /// <summary>
+        /// The <see cref="GameObjectSet"/> that deals with the grabbing actions.
+        /// </summary>
+        [Tooltip("The GameObjectSet that deals with the grabbing actions.")]
+        public GameObjectSet gameObjectSet;
         #endregion
 
         #region Attachment Logic
@@ -226,19 +231,6 @@
         }
 
         /// <summary>
-        /// Notifies that the Interactable is being grabbed for the first time.
-        /// </summary>
-        /// <param name="data">The grabbing object.</param>
-        public virtual void NotifyFirstGrab(GameObject data)
-        {
-            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
-            if (interactor != null)
-            {
-                facade?.FirstGrabbed?.Invoke(interactor);
-            }
-        }
-
-        /// <summary>
         /// Notifies that the Interactable is being grabbed.
         /// </summary>
         /// <param name="data">The grabbing object.</param>
@@ -247,6 +239,10 @@
             InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
+                if (facade?.GrabbingInteractors.Count == 1)
+                {
+                    facade?.FirstGrabbed?.Invoke(interactor);
+                }
                 facade?.Grabbed?.Invoke(interactor);
                 interactor.Grabbed?.Invoke(facade);
                 interactor.grabInteractorSetup?.grabbedObjects?.AddElement(facade?.gameObject);
@@ -265,19 +261,10 @@
                 facade?.Ungrabbed?.Invoke(interactor);
                 interactor.Ungrabbed?.Invoke(facade);
                 interactor.grabInteractorSetup?.grabbedObjects?.RemoveElement(facade?.gameObject);
-            }
-        }
-
-        /// <summary>
-        /// Notifies that the Interactable is being ungrabbed for the last time.
-        /// </summary>
-        /// <param name="data">The ungrabbing object.</param>
-        public virtual void NotifyLastUngrab(GameObject data)
-        {
-            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
-            if (interactor != null)
-            {
-                facade?.LastUngrabbed?.Invoke(interactor);
+                if (facade?.GrabbingInteractors.Count == 0)
+                {
+                    facade?.LastUngrabbed?.Invoke(interactor);
+                }
             }
         }
 
@@ -309,12 +296,12 @@
         {
             List<InteractorFacade> returnList = new List<InteractorFacade>();
 
-            if (gameObjectEventStack == null)
+            if (gameObjectEventStack == null && gameObjectSet == null)
             {
                 return returnList;
             }
 
-            foreach (GameObject element in gameObjectEventStack.Stack)
+            foreach (GameObject element in (gameObjectEventStack != null ? gameObjectEventStack.Stack as IEnumerable<GameObject> : gameObjectSet.Elements as IEnumerable<GameObject>))
             {
                 InteractorFacade interactor = element.TryGetComponent<InteractorFacade>(true, true);
                 if (interactor != null)

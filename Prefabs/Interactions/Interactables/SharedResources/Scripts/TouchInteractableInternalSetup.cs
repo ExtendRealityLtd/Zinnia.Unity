@@ -54,19 +54,6 @@
         }
 
         /// <summary>
-        /// Notifies that the Interactable is being touched for the first time.
-        /// </summary>
-        /// <param name="data">The touching object.</param>
-        public virtual void NotifyFirstTouch(GameObject data)
-        {
-            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
-            if (interactor != null)
-            {
-                facade?.FirstTouched?.Invoke(interactor);
-            }
-        }
-
-        /// <summary>
         /// Notifies that the Interactable is being touched.
         /// </summary>
         /// <param name="data">The touching object.</param>
@@ -75,6 +62,10 @@
             InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
+                if (facade?.TouchingInteractors.Count == 1)
+                {
+                    facade?.FirstTouched?.Invoke(interactor);
+                }
                 facade?.Touched?.Invoke(interactor);
                 interactor.Touched?.Invoke(facade);
             }
@@ -91,19 +82,10 @@
             {
                 facade?.Untouched?.Invoke(interactor);
                 interactor.Untouched?.Invoke(facade);
-            }
-        }
-
-        /// <summary>
-        /// Notifies that the Interactable is being untouched for the last time.
-        /// </summary>
-        /// <param name="data">The touching object.</param>
-        public virtual void NotifyLastUntouch(GameObject data)
-        {
-            InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
-            if (interactor != null)
-            {
-                facade?.LastUntouched?.Invoke(interactor);
+                if (facade?.TouchingInteractors.Count == 0)
+                {
+                    facade?.LastUntouched?.Invoke(interactor);
+                }
             }
         }
 
