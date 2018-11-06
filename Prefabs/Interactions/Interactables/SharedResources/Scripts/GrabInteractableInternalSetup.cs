@@ -114,7 +114,7 @@
         /// </summary>
         public virtual void ConfigureGrabValidity()
         {
-            if (facade?.disallowedGrabInteractors == null || grabValidity == null)
+            if (facade.disallowedGrabInteractors == null || grabValidity == null)
             {
                 return;
             }
@@ -123,7 +123,7 @@
 
             foreach (InteractorFacade interactor in facade.disallowedGrabInteractors)
             {
-                if (interactor.grabInteractorSetup?.attachPoint != null)
+                if (interactor.grabInteractorSetup.attachPoint != null)
                 {
                     grabValidity.objects.Add(interactor.grabInteractorSetup.attachPoint);
                 }
@@ -135,7 +135,7 @@
         /// </summary>
         public virtual void ConfigureGrabOffset()
         {
-            switch (facade?.grabOffset)
+            switch (facade.grabOffset)
             {
                 case InteractableFacade.GrabOffset.None:
                     precisionGrabLogic.TrySetActive(false);
@@ -162,16 +162,16 @@
                 return;
             }
 
-            switch (facade?.trackingType)
+            switch (facade.trackingType)
             {
                 case InteractableFacade.TrackingType.FollowTransform:
-                    RigidbodyTracking?.gameObject.SetActive(false);
-                    TransformTracking?.gameObject.SetActive(true);
+                    RigidbodyTracking.gameObject.SetActive(false);
+                    TransformTracking.gameObject.SetActive(true);
                     attachmentLogic.followModifier = TransformTracking;
                     break;
                 case InteractableFacade.TrackingType.FollowRigidbody:
-                    TransformTracking?.gameObject.SetActive(false);
-                    RigidbodyTracking?.gameObject.SetActive(true);
+                    TransformTracking.gameObject.SetActive(false);
+                    RigidbodyTracking.gameObject.SetActive(true);
                     attachmentLogic.followModifier = RigidbodyTracking;
                     break;
             }
@@ -182,7 +182,7 @@
         /// </summary>
         public virtual void ConfigureGrabType()
         {
-            switch (facade?.grabType)
+            switch (facade.grabType)
             {
                 case InteractableFacade.ActiveType.HoldTillRelease:
                     StartStateGrab.TrySetActive(true);
@@ -203,7 +203,7 @@
         /// <param name="interactor">The Interactor to attach the Interactable to.</param>
         public virtual void Grab(InteractorFacade interactor)
         {
-            interactor?.Grab(facade);
+            interactor.Grab(facade);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@
         /// <param name="interactor">The Interactor to ungrab from.</param>
         public virtual void Ungrab(InteractorFacade interactor)
         {
-            interactor?.Ungrab();
+            interactor.Ungrab();
         }
 
         /// <summary>
@@ -239,13 +239,13 @@
             InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
-                if (facade?.GrabbingInteractors.Count == 1)
+                if (facade.GrabbingInteractors.Count == 1)
                 {
-                    facade?.FirstGrabbed?.Invoke(interactor);
+                    facade.FirstGrabbed?.Invoke(interactor);
                 }
-                facade?.Grabbed?.Invoke(interactor);
+                facade.Grabbed?.Invoke(interactor);
                 interactor.Grabbed?.Invoke(facade);
-                interactor.grabInteractorSetup?.grabbedObjects?.AddElement(facade?.gameObject);
+                interactor.grabInteractorSetup.grabbedObjects.AddElement(facade.gameObject);
             }
         }
 
@@ -258,12 +258,12 @@
             InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
-                facade?.Ungrabbed?.Invoke(interactor);
+                facade.Ungrabbed?.Invoke(interactor);
                 interactor.Ungrabbed?.Invoke(facade);
-                interactor.grabInteractorSetup?.grabbedObjects?.RemoveElement(facade?.gameObject);
-                if (facade?.GrabbingInteractors.Count == 0)
+                interactor.grabInteractorSetup.grabbedObjects.RemoveElement(facade.gameObject);
+                if (facade.GrabbingInteractors.Count == 0)
                 {
-                    facade?.LastUngrabbed?.Invoke(interactor);
+                    facade.LastUngrabbed?.Invoke(interactor);
                 }
             }
         }
@@ -284,7 +284,7 @@
         protected virtual ActiveCollisionConsumer.EventData CreateConsumerDataFromInteractor(InteractorFacade interactor)
         {
             ActiveCollisionPublisher.PayloadData interactorPublisher = new ActiveCollisionPublisher.PayloadData();
-            interactorPublisher.sourceContainer = interactor?.grabInteractorSetup?.attachPoint;
+            interactorPublisher.sourceContainer = interactor.grabInteractorSetup.attachPoint;
             return new ActiveCollisionConsumer.EventData().Set(interactorPublisher, null);
         }
 
