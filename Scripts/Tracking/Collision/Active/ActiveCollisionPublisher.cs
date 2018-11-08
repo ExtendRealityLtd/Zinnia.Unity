@@ -78,12 +78,26 @@
         }
 
         /// <summary>
-        /// Sets the active collision data by copying it from given <see cref="PayloadData"/>.
+        /// Sets the active collision data by copying it from given <see cref="PayloadData"/> as long as the component is active and enabled.
         /// </summary>
         /// <param name="payload">The data to copy from.</param>
         public virtual void SetActiveCollisions(PayloadData payload)
         {
-            if (payload == null || !isActiveAndEnabled)
+            if (!isActiveAndEnabled)
+            {
+                return;
+            }
+
+            ForceSetActiveCollisions(payload);
+        }
+
+        /// <summary>
+        /// Sets the active collision data by copying it from given <see cref="PayloadData"/>.
+        /// </summary>
+        /// <param name="payload">The data to copy from.</param>
+        public virtual void ForceSetActiveCollisions(PayloadData payload)
+        {
+            if (payload == null)
             {
                 return;
             }
@@ -93,7 +107,7 @@
         }
 
         /// <summary>
-        /// Publishes itself and the current collision to all <see cref="ActiveCollisionConsumer"/> components found on any of the active collisions.
+        /// Publishes itself and the current collision to all <see cref="ActiveCollisionConsumer"/> components found on any of the active collisions as long as the component is active and enabled.
         /// </summary>
         public virtual void Publish()
         {
@@ -101,6 +115,15 @@
             {
                 return;
             }
+
+            ForcePublish();
+        }
+
+        /// <summary>
+        /// Publishes itself and the current collision to all <see cref="ActiveCollisionConsumer"/> components found on any of the active collisions as long as the component.
+        /// </summary>
+        public virtual void ForcePublish()
+        {
             payload.PublisherContainer = gameObject;
             foreach (CollisionNotifier.EventData currentCollision in payload.ActiveCollisions)
             {

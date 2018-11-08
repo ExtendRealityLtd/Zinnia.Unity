@@ -73,6 +73,12 @@
             ConfigurePublishers();
         }
 
+        protected virtual void OnDisable()
+        {
+            stopTouchingPublisher.ForceSetActiveCollisions(startTouchingPublisher.payload);
+            stopTouchingPublisher.ForcePublish();
+        }
+
         /// <summary>
         /// Retreives a collection of currently touched GameObjects.
         /// </summary>
