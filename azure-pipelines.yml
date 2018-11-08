@@ -1,0 +1,28 @@
+pool:
+  vmImage: 'vs2017-win2016'
+
+steps:
+- powershell: |
+   Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+   Install-Module UnitySetup -Scope CurrentUser -Force
+  workingDirectory: $(Build.SourcesDirectory)
+  failOnStderr: true
+
+  displayName: 'Install Unity Setup Powershell Module'
+
+- powershell: |
+   $project = Get-UnityProjectInstance
+   echo "before"
+   echo $project.Version
+   echo "after"
+   Install-UnitySetupInstance -Installers (Find-UnitySetupInstaller -Version $project.Version -Components Windows)
+  workingDirectory: $(Build.SourcesDirectory)
+  failOnStderr: true
+
+  displayName: 'Install Unity'
+
+- powershell: 'Start-UnityEditor -AcceptAPIUpdate -BatchMode -Quit -LogFile ".\UnityEditor.log" -OutputPath ".\Output" -Wait'
+  workingDirectory: $(Build.SourcesDirectory)
+  failOnStderr: true
+
+  displayName: 'Start Unity'
