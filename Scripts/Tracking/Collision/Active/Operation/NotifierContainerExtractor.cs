@@ -21,7 +21,7 @@
                 return null;
             }
 
-            Result = notifier.forwardSource?.gameObject;
+            Result = notifier.forwardSource.gameObject;
             return base.Extract();
         }
 

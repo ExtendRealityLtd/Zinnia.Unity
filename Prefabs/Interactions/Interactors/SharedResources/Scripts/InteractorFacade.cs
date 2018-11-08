@@ -125,15 +125,15 @@
         /// <summary>
         /// A collection of currently touched GameObjects.
         /// </summary>
-        public List<GameObject> TouchedObjects => touchInteractorSetup?.TouchedObjects;
+        public List<GameObject> TouchedObjects => touchInteractorSetup.TouchedObjects;
         /// <summary>
         /// The currently active touched GameObject.
         /// </summary>
-        public GameObject ActiveTouchedObject => touchInteractorSetup?.ActiveTouchedObject;
+        public GameObject ActiveTouchedObject => touchInteractorSetup.ActiveTouchedObject;
         /// <summary>
         /// A collection of currently grabbed GameObjects.
         /// </summary>
-        public List<GameObject> GrabbedObjects => grabInteractorSetup?.GrabbedObjects;
+        public List<GameObject> GrabbedObjects => grabInteractorSetup.GrabbedObjects;
 
         /// <summary>
         /// Attempt to grab a <see cref="GameObject"/> that contains an Interactable to the current Interactor.
@@ -161,7 +161,7 @@
         /// <param name="collider">Custom collider data.</param>
         public virtual void Grab(InteractableFacade interactable, Collision collision, Collider collider)
         {
-            grabInteractorSetup?.Grab(interactable, collision, collider);
+            grabInteractorSetup.Grab(interactable, collision, collider);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@
         /// </summary>
         public virtual void Ungrab()
         {
-            grabInteractorSetup?.Ungrab();
+            grabInteractorSetup.Ungrab();
         }
 
         protected virtual void OnValidate()

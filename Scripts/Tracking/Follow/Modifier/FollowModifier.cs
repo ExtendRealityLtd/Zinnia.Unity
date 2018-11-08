@@ -73,9 +73,9 @@
 
             Premodified?.Invoke(eventData.Set(source, target, offset));
 
-            positionModifier?.Modify(source, target, offset);
-            rotationModifier?.Modify(source, target, offset);
-            scaleModifier?.Modify(source, target, offset);
+            positionModifier.Modify(source, target, offset);
+            rotationModifier.Modify(source, target, offset);
+            scaleModifier.Modify(source, target, offset);
 
             Modified?.Invoke(eventData.Set(source, target, offset));
         }

@@ -112,7 +112,7 @@
         /// </summary>
         public virtual void NotifyHeadsetTrackingBegun()
         {
-            facade?.HeadsetTrackingBegun?.Invoke();
+            facade.HeadsetTrackingBegun?.Invoke();
         }
 
         /// <summary>
@@ -120,7 +120,7 @@
         /// </summary>
         public virtual void NotifyLeftControllerTrackingBegun()
         {
-            facade?.LeftControllerTrackingBegun?.Invoke();
+            facade.LeftControllerTrackingBegun?.Invoke();
         }
 
         /// <summary>
@@ -128,7 +128,7 @@
         /// </summary>
         public virtual void NotifyRightControllerTrackingBegun()
         {
-            facade?.RightControllerTrackingBegun?.Invoke();
+            facade.RightControllerTrackingBegun?.Invoke();
         }
 
         protected virtual void OnEnable()

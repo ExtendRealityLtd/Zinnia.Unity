@@ -157,11 +157,11 @@
         /// <summary>
         /// A collection of Interactors that are currently touching the Interactable.
         /// </summary>
-        public List<InteractorFacade> TouchingInteractors => touchInteractableSetup?.TouchingInteractors;
+        public List<InteractorFacade> TouchingInteractors => touchInteractableSetup.TouchingInteractors;
         /// <summary>
         /// A collection of Interactors that are currently grabbing the Interactable.
         /// </summary>
-        public List<InteractorFacade> GrabbingInteractors => grabInteractableSetup?.GrabbingInteractors;
+        public List<InteractorFacade> GrabbingInteractors => grabInteractableSetup.GrabbingInteractors;
 
         /// <summary>
         /// Attempt to grab the Interactable to the given <see cref="GameObject"/> that contains an Interactor.
@@ -178,7 +178,7 @@
         /// <param name="interactor">The Interactor to attach the Interactable to.</param>
         public virtual void Grab(InteractorFacade interactor)
         {
-            grabInteractableSetup?.Grab(interactor);
+            grabInteractableSetup.Grab(interactor);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@
         /// <param name="interactor">The Interactor to ungrab from.</param>
         public virtual void Ungrab(InteractorFacade interactor)
         {
-            grabInteractableSetup?.Ungrab(interactor);
+            grabInteractableSetup.Ungrab(interactor);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@
         /// <param name="sequenceIndex">The Interactor sequence index to ungrab from.</param>
         public virtual void Ungrab(int sequenceIndex = 0)
         {
-            grabInteractableSetup?.Ungrab(sequenceIndex);
+            grabInteractableSetup.Ungrab(sequenceIndex);
         }
 
         /// <summary>
@@ -213,8 +213,8 @@
         /// </summary>
         public virtual void RefreshInteractorRestrictions()
         {
-            touchInteractableSetup?.ConfigureTouchValidity();
-            grabInteractableSetup?.ConfigureGrabValidity();
+            touchInteractableSetup.ConfigureTouchValidity();
+            grabInteractableSetup.ConfigureGrabValidity();
         }
     }
 }

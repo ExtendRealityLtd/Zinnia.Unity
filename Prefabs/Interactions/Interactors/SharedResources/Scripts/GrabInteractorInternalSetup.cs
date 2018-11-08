@@ -80,7 +80,7 @@
             if (grabAction != null && facade != null && facade.GrabAction != null)
             {
                 grabAction.ClearSources();
-                grabAction.AddSource(facade?.GrabAction);
+                grabAction.AddSource(facade.GrabAction);
             }
         }
 
@@ -138,7 +138,7 @@
             }
 
             Ungrab();
-            startGrabbingPublisher?.SetActiveCollisions(CreateActiveCollisionsEventData(interactable.gameObject, collision, collider));
+            startGrabbingPublisher.SetActiveCollisions(CreateActiveCollisionsEventData(interactable.gameObject, collision, collider));
             ProcessGrabAction(startGrabbingPublisher, true);
             if (interactable.grabType == InteractableFacade.ActiveType.Toggle)
             {
@@ -166,13 +166,13 @@
 
         protected virtual void ProcessGrabAction(ActiveCollisionPublisher publisher, bool actionState)
         {
-            if (grabAction?.Value != actionState)
+            if (grabAction.Value != actionState)
             {
-                grabAction?.Receive(actionState);
+                grabAction.Receive(actionState);
             }
             else
             {
-                publisher?.Publish();
+                publisher.Publish();
             }
         }
 

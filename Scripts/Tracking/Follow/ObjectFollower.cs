@@ -161,10 +161,15 @@
         /// <inheritdoc />
         protected override void ProcessComponent(Component source, Component target)
         {
+            if (followModifier == null)
+            {
+                return;
+            }
+
             GameObject sourceGameObject = (modificationType == ModificationType.ModifyTargetUsingSource ? source.TryGetGameObject() : target.TryGetGameObject());
             GameObject targetGameObject = (modificationType == ModificationType.ModifyTargetUsingSource ? target.TryGetGameObject() : source.TryGetGameObject());
 
-            followModifier?.Modify(sourceGameObject, targetGameObject, followOffset);
+            followModifier.Modify(sourceGameObject, targetGameObject, followOffset);
         }
     }
 }

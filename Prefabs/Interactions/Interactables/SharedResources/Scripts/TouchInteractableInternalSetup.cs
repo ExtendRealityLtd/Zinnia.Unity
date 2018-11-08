@@ -40,7 +40,7 @@
         /// </summary>
         public virtual void ConfigureTouchValidity()
         {
-            if (facade?.disallowedTouchInteractors == null || touchValidity == null)
+            if (facade.disallowedTouchInteractors == null || touchValidity == null)
             {
                 return;
             }
@@ -62,11 +62,11 @@
             InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
-                if (facade?.TouchingInteractors.Count == 1)
+                if (facade.TouchingInteractors.Count == 1)
                 {
-                    facade?.FirstTouched?.Invoke(interactor);
+                    facade.FirstTouched?.Invoke(interactor);
                 }
-                facade?.Touched?.Invoke(interactor);
+                facade.Touched?.Invoke(interactor);
                 interactor.Touched?.Invoke(facade);
             }
         }
@@ -80,11 +80,11 @@
             InteractorFacade interactor = data.TryGetComponent<InteractorFacade>(true, true);
             if (interactor != null)
             {
-                facade?.Untouched?.Invoke(interactor);
+                facade.Untouched?.Invoke(interactor);
                 interactor.Untouched?.Invoke(facade);
-                if (facade?.TouchingInteractors.Count == 0)
+                if (facade.TouchingInteractors.Count == 0)
                 {
-                    facade?.LastUntouched?.Invoke(interactor);
+                    facade.LastUntouched?.Invoke(interactor);
                 }
             }
         }

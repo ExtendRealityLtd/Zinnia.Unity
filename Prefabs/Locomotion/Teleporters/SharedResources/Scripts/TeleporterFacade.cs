@@ -60,7 +60,7 @@
         /// <param name="destination">The location to attempt to teleport to.</param>
         public virtual void Teleport(TransformData destination)
         {
-            internalSetup?.Teleport(destination);
+            internalSetup.Teleport(destination);
         }
     }
 }

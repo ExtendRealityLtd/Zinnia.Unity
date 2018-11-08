@@ -59,12 +59,12 @@
         {
             if (startTouchingPublisher != null)
             {
-                startTouchingPublisher.payload.sourceContainer = facade?.gameObject;
+                startTouchingPublisher.payload.sourceContainer = facade.gameObject;
             }
 
             if (stopTouchingPublisher != null)
             {
-                stopTouchingPublisher.payload.sourceContainer = facade?.gameObject;
+                stopTouchingPublisher.payload.sourceContainer = facade.gameObject;
             }
         }
 
