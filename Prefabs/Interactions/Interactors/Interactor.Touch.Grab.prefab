@@ -581,7 +581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabAction: {fileID: 0}
   velocityTracker: {fileID: 0}
-  grabPrecognition: 0.01
+  grabPrecognition: 0.1
   Touched:
     m_PersistentCalls:
       m_Calls: []
