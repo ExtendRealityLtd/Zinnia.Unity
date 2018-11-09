@@ -15,7 +15,7 @@
         /// <returns>The forward source container within the notifier.</returns>
         public virtual GameObject Extract(CollisionNotifier.EventData notifier)
         {
-            if (notifier == null)
+            if (notifier == null || notifier.forwardSource == null)
             {
                 Result = null;
                 return null;

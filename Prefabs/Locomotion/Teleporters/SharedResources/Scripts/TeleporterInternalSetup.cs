@@ -108,7 +108,7 @@
         /// <param name="data">The location data.</param>
         public virtual void NotifyTeleporting(TransformPropertyApplier.EventData data)
         {
-            facade?.Teleporting.Invoke(data);
+            facade.Teleporting?.Invoke(data);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@
         /// <param name="data">The location data.</param>
         public virtual void NotifyTeleported(TransformPropertyApplier.EventData data)
         {
-            facade?.Teleported.Invoke(data);
+            facade.Teleported?.Invoke(data);
         }
 
         /// <summary>
