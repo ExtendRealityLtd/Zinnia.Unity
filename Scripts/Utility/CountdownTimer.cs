@@ -49,6 +49,11 @@
         /// </summary>
         public virtual void Begin()
         {
+            if (!isActiveAndEnabled)
+            {
+                return;
+            }
+
             IsRunning = true;
             Invoke(nameof(Complete), startTime);
             Started?.Invoke();
@@ -69,6 +74,11 @@
         /// </summary>
         public virtual void EmitStatus()
         {
+            if (!isActiveAndEnabled)
+            {
+                return;
+            }
+
             if (IsRunning)
             {
                 StillRunning?.Invoke();
@@ -77,6 +87,11 @@
             {
                 NotRunning?.Invoke();
             }
+        }
+
+        protected virtual void OnDisable()
+        {
+            Cancel();
         }
 
         /// <summary>

@@ -166,14 +166,16 @@
 
         protected virtual void ProcessGrabAction(ActiveCollisionPublisher publisher, bool actionState)
         {
+            precognitionTimer.enabled = false;
             if (grabAction.Value != actionState)
             {
                 grabAction.Receive(actionState);
             }
-            else
+            if (grabAction.Value)
             {
                 publisher.Publish();
             }
+            precognitionTimer.enabled = true;
         }
 
         protected virtual void OnEnable()
