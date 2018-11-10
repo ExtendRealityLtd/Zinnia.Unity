@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Takes average samples of a <see cref="Transform.position"/> and <see cref="Transform.rotation"/> and uses this cached data to estimate velocity and angular velocity.
@@ -13,6 +14,11 @@
         /// </summary>
         [Tooltip("The source to track and estimate velocities for.")]
         public GameObject source;
+        /// <summary>
+        /// An optional object to consider the source relative to when estimating the velocities.
+        /// </summary>
+        [Tooltip("An optional object to consider the source relative to when estimating the velocities.")]
+        public GameObject relativeTo;
         /// <summary>
         /// Automatically begin collecting samples for estimation.
         /// </summary>
@@ -34,7 +40,9 @@
         protected Vector3[] velocitySamples = Array.Empty<Vector3>();
         protected Vector3[] angularVelocitySamples = Array.Empty<Vector3>();
         protected Vector3 previousPosition = Vector3.zero;
-        Quaternion previousRotation = Quaternion.identity;
+        protected Quaternion previousRotation = Quaternion.identity;
+        protected Vector3 previousRelativePosition = Vector3.zero;
+        protected Quaternion previousRelativeRotation = Quaternion.identity;
 
         /// <inheritdoc />
         public override bool IsActive()
@@ -57,6 +65,23 @@
         public virtual void ClearSource()
         {
             source = null;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="relativeTo"/> parameter.
+        /// </summary>
+        /// <param name="relativeTo">The new relativeTo value.</param>
+        public virtual void SetRelativeTo(GameObject relativeTo)
+        {
+            this.relativeTo = relativeTo;
+        }
+
+        /// <summary>
+        /// Clears the <see cref="relativeTo"/> parameter.
+        /// </summary>
+        public virtual void ClearRelativeTo()
+        {
+            relativeTo = null;
         }
 
         /// <summary>
@@ -116,8 +141,10 @@
         {
             velocitySamples = new Vector3[velocityAverageFrames];
             angularVelocitySamples = new Vector3[angularVelocityAverageFrames];
-            previousPosition = (source != null ? source.transform.position : Vector3.zero);
-            previousRotation = (source != null ? source.transform.rotation : Quaternion.identity);
+            previousPosition = source.TryGetPosition();
+            previousRotation = source.TryGetRotation();
+            previousRelativePosition = relativeTo.TryGetPosition();
+            previousRelativeRotation = relativeTo.TryGetRotation();
             collectSamples = autoStartSampling;
         }
 
@@ -191,13 +218,18 @@
         /// <param name="factor">The multiplier to apply to the transform difference.</param>
         protected virtual void EstimateVelocity(float factor)
         {
-            Vector3 currentPosition = (source != null ? source.transform.position : Vector3.zero);
-            if (velocitySamples.Length > 0)
+            if (velocitySamples.Length == 0)
             {
-                int sampleIndex = currentSampleCount % velocitySamples.Length;
-                velocitySamples[sampleIndex] = factor * (currentPosition - previousPosition);
-                previousPosition = currentPosition;
+                return;
             }
+
+            Vector3 currentRelativePosition = relativeTo.TryGetPosition();
+            Vector3 relativeDeltaPosition = currentRelativePosition - previousRelativePosition;
+            Vector3 currentPosition = source.TryGetPosition();
+            int sampleIndex = currentSampleCount % velocitySamples.Length;
+            velocitySamples[sampleIndex] = factor * ((currentPosition - previousPosition) - relativeDeltaPosition);
+            previousPosition = currentPosition;
+            previousRelativePosition = currentRelativePosition;
         }
 
         /// <summary>
@@ -206,8 +238,15 @@
         /// <param name="factor">The multiplier to apply to the transform difference.</param>
         protected virtual void EstimateAngularVelocity(float factor)
         {
-            Quaternion currentRotation = (source != null ? source.transform.rotation : Quaternion.identity);
-            Quaternion deltaRotation = currentRotation * Quaternion.Inverse(previousRotation);
+            if (angularVelocitySamples.Length == 0)
+            {
+                return;
+            }
+
+            Quaternion currentRelativeRotation = relativeTo.TryGetRotation();
+            Quaternion relativeDelataRotation = currentRelativeRotation * Quaternion.Inverse(previousRelativeRotation);
+            Quaternion currentRotation = source.TryGetRotation();
+            Quaternion deltaRotation = Quaternion.Inverse(relativeDelataRotation) * (currentRotation * Quaternion.Inverse(previousRotation));
             float theta = 2.0f * Mathf.Acos(Mathf.Clamp(deltaRotation.w, -1.0f, 1.0f));
             if (theta > Mathf.PI)
             {
@@ -220,12 +259,10 @@
                 angularVelocity = theta * factor * angularVelocity.normalized;
             }
 
-            if (angularVelocitySamples.Length > 0)
-            {
-                int sampleIndex = currentSampleCount % angularVelocitySamples.Length;
-                angularVelocitySamples[sampleIndex] = angularVelocity;
-                previousRotation = currentRotation;
-            }
+            int sampleIndex = currentSampleCount % angularVelocitySamples.Length;
+            angularVelocitySamples[sampleIndex] = angularVelocity;
+            previousRotation = currentRotation;
+            previousRelativeRotation = currentRelativeRotation;
         }
     }
 }

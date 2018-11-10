@@ -155,5 +155,117 @@ namespace Test.VRTK.Core.Extension
             Object.DestroyImmediate(child);
             Object.DestroyImmediate(parent);
         }
+
+        [Test]
+        public void TryGetPosition()
+        {
+            Vector3 destinationPosition = Vector3.one * 2f;
+            GameObject parent = new GameObject();
+            parent.transform.position = destinationPosition;
+
+            Assert.AreEqual(destinationPosition, parent.TryGetPosition());
+
+            Object.DestroyImmediate(parent);
+        }
+
+        [Test]
+        public void TryGetPositionLocal()
+        {
+            Vector3 destinationPosition = Vector3.one * 2f;
+            GameObject parent = new GameObject();
+            GameObject child = new GameObject();
+            child.transform.SetParent(parent.transform);
+            child.transform.position = destinationPosition;
+            parent.transform.position = destinationPosition * 2f;
+
+            Assert.AreEqual(destinationPosition, child.TryGetPosition(true));
+
+            Object.DestroyImmediate(parent);
+            Object.DestroyImmediate(child);
+        }
+
+        [Test]
+        public void TryGetRotation()
+        {
+            Quaternion destinationRotation = Quaternion.Euler(Vector3.up * 90f);
+            GameObject parent = new GameObject();
+            parent.transform.rotation = destinationRotation;
+
+            Assert.AreEqual(destinationRotation.ToString(), parent.TryGetRotation().ToString());
+
+            Object.DestroyImmediate(parent);
+        }
+
+        [Test]
+        public void TryGetRotationLocal()
+        {
+            Quaternion destinationRotation = Quaternion.Euler(Vector3.up * 90f);
+            GameObject parent = new GameObject();
+            GameObject child = new GameObject();
+            child.transform.SetParent(parent.transform);
+            child.transform.localRotation = destinationRotation;
+            parent.transform.localRotation = Quaternion.Euler(Vector3.up * 145f);
+
+            Assert.AreEqual(destinationRotation.ToString(), child.TryGetRotation(true).ToString());
+
+            Object.DestroyImmediate(parent);
+            Object.DestroyImmediate(child);
+        }
+
+        [Test]
+        public void TryGetEulerRotation()
+        {
+            Vector3 destinationEulerRotation = Vector3.up * 90f;
+            GameObject parent = new GameObject();
+            parent.transform.eulerAngles = destinationEulerRotation;
+
+            Assert.AreEqual(destinationEulerRotation, parent.TryGetEulerRotation());
+
+            Object.DestroyImmediate(parent);
+        }
+
+        [Test]
+        public void TryGetEulerRotationLocal()
+        {
+            Vector3 destinationRotation = Vector3.up * 90f;
+            GameObject parent = new GameObject();
+            GameObject child = new GameObject();
+            child.transform.SetParent(parent.transform);
+            child.transform.localEulerAngles = destinationRotation;
+            parent.transform.localEulerAngles = Vector3.up * 145f;
+
+            Assert.AreEqual(destinationRotation.ToString(), child.TryGetEulerRotation(true).ToString());
+
+            Object.DestroyImmediate(parent);
+            Object.DestroyImmediate(child);
+        }
+
+        [Test]
+        public void TryGetScale()
+        {
+            Vector3 destinationScale = Vector3.one * 2f;
+            GameObject parent = new GameObject();
+            parent.transform.SetGlobalScale(destinationScale);
+
+            Assert.AreEqual(destinationScale, parent.TryGetScale());
+
+            Object.DestroyImmediate(parent);
+        }
+
+        [Test]
+        public void TryGetScaleLocal()
+        {
+            Vector3 destinationScale = Vector3.one * 2f;
+            GameObject parent = new GameObject();
+            GameObject child = new GameObject();
+            child.transform.SetParent(parent.transform);
+            child.transform.localScale = destinationScale;
+            parent.transform.SetGlobalScale(destinationScale * 2f);
+
+            Assert.AreEqual(destinationScale, child.TryGetScale(true));
+
+            Object.DestroyImmediate(parent);
+            Object.DestroyImmediate(child);
+        }
     }
 }
