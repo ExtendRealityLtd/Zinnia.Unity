@@ -140,7 +140,7 @@
                     Camera.onPreRender += OnCameraPreRender;
                     break;
                 case Moment.PreCull:
-                    Camera.onPreCull -= OnCameraPreCull;
+                    Camera.onPreCull += OnCameraPreCull;
                     break;
             }
             subscribedMoment = momentToProcess;
