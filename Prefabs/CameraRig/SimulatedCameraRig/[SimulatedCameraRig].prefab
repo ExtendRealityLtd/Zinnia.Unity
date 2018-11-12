@@ -2399,6 +2399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1581495199198194}
+  relativeTo: {fileID: 1121419207030402}
   autoStartSampling: 1
   velocityAverageFrames: 5
   angularVelocityAverageFrames: 10
@@ -2593,6 +2594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1496419616007624}
+  relativeTo: {fileID: 0}
   autoStartSampling: 1
   velocityAverageFrames: 5
   angularVelocityAverageFrames: 10
@@ -2743,9 +2745,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37939f2e3f9c118469597addd953b38c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trackedAlias: {fileID: 0}
   disableXRSettings: 1
   simulatedFrameRate: 90
-  trackedAlias: {fileID: 0}
   playareaPosition: {fileID: 114447943956170304}
   playareaResetter: {fileID: 114041395006009992}
 --- !u!114 &114351927556944560
@@ -3202,6 +3204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1643489474284420}
+  relativeTo: {fileID: 1121419207030402}
   autoStartSampling: 1
   velocityAverageFrames: 5
   angularVelocityAverageFrames: 10

@@ -48,5 +48,49 @@
 
             return foundComponent;
         }
+
+        /// <summary>
+        /// Attempts to retrieve the position of the <see cref="GameObject.transform"/>.
+        /// </summary>
+        /// <param name="gameObject">The reference <see cref="GameObject"/> to retrieve for.</param>
+        /// <param name="getLocal">Determines whether to get the local or world position.</param>
+        /// <returns>The position of the <see cref="GameObject.transform"/>.</returns>
+        public static Vector3 TryGetPosition(this GameObject gameObject, bool getLocal = false)
+        {
+            return (gameObject != null ? (getLocal ? gameObject.transform.localPosition : gameObject.transform.position) : Vector3.zero);
+        }
+
+        /// <summary>
+        /// Attempts to retrieve the rotation of the <see cref="GameObject.transform"/>.
+        /// </summary>
+        /// <param name="gameObject">The reference <see cref="GameObject"/> to retrieve for.</param>
+        /// <param name="getLocal">Determines whether to get the local or world rotation.</param>
+        /// <returns>The rotation of the <see cref="GameObject.transform"/>.</returns>
+        public static Quaternion TryGetRotation(this GameObject gameObject, bool getLocal = false)
+        {
+            return (gameObject != null ? (getLocal ? gameObject.transform.localRotation : gameObject.transform.rotation) : Quaternion.identity);
+        }
+
+        /// <summary>
+        /// Attempts to retrieve the euler rotation of the <see cref="GameObject.transform"/>.
+        /// </summary>
+        /// <param name="gameObject">The reference <see cref="GameObject"/> to retrieve for.</param>
+        /// <param name="getLocal">Determines whether to get the local or world euler rotation.</param>
+        /// <returns>The euler rotation of the <see cref="GameObject.transform"/>.</returns>
+        public static Vector3 TryGetEulerRotation(this GameObject gameObject, bool getLocal = false)
+        {
+            return (gameObject != null ? (getLocal ? gameObject.transform.localEulerAngles : gameObject.transform.eulerAngles) : Vector3.zero);
+        }
+
+        /// <summary>
+        /// Attempts to retrieve the scale of the <see cref="GameObject.transform"/>.
+        /// </summary>
+        /// <param name="gameObject">The reference <see cref="GameObject"/> to retrieve for.</param>
+        /// <param name="getLocal">Determines whether to get the local or world scale.</param>
+        /// <returns>The scale of the <see cref="GameObject.transform"/>.</returns>
+        public static Vector3 TryGetScale(this GameObject gameObject, bool getLocal = false)
+        {
+            return (gameObject != null ? (getLocal ? gameObject.transform.localScale : gameObject.transform.lossyScale) : Vector3.zero);
+        }
     }
 }
