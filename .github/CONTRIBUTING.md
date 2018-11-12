@@ -118,8 +118,7 @@ The order elements are defined in a class should be as follows:
 
   * nested classes
   * public enums
-  * public fields
-  * protected serialized fields
+  * serialized (public or protected/private + `[SerializeField]`) fields
   * public events
   * public properties
   * protected enums

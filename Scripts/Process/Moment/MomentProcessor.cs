@@ -1,8 +1,8 @@
 ﻿namespace VRTK.Core.Process.Moment
 {
     using UnityEngine;
-    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using VRTK.Core.Extension;
 
     /// <summary>
@@ -140,30 +140,20 @@
                     Camera.onPreRender += OnCameraPreRender;
                     break;
                 case Moment.PreCull:
-                    Camera.onPreCull -= OnCameraPreCull;
+                    Camera.onPreCull += OnCameraPreCull;
                     break;
             }
             subscribedMoment = momentToProcess;
         }
 
         /// <summary>
-        /// Iterates through the given <see cref="MomentProcess"/> and calls <see cref="MomentProcess.process"/> on each one.
+        /// Iterates through the given <see cref="MomentProcess"/> and calls <see cref="MomentProcess.Process"/> on each one.
         /// </summary>
         protected virtual void Process()
         {
-            foreach (MomentProcess currentProcess in processes.EmptyIfNull())
+            foreach (MomentProcess currentProcess in processes.EmptyIfNull().Where(process => process != null))
             {
-                if (currentProcess == null || currentProcess.process == null || (currentProcess.onlyProcessOnActiveAndEnabled && !currentProcess.isActiveAndEnabled))
-                {
-                    continue;
-                }
-
-                if (currentProcess.process.Interface == null)
-                {
-                    throw new ArgumentNullException(String.Format("The MomentProcess.field on {0} cannot be null", currentProcess.name));
-                }
-
-                currentProcess.process.Interface.Process();
+                currentProcess.Process();
             }
         }
     }
