@@ -7,7 +7,6 @@
     using VRTK.Core.Visual;
     using VRTK.Core.Data.Type;
     using VRTK.Core.Extension;
-    using VRTK.Core.Rule;
 
     /// <summary>
     /// Sets up the Teleport Prefab based on the provided user settings.
@@ -52,37 +51,16 @@
         [Tooltip("The Transform Property Applier collection to set aliases on.")]
         public List<TransformPropertyApplier> transformPropertyApplierAliases = new List<TransformPropertyApplier>();
         /// <summary>
+        /// The <see cref="TransformPropertyApplier"/> collection to ignore offsets on.
+        /// </summary>
+        [Tooltip("The Transform Property Applier collection to ignore offsets on.")]
+        public List<TransformPropertyApplier> transformPropertyApplierIgnoreOffsetAliases = new List<TransformPropertyApplier>();
+        /// <summary>
         /// The scene <see cref="Camera"/>s to set the <see cref="CameraColorOverlay"/>s to affect.
         /// </summary>
         [Tooltip("The scene Cameras to set the CameraColorOverlays to affect.")]
         public List<CameraColorOverlay> cameraColorOverlays = new List<CameraColorOverlay>();
         #endregion
-
-        /// <summary>
-        /// Sets up the Teleporter prefab with the specified settings.
-        /// </summary>
-        public virtual void Setup()
-        {
-            if (InvalidParameters())
-            {
-                return;
-            }
-
-            ApplySettings(facade.playAreaAlias, facade.headsetAlias, facade.sceneCameras, facade.targetValidity);
-        }
-
-        /// <summary>
-        /// Clears all of the settings from the Teleporter prefab.
-        /// </summary>
-        public virtual void Clear()
-        {
-            if (InvalidParameters())
-            {
-                return;
-            }
-
-            ApplySettings(null, null, null, null);
-        }
 
         /// <summary>
         /// Attempts to teleport the <see cref="playAreaAlias"/>.
@@ -123,51 +101,37 @@
         /// <summary>
         /// Applies the provided settings to the Teleporter prefab.
         /// </summary>
-        /// <param name="playAreaAlias">The PlayArea alias.</param>
-        /// <param name="headsetAlias">The Headset alias.</param>
-        /// <param name="sceneCameras">The scene cameras.</param>
-        /// <param name="targetValidity">The rules to determine validity.</param>
-        protected virtual void ApplySettings(GameObject playAreaAlias, GameObject headsetAlias, CameraList sceneCameras, RuleContainer targetValidity)
+        protected virtual void Setup()
         {
             foreach (SurfaceLocator currentLocator in surfaceLocatorAliases.EmptyIfNull())
             {
-                currentLocator.searchOrigin = headsetAlias;
+                currentLocator.searchOrigin = facade.offset;
             }
 
             foreach (SurfaceLocator currentLocator in surfaceLocatorRules.EmptyIfNull())
             {
-                currentLocator.targetValidity = targetValidity;
+                currentLocator.targetValidity = facade.targetValidity;
             }
 
             foreach (TransformPropertyApplier currentApplier in transformPropertyApplierAliases.EmptyIfNull())
             {
-                currentApplier.target = playAreaAlias;
-                currentApplier.offset = headsetAlias;
+                currentApplier.target = facade.target;
+                currentApplier.offset = null;
+                if (!facade.onlyOffsetFloorSnap || !transformPropertyApplierIgnoreOffsetAliases.Contains(currentApplier))
+                {
+                    currentApplier.offset = facade.offset;
+                }
             }
 
             foreach (CameraColorOverlay currentOverlay in cameraColorOverlays.EmptyIfNull())
             {
-                currentOverlay.validCameras = sceneCameras;
+                currentOverlay.validCameras = facade.sceneCameras;
             }
         }
 
         protected virtual void OnEnable()
         {
             Setup();
-        }
-
-        protected virtual void OnDisable()
-        {
-            Clear();
-        }
-
-        /// <summary>
-        /// Determines if the setup parameters are invalid.
-        /// </summary>
-        /// <returns><see langword="true"/> if the parameters are invalid.</returns>
-        protected virtual bool InvalidParameters()
-        {
-            return (facade == null || facade.playAreaAlias == null || facade.headsetAlias == null || facade.sceneCameras == null);
         }
     }
 }
