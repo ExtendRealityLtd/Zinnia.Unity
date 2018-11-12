@@ -13,15 +13,20 @@
     {
         #region Teleporter Settings
         /// <summary>
-        /// The alias for the CameraRig Play Area.
+        /// The target to move to the teleported position.
         /// </summary>
-        [Header("Teleporter Settings"), Tooltip("The alias for the CameraRig Play Area.")]
-        public GameObject playAreaAlias;
+        [Header("Teleporter Settings"), Tooltip("The target to move to the teleported position.")]
+        public GameObject target;
         /// <summary>
-        /// The alias for the CameraRig Headset.
+        /// The offset to compensate the teleported target position by for both floor snapping and position movement.
         /// </summary>
-        [Tooltip("The alias for the CameraRig Headset.")]
-        public GameObject headsetAlias;
+        [Tooltip("The offset to compensate the teleported target position by for both floor snapping and position movement.")]
+        public GameObject offset;
+        /// <summary>
+        /// Determines if only the floor snap should only be compensated by the <see cref="offset"/> or whether the teleported target position should also be compensated by the <see cref="offset"/>.
+        /// </summary>
+        [Tooltip("Determines if only the floor snap should only be compensated by the offset or whether the teleported target position should also be compensated by the offset.")]
+        public bool onlyOffsetFloorSnap;
         /// <summary>
         /// The <see cref="CameraList"/> of scene <see cref="Camera"/>s to apply a fade to.
         /// </summary>

@@ -498,6 +498,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114833483784811346}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114973425399694208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -520,6 +521,8 @@ MonoBehaviour:
   transformPropertyApplierAliases:
   - {fileID: 114595092254332754}
   - {fileID: 114898619257496582}
+  transformPropertyApplierIgnoreOffsetAliases:
+  - {fileID: 114898619257496582}
   cameraColorOverlays:
   - {fileID: 114308937317668468}
 --- !u!114 &114979836843907558
@@ -533,8 +536,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11803ae5247db04b8ba76bdf0e5c67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playAreaAlias: {fileID: 0}
-  headsetAlias: {fileID: 0}
+  target: {fileID: 0}
+  offset: {fileID: 0}
+  onlyOffsetFloorSnap: 0
   sceneCameras: {fileID: 0}
   targetValidity:
     field: {fileID: 0}
