@@ -569,6 +569,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114903452454151976}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114148444839838400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -696,6 +697,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114210250122447072}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114394881288804734
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -722,6 +724,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114355316302716346}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114463072076221852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -736,6 +739,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114042093598017732}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114507909976065154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -750,6 +754,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114963507534984794}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114512765214697388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -861,6 +866,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114512765214697388}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114702675428234912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -922,6 +928,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114964950378471170}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114855179307605532
 MonoBehaviour:
   m_ObjectHideFlags: 1

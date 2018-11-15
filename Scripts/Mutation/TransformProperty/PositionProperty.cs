@@ -5,7 +5,7 @@
     /// <summary>
     /// Mutates the position of a transform with an optional rotation offset.
     /// </summary>
-    public class PositionProperty : BaseProperty
+    public class PositionProperty : Property
     {
         /// <summary>
         /// An optional rotation offset.

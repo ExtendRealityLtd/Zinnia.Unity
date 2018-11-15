@@ -6,7 +6,7 @@
     /// <summary>
     /// Holds <see cref="GameObject"/>s to (de)activate.
     /// </summary>
-    public abstract class BaseGameObjectsAssociation : MonoBehaviour
+    public abstract class GameObjectsAssociation : MonoBehaviour
     {
         /// <summary>
         /// The <see cref="GameObject"/>s to (de)activate.

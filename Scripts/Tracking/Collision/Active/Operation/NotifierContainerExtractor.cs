@@ -6,7 +6,7 @@
     /// <summary>
     /// Extracts the forward source container from a given <see cref="CollisionNotifier.EventData"/>.
     /// </summary>
-    public class NotifierContainerExtractor : BaseGameObjectEmitter
+    public class NotifierContainerExtractor : GameObjectEmitter
     {
         /// <summary>
         /// Extracts the forward source container from the given notifier event data.

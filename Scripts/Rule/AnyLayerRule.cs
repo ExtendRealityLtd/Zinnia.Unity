@@ -5,7 +5,7 @@
     /// <summary>
     /// Determines whether a <see cref="GameObject"/>'s <see cref="GameObject.layer"/> is part of a list.
     /// </summary>
-    public class AnyLayerRule : BaseGameObjectRule
+    public class AnyLayerRule : GameObjectRule
     {
         /// <summary>
         /// The layers to check against.

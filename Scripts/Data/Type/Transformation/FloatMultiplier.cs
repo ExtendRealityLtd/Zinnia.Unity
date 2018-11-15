@@ -10,7 +10,7 @@
     /// <example>
     /// 2f * 2f = 4f
     /// </example>
-    public class FloatMultiplier : BaseTransformer<float, float, FloatMultiplier.UnityEvent>
+    public class FloatMultiplier : Transformer<float, float, FloatMultiplier.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the multiplied <see cref="float"/> value.

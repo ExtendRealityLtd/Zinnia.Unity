@@ -66,7 +66,7 @@
         /// An observable list of GameObjects to ignore collisions on.
         /// </summary>
         [Tooltip("An observable list of GameObjects to ignore collisions on.")]
-        public ObservableGameObjectList ignoredGameObjectCollisions;
+        public GameObjectObservableList ignoredGameObjectCollisions;
         #endregion
 
         /// <summary>

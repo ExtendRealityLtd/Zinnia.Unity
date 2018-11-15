@@ -6,7 +6,7 @@
     /// <summary>
     /// Extracts the source container from a given <see cref="ActiveCollisionPublisher.PayloadData"/>.
     /// </summary>
-    public class PublisherContainerExtractor : BaseGameObjectEmitter
+    public class PublisherContainerExtractor : GameObjectEmitter
     {
         /// <summary>
         /// Extracts the source container from the given publisher payload data.

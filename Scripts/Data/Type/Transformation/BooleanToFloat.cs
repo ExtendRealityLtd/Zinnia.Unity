@@ -10,7 +10,7 @@
     /// false = 0f
     /// true = 1f
     /// </example>
-    public class BooleanToFloat : BaseTransformer<bool, float, BooleanToFloat.UnityEvent>
+    public class BooleanToFloat : Transformer<bool, float, BooleanToFloat.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the transformed <see cref="float"/> value.

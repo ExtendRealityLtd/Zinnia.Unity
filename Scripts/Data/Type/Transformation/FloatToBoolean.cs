@@ -13,7 +13,7 @@
     /// threshold[0.3, 0.8] -> 1f = false
     /// threshold[0.3, 0.8] -> 0.5f = true
     /// </example>
-    public class FloatToBoolean : BaseTransformer<float, bool, FloatToBoolean.UnityEvent>
+    public class FloatToBoolean : Transformer<float, bool, FloatToBoolean.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the transformed <see cref="bool"/> value.

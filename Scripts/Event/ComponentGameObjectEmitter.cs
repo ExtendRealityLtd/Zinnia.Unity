@@ -5,7 +5,7 @@
     /// <summary>
     /// Extracts the <see cref="GameObject"/> from the <see cref="source"/> and emits an event containing the result.
     /// </summary>
-    public class ComponentGameObjectEmitter : BaseGameObjectEmitter
+    public class ComponentGameObjectEmitter : GameObjectEmitter
     {
         /// <summary>
         /// The source to extract from.

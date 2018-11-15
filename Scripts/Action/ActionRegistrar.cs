@@ -29,7 +29,7 @@
             /// The action to subscribe to.
             /// </summary>
             [Tooltip("The action to subscribe to.")]
-            public BaseAction action;
+            public Action action;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@
         /// The action that will have the sources populated by the given <see cref="sources"/>.
         /// </summary>
         [Tooltip("The action that will have the sources populated by the given sources.")]
-        public BaseAction target;
+        public Action target;
         /// <summary>
         /// A list of action sources to populate the target sources list with.
         /// </summary>

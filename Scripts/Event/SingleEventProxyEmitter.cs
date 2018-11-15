@@ -7,7 +7,7 @@
     /// </summary>
     /// <typeparam name="TValue">The value for Receive,</typeparam>
     /// <typeparam name="TEvent">The event type to emit.</typeparam>
-    public abstract class SingleEventProxyEmitter<TValue, TEvent> : BaseEventProxyEmitter where TEvent : UnityEvent<TValue>, new()
+    public abstract class SingleEventProxyEmitter<TValue, TEvent> : EventProxyEmitter where TEvent : UnityEvent<TValue>, new()
     {
         /// <summary>
         /// The most recent received payload.

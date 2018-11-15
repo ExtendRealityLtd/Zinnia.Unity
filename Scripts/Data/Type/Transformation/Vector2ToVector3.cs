@@ -12,7 +12,7 @@
     /// Vector2(1f, 2f) -> XToXAndYToZ -> Vector3(1f, 0f, 2f)
     /// Vector2(1f, 2f) -> XToYAndYToX -> Vector3(2f, 1f, 0f)
     /// </example>
-    public class Vector2ToVector3 : BaseTransformer<Vector2, Vector3, Vector2ToVector3.UnityEvent>
+    public class Vector2ToVector3 : Transformer<Vector2, Vector3, Vector2ToVector3.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the transformed <see cref="Vector3"/> value.

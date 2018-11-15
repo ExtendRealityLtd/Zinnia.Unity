@@ -10,7 +10,7 @@
     /// <example>
     /// float[2f, 3f] = Vector2(2f, 3f)
     /// </example>
-    public class FloatToVector2 : BaseTransformer<float[], Vector2, FloatToVector2.UnityEvent>
+    public class FloatToVector2 : Transformer<float[], Vector2, FloatToVector2.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the transformed <see cref="Vector2"/> value.

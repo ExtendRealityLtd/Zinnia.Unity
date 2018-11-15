@@ -19,7 +19,7 @@
         /// The associated CameraRigs to track.
         /// </summary>
         [Header("Tracked Alias Settings"), Tooltip("The associated CameraRigs to track.")]
-        public List<BaseAliasAssociationCollection> cameraRigs = new List<BaseAliasAssociationCollection>();
+        public List<AliasAssociationCollection> cameraRigs = new List<AliasAssociationCollection>();
         #endregion
 
         #region Tracking Begun Events

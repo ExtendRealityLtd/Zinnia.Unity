@@ -1111,6 +1111,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114787471753854276}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114101085606245950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1125,6 +1126,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114227604445383012}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114178961337722686
 MonoBehaviour:
   m_ObjectHideFlags: 1

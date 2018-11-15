@@ -6,7 +6,7 @@
     /// <summary>
     /// Provides the basis for describing a CameraRig Alias Association by providing the linked elements of the CameraRig.
     /// </summary>
-    public class LinkedAliasAssociationCollection : BaseAliasAssociationCollection
+    public class LinkedAliasAssociationCollection : AliasAssociationCollection
     {
         #region PlayArea Settings
         /// <summary>

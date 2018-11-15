@@ -27,12 +27,12 @@
         /// The objects defining the sources of movement.
         /// </summary>
         [Header("Reference Settings"), Tooltip("The objects defining the sources of movement.")]
-        public ObservableGameObjectList interactors;
+        public GameObjectObservableList interactors;
         /// <summary>
         /// The objects defining the offsets of movement.
         /// </summary>
         [Tooltip("The objects defining the offsets of movement.")]
-        public ObservableGameObjectList interactables;
+        public GameObjectObservableList interactables;
         /// <summary>
         /// The <see cref="ObjectDistanceComparator"/> component for the source.
         /// </summary>
