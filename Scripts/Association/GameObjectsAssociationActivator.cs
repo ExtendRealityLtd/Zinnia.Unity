@@ -7,7 +7,7 @@
     using VRTK.Core.Process;
 
     /// <summary>
-    /// (De)activates <see cref="BaseGameObjectsAssociation"/>s.
+    /// (De)activates <see cref="GameObjectsAssociation"/>s.
     /// </summary>
     public class GameObjectsAssociationActivator : MonoBehaviour, IProcessable
     {
@@ -15,19 +15,19 @@
         /// The associations in order they will be activated if they match the currently expected state.
         /// </summary>
         [Tooltip("The associations in order they will be activated if they match the currently expected state.")]
-        public List<BaseGameObjectsAssociation> associations = new List<BaseGameObjectsAssociation>();
+        public List<GameObjectsAssociation> associations = new List<GameObjectsAssociation>();
 
         /// <summary>
         /// The currently activated association, or <see langword="null"/> if no association is activated.
         /// </summary>
-        public BaseGameObjectsAssociation CurrentAssociation { get; private set; }
+        public GameObjectsAssociation CurrentAssociation { get; private set; }
 
         /// <summary>
         /// Activates the <see cref="GameObject"/>s that are part of the association if the association matches the currently expected state.
         /// </summary>
         public virtual void Activate()
         {
-            BaseGameObjectsAssociation desiredAssociation = associations.EmptyIfNull().FirstOrDefault(association => association.ShouldBeActive());
+            GameObjectsAssociation desiredAssociation = associations.EmptyIfNull().FirstOrDefault(association => association.ShouldBeActive());
             if (desiredAssociation == null || CurrentAssociation == desiredAssociation)
             {
                 return;
@@ -35,7 +35,7 @@
 
             CurrentAssociation = desiredAssociation;
 
-            IEnumerable<BaseGameObjectsAssociation> otherAssociations = associations.EmptyIfNull()
+            IEnumerable<GameObjectsAssociation> otherAssociations = associations.EmptyIfNull()
                 .Except(
                     new[]
                     {

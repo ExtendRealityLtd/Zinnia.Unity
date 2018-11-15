@@ -2952,8 +2952,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Event.BaseGameObjectEmitter+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Event.GameObjectEmitter+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114202039061041588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3269,8 +3269,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Event.BaseGameObjectEmitter+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Event.GameObjectEmitter+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114379027572919558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3609,6 +3609,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114574567817750402}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114472287722545212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3692,8 +3693,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Event.BaseGameObjectEmitter+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Event.GameObjectEmitter+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114497108920002644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3719,8 +3720,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Event.BaseGameObjectEmitter+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Event.GameObjectEmitter+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114501653590425606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3843,8 +3844,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Event.BaseGameObjectEmitter+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Event.GameObjectEmitter+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114521565836934374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3956,8 +3957,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Event.BaseGameObjectEmitter+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Event.GameObjectEmitter+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114615383002857600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3972,6 +3973,7 @@ MonoBehaviour:
   process:
     field: {fileID: 114916168400981308}
   onlyProcessOnActiveAndEnabled: 1
+  utilization: 1
 --- !u!114 &114624436378637464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4213,8 +4215,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Event.BaseGameObjectEmitter+UnityEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: VRTK.Core.Event.GameObjectEmitter+UnityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114740307141854086
 MonoBehaviour:
   m_ObjectHideFlags: 1

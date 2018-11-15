@@ -10,7 +10,7 @@
     /// <example>
     /// (2f,3f,4f) * [3f,4f,5f] = (6f,12f,20f)
     /// </example>
-    public class Vector3Multiplier : BaseTransformer<Vector3, Vector3, Vector3Multiplier.UnityEvent>
+    public class Vector3Multiplier : Transformer<Vector3, Vector3, Vector3Multiplier.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the multiplied <see cref="Vector3"/> value.

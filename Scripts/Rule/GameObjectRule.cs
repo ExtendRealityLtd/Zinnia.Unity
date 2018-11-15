@@ -5,7 +5,7 @@
     /// <summary>
     /// Simplifies implementing <see cref="IRule"/>s that only accept <see cref="GameObject"/>s.
     /// </summary>
-    public abstract class BaseGameObjectRule : MonoBehaviour, IRule
+    public abstract class GameObjectRule : MonoBehaviour, IRule
     {
         /// <inheritdoc />
         public bool Accepts(object target)

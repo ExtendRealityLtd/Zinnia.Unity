@@ -6,7 +6,7 @@
     /// <summary>
     /// Mutates the scale of a transform.
     /// </summary>
-    public class ScaleProperty : BaseProperty
+    public class ScaleProperty : Property
     {
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)

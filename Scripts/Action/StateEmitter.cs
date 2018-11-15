@@ -12,7 +12,7 @@
         /// The Action to re-emit the state for.
         /// </summary>
         [Tooltip("The Action to re-emit the state for.")]
-        public BaseAction action;
+        public Action action;
 
         /// <summary>
         /// Re-emits the state of the Action. 

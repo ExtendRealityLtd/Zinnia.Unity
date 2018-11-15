@@ -304,9 +304,9 @@ namespace Test.VRTK.Core.Action
         }
     }
 
-    public class MockAction : BaseAction
+    public class MockAction : global::VRTK.Core.Action.Action
     {
-        public override void AddSource(BaseAction action)
+        public override void AddSource(global::VRTK.Core.Action.Action action)
         {
         }
 
@@ -314,7 +314,7 @@ namespace Test.VRTK.Core.Action
         {
         }
 
-        public override void RemoveSource(BaseAction action)
+        public override void RemoveSource(global::VRTK.Core.Action.Action action)
         {
         }
 

@@ -11,10 +11,10 @@
     public class AnyAction : BooleanAction
     {
         /// <summary>
-        /// BaseActions to check the active state on.
+        /// Actions to check the active state on.
         /// </summary>
-        [Tooltip("BaseActions to check the active state on.")]
-        public List<BaseAction> actions = new List<BaseAction>();
+        [Tooltip("Actions to check the active state on.")]
+        public List<Action> actions = new List<Action>();
 
         protected virtual void Update()
         {

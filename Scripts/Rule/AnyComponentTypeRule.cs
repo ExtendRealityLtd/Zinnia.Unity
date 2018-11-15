@@ -10,7 +10,7 @@
     /// <summary>
     /// Determines whether a <see cref="GameObject"/> has any component found in a list.
     /// </summary>
-    public class AnyComponentTypeRule : BaseGameObjectRule
+    public class AnyComponentTypeRule : GameObjectRule
     {
         /// <summary>
         /// The component types to look for.

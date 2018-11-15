@@ -5,7 +5,7 @@
     /// <summary>
     ///  Emits a UnityEvent with a no payload whenever the Receive method is called.
     /// </summary>
-    public class EmptyEventProxyEmitter : BaseEventProxyEmitter
+    public class EmptyEventProxyEmitter : EventProxyEmitter
     {
         /// <summary>
         /// Is emitted when Receive is called.

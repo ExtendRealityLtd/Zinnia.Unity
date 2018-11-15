@@ -141,7 +141,7 @@ namespace Test.VRTK.Core.Association
         }
     }
 
-    public class GameObjectsAssociationMock : BaseGameObjectsAssociation
+    public class GameObjectsAssociationMock : GameObjectsAssociation
     {
         public bool shouldBeActive;
 

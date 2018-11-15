@@ -6,7 +6,7 @@
     /// <summary>
     /// Extracts a <see cref="GameObject"/> relevant to the extraction method from an <see cref="InteractorFacade"/>.
     /// </summary>
-    public class InteractorExtractor : BaseGameObjectEmitter
+    public class InteractorExtractor : GameObjectEmitter
     {
         /// <summary>
         /// Extracts the <see cref="GameObject"/> the <see cref="InteractorFacade"/> is residing on.

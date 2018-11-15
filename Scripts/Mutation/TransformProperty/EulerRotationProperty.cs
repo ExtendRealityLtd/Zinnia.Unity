@@ -5,7 +5,7 @@
     /// <summary>
     /// Mutates the euler rotation of a transform.
     /// </summary>
-    public class EulerRotationProperty : BaseProperty
+    public class EulerRotationProperty : Property
     {
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)

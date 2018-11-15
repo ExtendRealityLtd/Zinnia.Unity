@@ -12,7 +12,7 @@
     /// <example>
     /// 1f + 2f + 3f = 6f
     /// </example>
-    public class FloatCollectionAggregator : BaseTransformer<float, float, FloatCollectionAggregator.UnityEvent>
+    public class FloatCollectionAggregator : Transformer<float, float, FloatCollectionAggregator.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the aggregated <see cref="float"/> values.

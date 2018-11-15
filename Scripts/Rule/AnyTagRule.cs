@@ -7,7 +7,7 @@
     /// <summary>
     /// Determines whether a <see cref="GameObject"/>'s <see cref="GameObject.tag"/> is part of a list.
     /// </summary>
-    public class AnyTagRule : BaseGameObjectRule
+    public class AnyTagRule : GameObjectRule
     {
         /// <summary>
         /// The tags to check against.
