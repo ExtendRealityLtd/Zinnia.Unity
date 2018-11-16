@@ -19,10 +19,10 @@
 
         #region Touch Settings
         /// <summary>
-        /// The <see cref="GameObjectSet"/> that holds the current touching objects data.
+        /// The <see cref="GameObjectObservableSet"/> that holds the current touching objects data.
         /// </summary>
         [Header("Touch Settings"), Tooltip("The GameObjectSet that holds the current touching objects data.")]
-        public GameObjectSet currentTouchingObjects;
+        public GameObjectObservableSet currentTouchingObjects;
         /// <summary>
         /// The <see cref="ListContainsRule"/> used to determine the touch validity.
         /// </summary>

@@ -26,15 +26,15 @@
 
         #region Grab Settings
         /// <summary>
-        /// The <see cref="GameObjectEventStack"/> that deals with the grabbing actions.
+        /// The <see cref="GameObjectObservableStack"/> that deals with the grabbing actions.
         /// </summary>
         [Header("Grab Settings"), Tooltip("The GameObjectEventStack that deals with the grabbing actions.")]
-        public GameObjectEventStack gameObjectEventStack;
+        public GameObjectObservableStack gameObjectEventStack;
         /// <summary>
-        /// The <see cref="GameObjectSet"/> that deals with the grabbing actions.
+        /// The <see cref="GameObjectObservableSet"/> that deals with the grabbing actions.
         /// </summary>
         [Tooltip("The GameObjectSet that deals with the grabbing actions.")]
-        public GameObjectSet gameObjectSet;
+        public GameObjectObservableSet gameObjectSet;
         #endregion
 
         #region Attachment Logic

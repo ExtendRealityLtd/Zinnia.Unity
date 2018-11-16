@@ -5,9 +5,9 @@
     using System;
 
     /// <summary>
-    /// Allows observing changes to a <see cref="List{T}"/> of <see cref="GameObject"/>s.
+    /// Allows observing changes to a <see cref="HashSet{T}"/> of <see cref="GameObject"/>s.
     /// </summary>
-    public class GameObjectObservableList : ObservableList<GameObject, GameObjectObservableList.UnityEvent>
+    public class GameObjectObservableSet : ObservableSet<GameObject, GameObjectObservableSet.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the <see cref="GameObject"/>.
