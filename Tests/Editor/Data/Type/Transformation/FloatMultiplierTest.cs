@@ -5,6 +5,7 @@ namespace Test.VRTK.Core.Data.Type.Transformation
     using UnityEngine;
     using NUnit.Framework;
     using Test.VRTK.Core.Utility.Mock;
+    using System.Collections.Generic;
 
     public class FloatMultiplierTest
     {
@@ -30,11 +31,13 @@ namespace Test.VRTK.Core.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetMultiplier(2f);
+            subject.collection = new List<float>(new float[2]);
+            subject.SetElement(0, 2f);
 
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
+            subject.CurrentIndex = 1;
             float result = subject.Transform(2f);
 
             Assert.AreEqual(4f, result);
@@ -47,7 +50,8 @@ namespace Test.VRTK.Core.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetMultiplier(2f);
+            subject.collection = new List<float>(new float[2]);
+            subject.SetElement(0, 2f);
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(0f, subject.Result);
@@ -65,7 +69,8 @@ namespace Test.VRTK.Core.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetMultiplier(2f);
+            subject.collection = new List<float>(new float[2]);
+            subject.SetElement(0, 2f);
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(0f, subject.Result);

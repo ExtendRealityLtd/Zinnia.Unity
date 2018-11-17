@@ -3,14 +3,15 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using System.Linq;
 
     /// <summary>
-    /// Transforms a <see cref="Vector3"/> by multiplying each coordinate by a given multiplier.
+    /// Multiplies a collection of <see cref="Vector3"/>s by multiplying each one to the next entry in the collection.
     /// </summary>
     /// <example>
     /// (2f,3f,4f) * [3f,4f,5f] = (6f,12f,20f)
     /// </example>
-    public class Vector3Multiplier : Transformer<Vector3, Vector3, Vector3Multiplier.UnityEvent>
+    public class Vector3Multiplier : CollectionAggregator<Vector3, Vector3, Vector3Multiplier.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the multiplied <see cref="Vector3"/> value.
@@ -21,55 +22,92 @@
         }
 
         /// <summary>
-        /// The value to multiply the input by.
+        /// Sets the x value of the <see cref="CurrentIndex"/> element.
         /// </summary>
-        [Tooltip("The value to multiply the input by."), SerializeField]
-        protected Vector3 multiplier = Vector3.one;
-
-        /// <summary>
-        /// Sets the value to multiply the input by.
-        /// </summary>
-        /// <param name="multiplier">The new multiplier value.</param>
-        public virtual void SetMultiplier(Vector3 multiplier)
+        /// <param name="value">The new x value.</param>
+        public virtual void SetElementX(float value)
         {
-            this.multiplier = multiplier;
+            Vector3 currentValue = collection[CurrentIndex];
+            currentValue.x = value;
+            collection[CurrentIndex] = currentValue;
         }
 
         /// <summary>
-        /// Sets the x value to multiply the input x by.
+        /// Sets the x value of the given index element.
         /// </summary>
-        /// <param name="xMultiplier">The new x multiplier value.</param>
-        public virtual void SetXMultiplier(float xMultiplier)
+        /// <param name="index">The index in the collection to update at.</param>
+        /// <param name="value">The new x value.</param>
+        public virtual void SetElementX(int index, float value)
         {
-            multiplier.x = xMultiplier;
+            index = WrapAroundAndClamp(index);
+            Vector3 currentValue = collection[index];
+            currentValue.x = value;
+            collection[index] = currentValue;
         }
 
         /// <summary>
-        /// Sets the y value to multiply the input y by.
+        /// Sets the y value of the <see cref="CurrentIndex"/> element.
         /// </summary>
-        /// <param name="yMultiplier">The new y multiplier value.</param>
-        public virtual void SetYMultiplier(float yMultiplier)
+        /// <param name="value">The new y value.</param>
+        public virtual void SetElementY(float value)
         {
-            multiplier.y = yMultiplier;
+            Vector3 currentValue = collection[CurrentIndex];
+            currentValue.y = value;
+            collection[CurrentIndex] = currentValue;
         }
 
         /// <summary>
-        /// Sets the z value to multiply the input z by.
+        /// Sets the y value of the given index element.
         /// </summary>
-        /// <param name="zMultiplier">The new z multiplier value.</param>
-        public virtual void SetZMultiplier(float zMultiplier)
+        /// <param name="index">The index in the collection to update at.</param>
+        /// <param name="value">The new y value.</param>
+        public virtual void SetElementY(int index, float value)
         {
-            multiplier.z = zMultiplier;
+            index = WrapAroundAndClamp(index);
+            Vector3 currentValue = collection[index];
+            currentValue.y = value;
+            collection[index] = currentValue;
         }
 
         /// <summary>
-        /// Multiplies the input by the multipliers.
+        /// Sets the z value of the <see cref="CurrentIndex"/> element.
         /// </summary>
-        /// <param name="input">The value to transform.</param>
-        /// <returns>The transformed value.</returns>
-        protected override Vector3 Process(Vector3 input)
+        /// <param name="value">The new z value.</param>
+        public virtual void SetElementZ(float value)
         {
-            return Vector3.Scale(input, multiplier);
+            Vector3 currentValue = collection[CurrentIndex];
+            currentValue.z = value;
+            collection[CurrentIndex] = currentValue;
+        }
+
+        /// <summary>
+        /// Sets the z value of the given index element.
+        /// </summary>
+        /// <param name="index">The index in the collection to update at.</param>
+        /// <param name="value">The new z value.</param>
+        public virtual void SetElementZ(int index, float value)
+        {
+            index = WrapAroundAndClamp(index);
+            Vector3 currentValue = collection[index];
+            currentValue.z = value;
+            collection[index] = currentValue;
+        }
+
+        /// <inheritdoc />
+        protected override Vector3 ProcessCollection()
+        {
+            return collection.Aggregate(Multiply);
+        }
+
+        /// <summary>
+        /// Multiplies two <see cref="Vector3"/> values.
+        /// </summary>
+        /// <param name="multiplicand">The value to be multiplied.</param>
+        /// <param name="multiplier">The value to multiply with.</param>
+        /// <returns>The calculated value.</returns>
+        protected virtual Vector3 Multiply(Vector3 multiplicand, Vector3 multiplier)
+        {
+            return Vector3.Scale(multiplicand, multiplier);
         }
     }
 }

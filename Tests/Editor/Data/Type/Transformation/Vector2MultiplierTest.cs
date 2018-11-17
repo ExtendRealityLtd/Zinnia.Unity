@@ -5,6 +5,7 @@ namespace Test.VRTK.Core.Data.Type.Transformation
     using UnityEngine;
     using NUnit.Framework;
     using Test.VRTK.Core.Utility.Mock;
+    using System.Collections.Generic;
 
     public class Vector2MultiplierTest
     {
@@ -30,8 +31,10 @@ namespace Test.VRTK.Core.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetXMultiplier(3f);
-            subject.SetYMultiplier(4f);
+            subject.collection = new List<Vector2>(new Vector2[2]);
+            subject.SetElementX(0, 3f);
+            subject.SetElementY(0, 4f);
+            subject.CurrentIndex = 1;
 
             Assert.AreEqual(Vector2.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
@@ -50,8 +53,10 @@ namespace Test.VRTK.Core.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetXMultiplier(3f);
-            subject.SetYMultiplier(4f);
+            subject.collection = new List<Vector2>(new Vector2[2]);
+            subject.SetElementX(0, 3f);
+            subject.SetElementY(0, 4f);
+            subject.CurrentIndex = 1;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector2.zero, subject.Result);
@@ -70,8 +75,10 @@ namespace Test.VRTK.Core.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetXMultiplier(3f);
-            subject.SetYMultiplier(4f);
+            subject.collection = new List<Vector2>(new Vector2[2]);
+            subject.SetElementX(0, 3f);
+            subject.SetElementY(0, 4f);
+            subject.CurrentIndex = 1;
             subject.enabled = false;
 
             Assert.AreEqual(Vector2.zero, subject.Result);

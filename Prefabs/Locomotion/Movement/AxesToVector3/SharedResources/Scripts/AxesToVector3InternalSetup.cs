@@ -75,8 +75,9 @@
         /// </summary>
         public virtual void SetMultipliers()
         {
-            speedMultiplier.SetXMultiplier(facade.LateralSpeedMultiplier);
-            speedMultiplier.SetZMultiplier(facade.LongitudinalSpeedMultiplier);
+            speedMultiplier.SetElementX(1, facade.LateralSpeedMultiplier);
+            speedMultiplier.SetElementZ(1, facade.LongitudinalSpeedMultiplier);
+            speedMultiplier.CurrentIndex = 0;
         }
 
         /// <summary>
