@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Mutation.TransformProperty
+﻿namespace VRTK.Core.Data.Operation
 {
     using UnityEngine;
     using VRTK.Core.Extension;
@@ -6,7 +6,7 @@
     /// <summary>
     /// Mutates the scale of a transform.
     /// </summary>
-    public class ScaleProperty : Property
+    public class TransformScaleMutator : TransformPropertyMutator
     {
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)

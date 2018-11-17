@@ -4,7 +4,7 @@
     using UnityEngine;
     using VRTK.Core.Data.Collection;
     using VRTK.Core.Data.Type.Transformation;
-    using VRTK.Core.Mutation.TransformProperty;
+    using VRTK.Core.Data.Operation;
     using VRTK.Core.Prefabs.Locomotion.BodyRepresentation;
     using VRTK.Core.Tracking.Follow;
     using VRTK.Core.Tracking.Velocity;
@@ -44,10 +44,10 @@
         [Tooltip("The ObjectDistanceComparator component for the offset.")]
         public ObjectDistanceComparator offsetDistanceComparator;
         /// <summary>
-        /// The <see cref="PositionProperty"/> component for the offset.
+        /// The <see cref="TransformPositionMutator"/> component for the offset.
         /// </summary>
-        [Tooltip("The PositionProperty component for the target.")]
-        public PositionProperty targetPositionProperty;
+        [Tooltip("The TransformPositionMutator component for the target.")]
+        public TransformPositionMutator targetPositionProperty;
         /// <summary>
         /// The <see cref="ComponentTrackerProxy"/> component for obtaining velocity data.
         /// </summary>
