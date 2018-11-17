@@ -1831,12 +1831,12 @@ MonoBehaviour:
   ElementFound:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   ElementNotFound:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecameEmpty:
     m_PersistentCalls:
@@ -1852,7 +1852,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecamePopulated:
     m_PersistentCalls:
@@ -1868,7 +1868,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114263192877342054
 MonoBehaviour:
@@ -1957,7 +1957,7 @@ MonoBehaviour:
   ElementFound:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   ElementNotFound:
     m_PersistentCalls:
@@ -2017,12 +2017,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecameEmpty:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecamePopulated:
     m_PersistentCalls:
@@ -2049,7 +2049,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114330354418931030
 MonoBehaviour:
@@ -2712,7 +2712,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   ElementNotFound:
     m_PersistentCalls:
@@ -2739,17 +2739,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecameEmpty:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecamePopulated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114629857422965816
 MonoBehaviour:
@@ -3169,12 +3169,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   ElementNotFound:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecameEmpty:
     m_PersistentCalls:
@@ -3201,12 +3201,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecamePopulated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114946276088678942
 MonoBehaviour:

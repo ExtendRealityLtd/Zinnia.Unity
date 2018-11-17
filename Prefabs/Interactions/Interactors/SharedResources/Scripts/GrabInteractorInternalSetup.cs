@@ -51,10 +51,10 @@
         [Tooltip("The ActiveCollisionPublisher for checking valid stop touching collisions.")]
         public ActiveCollisionPublisher stopGrabbingPublisher;
         /// <summary>
-        /// The <see cref="GameObjectSet"/> containing the currently grabbed objects.
+        /// The <see cref="GameObjectObservableSet"/> containing the currently grabbed objects.
         /// </summary>
         [Tooltip("The GameObjectSet containing the currently grabbed objects.")]
-        public GameObjectSet grabbedObjects;
+        public GameObjectObservableSet grabbedObjects;
         /// <summary>
         /// The <see cref="CountdownTimer"/> to determine grab precognition.
         /// </summary>

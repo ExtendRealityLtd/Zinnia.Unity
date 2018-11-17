@@ -778,22 +778,22 @@ MonoBehaviour:
   ElementFound:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   ElementNotFound:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecameEmpty:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   BecamePopulated:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: VRTK.Core.Data.Collection.GameObjectSet+UnityEvent, Assembly-CSharp,
+    m_TypeName: VRTK.Core.Data.Collection.GameObjectObservableSet+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114829534263718348
 MonoBehaviour:

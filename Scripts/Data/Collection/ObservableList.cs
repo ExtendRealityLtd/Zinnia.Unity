@@ -1,8 +1,8 @@
 ﻿namespace VRTK.Core.Data.Collection
 {
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Allows observing changes to a <see cref="List{T}"/>.
