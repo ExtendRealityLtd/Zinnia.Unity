@@ -9,7 +9,8 @@
     /// <typeparam name="TInput">The variable type that will be input into transformation.</typeparam>
     /// <typeparam name="TOutput">The variable type that will be output from the result of the transformation.</typeparam>
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type the transformation will emit.</typeparam>
-    public abstract class Transformer<TInput, TOutput, TEvent> : MonoBehaviour where TEvent : UnityEvent<TOutput>, new()
+    public abstract class Transformer<TInput, TOutput, TEvent> : MonoBehaviour
+        where TEvent : UnityEvent<TOutput>, new()
     {
         /// <summary>
         /// The result of the transformation.
