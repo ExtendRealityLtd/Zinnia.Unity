@@ -24,38 +24,28 @@
         /// </summary>
         public int CurrentIndex
         {
-            get;
-            protected set;
+            get { return _currentIndex; }
+            set { _currentIndex = PreprocessCurrentIndex(value); }
         }
+        private int _currentIndex;
 
         /// <summary>
-        /// Sets the collection index that will store a given input value. The given index will be clamped to the range of valid indexes.
-        /// </summary>
-        /// <param name="index">The index to set the collection value at.</param>
-        public virtual void SetIndex(int index)
-        {
-            index = (index >= 0 ? index : collection.Count + index);
-            CurrentIndex = Mathf.Clamp(index, 0, collection.Count - 1);
-        }
-
-        /// <summary>
-        /// Updates the current collection index value with the given <see cref="TInput"/>.
+        /// Updates the collection at the <see cref="CurrentIndex"/> with the given <see cref="TInput"/>.
         /// </summary>
         /// <param name="input">The element to update the collection with.</param>
-        public virtual void SetElementAtCurrentIndex(TInput input)
+        public virtual void SetElement(TInput input)
         {
             collection[CurrentIndex] = input;
         }
 
         /// <summary>
-        /// Updates the element at the given index.
+        /// Updates the element at the given index without updating the collection <see cref="CurrentIndex"/>.
         /// </summary>
         /// <param name="index">The index in the collection to update at.</param>
         /// <param name="input">The element to update the collection with.</param>
         public virtual void SetElement(int index, TInput input)
         {
-            SetIndex(index);
-            SetElementAtCurrentIndex(input);
+            collection[WrapAroundAndClamp(index)] = input;
         }
 
         /// <summary>
@@ -66,7 +56,7 @@
         /// <returns>The summed value of all values in the collection.</returns>
         public virtual TOutput Transform(int index, TInput input)
         {
-            SetIndex(index);
+            CurrentIndex = index;
             return Transform(input);
         }
 
@@ -87,7 +77,7 @@
         protected abstract TOutput ProcessCollection();
 
         /// <summary>
-        /// Processes the given input by adding it to the collection at the saved current index.
+        /// Processes the given input by adding it to the collection at the <see cref="CurrentIndex"/>.
         /// </summary>
         /// <param name="input">The value to add to the collection.</param>
         /// <returns>The summed value of all values in the collection.</returns>
@@ -98,8 +88,29 @@
                 return default(TOutput);
             }
 
-            SetElementAtCurrentIndex(input);
+            SetElement(input);
             return ProcessCollection();
+        }
+
+        /// <summary>
+        /// Preprocesses the value to be set in <see cref="CurrentIndex"/>
+        /// </summary>
+        /// <param name="value">The value to process.</param>
+        /// <returns>The processed value</returns>
+        protected virtual int PreprocessCurrentIndex(int value)
+        {
+            return WrapAroundAndClamp(value);
+        }
+
+        /// <summary>
+        /// Wraps around and clamps the given value to within a valid range of the collection size.
+        /// </summary>
+        /// <param name="value">The value to process.</param>
+        /// <returns>The processed value.</returns>
+        protected virtual int WrapAroundAndClamp(int value)
+        {
+            value = (value >= 0 ? value : collection.Count + value);
+            return Mathf.Clamp(value, 0, collection.Count - 1);
         }
     }
 }

@@ -161,7 +161,8 @@
         /// <param name="multiplier">The multiplier to apply to tracked velocity.</param>
         public virtual void SetVelocityMultiplier(Vector3 multiplier)
         {
-            internalSetup.velocityMultiplier.SetMultiplier(multiplier);
+            internalSetup.velocityMultiplier.SetElement(1, multiplier);
+            internalSetup.velocityMultiplier.CurrentIndex = 0;
         }
     }
 }

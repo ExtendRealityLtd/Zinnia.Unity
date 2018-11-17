@@ -51,12 +51,14 @@
 
             foreach (FloatMultiplier positiveMultiplier in positiveMultipliers)
             {
-                positiveMultiplier.SetMultiplier(movementSpeed);
+                positiveMultiplier.SetElement(1, movementSpeed);
+                positiveMultiplier.CurrentIndex = 0;
             }
 
             foreach (FloatMultiplier negativeMultiplier in negativeMultipliers)
             {
-                negativeMultiplier.SetMultiplier(-movementSpeed);
+                negativeMultiplier.SetElement(1, -movementSpeed);
+                negativeMultiplier.CurrentIndex = 0;
             }
         }
     }

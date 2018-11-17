@@ -37,7 +37,7 @@ namespace Test.VRTK.Core.Data.Type.Transformation
 
             subject.SetElement(0, 1f);
             subject.SetElement(1, 2f);
-            subject.SetIndex(2);
+            subject.CurrentIndex = 2;
             float result = subject.Transform(3f);
 
             Assert.AreEqual(6f, result);

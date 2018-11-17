@@ -2674,7 +2674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   climbFacade: {fileID: 0}
-  releaseMultiplier: {x: -10, y: -10, z: -10}
+  releaseMultiplier: {x: -1.5, y: -1.5, z: -1.5}
   internalSetup: {fileID: 114105533547169964}
 --- !u!114 &114621324980172646
 MonoBehaviour:

@@ -3,14 +3,15 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using System.Linq;
 
     /// <summary>
-    /// Transforms a Vector2 by multiplying each coordinate by a given multiplier.
+    /// Multiplies a collection of <see cref="Vector2"/>s by multiplying each one to the next entry in the collection.
     /// </summary>
     /// <example>
     /// (2f,3f) * [3f,4f] = (6f,12f)
     /// </example>
-    public class Vector2Multiplier : Transformer<Vector2, Vector2, Vector2Multiplier.UnityEvent>
+    public class Vector2Multiplier : CollectionAggregator<Vector2, Vector2, Vector2Multiplier.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the multiplied <see cref="Vector2"/> value.
@@ -21,46 +22,68 @@
         }
 
         /// <summary>
-        /// The value to multiply the input by.
+        /// Sets the x value of the <see cref="CurrentIndex"/> element.
         /// </summary>
-        [Tooltip("The value to multiply the input by."), SerializeField]
-        protected Vector2 multiplier = Vector2.one;
-
-        /// <summary>
-        /// Sets the value to multiply the input by.
-        /// </summary>
-        /// <param name="multiplier">The new multiplier value.</param>
-        public virtual void SetMultiplier(Vector2 multiplier)
+        /// <param name="value">The new x value.</param>
+        public virtual void SetElementX(float value)
         {
-            this.multiplier = multiplier;
+            Vector2 currentValue = collection[CurrentIndex];
+            currentValue.x = value;
+            collection[CurrentIndex] = currentValue;
         }
 
         /// <summary>
-        /// Sets the x value to multiply the input x by.
+        /// Sets the x value of the given index element.
         /// </summary>
-        /// <param name="xMultiplier">The new x multiplier value.</param>
-        public virtual void SetXMultiplier(float xMultiplier)
+        /// <param name="index">The index in the collection to update at.</param>
+        /// <param name="value">The new x value.</param>
+        public virtual void SetElementX(int index, float value)
         {
-            multiplier.x = xMultiplier;
+            index = WrapAroundAndClamp(index);
+            Vector2 currentValue = collection[index];
+            currentValue.x = value;
+            collection[index] = currentValue;
         }
 
         /// <summary>
-        /// Sets the y value to multiply the input y by.
+        /// Sets the y value of the <see cref="CurrentIndex"/> element.
         /// </summary>
-        /// <param name="yMultiplier">The new y multiplier value.</param>
-        public virtual void SetYMultiplier(float yMultiplier)
+        /// <param name="value">The new y value.</param>
+        public virtual void SetElementY(float value)
         {
-            multiplier.y = yMultiplier;
+            Vector2 currentValue = collection[CurrentIndex];
+            currentValue.y = value;
+            collection[CurrentIndex] = currentValue;
         }
 
         /// <summary>
-        /// Multiplies the input by the multipliers.
+        /// Sets the y value of the given index element.
         /// </summary>
-        /// <param name="input">The value to transform.</param>
-        /// <returns>The transformed value.</returns>
-        protected override Vector2 Process(Vector2 input)
+        /// <param name="index">The index in the collection to update at.</param>
+        /// <param name="value">The new y value.</param>
+        public virtual void SetElementY(int index, float value)
         {
-            return Vector2.Scale(input, multiplier);
+            index = WrapAroundAndClamp(index);
+            Vector2 currentValue = collection[index];
+            currentValue.y = value;
+            collection[index] = currentValue;
+        }
+
+        /// <inheritdoc />
+        protected override Vector2 ProcessCollection()
+        {
+            return collection.Aggregate(Multiply);
+        }
+
+        /// <summary>
+        /// Multiplies two <see cref="Vector2"/> values.
+        /// </summary>
+        /// <param name="multiplicand">The value to be multiplied.</param>
+        /// <param name="multiplier">The value to multiply with.</param>
+        /// <returns>The calculated value.</returns>
+        protected virtual Vector2 Multiply(Vector2 multiplicand, Vector2 multiplier)
+        {
+            return Vector2.Scale(multiplicand, multiplier);
         }
     }
 }

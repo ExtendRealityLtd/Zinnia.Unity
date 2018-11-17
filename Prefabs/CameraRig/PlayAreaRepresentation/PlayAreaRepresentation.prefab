@@ -361,7 +361,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114381695561373098}
-        m_MethodName: SetIndex
+        m_MethodName: set_CurrentIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -372,7 +372,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114381695561373098}
-        m_MethodName: DoTransform
+        m_MethodName: SetElement
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -556,7 +556,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114381695561373098}
-        m_MethodName: SetIndex
+        m_MethodName: set_CurrentIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

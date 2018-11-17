@@ -521,7 +521,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Data.Type.Transformation.Vector3Multiplier+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  multiplier: {x: 1, y: 1, z: 1}
+  collection:
+  - {x: 0, y: 0, z: 0}
+  - {x: 1, y: 1, z: 1}
 --- !u!114 &114276270614342360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -649,7 +651,9 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: VRTK.Core.Data.Type.Transformation.Vector3Multiplier+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  multiplier: {x: -1, y: -1, z: -1}
+  collection:
+  - {x: 0, y: 0, z: 0}
+  - {x: -1, y: -1, z: -1}
 --- !u!114 &114849865521691880
 MonoBehaviour:
   m_ObjectHideFlags: 1

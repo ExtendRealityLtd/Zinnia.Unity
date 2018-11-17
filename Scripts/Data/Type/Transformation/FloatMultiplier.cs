@@ -1,16 +1,16 @@
 ﻿namespace VRTK.Core.Data.Type.Transformation
 {
-    using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using System.Linq;
 
     /// <summary>
-    /// Transforms a float by multiplying it by a given multiplier.
+    /// Multiplies a collection of <see cref="float"/>s by multiplying each one to the next entry in the collection.
     /// </summary>
     /// <example>
-    /// 2f * 2f = 4f
+    /// 2f * 2f * 2f = 8f
     /// </example>
-    public class FloatMultiplier : Transformer<float, float, FloatMultiplier.UnityEvent>
+    public class FloatMultiplier : CollectionAggregator<float, float, FloatMultiplier.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the multiplied <see cref="float"/> value.
@@ -20,29 +20,21 @@
         {
         }
 
-        /// <summary>
-        /// The value to multiply the input by.
-        /// </summary>
-        [Tooltip("The value to multiply the input by."), SerializeField]
-        protected float multiplier;
-
-        /// <summary>
-        /// Sets the value to multiply the input by.
-        /// </summary>
-        /// <param name="multiplier">The new multiplier value.</param>
-        public virtual void SetMultiplier(float multiplier)
+        /// <inheritdoc />
+        protected override float ProcessCollection()
         {
-            this.multiplier = multiplier;
+            return collection.Aggregate(Multiply);
         }
 
         /// <summary>
-        /// Multiplies the input by the multiplier.
+        /// Multiplies two <see cref="float"/> values.
         /// </summary>
-        /// <param name="input">The value to transform.</param>
-        /// <returns>The transformed value.</returns>
-        protected override float Process(float input)
+        /// <param name="multiplicand">The value to be multiplied.</param>
+        /// <param name="multiplier">The value to multiply with.</param>
+        /// <returns>The calculated value.</returns>
+        protected virtual float Multiply(float multiplicand, float multiplier)
         {
-            return (input * multiplier);
+            return multiplicand * multiplier;
         }
     }
 }

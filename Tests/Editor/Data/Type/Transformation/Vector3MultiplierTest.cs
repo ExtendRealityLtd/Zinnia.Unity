@@ -5,6 +5,7 @@ namespace Test.VRTK.Core.Data.Type.Transformation
     using UnityEngine;
     using NUnit.Framework;
     using Test.VRTK.Core.Utility.Mock;
+    using System.Collections.Generic;
 
     public class Vector3MultiplierTest
     {
@@ -30,10 +31,9 @@ namespace Test.VRTK.Core.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetXMultiplier(3f);
-            subject.SetYMultiplier(4f);
-            subject.SetZMultiplier(5f);
-
+            subject.collection = new List<Vector3>(new Vector3[2]);
+            subject.SetElement(0, new Vector3(3f, 4f, 5f));
+            subject.CurrentIndex = 1;
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
@@ -51,9 +51,10 @@ namespace Test.VRTK.Core.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetXMultiplier(3f);
-            subject.SetYMultiplier(4f);
-            subject.SetZMultiplier(5f);
+            subject.collection = new List<Vector3>(new Vector3[2]);
+            subject.SetElement(0, new Vector3(3f, 4f, 5f));
+            subject.CurrentIndex = 1;
+
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.zero, subject.Result);
@@ -72,9 +73,9 @@ namespace Test.VRTK.Core.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetXMultiplier(3f);
-            subject.SetYMultiplier(4f);
-            subject.SetZMultiplier(5f);
+            subject.collection = new List<Vector3>(new Vector3[2]);
+            subject.SetElement(0, new Vector3(3f, 4f, 5f));
+            subject.CurrentIndex = 1;
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, subject.Result);
