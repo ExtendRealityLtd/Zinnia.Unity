@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using VRTK.Core.Data.Operation;
-    using VRTK.Core.Mutation.TransformProperty;
     using VRTK.Core.Tracking.CameraRig;
 
     /// <summary>
@@ -25,15 +24,15 @@
         [Header("Operator Settings"), Tooltip("The PlayAreaDimensionsExtractor component for extracting the PlayArea dimension data.")]
         public PlayAreaDimensionsExtractor dimensionExtractor;
         /// <summary>
-        /// The <see cref="ScaleProperty"/> component for scaling the given target.
+        /// The <see cref="TransformScaleMutator"/> component for scaling the given target.
         /// </summary>
-        [Tooltip("The ScaleProperty component for scaling the given target.")]
-        public ScaleProperty objectScaler;
+        [Tooltip("The TransformScaleMutator component for scaling the given target.")]
+        public TransformScaleMutator objectScaler;
         /// <summary>
-        /// The <see cref="PositionProperty"/> component for positioning the given target.
+        /// The <see cref="TransformPositionMutator"/> component for positioning the given target.
         /// </summary>
-        [Tooltip("The PositionProperty component for positioning the given target.")]
-        public PositionProperty objectPositioner;
+        [Tooltip("The TransformPositionMutator component for positioning the given target.")]
+        public TransformPositionMutator objectPositioner;
         /// <summary>
         /// The <see cref="TransformPositionExtractor"/> component extracting the offset origin position.
         /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Mutation.TransformProperty
+﻿namespace VRTK.Core.Data.Operation
 {
     using UnityEngine;
     using VRTK.Core.Data.Type;
@@ -6,7 +6,7 @@
     /// <summary>
     /// Provides a basis for mutating transform Vector3 properties.
     /// </summary>
-    public abstract class Property : MonoBehaviour
+    public abstract class TransformPropertyMutator : MonoBehaviour
     {
         /// <summary>
         /// The target to mutate.

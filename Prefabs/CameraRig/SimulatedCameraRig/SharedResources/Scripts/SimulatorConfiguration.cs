@@ -4,7 +4,7 @@
     using UnityEngine.XR;
     using VRTK.Core.Extension;
     using VRTK.Core.Prefabs.CameraRig.TrackedAlias;
-    using VRTK.Core.Mutation.TransformProperty;
+    using VRTK.Core.Data.Operation;
     using VRTK.Core.Data.Attribute;
 
     /// <summary>
@@ -32,10 +32,10 @@
 
         #region Internal Settings
         /// <summary>
-        /// The linked PositionProperty.
+        /// The linked TransformPositionMutator.
         /// </summary>
-        [Header("Internal Settings"), Tooltip("The linked PositionProperty."), InternalSetting]
-        public PositionProperty playareaPosition;
+        [Header("Internal Settings"), Tooltip("The linked TransformPositionMutator."), InternalSetting]
+        public TransformPositionMutator playareaPosition;
         /// <summary>
         /// The linked TransformPropertyResetter.
         /// </summary>
