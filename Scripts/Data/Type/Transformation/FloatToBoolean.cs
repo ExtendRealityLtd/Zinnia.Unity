@@ -26,7 +26,7 @@
         /// <summary>
         /// The bounds in which the float must be to be considered a positive boolean.
         /// </summary>
-        [Tooltip("The bounds in which the float must be to be considered a positive boolean."), MinMaxRange(0f, 1f), SerializeField]
+        [Tooltip("The bounds in which the float must be to be considered a positive boolean."), MinMaxRange(-1f, 1f), SerializeField]
         protected FloatRange positiveBounds = new FloatRange(0f, 1f);
 
         /// <summary>
@@ -48,7 +48,7 @@
         }
 
         /// <summary>
-        /// Transforms the given input bool to the float equavalent value.
+        /// Transforms the given input float to the equivalent bool value.
         /// </summary>
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value.</returns>

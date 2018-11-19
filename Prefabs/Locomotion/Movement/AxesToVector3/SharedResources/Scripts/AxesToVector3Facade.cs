@@ -19,11 +19,31 @@
         {
         }
 
+        /// <summary>
+        /// The way to use the given axis data.
+        /// </summary>
+        public enum AxisUsage
+        {
+            /// <summary>
+            /// The processed output is a continuous incremental value based on the axis input.
+            /// </summary>
+            Incremental,
+            /// <summary>
+            /// The processed output is a specific direction value only outputted once per axis change.
+            /// </summary>
+            Directional
+        }
+
         #region Axis Settings
+        /// <summary>
+        /// The <see cref="AxisUsage"/> to utilize when applying the axis input.
+        /// </summary>
+        [Header("Axis Settings"), Tooltip("The AxisUsage to utilize when applying the axis input."), SerializeField]
+        protected AxisUsage axisUsageType = AxisUsage.Incremental;
         /// <summary>
         /// The <see cref="FloatAction"/> to get the lateral (left/right direction) data from.
         /// </summary>
-        [Header("Axis Settings"), Tooltip("The FloatAction to get the lateral (left/right direction) data from."), SerializeField]
+        [Tooltip("The FloatAction to get the lateral (left/right direction) data from."), SerializeField]
         protected FloatAction lateralAxis;
         /// <summary>
         /// The <see cref="FloatAction"/> to get the longitudinal (forward/backward direction) data from.
@@ -65,6 +85,22 @@
         [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting]
         public AxesToVector3InternalSetup internalSetup;
         #endregion
+
+        /// <summary>
+        /// The <see cref="AxisUsage"/> to utilize when applying the axis input.
+        /// </summary>
+        public AxisUsage AxisUsageType
+        {
+            get
+            {
+                return axisUsageType;
+            }
+            set
+            {
+                axisUsageType = value;
+                internalSetup.SetAxisUsageType();
+            }
+        }
 
         /// <summary>
         /// The <see cref="FloatAction"/> to get the lateral (left/right direction) data from.
@@ -139,6 +175,7 @@
 
             internalSetup.SetAxisSources();
             internalSetup.SetMultipliers();
+            internalSetup.SetAxisUsageType();
         }
     }
 }
