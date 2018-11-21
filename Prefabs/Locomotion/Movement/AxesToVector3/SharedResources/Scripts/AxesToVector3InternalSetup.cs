@@ -3,6 +3,7 @@
     using UnityEngine;
     using VRTK.Core.Action;
     using VRTK.Core.Process;
+    using VRTK.Core.Process.Moment;
     using VRTK.Core.Data.Type.Transformation;
 
     /// <summary>
@@ -18,11 +19,11 @@
         public AxesToVector3Facade facade;
         #endregion
 
-        #region Axis Settings
+        #region Linked Settings
         /// <summary>
         /// The lateral <see cref="FloatAction"/> to map to.
         /// </summary>
-        [Header("Axis Settings"), Tooltip("The lateral FloatAction to map to.")]
+        [Header("Linked Settings"), Tooltip("The lateral FloatAction to map to.")]
         public FloatAction lateralAxis;
         /// <summary>
         /// The longitudinal <see cref="FloatAction"/> to map to.
@@ -39,6 +40,21 @@
         /// </summary>
         [Tooltip("The multiplier to use as the input mask to limit the forward direction.")]
         public Vector3Multiplier inputMask;
+        /// <summary>
+        /// The GameObject that contains the incremental axis logic.
+        /// </summary>
+        [Tooltip("The GameObject that contains the incremental axis logic.")]
+        public GameObject incrementalAxis;
+        /// <summary>
+        /// The GameObject that contains the directional axis logic.
+        /// </summary>
+        [Tooltip("The GameObject that contains the directional axis logic.")]
+        public GameObject directionalAxis;
+        /// <summary>
+        /// The MomentProcessor for processing the axis logic.
+        /// </summary>
+        [Tooltip("The MomentProcessor for processing the axis logic.")]
+        public MomentProcessor momentProcessor;
         #endregion
 
         /// <summary>
@@ -66,7 +82,8 @@
             }
 
             Vector3 axisDirection = facade.sourceOfForwardDirection != null ? ApplyForwardSourceToAxis(currentAxisData) : currentAxisData;
-            CurrentMovement = inputMask.Transform(axisDirection) * (Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime);
+            float multiplier = (facade.AxisUsageType == AxesToVector3Facade.AxisUsage.Incremental ? (Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime) : 1f);
+            CurrentMovement = inputMask.Transform(axisDirection) * multiplier;
             facade.Processed?.Invoke(CurrentMovement);
         }
 
@@ -105,31 +122,45 @@
             }
         }
 
-        protected virtual void OnEnable()
+        /// <summary>
+        /// Set the Axis Usage Type.
+        /// </summary>
+        public virtual void SetAxisUsageType()
         {
-            SetAxisSources();
-            speedMultiplier.Transformed.AddListener(SetAxisData);
-            SetMultipliers();
-        }
-
-        protected virtual void OnDisable()
-        {
-            SetAxisSources(true);
-            speedMultiplier.Transformed.RemoveListener(SetAxisData);
+            switch (facade.AxisUsageType)
+            {
+                case AxesToVector3Facade.AxisUsage.Directional:
+                    incrementalAxis.SetActive(false);
+                    momentProcessor.gameObject.SetActive(false);
+                    directionalAxis.SetActive(true);
+                    break;
+                case AxesToVector3Facade.AxisUsage.Incremental:
+                    directionalAxis.SetActive(false);
+                    incrementalAxis.SetActive(true);
+                    momentProcessor.gameObject.SetActive(true);
+                    break;
+            }
         }
 
         /// <summary>
         /// Processes the axis data into a movement.
         /// </summary>
         /// <param name="axisData">The axis data to process.</param>
-        protected virtual void SetAxisData(Vector3 axisData)
+        public virtual void SetAxisData(Vector3 axisData)
         {
-            if (facade == null)
-            {
-                return;
-            }
-
             currentAxisData = axisData;
+        }
+
+        protected virtual void OnEnable()
+        {
+            SetAxisSources();
+            SetMultipliers();
+            SetAxisUsageType();
+        }
+
+        protected virtual void OnDisable()
+        {
+            SetAxisSources(true);
         }
 
         /// <summary>

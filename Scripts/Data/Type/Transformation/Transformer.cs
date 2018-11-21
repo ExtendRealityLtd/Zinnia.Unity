@@ -37,10 +37,7 @@
             {
                 return default(TOutput);
             }
-
-            Result = Process(input);
-            Transformed?.Invoke(Result);
-            return Result;
+            return ProcessResult(input);
         }
 
         /// <summary>
@@ -58,5 +55,26 @@
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value.</returns>
         protected abstract TOutput Process(TInput input);
+
+        /// <summary>
+        /// Processes the given input into the output result.
+        /// </summary>
+        /// <param name="input">The value to transform.</param>
+        /// <returns>The transformed value.</returns>
+        protected virtual TOutput ProcessResult(TInput input)
+        {
+            Result = Process(input);
+            EmitTransformed(Result);
+            return Result;
+        }
+
+        /// <summary>
+        /// Emits the output result.
+        /// </summary>
+        /// <param name="output">The result of the transformation to emit.</param>
+        protected virtual void EmitTransformed(TOutput output)
+        {
+            Transformed?.Invoke(output);
+        }
     }
 }
