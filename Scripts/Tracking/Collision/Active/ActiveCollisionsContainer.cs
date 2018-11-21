@@ -4,6 +4,8 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using VRTK.Core.Rule;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Holds a collection of the current collisions raised by a <see cref="CollisionNotifier"/>. 
@@ -45,6 +47,12 @@
         }
 
         /// <summary>
+        /// Determines whether the collision is valid and to add it to the active collision collection.
+        /// </summary>
+        [Tooltip("Determines whether the collision is valid and to add it to the active collision collection.")]
+        public RuleContainer collisionValidity;
+
+        /// <summary>
         /// Emitted when the first collision occurs.
         /// </summary>
         public UnityEvent FirstStarted = new UnityEvent();
@@ -78,7 +86,7 @@
         /// <param name="collisionData">The collision data.</param>
         public virtual void Add(CollisionNotifier.EventData collisionData)
         {
-            if (!isActiveAndEnabled)
+            if (!isActiveAndEnabled || !IsValidCollision(collisionData))
             {
                 return;
             }
@@ -129,6 +137,9 @@
             EmitEmptyEvents();
         }
 
+        /// <summary>
+        /// Emits the appropriate events when the collection is emptied.
+        /// </summary>
         protected virtual void EmitEmptyEvents()
         {
             if ((Elements.Count == 0))
@@ -139,9 +150,25 @@
             ProcessContentsChanged();
         }
 
+        /// <summary>
+        /// Clones the given event data.
+        /// </summary>
+        /// <param name="input">The data to clone.</param>
+        /// <returns>The cloned data.</returns>
         protected virtual CollisionNotifier.EventData CloneEventData(CollisionNotifier.EventData input)
         {
             return new CollisionNotifier.EventData().Set(input);
         }
+
+        /// <summary>
+        /// Determines if the current collision is valid.
+        /// </summary>
+        /// <param name="collisionData">The collision to check.</param>
+        /// <returns>The validity result of the collision.</returns>
+        protected virtual bool IsValidCollision(CollisionNotifier.EventData collisionData)
+        {
+            return (collisionData.collider != null && collisionValidity.Accepts(collisionData.collider.gameObject));
+        }
+
     }
 }
