@@ -1,4 +1,5 @@
-﻿using VRTK.Core.Tracking.Collision;
+﻿using VRTK.Core.Rule;
+using VRTK.Core.Tracking.Collision;
 using VRTK.Core.Tracking.Collision.Active;
 
 namespace Test.VRTK.Core.Tracking.Collision.Active
@@ -7,6 +8,7 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
     using NUnit.Framework;
     using Test.VRTK.Core.Utility.Mock;
     using Test.VRTK.Core.Utility.Helper;
+    using Test.VRTK.Core.Utility.Stub;
 
     public class ActiveCollisionsContainerTest
     {
@@ -77,6 +79,53 @@ namespace Test.VRTK.Core.Tracking.Collision.Active
 
             Object.DestroyImmediate(oneContainer);
             Object.DestroyImmediate(twoContainer);
+        }
+
+        [Test]
+        public void AddInvalidCollisionDueToRule()
+        {
+            UnityEventListenerMock firstStartedMock = new UnityEventListenerMock();
+            UnityEventListenerMock countChangedMock = new UnityEventListenerMock();
+            UnityEventListenerMock contentsChangedMock = new UnityEventListenerMock();
+            UnityEventListenerMock allStoppedMock = new UnityEventListenerMock();
+
+            subject.FirstStarted.AddListener(firstStartedMock.Listen);
+            subject.CountChanged.AddListener(countChangedMock.Listen);
+            subject.ContentsChanged.AddListener(contentsChangedMock.Listen);
+            subject.AllStopped.AddListener(allStoppedMock.Listen);
+
+            GameObject oneContainer;
+            CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.AddComponent<RuleStub>();
+            NegationRule negationRule = oneContainer.AddComponent<NegationRule>();
+            AnyComponentTypeRule anyComponentTypeRule = oneContainer.AddComponent<AnyComponentTypeRule>();
+            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
+            negationRule.rule = new RuleContainer
+            {
+                Interface = anyComponentTypeRule
+            };
+            subject.collisionValidity = new RuleContainer
+            {
+                Interface = negationRule
+            };
+
+            Assert.AreEqual(0, subject.Elements.Count);
+
+            Assert.IsFalse(firstStartedMock.Received);
+            Assert.IsFalse(countChangedMock.Received);
+            Assert.IsFalse(contentsChangedMock.Received);
+            Assert.IsFalse(allStoppedMock.Received);
+
+            subject.Add(oneData);
+
+            Assert.AreEqual(0, subject.Elements.Count);
+
+            Assert.IsFalse(firstStartedMock.Received);
+            Assert.IsFalse(countChangedMock.Received);
+            Assert.IsFalse(contentsChangedMock.Received);
+            Assert.IsFalse(allStoppedMock.Received);
+
+            Object.DestroyImmediate(oneContainer);
         }
 
         [Test]
