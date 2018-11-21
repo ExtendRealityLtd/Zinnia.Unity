@@ -5,7 +5,7 @@
     using System;
 
     /// <summary>
-    /// Transforms a Vector2 to a Vector3 and allows mapping of the relevant coordinates.
+    /// Transforms a <see cref="Vector2"/> to a <see cref="Vector3"/> and allows mapping of the relevant coordinates.
     /// </summary>
     /// <example>
     /// Vector2(1f, 2f) -> XToXAndYToY -> Vector3(1f, 2f, 0f)
@@ -23,7 +23,7 @@
         }
 
         /// <summary>
-        /// The mapping of Vector2 coordinates to the Vector3 coordinates.
+        /// The mapping of <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
         /// </summary>
         public enum CoordinateMap
         {
@@ -54,7 +54,7 @@
         }
 
         /// <summary>
-        /// The mechanism for mapping the Vector2 coordinates to the Vector3 coordinates.
+        /// The mechanism for mapping the <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
         /// </summary>
         [Tooltip("The mechanism for mapping the Vector2 coordinates to the Vector3 coordinates."), SerializeField]
         protected CoordinateMap coordinateMap = CoordinateMap.XToXAndYToY;
@@ -83,7 +83,7 @@
         }
 
         /// <summary>
-        /// Transforms the given Vector2 into a Vector3.
+        /// Transforms the given <see cref="Vector2"/> into a <see cref="Vector3"/>.
         /// </summary>
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value.</returns>
