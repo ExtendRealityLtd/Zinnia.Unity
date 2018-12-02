@@ -14,7 +14,7 @@ namespace Test.VRTK.Core.Extension
             GameObject child = new GameObject();
             child.transform.SetParent(parent.transform);
 
-            Rigidbody rigidbody = parent.AddComponent<Rigidbody>();
+            parent.AddComponent<Rigidbody>();
             BoxCollider collider = child.AddComponent<BoxCollider>();
 
             Assert.AreEqual(parent.transform, collider.GetContainingTransform());
