@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 114333664465635948}
   - component: {fileID: 114471210263486974}
   m_Layer: 0
-  m_Name: '[SimulatedCameraRig]'
+  m_Name: SimulatedCameraRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2595,7 +2595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1496419616007624}
-  relativeTo: {fileID: 0}
+  relativeTo: {fileID: 1121419207030402}
   autoStartSampling: 1
   velocityAverageFrames: 5
   angularVelocityAverageFrames: 10

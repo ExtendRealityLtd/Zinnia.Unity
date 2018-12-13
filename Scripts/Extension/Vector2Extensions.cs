@@ -18,5 +18,26 @@
         {
             return (Vector2.Distance(a, b) <= tolerance);
         }
+
+        /// <summary>
+        /// Divides each component of the given <see cref="Vector2"/> against the given <see cref="float"/>.
+        /// </summary>
+        /// <param name="dividend">The value to divide by each component.</param>
+        /// <param name="divisor">The components to divide with.</param>
+        /// <returns>The quotient.</returns>
+        public static Vector2 Divide(float dividend, Vector2 divisor)
+        {
+            return new Vector2(dividend / divisor.x, dividend / divisor.y);
+        }
+        /// <summary>
+        /// Divides two <see cref="Vector2"/>s component-wise.
+        /// </summary>
+        /// <param name="dividend">The value to divide by each component.</param>
+        /// <param name="divisor">The components to divide with.</param>
+        /// <returns>The quotient.</returns>
+        public static Vector2 Divide(this Vector2 dividend, Vector2 divisor)
+        {
+            return Vector2.Scale(dividend, Divide(1, divisor));
+        }
     }
 }

@@ -2649,7 +2649,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114759315321820952}
-        m_MethodName: SetFollowOffset
+        m_MethodName: SetTargetOffsetAtCurrentIndex
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2665,7 +2665,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114759315321820952}
-        m_MethodName: ClearFollowOffset
+        m_MethodName: ClearTargetOffsets
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3087,7 +3087,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114759315321820952}
-        m_MethodName: ClearSource
+        m_MethodName: ClearSources
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3098,7 +3098,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114759315321820952}
-        m_MethodName: ClearFollowOffset
+        m_MethodName: ClearTargetOffsets
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3121,10 +3121,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2aba98fe11f5d429cd8ad1517c907c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceComponent: {fileID: 4315093974649990}
-  targetComponents:
-  - {fileID: 4704813091651780}
-  - {fileID: 4485229632011006}
+  ceaseAfterFirstSourceProcessed: 1
+  sources:
+  - {fileID: 1938203301758414}
+  sourceValidity:
+    field: {fileID: 0}
+  targets:
+  - {fileID: 1865449653330948}
+  - {fileID: 1290506419759560}
+  targetValidity:
+    field: {fileID: 0}
 --- !u!114 &114175872960672122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3298,7 +3304,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114759315321820952}
-        m_MethodName: SetFollowOffset
+        m_MethodName: SetTargetOffsetAtCurrentIndex
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4016,7 +4022,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114759315321820952}
-        m_MethodName: SetSource
+        m_MethodName: SetSourceAtCurrentIndex
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4536,7 +4542,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  useLocalRotation: 0
 --- !u!114 &114731144008814380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4588,7 +4593,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  useLocalPosition: 0
 --- !u!114 &114740998008590318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4629,13 +4633,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b5781728bc3ef47af5d7aca57b0e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceComponent: {fileID: 0}
-  targetComponents:
-  - {fileID: 4318877393797606}
-  followOffset: {fileID: 0}
+  ceaseAfterFirstSourceProcessed: 1
+  sources: []
+  sourceValidity:
+    field: {fileID: 0}
+  targets:
+  - {fileID: 1388801789967596}
+  targetValidity:
+    field: {fileID: 0}
+  targetOffsets: []
   followModifier: {fileID: 114684042181498918}
-  modificationType: 0
-  processTarget: 0
   Preprocessed:
     m_PersistentCalls:
       m_Calls: []

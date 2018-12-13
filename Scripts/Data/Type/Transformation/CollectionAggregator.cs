@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Aggregates the values in a collection based on a specified operation.
@@ -25,7 +26,7 @@
         public int CurrentIndex
         {
             get { return _currentIndex; }
-            set { _currentIndex = PreprocessCurrentIndex(value); }
+            set { _currentIndex = collection.GetWrappedAndClampedIndex(value); }
         }
         private int _currentIndex;
 
@@ -45,7 +46,7 @@
         /// <param name="input">The element to update the collection with.</param>
         public virtual void SetElement(int index, TInput input)
         {
-            collection[WrapAroundAndClamp(index)] = input;
+            collection[collection.GetWrappedAndClampedIndex(index)] = input;
         }
 
         /// <summary>
@@ -90,27 +91,6 @@
 
             SetElement(input);
             return ProcessCollection();
-        }
-
-        /// <summary>
-        /// Preprocesses the value to be set in <see cref="CurrentIndex"/>
-        /// </summary>
-        /// <param name="value">The value to process.</param>
-        /// <returns>The processed value</returns>
-        protected virtual int PreprocessCurrentIndex(int value)
-        {
-            return WrapAroundAndClamp(value);
-        }
-
-        /// <summary>
-        /// Wraps around and clamps the given value to within a valid range of the collection size.
-        /// </summary>
-        /// <param name="value">The value to process.</param>
-        /// <returns>The processed value.</returns>
-        protected virtual int WrapAroundAndClamp(int value)
-        {
-            value = (value >= 0 ? value : collection.Count + value);
-            return Mathf.Clamp(value, 0, collection.Count - 1);
         }
     }
 }

@@ -27,10 +27,10 @@
 
         #region Pointer Settings
         /// <summary>
-        /// The target for the pointer to follow around.
+        /// The source for the pointer origin to follow.
         /// </summary>
-        [Header("Pointer Settings"), Tooltip("The target for the pointer to follow around.")]
-        public GameObject followTarget;
+        [Header("Pointer Settings"), Tooltip("The source for the pointer origin to follow.")]
+        public GameObject followSource;
         /// <summary>
         /// The <see cref="BooleanAction"/> that will activate/deactivate the pointer.
         /// </summary>

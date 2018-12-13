@@ -306,7 +306,7 @@
             Vector3 calculatedOffset = GetOffsetPosition(Vector3.zero, givenTarget.Position, offset.transform.position) * -1f;
             Quaternion relativeRotation = Quaternion.Inverse(givenTarget.Rotation) * sourceRotation;
             Vector3 adjustedOffset = relativeRotation * calculatedOffset;
-            Vector3 scaleFactor = new Vector3(sourceScale.x / givenTarget.Scale.x, sourceScale.y / givenTarget.Scale.y, sourceScale.z / givenTarget.Scale.z);
+            Vector3 scaleFactor = sourceScale.Divide(givenTarget.Scale);
             Vector3 scaledOffset = Vector3.Scale(adjustedOffset, scaleFactor);
             return sourcePosition - scaledOffset;
         }

@@ -33,10 +33,10 @@ namespace Test.VRTK.Core.Tracking.Modification
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.sourceComponent = source.TryGetComponent<Component>();
-            subject.targetComponents.Add(target1.TryGetComponent<Component>());
-            subject.targetComponents.Add(target2.TryGetComponent<Component>());
-            subject.targetComponents.Add(target3.TryGetComponent<Component>());
+            subject.AddSource(source);
+            subject.AddTarget(target1);
+            subject.AddTarget(target2);
+            subject.AddTarget(target3);
 
             source.gameObject.SetActive(true);
 
@@ -65,10 +65,10 @@ namespace Test.VRTK.Core.Tracking.Modification
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.sourceComponent = source.TryGetComponent<Component>();
-            subject.targetComponents.Add(target1.TryGetComponent<Component>());
-            subject.targetComponents.Add(target2.TryGetComponent<Component>());
-            subject.targetComponents.Add(target3.TryGetComponent<Component>());
+            subject.AddSource(source);
+            subject.AddTarget(target1);
+            subject.AddTarget(target2);
+            subject.AddTarget(target3);
 
             source.gameObject.SetActive(false);
 
@@ -97,10 +97,10 @@ namespace Test.VRTK.Core.Tracking.Modification
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.sourceComponent = source.TryGetComponent<Component>();
-            subject.targetComponents.Add(target1.TryGetComponent<Component>());
-            subject.targetComponents.Add(target2.TryGetComponent<Component>());
-            subject.targetComponents.Add(target3.TryGetComponent<Component>());
+            subject.AddSource(source);
+            subject.AddTarget(target1);
+            subject.AddTarget(target2);
+            subject.AddTarget(target3);
 
             source.gameObject.SetActive(true);
 

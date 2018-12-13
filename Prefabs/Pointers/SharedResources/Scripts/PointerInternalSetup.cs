@@ -65,10 +65,10 @@
 
             caster.targetValidity = facade.targetValidity;
 
-            if (facade.followTarget != null)
+            if (facade.followSource != null)
             {
-                objectFollow.targetComponents.Clear();
-                objectFollow.targetComponents.Add(facade.followTarget.TryGetComponent<Component>());
+                objectFollow.ClearSources();
+                objectFollow.AddSource(facade.followSource);
             }
 
             if (facade.selectionAction != null)
@@ -108,7 +108,7 @@
                 return;
             }
 
-            objectFollow.targetComponents.Clear();
+            objectFollow.ClearSources();
             activationAction.ClearSources();
             selectOnActivatedAction.ClearSources();
             selectOnDeactivatedAction.ClearSources();

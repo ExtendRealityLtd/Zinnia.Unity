@@ -77,12 +77,12 @@
                 return;
             }
 
-            playArea.targetComponents.AddRange(facade.PlayAreas);
-            headset.targetComponents.AddRange(facade.Headsets);
+            playArea.targets.AddRange(facade.PlayAreas);
+            headset.sources.AddRange(facade.Headsets);
             sceneCameras.cameras.AddRange(facade.HeadsetCameras);
             headsetVelocityTrackers.velocityTrackers.AddRange(facade.HeadsetVelocityTrackers);
-            leftController.targetComponents.AddRange(facade.LeftControllers);
-            rightController.targetComponents.AddRange(facade.RightControllers);
+            leftController.sources.AddRange(facade.LeftControllers);
+            rightController.sources.AddRange(facade.RightControllers);
             leftControllerVelocityTrackers.velocityTrackers.AddRange(facade.LeftControllerVelocityTrackers);
             rightControllerVelocityTrackers.velocityTrackers.AddRange(facade.RightControllerVelocityTrackers);
         }
@@ -97,12 +97,12 @@
                 return;
             }
 
-            playArea.targetComponents.Clear();
-            headset.targetComponents.Clear();
+            playArea.ClearTargets();
+            headset.ClearSources();
             sceneCameras.cameras.Clear();
             headsetVelocityTrackers.velocityTrackers.Clear();
-            leftController.targetComponents.Clear();
-            rightController.targetComponents.Clear();
+            leftController.ClearSources();
+            rightController.ClearSources();
             leftControllerVelocityTrackers.velocityTrackers.Clear();
             rightControllerVelocityTrackers.velocityTrackers.Clear();
         }
