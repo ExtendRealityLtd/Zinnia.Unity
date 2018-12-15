@@ -30,5 +30,23 @@ namespace Test.VRTK.Core.Extension
             tolerance = 1f;
             Assert.IsFalse(a.ApproxEquals(b, tolerance));
         }
+
+        [Test]
+        public void DivideWithFloat()
+        {
+            Vector2 a = Vector2.one * 10f;
+            Assert.AreEqual(Vector2.one * 0.2f, Vector2Extensions.Divide(2f, a));
+            Assert.AreEqual(Vector2.one * 0.5f, Vector2Extensions.Divide(5f, a));
+            Assert.AreEqual(Vector2.one, Vector2Extensions.Divide(10f, a));
+            Assert.AreEqual(Vector2.zero, Vector2Extensions.Divide(0f, a));
+        }
+
+        [Test]
+        public void DivideByVector()
+        {
+            Vector2 a = Vector2.one * 10f;
+            Vector2 b = Vector2.one * 2f;
+            Assert.AreEqual(Vector2.one * 5f, a.Divide(b));
+        }
     }
 }

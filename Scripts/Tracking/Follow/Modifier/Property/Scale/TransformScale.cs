@@ -9,12 +9,6 @@
     public class TransformScale : PropertyModifier
     {
         /// <summary>
-        /// Determines whether to use local scale or global scale.
-        /// </summary>
-        [Tooltip("Determines whether to use local scale or global scale.")]
-        public bool useLocalScale;
-
-        /// <summary>
         /// Modifies the target scale to match the given source scale.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
@@ -22,13 +16,13 @@
         /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
-            if (useLocalScale)
+            if (offset == null)
             {
-                target.transform.localScale = (offset != null ? (source.transform.localScale - (offset.transform.localScale - target.transform.localScale)) : source.transform.localScale);
+                target.transform.SetGlobalScale(source.transform.lossyScale);
             }
             else
             {
-                target.transform.SetGlobalScale((offset != null ? (source.transform.lossyScale - (offset.transform.lossyScale - target.transform.lossyScale)) : source.transform.lossyScale));
+                target.transform.SetGlobalScale(source.transform.lossyScale.Divide(offset.transform.localScale));
             }
         }
     }

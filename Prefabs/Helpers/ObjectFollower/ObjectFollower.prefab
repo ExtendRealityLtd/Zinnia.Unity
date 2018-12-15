@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82e1be200ae387d4c95c60842582358d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  applyOffset: 0
+  applyOffset: 1
   Premodified:
     m_PersistentCalls:
       m_Calls: []
@@ -198,7 +198,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  useLocalScale: 1
 --- !u!114 &114374749712010186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -245,7 +244,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  useLocalRotation: 0
 --- !u!114 &114712274792673208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -283,7 +281,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  useLocalPosition: 0
 --- !u!114 &114960550120155566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -295,13 +292,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b5781728bc3ef47af5d7aca57b0e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceComponent: {fileID: 0}
-  targetComponents:
-  - {fileID: 0}
-  followOffset: {fileID: 0}
+  ceaseAfterFirstSourceProcessed: 1
+  sources: []
+  sourceValidity:
+    field: {fileID: 0}
+  targets: []
+  targetValidity:
+    field: {fileID: 0}
+  targetOffsets: []
   followModifier: {fileID: 114374749712010186}
-  modificationType: 0
-  processTarget: 0
   Preprocessed:
     m_PersistentCalls:
       m_Calls: []

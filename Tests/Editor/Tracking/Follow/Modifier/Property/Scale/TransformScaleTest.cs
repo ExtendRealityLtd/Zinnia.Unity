@@ -49,14 +49,14 @@ namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Scale
             GameObject target = new GameObject();
             GameObject offset = new GameObject();
 
-            source.transform.localScale = Vector3.one * 2f;
-            target.transform.localScale = Vector3.zero;
-            offset.transform.localScale = Vector3.one * 0.5f;
+            source.transform.localScale = Vector3.one * 4f;
+            target.transform.localScale = Vector3.one;
+            offset.transform.localScale = Vector3.one * 2f;
 
             subject.Modify(source, target, offset);
 
-            Assert.AreEqual(Vector3.one * 2f, source.transform.localScale);
-            Assert.AreEqual(Vector3.one * 1.5f, target.transform.localScale);
+            Assert.AreEqual(Vector3.one * 4f, source.transform.localScale);
+            Assert.AreEqual(Vector3.one * 2f, target.transform.localScale);
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);

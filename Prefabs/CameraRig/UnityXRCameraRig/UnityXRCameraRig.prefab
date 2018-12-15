@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 114331813819599554}
   - component: {fileID: 114703236085601920}
   m_Layer: 0
-  m_Name: '[UnityXRCameraRig]'
+  m_Name: UnityXRCameraRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1907295252762062}
-  relativeTo: {fileID: 0}
+  relativeTo: {fileID: 1467290445770872}
   autoStartSampling: 1
   velocityAverageFrames: 5
   angularVelocityAverageFrames: 10

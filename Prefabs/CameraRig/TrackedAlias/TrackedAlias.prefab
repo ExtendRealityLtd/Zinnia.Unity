@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 114131717192866960}
   - component: {fileID: 114903452454151976}
   - component: {fileID: 114394881288804734}
+  - component: {fileID: 114596623626978810}
   m_Layer: 0
   m_Name: RightControllerAlias
   m_TagString: Untagged
@@ -184,7 +185,7 @@ GameObject:
   - component: {fileID: 4419020640412130}
   - component: {fileID: 114636638081852210}
   m_Layer: 0
-  m_Name: '[VRTK_TrackedAlias]'
+  m_Name: TrackedAlias
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,6 +234,7 @@ GameObject:
   - component: {fileID: 114838382803823290}
   - component: {fileID: 114964950378471170}
   - component: {fileID: 114855179307605532}
+  - component: {fileID: 114539237099380480}
   m_Layer: 0
   m_Name: HeadsetAlias
   m_TagString: Untagged
@@ -284,6 +286,7 @@ GameObject:
   - component: {fileID: 114439853570832652}
   - component: {fileID: 114355316302716346}
   - component: {fileID: 114916227885696116}
+  - component: {fileID: 114560288686383548}
   m_Layer: 0
   m_Name: LeftControllerAlias
   m_TagString: Untagged
@@ -539,12 +542,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b5781728bc3ef47af5d7aca57b0e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceComponent: {fileID: 4144020432045324}
-  targetComponents: []
-  followOffset: {fileID: 0}
+  ceaseAfterFirstSourceProcessed: 1
+  sources:
+  - {fileID: 1458957959020712}
+  sourceValidity:
+    field: {fileID: 0}
+  targets: []
+  targetValidity:
+    field: {fileID: 0}
+  targetOffsets: []
   followModifier: {fileID: 114809664867579310}
-  modificationType: 0
-  processTarget: 0
   Preprocessed:
     m_PersistentCalls:
       m_Calls: []
@@ -667,12 +674,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b5781728bc3ef47af5d7aca57b0e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceComponent: {fileID: 4360459780143330}
-  targetComponents: []
-  followOffset: {fileID: 0}
+  ceaseAfterFirstSourceProcessed: 1
+  sources: []
+  sourceValidity:
+    field: {fileID: 114560288686383548}
+  targets:
+  - {fileID: 1883915491596086}
+  targetValidity:
+    field: {fileID: 0}
+  targetOffsets: []
   followModifier: {fileID: 114809664867579310}
-  modificationType: 1
-  processTarget: 1
   Preprocessed:
     m_PersistentCalls:
       m_Calls: []
@@ -823,7 +834,39 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  useLocalPosition: 0
+--- !u!114 &114539237099380480
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1756652776302202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e8b99b1ee7702478f1e9df767d7723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114560288686383548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883915491596086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e8b99b1ee7702478f1e9df767d7723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114596623626978810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1390416002302802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e8b99b1ee7702478f1e9df767d7723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114636638081852210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -889,7 +932,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  useLocalRotation: 0
 --- !u!114 &114809664867579310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -952,12 +994,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b5781728bc3ef47af5d7aca57b0e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceComponent: {fileID: 4964578296126002}
-  targetComponents: []
-  followOffset: {fileID: 0}
+  ceaseAfterFirstSourceProcessed: 1
+  sources: []
+  sourceValidity:
+    field: {fileID: 114596623626978810}
+  targets:
+  - {fileID: 1390416002302802}
+  targetValidity:
+    field: {fileID: 0}
+  targetOffsets: []
   followModifier: {fileID: 114809664867579310}
-  modificationType: 1
-  processTarget: 1
   Preprocessed:
     m_PersistentCalls:
       m_Calls: []
@@ -1002,7 +1048,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: VRTK.Core.Tracking.Follow.ObjectFollower+UnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  useLocalScale: 0
 --- !u!114 &114963507534984794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1060,12 +1105,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b5781728bc3ef47af5d7aca57b0e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceComponent: {fileID: 4884265333994552}
-  targetComponents: []
-  followOffset: {fileID: 0}
+  ceaseAfterFirstSourceProcessed: 1
+  sources: []
+  sourceValidity:
+    field: {fileID: 114539237099380480}
+  targets:
+  - {fileID: 1756652776302202}
+  targetValidity:
+    field: {fileID: 0}
+  targetOffsets: []
   followModifier: {fileID: 114809664867579310}
-  modificationType: 1
-  processTarget: 1
   Preprocessed:
     m_PersistentCalls:
       m_Calls: []

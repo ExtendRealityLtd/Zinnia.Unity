@@ -2,120 +2,96 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using VRTK.Core.Extension;
 
     /// <summary>
-    /// An <see cref="IProcessable"/> that runs a set method on a source <see cref="Component"/> against an array of target <see cref="Component"/>s.
+    /// An <see cref="IProcessable"/> that runs a set method on each (or the first active) source collection against a collection of targets.
     /// </summary>
-    public abstract class SourceTargetProcessor : MonoBehaviour, IProcessable
+    public abstract class SourceTargetProcessor<TSource, TTarget> : MonoBehaviour, IProcessable
     {
-        #region Processor Component Settings
         /// <summary>
-        /// The source <see cref="Component"/> to apply against the source within the process.
+        /// Ceases the processing of the source collection after the first valid source is processed.
         /// </summary>
-        [Header("Processor Component Settings"), Tooltip("The source Component to apply against the source within the process.")]
-        public Component sourceComponent;
-        /// <summary>
-        /// The target <see cref="Component"/>s to apply the source to within the process.
-        /// </summary>
-        [Tooltip("The target Components to apply the source to within the process.")]
-        public List<Component> targetComponents = new List<Component>();
-        #endregion
+        [Header("Process Settings"), Tooltip("Ceases the processing of the source collection after the first valid source is processed.")]
+        public bool ceaseAfterFirstSourceProcessed = true;
 
         /// <summary>
-        /// The <see cref="Component"/> that is currently the active target for the process.
+        /// The <see cref="TSource"/> that is currently the active source for the process.
         /// </summary>
-        public Component ActiveTargetComponent
+        public TSource ActiveSource
         {
             get;
             protected set;
         }
 
         /// <summary>
-        /// Executes the relevant process to apply between the source and target <see cref="Component"/>.
+        /// Executes the relevant process to apply between the source and target.
         /// </summary>
         public abstract void Process();
 
         /// <summary>
-        /// Sets the source component to the the given <see cref="GameObject"/> component.
+        /// Sets the current indices of the source and target collections.
         /// </summary>
-        /// <param name="source">The new source.</param>
-        public virtual void SetSource(GameObject source)
+        /// <param name="sourceIndex">The source index.</param>
+        /// <param name="targetIndex">The target index.</param>
+        protected abstract void SetCurrentIndices(int sourceIndex, int targetIndex);
+
+        /// <summary>
+        /// Applies the source data to the target data.
+        /// </summary>
+        /// <param name="source">The source to apply the data from.</param>
+        /// <param name="target">The target to apply the data to.</param>
+        protected abstract void ApplySourceToTarget(TSource source, TTarget target);
+
+        /// <summary>
+        /// Determines if the given source is valid to process.
+        /// </summary>
+        /// <param name="source">The source to check.</param>
+        /// <returns><see langword="true"/> if the source is valid to process.</returns>
+        protected virtual bool IsSourceValid(TSource source)
         {
-            sourceComponent = source.TryGetComponent<Component>();
+            return (source != null);
         }
 
         /// <summary>
-        /// Clears the existing source component.
+        /// Determines if the given target is valid to process.
         /// </summary>
-        public virtual void ClearSource()
+        /// <param name="target">The target to check.</param>
+        /// <returns><see langword="true"/> if the target is valid to process.</returns>
+        protected virtual bool IsTargetValid(TTarget target)
         {
-            sourceComponent = null;
+            return (target != null);
         }
 
         /// <summary>
-        /// Adds a new target to the target components from a given <see cref="GameObject"/>.
+        /// Applies each (or the first active) source data to every (or only active) targets.
         /// </summary>
-        /// <param name="target">The target to add.</param>
-        public virtual void AddTarget(GameObject target)
+        /// <param name="sources">The sources to apply the data from.</param>
+        /// <param name="targets">The targets to apply the data to.</param>
+        protected virtual void ApplySourcesToTargets(List<TSource> sources, List<TTarget> targets)
         {
-            Component addTarget = target.TryGetComponent<Component>();
-            if (addTarget != null)
+            for (int sourceIndex = 0; sourceIndex < sources.Count; sourceIndex++)
             {
-                targetComponents.Add(addTarget);
-            }
-        }
-
-        /// <summary>
-        /// Removes an existing target from the target components from a given <see cref="GameObject"/>.
-        /// </summary>
-        /// <param name="target">The target to remove.</param>
-        public virtual void RemoveTarget(GameObject target)
-        {
-            targetComponents.Remove(target.TryGetComponent<Component>());
-        }
-
-        /// <summary>
-        /// Clears the existing target components.
-        /// </summary>
-        public virtual void ClearTargets()
-        {
-            targetComponents.Clear();
-        }
-
-        /// <summary>
-        /// Processes the source against the target.
-        /// </summary>
-        /// <param name="source">The source <see cref="Transform"/> to apply the <see cref="FollowModifier"/> with.</param>
-        /// <param name="target">The target <see cref="Transform"/> to apply the <see cref="FollowModifier"/> on.</param>
-        protected abstract void ProcessComponent(Component source, Component target);
-
-        /// <summary>
-        /// Processes the source <see cref="Component"/> against every target <see cref="Component"/> in the array.
-        /// </summary>
-        protected virtual void ProcessAllComponents()
-        {
-            foreach (Component currentComponent in targetComponents.EmptyIfNull())
-            {
-                if (sourceComponent != null)
+                TSource currentSource = sources[sourceIndex];
+                if (!IsSourceValid(currentSource))
                 {
-                    ProcessComponent(sourceComponent, currentComponent);
+                    continue;
                 }
-            }
-        }
 
-        /// <summary>
-        /// Processes the source <see cref="Component"/> against the first active target <see cref="Component"/> in the array.
-        /// </summary>
-        protected virtual void ProcessFirstActiveComponent()
-        {
-            ActiveTargetComponent = null;
-            foreach (Component currentComponent in targetComponents.EmptyIfNull())
-            {
-                if (sourceComponent != null && currentComponent != null && currentComponent.gameObject.activeInHierarchy)
+                for (int targetIndex = 0; targetIndex < targets.Count; targetIndex++)
                 {
-                    ProcessComponent(sourceComponent, currentComponent);
-                    ActiveTargetComponent = currentComponent;
+                    TTarget currentTarget = targets[targetIndex];
+                    if (!IsTargetValid(currentTarget))
+                    {
+                        continue;
+                    }
+
+                    SetCurrentIndices(sourceIndex, targetIndex);
+                    ApplySourceToTarget(currentSource, currentTarget);
+                }
+
+                ActiveSource = currentSource;
+                if (ceaseAfterFirstSourceProcessed)
+                {
                     break;
                 }
             }

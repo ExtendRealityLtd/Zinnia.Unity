@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 114619447772125684}
   - component: {fileID: 114973398678699410}
   m_Layer: 0
-  m_Name: '[Internal]'
+  m_Name: Internal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using EmptyUnityEvent = UnityEngine.Events.UnityEvent;
     using System;
+    using System.Collections.Generic;
     using VRTK.Core.Extension;
     using VRTK.Core.Process.Component;
     using VRTK.Core.Tracking.Follow.Modifier;
@@ -11,7 +12,7 @@
     /// <summary>
     /// Mirrors the <see cref="Transform"/> properties of another <see cref="Transform"/> based on the given <see cref="FollowModifier"/>.
     /// </summary>
-    public class ObjectFollower : SourceTargetProcessor
+    public class ObjectFollower : GameObjectSourceTargetProcessor
     {
         /// <summary>
         /// Holds data about a <see cref="ObjectFollower"/> event.
@@ -30,18 +31,18 @@
             /// <summary>
             /// The optional offset the target follow against the source.
             /// </summary>
-            public GameObject followOffset;
+            public GameObject targetOffset;
 
             public EventData Set(EventData source)
             {
-                return Set(source.source, source.target, source.followOffset);
+                return Set(source.source, source.target, source.targetOffset);
             }
 
-            public EventData Set(GameObject source, GameObject target, GameObject followOffset = null)
+            public EventData Set(GameObject source, GameObject target, GameObject targetOffset = null)
             {
                 this.source = source;
                 this.target = target;
-                this.followOffset = followOffset;
+                this.targetOffset = targetOffset;
                 return this;
             }
 
@@ -60,54 +61,25 @@
         }
 
         /// <summary>
-        /// The way in which to apply modifications.
+        /// A <see cref="GameObject"/> collection of target offsets to offset the target against the source whilst following.
         /// </summary>
-        public enum ModificationType
-        {
-            /// <summary>
-            /// The Source data is applied onto the Target
-            /// </summary>
-            ModifyTargetUsingSource,
-            /// <summary>
-            /// The Target data is applied onto the Source.
-            /// </summary>
-            ModifySourceUsingTarget
-        }
-        /// <summary>
-        /// The process logic for the target.
-        /// </summary>
-        public enum ProcessTarget
-        {
-            /// <summary>
-            /// Process all targets.
-            /// </summary>
-            All,
-            /// <summary>
-            /// Only process the first active target.
-            /// </summary>
-            FirstActive
-        }
-
-        /// <summary>
-        /// An offset on the target against the source when following.
-        /// </summary>
-        [Tooltip("An offset on the target against the source when following.")]
-        public GameObject followOffset;
+        [Tooltip("A GameObject collection of target offsets to offset the target against the source whilst following.")]
+        public List<GameObject> targetOffsets = new List<GameObject>();
         /// <summary>
         /// The <see cref="FollowModifier"/> to apply.
         /// </summary>
-        [Tooltip("The FollowModifier to apply.")]
+        [Header("Follow Settings"), Tooltip("The FollowModifier to apply.")]
         public FollowModifier followModifier;
+
         /// <summary>
-        /// Determines which component is to be applied to the other component.
+        /// The current <see cref="targetOffsets"/> collection index.
         /// </summary>
-        [Tooltip("Determines which component is to be applied to the other component.")]
-        public ModificationType modificationType;
-        /// <summary>
-        /// The mechanism of how to process the targets.
-        /// </summary>
-        [Tooltip("The mechanism of how to process the targets.")]
-        public ProcessTarget processTarget = ProcessTarget.All;
+        public int CurrentTargetOffsetsIndex
+        {
+            get { return _currentTargetOffsetsIndex; }
+            set { _currentTargetOffsetsIndex = targetOffsets.GetWrappedAndClampedIndex(value); }
+        }
+        private int _currentTargetOffsetsIndex;
 
         /// <summary>
         /// Emitted before any processing.
@@ -123,53 +95,71 @@
         /// <inheritdoc />
         public override void Process()
         {
-            if (!isActiveAndEnabled || followModifier == null)
+            if (!isActiveAndEnabled)
             {
                 return;
             }
 
             Preprocessed?.Invoke();
-            switch (processTarget)
-            {
-                case ProcessTarget.All:
-                    ProcessAllComponents();
-                    break;
-                case ProcessTarget.FirstActive:
-                    ProcessFirstActiveComponent();
-                    break;
-            }
+            base.Process();
             Processed?.Invoke();
         }
 
         /// <summary>
-        /// Sets the <see cref="followOffset"/> to the the given offset.
+        /// Adds the given targetOffset to the targetOffsets collection.
         /// </summary>
-        /// <param name="offset">The new offset.</param>
-        public virtual void SetFollowOffset(GameObject offset)
+        /// <param name="targetOffset">The targetOffset to add.</param>
+        public virtual void AddTargetOffset(GameObject targetOffset)
         {
-            followOffset = offset;
+            targetOffsets.Add(targetOffset);
         }
 
         /// <summary>
-        /// Clears the existing follow offset.
+        /// Removes the given targetOffset from the targetOffsets collection.
         /// </summary>
-        public virtual void ClearFollowOffset()
+        /// <param name="targetOffset">The targetOffset to remove.</param>
+        public virtual void RemoveTargetOffset(GameObject targetOffset)
         {
-            followOffset = null;
+            targetOffsets.Remove(targetOffset);
         }
 
-        /// <inheritdoc />
-        protected override void ProcessComponent(Component source, Component target)
+        /// <summary>
+        /// Sets the given targetOffset at the current targetOffsets index.
+        /// </summary>
+        /// <param name="targetOffset">The targetOffset to set.</param>
+        public virtual void SetTargetOffsetAtCurrentIndex(GameObject targetOffset)
         {
-            if (followModifier == null)
+            if (targetOffsets.Count == 0)
             {
-                return;
+                targetOffsets.Add(targetOffset);
             }
+            else
+            {
+                targetOffsets[CurrentTargetsIndex] = targetOffset;
+            }
+        }
 
-            GameObject sourceGameObject = (modificationType == ModificationType.ModifyTargetUsingSource ? source.TryGetGameObject() : target.TryGetGameObject());
-            GameObject targetGameObject = (modificationType == ModificationType.ModifyTargetUsingSource ? target.TryGetGameObject() : source.TryGetGameObject());
+        /// <summary>
+        /// Clears the targetOffsets collection.
+        /// </summary>
+        public virtual void ClearTargetOffsets()
+        {
+            targetOffsets.Clear();
+        }
 
-            followModifier.Modify(sourceGameObject, targetGameObject, followOffset);
+        /// <summary>
+        /// Applies the follow modification of the given source to the given target.
+        /// </summary>
+        /// <param name="source">The source to take the follow data from.</param>
+        /// <param name="target">The target to apply the follow data to.</param>
+        protected override void ApplySourceToTarget(GameObject source, GameObject target)
+        {
+            GameObject followOffset = (targetOffsets.Count > 0 ? targetOffsets[targetOffsets.GetWrappedAndClampedIndex(CurrentTargetsIndex)] : null);
+            if (followOffset != null && !followOffset.transform.IsChildOf(targets[CurrentTargetsIndex].transform))
+            {
+                throw new ArgumentException($"The `targetOffsets` at index [{CurrentTargetsIndex}] must be a child of the GameObject at `targets` index [{CurrentTargetsIndex}].");
+            }
+            followModifier.Modify(source, target, followOffset);
         }
     }
 }

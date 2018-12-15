@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Linq;
+    using VRTK.Core.Extension;
 
     /// <summary>
     /// Multiplies a collection of <see cref="Vector2"/>s by multiplying each one to the next entry in the collection.
@@ -39,7 +40,7 @@
         /// <param name="value">The new x value.</param>
         public virtual void SetElementX(int index, float value)
         {
-            index = WrapAroundAndClamp(index);
+            index = collection.GetWrappedAndClampedIndex(index);
             Vector2 currentValue = collection[index];
             currentValue.x = value;
             collection[index] = currentValue;
@@ -63,7 +64,7 @@
         /// <param name="value">The new y value.</param>
         public virtual void SetElementY(int index, float value)
         {
-            index = WrapAroundAndClamp(index);
+            index = collection.GetWrappedAndClampedIndex(index);
             Vector2 currentValue = collection[index];
             currentValue.y = value;
             collection[index] = currentValue;

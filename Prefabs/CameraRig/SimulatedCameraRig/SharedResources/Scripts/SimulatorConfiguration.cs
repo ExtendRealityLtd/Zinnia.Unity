@@ -93,12 +93,12 @@
             {
                 if (playareaPosition != null)
                 {
-                    playareaPosition.target = trackedAlias.internalSetup.playArea.sourceComponent.gameObject;
+                    playareaPosition.target = trackedAlias.internalSetup.playArea.sources[0];
                 }
 
                 if (playareaResetter != null)
                 {
-                    playareaResetter.source = trackedAlias.internalSetup.playArea.sourceComponent.TryGetTransform();
+                    playareaResetter.source = trackedAlias.internalSetup.playArea.sources[0].transform;
                 }
             }
         }

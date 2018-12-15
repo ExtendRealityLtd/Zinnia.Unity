@@ -9,20 +9,20 @@
     public class FollowModifier : MonoBehaviour
     {
         /// <summary>
-        /// The modifier to change the position.
+        /// The modifier to change the scale.
         /// </summary>
-        [Tooltip("The modifier to change the position.")]
-        public PropertyModifier positionModifier;
+        [Tooltip("The modifier to change the scale.")]
+        public PropertyModifier scaleModifier;
         /// <summary>
         /// The modifier to change the rotation.
         /// </summary>
         [Tooltip("The modifier to change the rotation.")]
         public PropertyModifier rotationModifier;
         /// <summary>
-        /// The modifier to change the scale.
+        /// The modifier to change the position.
         /// </summary>
-        [Tooltip("The modifier to change the scale.")]
-        public PropertyModifier scaleModifier;
+        [Tooltip("The modifier to change the position.")]
+        public PropertyModifier positionModifier;
 
         /// <summary>
         /// Emitted before the follow is modified.
@@ -73,17 +73,17 @@
 
             Premodified?.Invoke(eventData.Set(source, target, offset));
 
-            if (positionModifier != null)
+            if (scaleModifier != null)
             {
-                positionModifier.Modify(source, target, offset);
+                scaleModifier.Modify(source, target, offset);
             }
             if (rotationModifier != null)
             {
                 rotationModifier.Modify(source, target, offset);
             }
-            if (scaleModifier != null)
+            if (positionModifier != null)
             {
-                scaleModifier.Modify(source, target, offset);
+                positionModifier.Modify(source, target, offset);
             }
 
             Modified?.Invoke(eventData.Set(source, target, offset));
