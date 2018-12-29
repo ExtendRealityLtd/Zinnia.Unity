@@ -53,5 +53,10 @@
                 ActiveProcess.Cancel();
             }
         }
+
+        protected virtual void OnEnable()
+        {
+            ActiveProcess = hapticProcesses.EmptyIfNull().FirstOrDefault(process => process.IsActive());
+        }
     }
 }
