@@ -12,11 +12,11 @@
     /// </summary>
     public class ClimbFacade : MonoBehaviour
     {
-        #region Facade Settings
+        #region Control Settings
         /// <summary>
         /// The body representation to control.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The body representation to control.")]
+        [Header("Control Settings"), Tooltip("The body representation to control.")]
         public BodyRepresentationFacade bodyRepresentationFacade;
         #endregion
 

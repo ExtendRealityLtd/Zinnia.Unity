@@ -19,11 +19,11 @@
         public AxesToVector3Facade facade;
         #endregion
 
-        #region Linked Settings
+        #region Reference Settings
         /// <summary>
         /// The lateral <see cref="FloatAction"/> to map to.
         /// </summary>
-        [Header("Linked Settings"), Tooltip("The lateral FloatAction to map to.")]
+        [Header("Reference Settings"), Tooltip("The lateral FloatAction to map to.")]
         public FloatAction lateralAxis;
         /// <summary>
         /// The longitudinal <see cref="FloatAction"/> to map to.
