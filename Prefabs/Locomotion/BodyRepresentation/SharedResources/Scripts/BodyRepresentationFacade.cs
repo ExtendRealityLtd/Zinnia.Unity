@@ -12,11 +12,11 @@
     /// </summary>
     public class BodyRepresentationFacade : MonoBehaviour
     {
-        #region Facade Settings
+        #region Source Settings
         /// <summary>
         /// The object to follow.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The object to follow.")]
+        [Header("Source Settings"), Tooltip("The object to follow.")]
         public GameObject source;
         /// <summary>
         /// The thickness of <see cref="source"/> to be used when resolving body collisions.
@@ -28,10 +28,13 @@
         /// </summary>
         [Tooltip("An optional offset for the source to use.")]
         public GameObject offset;
+        #endregion
+
+        #region Interaction Settings
         /// <summary>
         /// A collection of interactors to exclude from physics collision checks.
         /// </summary>
-        [Tooltip("A collection of interactors to exclude from physics collision checks."), SerializeField]
+        [Header("Interaction Settings"), Tooltip("A collection of interactors to exclude from physics collision checks."), SerializeField]
         protected List<InteractorFacade> ignoredInteractors = new List<InteractorFacade>();
         #endregion
 

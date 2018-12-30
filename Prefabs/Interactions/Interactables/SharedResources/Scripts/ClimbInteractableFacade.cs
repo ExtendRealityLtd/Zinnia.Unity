@@ -9,11 +9,11 @@
     /// </summary>
     public class ClimbInteractableFacade : MonoBehaviour
     {
-        #region Facade Settings
+        #region Climb Settings
         /// <summary>
         /// The <see cref="ClimbFacade"/> to use.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The Climb Facade to use.")]
+        [Header("Climb Settings"), Tooltip("The Climb Facade to use.")]
         public ClimbFacade climbFacade;
         /// <summary>
         /// The multiplier to apply to the velocity of the interactor when the interactable is released and climbing stops.
