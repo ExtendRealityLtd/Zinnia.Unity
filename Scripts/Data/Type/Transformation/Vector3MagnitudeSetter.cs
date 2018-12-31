@@ -27,7 +27,7 @@
         /// Sets the magnitude to use.
         /// </summary>
         /// <param name="magnitude">The magnitude to use when transforming values.</param>
-        public void SetMagnitude(float magnitude)
+        public virtual void SetMagnitude(float magnitude)
         {
             this.magnitude = magnitude;
         }
@@ -36,7 +36,7 @@
         /// Sets the magnitude to use.
         /// </summary>
         /// <param name="magnitudeSource">The source of the magnitude to use when transforming values.</param>
-        public void SetMagnitude(Vector3 magnitudeSource)
+        public virtual void SetMagnitude(Vector3 magnitudeSource)
         {
             magnitude = magnitudeSource.magnitude;
         }
