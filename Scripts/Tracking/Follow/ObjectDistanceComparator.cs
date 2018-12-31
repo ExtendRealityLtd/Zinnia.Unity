@@ -106,7 +106,7 @@
             protected set;
         }
 
-        protected bool previousState = false;
+        protected bool previousState;
         protected Vector3 sourcePosition;
         protected EventData eventData = new EventData();
 
@@ -122,22 +122,26 @@
 
             Difference = target.transform.position - GetSourcePosition();
             Distance = Difference.magnitude;
-            Exceeding = (Distance >= distanceThreshold);
-            if (previousState != Exceeding || distanceThreshold <= 0f)
-            {
-                eventData.Set(Difference, Distance);
+            Exceeding = Distance >= distanceThreshold;
 
-                if (Exceeding)
-                {
-                    ThresholdExceeded?.Invoke(eventData);
-                }
-                else
-                {
-                    ThresholdResumed?.Invoke(eventData);
-                }
+            bool didStateChange = previousState != Exceeding;
+            previousState = Exceeding;
+
+            if (!didStateChange && distanceThreshold > 0f)
+            {
+                return;
             }
 
-            previousState = Exceeding;
+            eventData.Set(Difference, Distance);
+
+            if (Exceeding)
+            {
+                ThresholdExceeded?.Invoke(eventData);
+            }
+            else
+            {
+                ThresholdResumed?.Invoke(eventData);
+            }
         }
 
         /// <summary>
