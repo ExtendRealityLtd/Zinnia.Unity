@@ -106,7 +106,7 @@
             protected set;
         }
 
-        protected bool previousState = false;
+        protected bool previousState;
         protected Vector3 sourcePosition;
         protected EventData eventData = new EventData();
 
