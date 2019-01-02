@@ -19,6 +19,12 @@
         }
 
         /// <summary>
+        /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or just to search for the containing <see cref="Transform"/>.
+        /// </summary>
+        [Tooltip("Determines whether the collision point parent is the GameObject that contains a CollisionNotifier or just to search for the containing Transform.")]
+        public bool parentIsCollisionNotifier;
+
+        /// <summary>
         /// Emitted when the collision point container is created.
         /// </summary>
         public UnityEvent Created = new UnityEvent();
@@ -43,12 +49,13 @@
         public virtual void Create(ActiveCollisionConsumer.EventData eventData)
         {
             GameObject collisionInitiator = (eventData.publisher == null ? null : eventData.publisher.sourceContainer);
-            GameObject collidingObject = (eventData.currentCollision?.collider == null ? null : eventData.currentCollision.collider.GetContainingTransform().gameObject);
 
-            if (!isActiveAndEnabled || collisionInitiator == null || collidingObject == null || Container != null)
+            if (!isActiveAndEnabled || collisionInitiator == null || eventData.currentCollision?.collider == null || Container != null)
             {
                 return;
             }
+
+            GameObject collidingObject = (parentIsCollisionNotifier ? eventData.currentCollision.collider.GetComponentInParent<CollisionNotifier>().gameObject : eventData.currentCollision.collider.GetContainingTransform().gameObject);
 
             Container = new GameObject($"[VRTK][CollisionPointContainer][{collisionInitiator.name}]");
             Container.transform.SetParent(collidingObject.transform);
