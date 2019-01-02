@@ -5,8 +5,8 @@
 
 [![Slack](https://img.shields.io/badge/slack-chat-E24663.svg)](http://invite.vrtk.io)
 [![Documentation](https://img.shields.io/badge/readme-docs-3484C6.svg)](http://docs.vrtk.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/vr_toolkit.svg?style=flat&label=twitter)](https://twitter.com/VR_Toolkit)
 [![YouTube](https://img.shields.io/badge/youtube-channel-e52d27.svg)](http://videos.vrtk.io)
+[![Twitter Follow](https://img.shields.io/twitter/follow/vr_toolkit.svg?style=flat&label=twitter)](https://twitter.com/VR_Toolkit)
 [![Waffle](https://img.shields.io/badge/project-backlog-78bdf2.svg)](https://waffle.io/ExtendRealityLtd/VRTK.Unity.Core)
 
 ## 3<sup>rd</sup> Party SDK Support
