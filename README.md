@@ -11,23 +11,45 @@
 
 ## 3<sup>rd</sup> Party SDK Support
 
- * [VRTK.Unity.SteamVR]
- * [VRTK.Unity.OculusUtilities]
+* [VRTK.Unity.SteamVR]
+* [VRTK.Unity.OculusUtilities]
 
 ## Introduction
 
-VRTK.Unity.Core is a core collection of design patterns for Unity
-that can be beneficial in VR development.
+VRTK.Unity.Core is a core collection of design patterns for [Unity3d] that can be beneficial in VR development.
+
+## Getting Started
+
+### Setting up a project
+
+* Using Unity3d 2018.1 or above create a new project using the 3D Template or open an existing project.
+* Update the project `Scripting Runtime Version` to `.NET 4.x Equivalent`.
+  * In Unity3d select `Main Menu -> Edit -> Project Settings -> Player` to open the `Player Settings` inspector.
+  * In the `PlayerSettings` inspector panel expand `Other Settings`.
+  * Change the `Scripting Runtime Version` to `.NET 4.x Equivalent`.
+  * Unity3d will now restart in the supported scripting runtime.
+* If the project supports Virtual Reality then ensure `Virtual Reality Supported` is checked.
+  * In Unity3d select `Main Menu -> Edit -> Project Settings -> Player` to open the `Player Settings` inspector.
+  * In the `PlayerSettings` inspector panel expand `XR Settings`.
+  * In `XR Settings` ensure the `Virtual Reality Supported` option is checked.
+
+### Cloning the VRTK.Unity.Core repo into a project
+
+* Navigate to the `Assets/` directory of your project.
+* Git clone this repo into the `Assets/` directory:
+  * `git clone https://github.com/ExtendRealityLtd/VRTK.Unity.Core.git` - [How To Clone A Repo]
+* Wait for Unity3d to finish importing the cloned files.
 
 ## Contributing
 
-We're not currently in a place where accepting contributions would
-be helpful. But as soon as we're ready we'll let you know!
+We're not currently in a place where accepting contributions would be helpful. But as soon as we're ready we'll let you know!
 
 ## License
 
 Code released under the [MIT License].
 
 [MIT License]: LICENSE.md
+[How To Clone A Repo]: https://help.github.com/articles/cloning-a-repository/
 [VRTK.Unity.SteamVR]: https://github.com/ExtendRealityLtd/VRTK.Unity.SteamVR
 [VRTK.Unity.OculusUtilities]: https://github.com/ExtendRealityLtd/VRTK.Unity.OculusUtilities
+[Unity3d]: https://unity3d.com/
