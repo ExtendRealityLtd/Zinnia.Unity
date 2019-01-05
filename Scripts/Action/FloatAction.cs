@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using UnityEngine;
     using UnityEngine.Events;
     using System;
     using Zinnia.Extension;

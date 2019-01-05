@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
     using Zinnia.Extension;

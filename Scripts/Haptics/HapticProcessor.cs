@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Haptics
 {
-    using UnityEngine;
     using Zinnia.Extension;
     using System.Collections.Generic;
     using System.Linq;
