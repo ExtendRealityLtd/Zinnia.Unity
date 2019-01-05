@@ -4,7 +4,7 @@
     using UnityEditor;
 
     [CustomPropertyDrawer(typeof(InternalSettingAttribute))]
-    public class InternalSettingDrawer : PropertyDrawer
+    public class InternalSettingAttributeDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

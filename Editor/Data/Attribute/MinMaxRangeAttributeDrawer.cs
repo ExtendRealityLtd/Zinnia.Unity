@@ -3,12 +3,12 @@
     using UnityEngine;
     using UnityEditor;
     using System.Globalization;
+    using Supyrb;
     using Zinnia.Data.Type;
-    using Zinnia.Lib.Supyrb;
     using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(MinMaxRangeAttribute))]
-    class MinMaxRangeDrawer : PropertyDrawer
+    class MinMaxRangeAttributeDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

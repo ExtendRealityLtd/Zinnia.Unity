@@ -6,7 +6,7 @@
     using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(TypePickerAttribute))]
-    public class TypePickerDrawer : PropertyDrawer
+    public class TypePickerAttributeDrawer : PropertyDrawer
     {
         private Type type;
 

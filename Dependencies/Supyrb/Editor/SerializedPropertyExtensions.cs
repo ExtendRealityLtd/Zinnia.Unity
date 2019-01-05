@@ -8,7 +8,7 @@
 // </author>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Zinnia.Lib.Supyrb
+namespace Supyrb
 {
     using System;
     using UnityEngine;

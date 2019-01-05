@@ -5,7 +5,7 @@
     using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(UnityFlagsAttribute))]
-    public class UnityFlagsDrawer : PropertyDrawer
+    public class UnityFlagsAttributeDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
