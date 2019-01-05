@@ -103,7 +103,7 @@
         /// <summary>
         /// Attempts to get the value in the list of relations for the given index.
         /// </summary>
-        /// <param name="index">The index of the relation to get the value for.</param>        
+        /// <param name="index">The index of the relation to get the value for.</param>
         public virtual void DoGetValue(int index)
         {
             GetValue(index);

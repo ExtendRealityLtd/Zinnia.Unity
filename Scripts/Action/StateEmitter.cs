@@ -14,7 +14,7 @@
         public Action action;
 
         /// <summary>
-        /// Re-emits the state of the Action. 
+        /// Re-emits the state of the Action.
         /// </summary>
         public virtual void Process()
         {

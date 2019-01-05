@@ -8,7 +8,7 @@
     using Zinnia.Extension;
 
     /// <summary>
-    /// Holds a collection of the current collisions raised by a <see cref="CollisionNotifier"/>. 
+    /// Holds a collection of the current collisions raised by a <see cref="CollisionNotifier"/>.
     /// </summary>
     public class ActiveCollisionsContainer : MonoBehaviour
     {

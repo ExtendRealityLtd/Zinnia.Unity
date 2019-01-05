@@ -43,7 +43,6 @@ namespace Zinnia.Lib.Supyrb
         /// <returns>Returns if the operation was successful or failed</returns>
         public static bool SetValue<T>(this SerializedProperty property, T value)
         {
-
             object obj = GetSerializedPropertyRootComponent(property);
             //Iterate to parent object of the value, necessary if it is a nested object
             string[] fieldStructure = property.propertyPath.Split('.');

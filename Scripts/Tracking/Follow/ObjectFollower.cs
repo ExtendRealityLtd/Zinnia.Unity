@@ -26,7 +26,7 @@
             public GameObject source;
             /// <summary>
             /// The target to apply the <see cref="FollowModifier"/> on.
-            /// </summary>            
+            /// </summary>
             public GameObject target;
             /// <summary>
             /// The optional offset the target follow against the source.

@@ -9,7 +9,6 @@
     /// </summary>
     public abstract class Action : MonoBehaviour
     {
-
         /// <summary>
         /// Determines whether the action is currently activated.
         /// </summary>

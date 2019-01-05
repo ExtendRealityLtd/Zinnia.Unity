@@ -284,7 +284,7 @@
         }
 
         /// <summary>
-        /// Calculates the position with the appropriate offset. 
+        /// Calculates the position with the appropriate offset.
         /// </summary>
         /// <param name="sourcePosition">The source current position.</param>
         /// <param name="targetPosition">The target current position.</param>
