@@ -56,12 +56,12 @@
         /// <summary>
         /// The mechanism for mapping the <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
         /// </summary>
-        [Tooltip("The mechanism for mapping the Vector2 coordinates to the Vector3 coordinates."), SerializeField]
+        [SerializeField]
         protected CoordinateMap coordinateMap = CoordinateMap.XToXAndYToY;
         /// <summary>
         /// The value to set the unused coordinate to during the conversion.
         /// </summary>
-        [Tooltip("The value to set the unused coordinate to during the conversion."), SerializeField]
+        [SerializeField]
         protected float unusedCoordinateValue = 0f;
 
         /// <summary>

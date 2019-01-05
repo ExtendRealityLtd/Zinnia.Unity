@@ -12,27 +12,22 @@
         /// <summary>
         /// The target to scale.
         /// </summary>
-        [Tooltip("The target to scale.")]
         public GameObject target;
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
-        [Tooltip("The point to determine distance from.")]
         public GameObject primaryPoint;
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
-        [Tooltip("The point to determine distance to.")]
         public GameObject secondaryPoint;
         /// <summary>
         /// A scale factor multiplier.
         /// </summary>
-        [Tooltip("A scale factor multiplier.")]
         public float multiplier = 1f;
         /// <summary>
         /// Determines whether to use local or global scale.
         /// </summary>
-        [Tooltip("Determines whether to use local or global scale.")]
         public bool useLocalScale = true;
 
         protected bool initialized;

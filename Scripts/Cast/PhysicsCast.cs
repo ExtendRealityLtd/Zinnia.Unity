@@ -10,12 +10,10 @@
         /// <summary>
         /// The layers to ignore when casting.
         /// </summary>
-        [Tooltip("The layers to ignore when casting.")]
         public LayerMask layersToIgnore = Physics.IgnoreRaycastLayer;
         /// <summary>
         /// Determines whether the cast will interact with trigger colliders.
         /// </summary>
-        [Tooltip("Determines whether the cast will interact with trigger colliders.")]
         public QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.UseGlobal;
 
         /// <summary>

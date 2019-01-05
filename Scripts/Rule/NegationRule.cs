@@ -11,7 +11,6 @@
         /// <summary>
         /// The <see cref="IRule"/> to negate.
         /// </summary>
-        [Tooltip("The IRule to negate.")]
         public RuleContainer rule;
 
         /// <inheritdoc />

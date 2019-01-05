@@ -49,7 +49,6 @@
         /// <summary>
         /// Determines whether the collision is valid and to add it to the active collision collection.
         /// </summary>
-        [Tooltip("Determines whether the collision is valid and to add it to the active collision collection.")]
         public RuleContainer collisionValidity;
 
         /// <summary>

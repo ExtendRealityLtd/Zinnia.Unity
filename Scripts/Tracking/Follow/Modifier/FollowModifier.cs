@@ -11,17 +11,14 @@
         /// <summary>
         /// The modifier to change the scale.
         /// </summary>
-        [Tooltip("The modifier to change the scale.")]
         public PropertyModifier scaleModifier;
         /// <summary>
         /// The modifier to change the rotation.
         /// </summary>
-        [Tooltip("The modifier to change the rotation.")]
         public PropertyModifier rotationModifier;
         /// <summary>
         /// The modifier to change the position.
         /// </summary>
-        [Tooltip("The modifier to change the position.")]
         public PropertyModifier positionModifier;
 
         /// <summary>

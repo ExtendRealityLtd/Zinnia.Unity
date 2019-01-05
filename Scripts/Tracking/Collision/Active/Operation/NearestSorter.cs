@@ -11,7 +11,6 @@
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
-        [Tooltip("The source to determine the closest collision to.")]
         public GameObject source;
 
         /// <summary>

@@ -29,7 +29,6 @@
             /// <summary>
             /// The container of the source that is initiating the collision.
             /// </summary>
-            [Tooltip("The container of the source that is initiating the collision.")]
             public GameObject sourceContainer;
 
             /// <summary>
@@ -54,7 +53,6 @@
         /// <summary>
         /// The data to publish to any available consumers.
         /// </summary>
-        [Tooltip("The data to publish to any available consumers.")]
         public PayloadData payload = new PayloadData();
 
         /// <summary>

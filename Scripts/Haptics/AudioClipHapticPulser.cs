@@ -11,17 +11,14 @@
         /// <summary>
         /// The pulse process to utilize.
         /// </summary>
-        [Tooltip("The pulse process to utilize.")]
         public HapticPulser hapticPulser;
         /// <summary>
         /// The waveform to represent the haptic pattern.
         /// </summary>
-        [Tooltip("The waveform to represent the haptic pattern.")]
         public AudioClip audioClip;
         /// <summary>
         /// Multiplies the current audio peak to affect the wave intensity.
         /// </summary>
-        [Tooltip("Multiplies the current audio peak to affect the wave intensity.")]
         public float intensityMultiplier = 1f;
 
         /// <summary>

@@ -59,7 +59,6 @@
         /// <summary>
         /// The initial value of the action.
         /// </summary>
-        [Tooltip("The initial value of the action.")]
         public TValue defaultValue;
 
         /// <summary>
@@ -83,7 +82,7 @@
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        [Tooltip("Actions to subscribe to when this action is enabled. Allows chaining the source actions to this action."), SerializeField]
+        [SerializeField]
         protected List<TSelf> sources = new List<TSelf>();
 
         /// <summary>

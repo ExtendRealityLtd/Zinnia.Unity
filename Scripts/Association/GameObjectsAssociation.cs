@@ -11,7 +11,6 @@
         /// <summary>
         /// The <see cref="GameObject"/>s to (de)activate.
         /// </summary>
-        [Tooltip("The GameObjects to (de)activate.")]
         public List<GameObject> gameObjects = new List<GameObject>();
 
         /// <summary>

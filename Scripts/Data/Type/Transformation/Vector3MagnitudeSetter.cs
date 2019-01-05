@@ -20,7 +20,6 @@
         /// <summary>
         /// The magnitude to use when transforming values.
         /// </summary>
-        [Tooltip("The magnitude to use when transforming values.")]
         public float magnitude = 1f;
 
         /// <summary>

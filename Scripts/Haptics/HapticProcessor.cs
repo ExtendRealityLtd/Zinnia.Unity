@@ -13,7 +13,6 @@
         /// <summary>
         /// Process the first active <see cref="HapticProcess"/> found in the collection.
         /// </summary>
-        [Tooltip("Process the first active HapticProcess found in the collection.")]
         public List<HapticProcess> hapticProcesses = new List<HapticProcess>();
 
         private HapticProcess _activeHapticProcess;

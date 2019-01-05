@@ -12,7 +12,6 @@
         /// <summary>
         /// A regular expression to match the name of the XR device that needs to be loaded.
         /// </summary>
-        [Tooltip("A regular expression to match the name of the XR device that needs to be loaded.")]
         public string xrDeviceNamePattern;
 
         /// <inheritdoc/>

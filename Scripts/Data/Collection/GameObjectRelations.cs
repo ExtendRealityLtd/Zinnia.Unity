@@ -27,19 +27,16 @@
             /// <summary>
             /// The <see cref="GameObject"/> to use as the key for the relation.
             /// </summary>
-            [Tooltip("The GameObject to use as the key for the relation.")]
             public GameObject key;
             /// <summary>
             /// The <see cref="GameObject"/> to use as the value for the relation.
             /// </summary>
-            [Tooltip("The GameObject to use as the value for the relation.")]
             public GameObject value;
         }
 
         /// <summary>
         /// The collection of relations.
         /// </summary>
-        [Tooltip("The collection of relations.")]
         public List<Relation> relations = new List<Relation>();
 
         /// <summary>

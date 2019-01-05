@@ -11,7 +11,6 @@
         /// <summary>
         /// The Action to re-emit the state for.
         /// </summary>
-        [Tooltip("The Action to re-emit the state for.")]
         public Action action;
 
         /// <summary>

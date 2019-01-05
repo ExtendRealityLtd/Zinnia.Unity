@@ -10,12 +10,10 @@
         /// <summary>
         /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
         /// </summary>
-        [Tooltip("The source VelocityTracker to receive the velocity data from.")]
         public VelocityTracker source;
         /// <summary>
         /// The target <see cref="Rigidbody"/> to apply the source velocity data to.
         /// </summary>
-        [Tooltip("The target Rigidbody to apply the source velocity data to.")]
         public Rigidbody target;
 
         /// <summary>

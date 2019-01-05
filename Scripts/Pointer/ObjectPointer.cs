@@ -102,40 +102,33 @@
             /// <summary>
             /// Represents the <see cref="Element"/> when it's colliding with a valid object.
             /// </summary>
-            [Tooltip("Represents the Element when it's colliding with a valid object.")]
             public GameObject validObject;
             /// <summary>
             /// Represents the <see cref="Element"/> when it's colliding with an invalid object or not colliding at all.
             /// </summary>
-            [Tooltip("Represents the Element when it's colliding with an invalid object or not colliding at all.")]
             public GameObject invalidObject;
             /// <summary>
             /// Determines when the <see cref="Element"/> is visible.
             /// </summary>
-            [Tooltip("Determines when the Element is visible.")]
             public Visibility visibility = Visibility.OnWhenPointerActivated;
         }
 
         /// <summary>
         /// Determines if the <see cref="ObjectPointer"/> should be automatically activated when the script is enabled.
         /// </summary>
-        [Tooltip("Determines if the ObjectPointer should be automatically activated when the script is enabled.")]
         public bool activateOnEnable;
 
         /// <summary>
         /// Represents the origin, i.e. the first rendered point.
         /// </summary>
-        [Tooltip("Represents the origin, i.e. the first rendered point.")]
         public Element origin = new Element();
         /// <summary>
         /// Represents the segments between <see cref="origin"/> and <see cref="destination"/>. This will get cloned to create all the segments.
         /// </summary>
-        [Tooltip("Represents the segments between origin and destination. This will get cloned to create all the segments.")]
         public Element repeatedSegment = new Element();
         /// <summary>
         /// Represents the destination, i.e. the last rendered point.
         /// </summary>
-        [Tooltip("Represents the destination, i.e. the last rendered point.")]
         public Element destination = new Element();
 
         /// <summary>

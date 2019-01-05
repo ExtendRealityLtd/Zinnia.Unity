@@ -10,7 +10,6 @@
         /// <summary>
         /// The source to extract from.
         /// </summary>
-        [Tooltip("The source to extract from.")]
         public Component source;
 
         /// <summary>

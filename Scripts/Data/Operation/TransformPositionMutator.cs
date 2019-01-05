@@ -10,7 +10,6 @@
         /// <summary>
         /// An optional rotation offset.
         /// </summary>
-        [Tooltip("An optional rotation offset.")]
         public GameObject rotationOffset;
 
         /// <summary>

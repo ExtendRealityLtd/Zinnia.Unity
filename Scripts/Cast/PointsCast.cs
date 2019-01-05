@@ -57,17 +57,14 @@
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
-        [Tooltip("The origin point for the cast.")]
         public GameObject origin;
         /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
-        [Tooltip("Allows to optionally affect the cast.")]
         public PhysicsCast physicsCast;
         /// <summary>
         /// Allows to optionally determine targets based on the set rules.
         /// </summary>
-        [Tooltip("Allows to optionally determine targets based on the set rules.")]
         public RuleContainer targetValidity;
 
         /// <summary>

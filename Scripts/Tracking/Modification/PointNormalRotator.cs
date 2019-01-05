@@ -11,7 +11,6 @@
         /// <summary>
         /// The target to apply the rotations to.
         /// </summary>
-        [Tooltip("The target to apply the rotations to.")]
         public GameObject target;
 
         /// <summary>

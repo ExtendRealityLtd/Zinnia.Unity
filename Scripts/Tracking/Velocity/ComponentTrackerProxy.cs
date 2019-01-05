@@ -10,7 +10,6 @@
         /// <summary>
         /// The <see cref="Component"/> that contains a <see cref="VelocityTracker"/>.
         /// </summary>
-        [Tooltip("The Component that contains a VelocityTracker.")]
         public Component proxySource;
 
         /// <summary>

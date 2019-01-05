@@ -15,17 +15,14 @@
         /// <summary>
         /// The object used as the origin to check if it is pointing towards <see cref="target"/>.
         /// </summary>
-        [Tooltip("The object used as the origin to check if it is pointing towards target.")]
         public GameObject source;
         /// <summary>
         /// The object that will be checked to see if <see cref="source"/> is pointing at it.
         /// </summary>
-        [Tooltip("The object that will be checked to see if source is pointing at it.")]
         public GameObject target;
         /// <summary>
         /// A sphere radius that defines the volume in which <see cref="target"/> can be pointed at.
         /// </summary>
-        [Tooltip("A sphere radius that defines the volume in which target can be pointed at.")]
         public float targetRadius = 0.1f;
 
         /// <summary>

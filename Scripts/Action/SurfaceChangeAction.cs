@@ -12,12 +12,10 @@
         /// <summary>
         /// The distance between the current surface and previous surface to consider a valid change.
         /// </summary>
-        [Tooltip("The distance between the current surface and previous surface to consider a valid change.")]
         public float changeDistance = 0.5f;
         /// <summary>
         /// The axes to check for distance differences on.
         /// </summary>
-        [Tooltip("The axes to check for distance differences on.")]
         public Vector3State checkAxis = Vector3State.True;
 
         /// <summary>

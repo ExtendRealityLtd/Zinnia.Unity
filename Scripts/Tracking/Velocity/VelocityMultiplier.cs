@@ -10,17 +10,14 @@
         /// <summary>
         /// The <see cref="VelocityTracker"/> to use as the source data.
         /// </summary>
-        [Tooltip("The Velocity Tracker to use as the source data.")]
         public VelocityTracker source;
         /// <summary>
         /// The amount to multiply the source velocity by.
         /// </summary>
-        [Tooltip("The amount to multiply the source velocity by.")]
         public float velocityMultiplier = 1f;
         /// <summary>
         /// The amount to multiply the source angular velocity by.
         /// </summary>
-        [Tooltip("The amount to multiply the source angular velocity by.")]
         public float angularVelocityMultiplier = 1f;
 
         /// <inheritdoc />

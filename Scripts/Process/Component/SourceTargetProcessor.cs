@@ -11,7 +11,7 @@
         /// <summary>
         /// Ceases the processing of the source collection after the first valid source is processed.
         /// </summary>
-        [Header("Process Settings"), Tooltip("Ceases the processing of the source collection after the first valid source is processed.")]
+        [Header("Process Settings")]
         public bool ceaseAfterFirstSourceProcessed = true;
 
         /// <summary>

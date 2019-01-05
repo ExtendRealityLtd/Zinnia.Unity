@@ -14,7 +14,6 @@
         /// <summary>
         /// The associations in order they will be activated if they match the currently expected state.
         /// </summary>
-        [Tooltip("The associations in order they will be activated if they match the currently expected state.")]
         public List<GameObjectsAssociation> associations = new List<GameObjectsAssociation>();
 
         /// <summary>

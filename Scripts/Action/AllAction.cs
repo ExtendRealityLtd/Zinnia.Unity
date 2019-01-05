@@ -13,7 +13,6 @@
         /// <summary>
         /// Actions to check the active state on.
         /// </summary>
-        [Tooltip("Actions to check the active state on.")]
         public List<Action> actions = new List<Action>();
 
         protected virtual void Update()

@@ -26,32 +26,26 @@
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
-        [Tooltip("The origin of where to begin the cast to locate the nearest surface.")]
         public GameObject searchOrigin;
         /// <summary>
         /// The direction in which to cast to locate the nearest surface.
         /// </summary>
-        [Tooltip("The direction in which to cast to locate the nearest surface.")]
         public Vector3 searchDirection;
         /// <summary>
         /// The distance to move the origin backwards through the <see cref="searchDirection"/> to ensure the origin isn't clipping a surface.
         /// </summary>
-        [Tooltip("The distance to move the origin backwards through the `searchDirection` to ensure the origin isn't clipping a surface.")]
         public float originOffset = -0.01f;
         /// <summary>
         /// The maximum distance to cast the <see cref="Ray"/>.
         /// </summary>
-        [Tooltip("The maximum distance to cast the ray.")]
         public float maximumDistance = 50f;
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
         /// </summary>
-        [Tooltip("An optional RuleContainer to determine valid and invalid targets based on the set rules.")]
         public RuleContainer targetValidity;
         /// <summary>
         /// An optional custom <see cref="PhysicsCast"/> object to affect the <see cref="Ray"/>.
         /// </summary>
-        [Tooltip("An optional custom PhysicsCast object to affect the Ray.")]
         public PhysicsCast physicsCast;
 
         /// <summary>

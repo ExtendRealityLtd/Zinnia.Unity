@@ -20,7 +20,6 @@
         /// <summary>
         /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
         /// </summary>
-        [Tooltip("The source VelocityTracker to receive the velocity data from.")]
         public VelocityTracker source;
 
         /// <summary>

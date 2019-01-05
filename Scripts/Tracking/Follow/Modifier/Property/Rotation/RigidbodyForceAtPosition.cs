@@ -11,7 +11,6 @@
         /// <summary>
         /// The point where the attachment was made.
         /// </summary>
-        [Tooltip("The point where the attachment was made.")]
         public GameObject attachmentPoint;
 
         /// <summary>

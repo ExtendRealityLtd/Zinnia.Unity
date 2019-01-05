@@ -44,12 +44,10 @@
         /// <summary>
         /// The moment in which to process the given processes.
         /// </summary>
-        [Tooltip("The moment in which to process the given processes.")]
         public Moment momentToProcess = Moment.PreRender;
         /// <summary>
         /// A collection of <see cref="MomentProcess"/> to process.
         /// </summary>
-        [Tooltip("A collection of MomentProcess to process.")]
         public List<MomentProcess> processes = new List<MomentProcess>();
 
         protected Moment subscribedMoment;

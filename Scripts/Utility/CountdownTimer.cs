@@ -11,7 +11,6 @@
         /// <summary>
         /// The time to start the countdown at.
         /// </summary>
-        [Tooltip("The time to start the countdown at.")]
         public float startTime = 1f;
 
         /// <summary>

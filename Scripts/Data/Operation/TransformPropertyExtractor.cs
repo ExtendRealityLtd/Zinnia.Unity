@@ -16,12 +16,10 @@
         /// <summary>
         /// The source of the <see cref="Transform"/> to extract from.
         /// </summary>
-        [Tooltip("The source of the Transform to extract from.")]
         public GameObject source;
         /// <summary>
         /// Determines whether to extract the local property or the world property.
         /// </summary>
-        [Tooltip("Determines whether to extract the local property or the world property.")]
         public bool useLocal;
 
         /// <summary>

@@ -51,32 +51,26 @@
         /// <summary>
         /// A <see cref="Camera"/> collection to apply the color overlay to.
         /// </summary>
-        [Tooltip("A Camera collection to apply the color overlay to.")]
         public CameraList validCameras;
         /// <summary>
         /// The <see cref="Color"/> of the overlay.
         /// </summary>
-        [Tooltip("The Color of the overlay.")]
         public Color overlayColor = Color.black;
         /// <summary>
         /// The <see cref="Material"/> to use for the overlay.
         /// </summary>
-        [Tooltip("The Material to use for the overlay.")]
         public Material overlayMaterial;
         /// <summary>
         /// The duration of time to apply the overlay <see cref="Color"/>.
         /// </summary>
-        [Tooltip("The duration of time to apply the overlay Color.")]
         public float addDuration = 0f;
         /// <summary>
         /// The duration of time to remove the overlay <see cref="Color"/>.
         /// </summary>
-        [Tooltip("The duration of time to remove the overlay Color.")]
         public float removeDuration = 1f;
         /// <summary>
         /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
         /// </summary>
-        [Tooltip("The duration of time to wait once the overlay Color is applied before it is removed.")]
         public float appliedDuration = 0f;
 
         /// <summary>

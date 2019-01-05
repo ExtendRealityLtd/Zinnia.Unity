@@ -26,17 +26,14 @@
         /// <summary>
         /// Defines the source location that the raycast will originate from towards the <see cref="target"/> location.
         /// </summary>
-        [Tooltip("Defines the source location that the raycast will originate from towards the target location.")]
         public GameObject source;
         /// <summary>
         /// Defines the target location that the raycast will attain to reach from the originating <see cref="source"/> location.
         /// </summary>
-        [Tooltip("Defines the target location that the raycast will attain to reach from the originating source location.")]
         public Collider target;
         /// <summary>
         /// Optional settings to use when doing the raycast.
         /// </summary>
-        [Tooltip("Optional settings to use when doing the raycast.")]
         public PhysicsCast physicsCast;
 
         /// <summary>

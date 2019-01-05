@@ -14,7 +14,7 @@
         /// <summary>
         /// The collection to observe changes of.
         /// </summary>
-        [Tooltip("The list to observe changes of."), SerializeField]
+        [SerializeField]
         protected List<TElement> elements = new List<TElement>();
 
         /// <summary>

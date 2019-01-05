@@ -20,17 +20,14 @@
             /// <summary>
             /// Represents the start, i.e. the first rendered point.
             /// </summary>
-            [Tooltip("Represents the start, i.e. the first rendered point.")]
             public GameObject start;
             /// <summary>
             /// Represents the segments between <see cref="start"/> and <see cref="end"/>. This will get cloned to create all the segments.
             /// </summary>
-            [Tooltip("Represents the segments between start and end. This will get cloned to create all the segments.")]
             public GameObject repeatedSegment;
             /// <summary>
             /// Represents the end, i.e. the last rendered point.
             /// </summary>
-            [Tooltip("Represents the end, i.e. the last rendered point.")]
             public GameObject end;
             /// <summary>
             /// The points along the the most recent cast.
@@ -41,22 +38,18 @@
         /// <summary>
         /// The direction to scale the segment <see cref="GameObject"/>s in. Set axes to 0 to disable scaling on that axis.
         /// </summary>
-        [Tooltip("The direction to scale the segment GameObjects in. Set axes to 0 to disable scaling on that axis.")]
         public Vector3 segmentScaleDirection = Vector3.forward;
         /// <summary>
         /// Represents the start, i.e. the first rendered point.
         /// </summary>
-        [Tooltip("Represents the start, i.e. the first rendered point.")]
         public GameObject start;
         /// <summary>
         /// Represents the segments between <see cref="start"/> and <see cref="end"/>. This will get cloned to create all the segments.
         /// </summary>
-        [Tooltip("Represents the segments between start and end. This will get cloned to create all the segments.")]
         public GameObject repeatedSegment;
         /// <summary>
         /// Represents the end, i.e. the last rendered point.
         /// </summary>
-        [Tooltip("Represents the end, i.e. the last rendered point.")]
         public GameObject end;
 
         protected readonly List<GameObject> segmentClones = new List<GameObject>();

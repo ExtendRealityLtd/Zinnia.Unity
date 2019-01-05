@@ -16,7 +16,6 @@
         /// The component types to look for.
         /// </summary>
         [TypePicker(typeof(Component))]
-        [Tooltip("The component types to look for.")]
         public List<SerializableType> componentTypes = new List<SerializableType>();
 
         /// <inheritdoc/>

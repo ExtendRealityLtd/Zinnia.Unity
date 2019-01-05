@@ -11,22 +11,18 @@
         /// <summary>
         /// A collection of targets to set the state on when it is the active index.
         /// </summary>
-        [Tooltip("A collection of targets to set the state on when it is the active index.")]
         public List<GameObject> targets = new List<GameObject>();
         /// <summary>
         /// The state to set the active index target. All other targets will be set to the opposite state.
         /// </summary>
-        [Tooltip("The state to set the active index target. All other targets will be set to the opposite state.")]
         public bool targetState = true;
         /// <summary>
         /// Determines if to execute a switch when the component is enabled.
         /// </summary>
-        [Tooltip("Determines if to execute a switch when the component is enabled.")]
         public bool switchOnEnable = true;
         /// <summary>
         /// The index in the collection to start at.
         /// </summary>
-        [Tooltip("The index in the collection to start at.")]
         public int startIndex = 0;
 
         /// <summary>

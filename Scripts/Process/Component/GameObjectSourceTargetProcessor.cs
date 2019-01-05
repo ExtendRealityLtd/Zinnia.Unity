@@ -11,22 +11,19 @@
         /// <summary>
         /// A <see cref="GameObject"/> collection of sources to apply data from.
         /// </summary>
-        [Header("Entity Settings"), Tooltip("A GameObject collection of sources to apply data from.")]
+        [Header("Entity Settings")]
         public List<GameObject> sources = new List<GameObject>();
         /// <summary>
         /// Allows to optionally determine which sources should be processed based on the set rules.
         /// </summary>
-        [Tooltip("Allows to optionally determine which sources should be processed based on the set rules.")]
         public RuleContainer sourceValidity;
         /// <summary>
         /// A <see cref="GameObject"/> collection of targets to apply data to.
         /// </summary>
-        [Tooltip("A GameObject collection of targets to apply data to.")]
         public List<GameObject> targets = new List<GameObject>();
         /// <summary>
         /// Allows to optionally determine which targets should be processed based on the set rules.
         /// </summary>
-        [Tooltip("Allows to optionally determine which targets should be processed based on the set rules.")]
         public RuleContainer targetValidity;
         #endregion
 

@@ -40,7 +40,6 @@
         /// <summary>
         /// The events to emit for the <see cref="TElement"/> that is added to the same index within the stack.
         /// </summary>
-        [Tooltip("The events to emit for the TElement that is added to the same index within the stack.")]
         public List<TElementEvents> elementEvents = new List<TElementEvents>();
 
         /// <summary>

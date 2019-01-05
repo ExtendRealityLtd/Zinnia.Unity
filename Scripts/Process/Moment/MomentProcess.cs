@@ -10,17 +10,15 @@
         /// <summary>
         /// The process to attach to the moment.
         /// </summary>
-        [Tooltip("The process to attach to the moment.")]
         public ProcessContainer process;
         /// <summary>
         /// The process only executes if the <see cref="GameObject"/> is active and the <see cref="Component"/> is enabled.
         /// </summary>
-        [Tooltip("Only run the process if the process is on an active GameObject and the Component is enabled.")]
         public bool onlyProcessOnActiveAndEnabled = true;
         /// <summary>
         /// A percentage defining how often to process the <see cref="process"/>.
         /// </summary>
-        [Tooltip("A percentage defining how often to process the process."), Range(0f, 1f), SerializeField]
+        [Range(0f, 1f), SerializeField]
         private float utilization = 1f;
 
         /// <summary>

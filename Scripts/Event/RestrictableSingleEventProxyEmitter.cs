@@ -10,7 +10,6 @@
         /// <summary>
         /// Determines whether the received payload is valid to be re-emitted.
         /// </summary>
-        [Tooltip("Determines whether the received payload is valid to be re-emitted.")]
         public RuleContainer receiveValidity;
 
         /// <summary>

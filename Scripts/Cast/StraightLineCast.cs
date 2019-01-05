@@ -11,7 +11,6 @@
         /// <summary>
         /// The maximum length to cast.
         /// </summary>
-        [Tooltip("The maximum length to cast.")]
         public float maximumLength = 100f;
 
         protected virtual void OnEnable()

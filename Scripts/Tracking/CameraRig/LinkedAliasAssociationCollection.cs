@@ -12,7 +12,7 @@
         /// <summary>
         /// The associated PlayArea.
         /// </summary>
-        [Header("PlayArea Settings"), Tooltip("The associated PlayArea."), SerializeField]
+        [Header("PlayArea Settings"), SerializeField]
         protected GameObject playArea;
         #endregion
 
@@ -20,17 +20,17 @@
         /// <summary>
         /// The associated Headset.
         /// </summary>
-        [Header("Headset Settings"), Tooltip("The associated Headset."), SerializeField]
+        [Header("Headset Settings"), SerializeField]
         protected GameObject headset;
         /// <summary>
         /// The associated Headset Camera.
         /// </summary>
-        [Tooltip("The associated Headset Camera."), SerializeField]
+        [SerializeField]
         protected Camera headsetCamera;
         /// <summary>
         /// The associated Headset Velocity Tracker.
         /// </summary>
-        [Tooltip("The associated Headset Velocity Tracker."), SerializeField]
+        [SerializeField]
         protected VelocityTracker headsetVelocity;
         #endregion
 
@@ -38,12 +38,12 @@
         /// <summary>
         /// The associated Left Controller.
         /// </summary>
-        [Header("Left Controller Settings"), Tooltip("The associated Left Controller."), SerializeField]
+        [Header("Left Controller Settings"), SerializeField]
         protected GameObject leftController;
         /// <summary>
         /// The associated Left Controller Velocity Tracker.
         /// </summary>
-        [Tooltip("The associated Left Controller Velocity Tracker."), SerializeField]
+        [SerializeField]
         protected VelocityTracker leftControllerVelocity;
         #endregion
 
@@ -51,12 +51,12 @@
         /// <summary>
         /// The associated Right Controller.
         /// </summary>
-        [Header("Right Controller Settings"), Tooltip("The associated Right Controller."), SerializeField]
+        [Header("Right Controller Settings"), SerializeField]
         protected GameObject rightController;
         /// <summary>
         /// The associated Right Controller Velocity Tracker.
         /// </summary>
-        [Tooltip("The associated Right Controller Velocity Tracker."), SerializeField]
+        [SerializeField]
         protected VelocityTracker rightControllerVelocity;
         #endregion
 

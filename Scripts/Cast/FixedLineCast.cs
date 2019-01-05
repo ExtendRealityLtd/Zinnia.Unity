@@ -10,7 +10,6 @@
         /// <summary>
         /// The current length of the cast.
         /// </summary>
-        [Tooltip("The current length of the cast.")]
         public float currentLength = 1f;
 
         /// <summary>

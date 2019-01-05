@@ -17,7 +17,6 @@
         /// <summary>
         /// The collection to aggregate.
         /// </summary>
-        [Tooltip("The collection to aggregate.")]
         public List<TInput> collection = new List<TInput>();
 
         /// <summary>

@@ -12,7 +12,6 @@
         /// <summary>
         /// The tags to check against.
         /// </summary>
-        [Tooltip("The tags to check against.")]
         public List<string> tags = new List<string>();
 
         /// <inheritdoc />

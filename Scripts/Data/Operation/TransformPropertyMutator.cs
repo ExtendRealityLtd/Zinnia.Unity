@@ -11,17 +11,14 @@
         /// <summary>
         /// The target to mutate.
         /// </summary>
-        [Tooltip("The target to mutate.")]
         public GameObject target;
         /// <summary>
         /// Determines whether to mutate the local or global values.
         /// </summary>
-        [Tooltip("Determines whether to mutate the local or global values.")]
         public bool useLocalValues;
         /// <summary>
         /// Determines which axes to mutate.
         /// </summary>
-        [Tooltip("Determines which axes to mutate.")]
         public Vector3State mutateOnAxis = Vector3State.True;
 
         /// <summary>

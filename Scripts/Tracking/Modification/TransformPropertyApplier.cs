@@ -4,10 +4,10 @@
     using UnityEngine.Events;
     using System;
     using System.Collections;
-    using Zinnia.Extension;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Enum;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Applies the transform properties from a given source <see cref="Transform"/> onto the given target <see cref="Transform"/>.
@@ -58,37 +58,31 @@
         /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
-        [Tooltip("The source to obtain the transformation properties from.")]
         public TransformData source;
         /// <summary>
         /// The target to apply the transformations to.
         /// </summary>
-        [Tooltip("The target to apply the transformations to.")]
         public GameObject target;
         /// <summary>
         /// The offset/pivot when applying the transformations.
         /// </summary>
-        [Tooltip("The offset/pivot when applying the transformations.")]
         public GameObject offset;
         /// <summary>
         /// Determines which axes to apply on when utilizing the position offset.
         /// </summary>
-        [Tooltip("Determines which axes to apply on when utilizing the position offset.")]
         public Vector3State applyPositionOffsetOnAxis = new Vector3State(true, true, true);
         /// <summary>
         /// Determines which axes to apply on when utilizing the rotation offset.
         /// </summary>
-        [Tooltip("Determines which axes to apply on when utilizing the rotation offset.")]
         public Vector3State applyRotationOffsetOnAxis = new Vector3State(true, true, true);
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
         /// </summary>
-        [Tooltip("The Transform properties to apply the transformations on."), UnityFlags]
+        [UnityFlags]
         public TransformProperties applyTransformations = (TransformProperties)(-1);
         /// <summary>
         /// The amount of time to take when transitioning from the current <see cref="Transform"/> state to the modified <see cref="Transform"/> state.
         /// </summary>
-        [Tooltip("The amount of time to take when transitioning from the current Transform state to the modified Transform state.")]
         public float transitionDuration = 0f;
 
         /// <summary>

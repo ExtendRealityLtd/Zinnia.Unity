@@ -44,10 +44,9 @@
         /// <summary>
         /// The unit to return the converted angle in.
         /// </summary>
-        [Tooltip("The unit to return the converted angle in.")]
         public AngleUnit unit = AngleUnit.Degrees;
 
-        [Tooltip("The direction that defines the origin (i.e. zero) angle."), SerializeField]
+        [SerializeField]
         private Vector2 _origin = new Vector2(0f, 1f);
         /// <summary>
         /// The direction that defines the origin (i.e. zero) angle..

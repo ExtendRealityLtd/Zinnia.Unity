@@ -18,34 +18,28 @@
             /// <summary>
             /// Determines if the source can be used.
             /// </summary>
-            [Tooltip("Determines if the source can be used.")]
             public bool enabled;
             /// <summary>
             /// The main container of the action.
             /// </summary>
-            [Tooltip("The main container of the action.")]
             public GameObject container;
             /// <summary>
             /// The action to subscribe to.
             /// </summary>
-            [Tooltip("The action to subscribe to.")]
             public Action action;
         }
 
         /// <summary>
         /// Registers the action sources when the component is enabled.
         /// </summary>
-        [Tooltip("Registers the action sources when the component is enabled.")]
         public bool registerOnEnable = true;
         /// <summary>
         /// The action that will have the sources populated by the given <see cref="sources"/>.
         /// </summary>
-        [Tooltip("The action that will have the sources populated by the given sources.")]
         public Action target;
         /// <summary>
         /// A list of action sources to populate the target sources list with.
         /// </summary>
-        [Tooltip("A list of action sources to populate the target sources list with.")]
         public List<ActionSource> sources = new List<ActionSource>();
 
         /// <summary>

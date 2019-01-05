@@ -21,19 +21,16 @@
             /// <summary>
             /// The rule to match against.
             /// </summary>
-            [Tooltip("The rule to match against.")]
             public RuleContainer rule;
             /// <summary>
             /// Emitted when the <see cref="rule"/> is valid.
             /// </summary>
-            [Tooltip("Emitted when the rule is valid.")]
             public UnityEvent Matched = new UnityEvent();
         }
 
         /// <summary>
         /// A collection of rules to potentially match against.
         /// </summary>
-        [Tooltip("A collection of rules to potentially match against.")]
         public List<Element> elements = new List<Element>();
 
         /// <summary>

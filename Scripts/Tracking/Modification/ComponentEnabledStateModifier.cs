@@ -15,13 +15,12 @@
         /// <summary>
         /// The <see cref="Object"/> types to manage the enabled state on.
         /// </summary>
-        [Tooltip("The Object types to manage the enabled state on."), TypePicker(typeof(Object))]
+        [TypePicker(typeof(Object))]
         public List<SerializableType> types = new List<SerializableType>();
 
         /// <summary>
         /// The target to modify the enabled states for the provided <see cref="types"/>.
         /// </summary>
-        [Tooltip("The target to modify the enabled states for the provided types")]
         public GameObject target;
 
         /// <summary>

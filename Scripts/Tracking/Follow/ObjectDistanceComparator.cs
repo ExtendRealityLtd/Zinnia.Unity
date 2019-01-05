@@ -57,17 +57,14 @@
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
-        [Tooltip("The source of the distance measurement.")]
         public GameObject source;
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
-        [Tooltip("The target of the distance measurement.")]
         public GameObject target;
         /// <summary>
         /// The distance between the source and target that is considered to be exceeding the given threshold.
         /// </summary>
-        [Tooltip("The distance between the source and target that is considered to be exceeding the given threshold.")]
         public float distanceThreshold = 1f;
 
         /// <summary>

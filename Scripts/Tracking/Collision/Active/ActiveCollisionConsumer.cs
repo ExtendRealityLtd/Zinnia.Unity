@@ -55,13 +55,11 @@
         /// <summary>
         /// The highest level container of the consumer to allow for nested consumers.
         /// </summary>
-        [Tooltip("The highest level container of the consumer to allow for nested consumers.")]
         public GameObject container;
 
         /// <summary>
         /// Determines whether to consume the received call from specific publishers.
         /// </summary>
-        [Tooltip("Determines whether to consume the received call from specific publishers.")]
         public RuleContainer publisherValidity;
 
         /// <summary>

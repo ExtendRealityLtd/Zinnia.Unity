@@ -11,17 +11,16 @@
         /// <summary>
         /// The process to utilize.
         /// </summary>
-        [Tooltip("The process to utilize.")]
         public HapticProcess hapticProcess;
         /// <summary>
         /// The amount of time to keep repeating the process for.
         /// </summary>
-        [Tooltip("The amount of time to keep repeating the process for."), SerializeField]
+        [SerializeField]
         protected float duration = 1f;
         /// <summary>
         /// The amount of time to pause after each process iteration.
         /// </summary>
-        [Tooltip("The amount of time to pause after each process iteration."), SerializeField]
+        [SerializeField]
         protected float interval = 0.1f;
 
         /// <summary>

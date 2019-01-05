@@ -13,7 +13,6 @@
         /// <summary>
         /// The node to query velocity estimations for.
         /// </summary>
-        [Tooltip("The node to query velocity estimations for.")]
         public XRNode node = XRNode.LeftHand;
 
         /// <summary>

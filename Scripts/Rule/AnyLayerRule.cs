@@ -10,7 +10,6 @@
         /// <summary>
         /// The layers to check against.
         /// </summary>
-        [Tooltip("The layers to check against.")]
         public LayerMask layerMask;
 
         /// <inheritdoc />

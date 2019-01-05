@@ -11,12 +11,10 @@
         /// <summary>
         /// The maximum squared magnitude of velocity that can be applied to the source.
         /// </summary>
-        [Tooltip("The maximum squared magnitude of velocity that can be applied to the source Transform.")]
         public float velocityLimit = float.PositiveInfinity;
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
-        [Tooltip("The maximum difference in distance to the tracked position.")]
         public float maxDistanceDelta = 10f;
 
         protected Rigidbody cachedTargetRigidbody;

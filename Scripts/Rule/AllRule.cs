@@ -13,7 +13,6 @@
         /// <summary>
         /// The <see cref="IRule"/>s to check against.
         /// </summary>
-        [Tooltip("The IRules to check against.")]
         public List<RuleContainer> rules = new List<RuleContainer>();
 
         /// <inheritdoc/>

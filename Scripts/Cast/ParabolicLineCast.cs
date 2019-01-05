@@ -11,30 +11,25 @@
         /// <summary>
         /// The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.
         /// </summary>
-        [Tooltip("The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.")]
         public Vector2 maximumLength = new Vector2(10f, float.PositiveInfinity);
         /// <summary>
         /// The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.
         /// </summary>
         [Range(1, 100)]
-        [Tooltip("The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.")]
         public float heightLimitAngle = 100f;
         /// <summary>
         /// The number of points to generate on the parabolic line.
         /// </summary>
         /// <remarks>The higher the number, the more CPU intensive the point generation becomes.</remarks>
-        [Tooltip("The number of points to generate on the parabolic line. The higher the number, the more CPU intensive the point generation becomes.")]
         public int segmentCount = 10;
         /// <summary>
         /// The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at <see cref="segmentCount" />.
         /// </summary>
         /// <remarks>The higher the number, the more CPU intensive the checks become.</remarks>
-        [Tooltip("The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at the set segment count. The higher the number, the more CPU intensive the checks become.")]
         public int collisionCheckFrequency;
         /// <summary>
         /// The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.
         /// </summary>
-        [Tooltip("The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.")]
         public float curveOffset = 1f;
 
         /// <summary>

@@ -63,12 +63,11 @@
         /// <summary>
         /// A <see cref="GameObject"/> collection of target offsets to offset the target against the source whilst following.
         /// </summary>
-        [Tooltip("A GameObject collection of target offsets to offset the target against the source whilst following.")]
         public List<GameObject> targetOffsets = new List<GameObject>();
         /// <summary>
         /// The <see cref="FollowModifier"/> to apply.
         /// </summary>
-        [Header("Follow Settings"), Tooltip("The FollowModifier to apply.")]
+        [Header("Follow Settings")]
         public FollowModifier followModifier;
 
         /// <summary>

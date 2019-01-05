@@ -11,7 +11,6 @@
         /// <summary>
         /// The objects to check against.
         /// </summary>
-        [Tooltip("The objects to check against.")]
         public List<Object> objects = new List<Object>();
 
         /// <inheritdoc />

@@ -13,7 +13,6 @@
         /// <summary>
         /// Process the first active <see cref="VelocityTracker"/> found in the collection.
         /// </summary>
-        [Tooltip("Process the first active VelocityTracker found in the array.")]
         public List<VelocityTracker> velocityTrackers = new List<VelocityTracker>();
 
         private VelocityTracker _activeVelocityTracker;

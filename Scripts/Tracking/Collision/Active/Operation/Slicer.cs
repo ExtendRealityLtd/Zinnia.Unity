@@ -11,12 +11,10 @@
         /// <summary>
         /// The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.
         /// </summary>
-        [Tooltip("The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.")]
         public int startIndex = 0;
         /// <summary>
         /// The number of elements in the slice.
         /// </summary>
-        [Tooltip("The number of elements in the slice.")]
         public uint length = 1;
 
         /// <summary>

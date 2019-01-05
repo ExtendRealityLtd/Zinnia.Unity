@@ -21,7 +21,6 @@
         /// <summary>
         /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or just to search for the containing <see cref="Transform"/>.
         /// </summary>
-        [Tooltip("Determines whether the collision point parent is the GameObject that contains a CollisionNotifier or just to search for the containing Transform.")]
         public bool parentIsCollisionNotifier;
 
         /// <summary>

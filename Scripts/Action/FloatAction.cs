@@ -21,7 +21,6 @@
         /// <summary>
         /// The tolerance of equality between two <see cref="float"/> values.
         /// </summary>
-        [Tooltip("The tolerance of equality between two float values.")]
         public float equalityTolerance = float.Epsilon;
 
         /// <inheritdoc />

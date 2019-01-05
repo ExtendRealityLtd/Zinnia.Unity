@@ -12,27 +12,22 @@
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
-        [Tooltip("The source to track and estimate velocities for.")]
         public GameObject source;
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [Tooltip("An optional object to consider the source relative to when estimating the velocities.")]
         public GameObject relativeTo;
         /// <summary>
         /// Automatically begin collecting samples for estimation.
         /// </summary>
-        [Tooltip("Automatically begin collecting samples for estimation.")]
         public bool autoStartSampling = true;
         /// <summary>
         /// The number of average frames to collect samples for velocity estimation.
         /// </summary>
-        [Tooltip("The number of average frames to collect samples for velocity estimation.")]
         public int velocityAverageFrames = 5;
         /// <summary>
         /// The number of average frames to collect samples for angular velocity estimation.
         /// </summary>
-        [Tooltip("The number of average frames to collect samples for angular velocity estimation.")]
         public int angularVelocityAverageFrames = 10;
 
         protected bool collectSamples;

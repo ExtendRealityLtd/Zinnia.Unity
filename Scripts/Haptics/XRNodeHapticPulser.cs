@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Haptics
 {
-    using UnityEngine;
     using UnityEngine.XR;
 
     /// <summary>
@@ -11,12 +10,10 @@
         /// <summary>
         /// The node to pulse.
         /// </summary>
-        [Tooltip("The node to pulse.")]
         public XRNode node = XRNode.LeftHand;
         /// <summary>
         /// The duration to pulse <see cref="node"/> for.
         /// </summary>
-        [Tooltip("The duration to pulse the node for.")]
         public float duration = 0.005f;
 
         /// <summary>
