@@ -15,11 +15,6 @@ VRTK.Unity.Core is a core collection of design patterns for [Unity3d] that can b
 
   > VRTK.Unity.Core requires Unity3d 2018.3 (or above).
 
-## 3<sup>rd</sup> Party SDK Support
-
-* [VRTK.Unity.SteamVR]
-* [VRTK.Unity.OculusUtilities]
-
 ## Getting Started
 
 ### Setting up a project
@@ -59,6 +54,4 @@ Code released under the [MIT License].
 
 [MIT License]: LICENSE.md
 [How To Clone A Repo]: https://help.github.com/articles/cloning-a-repository/
-[VRTK.Unity.SteamVR]: https://github.com/ExtendRealityLtd/VRTK.Unity.SteamVR
-[VRTK.Unity.OculusUtilities]: https://github.com/ExtendRealityLtd/VRTK.Unity.OculusUtilities
 [Unity3d]: https://unity3d.com/
