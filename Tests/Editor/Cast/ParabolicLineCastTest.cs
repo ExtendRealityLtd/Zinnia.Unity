@@ -17,6 +17,7 @@ namespace Test.VRTK.Core.Cast
         [SetUp]
         public void SetUp()
         {
+            Physics.autoSimulation = false;
             containingObject = new GameObject();
             subject = containingObject.AddComponent<ParabolicLineCast>();
             validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -28,6 +29,7 @@ namespace Test.VRTK.Core.Cast
             Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
             Object.DestroyImmediate(validSurface);
+            Physics.autoSimulation = true;
         }
 
         [Test]
@@ -42,6 +44,7 @@ namespace Test.VRTK.Core.Cast
             subject.maximumLength = new Vector2(5f, 5f);
             subject.segmentCount = 5;
 
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Vector3[] expectedPoints = new Vector3[]
@@ -74,6 +77,7 @@ namespace Test.VRTK.Core.Cast
             subject.maximumLength = new Vector2(2f, 5f);
             subject.segmentCount = 5;
 
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Vector3[] expectedPoints = new Vector3[]
@@ -106,6 +110,7 @@ namespace Test.VRTK.Core.Cast
             subject.maximumLength = new Vector2(5f, 2f);
             subject.segmentCount = 5;
 
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Vector3[] expectedPoints = new Vector3[]
@@ -150,6 +155,7 @@ namespace Test.VRTK.Core.Cast
             subject.maximumLength = new Vector2(5f, 5f);
             subject.segmentCount = 5;
 
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Vector3[] expectedPoints = new Vector3[]
@@ -183,6 +189,7 @@ namespace Test.VRTK.Core.Cast
             subject.segmentCount = 5;
             subject.gameObject.SetActive(false);
 
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Assert.AreEqual(0, subject.Points.Count);
@@ -203,6 +210,7 @@ namespace Test.VRTK.Core.Cast
             subject.segmentCount = 5;
             subject.enabled = false;
 
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Assert.AreEqual(0, subject.Points.Count);

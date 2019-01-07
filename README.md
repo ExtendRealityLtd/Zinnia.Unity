@@ -9,29 +9,38 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/vr_toolkit.svg?style=flat&label=twitter)](https://twitter.com/VR_Toolkit)
 [![Waffle](https://img.shields.io/badge/project-backlog-78bdf2.svg)](https://waffle.io/ExtendRealityLtd/VRTK.Unity.Core)
 
+## Introduction
+
+VRTK.Unity.Core is a core collection of design patterns for [Unity3d] that can be beneficial in VR development.
+
+  > VRTK.Unity.Core requires Unity3d 2018.3 (or above).
+
 ## 3<sup>rd</sup> Party SDK Support
 
 * [VRTK.Unity.SteamVR]
 * [VRTK.Unity.OculusUtilities]
 
-## Introduction
-
-VRTK.Unity.Core is a core collection of design patterns for [Unity3d] that can be beneficial in VR development.
-
 ## Getting Started
 
 ### Setting up a project
 
-* Using Unity3d 2018.1 or above create a new project using the 3D Template or open an existing project.
-* Update the project `Scripting Runtime Version` to `.NET 4.x Equivalent`.
-  * In Unity3d select `Main Menu -> Edit -> Project Settings -> Player` to open the `Player Settings` inspector.
-  * In the `PlayerSettings` inspector panel expand `Other Settings`.
-  * Change the `Scripting Runtime Version` to `.NET 4.x Equivalent`.
-  * Unity3d will now restart in the supported scripting runtime.
-* If the project supports Virtual Reality then ensure `Virtual Reality Supported` is checked.
-  * In Unity3d select `Main Menu -> Edit -> Project Settings -> Player` to open the `Player Settings` inspector.
-  * In the `PlayerSettings` inspector panel expand `XR Settings`.
-  * In `XR Settings` ensure the `Virtual Reality Supported` option is checked.
+* Using Unity3d 2018.3 (or above) create a new project using the 3D Template or open an existing project.
+* If the project supports Virtual Reality:
+  * Ensure `Virtual Reality Supported` is checked.
+    * In Unity3d select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` window.
+    * Select `Player` from the left hand menu in the `Project Settings` window.
+    * In the `Player` settings panel expand `XR Settings`.
+    * In `XR Settings` ensure the `Virtual Reality Supported` option is checked.
+  * Ensure the appropriate support package is installed.
+    * In Unity3d select `Main Menu -> Window -> Package Manager` to open the `Packages` window.
+    * Find the appropriate support package in the left hand menu and click on it to select it (e.g. Oculus (Standalone) or OpenVR).
+    * Click the `Install` button in the right hand pane of the `Packages` window for the selected support package.
+    * The package will now install and be available for your supported hardware.
+* Ensure the project `Scripting Runtime Version` is set to `.NET 4.x Equivalent`.
+  * In Unity3d select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` inspector.
+  * Select `Player` from the left hand menu in the `Project Settings` window.
+  * In the `Player` settings panel expand `Other Settings`.
+  * Ensure the `Scripting Runtime Version` is set to `.NET 4.x Equivalent`.
 
 ### Cloning the VRTK.Unity.Core repo into a project
 

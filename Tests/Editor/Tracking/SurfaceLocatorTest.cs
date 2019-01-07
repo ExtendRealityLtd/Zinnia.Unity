@@ -18,6 +18,7 @@ namespace Test.VRTK.Core.Tracking
         [SetUp]
         public void SetUp()
         {
+            Physics.autoSimulation = false;
             containingObject = new GameObject();
             subject = containingObject.AddComponent<SurfaceLocator>();
             validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -32,6 +33,7 @@ namespace Test.VRTK.Core.Tracking
 
             Object.DestroyImmediate(validSurface);
             Object.DestroyImmediate(searchOrigin);
+            Physics.autoSimulation = true;
         }
 
         [Test]
@@ -46,6 +48,7 @@ namespace Test.VRTK.Core.Tracking
             subject.searchDirection = Vector3.forward;
 
             //Process just calls Locate() so may as well just test the first point
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Assert.IsTrue(surfaceLocatedMock.Received);
@@ -63,6 +66,7 @@ namespace Test.VRTK.Core.Tracking
             subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.down;
 
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Locate();
             Assert.IsFalse(surfaceLocatedMock.Received);
         }
@@ -90,6 +94,7 @@ namespace Test.VRTK.Core.Tracking
             subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
 
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Locate();
             Assert.IsFalse(surfaceLocatedMock.Received);
         }
@@ -105,6 +110,7 @@ namespace Test.VRTK.Core.Tracking
             subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
             subject.gameObject.SetActive(false);
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Assert.IsFalse(surfaceLocatedMock.Received);
@@ -121,6 +127,7 @@ namespace Test.VRTK.Core.Tracking
             subject.searchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
             subject.enabled = false;
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Assert.IsFalse(surfaceLocatedMock.Received);
