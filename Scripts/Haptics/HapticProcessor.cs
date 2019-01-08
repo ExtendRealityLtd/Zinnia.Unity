@@ -1,8 +1,8 @@
 ﻿namespace VRTK.Core.Haptics
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using VRTK.Core.Extension;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -16,19 +16,17 @@
         [Tooltip("Process the first active HapticProcess found in the collection.")]
         public List<HapticProcess> hapticProcesses = new List<HapticProcess>();
 
+        private HapticProcess _activeHapticProcess;
         /// <summary>
         /// The current active <see cref="HapticProcess"/> being utilized.
         /// </summary>
-        public HapticProcess ActiveProcess
+        public HapticProcess ActiveHapticProcess
         {
-            get;
-            protected set;
-        }
-
-        /// <inheritdoc />
-        public override bool IsActive()
-        {
-            return (base.IsActive() && ActiveProcess != null && ActiveProcess.IsActive());
+            get => _activeHapticProcess != null && _activeHapticProcess.IsActive() ? _activeHapticProcess : null;
+            protected set
+            {
+                _activeHapticProcess = value;
+            }
         }
 
         /// <summary>
@@ -36,27 +34,22 @@
         /// </summary>
         protected override void DoBegin()
         {
-            ActiveProcess = hapticProcesses.EmptyIfNull().FirstOrDefault(process => process.IsActive());
-            if (ActiveProcess != null)
+            ActiveHapticProcess = hapticProcesses.EmptyIfNull().FirstOrDefault(process => process.IsActive());
+            if (ActiveHapticProcess != null)
             {
-                ActiveProcess.Begin();
+                ActiveHapticProcess.Begin();
             }
         }
 
         /// <summary>
-        /// Cancels the current <see cref="ActiveProcess"/> from running.
+        /// Cancels the current <see cref="ActiveHapticProcess"/> from running.
         /// </summary>
         protected override void DoCancel()
         {
-            if (ActiveProcess != null)
+            if (ActiveHapticProcess != null)
             {
-                ActiveProcess.Cancel();
+                ActiveHapticProcess.Cancel();
             }
-        }
-
-        protected virtual void OnEnable()
-        {
-            ActiveProcess = hapticProcesses.EmptyIfNull().FirstOrDefault(process => process.IsActive());
         }
     }
 }
