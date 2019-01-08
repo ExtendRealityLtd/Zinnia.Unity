@@ -26,6 +26,7 @@ namespace Test.VRTK.Core.Data.Type
         [Test]
         public void CollisionData()
         {
+            Physics.autoSimulation = false;
             SurfaceData surfaceData = new SurfaceData();
 
             //Create a couple of GameObjects for collision detection
@@ -37,6 +38,7 @@ namespace Test.VRTK.Core.Data.Type
             //Do an initial collision
             Ray forwardRay = new Ray(Vector3.zero, Vector3.forward);
             RaycastHit forwardHit;
+            Physics.Simulate(Time.fixedDeltaTime);
             Physics.Raycast(forwardRay, out forwardHit);
 
             //Set up the initial collision of a surface
@@ -47,6 +49,7 @@ namespace Test.VRTK.Core.Data.Type
             //Do an second different collision
             Ray downwardRay = new Ray(Vector3.zero, Vector3.down);
             RaycastHit downwardHit;
+            Physics.Simulate(Time.fixedDeltaTime);
             Physics.Raycast(downwardRay, out downwardHit);
 
             //Set up the initial collision of a surface
@@ -61,6 +64,7 @@ namespace Test.VRTK.Core.Data.Type
 
             Object.DestroyImmediate(front);
             Object.DestroyImmediate(bottom);
+            Physics.autoSimulation = true;
         }
     }
 }

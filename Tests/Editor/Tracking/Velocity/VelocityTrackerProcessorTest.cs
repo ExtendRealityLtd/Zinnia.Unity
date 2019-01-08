@@ -142,7 +142,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
 
             VelocityTrackerMock expectedResult = trackerThree;
             VelocityTrackerMock unexpectedResult = trackerOne;
-            VelocityTrackerMock actualResult = (VelocityTrackerMock)subject.GetActiveVelocityTracker();
+            VelocityTrackerMock actualResult = (VelocityTrackerMock)subject.ActiveVelocityTracker;
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
@@ -166,7 +166,7 @@ namespace Test.VRTK.Core.Tracking.Velocity
 
             VelocityTrackerMock expectedResult = trackerTwo;
             VelocityTrackerMock unexpectedResult = trackerOne;
-            VelocityTrackerMock actualResult = (VelocityTrackerMock)subject.GetActiveVelocityTracker();
+            VelocityTrackerMock actualResult = (VelocityTrackerMock)subject.ActiveVelocityTracker;
 
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);

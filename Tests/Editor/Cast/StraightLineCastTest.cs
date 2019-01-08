@@ -17,6 +17,7 @@ namespace Test.VRTK.Core.Cast
         [SetUp]
         public void SetUp()
         {
+            Physics.autoSimulation = false;
             containingObject = new GameObject();
             subject = containingObject.AddComponent<StraightLineCastMock>();
             validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -28,6 +29,7 @@ namespace Test.VRTK.Core.Cast
             Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
             Object.DestroyImmediate(validSurface);
+            Physics.autoSimulation = true;
         }
 
         [Test]
@@ -40,6 +42,7 @@ namespace Test.VRTK.Core.Cast
             validSurface.transform.position = Vector3.forward * 5f;
 
             subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Vector3 expectedStart = Vector3.zero;
@@ -62,6 +65,7 @@ namespace Test.VRTK.Core.Cast
             subject.maximumLength = validSurface.transform.position.z / 2f;
 
             subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Vector3 expectedStart = Vector3.zero;
@@ -95,6 +99,7 @@ namespace Test.VRTK.Core.Cast
             };
 
             subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Vector3 expectedStart = Vector3.zero;
@@ -118,6 +123,7 @@ namespace Test.VRTK.Core.Cast
             subject.ManualOnEnable();
             subject.gameObject.SetActive(false);
             subject.ManualOnDisable();
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Assert.AreEqual(0, subject.Points.Count);
@@ -137,6 +143,7 @@ namespace Test.VRTK.Core.Cast
             subject.ManualOnEnable();
             subject.enabled = false;
             subject.ManualOnDisable();
+            Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Assert.AreEqual(0, subject.Points.Count);

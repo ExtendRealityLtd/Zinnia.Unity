@@ -26,7 +26,7 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return (isActiveAndEnabled && source != null && source.isActiveAndEnabled);
+            return (base.IsActive() && source != null && source.isActiveAndEnabled);
         }
 
         /// <inheritdoc />

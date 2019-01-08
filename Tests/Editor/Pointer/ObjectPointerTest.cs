@@ -22,6 +22,7 @@ namespace Test.VRTK.Core.Pointer
         [SetUp]
         public void SetUp()
         {
+            Physics.autoSimulation = false;
             containingObject = new GameObject();
             subject = containingObject.AddComponent<ObjectPointerMock>();
 
@@ -45,6 +46,7 @@ namespace Test.VRTK.Core.Pointer
             Object.DestroyImmediate(invalidSegment);
             Object.DestroyImmediate(validDestination);
             Object.DestroyImmediate(invalidDestination);
+            Physics.autoSimulation = true;
         }
 
         [Test]
@@ -790,6 +792,7 @@ namespace Test.VRTK.Core.Pointer
                 RaycastHit hit = new RaycastHit();
                 if (realRay != null)
                 {
+                    Physics.Simulate(Time.fixedDeltaTime);
                     Physics.Raycast((Ray)realRay, out hit);
                 }
                 return new PointsCast.EventData()
