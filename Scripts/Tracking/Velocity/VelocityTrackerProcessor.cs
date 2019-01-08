@@ -16,12 +16,6 @@
         public List<VelocityTracker> velocityTrackers = new List<VelocityTracker>();
         protected VelocityTracker cachedTracker;
 
-        /// <inheritdoc />
-        public override bool IsActive()
-        {
-            return isActiveAndEnabled;
-        }
-
         /// <summary>
         /// The current active <see cref="VelocityTracker"/> that is reporting velocities.
         /// </summary>

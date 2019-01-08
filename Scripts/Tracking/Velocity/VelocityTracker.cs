@@ -10,8 +10,11 @@
         /// <summary>
         /// The state of whether the <see cref="Component"/> is active.
         /// </summary>
-        /// <returns><see langword="true"/> if the <see cref="Component"/> is considered active.</returns>
-        public abstract bool IsActive();
+        /// <returns>Whether the <see cref="Component"/> is considered active.</returns>
+        public virtual bool IsActive()
+        {
+            return isActiveAndEnabled;
+        }
 
         /// <summary>
         /// Gets the current velocity of the <see cref="source"/>.

@@ -21,7 +21,7 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return (isActiveAndEnabled && cachedVelocityTracker != null && cachedVelocityTracker.isActiveAndEnabled);
+            return (base.IsActive() && cachedVelocityTracker != null && cachedVelocityTracker.isActiveAndEnabled);
         }
 
         /// <summary>

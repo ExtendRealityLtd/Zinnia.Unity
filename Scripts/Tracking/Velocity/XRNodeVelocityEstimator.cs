@@ -22,12 +22,6 @@
         protected readonly List<XRNodeState> nodesStates = new List<XRNodeState>();
 
         /// <inheritdoc />
-        public override bool IsActive()
-        {
-            return isActiveAndEnabled;
-        }
-
-        /// <inheritdoc />
         protected override Vector3 DoGetVelocity()
         {
             Vector3 result = Vector3.zero;
