@@ -2,11 +2,12 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using VRTK.Core.Visual;
+    using VRTK.Core.Extension;
+    using VRTK.Core.Data.Type;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Tracking;
     using VRTK.Core.Tracking.Modification;
-    using VRTK.Core.Visual;
-    using VRTK.Core.Data.Type;
-    using VRTK.Core.Extension;
 
     /// <summary>
     /// Sets up the Teleport Prefab based on the provided user settings.
@@ -17,49 +18,49 @@
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The public interface facade.")]
-        public TeleporterFacade facade;
+        [Header("Facade Settings"), Tooltip("The public interface facade."), InternalSetting, SerializeField]
+        protected TeleporterFacade facade;
         #endregion
 
         #region Teleporter Settings
         /// <summary>
         /// The <see cref="SurfaceLocator"/> to use for the teleporting event.
         /// </summary>
-        [Header("Teleporter Settings"), Tooltip("The Surface Locator to use for the teleporting event.")]
-        public SurfaceLocator surfaceTeleporter;
+        [Header("Teleporter Settings"), Tooltip("The Surface Locator to use for the teleporting event."), InternalSetting, SerializeField]
+        protected SurfaceLocator surfaceTeleporter;
         /// <summary>
         /// The <see cref="TransformPropertyApplier"/> to use for the teleporting event.
         /// </summary>
-        [Tooltip("The Transform Property Applier to use for the teleporting event.")]
-        public TransformPropertyApplier modifyTeleporter;
+        [Tooltip("The Transform Property Applier to use for the teleporting event."), InternalSetting, SerializeField]
+        protected TransformPropertyApplier modifyTeleporter;
         #endregion
 
         #region Alias Settings
         /// <summary>
         /// The <see cref="SurfaceLocator"/> to set aliases on.
         /// </summary>
-        [Header("Alias Settings"), Tooltip("The Surface Locators to set aliases on.")]
-        public List<SurfaceLocator> surfaceLocatorAliases = new List<SurfaceLocator>();
+        [Header("Alias Settings"), Tooltip("The Surface Locators to set aliases on."), InternalSetting, SerializeField]
+        protected List<SurfaceLocator> surfaceLocatorAliases = new List<SurfaceLocator>();
         /// <summary>
         /// The <see cref="SurfaceLocator"/> to set rules on.
         /// </summary>
-        [Tooltip("The Surface Locators to set rules on.")]
-        public List<SurfaceLocator> surfaceLocatorRules = new List<SurfaceLocator>();
+        [Tooltip("The Surface Locators to set rules on."), InternalSetting, SerializeField]
+        protected List<SurfaceLocator> surfaceLocatorRules = new List<SurfaceLocator>();
         /// <summary>
         /// The <see cref="TransformPropertyApplier"/> collection to set aliases on.
         /// </summary>
-        [Tooltip("The Transform Property Applier collection to set aliases on.")]
-        public List<TransformPropertyApplier> transformPropertyApplierAliases = new List<TransformPropertyApplier>();
+        [Tooltip("The Transform Property Applier collection to set aliases on."), InternalSetting, SerializeField]
+        protected List<TransformPropertyApplier> transformPropertyApplierAliases = new List<TransformPropertyApplier>();
         /// <summary>
         /// The <see cref="TransformPropertyApplier"/> collection to ignore offsets on.
         /// </summary>
-        [Tooltip("The Transform Property Applier collection to ignore offsets on.")]
-        public List<TransformPropertyApplier> transformPropertyApplierIgnoreOffsetAliases = new List<TransformPropertyApplier>();
+        [Tooltip("The Transform Property Applier collection to ignore offsets on."), InternalSetting, SerializeField]
+        protected List<TransformPropertyApplier> transformPropertyApplierIgnoreOffsetAliases = new List<TransformPropertyApplier>();
         /// <summary>
         /// The scene <see cref="Camera"/>s to set the <see cref="CameraColorOverlay"/>s to affect.
         /// </summary>
-        [Tooltip("The scene Cameras to set the CameraColorOverlays to affect.")]
-        public List<CameraColorOverlay> cameraColorOverlays = new List<CameraColorOverlay>();
+        [Tooltip("The scene Cameras to set the CameraColorOverlays to affect."), InternalSetting, SerializeField]
+        protected List<CameraColorOverlay> cameraColorOverlays = new List<CameraColorOverlay>();
         #endregion
 
         /// <summary>
@@ -99,39 +100,60 @@
         }
 
         /// <summary>
-        /// Applies the provided settings to the Teleporter prefab.
+        /// Configures the surface locator aliases with the offset provided in the facade.
         /// </summary>
-        protected virtual void Setup()
+        public virtual void ConfigureSurfaceLocatorAliases()
         {
             foreach (SurfaceLocator currentLocator in surfaceLocatorAliases.EmptyIfNull())
             {
-                currentLocator.searchOrigin = facade.offset;
+                currentLocator.searchOrigin = facade.Offset;
             }
+        }
 
+        /// <summary>
+        /// Configures the surface locator rules with the valid targets provided in the facade.
+        /// </summary>
+        public virtual void ConfigureSurfaceLocatorRules()
+        {
             foreach (SurfaceLocator currentLocator in surfaceLocatorRules.EmptyIfNull())
             {
-                currentLocator.targetValidity = facade.targetValidity;
+                currentLocator.targetValidity = facade.TargetValidity;
             }
+        }
 
+        /// <summary>
+        /// Configures the transform properties applies with the settings applied in the facade.
+        /// </summary>
+        public virtual void ConfigureTransformPropertyAppliers()
+        {
             foreach (TransformPropertyApplier currentApplier in transformPropertyApplierAliases.EmptyIfNull())
             {
-                currentApplier.target = facade.target;
+                currentApplier.target = facade.Target;
                 currentApplier.offset = null;
-                if (!facade.onlyOffsetFloorSnap || !transformPropertyApplierIgnoreOffsetAliases.Contains(currentApplier))
+                if (!facade.OnlyOffsetFloorSnap || !transformPropertyApplierIgnoreOffsetAliases.Contains(currentApplier))
                 {
-                    currentApplier.offset = facade.offset;
+                    currentApplier.offset = facade.Offset;
                 }
             }
+        }
 
+        /// <summary>
+        /// Configures the camera color overlays with the scene cameras provided in the facade.
+        /// </summary>
+        public virtual void ConfigureCameraColorOverlays()
+        {
             foreach (CameraColorOverlay currentOverlay in cameraColorOverlays.EmptyIfNull())
             {
-                currentOverlay.validCameras = facade.sceneCameras;
+                currentOverlay.validCameras = facade.SceneCameras;
             }
         }
 
         protected virtual void OnEnable()
         {
-            Setup();
+            ConfigureSurfaceLocatorAliases();
+            ConfigureSurfaceLocatorRules();
+            ConfigureTransformPropertyAppliers();
+            ConfigureCameraColorOverlays();
         }
     }
 }

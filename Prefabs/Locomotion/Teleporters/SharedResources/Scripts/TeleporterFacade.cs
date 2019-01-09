@@ -12,31 +12,81 @@
     public class TeleporterFacade : MonoBehaviour
     {
         #region Teleporter Settings
+        [Header("Teleporter Settings"), Tooltip("The target to move to the teleported position."), SerializeField]
+        private GameObject _target;
         /// <summary>
         /// The target to move to the teleported position.
         /// </summary>
-        [Header("Teleporter Settings"), Tooltip("The target to move to the teleported position.")]
-        public GameObject target;
+        public GameObject Target
+        {
+            get { return _target; }
+            set
+            {
+                _target = value;
+                internalSetup.ConfigureTransformPropertyAppliers();
+            }
+        }
+
+        [Tooltip("The offset to compensate the teleported target position by for both floor snapping and position movement."), SerializeField]
+        private GameObject _offset;
         /// <summary>
         /// The offset to compensate the teleported target position by for both floor snapping and position movement.
         /// </summary>
-        [Tooltip("The offset to compensate the teleported target position by for both floor snapping and position movement.")]
-        public GameObject offset;
+        public GameObject Offset
+        {
+            get { return _offset; }
+            set
+            {
+                _offset = value;
+                internalSetup.ConfigureSurfaceLocatorAliases();
+                internalSetup.ConfigureTransformPropertyAppliers();
+            }
+        }
+
+        [Tooltip("Determines if only the floor snap should only be compensated by the offset or whether the teleported target position should also be compensated by the offset."), SerializeField]
+        private bool _onlyOffsetFloorSnap;
         /// <summary>
         /// Determines if only the floor snap should only be compensated by the <see cref="offset"/> or whether the teleported target position should also be compensated by the <see cref="offset"/>.
         /// </summary>
-        [Tooltip("Determines if only the floor snap should only be compensated by the offset or whether the teleported target position should also be compensated by the offset.")]
-        public bool onlyOffsetFloorSnap;
+        public bool OnlyOffsetFloorSnap
+        {
+            get { return _onlyOffsetFloorSnap; }
+            set
+            {
+                _onlyOffsetFloorSnap = value;
+                internalSetup.ConfigureTransformPropertyAppliers();
+            }
+        }
+
+        [Tooltip("The list of scene Cameras to apply a fade to."), SerializeField]
+        private CameraList _sceneCameras;
         /// <summary>
         /// The <see cref="CameraList"/> of scene <see cref="Camera"/>s to apply a fade to.
         /// </summary>
-        [Tooltip("The list of scene Cameras to apply a fade to.")]
-        public CameraList sceneCameras;
+        public CameraList SceneCameras
+        {
+            get { return _sceneCameras; }
+            set
+            {
+                _sceneCameras = value;
+                internalSetup.ConfigureCameraColorOverlays();
+            }
+        }
+
+        [Tooltip("Allows to optionally determine targets based on the set rules."), SerializeField]
+        private RuleContainer _targetValidity;
         /// <summary>
         /// Allows to optionally determine targets based on the set rules.
         /// </summary>
-        [Tooltip("Allows to optionally determine targets based on the set rules.")]
-        public RuleContainer targetValidity;
+        public RuleContainer TargetValidity
+        {
+            get { return _targetValidity; }
+            set
+            {
+                _targetValidity = value;
+                internalSetup.ConfigureSurfaceLocatorRules();
+            }
+        }
         #endregion
 
         #region Teleporter Events
@@ -55,8 +105,8 @@
         /// <summary>
         /// The linked Internal Setup.
         /// </summary>
-        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting]
-        public TeleporterInternalSetup internalSetup;
+        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting, SerializeField]
+        protected TeleporterInternalSetup internalSetup;
         #endregion
 
         /// <summary>
@@ -66,6 +116,19 @@
         public virtual void Teleport(TransformData destination)
         {
             internalSetup.Teleport(destination);
+        }
+
+        protected virtual void OnValidate()
+        {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            internalSetup.ConfigureSurfaceLocatorAliases();
+            internalSetup.ConfigureSurfaceLocatorRules();
+            internalSetup.ConfigureTransformPropertyAppliers();
+            internalSetup.ConfigureCameraColorOverlays();
         }
     }
 }
