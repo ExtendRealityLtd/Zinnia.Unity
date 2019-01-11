@@ -123,9 +123,9 @@
 
             foreach (InteractorFacade interactor in facade.disallowedGrabInteractors)
             {
-                if (interactor.grabInteractorSetup.attachPoint != null)
+                if (interactor.GrabInteractorSetup.AttachPoint != null)
                 {
-                    grabValidity.objects.Add(interactor.grabInteractorSetup.attachPoint);
+                    grabValidity.objects.Add(interactor.GrabInteractorSetup.AttachPoint);
                 }
             }
         }
@@ -245,7 +245,7 @@
                 }
                 facade.Grabbed?.Invoke(interactor);
                 interactor.Grabbed?.Invoke(facade);
-                interactor.grabInteractorSetup.grabbedObjects.AddElement(facade.gameObject);
+                interactor.GrabInteractorSetup.grabbedObjectsCollection.AddElement(facade.gameObject);
             }
         }
 
@@ -260,7 +260,7 @@
             {
                 facade.Ungrabbed?.Invoke(interactor);
                 interactor.Ungrabbed?.Invoke(facade);
-                interactor.grabInteractorSetup.grabbedObjects.RemoveElement(facade.gameObject);
+                interactor.GrabInteractorSetup.grabbedObjectsCollection.RemoveElement(facade.gameObject);
                 if (facade.GrabbingInteractors.Count == 0)
                 {
                     facade.LastUngrabbed?.Invoke(interactor);
@@ -284,7 +284,7 @@
         protected virtual ActiveCollisionConsumer.EventData CreateConsumerDataFromInteractor(InteractorFacade interactor)
         {
             ActiveCollisionPublisher.PayloadData interactorPublisher = new ActiveCollisionPublisher.PayloadData();
-            interactorPublisher.sourceContainer = interactor.grabInteractorSetup.attachPoint;
+            interactorPublisher.sourceContainer = interactor.GrabInteractorSetup.AttachPoint;
             return new ActiveCollisionConsumer.EventData().Set(interactorPublisher, null);
         }
 

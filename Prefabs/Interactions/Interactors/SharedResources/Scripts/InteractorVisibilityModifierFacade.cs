@@ -34,13 +34,13 @@
         /// <summary>
         /// The emitter that deals with hiding the interactor.
         /// </summary>
-        [Header("Internal Settings"), Tooltip("The emitter that deals with hiding the interactor."), InternalSetting]
-        public InteractorFacadeEventProxyEmitter hideEmitter;
+        [Header("Internal Settings"), Tooltip("The emitter that deals with hiding the interactor."), InternalSetting, SerializeField]
+        protected InteractorFacadeEventProxyEmitter hideEmitter;
         /// <summary>
         /// The emitter that deals with showing the interactor.
         /// </summary>
-        [Tooltip("The emitter that deals with showing the interactor."), InternalSetting]
-        public InteractorFacadeEventProxyEmitter showEmitter;
+        [Tooltip("The emitter that deals with showing the interactor."), InternalSetting, SerializeField]
+        protected InteractorFacadeEventProxyEmitter showEmitter;
         #endregion
 
         /// <summary>

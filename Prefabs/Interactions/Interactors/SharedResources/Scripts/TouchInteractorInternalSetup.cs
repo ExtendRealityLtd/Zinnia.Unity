@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using VRTK.Core.Extension;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Tracking.Collision;
     using VRTK.Core.Tracking.Collision.Active;
     using VRTK.Core.Tracking.Collision.Active.Operation;
@@ -16,31 +17,31 @@
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The public interface facade.")]
-        public InteractorFacade facade;
+        [Header("Facade Settings"), Tooltip("The public interface facade."), InternalSetting, SerializeField]
+        protected InteractorFacade facade;
         #endregion
 
         #region Touch Settings
         /// <summary>
         /// The <see cref="ActiveCollisionsContainer"/> that holds all current collisions.
         /// </summary>
-        [Header("Touch Settings"), Tooltip("The ActiveCollisionsContainer that holds all current collisions.")]
-        public ActiveCollisionsContainer activeCollisionsContainer;
+        [Header("Touch Settings"), Tooltip("The ActiveCollisionsContainer that holds all current collisions."), InternalSetting, SerializeField]
+        protected ActiveCollisionsContainer activeCollisionsContainer;
         /// <summary>
         /// The <see cref="Slicer"/> that holds the current active collision.
         /// </summary>
-        [Tooltip("The Slicer that holds the current active collision.")]
-        public Slicer currentActiveCollision;
+        [Tooltip("The Slicer that holds the current active collision."), InternalSetting, SerializeField]
+        protected Slicer currentActiveCollision;
         /// <summary>
         /// The <see cref="ActiveCollisionPublisher"/> for checking valid start touching collisions.
         /// </summary>
-        [Tooltip("The ActiveCollisionPublisher for checking valid start touching collisions.")]
-        public ActiveCollisionPublisher startTouchingPublisher;
+        [Tooltip("The ActiveCollisionPublisher for checking valid start touching collisions."), InternalSetting, SerializeField]
+        protected ActiveCollisionPublisher startTouchingPublisher;
         /// <summary>
         /// The <see cref="ActiveCollisionPublisher"/> for checking valid stop touching collisions.
         /// </summary>
-        [Tooltip("The ActiveCollisionPublisher for checking valid stop touching collisions.")]
-        public ActiveCollisionPublisher stopTouchingPublisher;
+        [Tooltip("The ActiveCollisionPublisher for checking valid stop touching collisions."), InternalSetting, SerializeField]
+        protected ActiveCollisionPublisher stopTouchingPublisher;
         #endregion
 
         /// <summary>

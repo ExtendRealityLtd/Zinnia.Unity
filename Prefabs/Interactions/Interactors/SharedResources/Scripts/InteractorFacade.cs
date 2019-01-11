@@ -24,21 +24,53 @@
         }
 
         #region Interactor Settings
+        [Header("Interactor Settings"), Tooltip("The BooleanAction that will initiate the Interactor grab mechanism."), SerializeField]
+        private BooleanAction _grabAction;
         /// <summary>
         /// The <see cref="BooleanAction"/> that will initiate the Interactor grab mechanism.
         /// </summary>
-        [Header("Interactor Settings"), Tooltip("The BooleanAction that will initiate the Interactor grab mechanism."), SerializeField]
-        protected BooleanAction grabAction;
+        public BooleanAction GrabAction
+        {
+            get { return _grabAction; }
+            set
+            {
+                _grabAction = value;
+                grabInteractorSetup.ConfigureGrabAction();
+            }
+        }
+
+        [Tooltip("The VelocityTrackerProcessor to measure the interactors current velocity."), SerializeField]
+        private VelocityTrackerProcessor _velocityTracker;
         /// <summary>
         /// The <see cref="VelocityTrackerProcessor"/> to measure the interactors current velocity.
         /// </summary>
-        [Tooltip("The VelocityTrackerProcessor to measure the interactors current velocity."), SerializeField]
-        protected VelocityTrackerProcessor velocityTracker;
+        public VelocityTrackerProcessor VelocityTracker
+        {
+            get { return _velocityTracker; }
+            set
+            {
+                _velocityTracker = value;
+                grabInteractorSetup.ConfigureVelocityTrackers();
+            }
+        }
+
+        [Tooltip("The time between initiating the grabAction and touching an Interactable to be considered a valid grab."), SerializeField]
+        private float _grabPrecognition = 0.1f;
         /// <summary>
         /// The time between initiating the <see cref="grabAction"/> and touching an Interactable to be considered a valid grab.
         /// </summary>
-        [Tooltip("The time between initiating the grabAction and touching an Interactable to be considered a valid grab."), SerializeField]
-        protected float grabPrecognition = 0.01f;
+        public float GrabPrecognition
+        {
+            get
+            {
+                return _grabPrecognition;
+            }
+            set
+            {
+                _grabPrecognition = value;
+                grabInteractorSetup.ConfigureGrabPrecognition();
+            }
+        }
         #endregion
 
         #region Interactor Events
@@ -62,65 +94,20 @@
         #endregion
 
         #region Internal Settings
+        [Header("Internal Settings"), Tooltip("The linked Touch Internal Setup."), InternalSetting, SerializeField]
+        protected TouchInteractorInternalSetup touchInteractorSetup;
         /// <summary>
         /// The linked Touch Internal Setup.
         /// </summary>
-        [Header("Internal Settings"), Tooltip("The linked Touch Internal Setup."), InternalSetting]
-        public TouchInteractorInternalSetup touchInteractorSetup;
+        public TouchInteractorInternalSetup TouchInteractorSetup => touchInteractorSetup;
+
+        [Tooltip("The linked Grab Internal Setup."), InternalSetting, SerializeField]
+        protected GrabInteractorInternalSetup grabInteractorSetup;
         /// <summary>
         /// The linked Grab Internal Setup.
         /// </summary>
-        [Tooltip("The linked Grab Internal Setup."), InternalSetting]
-        public GrabInteractorInternalSetup grabInteractorSetup;
+        public GrabInteractorInternalSetup GrabInteractorSetup => grabInteractorSetup;
         #endregion
-
-        /// <summary>
-        /// The <see cref="BooleanAction"/> that will initiate the Interactor grab mechanism.
-        /// </summary>
-        public BooleanAction GrabAction
-        {
-            get
-            {
-                return grabAction;
-            }
-            set
-            {
-                grabAction = value;
-                grabInteractorSetup.ConfigureGrabAction();
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="VelocityTrackerProcessor"/> to measure the interactors current velocity.
-        /// </summary>
-        public VelocityTrackerProcessor VelocityTracker
-        {
-            get
-            {
-                return velocityTracker;
-            }
-            set
-            {
-                velocityTracker = value;
-                grabInteractorSetup.ConfigureVelocityTrackers();
-            }
-        }
-
-        /// <summary>
-        /// The time between initiating the <see cref="grabAction"/> and touching an Interactable to be considered a valid grab.
-        /// </summary>
-        public float GrabPrecognition
-        {
-            get
-            {
-                return grabPrecognition;
-            }
-            set
-            {
-                grabPrecognition = value;
-                grabInteractorSetup.ConfigureGrabPrecognition();
-            }
-        }
 
         /// <summary>
         /// A collection of currently touched GameObjects.
@@ -174,7 +161,7 @@
 
         protected virtual void OnValidate()
         {
-            if (!isActiveAndEnabled || !Application.isPlaying)
+            if (!Application.isPlaying)
             {
                 return;
             }

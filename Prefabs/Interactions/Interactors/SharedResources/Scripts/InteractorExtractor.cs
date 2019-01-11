@@ -41,13 +41,13 @@
         /// <returns>The attach point.</returns>
         public virtual GameObject ExtractAttachPoint(InteractorFacade interactor)
         {
-            if (interactor == null || interactor.grabInteractorSetup == null)
+            if (interactor == null || interactor.GrabInteractorSetup == null)
             {
                 Result = null;
                 return null;
             }
 
-            Result = interactor.grabInteractorSetup.attachPoint;
+            Result = interactor.GrabInteractorSetup.AttachPoint;
             return base.Extract();
         }
 
