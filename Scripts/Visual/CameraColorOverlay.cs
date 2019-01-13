@@ -63,7 +63,7 @@
         /// <summary>
         /// The duration of time to apply the overlay <see cref="Color"/>.
         /// </summary>
-        public float addDuration = 0f;
+        public float addDuration;
         /// <summary>
         /// The duration of time to remove the overlay <see cref="Color"/>.
         /// </summary>
@@ -71,7 +71,7 @@
         /// <summary>
         /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
         /// </summary>
-        public float appliedDuration = 0f;
+        public float appliedDuration;
 
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> is added.

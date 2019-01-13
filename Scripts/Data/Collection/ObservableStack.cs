@@ -63,7 +63,7 @@
         /// <summary>
         /// Determines whether to abort a running pop process.
         /// </summary>
-        protected bool abortPopProcess = false;
+        protected bool abortPopProcess;
 
         /// <summary>
         /// Push an element onto the stack and emit the related events.

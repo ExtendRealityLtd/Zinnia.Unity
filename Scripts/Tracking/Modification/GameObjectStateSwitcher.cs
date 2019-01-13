@@ -23,12 +23,12 @@
         /// <summary>
         /// The index in the collection to start at.
         /// </summary>
-        public int startIndex = 0;
+        public int startIndex;
 
         /// <summary>
         /// The current active index in the targets collection.
         /// </summary>
-        protected int activeIndex = 0;
+        protected int activeIndex;
 
         /// <summary>
         /// Switches to the next target in the collection and sets to the appropriate state.

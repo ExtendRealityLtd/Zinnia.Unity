@@ -31,7 +31,7 @@
         public int angularVelocityAverageFrames = 10;
 
         protected bool collectSamples;
-        protected int currentSampleCount = 0;
+        protected int currentSampleCount;
         protected Vector3[] velocitySamples = Array.Empty<Vector3>();
         protected Vector3[] angularVelocitySamples = Array.Empty<Vector3>();
         protected Vector3 previousPosition = Vector3.zero;

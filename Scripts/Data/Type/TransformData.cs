@@ -16,15 +16,15 @@
         /// <summary>
         /// Position override of the <see cref="Transform"/> object.
         /// </summary>
-        public Vector3? positionOverride = null;
+        public Vector3? positionOverride;
         /// <summary>
         /// Rotation override of the <see cref="Transform"/> object.
         /// </summary>
-        public Quaternion? rotationOverride = null;
+        public Quaternion? rotationOverride;
         /// <summary>
         /// Scale override of the <see cref="Transform"/> object.
         /// </summary>
-        public Vector3? scaleOverride = null;
+        public Vector3? scaleOverride;
 
         /// <summary>
         /// The position of the <see cref="Transform"/> or the <see cref="positionOverride"/> if it is set.

@@ -83,7 +83,7 @@
         /// <summary>
         /// The amount of time to take when transitioning from the current <see cref="Transform"/> state to the modified <see cref="Transform"/> state.
         /// </summary>
-        public float transitionDuration = 0f;
+        public float transitionDuration;
 
         /// <summary>
         /// Emitted before the transformation process occurs.

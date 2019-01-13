@@ -62,7 +62,7 @@
         /// The value to set the unused coordinate to during the conversion.
         /// </summary>
         [SerializeField]
-        protected float unusedCoordinateValue = 0f;
+        protected float unusedCoordinateValue;
 
         /// <summary>
         /// Sets the coordinate mapping used during the conversion.

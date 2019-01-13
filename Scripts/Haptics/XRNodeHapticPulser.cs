@@ -19,7 +19,7 @@
         /// <summary>
         /// The haptic capabilities of <see cref="node"/>.
         /// </summary>
-        protected HapticCapabilities nodeHapticCapabilities = new HapticCapabilities();
+        protected HapticCapabilities nodeHapticCapabilities;
 
         /// <inheritdoc />
         protected override void DoBegin()

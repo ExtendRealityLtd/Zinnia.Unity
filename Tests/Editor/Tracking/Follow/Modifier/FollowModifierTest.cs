@@ -296,7 +296,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
 
     public class PropertyModifierMock : PropertyModifier
     {
-        public bool modified = false;
+        public bool modified;
 
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {

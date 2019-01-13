@@ -11,7 +11,7 @@
         /// <summary>
         /// The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.
         /// </summary>
-        public int startIndex = 0;
+        public int startIndex;
         /// <summary>
         /// The number of elements in the slice.
         /// </summary>
