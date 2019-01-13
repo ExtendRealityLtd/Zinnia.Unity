@@ -4,7 +4,7 @@
     using System.Collections;
 
     /// <summary>
-    /// Processes a given <see cref="HapticProcess"/> repeatidly for a given duration and with a pause interval between each process.
+    /// Processes a given <see cref="HapticProcess"/> repeatedly for a given duration and with a pause interval between each process.
     /// </summary>
     public class TimedHapticProcess : HapticProcess
     {

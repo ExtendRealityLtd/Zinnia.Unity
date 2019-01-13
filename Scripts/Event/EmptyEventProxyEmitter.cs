@@ -3,7 +3,7 @@
     using UnityEngine.Events;
 
     /// <summary>
-    ///  Emits a UnityEvent with a no payload whenever the Receive method is called.
+    /// Emits a UnityEvent with a no payload whenever the Receive method is called.
     /// </summary>
     public class EmptyEventProxyEmitter : EventProxyEmitter
     {

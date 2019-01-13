@@ -21,7 +21,7 @@
         }
 
         /// <summary>
-        /// Attempts to retreive the component or if one is not found then optionally search children then search parents for the component.
+        /// Attempts to retrieve the component or if one is not found then optionally search children then search parents for the component.
         /// </summary>
         /// <param name="gameObject">The reference <see cref="GameObject"/> to search on.</param>
         /// <param name="searchAncestors">Optionally searches all ancestors in the hierarchy for the component.</param>

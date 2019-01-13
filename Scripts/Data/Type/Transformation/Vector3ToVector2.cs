@@ -42,7 +42,7 @@
             /// <summary>
             /// Maps (X,Y,Z) to (Y,Z)
             /// </summary>
-            YToXAndZToYExcluedX,
+            YToXAndZToYExcludeX,
             /// <summary>
             /// Maps (X,Y,Z) to (X,Z)
             /// </summary>
@@ -83,7 +83,7 @@
                     return new Vector3(input.y, input.x);
                 case CoordinateMap.YToYAndZToXExcludeX:
                     return new Vector3(input.z, input.y);
-                case CoordinateMap.YToXAndZToYExcluedX:
+                case CoordinateMap.YToXAndZToYExcludeX:
                     return new Vector3(input.y, input.z);
                 case CoordinateMap.XToXAndZToYExcludeY:
                     return new Vector3(input.x, input.z);

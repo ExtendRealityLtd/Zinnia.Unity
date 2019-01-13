@@ -71,8 +71,8 @@
         /// <summary>
         /// Creates a new <see cref="TransformData"/> from an existing <see cref="GameObject"/>.
         /// </summary>
-        /// <param name="gameobject">The <see cref="GameObject"/> to create the <see cref="TransformData"/> from.</param>
-        public TransformData(GameObject gameobject) : this(gameobject != null ? gameobject.transform : null)
+        /// <param name="gameObject">The <see cref="GameObject"/> to create the <see cref="TransformData"/> from.</param>
+        public TransformData(GameObject gameObject) : this(gameObject != null ? gameObject.transform : null)
         {
         }
     }

@@ -49,7 +49,7 @@
         [SerializeField]
         private Vector2 _origin = new Vector2(0f, 1f);
         /// <summary>
-        /// The direction that defines the origin (i.e. zero) angle..
+        /// The direction that defines the origin (i.e. zero) angle.
         /// </summary>
         public Vector2 Origin
         {

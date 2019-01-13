@@ -161,7 +161,7 @@
         }
 
         /// <summary>
-        /// Calulates the multiplication factor for the velocities.
+        /// Calculates the multiplication factor for the velocities.
         /// </summary>
         /// <returns>Multiplication value.</returns>
         protected virtual float GetFactor()
@@ -170,7 +170,7 @@
         }
 
         /// <summary>
-        /// Calculates the average estiamte for the given sample set.
+        /// Calculates the average estimate for the given sample set.
         /// </summary>
         /// <param name="samples">An array of samples to estimate with.</param>
         /// <returns>The estimated result.</returns>
@@ -239,9 +239,9 @@
             }
 
             Quaternion currentRelativeRotation = relativeTo.TryGetRotation();
-            Quaternion relativeDelataRotation = currentRelativeRotation * Quaternion.Inverse(previousRelativeRotation);
+            Quaternion relativeDeltaRotation = currentRelativeRotation * Quaternion.Inverse(previousRelativeRotation);
             Quaternion currentRotation = source.TryGetRotation();
-            Quaternion deltaRotation = Quaternion.Inverse(relativeDelataRotation) * (currentRotation * Quaternion.Inverse(previousRotation));
+            Quaternion deltaRotation = Quaternion.Inverse(relativeDeltaRotation) * (currentRotation * Quaternion.Inverse(previousRotation));
             float theta = 2.0f * Mathf.Acos(Mathf.Clamp(deltaRotation.w, -1.0f, 1.0f));
             if (theta > Mathf.PI)
             {

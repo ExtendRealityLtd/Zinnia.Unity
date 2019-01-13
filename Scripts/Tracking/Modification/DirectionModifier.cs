@@ -265,7 +265,7 @@
         }
 
         /// <summary>
-        /// Gets the actial initial rotation of the target based on any changes to the pivot rotation.
+        /// Gets the actual initial rotation of the target based on any changes to the pivot rotation.
         /// </summary>
         /// <returns>The actual initial rotation.</returns>
         protected virtual Quaternion GetActualInitialRotation()

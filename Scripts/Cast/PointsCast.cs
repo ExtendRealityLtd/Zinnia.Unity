@@ -116,7 +116,7 @@
         }
 
         /// <summary>
-        /// Performs the implementated way of casting points.
+        /// Performs the implemented way of casting points.
         /// </summary>
         protected abstract void DoCastPoints();
     }

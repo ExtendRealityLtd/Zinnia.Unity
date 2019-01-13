@@ -39,7 +39,7 @@
         }
 
         /// <summary>
-        /// Constructs a new range from a given <see cref="Vector2"/> using the <see cref="Vector2.x"/> value as the minumum value and the <see cref="Vector2.y"/> value as the maximum value.
+        /// Constructs a new range from a given <see cref="Vector2"/> using the <see cref="Vector2.x"/> value as the minimum value and the <see cref="Vector2.y"/> value as the maximum value.
         /// </summary>
         /// <param name="range">The range data.</param>
         public FloatRange(Vector2 range)

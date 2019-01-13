@@ -30,7 +30,7 @@ namespace Test.Zinnia.Data.Collection
         public void GetValueByKey()
         {
             UnityEventListenerMock valueRetrievedListenerMock = new UnityEventListenerMock();
-            subject.ValueRetreieved.AddListener(valueRetrievedListenerMock.Listen);
+            subject.ValueRetrieved.AddListener(valueRetrievedListenerMock.Listen);
 
             GameObject keyOne = new GameObject();
             GameObject valueOne = new GameObject();
@@ -63,7 +63,7 @@ namespace Test.Zinnia.Data.Collection
         public void GetValueByKeyNotFound()
         {
             UnityEventListenerMock valueRetrievedListenerMock = new UnityEventListenerMock();
-            subject.ValueRetreieved.AddListener(valueRetrievedListenerMock.Listen);
+            subject.ValueRetrieved.AddListener(valueRetrievedListenerMock.Listen);
 
             GameObject keyOne = new GameObject();
             GameObject valueOne = new GameObject();
@@ -95,7 +95,7 @@ namespace Test.Zinnia.Data.Collection
         public void GetValueByIndex()
         {
             UnityEventListenerMock valueRetrievedListenerMock = new UnityEventListenerMock();
-            subject.ValueRetreieved.AddListener(valueRetrievedListenerMock.Listen);
+            subject.ValueRetrieved.AddListener(valueRetrievedListenerMock.Listen);
 
             GameObject keyOne = new GameObject();
             GameObject valueOne = new GameObject();
@@ -128,7 +128,7 @@ namespace Test.Zinnia.Data.Collection
         public void GetValueByIndexNotFound()
         {
             UnityEventListenerMock valueRetrievedListenerMock = new UnityEventListenerMock();
-            subject.ValueRetreieved.AddListener(valueRetrievedListenerMock.Listen);
+            subject.ValueRetrieved.AddListener(valueRetrievedListenerMock.Listen);
 
             GameObject keyOne = new GameObject();
             GameObject valueOne = new GameObject();

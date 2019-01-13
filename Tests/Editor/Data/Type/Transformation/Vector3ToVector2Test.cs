@@ -83,11 +83,11 @@ namespace Test.Zinnia.Data.Type.Transformation
         }
 
         [Test]
-        public void TransformYToXAndZToYExcluedX()
+        public void TransformYToXAndZToYExcludeX()
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetCoordinateMap(Vector3ToVector2.CoordinateMap.YToXAndZToYExcluedX);
+            subject.SetCoordinateMap(Vector3ToVector2.CoordinateMap.YToXAndZToYExcludeX);
 
             Assert.AreEqual(Vector2.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);

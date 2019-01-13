@@ -4,7 +4,7 @@
     using System;
 
     /// <summary>
-    /// Transforms a boolean value to the equvalent float value.
+    /// Transforms a boolean value to the equivalent float value.
     /// </summary>
     /// <example>
     /// false = 0f
@@ -21,7 +21,7 @@
         }
 
         /// <summary>
-        /// Transforms the given input bool to the float equavalent value.
+        /// Transforms the given input bool to the float equivalent value.
         /// </summary>
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value.</returns>

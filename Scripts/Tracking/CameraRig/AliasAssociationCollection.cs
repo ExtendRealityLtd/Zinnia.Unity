@@ -42,42 +42,42 @@
         public VelocityTracker RightControllerVelocity => GetRightControllerVelocity();
 
         /// <summary>
-        /// Retreives the PlayArea.
+        /// Retrieves the PlayArea.
         /// </summary>
         /// <returns>The PlayArea.</returns>
         protected abstract GameObject GetPlayArea();
         /// <summary>
-        /// Retreives the Headset.
+        /// Retrieves the Headset.
         /// </summary>
         /// <returns>The Headset.</returns>
         protected abstract GameObject GetHeadset();
         /// <summary>
-        /// Retreives the Headset Camera.
+        /// Retrieves the Headset Camera.
         /// </summary>
         /// <returns>The Headset Camera.</returns>
         protected abstract Camera GetHeadsetCamera();
         /// <summary>
-        /// Retreives the Headset Velocity Tracker.
+        /// Retrieves the Headset Velocity Tracker.
         /// </summary>
         /// <returns>The Headset Velocity Tracker.</returns>
         protected abstract VelocityTracker GetHeadsetVelocity();
         /// <summary>
-        /// Retreives the Left Controller.
+        /// Retrieves the Left Controller.
         /// </summary>
         /// <returns>The Left Controller.</returns>
         protected abstract GameObject GetLeftController();
         /// <summary>
-        /// Retreives the Left Controller Velocity Tracker.
+        /// Retrieves the Left Controller Velocity Tracker.
         /// </summary>
         /// <returns>The Left Controller Velocity Tracker.</returns>
         protected abstract VelocityTracker GetLeftControllerVelocity();
         /// <summary>
-        /// Retreives the Right Controller.
+        /// Retrieves the Right Controller.
         /// </summary>
         /// <returns>The Right Controller.</returns>
         protected abstract GameObject GetRightController();
         /// <summary>
-        /// Retreives the Right Controller Velocity Tracker.
+        /// Retrieves the Right Controller Velocity Tracker.
         /// </summary>
         /// <returns>The Right Controller Velocity Tracker.</returns>
         protected abstract VelocityTracker GetRightControllerVelocity();

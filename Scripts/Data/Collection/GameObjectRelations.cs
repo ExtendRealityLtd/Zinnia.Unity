@@ -40,9 +40,9 @@
         public List<Relation> relations = new List<Relation>();
 
         /// <summary>
-        /// Emitted when a value is retreived for a given key.
+        /// Emitted when a value is retrieved for a given key.
         /// </summary>
-        public UnityEvent ValueRetreieved = new UnityEvent();
+        public UnityEvent ValueRetrieved = new UnityEvent();
 
         /// <summary>
         /// Attempts to get the value in the list of relations for the given key.
@@ -60,7 +60,7 @@
             {
                 if (key.Equals(relation.key))
                 {
-                    ValueRetreieved?.Invoke(relation.value);
+                    ValueRetrieved?.Invoke(relation.value);
                     return relation.value;
                 }
             }
@@ -84,7 +84,7 @@
                 if (index == relationIndex)
                 {
                     GameObject foundValue = relations[index].value;
-                    ValueRetreieved?.Invoke(foundValue);
+                    ValueRetrieved?.Invoke(foundValue);
                     return foundValue;
                 }
             }

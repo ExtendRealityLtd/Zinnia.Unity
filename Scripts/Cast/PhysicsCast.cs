@@ -3,7 +3,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// Allows customising of Unity Physics casting within other scripts by applying settings at edit time.
+    /// Allows customizing of Unity Physics casting within other scripts by applying settings at edit time.
     /// </summary>
     public class PhysicsCast : MonoBehaviour
     {

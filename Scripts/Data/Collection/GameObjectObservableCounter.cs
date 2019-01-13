@@ -5,7 +5,7 @@
     using System;
 
     /// <summary>
-    /// Allows counting the amount of attempts a <see cref="GameObject"/> is added or removed from a  <see cref="Dictionary{TKey, TValue}"/>.
+    /// Allows counting the amount of attempts a <see cref="GameObject"/> is added or removed from a <see cref="Dictionary{TKey, TValue}"/>.
     /// </summary>
     public class GameObjectObservableCounter : ObservableCounter<GameObject, GameObjectObservableCounter.UnityEvent>
     {
