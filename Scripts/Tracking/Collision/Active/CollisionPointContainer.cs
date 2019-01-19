@@ -48,7 +48,7 @@
         /// <param name="eventData">Contains data about the collision.</param>
         public virtual void Create(ActiveCollisionConsumer.EventData eventData)
         {
-            GameObject collisionInitiator = (eventData.publisher == null ? null : eventData.publisher.sourceContainer);
+            GameObject collisionInitiator = eventData.publisher == null ? null : eventData.publisher.sourceContainer;
 
             if (!isActiveAndEnabled || collisionInitiator == null || eventData.currentCollision?.collider == null || Container != null)
             {
@@ -71,8 +71,11 @@
         /// </summary>
         public virtual void Destroy()
         {
-            Destroyed?.Invoke(Container);
-            DestroyContainer();
+            if (Container != null)
+            {
+                Destroyed?.Invoke(Container);
+                DestroyContainer();
+            }
         }
 
         /// <summary>
