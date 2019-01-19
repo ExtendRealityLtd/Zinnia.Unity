@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
@@ -14,12 +15,12 @@
         /// <summary>
         /// The target to rotate.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject target;
         /// <summary>
         /// The object to look at when affecting rotation.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject lookAt;
         /// <summary>
         /// The object to be used as the pivot point for rotation.
@@ -84,28 +85,12 @@
         }
 
         /// <summary>
-        /// Clears the existing target.
-        /// </summary>
-        public virtual void ClearTarget()
-        {
-            target = null;
-        }
-
-        /// <summary>
         /// Sets the lookAt.
         /// </summary>
         /// <param name="lookAt">The new lookAt.</param>
         public virtual void SetLookAt(GameObject lookAt)
         {
             this.lookAt = lookAt;
-        }
-
-        /// <summary>
-        /// Clears the existing lookAt.
-        /// </summary>
-        public virtual void ClearLookAt()
-        {
-            lookAt = null;
         }
 
         /// <summary>

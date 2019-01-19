@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Linq;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
@@ -28,7 +29,7 @@
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject searchOrigin;
         /// <summary>
         /// The direction in which to cast to locate the nearest surface.
@@ -80,14 +81,6 @@
         public virtual void SetSearchOrigin(GameObject searchOrigin)
         {
             this.searchOrigin = searchOrigin;
-        }
-
-        /// <summary>
-        /// Clears the <see cref="searchOrigin"/> parameter.
-        /// </summary>
-        public virtual void ClearSearchOrigin()
-        {
-            searchOrigin = null;
         }
 
         /// <summary>

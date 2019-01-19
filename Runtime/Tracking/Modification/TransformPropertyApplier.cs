@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Enum;
@@ -61,17 +62,17 @@
         /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public TransformData source;
         /// <summary>
         /// The target to apply the transformations to.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject target;
         /// <summary>
         /// The offset/pivot when applying the transformations.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject offset;
         /// <summary>
         /// Determines which axes to apply on when utilizing the position offset.
@@ -136,14 +137,6 @@
         }
 
         /// <summary>
-        /// Clears the <see cref="source"/> parameter.
-        /// </summary>
-        public virtual void ClearSource()
-        {
-            source = null;
-        }
-
-        /// <summary>
         /// Sets the <see cref="target"/> parameter.
         /// </summary>
         /// <param name="target">The new target value.</param>
@@ -162,14 +155,6 @@
         }
 
         /// <summary>
-        /// Clears the <see cref="target"/> parameter.
-        /// </summary>
-        public virtual void ClearTarget()
-        {
-            target = null;
-        }
-
-        /// <summary>
         /// Sets the <see cref="offset"/> parameter.
         /// </summary>
         /// <param name="offset">The new offset value.</param>
@@ -185,14 +170,6 @@
         public virtual void SetOffset(TransformData offset)
         {
             SetOffset(offset.TryGetGameObject());
-        }
-
-        /// <summary>
-        /// Clears the <see cref="offset"/> parameter.
-        /// </summary>
-        public virtual void ClearOffset()
-        {
-            offset = null;
         }
 
         /// <summary>

@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
@@ -60,12 +61,12 @@
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject source;
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject target;
         /// <summary>
         /// The distance between the source and target that is considered to be exceeding the given threshold.
@@ -160,14 +161,6 @@
         }
 
         /// <summary>
-        /// Clears the <see cref="source"/> parameter.
-        /// </summary>
-        public virtual void ClearSource()
-        {
-            source = null;
-        }
-
-        /// <summary>
         /// Attempts to save the current <see cref="target"/> position as the initial position if the <see cref="source"/> and the <see cref="target"/> are the same <see cref="GameObject"/>.
         /// </summary>
         public virtual void SavePosition()
@@ -189,14 +182,6 @@
         {
             this.target = target;
             SavePosition();
-        }
-
-        /// <summary>
-        /// Clears the <see cref="target"/> parameter.
-        /// </summary>
-        public virtual void ClearTarget()
-        {
-            target = null;
         }
 
         protected virtual void OnEnable()

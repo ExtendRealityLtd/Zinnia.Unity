@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -13,12 +14,12 @@
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject source;
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject relativeTo;
         /// <summary>
         /// Automatically begin collecting samples for estimation.
@@ -61,28 +62,12 @@
         }
 
         /// <summary>
-        /// Clears the <see cref="source"/> parameter.
-        /// </summary>
-        public virtual void ClearSource()
-        {
-            source = null;
-        }
-
-        /// <summary>
         /// Sets the <see cref="relativeTo"/> parameter.
         /// </summary>
         /// <param name="relativeTo">The new relativeTo value.</param>
         public virtual void SetRelativeTo(GameObject relativeTo)
         {
             this.relativeTo = relativeTo;
-        }
-
-        /// <summary>
-        /// Clears the <see cref="relativeTo"/> parameter.
-        /// </summary>
-        public virtual void ClearRelativeTo()
-        {
-            relativeTo = null;
         }
 
         /// <summary>

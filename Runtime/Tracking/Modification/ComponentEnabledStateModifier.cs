@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Data.Attribute;
@@ -22,7 +23,7 @@
         /// <summary>
         /// The target to modify the enabled states for the provided <see cref="types"/>.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject target;
 
         /// <summary>
@@ -32,14 +33,6 @@
         public virtual void SetTarget(GameObject target)
         {
             this.target = target;
-        }
-
-        /// <summary>
-        /// Clears the current <see cref="target"/>.
-        /// </summary>
-        public virtual void ClearTarget()
-        {
-            target = null;
         }
 
         /// <summary>

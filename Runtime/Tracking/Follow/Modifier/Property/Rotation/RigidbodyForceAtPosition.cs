@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
@@ -12,7 +13,7 @@
         /// <summary>
         /// The point where the attachment was made.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject attachmentPoint;
 
         /// <summary>
@@ -31,14 +32,6 @@
         public virtual void SetAttachmentPoint(GameObject attachmentPoint)
         {
             this.attachmentPoint = attachmentPoint;
-        }
-
-        /// <summary>
-        /// Clears the attachment point.
-        /// </summary>
-        public virtual void ClearAttachmentPoint()
-        {
-            attachmentPoint = null;
         }
 
         /// <summary>

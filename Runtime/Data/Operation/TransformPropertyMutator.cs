@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Operation
 {
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
@@ -12,7 +13,7 @@
         /// <summary>
         /// The target to mutate.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject target;
         /// <summary>
         /// Determines whether to mutate the local or global values.
@@ -32,14 +33,6 @@
         public virtual void SetTarget(GameObject target)
         {
             this.target = target;
-        }
-
-        /// <summary>
-        /// Clears the existing target.
-        /// </summary>
-        public virtual void ClearTarget()
-        {
-            target = null;
         }
 
         /// <summary>

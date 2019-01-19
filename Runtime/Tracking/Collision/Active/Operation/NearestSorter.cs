@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
@@ -12,7 +13,7 @@
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject source;
 
         /// <summary>
@@ -37,14 +38,6 @@
         public virtual void SetSource(GameObject source)
         {
             this.source = source;
-        }
-
-        /// <summary>
-        /// Clears the <see cref="source"/> parameter.
-        /// </summary>
-        public virtual void ClearSource()
-        {
-            source = null;
         }
 
         /// <summary>

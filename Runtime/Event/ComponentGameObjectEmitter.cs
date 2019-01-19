@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Event
 {
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -11,7 +12,7 @@
         /// <summary>
         /// The source to extract from.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public Component source;
 
         /// <summary>
@@ -21,14 +22,6 @@
         public virtual void SetSource(Component source)
         {
             this.source = source;
-        }
-
-        /// <summary>
-        /// Clears the current <see cref="source"/>.
-        /// </summary>
-        public virtual void ClearSource()
-        {
-            source = null;
         }
 
         /// <inheritdoc />

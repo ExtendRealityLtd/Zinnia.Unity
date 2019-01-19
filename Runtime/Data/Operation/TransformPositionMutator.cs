@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Operation
 {
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -11,7 +12,7 @@
         /// <summary>
         /// An optional rotation offset.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject rotationOffset;
 
         /// <summary>
@@ -21,14 +22,6 @@
         public virtual void SetRotationOffset(GameObject rotationOffset)
         {
             this.rotationOffset = rotationOffset;
-        }
-
-        /// <summary>
-        /// Clears the existing rotation offset.
-        /// </summary>
-        public virtual void ClearRotationOffset()
-        {
-            rotationOffset = null;
         }
 
         /// <inheritdoc/>

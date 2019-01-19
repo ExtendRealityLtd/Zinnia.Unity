@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
@@ -13,7 +14,7 @@
         /// <summary>
         /// The target to scale.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject target;
         /// <summary>
         /// The point to determine distance from.
@@ -83,14 +84,6 @@
         public virtual void SetTarget(GameObject target)
         {
             this.target = target;
-        }
-
-        /// <summary>
-        /// Clears the existing target.
-        /// </summary>
-        public virtual void ClearTarget()
-        {
-            target = null;
         }
 
         /// <summary>
