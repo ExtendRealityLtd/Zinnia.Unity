@@ -11,6 +11,7 @@
     using VRTK.Core.Tracking.Collision;
     using VRTK.Core.Tracking.Collision.Active;
     using VRTK.Core.Prefabs.Interactions.Interactables;
+    using VRTK.Core.Prefabs.Interactions.Interactables.Grab.Receiver;
 
     /// <summary>
     /// Sets up the Interactor Prefab grab settings based on the provided user settings.
@@ -174,7 +175,7 @@
             Ungrab();
             startGrabbingPublisher.SetActiveCollisions(CreateActiveCollisionsEventData(interactable.gameObject, collision, collider));
             ProcessGrabAction(startGrabbingPublisher, true);
-            if (interactable.grabType == InteractableFacade.ActiveType.Toggle)
+            if (interactable.IsGrabTypeToggle())
             {
                 ProcessGrabAction(startGrabbingPublisher, false);
             }
@@ -191,7 +192,7 @@
             }
 
             InteractableFacade interactable = GrabbedObjects[0].TryGetComponent<InteractableFacade>(true, true);
-            if (interactable.grabType == InteractableFacade.ActiveType.Toggle)
+            if (interactable.IsGrabTypeToggle())
             {
                 ProcessGrabAction(startGrabbingPublisher, true);
             }

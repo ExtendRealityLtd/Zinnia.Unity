@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using VRTK.Core.Data.Type;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Extension;
 
     /// <summary>
@@ -13,13 +14,13 @@
         /// <summary>
         /// The joint being used to drive the rotation.
         /// </summary>
-        [Header("Joint Settings"), Tooltip("The joint being used to drive the rotation.")]
-        public HingeJoint joint;
+        [Header("Joint Settings"), Tooltip("The joint being used to drive the rotation."), InternalSetting, SerializeField]
+        protected HingeJoint joint;
         /// <summary>
         /// The parent <see cref="GameObject"/> of the joint.
         /// </summary>
-        [Tooltip("The parent GameObject of the joint.")]
-        public GameObject jointContainer;
+        [Tooltip("The parent GameObject of the joint."), InternalSetting, SerializeField]
+        protected GameObject jointContainer;
         #endregion
 
         /// <summary>

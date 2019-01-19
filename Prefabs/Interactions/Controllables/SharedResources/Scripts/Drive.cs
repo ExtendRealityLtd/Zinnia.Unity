@@ -4,6 +4,7 @@
     using VRTK.Core.Data.Type;
     using VRTK.Core.Process;
     using VRTK.Core.Extension;
+    using VRTK.Core.Data.Attribute;
 
     /// <summary>
     /// The basis for a mechanism to drive motion on a control.
@@ -17,8 +18,8 @@
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The public interface facade.")]
-        public TFacade facade;
+        [Header("Facade Settings"), Tooltip("The public interface facade."), InternalSetting, SerializeField]
+        protected TFacade facade;
         #endregion
 
         #region Threshold Settings
