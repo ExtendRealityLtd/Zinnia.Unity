@@ -4,7 +4,6 @@
     using UnityEngine.Events;
     using System.Collections.Generic;
     using VRTK.Core.Data.Attribute;
-    using VRTK.Core.Tracking.Follow;
     using VRTK.Core.Prefabs.Interactions.Interactors;
 
     /// <summary>
@@ -13,29 +12,48 @@
     public class BodyRepresentationFacade : MonoBehaviour
     {
         #region Source Settings
+        [Header("Source Settings"), Tooltip("The object to follow."), SerializeField]
+        private GameObject _source;
         /// <summary>
         /// The object to follow.
         /// </summary>
-        [Header("Source Settings"), Tooltip("The object to follow.")]
-        public GameObject source;
+        public GameObject Source
+        {
+            get { return _source; }
+            set
+            {
+                _source = value;
+                internalSetup.ConfigureSourceObjectFollower();
+            }
+        }
         /// <summary>
         /// The thickness of <see cref="source"/> to be used when resolving body collisions.
         /// </summary>
         [Tooltip("The thickness of source to be used when resolving body collisions.")]
         public float sourceThickness = 0.05f;
+
+        [Tooltip("An optional offset for the source to use.")]
+        private GameObject _offset;
         /// <summary>
         /// An optional offset for the <see cref="source"/> to use.
         /// </summary>
-        [Tooltip("An optional offset for the source to use.")]
-        public GameObject offset;
+        public GameObject Offset
+        {
+            get { return _offset; }
+            set
+            {
+                _offset = value;
+                internalSetup.ConfigureOffsetObjectFollower();
+            }
+        }
         #endregion
 
         #region Interaction Settings
         /// <summary>
         /// A collection of interactors to exclude from physics collision checks.
         /// </summary>
-        [Header("Interaction Settings"), Tooltip("A collection of interactors to exclude from physics collision checks."), SerializeField]
-        protected List<InteractorFacade> ignoredInteractors = new List<InteractorFacade>();
+        [Header("Interaction Settings"), Tooltip("A collection of interactors to exclude from physics collision checks.")]
+        public List<InteractorFacade> ignoredInteractors = new List<InteractorFacade>();
         #endregion
 
         #region Events
@@ -55,8 +73,8 @@
         /// <summary>
         /// The linked Internal Setup.
         /// </summary>
-        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting]
-        public BodyRepresentationInternalSetup internalSetup;
+        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting, SerializeField]
+        protected BodyRepresentationInternalSetup internalSetup;
         #endregion
 
         /// <summary>
@@ -80,18 +98,9 @@
         public bool IsCharacterControllerGrounded => internalSetup.IsCharacterControllerGrounded;
 
         /// <summary>
-        /// A collection of interactors to exclude from physics checks.
+        /// The <see cref="Rigidbody"/> that acts as the physical representation of the body.
         /// </summary>
-        public List<InteractorFacade> IgnoredInteractors => ignoredInteractors;
-
-        /// <summary>
-        /// An optional follower of <see cref="offset"/>.
-        /// </summary>
-        protected ObjectFollower offsetObjectFollower;
-        /// <summary>
-        /// An optional follower of <see cref="source"/>.
-        /// </summary>
-        protected ObjectFollower sourceObjectFollower;
+        public Rigidbody PhysicsBody => internalSetup.PhysicsBody;
 
         /// <summary>
         /// Sets the source of truth for movement to come from <see cref="BodyRepresentationInternalSetup.rigidbody"/> until <see cref="BodyRepresentationInternalSetup.characterController"/> hits the ground, then <see cref="BodyRepresentationInternalSetup.characterController"/> is the new source of truth.
@@ -112,56 +121,27 @@
         /// </remarks>
         public virtual void SolveBodyCollisions()
         {
-            if (!isActiveAndEnabled || source == null)
+            internalSetup.SolveBodyCollisions();
+        }
+
+        /// <summary>
+        /// Refreshes the ignored interactors.
+        /// </summary>
+        public virtual void RefreshIgnoredInteractors()
+        {
+            internalSetup.ConfigureIgnoreInteractorsCollisions();
+        }
+
+        protected virtual void OnValidate()
+        {
+            if (!Application.isPlaying)
             {
                 return;
             }
 
-            if (offsetObjectFollower != null)
-            {
-                offsetObjectFollower.Process();
-            }
-
-            if (sourceObjectFollower != null)
-            {
-                sourceObjectFollower.Process();
-            }
-
-            internalSetup.Process();
-
-            Vector3 characterControllerPosition = internalSetup.characterController.transform.position + internalSetup.characterController.center;
-            Vector3 difference = source.transform.position - characterControllerPosition;
-            difference.y = 0f;
-
-            float minimumDistanceToColliders = internalSetup.characterController.radius - sourceThickness;
-            if (difference.magnitude < minimumDistanceToColliders)
-            {
-                return;
-            }
-
-            float newDistance = difference.magnitude - minimumDistanceToColliders;
-            (offset == null ? source : offset).transform.position -= difference.normalized * newDistance;
-
-            internalSetup.Process();
-        }
-
-        protected virtual void OnEnable()
-        {
-            if (source != null)
-            {
-                sourceObjectFollower = source.GetComponent<ObjectFollower>();
-            }
-
-            if (offset != null)
-            {
-                offsetObjectFollower = offset.GetComponent<ObjectFollower>();
-            }
-        }
-
-        protected virtual void OnDisable()
-        {
-            sourceObjectFollower = null;
-            offsetObjectFollower = null;
+            internalSetup.ConfigureSourceObjectFollower();
+            internalSetup.ConfigureOffsetObjectFollower();
+            RefreshIgnoredInteractors();
         }
     }
 }

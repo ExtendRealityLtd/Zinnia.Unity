@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facade: {fileID: 114528279196214910}
   characterController: {fileID: 143977418137762132}
-  rigidbody: {fileID: 54654685459298818}
+  physicsBody: {fileID: 54654685459298818}
   rigidbodyCollider: {fileID: 136222110334591178}
   ignoredGameObjectCollisions: {fileID: 114307151915046314}
 --- !u!114 &114867763649759452

@@ -77,7 +77,7 @@
 
             velocityEmitter.EmitVelocity();
             facade.bodyRepresentationFacade.ListenToRigidbodyMovement();
-            facade.bodyRepresentationFacade.internalSetup.rigidbody.velocity += velocityMultiplier.Result;
+            facade.bodyRepresentationFacade.PhysicsBody.velocity += velocityMultiplier.Result;
             velocityProxy.ClearProxySource();
         }
 
@@ -94,9 +94,9 @@
             sourceDistanceComparator.enabled = false;
             offsetDistanceComparator.enabled = false;
 
-            targetPositionProperty.target = facade.bodyRepresentationFacade.offset == null
-                ? facade.bodyRepresentationFacade.source
-                : facade.bodyRepresentationFacade.offset;
+            targetPositionProperty.target = facade.bodyRepresentationFacade.Offset == null
+                ? facade.bodyRepresentationFacade.Source
+                : facade.bodyRepresentationFacade.Offset;
         }
 
         protected virtual void OnDisable()
