@@ -493,10 +493,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facade: {fileID: 114636638081852210}
-  playArea: {fileID: 114042093598017732}
-  headset: {fileID: 114964950378471170}
-  leftController: {fileID: 114355316302716346}
-  rightController: {fileID: 114903452454151976}
+  _playArea: {fileID: 114042093598017732}
+  _headset: {fileID: 114964950378471170}
+  _leftController: {fileID: 114355316302716346}
+  _rightController: {fileID: 114903452454151976}
   headsetVelocityTrackers: {fileID: 114855179307605532}
   leftControllerVelocityTrackers: {fileID: 114916227885696116}
   rightControllerVelocityTrackers: {fileID: 114394881288804734}

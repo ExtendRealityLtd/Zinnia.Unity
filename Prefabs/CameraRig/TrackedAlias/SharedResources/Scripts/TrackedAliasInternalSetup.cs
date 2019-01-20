@@ -1,7 +1,9 @@
 ﻿namespace VRTK.Core.Prefabs.CameraRig.TrackedAlias
 {
     using UnityEngine;
+    using VRTK.Core.Extension;
     using VRTK.Core.Data.Type;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Tracking.Follow;
     using VRTK.Core.Tracking.Velocity;
 
@@ -14,97 +16,94 @@
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The public interface facade.")]
-        public TrackedAliasFacade facade;
+        [Header("Facade Settings"), Tooltip("The public interface facade."), InternalSetting, SerializeField]
+        protected TrackedAliasFacade facade;
         #endregion
 
         #region Object Follow Settings
+        [Header("Object Follow Settings"), Tooltip("The ObjectFollower component for the PlayArea."), InternalSetting, SerializeField]
+        private ObjectFollower _playArea = null;
         /// <summary>
         /// The <see cref="ObjectFollower"/> component for the PlayArea.
         /// </summary>
-        [Header("Object Follow Settings"), Tooltip("The ObjectFollower component for the PlayArea.")]
-        public ObjectFollower playArea;
+        public ObjectFollower PlayArea => _playArea;
+
+        [Tooltip("The ObjectFollower component for the Headset."), InternalSetting, SerializeField]
+        private ObjectFollower _headset = null;
         /// <summary>
         /// The <see cref="ObjectFollower"/> component for the Headset.
         /// </summary>
-        [Tooltip("The ObjectFollower component for the Headset.")]
-        public ObjectFollower headset;
+        public ObjectFollower Headset => _headset;
+
+        [Tooltip("The ObjectFollower component for the Left Controller."), InternalSetting, SerializeField]
+        private ObjectFollower _leftController = null;
         /// <summary>
         /// The <see cref="ObjectFollower"/> component for the Left Controller.
         /// </summary>
-        [Tooltip("The ObjectFollower component for the Left Controller.")]
-        public ObjectFollower leftController;
+        public ObjectFollower LeftController => _leftController;
+
+        [Tooltip("The ObjectFollower component for the Right Controller."), InternalSetting, SerializeField]
+        private ObjectFollower _rightController = null;
         /// <summary>
         /// The <see cref="ObjectFollower"/> component for the Right Controller.
         /// </summary>
-        [Tooltip("The ObjectFollower component for the Right Controller.")]
-        public ObjectFollower rightController;
+        public ObjectFollower RightController => _rightController;
         #endregion
 
         #region Velocity Tracker Settings
         /// <summary>
         /// The <see cref="VelocityTrackerProcessor"/> component containing the Headset Velocity Trackers.
         /// </summary>
-        [Header("Velocity Tracker Settings"), Tooltip("The VelocityTrackerProcessor component containing the Headset Velocity Trackers.")]
-        public VelocityTrackerProcessor headsetVelocityTrackers;
+        [Header("Velocity Tracker Settings"), Tooltip("The VelocityTrackerProcessor component containing the Headset Velocity Trackers."), InternalSetting, SerializeField]
+        protected VelocityTrackerProcessor headsetVelocityTrackers;
         /// <summary>
         /// The <see cref="VelocityTrackerProcessor"/> component containing the Left Controller Velocity Trackers.
         /// </summary>
-        [Tooltip("The VelocityTrackerProcessor component containing the Left Controller Velocity Trackers.")]
-        public VelocityTrackerProcessor leftControllerVelocityTrackers;
+        [Tooltip("The VelocityTrackerProcessor component containing the Left Controller Velocity Trackers."), InternalSetting, SerializeField]
+        protected VelocityTrackerProcessor leftControllerVelocityTrackers;
         /// <summary>
         /// The <see cref="VelocityTrackerProcessor"/> component containing the Right Controller Velocity Trackers.
         /// </summary>
-        [Tooltip("The VelocityTrackerProcessor component containing the Right Controller Velocity Trackers.")]
-        public VelocityTrackerProcessor rightControllerVelocityTrackers;
+        [Tooltip("The VelocityTrackerProcessor component containing the Right Controller Velocity Trackers."), InternalSetting, SerializeField]
+        protected VelocityTrackerProcessor rightControllerVelocityTrackers;
         #endregion
 
         #region Other Settings
         /// <summary>
         /// The <see cref="CameraList"/> component containing the valid scene cameras.
         /// </summary>
-        [Header("Other Settings"), Tooltip("The CameraList component containing the valid scene cameras.")]
-        public CameraList sceneCameras;
+        [Header("Other Settings"), Tooltip("The CameraList component containing the valid scene cameras."), InternalSetting, SerializeField]
+        protected CameraList sceneCameras;
         #endregion
 
         /// <summary>
         /// Sets up the TrackedAlias prefab with the specified settings.
         /// </summary>
-        public virtual void Setup()
+        public virtual void SetUpCameraRigsConfiguration()
         {
-            if (InvalidParameters())
-            {
-                return;
-            }
+            PlayArea.ClearTargets();
+            PlayArea.targets.AddRange(facade.PlayAreas.EmptyIfNull());
 
-            playArea.targets.AddRange(facade.PlayAreas);
-            headset.sources.AddRange(facade.Headsets);
-            sceneCameras.cameras.AddRange(facade.HeadsetCameras);
-            headsetVelocityTrackers.velocityTrackers.AddRange(facade.HeadsetVelocityTrackers);
-            leftController.sources.AddRange(facade.LeftControllers);
-            rightController.sources.AddRange(facade.RightControllers);
-            leftControllerVelocityTrackers.velocityTrackers.AddRange(facade.LeftControllerVelocityTrackers);
-            rightControllerVelocityTrackers.velocityTrackers.AddRange(facade.RightControllerVelocityTrackers);
-        }
+            Headset.ClearSources();
+            Headset.sources.AddRange(facade.Headsets.EmptyIfNull());
 
-        /// <summary>
-        /// Clears all of the settings from the TrackedAlias prefab.
-        /// </summary>
-        public virtual void Clear()
-        {
-            if (InvalidParameters())
-            {
-                return;
-            }
-
-            playArea.ClearTargets();
-            headset.ClearSources();
             sceneCameras.cameras.Clear();
+            sceneCameras.cameras.AddRange(facade.HeadsetCameras.EmptyIfNull());
+
             headsetVelocityTrackers.velocityTrackers.Clear();
-            leftController.ClearSources();
-            rightController.ClearSources();
+            headsetVelocityTrackers.velocityTrackers.AddRange(facade.HeadsetVelocityTrackers.EmptyIfNull());
+
+            LeftController.ClearSources();
+            LeftController.sources.AddRange(facade.LeftControllers.EmptyIfNull());
+
+            RightController.ClearSources();
+            RightController.sources.AddRange(facade.RightControllers.EmptyIfNull());
+
             leftControllerVelocityTrackers.velocityTrackers.Clear();
+            leftControllerVelocityTrackers.velocityTrackers.AddRange(facade.LeftControllerVelocityTrackers.EmptyIfNull());
+
             rightControllerVelocityTrackers.velocityTrackers.Clear();
+            rightControllerVelocityTrackers.velocityTrackers.AddRange(facade.RightControllerVelocityTrackers.EmptyIfNull());
         }
 
         /// <summary>
@@ -133,21 +132,7 @@
 
         protected virtual void OnEnable()
         {
-            Setup();
-        }
-
-        protected virtual void OnDisable()
-        {
-            Clear();
-        }
-
-        /// <summary>
-        /// Determines if the setup parameters are invalid.
-        /// </summary>
-        /// <returns><see langword="true"/> if the parameters are invalid.</returns>
-        protected virtual bool InvalidParameters()
-        {
-            return (playArea == null || headset == null || sceneCameras == null || headsetVelocityTrackers == null || leftController == null || rightController == null || leftControllerVelocityTrackers == null || rightControllerVelocityTrackers == null || facade == null);
+            SetUpCameraRigsConfiguration();
         }
     }
 }
