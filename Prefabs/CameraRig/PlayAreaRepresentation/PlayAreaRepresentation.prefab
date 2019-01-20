@@ -386,9 +386,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e22095bb5049648ba6f2c19a90b9c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  offsetOrigin: {fileID: 0}
-  offsetDestination: {fileID: 0}
+  _target: {fileID: 0}
+  _offsetOrigin: {fileID: 0}
+  _offsetDestination: {fileID: 0}
   internalSetup: {fileID: 114683727937498690}
 --- !u!1 &1655537627728238
 GameObject:
