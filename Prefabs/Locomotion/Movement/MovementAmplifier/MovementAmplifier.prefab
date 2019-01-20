@@ -353,10 +353,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb966491f2d49dcace7c9cc321e53d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  target: {fileID: 0}
-  ignoredRadius: 0.25
-  multiplier: 2
+  _source: {fileID: 0}
+  _target: {fileID: 0}
+  _ignoredRadius: 0.25
+  _multiplier: 2
   internalSetup: {fileID: 114782358205031066}
 --- !u!1 &1312340796486872
 GameObject:
