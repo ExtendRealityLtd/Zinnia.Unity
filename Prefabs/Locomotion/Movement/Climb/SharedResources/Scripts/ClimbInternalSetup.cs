@@ -1,13 +1,14 @@
 ﻿namespace VRTK.Core.Prefabs.Locomotion.Movement.Climb
 {
-    using System.Linq;
     using UnityEngine;
+    using System.Linq;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Data.Collection;
-    using VRTK.Core.Data.Type.Transformation;
     using VRTK.Core.Data.Operation;
-    using VRTK.Core.Prefabs.Locomotion.BodyRepresentation;
+    using VRTK.Core.Data.Type.Transformation;
     using VRTK.Core.Tracking.Follow;
     using VRTK.Core.Tracking.Velocity;
+    using VRTK.Core.Prefabs.Locomotion.BodyRepresentation;
 
     /// <summary>
     /// Sets up the Climb prefab based on the provided user settings.
@@ -18,51 +19,59 @@
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The public interface facade.")]
-        public ClimbFacade facade;
+        [Header("Facade Settings"), Tooltip("The public interface facade."), InternalSetting, SerializeField]
+        protected ClimbFacade facade;
         #endregion
 
         #region Reference Settings
+        [Header("Reference Settings"), Tooltip("The objects defining the sources of movement."), InternalSetting, SerializeField]
+        protected GameObjectObservableList interactors;
         /// <summary>
         /// The objects defining the sources of movement.
         /// </summary>
-        [Header("Reference Settings"), Tooltip("The objects defining the sources of movement.")]
-        public GameObjectObservableList interactors;
+        public GameObjectObservableList Interactors => interactors;
+
+        [Tooltip("The objects defining the offsets of movement."), InternalSetting, SerializeField]
+        protected GameObjectObservableList interactables;
         /// <summary>
         /// The objects defining the offsets of movement.
         /// </summary>
-        [Tooltip("The objects defining the offsets of movement.")]
-        public GameObjectObservableList interactables;
-        /// <summary>
-        /// The <see cref="ObjectDistanceComparator"/> component for the source.
-        /// </summary>
-        [Tooltip("The ObjectDistanceComparator component for the source.")]
-        public ObjectDistanceComparator sourceDistanceComparator;
-        /// <summary>
-        /// The <see cref="ObjectDistanceComparator"/> component for the offset.
-        /// </summary>
-        [Tooltip("The ObjectDistanceComparator component for the offset.")]
-        public ObjectDistanceComparator offsetDistanceComparator;
-        /// <summary>
-        /// The <see cref="TransformPositionMutator"/> component for the offset.
-        /// </summary>
-        [Tooltip("The TransformPositionMutator component for the target.")]
-        public TransformPositionMutator targetPositionProperty;
+        public GameObjectObservableList Interactables => interactables;
+
+        [Tooltip("The ComponentTrackerProxy component for obtaining velocity data."), InternalSetting, SerializeField]
+        protected ComponentTrackerProxy velocityProxy;
         /// <summary>
         /// The <see cref="ComponentTrackerProxy"/> component for obtaining velocity data.
         /// </summary>
-        [Tooltip("The ComponentTrackerProxy component for obtaining velocity data.")]
-        public ComponentTrackerProxy velocityProxy;
-        /// <summary>
-        /// The <see cref="VelocityEmitter"/> component for emitting velocity data.
-        /// </summary>
-        [Tooltip("The VelocityEmitter component for emitting velocity data.")]
-        public VelocityEmitter velocityEmitter;
+        public ComponentTrackerProxy VelocityProxy => velocityProxy;
+
+        [Tooltip("The Vector3Multiplier component for multiplying velocity data."), InternalSetting, SerializeField]
+        protected Vector3Multiplier velocityMultiplier;
         /// <summary>
         /// The <see cref="Vector3Multiplier"/> component for multiplying velocity data.
         /// </summary>
-        [Tooltip("The Vector3Multiplier component for multiplying velocity data.")]
-        public Vector3Multiplier velocityMultiplier;
+        public Vector3Multiplier VelocityMultiplier => velocityMultiplier;
+
+        /// <summary>
+        /// The <see cref="ObjectDistanceComparator"/> component for the source.
+        /// </summary>
+        [Tooltip("The ObjectDistanceComparator component for the source."), InternalSetting, SerializeField]
+        protected ObjectDistanceComparator sourceDistanceComparator;
+        /// <summary>
+        /// The <see cref="ObjectDistanceComparator"/> component for the offset.
+        /// </summary>
+        [Tooltip("The ObjectDistanceComparator component for the offset."), InternalSetting, SerializeField]
+        protected ObjectDistanceComparator offsetDistanceComparator;
+        /// <summary>
+        /// The <see cref="TransformPositionMutator"/> component for the offset.
+        /// </summary>
+        [Tooltip("The TransformPositionMutator component for the target."), InternalSetting, SerializeField]
+        protected TransformPositionMutator targetPositionProperty;
+        /// <summary>
+        /// The <see cref="VelocityEmitter"/> component for emitting velocity data.
+        /// </summary>
+        [Tooltip("The VelocityEmitter component for emitting velocity data."), InternalSetting, SerializeField]
+        protected VelocityEmitter velocityEmitter;
         #endregion
 
         /// <summary>
@@ -76,9 +85,17 @@
             }
 
             velocityEmitter.EmitVelocity();
-            facade.bodyRepresentationFacade.ListenToRigidbodyMovement();
-            facade.bodyRepresentationFacade.PhysicsBody.velocity += velocityMultiplier.Result;
+            facade.BodyRepresentationFacade.ListenToRigidbodyMovement();
+            facade.BodyRepresentationFacade.PhysicsBody.velocity += velocityMultiplier.Result;
             velocityProxy.ClearProxySource();
+        }
+
+        /// <summary>
+        /// Configures the <see cref="targetPositionProperty"/> based on the facade settings.
+        /// </summary>
+        public virtual void ConfigureTargetPositionProperty()
+        {
+            targetPositionProperty.target = facade.BodyRepresentationFacade.Offset == null ? facade.BodyRepresentationFacade.Source : facade.BodyRepresentationFacade.Offset;
         }
 
         protected virtual void OnEnable()
@@ -93,10 +110,7 @@
 
             sourceDistanceComparator.enabled = false;
             offsetDistanceComparator.enabled = false;
-
-            targetPositionProperty.target = facade.bodyRepresentationFacade.Offset == null
-                ? facade.bodyRepresentationFacade.Source
-                : facade.bodyRepresentationFacade.Offset;
+            ConfigureTargetPositionProperty();
         }
 
         protected virtual void OnDisable()
@@ -115,6 +129,10 @@
             interactors.BecamePopulated.RemoveListener(OnListBecamePopulated);
         }
 
+        /// <summary>
+        /// Emits a climb started event when the list becomes populated.
+        /// </summary>
+        /// <param name="addedElement">The element added.</param>
         protected virtual void OnListBecamePopulated(GameObject addedElement)
         {
             if (interactors.Elements.Any() || interactables.Elements.Any())
@@ -123,6 +141,10 @@
             }
         }
 
+        /// <summary>
+        /// Emits a climb stopped event when the list becomes empty.
+        /// </summary>
+        /// <param name="addedElement">The element removed.</param>
         protected virtual void OnListBecameEmpty(GameObject removedElement)
         {
             if (!interactors.Elements.Any() && !interactables.Elements.Any())
@@ -131,6 +153,10 @@
             }
         }
 
+        /// <summary>
+        /// Configures the <see cref="sourceDistanceComparator"/> when an interactor is added.
+        /// </summary>
+        /// <param name="interactor">The added interactor.</param>
         protected virtual void OnInteractorAdded(GameObject interactor)
         {
             sourceDistanceComparator.source = interactor;
@@ -140,15 +166,23 @@
 
             if (interactor != null)
             {
-                facade.bodyRepresentationFacade.Interest = BodyRepresentationInternalSetup.MovementInterest.CharacterController;
+                facade.BodyRepresentationFacade.Interest = BodyRepresentationInternalSetup.MovementInterest.CharacterController;
             }
         }
 
+        /// <summary>
+        /// Configures the <see cref="sourceDistanceComparator"/> when an interactor is removed.
+        /// </summary>
+        /// <param name="interactor">The removed interactor.</param>
         protected virtual void OnInteractorRemoved(GameObject interactor)
         {
             OnInteractorAdded(interactors.Elements.LastOrDefault());
         }
 
+        /// <summary>
+        /// Configures the <see cref="offsetDistanceComparator"/> when an interactable is added.
+        /// </summary>
+        /// <param name="interactable">The added interactable.</param>
         protected virtual void OnInteractableAdded(GameObject interactable)
         {
             offsetDistanceComparator.source = interactable;
@@ -158,10 +192,14 @@
 
             if (interactable != null)
             {
-                facade.bodyRepresentationFacade.Interest = BodyRepresentationInternalSetup.MovementInterest.CharacterController;
+                facade.BodyRepresentationFacade.Interest = BodyRepresentationInternalSetup.MovementInterest.CharacterController;
             }
         }
 
+        /// <summary>
+        /// Configures the <see cref="offsetDistanceComparator"/> when an interactable is removed.
+        /// </summary>
+        /// <param name="interactable">The removed interactable.</param>
         protected virtual void OnInteractableRemoved(GameObject interactable)
         {
             OnInteractableAdded(interactables.Elements.LastOrDefault());

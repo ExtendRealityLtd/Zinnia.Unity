@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde134dd07f420345a6e2d153ececd82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyRepresentationFacade: {fileID: 0}
+  _bodyRepresentationFacade: {fileID: 0}
   ClimbStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -826,9 +826,9 @@ MonoBehaviour:
   facade: {fileID: 114156228797892418}
   interactors: {fileID: 114411988925571536}
   interactables: {fileID: 114887528504267784}
+  velocityProxy: {fileID: 114012006880878098}
+  velocityMultiplier: {fileID: 114209062100530296}
   sourceDistanceComparator: {fileID: 114942350883501654}
   offsetDistanceComparator: {fileID: 114004408943092372}
   targetPositionProperty: {fileID: 114276270614342360}
-  velocityProxy: {fileID: 114012006880878098}
   velocityEmitter: {fileID: 114935716955421070}
-  velocityMultiplier: {fileID: 114209062100530296}
