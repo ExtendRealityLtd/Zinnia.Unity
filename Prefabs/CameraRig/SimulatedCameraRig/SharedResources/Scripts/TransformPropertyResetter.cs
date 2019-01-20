@@ -13,9 +13,21 @@
         [Tooltip("The source to cache and reset.")]
         public Transform source;
 
+        /// <summary>
+        /// The initial local position of the <see cref="source"/>.
+        /// </summary>
         protected Vector3 initialLocalPosition;
+        /// <summary>
+        /// The initial local rotation of the <see cref="source"/>.
+        /// </summary>
         protected Quaternion initialLocalRotation;
+        /// <summary>
+        /// The initial local scale of the <see cref="source"/>.
+        /// </summary>
         protected Vector3 initialLocalScale;
+        /// <summary>
+        /// Whether the initial states have been set.
+        /// </summary>
         protected bool initialSet;
 
         /// <summary>

@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using UnityEngine.UI;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Prefabs.CameraRig.UnityXRCameraRig.Input;
 
     /// <summary>
@@ -9,22 +10,40 @@
     /// </summary>
     public class KeyBindingDisplay : MonoBehaviour
     {
-        public Text keyBindingText;
-        public UnityButtonAction forward;
-        public UnityButtonAction backward;
-        public UnityButtonAction strafeLeft;
-        public UnityButtonAction strafeRight;
-        public UnityButtonAction button1;
-        public UnityButtonAction button2;
-        public UnityButtonAction button3;
-        public UnityButtonAction switchToPlayer;
-        public UnityButtonAction switchToLeftController;
-        public UnityButtonAction switchToRightController;
-        public UnityButtonAction resetPlayer;
-        public UnityButtonAction resetControllers;
-        public UnityButtonAction toggleInstructions;
-        public UnityButtonAction lockCursorToggle;
+        [Tooltip("The Text component to apply the instructions text to."), InternalSetting, SerializeField]
+        protected Text keyBindingText;
+        [Tooltip("The action for handling foward."), InternalSetting, SerializeField]
+        protected UnityButtonAction forward;
+        [Tooltip("The action for handling backward."), InternalSetting, SerializeField]
+        protected UnityButtonAction backward;
+        [Tooltip("The action for handling strafeLeft."), InternalSetting, SerializeField]
+        protected UnityButtonAction strafeLeft;
+        [Tooltip("The action for handling strafeRight."), InternalSetting, SerializeField]
+        protected UnityButtonAction strafeRight;
+        [Tooltip("The action for handling button1."), InternalSetting, SerializeField]
+        protected UnityButtonAction button1;
+        [Tooltip("The action for handling button2."), InternalSetting, SerializeField]
+        protected UnityButtonAction button2;
+        [Tooltip("The action for handling button3."), InternalSetting, SerializeField]
+        protected UnityButtonAction button3;
+        [Tooltip("The action for handling switchToPlayer."), InternalSetting, SerializeField]
+        protected UnityButtonAction switchToPlayer;
+        [Tooltip("The action for handling switchToLeftController."), InternalSetting, SerializeField]
+        protected UnityButtonAction switchToLeftController;
+        [Tooltip("The action for handling switchToRightController."), InternalSetting, SerializeField]
+        protected UnityButtonAction switchToRightController;
+        [Tooltip("The action for handling resetPlayer."), InternalSetting, SerializeField]
+        protected UnityButtonAction resetPlayer;
+        [Tooltip("The action for handling resetControllers."), InternalSetting, SerializeField]
+        protected UnityButtonAction resetControllers;
+        [Tooltip("The action for handling toggleInstructions."), InternalSetting, SerializeField]
+        protected UnityButtonAction toggleInstructions;
+        [Tooltip("The action for handling lockCursorToggle."), InternalSetting, SerializeField]
+        protected UnityButtonAction lockCursorToggle;
 
+        /// <summary>
+        /// The instructions text.
+        /// </summary>
         protected string instructions = @"<b>Simulator Key Bindings</b>
 
 <b>Movement:</b>

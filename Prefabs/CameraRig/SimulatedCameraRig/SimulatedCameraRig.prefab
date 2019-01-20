@@ -241,10 +241,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed76bad40fe84f2468841a06c64b700a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freeCursorRotationSpeed: 0.1
-  lockedCursorRotationSpeed: 1
-  movementSpeed: 0.005
-  mouseInput: {fileID: 114905393995560402}
+  _freeCursorRotationSpeed: 0.1
+  _lockedCursorRotationSpeed: 1
+  _movementSpeed: 0.005
+  _mouseInput: {fileID: 114905393995560402}
   positiveMultipliers:
   - {fileID: 114695964142564534}
   - {fileID: 114509652745747188}
@@ -565,9 +565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37939f2e3f9c118469597addd953b38c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackedAlias: {fileID: 0}
-  disableXRSettings: 1
-  simulatedFrameRate: 90
+  _trackedAlias: {fileID: 0}
+  _disableXRSettings: 1
+  _simulatedFrameRate: 90
   playareaPosition: {fileID: 114447943956170304}
   playareaResetter: {fileID: 114041395006009992}
 --- !u!114 &114471210263486974
@@ -1690,10 +1690,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed76bad40fe84f2468841a06c64b700a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freeCursorRotationSpeed: 0.1
-  lockedCursorRotationSpeed: 1
-  movementSpeed: 0.005
-  mouseInput: {fileID: 114905393995560402}
+  _freeCursorRotationSpeed: 0.1
+  _lockedCursorRotationSpeed: 1
+  _movementSpeed: 0.005
+  _mouseInput: {fileID: 114905393995560402}
   positiveMultipliers:
   - {fileID: 114695964142564534}
   - {fileID: 114509652745747188}
@@ -2790,10 +2790,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed76bad40fe84f2468841a06c64b700a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freeCursorRotationSpeed: 0.2
-  lockedCursorRotationSpeed: 3
-  movementSpeed: 0.025
-  mouseInput: {fileID: 114905393995560402}
+  _freeCursorRotationSpeed: 0.2
+  _lockedCursorRotationSpeed: 3
+  _movementSpeed: 0.025
+  _mouseInput: {fileID: 114905393995560402}
   positiveMultipliers:
   - {fileID: 114695964142564534}
   - {fileID: 114509652745747188}
