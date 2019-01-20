@@ -4,6 +4,7 @@
     using VRTK.Core.Action;
     using VRTK.Core.Process;
     using VRTK.Core.Process.Moment;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Data.Type.Transformation;
 
     /// <summary>
@@ -15,46 +16,46 @@
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The public interface facade.")]
-        public AxesToVector3Facade facade;
+        [Header("Facade Settings"), Tooltip("The public interface facade."), InternalSetting, SerializeField]
+        protected AxesToVector3Facade facade;
         #endregion
 
         #region Reference Settings
         /// <summary>
         /// The lateral <see cref="FloatAction"/> to map to.
         /// </summary>
-        [Header("Reference Settings"), Tooltip("The lateral FloatAction to map to.")]
-        public FloatAction lateralAxis;
+        [Header("Reference Settings"), Tooltip("The lateral FloatAction to map to."), InternalSetting, SerializeField]
+        protected FloatAction lateralAxis;
         /// <summary>
         /// The longitudinal <see cref="FloatAction"/> to map to.
         /// </summary>
-        [Tooltip("The longitudinal FloatAction to map to.")]
-        public FloatAction longitudinalAxis;
+        [Tooltip("The longitudinal FloatAction to map to."), InternalSetting, SerializeField]
+        protected FloatAction longitudinalAxis;
         /// <summary>
         /// The multiplier that operates on the final <see cref="Vector3"/> to modify the speed.
         /// </summary>
-        [Tooltip("The multiplier that operates on the final Vector3 to modify the speed.")]
-        public Vector3Multiplier speedMultiplier;
+        [Tooltip("The multiplier that operates on the final Vector3 to modify the speed."), InternalSetting, SerializeField]
+        protected Vector3Multiplier speedMultiplier;
         /// <summary>
         /// The multiplier to use as the input mask to limit the forward direction.
         /// </summary>
-        [Tooltip("The multiplier to use as the input mask to limit the forward direction.")]
-        public Vector3Multiplier inputMask;
+        [Tooltip("The multiplier to use as the input mask to limit the forward direction."), InternalSetting, SerializeField]
+        protected Vector3Multiplier inputMask;
         /// <summary>
         /// The GameObject that contains the incremental axis logic.
         /// </summary>
-        [Tooltip("The GameObject that contains the incremental axis logic.")]
-        public GameObject incrementalAxis;
+        [Tooltip("The GameObject that contains the incremental axis logic."), InternalSetting, SerializeField]
+        protected GameObject incrementalAxis;
         /// <summary>
         /// The GameObject that contains the directional axis logic.
         /// </summary>
-        [Tooltip("The GameObject that contains the directional axis logic.")]
-        public GameObject directionalAxis;
+        [Tooltip("The GameObject that contains the directional axis logic."), InternalSetting, SerializeField]
+        protected GameObject directionalAxis;
         /// <summary>
         /// The MomentProcessor for processing the axis logic.
         /// </summary>
-        [Tooltip("The MomentProcessor for processing the axis logic.")]
-        public MomentProcessor momentProcessor;
+        [Tooltip("The MomentProcessor for processing the axis logic."), InternalSetting, SerializeField]
+        protected MomentProcessor momentProcessor;
         #endregion
 
         /// <summary>

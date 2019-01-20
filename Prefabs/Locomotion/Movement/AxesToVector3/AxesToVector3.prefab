@@ -1122,11 +1122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b798c2d58bdb9478ee2a2889077dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axisUsageType: 0
-  lateralAxis: {fileID: 0}
-  longitudinalAxis: {fileID: 0}
-  lateralSpeedMultiplier: 1
-  longitudinalSpeedMultiplier: 1
+  _axisUsageType: 0
+  _lateralAxis: {fileID: 0}
+  _longitudinalAxis: {fileID: 0}
+  _lateralSpeedMultiplier: 1
+  _longitudinalSpeedMultiplier: 1
   sourceOfForwardDirection: {fileID: 0}
   Processed:
     m_PersistentCalls:
