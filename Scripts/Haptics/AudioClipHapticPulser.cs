@@ -4,50 +4,32 @@
     using System.Collections;
 
     /// <summary>
-    /// Creates a haptic pattern based on the waveform of an <see cref="AudioClip"/> and utilizes a <see cref="HapticPulse"/> to create the effect.
+    /// Creates a haptic pattern based on the waveform of an <see cref="UnityEngine.AudioClip"/> and utilizes a <see cref="HapticPulser"/> to create the effect.
     /// </summary>
-    public class HapticPulseFromAudioClip : HapticProcess
+    public class AudioClipHapticPulser : HapticProcess
     {
         /// <summary>
         /// The pulse process to utilize.
         /// </summary>
         [Tooltip("The pulse process to utilize.")]
-        public HapticPulse hapticPulse;
+        public HapticPulser hapticPulser;
         /// <summary>
         /// The waveform to represent the haptic pattern.
         /// </summary>
-        [Tooltip("The waveform to represent the haptic pattern."), SerializeField]
-        protected AudioClip audioClip;
+        [Tooltip("The waveform to represent the haptic pattern.")]
+        public AudioClip audioClip;
         /// <summary>
         /// Multiplies the current audio peak to affect the wave intensity.
         /// </summary>
-        [Tooltip("Multiplies the current audio peak to affect the wave intensity."), SerializeField]
-        protected float intensityMultiplier = 1f;
-
-        /// <summary>
-        /// The waveform to represent the haptic pattern.
-        /// </summary>
-        public AudioClip AudioClip
-        {
-            get { return audioClip; }
-            set { audioClip = value; }
-        }
-
-        /// <summary>
-        /// Multiplies the current audio peak to affect the wave intensity.
-        /// </summary>
-        public float IntensityMultiplier
-        {
-            get { return intensityMultiplier; }
-            set { intensityMultiplier = value; }
-        }
+        [Tooltip("Multiplies the current audio peak to affect the wave intensity.")]
+        public float intensityMultiplier = 1f;
 
         /// <summary>
         /// A reference to the started routine.
         /// </summary>
         protected Coroutine hapticRoutine;
         /// <summary>
-        /// The original intensity of the provided <see cref="HapticPulse"/> to reset back to after the process is complete.
+        /// The original intensity of the provided <see cref="HapticPulser"/> to reset back to after the process is complete.
         /// </summary>
         protected float cachedIntensity;
         /// <summary>
@@ -58,13 +40,13 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return (base.IsActive() && hapticPulse != null && audioClip != null && hapticPulse.IsActive());
+            return (base.IsActive() && hapticPulser != null && audioClip != null && hapticPulser.IsActive());
         }
 
         /// <inheritdoc />
         protected override void DoBegin()
         {
-            cachedIntensity = hapticPulse.Intensity;
+            cachedIntensity = hapticPulser.Intensity;
             hapticRoutine = StartCoroutine(HapticProcessRoutine());
         }
 
@@ -78,7 +60,7 @@
 
             StopCoroutine(hapticRoutine);
             hapticRoutine = null;
-            hapticPulse.Cancel();
+            hapticPulser.Cancel();
             ResetIntensity();
         }
 
@@ -87,7 +69,7 @@
         /// </summary>
         protected virtual void ResetIntensity()
         {
-            hapticPulse.Intensity = cachedIntensity;
+            hapticPulser.Intensity = cachedIntensity;
         }
 
         /// <summary>
@@ -99,21 +81,21 @@
             float[] audioData = new float[bufferSize];
             int sampleOffset = -bufferSize;
             float startTime = Time.time;
-            float length = AudioClip.length;
+            float length = audioClip.length;
             float endTime = startTime + length;
-            float sampleRate = AudioClip.samples;
+            float sampleRate = audioClip.samples;
             while (Time.time <= endTime)
             {
                 float lerpVal = (Time.time - startTime) / length;
                 int sampleIndex = (int)(sampleRate * lerpVal);
                 if (sampleIndex >= sampleOffset + bufferSize)
                 {
-                    AudioClip.GetData(audioData, sampleIndex);
+                    audioClip.GetData(audioData, sampleIndex);
                     sampleOffset = sampleIndex;
                 }
                 float currentSample = Mathf.Abs(audioData[sampleIndex - sampleOffset]);
-                hapticPulse.Intensity = currentSample * IntensityMultiplier;
-                hapticPulse.Begin();
+                hapticPulser.Intensity = currentSample * intensityMultiplier;
+                hapticPulser.Begin();
                 yield return null;
             }
             ResetIntensity();
