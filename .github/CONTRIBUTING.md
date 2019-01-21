@@ -70,25 +70,6 @@ and use American spellings to denote classes, methods, fields, etc.
   public Color fontColor;
   ```
 
-The only deviation from the MSDN conventions are fields should start
-with lowercase -> `public Type myField` as this is inline with Unity's
-naming convention.
-
-Class methods and parameters should always denote their accessibility
-level using the `public` `protected` `private` keywords. Methods should
-also always be defined as virtual in concrete classes to allow
-overriding.
-
-  > **Incorrect:**
-  ```
-  void MyMethod()
-  ```
-
-  > **Correct:**
-  ```
-  protected virtual void MyMethod()
-  ```
-
 All core classes should be within the relevant `VRTK` namespace. Any
 required `using` lines should be within the namespace block.
 
@@ -108,10 +89,103 @@ required `using` lines should be within the namespace block.
   namespace X.Y.Z
   {
     using System;
+
     public class MyClass
     {
     }
   }
+  ```
+
+Names of classes should always be a noun describing what the
+component's role is.
+
+  > **Incorrect:**
+  ```
+  public class UpdateThing;
+  ```
+
+  > **Correct:**
+  ```
+  public class ThingUpdater;
+  ```
+
+Names of methods should always be a verb describing the action that the
+method will carry out. Methods should also do a specific task which the
+name clearly highlights. Any use of the word `And`/`Or` in a method name
+highlights the potential issue that a method is doing too much.
+
+  > **Incorrect:**
+  ```
+  public virtual void ContainerPosition();
+  public virtual void ContainerPositionAndRotation();
+  public virtual void ContainerPositionOrRotation();
+  public virtual void Setup();
+  ```
+
+  > **Correct:**
+  ```
+  public virtual void UpdateContainerPosition();
+  public virtual void UpdateContainerRotation();
+  public virtual void SetUpContainer();
+  ```
+
+The only deviation from the MSDN conventions are fields should start
+with lowercase -> `public Type myField` as this is inline with Unity's
+naming convention.
+
+Names of fields and properties should always be an adjective with
+a clear understanding of what the variable is describing. It is also
+not necessary to repeat the type name in the variable name as it should
+be implicitly understood from the naming of the variable.
+
+  > **Incorrect:**
+  ```
+  public GameObject go;
+  public GameObject jointGameObject;
+  ```
+
+  > **Correct:**
+  ```
+  public GameObject jointContainer;
+  ```
+
+Inline variable declarations should also follow the same naming rules
+and be clear and concise to their purpose. They should not be
+abbreviated which can cause confusion whilst reading the code.
+
+  > **Incorrect:**
+  ```
+  for (int i = 0; i < 10; i++) {}
+  for (int x = 0; x < 10; x++)
+  {
+    for (int y = 0; y < 10; y++) {}
+  }
+  ```
+
+  > **Correct:**
+  ```
+  for (int index = 0; index < 10; index++) {}
+  for (int containerIndex = 0; containerIndex < 10; containerIndex++)
+  {
+    for (int clipIndex = 0; clipIndex < 10; clipIndex++) {}
+  }
+  ```
+
+Class methods and parameters should always denote their accessibility
+level using the `public` `protected` `private` keywords. Methods should
+also always be defined as virtual in concrete classes to allow
+overriding. Marking as `protected` is favored until there is good
+reason to make it `private`. This ensures the type is open for extension
+where possible.
+
+  > **Incorrect:**
+  ```
+  void MyMethod()
+  ```
+
+  > **Correct:**
+  ```
+  protected virtual void MyMethod()
   ```
 
 The order elements are defined in a class should be as follows:
@@ -144,8 +218,8 @@ parameters and methods should be defined first, followed by `protected`
 parameters and methods with `private` parameters and methods being
 defined last.
 
-Blocks of code such as conditional statements and loops must always
-contain the block of code in braces `{ }` even if it is just one line.
+Blocks of code such as conditional statements and loops should contain
+the block of code in braces `{ }` even if it is just one line.
 
   > **Incorrect:**
   ```
@@ -157,6 +231,22 @@ contain the block of code in braces `{ }` even if it is just one line.
   if (this == that)
   {
     do;
+  }
+  ```
+
+The only exception to this is when defining Property get/set fields that
+only require one line:
+
+  > **Example:**
+  ```
+  public Type MyType
+  {
+    get { return _backingType; }
+    set
+    {
+      _backingType = value;
+      ConfigureMyType(_backingType);
+    }
   }
   ```
 
