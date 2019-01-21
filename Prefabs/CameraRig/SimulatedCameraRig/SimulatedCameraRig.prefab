@@ -206,10 +206,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1643489474284420}
   useLocalValues: 1
-  lockAxis:
-    xState: 0
-    yState: 0
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 1
+    zState: 1
 --- !u!114 &114208761435017372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,10 +224,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1643489474284420}
   useLocalValues: 1
-  lockAxis:
-    xState: 0
-    yState: 0
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 1
+    zState: 1
   rotationOffset: {fileID: 1643489474284420}
 --- !u!114 &114150379920675320
 MonoBehaviour:
@@ -1655,10 +1655,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1581495199198194}
   useLocalValues: 1
-  lockAxis:
-    xState: 0
-    yState: 0
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 1
+    zState: 1
 --- !u!114 &114391431457905644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1673,10 +1673,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1581495199198194}
   useLocalValues: 1
-  lockAxis:
-    xState: 0
-    yState: 0
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 1
+    zState: 1
   rotationOffset: {fileID: 1581495199198194}
 --- !u!114 &114218838133236254
 MonoBehaviour:
@@ -2755,10 +2755,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1143215074586592}
   useLocalValues: 1
-  lockAxis:
-    xState: 0
-    yState: 0
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 1
+    zState: 1
 --- !u!114 &114447943956170304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2773,10 +2773,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1121419207030402}
   useLocalValues: 1
-  lockAxis:
-    xState: 0
-    yState: 1
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 0
+    zState: 1
   rotationOffset: {fileID: 1143215074586592}
 --- !u!114 &114187299305708370
 MonoBehaviour:

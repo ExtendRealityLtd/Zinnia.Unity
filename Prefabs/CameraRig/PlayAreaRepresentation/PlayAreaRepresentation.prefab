@@ -45,10 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   useLocalValues: 1
-  lockAxis:
-    xState: 0
-    yState: 1
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 0
+    zState: 1
 --- !u!1 &1279233042894318
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,10 +561,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   useLocalValues: 1
-  lockAxis:
-    xState: 0
-    yState: 1
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 0
+    zState: 1
   rotationOffset: {fileID: 0}
 --- !u!1 &1781126682336808
 GameObject:
