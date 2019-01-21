@@ -32,7 +32,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -51,7 +51,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = false;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -70,7 +70,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = new Vector3State(false, true, false);
+            subject.mutateOnAxis = new Vector3State(true, false, true);
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -91,7 +91,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = false;
-            subject.lockAxis = new Vector3State(true, false, true);
+            subject.mutateOnAxis = new Vector3State(false, true, false);
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -112,7 +112,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -135,7 +135,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = false;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -158,7 +158,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = new Vector3State(false, true, false);
+            subject.mutateOnAxis = new Vector3State(true, false, true);
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -183,7 +183,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = false;
-            subject.lockAxis = new Vector3State(true, false, true);
+            subject.mutateOnAxis = new Vector3State(false, true, false);
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -210,7 +210,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
             subject.rotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
@@ -234,7 +234,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = false;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
             subject.rotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -258,7 +258,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = new Vector3State(false, true, false);
+            subject.mutateOnAxis = new Vector3State(true, false, true);
             subject.rotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
@@ -283,7 +283,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = false;
-            subject.lockAxis = new Vector3State(true, false, true);
+            subject.mutateOnAxis = new Vector3State(false, true, false);
             subject.rotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -308,7 +308,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
             subject.rotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
@@ -339,7 +339,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = false;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
             subject.rotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -369,7 +369,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = new Vector3State(false, true, false);
+            subject.mutateOnAxis = new Vector3State(true, false, true);
             subject.rotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
@@ -400,7 +400,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = false;
-            subject.lockAxis = new Vector3State(true, false, true);
+            subject.mutateOnAxis = new Vector3State(false, true, false);
             subject.rotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -429,7 +429,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -449,7 +449,7 @@ namespace Test.VRTK.Core.Data.Operation
 
             subject.target = target;
             subject.useLocalValues = true;
-            subject.lockAxis = Vector3State.False;
+            subject.mutateOnAxis = Vector3State.True;
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);

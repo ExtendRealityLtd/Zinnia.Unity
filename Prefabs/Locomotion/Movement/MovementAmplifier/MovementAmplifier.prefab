@@ -118,10 +118,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   useLocalValues: 0
-  lockAxis:
-    xState: 0
-    yState: 1
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 0
+    zState: 1
   rotationOffset: {fileID: 0}
 --- !u!1 &1173348994459298
 GameObject:
@@ -256,10 +256,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1560522712979762}
   useLocalValues: 0
-  lockAxis:
-    xState: 1
-    yState: 0
-    zState: 1
+  mutateOnAxis:
+    xState: 0
+    yState: 1
+    zState: 0
   rotationOffset: {fileID: 0}
 --- !u!1 &1229218066911268
 GameObject:
@@ -886,10 +886,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1560522712979762}
   useLocalValues: 0
-  lockAxis:
-    xState: 0
-    yState: 1
-    zState: 0
+  mutateOnAxis:
+    xState: 1
+    yState: 0
+    zState: 1
   rotationOffset: {fileID: 0}
 --- !u!1 &1833241684301458
 GameObject:

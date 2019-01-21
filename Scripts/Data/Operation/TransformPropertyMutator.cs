@@ -19,10 +19,10 @@
         [Tooltip("Determines whether to mutate the local or global values.")]
         public bool useLocalValues;
         /// <summary>
-        /// Determines which axes to lock and not mutate.
+        /// Determines which axes to mutate.
         /// </summary>
-        [Tooltip("Determines which axes to lock and not mutate.")]
-        public Vector3State lockAxis = Vector3State.False;
+        [Tooltip("Determines which axes to mutate.")]
+        public Vector3State mutateOnAxis = Vector3State.True;
 
         /// <summary>
         /// Sets the target.
@@ -50,7 +50,7 @@
         {
             if (!IsValid())
             {
-                return default(Vector3);
+                return default;
             }
 
             input = LockSetInput(input);
@@ -82,7 +82,7 @@
         {
             if (!IsValid())
             {
-                return default(Vector3);
+                return default;
             }
 
             input = LockIncrementInput(input);
@@ -103,58 +103,6 @@
         public virtual void DoIncrementProperty(Vector3 input)
         {
             IncrementProperty(input);
-        }
-
-        /// <summary>
-        /// Locks the set input based on the locked axes.
-        /// </summary>
-        /// <param name="input">The input to lock.</param>
-        /// <returns>The input locked on the required axes.</returns>
-        protected virtual Vector3 LockSetInput(Vector3 input)
-        {
-            input.x = (lockAxis.xState ? GetAxisValue(0) : input.x);
-            input.y = (lockAxis.yState ? GetAxisValue(1) : input.y);
-            input.z = (lockAxis.zState ? GetAxisValue(2) : input.z);
-            return input;
-        }
-
-        /// <summary>
-        /// Locks the increment input based on the locked axes.
-        /// </summary>
-        /// <param name="input">The input to lock.</param>
-        /// <returns>The input locked on the required axes.</returns>
-        protected virtual Vector3 LockIncrementInput(Vector3 input)
-        {
-            input.x = (lockAxis.xState ? 0f : input.x);
-            input.y = (lockAxis.yState ? 0f : input.y);
-            input.z = (lockAxis.zState ? 0f : input.z);
-            return input;
-        }
-
-        /// <summary>
-        /// Gets the value for a given axis.
-        /// </summary>
-        /// <param name="axis">The axis to get the value from.</param>
-        /// <returns>The axis value.</returns>
-        protected virtual float GetAxisValue(int axis)
-        {
-            if (useLocalValues)
-            {
-                return GetLocalAxisValue(axis);
-            }
-            else
-            {
-                return GetGlobalAxisValue(axis);
-            }
-        }
-
-        /// <summary>
-        /// Determines if the process is valid.
-        /// </summary>
-        /// <returns><see langword="true"/> if it is valid.</returns>
-        protected virtual bool IsValid()
-        {
-            return (isActiveAndEnabled && target != null);
         }
 
         /// <summary>
@@ -193,5 +141,57 @@
         /// <param name="axis">The axis to get the value from.</param>
         /// <returns>The axis value.</returns>
         protected abstract float GetGlobalAxisValue(int axis);
+
+        /// <summary>
+        /// Locks the set input based on the locked axes.
+        /// </summary>
+        /// <param name="input">The input to lock.</param>
+        /// <returns>The input locked on the required axes.</returns>
+        protected virtual Vector3 LockSetInput(Vector3 input)
+        {
+            input.x = mutateOnAxis.xState ? input.x : GetAxisValue(0);
+            input.y = mutateOnAxis.yState ? input.y : GetAxisValue(1);
+            input.z = mutateOnAxis.zState ? input.z : GetAxisValue(2);
+            return input;
+        }
+
+        /// <summary>
+        /// Locks the increment input based on the locked axes.
+        /// </summary>
+        /// <param name="input">The input to lock.</param>
+        /// <returns>The input locked on the required axes.</returns>
+        protected virtual Vector3 LockIncrementInput(Vector3 input)
+        {
+            input.x = mutateOnAxis.xState ? input.x : 0f;
+            input.y = mutateOnAxis.yState ? input.y : 0f;
+            input.z = mutateOnAxis.zState ? input.z : 0f;
+            return input;
+        }
+
+        /// <summary>
+        /// Gets the value for a given axis.
+        /// </summary>
+        /// <param name="axis">The axis to get the value from.</param>
+        /// <returns>The axis value.</returns>
+        protected virtual float GetAxisValue(int axis)
+        {
+            if (useLocalValues)
+            {
+                return GetLocalAxisValue(axis);
+            }
+            else
+            {
+                return GetGlobalAxisValue(axis);
+            }
+        }
+
+        /// <summary>
+        /// Determines if the process is valid.
+        /// </summary>
+        /// <returns><see langword="true"/> if it is valid.</returns>
+        protected virtual bool IsValid()
+        {
+            return (isActiveAndEnabled && target != null);
+        }
     }
 }
