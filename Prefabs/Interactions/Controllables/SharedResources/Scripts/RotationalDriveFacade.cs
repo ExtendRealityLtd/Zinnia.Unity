@@ -1,8 +1,8 @@
 ﻿namespace VRTK.Core.Prefabs.Interactions.Controllables
 {
     using UnityEngine;
-    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Data.Type;
+    using VRTK.Core.Data.Attribute;
 
     /// <summary>
     /// The public interface into any RotationalDrive prefab.

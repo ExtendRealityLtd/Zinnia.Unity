@@ -1,9 +1,9 @@
 ﻿namespace VRTK.Core.Prefabs.Pointers
 {
     using UnityEngine;
-    using VRTK.Core.Action;
     using VRTK.Core.Cast;
-    using VRTK.Core.Extension;
+    using VRTK.Core.Action;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Tracking.Follow;
 
     /// <summary>
@@ -15,77 +15,96 @@
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The public interface facade.")]
-        public PointerFacade facade;
+        [Header("Facade Settings"), Tooltip("The public interface facade."), InternalSetting, SerializeField]
+        protected PointerFacade facade;
         #endregion
 
         #region Object Follow Settings
         /// <summary>
         /// The <see cref="ObjectFollower"/> component for the Pointer.
         /// </summary>
-        [Header("Object Follow Settings"), Tooltip("The ObjectFollower component for the Pointer.")]
-        public ObjectFollower objectFollow;
+        [Header("Object Follow Settings"), Tooltip("The ObjectFollower component for the Pointer."), InternalSetting, SerializeField]
+        protected ObjectFollower objectFollow;
         #endregion
 
         #region Cast Settings
         /// <summary>
         /// The <see cref="PointsCast"/> component for the Pointer.
         /// </summary>
-        [Header("Cast Settings"), Tooltip("The PointsCast component for the Pointer.")]
-        public PointsCast caster;
+        [Header("Cast Settings"), Tooltip("The PointsCast component for the Pointer."), InternalSetting, SerializeField]
+        protected PointsCast caster;
         #endregion
 
         #region Action Settings
         /// <summary>
         /// The <see cref="BooleanAction"/> that will activate/deactivate the pointer.
         /// </summary>
-        [Header("Action Settions"), Tooltip("The BooleanAction that will activate/deactivate the pointer.")]
-        public BooleanAction activationAction;
+        [Header("Action Settions"), Tooltip("The BooleanAction that will activate/deactivate the pointer."), InternalSetting, SerializeField]
+        protected BooleanAction activationAction;
         /// <summary>
         /// The <see cref="BooleanAction"/> that initiates the pointer selection when the action is activated.
         /// </summary>
-        [Tooltip("The BooleanAction that initiates the pointer selection when the action is activated.")]
-        public BooleanAction selectOnActivatedAction;
+        [Tooltip("The BooleanAction that initiates the pointer selection when the action is activated."), InternalSetting, SerializeField]
+        protected BooleanAction selectOnActivatedAction;
         /// <summary>
         /// The <see cref="BooleanAction"/> that initiates the pointer selection when the action is deactivated.
         /// </summary>
-        [Tooltip("The BooleanAction that initiates the pointer selection when the action is deactivated.")]
-        public BooleanAction selectOnDeactivatedAction;
+        [Tooltip("The BooleanAction that initiates the pointer selection when the action is deactivated."), InternalSetting, SerializeField]
+        protected BooleanAction selectOnDeactivatedAction;
         #endregion
 
         /// <summary>
-        /// Sets up the Pointer prefab with the specified settings.
+        /// Configures the target validity based on the facade settings.
         /// </summary>
-        public virtual void Setup()
+        public virtual void ConfigureTargetValidity()
         {
-            if (InvalidParameters())
-            {
-                return;
-            }
+            caster.targetValidity = facade.TargetValidity;
+        }
 
-            caster.targetValidity = facade.targetValidity;
-
-            if (facade.followSource != null)
+        /// <summary>
+        /// Configures the object follow sources based on the facade settings.
+        /// </summary>
+        public virtual void ConfigureFollowSources()
+        {
+            if (facade.FollowSource != null)
             {
                 objectFollow.ClearSources();
-                objectFollow.AddSource(facade.followSource);
+                objectFollow.AddSource(facade.FollowSource);
             }
+        }
 
-            if (facade.selectionAction != null)
+        /// <summary>
+        /// Configures the selection action on the facade settings.
+        /// </summary>
+        public virtual void ConfigureSelectionAction()
+        {
+            if (facade.SelectionAction != null)
             {
                 selectOnActivatedAction.ClearSources();
-                selectOnActivatedAction.AddSource(facade.selectionAction);
+                selectOnActivatedAction.AddSource(facade.SelectionAction);
                 selectOnDeactivatedAction.ClearSources();
-                selectOnDeactivatedAction.AddSource(facade.selectionAction);
+                selectOnDeactivatedAction.AddSource(facade.SelectionAction);
             }
+        }
 
-            if (facade.activationAction != null)
+        /// <summary>
+        /// Configures the activation action based on the facade settings.
+        /// </summary>
+        public virtual void ConfigureActivationAction()
+        {
+            if (facade.ActivationAction != null)
             {
                 activationAction.ClearSources();
-                activationAction.AddSource(facade.activationAction);
+                activationAction.AddSource(facade.ActivationAction);
             }
+        }
 
-            switch (facade.selectionType)
+        /// <summary>
+        /// Configures the selection type based on the facade settings.
+        /// </summary>
+        public virtual void ConfigureSelectionType()
+        {
+            switch (facade.SelectionMethod)
             {
                 case PointerFacade.SelectionType.SelectOnActivate:
                     selectOnActivatedAction.gameObject.SetActive(true);
@@ -98,39 +117,13 @@
             }
         }
 
-        /// <summary>
-        /// Clears all of the settings from the Pointer prefab.
-        /// </summary>
-        public virtual void Clear()
-        {
-            if (InvalidParameters())
-            {
-                return;
-            }
-
-            objectFollow.ClearSources();
-            activationAction.ClearSources();
-            selectOnActivatedAction.ClearSources();
-            selectOnDeactivatedAction.ClearSources();
-        }
-
         protected virtual void OnEnable()
         {
-            Setup();
-        }
-
-        protected virtual void OnDisable()
-        {
-            Clear();
-        }
-
-        /// <summary>
-        /// Determines if the setup parameters are invalid.
-        /// </summary>
-        /// <returns><see langword="true"/> if the parameters are invalid.</returns>
-        protected virtual bool InvalidParameters()
-        {
-            return (objectFollow == null || caster == null || facade == null);
+            ConfigureTargetValidity();
+            ConfigureFollowSources();
+            ConfigureSelectionAction();
+            ConfigureActivationAction();
+            ConfigureSelectionType();
         }
     }
 }

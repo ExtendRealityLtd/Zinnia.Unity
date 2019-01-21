@@ -35,31 +35,95 @@
         }
 
         #region Axis Settings
+        [Header("Axis Settings"), Tooltip("The AxisUsage to utilize when applying the axis input."), SerializeField]
+        private AxisUsage _axisUsageType = AxisUsage.Incremental;
         /// <summary>
         /// The <see cref="AxisUsage"/> to utilize when applying the axis input.
         /// </summary>
-        [Header("Axis Settings"), Tooltip("The AxisUsage to utilize when applying the axis input."), SerializeField]
-        protected AxisUsage axisUsageType = AxisUsage.Incremental;
+        public AxisUsage AxisUsageType
+        {
+            get
+            {
+                return _axisUsageType;
+            }
+            set
+            {
+                _axisUsageType = value;
+                internalSetup.SetAxisUsageType();
+            }
+        }
+
+        [Tooltip("The FloatAction to get the lateral (left/right direction) data from."), SerializeField]
+        private FloatAction _lateralAxis;
         /// <summary>
         /// The <see cref="FloatAction"/> to get the lateral (left/right direction) data from.
         /// </summary>
-        [Tooltip("The FloatAction to get the lateral (left/right direction) data from."), SerializeField]
-        protected FloatAction lateralAxis;
+        public FloatAction LateralAxis
+        {
+            get
+            {
+                return _lateralAxis;
+            }
+            set
+            {
+                _lateralAxis = value;
+                internalSetup.SetAxisSources();
+            }
+        }
+
+        [Tooltip("The FloatAction to get the longitudinal (forward/backward direction) data from."), SerializeField]
+        private FloatAction _longitudinalAxis;
         /// <summary>
         /// The <see cref="FloatAction"/> to get the longitudinal (forward/backward direction) data from.
         /// </summary>
-        [Tooltip("The FloatAction to get the longitudinal (forward/backward direction) data from."), SerializeField]
-        protected FloatAction longitudinalAxis;
+        public FloatAction LongitudinalAxis
+        {
+            get
+            {
+                return _longitudinalAxis;
+            }
+            set
+            {
+                _longitudinalAxis = value;
+                internalSetup.SetAxisSources();
+            }
+        }
+
+        [Tooltip("The multiplier to apply to the lateral axis."), SerializeField]
+        private float _lateralSpeedMultiplier = 1f;
         /// <summary>
         /// The multiplier to apply to the lateral axis.
         /// </summary>
-        [Tooltip("The multiplier to apply to the lateral axis."), SerializeField]
-        protected float lateralSpeedMultiplier = 1f;
+        public float LateralSpeedMultiplier
+        {
+            get
+            {
+                return _lateralSpeedMultiplier;
+            }
+            set
+            {
+                _lateralSpeedMultiplier = value;
+                internalSetup.SetMultipliers();
+            }
+        }
+
+        [Tooltip("The multiplier to apply to the longitudinal axis."), SerializeField]
+        private float _longitudinalSpeedMultiplier = 1f;
         /// <summary>
         /// The multiplier to apply to the longitudinal axis.
         /// </summary>
-        [Tooltip("The multiplier to apply to the longitudinal axis."), SerializeField]
-        protected float longitudinalSpeedMultiplier = 1f;
+        public float LongitudinalSpeedMultiplier
+        {
+            get
+            {
+                return _longitudinalSpeedMultiplier;
+            }
+            set
+            {
+                _longitudinalSpeedMultiplier = value;
+                internalSetup.SetMultipliers();
+            }
+        }
         #endregion
 
         #region Reference Settings
@@ -82,89 +146,9 @@
         /// <summary>
         /// The linked Internal Setup.
         /// </summary>
-        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting]
-        public AxesToVector3InternalSetup internalSetup;
+        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting, SerializeField]
+        protected AxesToVector3InternalSetup internalSetup;
         #endregion
-
-        /// <summary>
-        /// The <see cref="AxisUsage"/> to utilize when applying the axis input.
-        /// </summary>
-        public AxisUsage AxisUsageType
-        {
-            get
-            {
-                return axisUsageType;
-            }
-            set
-            {
-                axisUsageType = value;
-                internalSetup.SetAxisUsageType();
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="FloatAction"/> to get the lateral (left/right direction) data from.
-        /// </summary>
-        public FloatAction LateralAxis
-        {
-            get
-            {
-                return lateralAxis;
-            }
-            set
-            {
-                lateralAxis = value;
-                internalSetup.SetAxisSources();
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="FloatAction"/> to get the longitudinal (forward/backward direction) data from.
-        /// </summary>
-        public FloatAction LongitudinalAxis
-        {
-            get
-            {
-                return longitudinalAxis;
-            }
-            set
-            {
-                longitudinalAxis = value;
-                internalSetup.SetAxisSources();
-            }
-        }
-
-        /// <summary>
-        /// The multiplier to apply to the lateral axis.
-        /// </summary>
-        public float LateralSpeedMultiplier
-        {
-            get
-            {
-                return lateralSpeedMultiplier;
-            }
-            set
-            {
-                lateralSpeedMultiplier = value;
-                internalSetup.SetMultipliers();
-            }
-        }
-
-        /// <summary>
-        /// The multiplier to apply to the longitudinal axis.
-        /// </summary>
-        public float LongitudinalSpeedMultiplier
-        {
-            get
-            {
-                return longitudinalSpeedMultiplier;
-            }
-            set
-            {
-                longitudinalSpeedMultiplier = value;
-                internalSetup.SetMultipliers();
-            }
-        }
 
         protected virtual void OnValidate()
         {

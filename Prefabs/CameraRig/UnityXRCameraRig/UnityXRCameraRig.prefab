@@ -181,8 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f71c65a21f41e4da4cae476b4e957c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackingSpaceType: 1
-  lockPhysicsUpdateRateToRenderFrequency: 1
+  _trackingSpaceType: 1
+  _lockPhysicsUpdateRateToRenderFrequency: 1
 --- !u!114 &114703236085601920
 MonoBehaviour:
   m_ObjectHideFlags: 0

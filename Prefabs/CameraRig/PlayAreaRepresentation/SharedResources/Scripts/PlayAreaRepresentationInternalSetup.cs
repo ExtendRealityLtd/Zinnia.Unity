@@ -1,6 +1,7 @@
 ﻿namespace VRTK.Core.Prefabs.PlayAreaRepresentation
 {
     using UnityEngine;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Data.Operation;
     using VRTK.Core.Tracking.CameraRig;
 
@@ -13,52 +14,75 @@
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The public interface facade.")]
-        public PlayAreaRepresentationFacade facade;
+        [Header("Facade Settings"), Tooltip("The public interface facade."), InternalSetting, SerializeField]
+        protected PlayAreaRepresentationFacade facade;
         #endregion
 
         #region Operator Settings
         /// <summary>
         /// The <see cref="PlayAreaDimensionsExtractor"/> component for extracting the PlayArea dimension data.
         /// </summary>
-        [Header("Operator Settings"), Tooltip("The PlayAreaDimensionsExtractor component for extracting the PlayArea dimension data.")]
-        public PlayAreaDimensionsExtractor dimensionExtractor;
+        [Header("Operator Settings"), Tooltip("The PlayAreaDimensionsExtractor component for extracting the PlayArea dimension data."), InternalSetting, SerializeField]
+        protected PlayAreaDimensionsExtractor dimensionExtractor;
         /// <summary>
         /// The <see cref="TransformScaleMutator"/> component for scaling the given target.
         /// </summary>
-        [Tooltip("The TransformScaleMutator component for scaling the given target.")]
-        public TransformScaleMutator objectScaler;
+        [Tooltip("The TransformScaleMutator component for scaling the given target."), InternalSetting, SerializeField]
+        protected TransformScaleMutator objectScaler;
         /// <summary>
         /// The <see cref="TransformPositionMutator"/> component for positioning the given target.
         /// </summary>
-        [Tooltip("The TransformPositionMutator component for positioning the given target.")]
-        public TransformPositionMutator objectPositioner;
+        [Tooltip("The TransformPositionMutator component for positioning the given target."), InternalSetting, SerializeField]
+        protected TransformPositionMutator objectPositioner;
         /// <summary>
         /// The <see cref="TransformPositionExtractor"/> component extracting the offset origin position.
         /// </summary>
-        [Tooltip("The TransformPositionExtractor component extracting the offset origin position.")]
-        public TransformPositionExtractor offsetOriginExtractor;
+        [Tooltip("The TransformPositionExtractor component extracting the offset origin position."), InternalSetting, SerializeField]
+        protected TransformPositionExtractor offsetOriginExtractor;
         /// <summary>
         /// The <see cref="TransformPositionExtractor"/> component extracting the offset destination position.
         /// </summary>
-        [Tooltip("The TransformPositionExtractor component extracting the offset destination position.")]
-        public TransformPositionExtractor offsetDestinationExtractor;
+        [Tooltip("The TransformPositionExtractor component extracting the offset destination position."), InternalSetting, SerializeField]
+        protected TransformPositionExtractor offsetDestinationExtractor;
         #endregion
 
         /// <summary>
-        /// Sets up the PlayAreaRepresentation prefab with the specified settings.
+        /// Configures the target settings.
         /// </summary>
-        public virtual void SetUp()
+        public virtual void ConfigureTarget()
         {
-            objectScaler.target = facade.target;
-            objectPositioner.target = facade.target;
-            offsetOriginExtractor.source = facade.offsetOrigin;
-            offsetDestinationExtractor.source = facade.offsetDestination;
+            objectScaler.target = facade.Target;
+            objectPositioner.target = facade.Target;
+        }
+
+        /// <summary>
+        /// Configures the offset origin settings.
+        /// </summary>
+        public virtual void ConfigureOffsetOrigin()
+        {
+            offsetOriginExtractor.source = facade.OffsetOrigin;
+        }
+
+        /// <summary>
+        /// Configures the offset destination settings.
+        /// </summary>
+        public virtual void ConfigureOffsetDestination()
+        {
+            offsetDestinationExtractor.source = facade.OffsetDestination;
+        }
+
+        /// <summary>
+        /// Recalculates the PlayArea dimensions.
+        public virtual void RecalculateDimensions()
+        {
+            dimensionExtractor.DoExtract();
         }
 
         protected virtual void OnEnable()
         {
-            SetUp();
+            ConfigureTarget();
+            ConfigureOffsetOrigin();
+            ConfigureOffsetDestination();
             objectScaler.gameObject.SetActive(true);
         }
 

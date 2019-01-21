@@ -1,9 +1,9 @@
 ﻿namespace VRTK.Core.Prefabs.Locomotion.Movement.Climb
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using UnityEngine;
     using UnityEngine.Events;
+    using System.Linq;
+    using System.Collections.Generic;
     using VRTK.Core.Data.Attribute;
     using VRTK.Core.Prefabs.Locomotion.BodyRepresentation;
 
@@ -16,8 +16,17 @@
         /// <summary>
         /// The body representation to control.
         /// </summary>
-        [Header("Control Settings"), Tooltip("The body representation to control.")]
-        public BodyRepresentationFacade bodyRepresentationFacade;
+        [Header("Control Settings"), Tooltip("The body representation to control."), SerializeField]
+        private BodyRepresentationFacade _bodyRepresentationFacade;
+        public BodyRepresentationFacade BodyRepresentationFacade
+        {
+            get { return _bodyRepresentationFacade; }
+            set
+            {
+                _bodyRepresentationFacade = value;
+                internalSetup.ConfigureTargetPositionProperty();
+            }
+        }
         #endregion
 
         #region Events
@@ -37,8 +46,8 @@
         /// <summary>
         /// The linked Internal Setup.
         /// </summary>
-        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting]
-        public ClimbInternalSetup internalSetup;
+        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting, SerializeField]
+        protected ClimbInternalSetup internalSetup;
         #endregion
 
         /// <summary>
@@ -57,11 +66,11 @@
         /// <summary>
         /// The objects that define the source of movement in order they should be used. The last object defines <see cref="CurrentInteractor"/>.
         /// </summary>
-        public IReadOnlyList<GameObject> Interactors => internalSetup.interactors.Elements;
+        public IReadOnlyList<GameObject> Interactors => internalSetup.Interactors.Elements;
         /// <summary>
         /// The objects that define the optional offsets of movement in order they should be used. The last object defines <see cref="CurrentInteractable"/>.
         /// </summary>
-        public IReadOnlyList<GameObject> Interactables => internalSetup.interactables.Elements;
+        public IReadOnlyList<GameObject> Interactables => internalSetup.Interactables.Elements;
 
         /// <summary>
         /// Adds a source of movement for the body.
@@ -74,7 +83,7 @@
                 return;
             }
 
-            internalSetup.interactors.AddToEnd(interactor);
+            internalSetup.Interactors.AddToEnd(interactor);
         }
 
         /// <summary>
@@ -83,12 +92,12 @@
         /// <param name="interactor">The object used as a source of the movement.</param>
         public virtual void RemoveInteractor(GameObject interactor)
         {
-            if (!isActiveAndEnabled || !internalSetup.interactors.Elements.Contains(interactor))
+            if (!isActiveAndEnabled || !internalSetup.Interactors.Elements.Contains(interactor))
             {
                 return;
             }
 
-            internalSetup.interactors.RemoveLast(interactor);
+            internalSetup.Interactors.RemoveLast(interactor);
             internalSetup.ApplyVelocity();
         }
 
@@ -102,7 +111,7 @@
                 return;
             }
 
-            internalSetup.interactors.Clear(false);
+            internalSetup.Interactors.Clear(false);
         }
 
         /// <summary>
@@ -116,7 +125,7 @@
                 return;
             }
 
-            internalSetup.interactables.AddToEnd(interactable);
+            internalSetup.Interactables.AddToEnd(interactable);
         }
 
         /// <summary>
@@ -130,7 +139,7 @@
                 return;
             }
 
-            internalSetup.interactables.RemoveLast(interactable);
+            internalSetup.Interactables.RemoveLast(interactable);
         }
 
         /// <summary>
@@ -143,7 +152,7 @@
                 return;
             }
 
-            internalSetup.interactables.Clear(false);
+            internalSetup.Interactables.Clear(false);
         }
 
         /// <summary>
@@ -152,7 +161,7 @@
         /// <param name="source">The tracked velocity source.</param>
         public virtual void SetVelocitySource(GameObject source)
         {
-            internalSetup.velocityProxy.SetProxySource(source);
+            internalSetup.VelocityProxy.SetProxySource(source);
         }
 
         /// <summary>
@@ -161,8 +170,8 @@
         /// <param name="multiplier">The multiplier to apply to tracked velocity.</param>
         public virtual void SetVelocityMultiplier(Vector3 multiplier)
         {
-            internalSetup.velocityMultiplier.SetElement(1, multiplier);
-            internalSetup.velocityMultiplier.CurrentIndex = 0;
+            internalSetup.VelocityMultiplier.SetElement(1, multiplier);
+            internalSetup.VelocityMultiplier.CurrentIndex = 0;
         }
     }
 }

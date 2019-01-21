@@ -2,11 +2,12 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
-    using System.Collections.Generic;
     using System.Linq;
-    using VRTK.Core.Tracking.CameraRig;
-    using VRTK.Core.Tracking.Velocity;
+    using System.Collections.Generic;
     using VRTK.Core.Data.Attribute;
+    using VRTK.Core.Tracking.Follow;
+    using VRTK.Core.Tracking.Velocity;
+    using VRTK.Core.Tracking.CameraRig;
 
     /// <summary>
     /// The public interface into the Tracked Alias Prefab.
@@ -41,8 +42,8 @@
         /// <summary>
         /// The linked Internal Setup.
         /// </summary>
-        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting]
-        public TrackedAliasInternalSetup internalSetup;
+        [Header("Internal Settings"), Tooltip("The linked Internal Setup."), InternalSetting, SerializeField]
+        protected TrackedAliasInternalSetup internalSetup;
         #endregion
 
         /// <summary>
@@ -110,5 +111,39 @@
         /// Retreives all of the linked CameraRig Right Controller Velocity Trackers.
         /// </summary>
         public List<VelocityTracker> RightControllerVelocityTrackers => cameraRigs.Select(rig => rig.RightControllerVelocity).Where(value => value != null).ToList();
+        /// <summary>
+        /// The alias follower for the PlayArea.
+        /// </summary>
+        public ObjectFollower PlayAreaAlias => internalSetup.PlayArea;
+        /// <summary>
+        /// The alias follower for the Headset.
+        /// </summary>
+        public ObjectFollower HeadsetAlias => internalSetup.Headset;
+        /// <summary>
+        /// The alias follower for the LeftController.
+        /// </summary>
+        public ObjectFollower LeftControllerAlias => internalSetup.LeftController;
+        /// <summary>
+        /// The alias follower for the RightController.
+        /// </summary>
+        public ObjectFollower RightControllerAlias => internalSetup.RightController;
+
+        /// <summary>
+        /// Refreshes any changes made to the <see cref="cameraRigs"/> collection.
+        /// </summary>
+        public virtual void RefreshCameraRigsConfiguration()
+        {
+            internalSetup.SetUpCameraRigsConfiguration();
+        }
+
+        protected virtual void OnValidate()
+        {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            RefreshCameraRigsConfiguration();
+        }
     }
 }

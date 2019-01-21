@@ -3,13 +3,15 @@
     using UnityEngine;
     using System.Collections.Generic;
     using VRTK.Core.Action;
+    using VRTK.Core.Utility;
     using VRTK.Core.Extension;
+    using VRTK.Core.Data.Attribute;
     using VRTK.Core.Data.Collection;
     using VRTK.Core.Tracking.Velocity;
     using VRTK.Core.Tracking.Collision;
     using VRTK.Core.Tracking.Collision.Active;
     using VRTK.Core.Prefabs.Interactions.Interactables;
-    using VRTK.Core.Utility;
+    using VRTK.Core.Prefabs.Interactions.Interactables.Grab.Receiver;
 
     /// <summary>
     /// Sets up the Interactor Prefab grab settings based on the provided user settings.
@@ -20,51 +22,83 @@
         /// <summary>
         /// The public interface facade.
         /// </summary>
-        [Header("Facade Settings"), Tooltip("The public interface facade.")]
-        public InteractorFacade facade;
+        [Header("Facade Settings"), Tooltip("The public interface facade."), InternalSetting, SerializeField]
+        protected InteractorFacade facade;
+        #endregion
+
+        #region Reference Settings
+        [Header("Reference Settings"), Tooltip("The point in which to attach a grabbed Interactable to the Interactor."), InternalSetting, SerializeField]
+        private GameObject _attachPoint;
+        /// <summary>
+        /// The point in which to attach a grabbed Interactable to the Interactor.
+        /// </summary>
+        public GameObject AttachPoint
+        {
+            get { return _attachPoint; }
+            set
+            {
+                _attachPoint = value;
+                ConfigurePublishers();
+            }
+        }
+
+        [Tooltip("The VelocityTrackerProcessor to measure the interactors current velocity for throwing on release."), InternalSetting, SerializeField]
+        private VelocityTrackerProcessor _velocityTracker;
+        /// <summary>
+        /// The <see cref="VelocityTrackerProcessor"/> to measure the interactors current velocity for throwing on release.
+        /// </summary>
+        public VelocityTrackerProcessor VelocityTracker
+        {
+            get { return _velocityTracker; }
+            set
+            {
+                _velocityTracker = value;
+                ConfigureVelocityTrackers();
+            }
+        }
         #endregion
 
         #region Grab Settings
         /// <summary>
         /// The <see cref="BooleanAction"/> that will initiate the Interactor grab mechanism.
         /// </summary>
-        [Header("Grab Settings"), Tooltip("The BooleanAction that will initiate the Interactor grab mechanism.")]
-        public BooleanAction grabAction;
-        /// <summary>
-        /// The point in which to attach a grabbed Interactable to the Interactor.
-        /// </summary>
-        [Tooltip("The point in which to attach a grabbed Interactable to the Interactor.")]
-        public GameObject attachPoint;
-        /// <summary>
-        /// The <see cref="VelocityTrackerProcessor"/> to measure the interactors current velocity for throwing on release.
-        /// </summary>
-        [Tooltip("The VelocityTrackerProcessor to measure the interactors current velocity for throwing on release.")]
-        public VelocityTrackerProcessor velocityTracker;
+        [Header("Grab Settings"), Tooltip("The BooleanAction that will initiate the Interactor grab mechanism."), InternalSetting, SerializeField]
+        protected BooleanAction grabAction;
         /// <summary>
         /// The <see cref="ActiveCollisionPublisher"/> for checking valid start grabbing action.
         /// </summary>
-        [Tooltip("The ActiveCollisionPublisher for checking valid start touching collisions.")]
-        public ActiveCollisionPublisher startGrabbingPublisher;
+        [Tooltip("The ActiveCollisionPublisher for checking valid start grabbing action."), InternalSetting, SerializeField]
+        protected ActiveCollisionPublisher startGrabbingPublisher;
         /// <summary>
         /// The <see cref="ActiveCollisionPublisher"/> for checking valid stop grabbing action.
         /// </summary>
-        [Tooltip("The ActiveCollisionPublisher for checking valid stop touching collisions.")]
-        public ActiveCollisionPublisher stopGrabbingPublisher;
+        [Tooltip("The ActiveCollisionPublisher for checking valid stop grabbing action."), InternalSetting, SerializeField]
+        protected ActiveCollisionPublisher stopGrabbingPublisher;
         /// <summary>
-        /// The <see cref="GameObjectObservableSet"/> containing the currently grabbed objects.
+        /// The processor for initiating an instant grab.
         /// </summary>
-        [Tooltip("The GameObjectSet containing the currently grabbed objects.")]
-        public GameObjectObservableSet grabbedObjects;
+        [Tooltip("The processor for initiating an instant grab."), InternalSetting, SerializeField]
+        protected GameObject instantGrabProcessor;
+        /// <summary>
+        /// The processor for initiating a precognitive grab.
+        /// </summary>
+        [Tooltip("The processor for initiating a precognitive grab."), InternalSetting, SerializeField]
+        protected GameObject precognitionGrabProcessor;
         /// <summary>
         /// The <see cref="CountdownTimer"/> to determine grab precognition.
         /// </summary>
-        [Tooltip("The CountdownTimer to determine grab precognition.")]
-        public CountdownTimer precognitionTimer;
+        [Tooltip("The CountdownTimer to determine grab precognition."), InternalSetting, SerializeField]
+        protected CountdownTimer precognitionTimer;
         /// <summary>
         /// The minimum timer value for the grab precognition <see cref="CountdownTimer"/>.
         /// </summary>
-        [Tooltip("The minimum timer value for the grab precognition CountdownTimer.")]
-        public float minPrecognitionTimer = 0.01f;
+        [Tooltip("The minimum timer value for the grab precognition CountdownTimer."), InternalSetting, SerializeField]
+        protected float minPrecognitionTimer = 0.01f;
+        /// <summary>
+        /// The <see cref="GameObjectObservableSet"/> containing the currently grabbed objects.
+        /// </summary>
+        [Tooltip("The GameObjectSet containing the currently grabbed objects."), InternalSetting, SerializeField]
+        public GameObjectObservableSet grabbedObjectsCollection;
         #endregion
 
         /// <summary>
@@ -89,10 +123,10 @@
         /// </summary>
         public virtual void ConfigureVelocityTrackers()
         {
-            if (velocityTracker != null && facade != null && facade.VelocityTracker != null)
+            if (VelocityTracker != null && facade != null && facade.VelocityTracker != null)
             {
-                velocityTracker.velocityTrackers.Clear();
-                velocityTracker.velocityTrackers.Add(facade.VelocityTracker);
+                VelocityTracker.velocityTrackers.Clear();
+                VelocityTracker.velocityTrackers.Add(facade.VelocityTracker);
             }
         }
 
@@ -103,12 +137,12 @@
         {
             if (startGrabbingPublisher != null)
             {
-                startGrabbingPublisher.payload.sourceContainer = attachPoint;
+                startGrabbingPublisher.payload.sourceContainer = AttachPoint;
             }
 
             if (stopGrabbingPublisher != null)
             {
-                stopGrabbingPublisher.payload.sourceContainer = attachPoint;
+                stopGrabbingPublisher.payload.sourceContainer = AttachPoint;
             }
         }
 
@@ -117,11 +151,12 @@
         /// </summary>
         public virtual void ConfigureGrabPrecognition()
         {
-            if (facade.GrabPrecognition < minPrecognitionTimer)
+            if (facade.GrabPrecognition < minPrecognitionTimer && !facade.GrabPrecognition.ApproxEquals(0f))
             {
                 facade.GrabPrecognition = minPrecognitionTimer;
             }
             precognitionTimer.startTime = facade.GrabPrecognition;
+            ChooseGrabProcessor();
         }
 
         /// <summary>
@@ -140,7 +175,7 @@
             Ungrab();
             startGrabbingPublisher.SetActiveCollisions(CreateActiveCollisionsEventData(interactable.gameObject, collision, collider));
             ProcessGrabAction(startGrabbingPublisher, true);
-            if (interactable.grabType == InteractableFacade.ActiveType.Toggle)
+            if (interactable.IsGrabTypeToggle())
             {
                 ProcessGrabAction(startGrabbingPublisher, false);
             }
@@ -157,7 +192,7 @@
             }
 
             InteractableFacade interactable = GrabbedObjects[0].TryGetComponent<InteractableFacade>(true, true);
-            if (interactable.grabType == InteractableFacade.ActiveType.Toggle)
+            if (interactable.IsGrabTypeToggle())
             {
                 ProcessGrabAction(startGrabbingPublisher, true);
             }
@@ -166,7 +201,8 @@
 
         protected virtual void ProcessGrabAction(ActiveCollisionPublisher publisher, bool actionState)
         {
-            precognitionTimer.enabled = false;
+            instantGrabProcessor.SetActive(false);
+            precognitionGrabProcessor.SetActive(false);
             if (grabAction.Value != actionState)
             {
                 grabAction.Receive(actionState);
@@ -175,7 +211,7 @@
             {
                 publisher.Publish();
             }
-            precognitionTimer.enabled = true;
+            ChooseGrabProcessor();
         }
 
         protected virtual void OnEnable()
@@ -187,6 +223,16 @@
         }
 
         /// <summary>
+        /// Chooses which grab processing to perform on the grab action.
+        /// </summary>
+        protected virtual void ChooseGrabProcessor()
+        {
+            bool disablePrecognition = precognitionTimer.startTime.ApproxEquals(0f);
+            instantGrabProcessor.SetActive(disablePrecognition);
+            precognitionGrabProcessor.SetActive(!disablePrecognition);
+        }
+
+        /// <summary>
         /// Retreives a collection of currently grabbed GameObjects.
         /// </summary>
         /// <returns>The currently grabbed GameObjects.</returns>
@@ -194,12 +240,12 @@
         {
             List<GameObject> returnList = new List<GameObject>();
 
-            if (grabbedObjects == null)
+            if (grabbedObjectsCollection == null)
             {
                 return returnList;
             }
 
-            returnList.AddRange(grabbedObjects.Elements);
+            returnList.AddRange(grabbedObjectsCollection.Elements);
             return returnList;
         }
 

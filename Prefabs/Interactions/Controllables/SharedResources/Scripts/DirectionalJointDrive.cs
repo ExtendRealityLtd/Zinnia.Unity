@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using VRTK.Core.Data.Type;
+    using VRTK.Core.Data.Attribute;
 
     /// <summary>
     /// A directional drive that utilizes a physics joint to control the linear translation movement.
@@ -12,8 +13,8 @@
         /// <summary>
         /// The joint being used to drive the movement.
         /// </summary>
-        [Header("Joint Settings"), Tooltip("The joint being used to drive the movement.")]
-        public ConfigurableJoint joint;
+        [Header("Joint Settings"), Tooltip("The joint being used to drive the movement."), InternalSetting, SerializeField]
+        protected ConfigurableJoint joint;
         #endregion
 
         /// <inheritdoc />

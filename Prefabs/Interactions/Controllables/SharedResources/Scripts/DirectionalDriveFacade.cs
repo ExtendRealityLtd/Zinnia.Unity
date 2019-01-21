@@ -37,7 +37,7 @@
         {
             Gizmos.color = Color.yellow;
             Gizmos.matrix = transform.localToWorldMatrix;
-            Vector3 origin = transform.localPosition;
+            Vector3 origin = Vector3.zero;
             Vector3 direction = (DriveAxis.GetAxisDirection(true) * (DriveLimit * 0.5f));
             Vector3 from = origin - direction;
             Vector3 to = origin + direction;

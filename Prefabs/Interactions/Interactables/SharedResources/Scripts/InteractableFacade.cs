@@ -6,7 +6,10 @@
     using System.Collections.Generic;
     using VRTK.Core.Extension;
     using VRTK.Core.Data.Attribute;
+    using VRTK.Core.Tracking.Collision;
     using VRTK.Core.Prefabs.Interactions.Interactors;
+    using VRTK.Core.Prefabs.Interactions.Interactables.Touch;
+    using VRTK.Core.Prefabs.Interactions.Interactables.Grab;
 
     /// <summary>
     /// The public interface into the Interactable Prefab.
@@ -20,86 +23,6 @@
         public class UnityEvent : UnityEvent<InteractorFacade>
         {
         }
-
-        /// <summary>
-        /// The way in which the grab is kept active.
-        /// </summary>
-        public enum ActiveType
-        {
-            /// <summary>
-            /// The grab will occur when the button is held down and will ungrab when the button is released.
-            /// </summary>
-            HoldTillRelease,
-            /// <summary>
-            /// The grab will occur on the first press of the button and stay grabbed until a second press of the button.
-            /// </summary>
-            Toggle
-        }
-
-        /// <summary>
-        /// The way in which the object is moved.
-        /// </summary>
-        public enum TrackingType
-        {
-            /// <summary>
-            /// Updates the transform data directly, outside of the physics system.
-            /// </summary>
-            FollowTransform,
-            /// <summary>
-            /// Updates the rigidbody using velocity to stay within the bounds of the physics system.
-            /// </summary>
-            FollowRigidbody
-        }
-
-        /// <summary>
-        /// The offset to apply on grab.
-        /// </summary>
-        public enum GrabOffset
-        {
-            /// <summary>
-            /// No offset is applied.
-            /// </summary>
-            None,
-            /// <summary>
-            /// An offset of where the collision between the Interactor and Interactable is applied for precision grabbing.
-            /// </summary>
-            PrecisionGrab,
-            /// <summary>
-            /// An offset of a specified <see cref="GameObject"/> is applied to orientate the interactable on grab.
-            /// </summary>
-            SnapHandle
-        }
-
-        #region Interactable Settings
-        /// <summary>
-        /// The mechanism of how to keep the grab action active.
-        /// </summary>
-        [Header("Interactable Settings"), Tooltip("The mechanism of how to keep the grab action active.")]
-        public ActiveType grabType = ActiveType.HoldTillRelease;
-        /// <summary>
-        /// Determines how to track the interactable to the interactor.
-        /// </summary>
-        [Tooltip("Determines how to track the interactable to the interactor.")]
-        public TrackingType trackingType = TrackingType.FollowTransform;
-        /// <summary>
-        /// The offset to apply when grabbing the Interactable.
-        /// </summary>
-        [Tooltip("The offset to apply when grabbing the Interactable.")]
-        public GrabOffset grabOffset = GrabOffset.None;
-        #endregion
-
-        #region Restriction Settings
-        /// <summary>
-        /// A collection of interactors that are not allowed to touch this interactable.
-        /// </summary>
-        [Header("Restriction Settings"), Tooltip("A collection of interactors that are not allowed to touch this interactable.")]
-        public List<InteractorFacade> disallowedTouchInteractors = new List<InteractorFacade>();
-        /// <summary>
-        /// A collection of interactors that are not allowed to grab this interactable.
-        /// </summary>
-        [Tooltip("A collection of interactors that are not allowed to grab this interactable.")]
-        public List<InteractorFacade> disallowedGrabInteractors = new List<InteractorFacade>();
-        #endregion
 
         #region Touch Events
         /// <summary>
@@ -141,11 +64,62 @@
         public UnityEvent LastUngrabbed = new UnityEvent();
         #endregion
 
+        #region Restriction Settings
+        /// <summary>
+        /// A collection of interactors that are not allowed to touch this interactable.
+        /// </summary>
+        [Header("Restriction Settings"), Tooltip("A collection of interactors that are not allowed to touch this interactable.")]
+        public List<InteractorFacade> disallowedTouchInteractors = new List<InteractorFacade>();
+        /// <summary>
+        /// A collection of interactors that are not allowed to grab this interactable.
+        /// </summary>
+        [Tooltip("A collection of interactors that are not allowed to grab this interactable.")]
+        public List<InteractorFacade> disallowedGrabInteractors = new List<InteractorFacade>();
+        #endregion
+
+        #region Container Settings
+        [Header("Container Settings"), Tooltip("The overall container for the touch consumers."), SerializeField]
+        private GameObject _consumerContainer;
+        /// <summary>
+        /// The overall container for the interactable consumers.
+        /// </summary>
+        public GameObject ConsumerContainer
+        {
+            get { return _consumerContainer; }
+            set
+            {
+                _consumerContainer = value;
+                ConfigureContainer();
+            }
+        }
+        [Tooltip("The rigidbody for the overall collisions."), SerializeField]
+        private Rigidbody _consumerRigidbody;
+        /// <summary>
+        /// The <see cref="Rigidbody"/> for the overall collisions.
+        /// </summary>
+        public Rigidbody ConsumerRigidbody
+        {
+            get { return _consumerRigidbody; }
+            set
+            {
+                _consumerRigidbody = value;
+                ConfigureContainer();
+            }
+        }
+        #endregion
+
         #region Internal Settings
+        [Header("Internal Settings"), Tooltip("The linked CollisionNotifier."), SerializeField, InternalSetting]
+        private CollisionNotifier _collisionNotifier = null;
+        /// <summary>
+        /// The linked <see cref="CollisionNotifier"/>.
+        /// </summary>
+        public CollisionNotifier CollisionNotifier => _collisionNotifier;
+
         /// <summary>
         /// The linked Touch Internal Setup.
         /// </summary>
-        [Header("Internal Settings"), Tooltip("The linked Touch Internal Setup."), InternalSetting, SerializeField]
+        [Tooltip("The linked Touch Internal Setup."), InternalSetting, SerializeField]
         protected TouchInteractableInternalSetup touchInteractableSetup;
         /// <summary>
         /// The linked Grab Internal Setup.
@@ -213,8 +187,36 @@
         /// </summary>
         public virtual void RefreshInteractorRestrictions()
         {
-            touchInteractableSetup.ConfigureTouchValidity();
-            grabInteractableSetup.ConfigureGrabValidity();
+            touchInteractableSetup.ConfigureTouchValidity(disallowedTouchInteractors);
+            grabInteractableSetup.ConfigureGrabValidity(disallowedGrabInteractors);
+        }
+
+        /// <summary>
+        /// Determines if the grab type is set to toggle.
+        /// </summary>
+        /// <returns>Whether the grab type is of type toggle.</returns>
+        public virtual bool IsGrabTypeToggle()
+        {
+            return grabInteractableSetup.IsGrabTypeToggle();
+        }
+
+        protected virtual void OnValidate()
+        {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            ConfigureContainer();
+        }
+
+        /// <summary>
+        /// Configures any container data to the sub setup components.
+        /// </summary>
+        protected virtual void ConfigureContainer()
+        {
+            touchInteractableSetup.ConfigureContainer();
+            grabInteractableSetup.ConfigureContainer();
         }
     }
 }
