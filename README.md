@@ -1,7 +1,7 @@
 ![image](https://user-images.githubusercontent.com/1029673/39358522-3d16a6aa-4a0e-11e8-9515-41909f36e70d.png)
 
 > ### VRTK.Unity.Core
-> A set of design patterns for rapidly building VR solutions in Unity3d
+> A collection of design patterns for solving common problems
 
 [![Slack](https://img.shields.io/badge/slack-chat-E24663.svg)](http://invite.vrtk.io)
 [![Documentation](https://img.shields.io/badge/readme-docs-3484C6.svg)](http://docs.vrtk.io)
@@ -11,7 +11,7 @@
 
 ## Introduction
 
-VRTK.Unity.Core is a core collection of design patterns for [Unity3d] that can be beneficial in VR development.
+VRTK.Unity.Core is a collection of design patterns for the [Unity] software that can be beneficial in (but not limited to) spatial computing development.
 
   > VRTK.Unity.Core requires Unity3d 2018.3 (or above).
 
@@ -19,7 +19,7 @@ VRTK.Unity.Core is a core collection of design patterns for [Unity3d] that can b
 
 ### Setting up a project
 
-* Using Unity3d 2018.3 (or above) create a new project using the 3D Template or open an existing project.
+* Using the Unity software version 2018.3 (or above), create a new project using the 3D Template or open an existing project.
 * If the project supports Virtual Reality:
   * Ensure `Virtual Reality Supported` is checked.
     * In Unity3d select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` window.
@@ -52,6 +52,10 @@ We're not currently in a place where accepting contributions would be helpful. B
 
 Code released under the [MIT License].
 
+## Disclaimer
+
+These materials are not sponsored by or affiliated with Unity Technologies or its affiliates. "Unity" is a trademark or registered trademark of Unity Technologies or its affiliates in the U.S. and elsewhere.
+
 [MIT License]: LICENSE.md
 [How To Clone A Repo]: https://help.github.com/articles/cloning-a-repository/
-[Unity3d]: https://unity3d.com/
+[Unity]: https://unity3d.com/
