@@ -46,7 +46,7 @@ In regards to naming conventions we also adhere to the [standard .NET Framework 
   public Color fontColor;
   ```
 
-All core classes should be within the relevant `VRTK` namespace. Any required `using` lines should be within the namespace block.
+All core classes should be within the relevant `Zinnia` namespace. Any required `using` lines should be within the namespace block.
 
   > **Incorrect:**
   ```
@@ -61,7 +61,7 @@ All core classes should be within the relevant `VRTK` namespace. Any required `u
 
   > **Correct:**
   ```
-  namespace X.Y.Z
+  namespace Zinnia.X.Y.Z
   {
     using System;
 
