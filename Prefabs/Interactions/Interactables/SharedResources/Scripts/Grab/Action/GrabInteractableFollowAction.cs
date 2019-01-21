@@ -108,10 +108,10 @@
         [Tooltip("The FollowModifier to rotate by applying a force to the rigidbody."), InternalSetting, SerializeField]
         protected FollowModifier followRigidbodyForceRotate;
         /// <summary>
-        /// The <see cref="ApplyVelocity"/> to apply velocity on ungrab.
+        /// The <see cref="VelocityApplier"/> to apply velocity on ungrab.
         /// </summary>
-        [Tooltip("The ApplyVelocity to apply velocity on ungrab"), InternalSetting, SerializeField]
-        protected ApplyVelocity velocityApplier;
+        [Tooltip("The VelocityApplier to apply velocity on ungrab"), InternalSetting, SerializeField]
+        protected VelocityApplier velocityApplier;
         #endregion
 
         #region Grab Offset Settings

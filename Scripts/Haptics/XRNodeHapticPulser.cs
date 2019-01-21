@@ -6,7 +6,7 @@
     /// <summary>
     /// Creates a timed haptic pulse on an <see cref="XRNode"/>.
     /// </summary>
-    public class XRNodeHapticPulse : HapticPulse
+    public class XRNodeHapticPulser : HapticPulser
     {
         /// <summary>
         /// The node to pulse.
