@@ -153,14 +153,14 @@
         /// <param name="setAll">Determines whether to ignore the source and just set all sources to the given state.</param>
         protected virtual void SetSourceEnabledState(GameObject source, bool state, bool setAll = false)
         {
-            for (int i = 0; i < sources.Count; i++)
+            for (int index = 0; index < sources.Count; index++)
             {
-                ActionSource actionSource = sources[i];
+                ActionSource actionSource = sources[index];
                 if (actionSource.container == source || setAll)
                 {
                     actionSource.enabled = state;
                 }
-                sources[i] = actionSource;
+                sources[index] = actionSource;
             }
         }
     }

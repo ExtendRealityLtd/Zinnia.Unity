@@ -121,12 +121,12 @@
             }
 
             Vector3 average = Vector3.zero;
-            for (int i = 2 + currentSampleCount - velocitySamples.Length; i < currentSampleCount; i++)
+            for (int sampleIndex = 2 + currentSampleCount - velocitySamples.Length; sampleIndex < currentSampleCount; sampleIndex++)
             {
-                if (i >= 2)
+                if (sampleIndex >= 2)
                 {
-                    int first = i - 2;
-                    int second = i - 1;
+                    int first = sampleIndex - 2;
+                    int second = sampleIndex - 1;
 
                     Vector3 v1 = velocitySamples[first % velocitySamples.Length];
                     Vector3 v2 = velocitySamples[second % velocitySamples.Length];
@@ -185,9 +185,9 @@
             int sampleCount = Mathf.Min(currentSampleCount, samples.Length);
             if (sampleCount != 0)
             {
-                for (int i = 0; i < sampleCount; i++)
+                for (int index = 0; index < sampleCount; index++)
                 {
-                    estimate += samples[i];
+                    estimate += samples[index];
                 }
                 estimate *= (1.0f / sampleCount);
             }

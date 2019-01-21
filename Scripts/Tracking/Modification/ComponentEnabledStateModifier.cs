@@ -52,19 +52,19 @@
                 return;
             }
 
-            IEnumerable<Object> objects = types.EmptyIfNull()
+            IEnumerable<Object> targetObjects = types.EmptyIfNull()
                 .SelectMany(serializableType => target.GetComponentsInChildren(serializableType, true));
 
-            foreach (Object @object in objects)
+            foreach (Object targetObject in targetObjects)
             {
-                Behaviour potentialBehaviour = @object as Behaviour;
+                Behaviour potentialBehaviour = targetObject as Behaviour;
                 if (potentialBehaviour != null)
                 {
                     potentialBehaviour.enabled = state;
                     continue;
                 }
 
-                Renderer potentialRenderer = @object as Renderer;
+                Renderer potentialRenderer = targetObject as Renderer;
                 if (potentialRenderer != null)
                 {
                     potentialRenderer.enabled = state;

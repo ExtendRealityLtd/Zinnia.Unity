@@ -106,9 +106,9 @@
                 return;
             }
 
-            for (int i = 0; i < targets.Count; i++)
+            for (int index = 0; index < targets.Count; index++)
             {
-                targets[i].SetActive((i == activeIndex ? targetState : !targetState));
+                targets[index].SetActive(index == activeIndex ? targetState : !targetState);
             }
         }
     }

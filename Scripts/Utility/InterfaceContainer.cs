@@ -34,7 +34,7 @@
                 else
                 {
                     field = @object;
-                    _interface = default(TInterface);
+                    _interface = default;
                 }
             }
         }

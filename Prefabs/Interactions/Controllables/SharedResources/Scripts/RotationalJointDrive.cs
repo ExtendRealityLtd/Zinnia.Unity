@@ -143,15 +143,15 @@
             // Disable any child rigidbody GameObjects of the joint to prevent the anchor position updating their position.
             Rigidbody[] rigidbodyChildren = joint.GetComponentsInChildren<Rigidbody>();
             bool[] childrenStates = new bool[rigidbodyChildren.Length];
-            for (int i = 0; i < rigidbodyChildren.Length; i++)
+            for (int index = 0; index < rigidbodyChildren.Length; index++)
             {
-                if (rigidbodyChildren[i].gameObject == jointContainer || rigidbodyChildren[i] == jointRigidbody)
+                if (rigidbodyChildren[index].gameObject == jointContainer || rigidbodyChildren[index] == jointRigidbody)
                 {
                     continue;
                 }
 
-                childrenStates[i] = rigidbodyChildren[i].gameObject.activeSelf;
-                rigidbodyChildren[i].gameObject.SetActive(false);
+                childrenStates[index] = rigidbodyChildren[index].gameObject.activeSelf;
+                rigidbodyChildren[index].gameObject.SetActive(false);
             }
 
             // Set the current joint container to match the joint anchor to provide the correct offset.
@@ -159,14 +159,14 @@
             jointContainer.transform.localRotation = Quaternion.identity;
 
             // Restore the state of child rigidbody GameObjects now the anchor position has been set.
-            for (int i = 0; i < rigidbodyChildren.Length; i++)
+            for (int index = 0; index < rigidbodyChildren.Length; index++)
             {
-                if (rigidbodyChildren[i].gameObject == jointContainer || rigidbodyChildren[i] == jointRigidbody)
+                if (rigidbodyChildren[index].gameObject == jointContainer || rigidbodyChildren[index] == jointRigidbody)
                 {
                     continue;
                 }
 
-                rigidbodyChildren[i].gameObject.SetActive(childrenStates[i]);
+                rigidbodyChildren[index].gameObject.SetActive(childrenStates[index]);
             }
         }
 

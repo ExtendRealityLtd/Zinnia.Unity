@@ -73,20 +73,20 @@
         /// <summary>
         /// Attempts to get the value in the list of relations for the given index.
         /// </summary>
-        /// <param name="index">The index of the relation to get the value for.</param>
+        /// <param name="relationIndex">The index of the relation to get the value for.</param>
         /// <returns>The value for the given index.</returns>
-        public virtual GameObject GetValue(int index)
+        public virtual GameObject GetValue(int relationIndex)
         {
             if (!isActiveAndEnabled)
             {
                 return null;
             }
 
-            for (int i = 0; i < relations.Count; i++)
+            for (int index = 0; index < relations.Count; index++)
             {
-                if (i == index)
+                if (index == relationIndex)
                 {
-                    GameObject foundValue = relations[i].value;
+                    GameObject foundValue = relations[index].value;
                     ValueRetreieved?.Invoke(foundValue);
                     return foundValue;
                 }
