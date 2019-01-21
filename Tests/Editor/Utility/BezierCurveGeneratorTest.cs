@@ -38,9 +38,9 @@ namespace Test.VRTK.Core.Utility
 
             Vector3[] actualResults = BezierCurveGenerator.GeneratePoints(curvePoints, controlPoints);
 
-            for (int i = 0; i < actualResults.Length; i++)
+            for (int index = 0; index < actualResults.Length; index++)
             {
-                Assert.AreEqual(expectedResults[i].ToString(), actualResults[i].ToString(), "index " + i);
+                Assert.AreEqual(expectedResults[index].ToString(), actualResults[index].ToString(), "index " + index);
             }
         }
     }

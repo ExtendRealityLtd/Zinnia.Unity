@@ -117,7 +117,7 @@
                 return;
             }
 
-            for (int i = elementEvents.Count - 1; i >= elementIndex; i--)
+            for (int currentIndex = elementEvents.Count - 1; currentIndex >= elementIndex; currentIndex--)
             {
                 if (abortPopProcess)
                 {
@@ -125,18 +125,18 @@
                     return;
                 }
 
-                if (elementIndex < Stack.Count && i < Stack.Count)
+                if (elementIndex < Stack.Count && currentIndex < Stack.Count)
                 {
-                    TElement currentElement = Stack[i];
+                    TElement currentElement = Stack[currentIndex];
                     Stack.Remove(currentElement);
                     EventIndex = elementIndex;
-                    if (i == elementIndex)
+                    if (currentIndex == elementIndex)
                     {
-                        elementEvents[i].Popped?.Invoke(currentElement);
+                        elementEvents[currentIndex].Popped?.Invoke(currentElement);
                     }
                     else
                     {
-                        elementEvents[i].ForcePopped?.Invoke(currentElement);
+                        elementEvents[currentIndex].ForcePopped?.Invoke(currentElement);
                     }
                 }
             }

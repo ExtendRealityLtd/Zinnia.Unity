@@ -56,9 +56,9 @@ namespace Test.VRTK.Core.Cast
                 new Vector3(0f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
             };
 
-            for (int i = 0; i < subject.Points.Count; i++)
+            for (int index = 0; index < subject.Points.Count; index++)
             {
-                Assert.AreEqual(expectedPoints[i].ToString(), subject.Points[i].ToString(), "Index " + i);
+                Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
             }
 
             Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
@@ -89,9 +89,9 @@ namespace Test.VRTK.Core.Cast
                 new Vector3(0f, 0f, 2f)
             };
 
-            for (int i = 0; i < subject.Points.Count; i++)
+            for (int index = 0; index < subject.Points.Count; index++)
             {
-                Assert.AreEqual(expectedPoints[i].ToString(), subject.Points[i].ToString(), "Index " + i);
+                Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
             }
 
             Assert.IsNull(subject.TargetHit);
@@ -122,9 +122,9 @@ namespace Test.VRTK.Core.Cast
                 new Vector3(0f, 0f, 5f)
             };
 
-            for (int i = 0; i < subject.Points.Count; i++)
+            for (int index = 0; index < subject.Points.Count; index++)
             {
-                Assert.AreEqual(expectedPoints[i].ToString(), subject.Points[i].ToString(), "Index " + i);
+                Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
             }
 
             Assert.IsNull(subject.TargetHit);
@@ -167,9 +167,9 @@ namespace Test.VRTK.Core.Cast
                 new Vector3(0f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
             };
 
-            for (int i = 0; i < subject.Points.Count; i++)
+            for (int index = 0; index < subject.Points.Count; index++)
             {
-                Assert.AreEqual(expectedPoints[i].ToString(), subject.Points[i].ToString(), "Index " + i);
+                Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
             }
 
             Assert.IsNull(subject.TargetHit);

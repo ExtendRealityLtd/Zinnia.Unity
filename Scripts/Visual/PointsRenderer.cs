@@ -99,14 +99,14 @@
             segmentClones.ForEach(Destroy);
             segmentClones.Clear();
 
-            foreach (GameObject @object in new[]
+            foreach (GameObject renderElement in new[]
             {
                 start,
                 repeatedSegment,
                 end
-            }.Where(@object => @object != null))
+            }.Where(currentElement => currentElement != null))
             {
-                @object.SetActive(false);
+                renderElement.SetActive(false);
             }
         }
 
@@ -121,7 +121,7 @@
                 return;
             }
 
-            int targetCount = (points.Count > 0 ? points.Count - 1 : 0);
+            int targetCount = points.Count > 0 ? points.Count - 1 : 0;
             for (int index = segmentClones.Count - 1; index >= targetCount; index--)
             {
                 Destroy(segmentClones[index]);
@@ -140,10 +140,10 @@
         /// <param name="points">All points to render.</param>
         /// <param name="pointsIndex">The index of the point that is represented by the element.</param>
         /// <param name="isPartOfLine">Whether the element is part of the line or alternatively it's representing a point.</param>
-        /// <param name="object">The <see cref="GameObject"/> to use for rendering.</param>
-        protected virtual void UpdateElement(IReadOnlyList<Vector3> points, int pointsIndex, bool isPartOfLine, GameObject @object)
+        /// <param name="renderElement">The <see cref="GameObject"/> to use for rendering.</param>
+        protected virtual void UpdateElement(IReadOnlyList<Vector3> points, int pointsIndex, bool isPartOfLine, GameObject renderElement)
         {
-            if (@object == null || 0 > pointsIndex || pointsIndex >= points.Count)
+            if (renderElement == null || 0 > pointsIndex || pointsIndex >= points.Count)
             {
                 return;
             }
@@ -154,16 +154,16 @@
             Vector3 position = isPartOfLine ? targetPoint + 0.5f * forward : targetPoint;
             float scaleTarget = Mathf.Abs(Vector3.Distance(targetPoint, otherPoint));
 
-            @object.transform.position = position;
+            renderElement.transform.position = position;
 
             if (!isPartOfLine)
             {
                 return;
             }
 
-            @object.transform.forward = forward;
+            renderElement.transform.forward = forward;
 
-            Vector3 scale = @object.transform.lossyScale;
+            Vector3 scale = renderElement.transform.lossyScale;
 
             for (int index = 0; index < 3; index++)
             {
@@ -173,7 +173,7 @@
                 }
             }
 
-            @object.transform.SetGlobalScale(scale);
+            renderElement.transform.SetGlobalScale(scale);
         }
     }
 }

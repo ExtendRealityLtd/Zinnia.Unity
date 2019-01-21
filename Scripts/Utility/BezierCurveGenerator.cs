@@ -11,42 +11,47 @@
         /// <summary>
         /// Generates points on a bezier curve.
         /// </summary>
-        /// <param name="count">The number of points to generate.</param>
+        /// <param name="pointsCount">The number of points to generate.</param>
         /// <param name="controlPoints">Points defining the bezier curve.</param>
         /// <returns>The generated points.</returns>
-        public static Vector3[] GeneratePoints(int count, Vector3[] controlPoints)
+        public static Vector3[] GeneratePoints(int pointsCount, Vector3[] controlPoints)
         {
-            Vector3[] calculatedPoints = new Vector3[count];
-            float stepSize = count != 1 ? 1f / (count - 1) : count;
+            Vector3[] calculatedPoints = new Vector3[pointsCount];
+            float stepSize = pointsCount != 1 ? 1f / (pointsCount - 1) : pointsCount;
 
-            for (int f = 0; f < count; f++)
+            for (int index = 0; index < pointsCount; index++)
             {
-                calculatedPoints[f] = GeneratePoint(controlPoints, f * stepSize);
+                calculatedPoints[index] = GeneratePoint(controlPoints, index * stepSize);
             }
 
             return calculatedPoints;
         }
 
-        private static Vector3 GeneratePoint(IReadOnlyList<Vector3> controlPoints, float t)
+        /// <summary>
+        /// Generates a point at a specific location along the control points.
+        /// </summary>
+        /// <param name="controlPoints">The collection of points where the point can be generated.</param>
+        /// <param name="pointLocation">The specific location along the collection where to generate the point.</param>
+        /// <returns></returns>
+        private static Vector3 GeneratePoint(IReadOnlyList<Vector3> controlPoints, float pointLocation)
         {
             int index;
-            if (t >= 1f)
+            if (pointLocation >= 1f)
             {
-                t = 1f;
+                pointLocation = 1f;
                 index = controlPoints.Count - 4;
             }
             else
             {
-                t = Mathf.Clamp01(t) * ((controlPoints.Count - 1) / 3f);
-                index = (int)t;
-                t -= index;
+                pointLocation = Mathf.Clamp01(pointLocation) * ((controlPoints.Count - 1) / 3f);
+                index = (int)pointLocation;
+                pointLocation -= index;
                 index *= 3;
             }
 
-            float t1 = t;
-            t1 = Mathf.Clamp01(t1);
-            float oneMinusT = 1f - t1;
-            return oneMinusT * oneMinusT * oneMinusT * controlPoints[index] + 3f * oneMinusT * oneMinusT * t1 * controlPoints[index + 1] + 3f * oneMinusT * t1 * t1 * controlPoints[index + 2] + t1 * t1 * t1 * controlPoints[index + 3];
+            float normalizedPointLocation = Mathf.Clamp01(pointLocation);
+            float oneMinusT = 1f - normalizedPointLocation;
+            return oneMinusT * oneMinusT * oneMinusT * controlPoints[index] + 3f * oneMinusT * oneMinusT * normalizedPointLocation * controlPoints[index + 1] + 3f * oneMinusT * normalizedPointLocation * normalizedPointLocation * controlPoints[index + 2] + normalizedPointLocation * normalizedPointLocation * normalizedPointLocation * controlPoints[index + 3];
         }
     }
 }

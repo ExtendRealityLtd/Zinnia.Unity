@@ -131,13 +131,13 @@
 
         protected virtual void Start()
         {
-            for (int i = 0; i < Elements.Count; i++)
+            for (int index = 0; index < Elements.Count; index++)
             {
-                if (i == 0)
+                if (index == 0)
                 {
-                    BecamePopulated?.Invoke(Elements[i]);
+                    BecamePopulated?.Invoke(Elements[index]);
                 }
-                ElementAdded?.Invoke(Elements[i]);
+                ElementAdded?.Invoke(Elements[index]);
             }
         }
 

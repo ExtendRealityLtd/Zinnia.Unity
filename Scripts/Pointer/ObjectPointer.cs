@@ -388,7 +388,7 @@
                         repeatedSegment.validObject,
                         repeatedSegment.invalidObject
                     })
-                .Where(@object => @object != null);
+                .Where(pointElement => pointElement != null);
 
             foreach (GameObject unusedGameObject in unusedGameObjects)
             {
@@ -400,7 +400,7 @@
                 pointsData.start,
                 pointsData.repeatedSegment,
                 pointsData.end
-            }.Where(@object => @object != null);
+            }.Where(pointElement => pointElement != null);
 
             foreach (GameObject usedGameObject in usedGameObjects)
             {

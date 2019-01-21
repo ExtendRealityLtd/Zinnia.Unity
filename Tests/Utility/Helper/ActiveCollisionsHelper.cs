@@ -8,11 +8,11 @@ namespace Test.VRTK.Core.Utility.Helper
         public static string GetNamesOfActiveCollisions(ActiveCollisionsContainer.EventData list, string separator = ",")
         {
             string returnString = "";
-            for (int i = 0; i < list.activeCollisions.Count; i++)
+            for (int index = 0; index < list.activeCollisions.Count; index++)
             {
-                CollisionNotifier.EventData data = list.activeCollisions[i];
+                CollisionNotifier.EventData data = list.activeCollisions[index];
                 returnString += data.collider.name;
-                if (i < list.activeCollisions.Count - 1)
+                if (index < list.activeCollisions.Count - 1)
                 {
                     returnString += separator;
                 }
