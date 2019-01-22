@@ -1,11 +1,11 @@
-﻿using VRTK.Core.Tracking.Follow.Modifier;
-using VRTK.Core.Tracking.Follow.Modifier.Property;
+﻿using Zinnia.Tracking.Follow.Modifier;
+using Zinnia.Tracking.Follow.Modifier.Property;
 
-namespace Test.VRTK.Core.Tracking.Follow.Modifier
+namespace Test.Zinnia.Tracking.Follow.Modifier
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class FollowModifierTest
     {

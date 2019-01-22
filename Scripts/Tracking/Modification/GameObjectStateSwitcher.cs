@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Tracking.Modification
+﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
     using System.Collections.Generic;

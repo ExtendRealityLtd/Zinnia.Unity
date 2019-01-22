@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Association
+﻿namespace Zinnia.Association
 {
     using UnityEngine;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Tracking.Follow.Modifier.Property.Rotation
+﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
     using UnityEngine;
 

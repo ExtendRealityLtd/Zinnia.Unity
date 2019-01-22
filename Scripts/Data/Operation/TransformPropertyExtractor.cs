@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Data.Operation
+﻿namespace Zinnia.Data.Operation
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using VRTK.Core.Process;
+    using Zinnia.Process;
 
     /// <summary>
     /// Provides a basis for extracting properties from a <see cref="Transform"/>.

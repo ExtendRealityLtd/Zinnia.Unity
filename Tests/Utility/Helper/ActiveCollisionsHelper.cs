@@ -1,7 +1,7 @@
-﻿using VRTK.Core.Tracking.Collision;
-using VRTK.Core.Tracking.Collision.Active;
+﻿using Zinnia.Tracking.Collision;
+using Zinnia.Tracking.Collision.Active;
 
-namespace Test.VRTK.Core.Utility.Helper
+namespace Test.Zinnia.Utility.Helper
 {
     public static class ActiveCollisionsHelper
     {

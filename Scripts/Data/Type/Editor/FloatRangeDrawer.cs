@@ -1,8 +1,8 @@
-﻿namespace VRTK.Core.Data.Type
+﻿namespace Zinnia.Data.Type
 {
     using UnityEngine;
     using UnityEditor;
-    using VRTK.Core.Utility;
+    using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(FloatRange))]
     public class Limits2DDrawer : PropertyDrawer

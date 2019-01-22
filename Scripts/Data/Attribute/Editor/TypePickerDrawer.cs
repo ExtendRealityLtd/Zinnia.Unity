@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Data.Attribute
+﻿namespace Zinnia.Data.Attribute
 {
     using UnityEditor;
     using UnityEngine;
     using System;
-    using VRTK.Core.Utility;
+    using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(TypePickerAttribute))]
     public class TypePickerDrawer : PropertyDrawer

@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.Follow.Modifier.Property.Position
+﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Position
 {
     using UnityEngine;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Updates the rigidbody velocity by moving towards a given source.

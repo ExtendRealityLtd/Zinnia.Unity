@@ -1,7 +1,7 @@
-﻿using VRTK.Core.Extension;
-using VRTK.Core.Data.Type;
+﻿using Zinnia.Extension;
+using Zinnia.Data.Type;
 
-namespace Test.VRTK.Core.Extension
+namespace Test.Zinnia.Extension
 {
     using UnityEngine;
     using NUnit.Framework;

@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Event;
+﻿using Zinnia.Event;
 
-namespace Test.VRTK.Core.Event
+namespace Test.Zinnia.Event
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class EmptyEventProxyEmitterTest
     {

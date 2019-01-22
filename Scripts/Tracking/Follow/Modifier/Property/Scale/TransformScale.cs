@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.Follow.Modifier.Property.Scale
+﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Scale
 {
     using UnityEngine;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Updates the transform scale of the target to match the source.

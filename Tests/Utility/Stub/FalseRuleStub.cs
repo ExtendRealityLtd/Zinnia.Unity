@@ -1,6 +1,6 @@
-﻿using VRTK.Core.Rule;
+﻿using Zinnia.Rule;
 
-namespace Test.VRTK.Core.Utility.Stub
+namespace Test.Zinnia.Utility.Stub
 {
     using UnityEngine;
 

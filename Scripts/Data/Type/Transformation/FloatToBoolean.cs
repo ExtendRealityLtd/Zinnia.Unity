@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Data.Type.Transformation
+﻿namespace Zinnia.Data.Type.Transformation
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using VRTK.Core.Data.Attribute;
+    using Zinnia.Data.Attribute;
 
     /// <summary>
     /// Transforms a float value to a boolean based on a defined threshold.

@@ -1,8 +1,8 @@
-﻿namespace VRTK.Core.Tracking.Velocity
+﻿namespace Zinnia.Tracking.Velocity
 {
     using UnityEngine;
     using System;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Takes average samples of a <see cref="Transform.position"/> and <see cref="Transform.rotation"/> and uses this cached data to estimate velocity and angular velocity.

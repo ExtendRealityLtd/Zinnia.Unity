@@ -1,10 +1,10 @@
-﻿namespace VRTK.Core.Association
+﻿namespace Zinnia.Association
 {
     using UnityEngine;
     using System.Collections.Generic;
     using System.Linq;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Process;
+    using Zinnia.Extension;
+    using Zinnia.Process;
 
     /// <summary>
     /// (De)activates <see cref="GameObjectsAssociation"/>s.

@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Visual;
+﻿using Zinnia.Visual;
 
-namespace Test.VRTK.Core.Visual
+namespace Test.Zinnia.Visual
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class CameraColorOverlayTest
     {

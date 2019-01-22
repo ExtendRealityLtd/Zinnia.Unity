@@ -8,7 +8,7 @@
 // </author>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace VRTK.Core.Lib.Supyrb
+namespace Zinnia.Lib.Supyrb
 {
     using System;
     using UnityEngine;

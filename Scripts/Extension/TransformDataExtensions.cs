@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Extension
+﻿namespace Zinnia.Extension
 {
     using UnityEngine;
-    using VRTK.Core.Data.Type;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// Extended methods for the <see cref="TransformData"/> Type.

@@ -1,11 +1,11 @@
-﻿using VRTK.Core.Pointer;
-using VRTK.Core.Cast;
+﻿using Zinnia.Pointer;
+using Zinnia.Cast;
 
-namespace Test.VRTK.Core.Pointer
+namespace Test.Zinnia.Pointer
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class PointerTest
     {

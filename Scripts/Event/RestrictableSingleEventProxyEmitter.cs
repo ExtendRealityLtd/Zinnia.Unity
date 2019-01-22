@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Event
+﻿namespace Zinnia.Event
 {
     using UnityEngine;
     using UnityEngine.Events;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Rule;
+    using Zinnia.Extension;
+    using Zinnia.Rule;
 
     public abstract class RestrictableSingleEventProxyEmitter<TValue, TEvent> : SingleEventProxyEmitter<TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
     {

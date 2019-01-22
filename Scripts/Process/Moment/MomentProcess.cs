@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Process.Moment
+﻿namespace Zinnia.Process.Moment
 {
     using UnityEngine;
 

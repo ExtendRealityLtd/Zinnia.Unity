@@ -1,10 +1,10 @@
-﻿namespace VRTK.Core.Visual
+﻿namespace Zinnia.Visual
 {
     using UnityEngine;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Renders points using <see cref="GameObject"/>s.

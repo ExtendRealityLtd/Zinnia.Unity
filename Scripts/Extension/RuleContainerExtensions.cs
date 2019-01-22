@@ -1,6 +1,6 @@
-﻿namespace VRTK.Core.Extension
+﻿namespace Zinnia.Extension
 {
-    using VRTK.Core.Rule;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Extension methods for <see cref="RuleContainer"/>.

@@ -1,7 +1,7 @@
-﻿using VRTK.Core.Extension;
-using VRTK.Core.Rule;
+﻿using Zinnia.Extension;
+using Zinnia.Rule;
 
-namespace Test.VRTK.Core.Extension
+namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
 

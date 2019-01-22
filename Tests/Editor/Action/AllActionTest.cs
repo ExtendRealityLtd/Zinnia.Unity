@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Action;
+﻿using ZinniaAction = Zinnia.Action;
 
-namespace Test.VRTK.Core.Action
+namespace Test.Zinnia.Action
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class AllActionTest
     {
@@ -286,7 +286,7 @@ namespace Test.VRTK.Core.Action
         }
     }
 
-    public class AllActionMock : AllAction
+    public class AllActionMock : ZinniaAction.AllAction
     {
         public virtual void ManualUpdate()
         {
@@ -304,9 +304,9 @@ namespace Test.VRTK.Core.Action
         }
     }
 
-    public class MockAction : global::VRTK.Core.Action.Action
+    public class MockAction : ZinniaAction.Action
     {
-        public override void AddSource(global::VRTK.Core.Action.Action action)
+        public override void AddSource(ZinniaAction.Action action)
         {
         }
 
@@ -314,7 +314,7 @@ namespace Test.VRTK.Core.Action
         {
         }
 
-        public override void RemoveSource(global::VRTK.Core.Action.Action action)
+        public override void RemoveSource(ZinniaAction.Action action)
         {
         }
 

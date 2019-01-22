@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.Collision.Active.Operation
+﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
     using UnityEngine;
-    using VRTK.Core.Event;
+    using Zinnia.Event;
 
     /// <summary>
     /// Extracts the forward source container from a given <see cref="CollisionNotifier.EventData"/>.

@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.CameraRig
+﻿namespace Zinnia.Tracking.CameraRig
 {
     using UnityEngine;
-    using VRTK.Core.Tracking.Velocity;
+    using Zinnia.Tracking.Velocity;
 
     /// <summary>
     /// Provides a basis for describing a common VR based CameraRig for linking to a TrackedAlias.

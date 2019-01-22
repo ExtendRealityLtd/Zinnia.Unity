@@ -1,13 +1,13 @@
-﻿namespace VRTK.Core.Tracking.Follow
+﻿namespace Zinnia.Tracking.Follow
 {
     using UnityEngine;
     using UnityEngine.Events;
     using EmptyUnityEvent = UnityEngine.Events.UnityEvent;
     using System;
     using System.Collections.Generic;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Process.Component;
-    using VRTK.Core.Tracking.Follow.Modifier;
+    using Zinnia.Extension;
+    using Zinnia.Process.Component;
+    using Zinnia.Tracking.Follow.Modifier;
 
     /// <summary>
     /// Mirrors the <see cref="Transform"/> properties of another <see cref="Transform"/> based on the given <see cref="FollowModifier"/>.

@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Process
+﻿namespace Zinnia.Process
 {
     using System;
-    using VRTK.Core.Utility;
+    using Zinnia.Utility;
 
     /// <summary>
     /// A proxy class used to make a <see cref="IProcessable"/> interface appear in the Unity Inspector.

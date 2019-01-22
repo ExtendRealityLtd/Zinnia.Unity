@@ -1,8 +1,8 @@
-﻿using VRTK.Core.Extension;
-using VRTK.Core.Rule;
-using VRTK.Core.Utility;
+﻿using Zinnia.Extension;
+using Zinnia.Rule;
+using Zinnia.Utility;
 
-namespace Test.VRTK.Core.Rule
+namespace Test.Zinnia.Rule
 {
     using UnityEngine;
     using System.Collections.Generic;

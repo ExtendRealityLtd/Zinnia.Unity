@@ -1,52 +1,57 @@
-![image](https://user-images.githubusercontent.com/1029673/39358522-3d16a6aa-4a0e-11e8-9515-41909f36e70d.png)
+[![Zinnia logo][Zinnia-Image]](#)
 
-> ### VRTK.Unity.Core
-> A collection of design patterns for solving common problems
+> ### Zinnia
+> A collection of design patterns for solving common problems.
+>
+> `[zin-ee-uh]`
 
-[![Slack](https://img.shields.io/badge/slack-chat-E24663.svg)](http://invite.vrtk.io)
-[![Documentation](https://img.shields.io/badge/readme-docs-3484C6.svg)](http://docs.vrtk.io)
-[![YouTube](https://img.shields.io/badge/youtube-channel-e52d27.svg)](http://videos.vrtk.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/vr_toolkit.svg?style=flat&label=twitter)](https://twitter.com/VR_Toolkit)
-[![Waffle](https://img.shields.io/badge/project-backlog-78bdf2.svg)](https://waffle.io/ExtendRealityLtd/VRTK.Unity.Core)
+[![License][License-Badge]][MIT License]
+[![Waffle][Waffle-Badge]][Waffle]
 
 ## Introduction
 
-VRTK.Unity.Core is a collection of design patterns for the [Unity] software that can be beneficial in (but not limited to) spatial computing development.
+Zinnia is a collection of design patterns for the [Unity] software that can be beneficial in (but not limited to) spatial computing development.
 
-  > VRTK.Unity.Core requires Unity3d 2018.3 (or above).
+  > **Requires** the Unity software version 2018.3 (or above).
 
 ## Getting Started
 
 ### Setting up a project
 
 * Using the Unity software version 2018.3 (or above), create a new project using the 3D Template or open an existing project.
-* If the project supports Virtual Reality:
+* If the project requires Virtual Reality support:
   * Ensure `Virtual Reality Supported` is checked.
-    * In Unity3d select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` window.
+    * In the Unity software select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` window.
     * Select `Player` from the left hand menu in the `Project Settings` window.
     * In the `Player` settings panel expand `XR Settings`.
     * In `XR Settings` ensure the `Virtual Reality Supported` option is checked.
   * Ensure the appropriate support package is installed.
-    * In Unity3d select `Main Menu -> Window -> Package Manager` to open the `Packages` window.
+    * In the Unity software select `Main Menu -> Window -> Package Manager` to open the `Packages` window.
     * Find the appropriate support package in the left hand menu and click on it to select it (e.g. Oculus (Standalone) or OpenVR).
     * Click the `Install` button in the right hand pane of the `Packages` window for the selected support package.
     * The package will now install and be available for your supported hardware.
 * Ensure the project `Scripting Runtime Version` is set to `.NET 4.x Equivalent`.
-  * In Unity3d select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` inspector.
+  * In the Unity software select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` inspector.
   * Select `Player` from the left hand menu in the `Project Settings` window.
   * In the `Player` settings panel expand `Other Settings`.
   * Ensure the `Scripting Runtime Version` is set to `.NET 4.x Equivalent`.
 
-### Cloning the VRTK.Unity.Core repo into a project
+### Cloning the Zinnia repo into a project
 
 * Navigate to the `Assets/` directory of your project.
 * Git clone this repo into the `Assets/` directory:
-  * `git clone https://github.com/ExtendRealityLtd/VRTK.Unity.Core.git` - [How To Clone A Repo]
-* Wait for Unity3d to finish importing the cloned files.
+  * `git clone https://github.com/ExtendRealityLtd/Zinnia.git` - [How To Clone A Repo]
+* Wait for the Unity software to finish importing the cloned files.
 
 ## Contributing
 
 We're not currently in a place where accepting contributions would be helpful. But as soon as we're ready we'll let you know!
+
+## Naming
+
+Inspired by the [Zinnia] genus of plants known for their colourful, long lasting flower heads and their great ease to grow from seeds. This repository, much like the Zinnia flower aims to be easy to use and allow your projects to grow and florish into long lasting, easy to maintain solutions.
+
+  > **Fun Fact:** Zinnias have been grown aboard the [International Space Station] and have demonstrated the capability to blossum in a weightless environment.
 
 ## License
 
@@ -56,6 +61,12 @@ Code released under the [MIT License].
 
 These materials are not sponsored by or affiliated with Unity Technologies or its affiliates. "Unity" is a trademark or registered trademark of Unity Technologies or its affiliates in the U.S. and elsewhere.
 
+[Zinnia-Image]: https://user-images.githubusercontent.com/1029673/51488711-2ab42c80-1d9e-11e9-94c9-767e804157e7.png
+[License-Badge]: https://img.shields.io/github/license/ExtendRealityLtd/Zinnia.Unity.svg
+[Waffle-Badge]: https://badge.waffle.io/ExtendRealityLtd/Zinnia.Unity.svg?columns=Bug%20Backlog,Feature%20Backlog,In%20Progress,In%20Review
 [MIT License]: LICENSE.md
+[Waffle]: https://waffle.io/ExtendRealityLtd/Zinnia.Unity
 [How To Clone A Repo]: https://help.github.com/articles/cloning-a-repository/
 [Unity]: https://unity3d.com/
+[Zinnia]: https://en.wikipedia.org/wiki/Zinnia
+[International Space Station]: https://www.nasa.gov/image-feature/first-flower-grown-in-space-stations-veggie-facility

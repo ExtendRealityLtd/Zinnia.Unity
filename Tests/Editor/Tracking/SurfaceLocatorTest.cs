@@ -1,12 +1,12 @@
-﻿using VRTK.Core.Rule;
-using VRTK.Core.Tracking;
+﻿using Zinnia.Rule;
+using Zinnia.Tracking;
 
-namespace Test.VRTK.Core.Tracking
+namespace Test.Zinnia.Tracking
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
-    using Test.VRTK.Core.Utility.Stub;
+    using Test.Zinnia.Utility.Mock;
+    using Test.Zinnia.Utility.Stub;
 
     public class SurfaceLocatorTest
     {

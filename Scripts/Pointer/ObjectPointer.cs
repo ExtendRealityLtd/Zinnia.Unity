@@ -1,13 +1,13 @@
-﻿namespace VRTK.Core.Pointer
+﻿namespace Zinnia.Pointer
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using VRTK.Core.Cast;
-    using VRTK.Core.Data.Type;
-    using VRTK.Core.Visual;
+    using Zinnia.Cast;
+    using Zinnia.Data.Type;
+    using Zinnia.Visual;
 
     /// <summary>
     /// Allows pointing at objects and notifies when a target is hit, continues to be hit or stops being hit by listening to a <see cref="PointsCast"/>.

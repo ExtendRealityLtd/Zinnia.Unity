@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Data.Operation
+﻿namespace Zinnia.Data.Operation
 {
     using UnityEngine;
 

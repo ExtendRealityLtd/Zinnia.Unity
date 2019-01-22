@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Cast
+﻿namespace Zinnia.Cast
 {
     using UnityEngine;
-    using VRTK.Core.Utility;
+    using Zinnia.Utility;
 
     /// <summary>
     /// Casts a parabolic line and creates points at the origin, the target and in between.

@@ -1,4 +1,4 @@
-﻿namespace Test.VRTK.Core.Utility.Stub
+﻿namespace Test.Zinnia.Utility.Stub
 {
     using UnityEngine;
 

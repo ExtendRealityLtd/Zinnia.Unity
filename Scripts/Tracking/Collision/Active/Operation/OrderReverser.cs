@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Tracking.Collision.Active.Operation
+﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
     using UnityEngine;
 

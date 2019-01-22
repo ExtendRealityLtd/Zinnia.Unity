@@ -1,11 +1,11 @@
-﻿using VRTK.Core.Extension;
-using VRTK.Core.Rule;
+﻿using Zinnia.Extension;
+using Zinnia.Rule;
 
-namespace Test.VRTK.Core.Rule
+namespace Test.Zinnia.Rule
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Stub;
+    using Test.Zinnia.Utility.Stub;
 
     public class AnyRuleTest
     {

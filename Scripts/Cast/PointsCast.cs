@@ -1,12 +1,12 @@
-﻿namespace VRTK.Core.Cast
+﻿namespace Zinnia.Cast
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Process;
-    using VRTK.Core.Rule;
+    using Zinnia.Extension;
+    using Zinnia.Process;
+    using Zinnia.Rule;
 
     /// <summary>
     /// The base of casting components that result in points along the cast.

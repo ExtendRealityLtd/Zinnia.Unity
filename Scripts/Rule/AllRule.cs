@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Rule
+﻿namespace Zinnia.Rule
 {
     using UnityEngine;
     using System.Collections.Generic;
     using System.Linq;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Determines whether all <see cref="IRule"/>s in a list are accepting an object.

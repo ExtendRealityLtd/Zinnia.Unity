@@ -1,14 +1,14 @@
-﻿using VRTK.Core.Tracking.Collision;
-using VRTK.Core.Tracking.Collision.Active;
-using VRTK.Core.Tracking.Collision.Active.Operation;
+﻿using Zinnia.Tracking.Collision;
+using Zinnia.Tracking.Collision.Active;
+using Zinnia.Tracking.Collision.Active.Operation;
 
-namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
+namespace Test.Zinnia.Tracking.Collision.Active.Operation
 {
     using UnityEngine;
     using NUnit.Framework;
     using System.Collections.Generic;
-    using Test.VRTK.Core.Utility.Mock;
-    using Test.VRTK.Core.Utility.Helper;
+    using Test.Zinnia.Utility.Mock;
+    using Test.Zinnia.Utility.Helper;
 
     public class OrderReverserTest
     {

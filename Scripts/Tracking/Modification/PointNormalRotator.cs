@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.Modification
+﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
-    using VRTK.Core.Cast;
+    using Zinnia.Cast;
 
     /// <summary>
     /// Rotates the <see cref="GameObject"/> to look into a normal direction.

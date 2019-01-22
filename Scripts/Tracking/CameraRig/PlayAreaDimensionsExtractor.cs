@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Tracking.CameraRig
+﻿namespace Zinnia.Tracking.CameraRig
 {
     using System;
     using UnityEngine;

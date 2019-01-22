@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Process.Component
+﻿namespace Zinnia.Process.Component
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Rule;
+    using Zinnia.Extension;
+    using Zinnia.Rule;
 
     public abstract class GameObjectSourceTargetProcessor : SourceTargetProcessor<GameObject, GameObject>
     {

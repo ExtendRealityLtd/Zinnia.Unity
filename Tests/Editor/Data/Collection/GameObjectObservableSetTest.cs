@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Data.Collection;
+﻿using Zinnia.Data.Collection;
 
-namespace Test.VRTK.Core.Data.Collection
+namespace Test.Zinnia.Data.Collection
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class GameObjectObservableSetTest
     {

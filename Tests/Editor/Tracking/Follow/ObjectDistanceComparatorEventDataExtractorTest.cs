@@ -1,9 +1,9 @@
-﻿using VRTK.Core.Tracking.Follow;
+﻿using Zinnia.Tracking.Follow;
 
-namespace Test.VRTK.Core.Tracking.Follow
+namespace Test.Zinnia.Tracking.Follow
 {
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
 
     public class ObjectDistanceComparatorEventDataExtractorTest

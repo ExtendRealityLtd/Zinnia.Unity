@@ -1,11 +1,11 @@
-﻿using VRTK.Core.Event;
-using VRTK.Core.Tracking.Collision.Active;
+﻿using Zinnia.Event;
+using Zinnia.Tracking.Collision.Active;
 
-namespace Test.VRTK.Core.Event
+namespace Test.Zinnia.Event
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class ActiveCollisionsContainerEventProxyEmitterTest
     {

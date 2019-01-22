@@ -1,7 +1,7 @@
-﻿using VRTK.Core.Association;
-using VRTK.Core.Extension;
+﻿using Zinnia.Association;
+using Zinnia.Extension;
 
-namespace Test.VRTK.Core.Association
+namespace Test.Zinnia.Association
 {
     using UnityEngine;
     using UnityEngine.TestTools;

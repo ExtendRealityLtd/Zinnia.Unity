@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Data.Attribute
+﻿namespace Zinnia.Data.Attribute
 {
     using UnityEngine;
 

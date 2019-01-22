@@ -1,8 +1,8 @@
-﻿namespace VRTK.Core.Action
+﻿namespace Zinnia.Action
 {
     using UnityEngine;
-    using VRTK.Core.Data.Type;
-    using VRTK.Core.Extension;
+    using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value when the received <see cref="SurfaceData"/> current position and previous position exceed the specified distance.

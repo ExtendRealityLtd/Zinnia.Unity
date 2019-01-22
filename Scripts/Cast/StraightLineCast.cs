@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Cast
+﻿namespace Zinnia.Cast
 {
     using UnityEngine;
     using System.Linq;

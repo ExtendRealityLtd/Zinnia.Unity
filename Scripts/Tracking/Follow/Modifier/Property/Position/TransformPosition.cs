@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Tracking.Follow.Modifier.Property.Position
+﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Position
 {
     using UnityEngine;
 

@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Haptics
+﻿namespace Zinnia.Haptics
 {
     using UnityEngine;
     using System.Collections;

@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Rule
+﻿namespace Zinnia.Rule
 {
     using UnityEditor;
     using UnityEditorInternal;
@@ -6,7 +6,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using VRTK.Core.Utility;
+    using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(RuleContainer), true)]
     public class RuleContainerDrawer : PropertyDrawer

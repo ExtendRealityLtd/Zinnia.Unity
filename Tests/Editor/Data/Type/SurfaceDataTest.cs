@@ -1,6 +1,6 @@
-﻿using VRTK.Core.Data.Type;
+﻿using Zinnia.Data.Type;
 
-namespace Test.VRTK.Core.Data.Type
+namespace Test.Zinnia.Data.Type
 {
     using UnityEngine;
     using NUnit.Framework;

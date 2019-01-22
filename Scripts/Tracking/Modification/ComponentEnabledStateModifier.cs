@@ -1,11 +1,11 @@
-﻿namespace VRTK.Core.Tracking.Modification
+﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
     using System.Linq;
     using System.Collections.Generic;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Data.Attribute;
-    using VRTK.Core.Data.Type;
+    using Zinnia.Extension;
+    using Zinnia.Data.Attribute;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// Provides the ability to modify the enabled state of a <see cref="Behaviour"/> or <see cref="Renderer"/> component.

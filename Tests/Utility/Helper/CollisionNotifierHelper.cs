@@ -1,6 +1,6 @@
-﻿using VRTK.Core.Tracking.Collision;
+﻿using Zinnia.Tracking.Collision;
 
-namespace Test.VRTK.Core.Utility.Helper
+namespace Test.Zinnia.Utility.Helper
 {
     using UnityEngine;
 

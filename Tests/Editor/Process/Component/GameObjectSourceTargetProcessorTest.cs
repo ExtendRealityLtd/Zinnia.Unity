@@ -1,11 +1,11 @@
-﻿using VRTK.Core.Process.Component;
-using VRTK.Core.Rule;
+﻿using Zinnia.Process.Component;
+using Zinnia.Rule;
 
-namespace Test.VRTK.Core.Process.Component
+namespace Test.Zinnia.Process.Component
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Stub;
+    using Test.Zinnia.Utility.Stub;
 
     public class GameObjectSourceTargetProcessorTest
     {
