@@ -1,11 +1,11 @@
-﻿using VRTK.Core.Data.Type;
-using VRTK.Core.Action;
+﻿using Zinnia.Data.Type;
+using Zinnia.Action;
 
-namespace Test.VRTK.Core.Action
+namespace Test.Zinnia.Action
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class SurfaceChangeActionTest
     {

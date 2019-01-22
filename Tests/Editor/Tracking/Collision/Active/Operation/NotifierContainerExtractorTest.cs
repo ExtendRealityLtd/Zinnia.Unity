@@ -1,11 +1,11 @@
-﻿using VRTK.Core.Tracking.Collision;
-using VRTK.Core.Tracking.Collision.Active.Operation;
+﻿using Zinnia.Tracking.Collision;
+using Zinnia.Tracking.Collision.Active.Operation;
 
-namespace Test.VRTK.Core.Tracking.Collision.Active.Operation
+namespace Test.Zinnia.Tracking.Collision.Active.Operation
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class NotifierContainerExtractorTest
     {

@@ -1,14 +1,14 @@
-﻿namespace VRTK.Core.Tracking
+﻿namespace Zinnia.Tracking
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
     using System.Linq;
-    using VRTK.Core.Cast;
-    using VRTK.Core.Data.Type;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Process;
-    using VRTK.Core.Rule;
+    using Zinnia.Cast;
+    using Zinnia.Data.Type;
+    using Zinnia.Extension;
+    using Zinnia.Process;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Casts a <see cref="Ray"/> in a given direction and looks for the nearest valid surface.

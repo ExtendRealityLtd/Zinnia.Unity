@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.Follow.Modifier.Property
+﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
     using UnityEngine;
-    using VRTK.Core.Tracking.Follow;
+    using Zinnia.Tracking.Follow;
 
     public abstract class PropertyModifier : MonoBehaviour
     {

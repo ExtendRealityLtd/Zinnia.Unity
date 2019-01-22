@@ -1,11 +1,11 @@
-﻿namespace VRTK.Core.Data.Attribute
+﻿namespace Zinnia.Data.Attribute
 {
     using UnityEngine;
     using UnityEditor;
     using System.Globalization;
-    using VRTK.Core.Data.Type;
-    using VRTK.Core.Lib.Supyrb;
-    using VRTK.Core.Utility;
+    using Zinnia.Data.Type;
+    using Zinnia.Lib.Supyrb;
+    using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(MinMaxRangeAttribute))]
     class MinMaxRangeDrawer : PropertyDrawer

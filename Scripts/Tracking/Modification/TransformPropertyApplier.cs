@@ -1,13 +1,13 @@
-﻿namespace VRTK.Core.Tracking.Modification
+﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
     using System.Collections;
-    using VRTK.Core.Data.Attribute;
-    using VRTK.Core.Data.Enum;
-    using VRTK.Core.Data.Type;
-    using VRTK.Core.Extension;
+    using Zinnia.Data.Attribute;
+    using Zinnia.Data.Enum;
+    using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Applies the transform properties from a given source <see cref="Transform"/> onto the given target <see cref="Transform"/>.

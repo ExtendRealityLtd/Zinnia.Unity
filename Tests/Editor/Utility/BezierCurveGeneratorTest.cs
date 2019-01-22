@@ -1,6 +1,6 @@
-﻿using VRTK.Core.Utility;
+﻿using Zinnia.Utility;
 
-namespace Test.VRTK.Core.Utility
+namespace Test.Zinnia.Utility
 {
     using UnityEngine;
     using NUnit.Framework;

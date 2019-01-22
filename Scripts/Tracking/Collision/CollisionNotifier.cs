@@ -1,13 +1,13 @@
-﻿namespace VRTK.Core.Tracking.Collision
+﻿namespace Zinnia.Tracking.Collision
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using VRTK.Core.Data.Attribute;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Rule;
+    using Zinnia.Data.Attribute;
+    using Zinnia.Extension;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Allows emitting collision data via events.

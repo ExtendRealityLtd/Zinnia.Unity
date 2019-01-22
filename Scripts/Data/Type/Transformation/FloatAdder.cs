@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Data.Type.Transformation
+﻿namespace Zinnia.Data.Type.Transformation
 {
     using UnityEngine.Events;
     using System;

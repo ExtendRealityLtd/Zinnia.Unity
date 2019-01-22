@@ -1,11 +1,11 @@
-﻿namespace VRTK.Core.Visual
+﻿namespace Zinnia.Visual
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
     using System.Collections;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Data.Type;
+    using Zinnia.Extension;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// Applies a color over the valid cameras and can be used to fade the screen view.

@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Rule
+﻿namespace Zinnia.Rule
 {
     using UnityEngine;
 

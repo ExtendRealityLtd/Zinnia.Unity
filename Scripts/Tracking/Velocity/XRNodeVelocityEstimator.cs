@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Tracking.Velocity
+﻿namespace Zinnia.Tracking.Velocity
 {
     using UnityEngine;
     using UnityEngine.XR;

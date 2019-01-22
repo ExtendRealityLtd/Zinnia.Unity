@@ -1,11 +1,11 @@
-﻿namespace VRTK.Core.Tracking.Collision.Active
+﻿namespace Zinnia.Tracking.Collision.Active
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
-    using VRTK.Core.Rule;
-    using VRTK.Core.Extension;
+    using Zinnia.Rule;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Holds a collection of the current collisions raised by a <see cref="CollisionNotifier"/>. 

@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Utility
+﻿namespace Zinnia.Utility
 {
     using UnityEngine;
     using UnityEngine.Events;

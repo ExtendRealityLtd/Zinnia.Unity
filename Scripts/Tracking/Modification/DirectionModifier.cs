@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Tracking.Modification
+﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections;
-    using VRTK.Core.Process;
+    using Zinnia.Process;
 
     /// <summary>
     /// Modifies the given target direction by rotating it to look at a point in space whilst pivoting on another point in space.

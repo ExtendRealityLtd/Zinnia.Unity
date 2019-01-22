@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.Collision.Active.Operation
+﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
     using UnityEngine;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Sorts the given collision collection based on which collision <see cref="Transform"/> components are nearest to the specified <see cref="source"/>.

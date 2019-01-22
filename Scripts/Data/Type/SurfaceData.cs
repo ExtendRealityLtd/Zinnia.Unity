@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Data.Type
+﻿namespace Zinnia.Data.Type
 {
     using UnityEngine;
     using System;

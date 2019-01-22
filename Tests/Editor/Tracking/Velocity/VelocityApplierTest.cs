@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Tracking.Velocity;
+﻿using Zinnia.Tracking.Velocity;
 
-namespace Test.VRTK.Core.Tracking.Velocity
+namespace Test.Zinnia.Tracking.Velocity
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class VelocityApplierTest
     {

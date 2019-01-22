@@ -1,8 +1,8 @@
-﻿namespace VRTK.Core.Tracking.Query
+﻿namespace Zinnia.Tracking.Query
 {
     using UnityEngine;
     using UnityEngine.Events;
-    using VRTK.Core.Process;
+    using Zinnia.Process;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/> points at another <see cref="GameObject"/>.

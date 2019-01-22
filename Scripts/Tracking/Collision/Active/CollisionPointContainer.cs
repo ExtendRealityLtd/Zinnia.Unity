@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Tracking.Collision.Active
+﻿namespace Zinnia.Tracking.Collision.Active
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Contains a <see cref="GameObject"/> at the point of a collision from the event data of an <see cref="ActiveCollisionConsumer"/>.
@@ -57,7 +57,7 @@
 
             GameObject collidingObject = (parentIsCollisionNotifier ? eventData.currentCollision.collider.GetComponentInParent<CollisionNotifier>().gameObject : eventData.currentCollision.collider.GetContainingTransform().gameObject);
 
-            Container = new GameObject($"[VRTK][CollisionPointContainer][{collisionInitiator.name}]");
+            Container = new GameObject($"[Zinnia][CollisionPointContainer][{collisionInitiator.name}]");
             Container.transform.SetParent(collidingObject.transform);
             Container.transform.position = collisionInitiator.transform.position;
             Container.transform.rotation = collisionInitiator.transform.rotation;

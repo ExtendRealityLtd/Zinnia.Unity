@@ -1,8 +1,8 @@
-﻿namespace VRTK.Core.Data.Attribute
+﻿namespace Zinnia.Data.Attribute
 {
     using UnityEngine;
     using UnityEditor;
-    using VRTK.Core.Utility;
+    using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(UnityFlagsAttribute))]
     public class UnityFlagsDrawer : PropertyDrawer

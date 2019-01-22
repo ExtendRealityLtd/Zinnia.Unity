@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Tracking.Follow
+﻿namespace Zinnia.Tracking.Follow
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using VRTK.Core.Process;
+    using Zinnia.Process;
 
     /// <summary>
     /// Compares the distance between two GameObjects and emits an event when a given threshold is exceeded or falls within it.

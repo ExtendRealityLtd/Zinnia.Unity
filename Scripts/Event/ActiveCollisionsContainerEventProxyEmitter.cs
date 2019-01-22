@@ -1,8 +1,8 @@
-﻿namespace VRTK.Core.Event
+﻿namespace Zinnia.Event
 {
     using UnityEngine.Events;
     using System;
-    using VRTK.Core.Tracking.Collision.Active;
+    using Zinnia.Tracking.Collision.Active;
 
     /// <summary>
     /// Emits a UnityEvent with a <see cref="ActiveCollisionsContainer.EventData"/> payload whenever <see cref="SingleEventProxyEmitter{TValue,TEvent}.Receive"/> is called.

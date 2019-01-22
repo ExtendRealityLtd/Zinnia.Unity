@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Event
+﻿namespace Zinnia.Event
 {
     using System.Collections.Generic;
     using UnityEngine;

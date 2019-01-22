@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Tracking.Modification;
+﻿using Zinnia.Tracking.Modification;
 
-namespace Test.VRTK.Core.Tracking.Modification
+namespace Test.Zinnia.Tracking.Modification
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class DirectionModifierTest
     {

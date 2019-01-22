@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Data.Enum
+﻿namespace Zinnia.Data.Enum
 {
     using System;
 

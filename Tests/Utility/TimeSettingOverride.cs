@@ -1,4 +1,4 @@
-﻿namespace Test.VRTK.Core.Utility
+﻿namespace Test.Zinnia.Utility
 {
     using UnityEngine;
 

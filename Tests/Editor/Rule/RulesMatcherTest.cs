@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Rule;
+﻿using Zinnia.Rule;
 
-namespace Test.VRTK.Core.Rule
+namespace Test.Zinnia.Rule
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class RulesMatcherTest
     {

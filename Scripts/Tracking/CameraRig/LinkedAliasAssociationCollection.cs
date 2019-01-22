@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.CameraRig
+﻿namespace Zinnia.Tracking.CameraRig
 {
     using UnityEngine;
-    using VRTK.Core.Tracking.Velocity;
+    using Zinnia.Tracking.Velocity;
 
     /// <summary>
     /// Provides the basis for describing a CameraRig Alias Association by providing the linked elements of the CameraRig.

@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Cast;
+﻿using Zinnia.Cast;
 
-namespace Test.VRTK.Core.Cast
+namespace Test.Zinnia.Cast
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class FixedLineCastTest
     {

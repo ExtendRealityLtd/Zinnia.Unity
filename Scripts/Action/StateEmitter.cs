@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Action
+﻿namespace Zinnia.Action
 {
     using UnityEngine;
-    using VRTK.Core.Process;
+    using Zinnia.Process;
 
     /// <summary>
     /// Re-emits the state of the given action whenever the process is run.

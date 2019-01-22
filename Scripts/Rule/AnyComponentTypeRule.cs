@@ -1,11 +1,11 @@
-﻿namespace VRTK.Core.Rule
+﻿namespace Zinnia.Rule
 {
     using UnityEngine;
     using System.Collections.Generic;
     using System.Linq;
-    using VRTK.Core.Data.Attribute;
-    using VRTK.Core.Data.Type;
-    using VRTK.Core.Extension;
+    using Zinnia.Data.Attribute;
+    using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/> has any component found in a list.

@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Data.Operation
+﻿namespace Zinnia.Data.Operation
 {
     using UnityEngine;
-    using VRTK.Core.Data.Type;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// Provides a basis for mutating transform Vector3 properties.

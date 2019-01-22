@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.Follow.Modifier.Property.Rotation
+﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
     using UnityEngine;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Updates the rigidbody by applying force at the position difference between the source and the attachment point providing a torque rotation.

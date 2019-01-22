@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Rule
+﻿namespace Zinnia.Rule
 {
     using UnityEngine;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Negates the acceptance of an object based on the acceptance of another <see cref="IRule"/>.

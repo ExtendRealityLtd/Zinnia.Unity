@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Rule
+﻿namespace Zinnia.Rule
 {
     /// <summary>
     /// Allows determining whether an object is accepted.

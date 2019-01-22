@@ -1,14 +1,14 @@
-﻿using VRTK.Core.Rule;
-using VRTK.Core.Tracking.Collision;
-using VRTK.Core.Tracking.Collision.Active;
+﻿using Zinnia.Rule;
+using Zinnia.Tracking.Collision;
+using Zinnia.Tracking.Collision.Active;
 
-namespace Test.VRTK.Core.Tracking.Collision.Active
+namespace Test.Zinnia.Tracking.Collision.Active
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
-    using Test.VRTK.Core.Utility.Helper;
-    using Test.VRTK.Core.Utility.Stub;
+    using Test.Zinnia.Utility.Mock;
+    using Test.Zinnia.Utility.Helper;
+    using Test.Zinnia.Utility.Stub;
 
     public class ActiveCollisionsContainerTest
     {

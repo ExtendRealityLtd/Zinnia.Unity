@@ -1,11 +1,11 @@
-﻿namespace VRTK.Core.Tracking.Query
+﻿namespace Zinnia.Tracking.Query
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
     using System.Linq;
-    using VRTK.Core.Cast;
-    using VRTK.Core.Process;
+    using Zinnia.Cast;
+    using Zinnia.Process;
 
     /// <summary>
     /// Determines whether any <see cref="Collider"/> obscures a line between two <see cref="GameObject"/>s.

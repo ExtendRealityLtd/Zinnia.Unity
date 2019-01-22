@@ -1,8 +1,8 @@
-﻿namespace VRTK.Core.Tracking.Modification
+﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Process;
+    using Zinnia.Extension;
+    using Zinnia.Process;
 
     /// <summary>
     /// Scales a given target based on the distance between two points.

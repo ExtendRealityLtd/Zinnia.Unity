@@ -1,10 +1,10 @@
-﻿namespace VRTK.Core.Tracking.Collision.Active
+﻿namespace Zinnia.Tracking.Collision.Active
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using VRTK.Core.Extension;
-    using VRTK.Core.Rule;
+    using Zinnia.Extension;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Consumes a published <see cref="ActiveCollisionPublisher"/>.

@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Action
+﻿namespace Zinnia.Action
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a <see cref="float"/> value.

@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Process.Moment
+﻿namespace Zinnia.Process.Moment
 {
     using UnityEngine;
     using System.Collections.Generic;
     using System.Linq;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Iterates through the given <see cref="MomentProcess"/> array and executes the <see cref="MomentProcess.process"/> method on the given Unity game loop moment.

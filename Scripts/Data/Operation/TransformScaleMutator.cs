@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Data.Operation
+﻿namespace Zinnia.Data.Operation
 {
     using UnityEngine;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Mutates the scale of a transform.

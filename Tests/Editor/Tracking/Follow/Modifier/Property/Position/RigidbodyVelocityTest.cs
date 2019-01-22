@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Tracking.Follow.Modifier.Property.Position;
+﻿using Zinnia.Tracking.Follow.Modifier.Property.Position;
 
-namespace Test.VRTK.Core.Tracking.Follow.Modifier.Property.Position
+namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility;
+    using Test.Zinnia.Utility;
 
     public class RigidbodyVelocityTest
     {

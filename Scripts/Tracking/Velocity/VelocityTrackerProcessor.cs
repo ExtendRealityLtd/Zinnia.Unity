@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.Velocity
+﻿namespace Zinnia.Tracking.Velocity
 {
     using UnityEngine;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
     using System.Collections.Generic;
     using System.Linq;
 

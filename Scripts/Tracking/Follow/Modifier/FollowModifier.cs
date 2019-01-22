@@ -1,7 +1,7 @@
-﻿namespace VRTK.Core.Tracking.Follow.Modifier
+﻿namespace Zinnia.Tracking.Follow.Modifier
 {
     using UnityEngine;
-    using VRTK.Core.Tracking.Follow.Modifier.Property;
+    using Zinnia.Tracking.Follow.Modifier.Property;
 
     /// <summary>
     /// Composes the logic to modify the position, rotation and scale of a <see cref="Transform"/>.

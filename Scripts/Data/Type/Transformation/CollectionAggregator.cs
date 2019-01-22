@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Data.Type.Transformation
+﻿namespace Zinnia.Data.Type.Transformation
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Aggregates the values in a collection based on a specified operation.

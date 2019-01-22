@@ -1,9 +1,9 @@
-﻿using VRTK.Core.Data.Type.Transformation;
+﻿using Zinnia.Data.Type.Transformation;
 
-namespace Test.VRTK.Core.Data.Type.Transformation
+namespace Test.Zinnia.Data.Type.Transformation
 {
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
 
     public class Vector3MagnitudeSetterTest

@@ -1,10 +1,10 @@
-﻿using VRTK.Core.Data.Operation;
+﻿using Zinnia.Data.Operation;
 
-namespace Test.VRTK.Core.Data.Operation
+namespace Test.Zinnia.Data.Operation
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class TransformPositionExtractorTest
     {

@@ -1,12 +1,12 @@
-﻿using VRTK.Core.Cast;
-using VRTK.Core.Rule;
+﻿using Zinnia.Cast;
+using Zinnia.Rule;
 
-namespace Test.VRTK.Core.Cast
+namespace Test.Zinnia.Cast
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
-    using Test.VRTK.Core.Utility.Stub;
+    using Test.Zinnia.Utility.Mock;
+    using Test.Zinnia.Utility.Stub;
 
     public class StraightLineCastTest
     {

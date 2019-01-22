@@ -1,9 +1,9 @@
-﻿namespace VRTK.Core.Action
+﻿namespace Zinnia.Action
 {
     using UnityEngine;
     using System.Linq;
     using System.Collections.Generic;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value when all given actions are in their active state.

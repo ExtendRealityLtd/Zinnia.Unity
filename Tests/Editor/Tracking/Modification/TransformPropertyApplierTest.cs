@@ -1,12 +1,12 @@
-﻿using VRTK.Core.Tracking.Modification;
-using VRTK.Core.Data.Type;
-using VRTK.Core.Data.Enum;
+﻿using Zinnia.Tracking.Modification;
+using Zinnia.Data.Type;
+using Zinnia.Data.Enum;
 
-namespace Test.VRTK.Core.Tracking.Modification
+namespace Test.Zinnia.Tracking.Modification
 {
     using UnityEngine;
     using NUnit.Framework;
-    using Test.VRTK.Core.Utility.Mock;
+    using Test.Zinnia.Utility.Mock;
 
     public class TransformPropertyApplierTest
     {

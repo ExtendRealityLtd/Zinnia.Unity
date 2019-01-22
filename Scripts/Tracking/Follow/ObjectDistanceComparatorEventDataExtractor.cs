@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Tracking.Follow
+﻿namespace Zinnia.Tracking.Follow
 {
     using UnityEngine;
     using UnityEngine.Events;

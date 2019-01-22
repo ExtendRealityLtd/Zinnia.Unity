@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Process.Component
+﻿namespace Zinnia.Process.Component
 {
     using UnityEngine;
     using System.Collections.Generic;

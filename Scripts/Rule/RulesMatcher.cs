@@ -1,11 +1,11 @@
-﻿namespace VRTK.Core.Rule
+﻿namespace Zinnia.Rule
 {
     using UnityEngine;
     using UnityEngine.Events;
     using System;
     using System.Linq;
     using System.Collections.Generic;
-    using VRTK.Core.Extension;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Matches a given object against a collections of rules and emits the associated event.

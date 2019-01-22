@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Utility
+﻿namespace Zinnia.Utility
 {
     using UnityEditor;
     using UnityEditor.IMGUI.Controls;

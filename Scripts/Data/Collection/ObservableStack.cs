@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Data.Collection
+﻿namespace Zinnia.Data.Collection
 {
     using UnityEngine;
     using UnityEngine.Events;

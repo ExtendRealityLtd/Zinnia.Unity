@@ -1,6 +1,6 @@
-﻿using VRTK.Core.Extension;
+﻿using Zinnia.Extension;
 
-namespace Test.VRTK.Core.Extension
+namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
     using System.Collections.Generic;

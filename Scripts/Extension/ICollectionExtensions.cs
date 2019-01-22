@@ -1,4 +1,4 @@
-﻿namespace VRTK.Core.Extension
+﻿namespace Zinnia.Extension
 {
     using UnityEngine;
     using System.Collections.Generic;

@@ -1,7 +1,7 @@
-﻿using VRTK.Core.Tracking.Modification;
-using VRTK.Core.Cast;
+﻿using Zinnia.Tracking.Modification;
+using Zinnia.Cast;
 
-namespace Test.VRTK.Core.Tracking.Modification
+namespace Test.Zinnia.Tracking.Modification
 {
     using UnityEngine;
     using NUnit.Framework;
