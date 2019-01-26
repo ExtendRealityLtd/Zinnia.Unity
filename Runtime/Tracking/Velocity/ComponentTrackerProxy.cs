@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -11,7 +12,7 @@
         /// <summary>
         /// The <see cref="Component"/> that contains a <see cref="VelocityTracker"/>.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public Component proxySource;
 
         /// <summary>
@@ -49,7 +50,6 @@
         /// </summary>
         public virtual void ClearProxySource()
         {
-            proxySource = null;
             cachedVelocityTracker = null;
         }
 

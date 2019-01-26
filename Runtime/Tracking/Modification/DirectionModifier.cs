@@ -25,7 +25,7 @@
         /// <summary>
         /// The object to be used as the pivot point for rotation.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject pivot;
         /// <summary>
         /// The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.
@@ -108,7 +108,6 @@
         public virtual void ClearPivot()
         {
             pivotReleaseRotation = (pivot != null ? pivot.transform.rotation : Quaternion.identity);
-            pivot = null;
         }
 
         /// <summary>

@@ -19,12 +19,12 @@
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject primaryPoint;
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
-        [DocumentedByXml]
+        [DocumentedByXml, Cleared]
         public GameObject secondaryPoint;
         /// <summary>
         /// A scale factor multiplier.
@@ -100,7 +100,6 @@
         /// </summary>
         public virtual void ClearPrimaryPoint()
         {
-            primaryPoint = null;
             initialized = false;
         }
 
@@ -118,7 +117,6 @@
         /// </summary>
         public virtual void ClearSecondaryPoint()
         {
-            secondaryPoint = null;
             initialized = false;
         }
 
