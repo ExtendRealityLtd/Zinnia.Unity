@@ -3,14 +3,14 @@
     using UnityEngine;
 
     /// <summary>
-    /// Extracts the <see cref="Transform.position"/>.
+    /// Extracts the position of a <see cref="Transform"/>.
     /// </summary>
     public class TransformPositionExtractor : TransformVector3PropertyExtractor
     {
         /// <inheritdoc />
         protected override Vector3 ExtractValue()
         {
-            return (useLocal ? source.transform.localPosition : source.transform.position);
+            return useLocal ? source.transform.localPosition : source.transform.position;
         }
     }
 }
