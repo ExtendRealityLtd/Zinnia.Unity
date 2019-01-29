@@ -3,9 +3,9 @@
     using UnityEngine;
 
     /// <summary>
-    /// Extracts the chosen axis.
+    /// Extracts a chosen axis of a <see cref="Transform"/>.
     /// </summary>
-    public class TransformAxisExtractor : TransformVector3PropertyExtractor
+    public class TransformDirectionExtractor : TransformVector3PropertyExtractor
     {
         /// <summary>
         /// The direction axes of the transform.

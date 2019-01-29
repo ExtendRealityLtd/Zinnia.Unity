@@ -6,16 +6,16 @@ namespace Test.Zinnia.Data.Operation
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
 
-    public class TransformAxisExtractorTest
+    public class TransformDirectionExtractorTest
     {
         private GameObject containingObject;
-        private TransformAxisExtractor subject;
+        private TransformDirectionExtractor subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<TransformAxisExtractor>();
+            subject = containingObject.AddComponent<TransformDirectionExtractor>();
         }
 
         [TearDown]
@@ -31,7 +31,7 @@ namespace Test.Zinnia.Data.Operation
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.source = containingObject;
-            subject.Direction = TransformAxisExtractor.AxisDirection.Right;
+            subject.Direction = TransformDirectionExtractor.AxisDirection.Right;
 
             containingObject.transform.eulerAngles = Vector3.up * 45f;
             Vector3 result = subject.Extract();
@@ -48,7 +48,7 @@ namespace Test.Zinnia.Data.Operation
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.source = containingObject;
-            subject.Direction = TransformAxisExtractor.AxisDirection.Up;
+            subject.Direction = TransformDirectionExtractor.AxisDirection.Up;
 
             containingObject.transform.eulerAngles = Vector3.forward * 45f;
             Vector3 result = subject.Extract();
@@ -65,7 +65,7 @@ namespace Test.Zinnia.Data.Operation
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.source = containingObject;
-            subject.Direction = TransformAxisExtractor.AxisDirection.Forward;
+            subject.Direction = TransformDirectionExtractor.AxisDirection.Forward;
 
             containingObject.transform.eulerAngles = Vector3.up * 45f;
             Vector3 result = subject.Extract();
