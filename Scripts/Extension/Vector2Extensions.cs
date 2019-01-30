@@ -16,7 +16,7 @@
         /// <returns><see langword="true"/> if the two <see cref="Vector2"/> values are considered equal.</returns>
         public static bool ApproxEquals(this Vector2 a, Vector2 b, float tolerance = float.Epsilon)
         {
-            return (Vector2.Distance(a, b) <= tolerance);
+            return Vector2.Distance(a, b) <= tolerance;
         }
 
         /// <summary>
