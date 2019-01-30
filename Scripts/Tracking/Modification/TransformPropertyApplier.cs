@@ -4,10 +4,10 @@
     using UnityEngine.Events;
     using System;
     using System.Collections;
+    using Zinnia.Extension;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Enum;
     using Zinnia.Data.Type;
-    using Zinnia.Extension;
 
     /// <summary>
     /// Applies the transform properties from a given source <see cref="Transform"/> onto the given target <see cref="Transform"/>.
@@ -43,7 +43,7 @@
 
             public void Clear()
             {
-                Set(default(TransformData), default(TransformData));
+                Set(default, default);
             }
         }
 
@@ -71,10 +71,15 @@
         [Tooltip("The offset/pivot when applying the transformations.")]
         public GameObject offset;
         /// <summary>
-        /// Determines which axes to apply on when utilising the offset.
+        /// Determines which axes to apply on when utilizing the position offset.
         /// </summary>
-        [Tooltip("Determines which axes to apply on when utilising the offset.")]
-        public Vector3State applyOffsetOnAxis = new Vector3State(true, true, true);
+        [Tooltip("Determines which axes to apply on when utilizing the position offset.")]
+        public Vector3State applyPositionOffsetOnAxis = new Vector3State(true, true, true);
+        /// <summary>
+        /// Determines which axes to apply on when utilizing the rotation offset.
+        /// </summary>
+        [Tooltip("Determines which axes to apply on when utilizing the rotation offset.")]
+        public Vector3State applyRotationOffsetOnAxis = new Vector3State(true, true, true);
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
         /// </summary>
@@ -95,10 +100,25 @@
         /// </summary>
         public UnityEvent AfterTransformUpdated = new UnityEvent();
 
+        /// <summary>
+        /// The final calculated position to apply to the target.
+        /// </summary>
         protected Vector3 finalPosition;
+        /// <summary>
+        /// The final calculated rotation to apply to the target.
+        /// </summary>
         protected Quaternion finalRotation;
+        /// <summary>
+        /// The final calculated scale to apply to the target.
+        /// </summary>
         protected Vector3 finalScale;
+        /// <summary>
+        /// The routine for managing the transition of the transform.
+        /// </summary>
         protected Coroutine transitionRoutine;
+        /// <summary>
+        /// The cached event data payload.
+        /// </summary>
         protected EventData eventData = new EventData();
 
         /// <summary>
@@ -208,90 +228,90 @@
         /// <summary>
         /// Applies final transformations to the given <see cref="TransformData"/>.
         /// </summary>
-        /// <param name="givenSource">The source <see cref="TransformData"/> to obtain the transformation properties from.</param>
-        /// <param name="givenTarget">The target <see cref="TransformData"/> to apply transformations to.</param>
-        protected virtual void ProcessTransform(TransformData givenSource, TransformData givenTarget)
+        /// <param name="source">The source <see cref="TransformData"/> to obtain the transformation properties from.</param>
+        /// <param name="target">The target <see cref="TransformData"/> to apply transformations to.</param>
+        protected virtual void ProcessTransform(TransformData source, TransformData target)
         {
             if (transitionDuration.ApproxEquals(0f))
             {
-                givenTarget.transform.SetGlobalScale(finalScale);
-                givenTarget.transform.position = finalPosition;
-                givenTarget.transform.rotation = finalRotation;
-                AfterTransformUpdated?.Invoke(eventData.Set(givenSource, givenTarget));
+                target.transform.SetGlobalScale(finalScale);
+                target.transform.position = finalPosition;
+                target.transform.rotation = finalRotation;
+                AfterTransformUpdated?.Invoke(eventData.Set(source, target));
             }
             else
             {
                 CancelTransition();
-                transitionRoutine = StartCoroutine(TransitionTransform(givenSource, givenTarget, givenTarget.Position, finalPosition, givenTarget.Rotation, finalRotation, givenTarget.Scale, finalScale));
+                transitionRoutine = StartCoroutine(TransitionTransform(source, target, target.Position, finalPosition, target.Rotation, finalRotation, target.Scale, finalScale));
             }
         }
 
         /// <summary>
         /// Calculates the final position to apply based on the given target <see cref="Transform"/>.
         /// </summary>
-        /// <param name="givenSource">The source <see cref="TransformData"/> that will be used to determine the position transformation that is to be applied.</param>
-        /// <param name="givenTarget">The target <see cref="TransformData"/> that will have the position transformations applied to.</param>
-        protected virtual void SetPosition(TransformData givenSource, TransformData givenTarget)
+        /// <param name="source">The source <see cref="TransformData"/> that will be used to determine the position transformation that is to be applied.</param>
+        /// <param name="target">The target <see cref="TransformData"/> that will have the position transformations applied to.</param>
+        protected virtual void SetPosition(TransformData source, TransformData target)
         {
-            finalPosition = givenTarget.Position;
+            finalPosition = target.Position;
             if (applyTransformations.HasFlag(TransformProperties.Position))
             {
-                finalPosition = CalculatePosition(givenTarget, givenSource.Position, givenSource.Rotation, finalScale);
+                finalPosition = CalculatePosition(target, source.Position, source.Rotation, finalScale);
             }
         }
 
         /// <summary>
         /// Calculates the final rotation to apply based on the given target <see cref="Transform"/>.
         /// </summary>
-        /// <param name="givenSource">The source <see cref="TransformData"/> that will be used to determine the rotation transformation that is to be applied.</param>
-        /// <param name="givenTarget">The target <see cref="TransformData"/> that will have the rotation transformations applied to.</param>
-        protected virtual void SetRotation(TransformData givenSource, TransformData givenTarget)
+        /// <param name="source">The source <see cref="TransformData"/> that will be used to determine the rotation transformation that is to be applied.</param>
+        /// <param name="target">The target <see cref="TransformData"/> that will have the rotation transformations applied to.</param>
+        protected virtual void SetRotation(TransformData source, TransformData target)
         {
-            finalRotation = givenTarget.Rotation;
+            finalRotation = target.Rotation;
             if (applyTransformations.HasFlag(TransformProperties.Rotation))
             {
-                SetPositionWithOriginToSource(givenSource, givenTarget);
-                finalRotation = givenSource.Rotation;
+                SetPositionWithOriginToSource(source, target);
+                finalRotation = CalculateRotationWithOffset(source.Rotation, target.Rotation, offset);
             }
         }
 
         /// <summary>
         /// Calculates the final scale to apply based on the given target <see cref="Transform"/>.
         /// </summary>
-        /// <param name="givenSource">The source <see cref="TransformData"/> that will be used to determine the scale transformation that is to be applied.</param>
-        /// <param name="givenTarget">The target <see cref="TransformData"/> that will have the scale transformations applied to.</param>
-        protected virtual void SetScale(TransformData givenSource, TransformData givenTarget)
+        /// <param name="source">The source <see cref="TransformData"/> that will be used to determine the scale transformation that is to be applied.</param>
+        /// <param name="target">The target <see cref="TransformData"/> that will have the scale transformations applied to.</param>
+        protected virtual void SetScale(TransformData source, TransformData target)
         {
-            finalScale = givenTarget.Scale;
+            finalScale = target.Scale;
             if (applyTransformations.HasFlag(TransformProperties.Scale))
             {
-                finalScale = givenSource.Scale;
+                finalScale = source.Scale;
             }
         }
 
         /// <summary>
         /// Calculates the final position when the target <see cref="TransformData"/> also has an origin <see cref="TransformData"/>.
         /// </summary>
-        /// <param name="givenSource">The source <see cref="TransformData"/> that will be used to determine the position transformation that is to be applied.</param>
-        /// <param name="givenTarget">The target <see cref="TransformData"/> that will have the position transformations applied to.</param>
-        protected virtual void SetPositionWithOriginToSource(TransformData givenSource, TransformData givenTarget)
+        /// <param name="source">The source <see cref="TransformData"/> that will be used to determine the position transformation that is to be applied.</param>
+        /// <param name="target">The target <see cref="TransformData"/> that will have the position transformations applied to.</param>
+        protected virtual void SetPositionWithOriginToSource(TransformData source, TransformData target)
         {
             if (!applyTransformations.HasFlag(TransformProperties.Position) && offset != null)
             {
-                Vector3 updatedPosition = GetModifiedPosition(givenTarget);
-                finalPosition = CalculatePosition(givenTarget, updatedPosition, givenSource.Rotation, finalScale);
+                Vector3 updatedPosition = GetModifiedPosition(target);
+                finalPosition = CalculatePosition(target, updatedPosition, source.Rotation, finalScale);
             }
         }
 
         /// <summary>
         /// Calculates the position of a <see cref="TransformData"/> based on the source position, rotation and scale.
         /// </summary>
-        /// <param name="givenTarget">The target <see cref="TransformData"/> that will have the position transformations applied to.</param>
+        /// <param name="target">The target <see cref="TransformData"/> that will have the position transformations applied to.</param>
         /// <param name="sourcePosition">The source position value.</param>
         /// <param name="sourceRotation">The source rotation value.</param>
         /// <param name="sourceScale">The source scale value.</param>
         /// <returns>Calculated final position.</returns>
-        protected virtual Vector3 CalculatePosition(TransformData givenTarget, Vector3 sourcePosition, Quaternion sourceRotation, Vector3 sourceScale)
+        protected virtual Vector3 CalculatePosition(TransformData target, Vector3 sourcePosition, Quaternion sourceRotation, Vector3 sourceScale)
         {
             if (offset == null)
             {
@@ -300,13 +320,13 @@
 
             if (!applyTransformations.HasFlag(TransformProperties.Rotation))
             {
-                return GetOffsetPosition(sourcePosition, givenTarget.Position, offset.transform.position);
+                return GetOffsetPosition(sourcePosition, target.Position, offset.transform.position);
             }
 
-            Vector3 calculatedOffset = GetOffsetPosition(Vector3.zero, givenTarget.Position, offset.transform.position) * -1f;
-            Quaternion relativeRotation = Quaternion.Inverse(givenTarget.Rotation) * sourceRotation;
+            Vector3 calculatedOffset = GetOffsetPosition(Vector3.zero, target.Position, offset.transform.position) * -1f;
+            Quaternion relativeRotation = Quaternion.Inverse(target.Rotation) * sourceRotation;
             Vector3 adjustedOffset = relativeRotation * calculatedOffset;
-            Vector3 scaleFactor = sourceScale.Divide(givenTarget.Scale);
+            Vector3 scaleFactor = sourceScale.Divide(target.Scale);
             Vector3 scaledOffset = Vector3.Scale(adjustedOffset, scaleFactor);
             return sourcePosition - scaledOffset;
         }
@@ -314,14 +334,14 @@
         /// <summary>
         /// Applies the offset to the given <see cref="TransformData"/>.
         /// </summary>
-        /// <param name="givenTarget">The target <see cref="TransformData"/> that will have the position transformations applied to.</param>
+        /// <param name="target">The target <see cref="TransformData"/> that will have the position transformations applied to.</param>
         /// <returns>Modified position taking in to consideration any offset transformations.</returns>
-        protected virtual Vector3 GetModifiedPosition(TransformData givenTarget)
+        protected virtual Vector3 GetModifiedPosition(TransformData target)
         {
             return new Vector3(
-                GetModifiedPositionValue(applyOffsetOnAxis.xState, offset.transform.position.x, givenTarget.Position.x),
-                GetModifiedPositionValue(applyOffsetOnAxis.yState, offset.transform.position.y, givenTarget.Position.y),
-                GetModifiedPositionValue(applyOffsetOnAxis.zState, offset.transform.position.z, givenTarget.Position.z)
+                GetModifiedPositionValue(applyPositionOffsetOnAxis.xState, offset.transform.position.x, target.Position.x),
+                GetModifiedPositionValue(applyPositionOffsetOnAxis.yState, offset.transform.position.y, target.Position.y),
+                GetModifiedPositionValue(applyPositionOffsetOnAxis.zState, offset.transform.position.z, target.Position.z)
                 );
         }
 
@@ -346,9 +366,9 @@
         /// <returns>Position with the applied offset.</returns>
         protected virtual Vector3 GetOffsetPosition(Vector3 sourcePosition, Vector3 targetPosition, Vector3 offsetPosition)
         {
-            float xPosition = GetOffsetCoordinate(applyOffsetOnAxis.xState, sourcePosition, targetPosition, offsetPosition, 0);
-            float yPosition = GetOffsetCoordinate(applyOffsetOnAxis.yState, sourcePosition, targetPosition, offsetPosition, 1);
-            float zPosition = GetOffsetCoordinate(applyOffsetOnAxis.zState, sourcePosition, targetPosition, offsetPosition, 2);
+            float xPosition = GetOffsetCoordinate(applyPositionOffsetOnAxis.xState, sourcePosition, targetPosition, offsetPosition, 0);
+            float yPosition = GetOffsetCoordinate(applyPositionOffsetOnAxis.yState, sourcePosition, targetPosition, offsetPosition, 1);
+            float zPosition = GetOffsetCoordinate(applyPositionOffsetOnAxis.zState, sourcePosition, targetPosition, offsetPosition, 2);
             return new Vector3(xPosition, yPosition, zPosition);
         }
 
@@ -367,6 +387,28 @@
         }
 
         /// <summary>
+        /// Calculates the rotation with an optional offset.
+        /// </summary>
+        /// <param name="sourceRotation">The source rotation to apply to the target.</param>
+        /// <param name="targetRotation">The current original target rotation before any changes to it.</param>
+        /// <param name="offset">The offset rotation to apply.</param>
+        /// <returns>The calculated rotation based on the offset.</returns>
+        protected virtual Quaternion CalculateRotationWithOffset(Quaternion sourceRotation, Quaternion targetRotation, GameObject offset)
+        {
+            if (offset == null)
+            {
+                return sourceRotation;
+            }
+
+            Quaternion offsetAdjustedRotation = sourceRotation * (targetRotation * Quaternion.Inverse(offset.transform.rotation));
+            float xRotation = applyRotationOffsetOnAxis.xState ? offsetAdjustedRotation.eulerAngles.x : sourceRotation.eulerAngles.x;
+            float yRotation = applyRotationOffsetOnAxis.yState ? offsetAdjustedRotation.eulerAngles.y : sourceRotation.eulerAngles.y;
+            float zRotation = applyRotationOffsetOnAxis.zState ? offsetAdjustedRotation.eulerAngles.z : sourceRotation.eulerAngles.z;
+
+            return Quaternion.Euler(new Vector3(xRotation, yRotation, zRotation));
+        }
+
+        /// <summary>
         /// Cancels the transition of the transformation.
         /// </summary>
         protected virtual void CancelTransition()
@@ -380,8 +422,8 @@
         /// <summary>
         /// Applies the relevant transformation to the affected <see cref="TransformData"/> over a given duration.
         /// </summary>
-        /// <param name="givenSource">The target <see cref="TransformData"/> to obtain the transformation properties from.</param>
-        /// <param name="givenTarget">The <see cref="TransformData"/> to apply the transformations to.</param>
+        /// <param name="source">The target <see cref="TransformData"/> to obtain the transformation properties from.</param>
+        /// <param name="target">The <see cref="TransformData"/> to apply the transformations to.</param>
         /// <param name="startPosition">The initial position of the <see cref="Transform"/>.</param>
         /// <param name="destinationPosition">The final position for the <see cref="Transform"/>.</param>
         /// <param name="startRotation">The initial rotation of the <see cref="Transform"/>.</param>
@@ -389,24 +431,24 @@
         /// <param name="startScale">The initial scale of the <see cref="Transform"/>.</param>
         /// <param name="destinationScale">The final scale of the <see cref="Transform"/>.</param>
         /// <returns>Coroutine enumerator.</returns>
-        protected virtual IEnumerator TransitionTransform(TransformData givenSource, TransformData givenTarget, Vector3 startPosition, Vector3 destinationPosition, Quaternion startRotation, Quaternion destinationRotation, Vector3 startScale, Vector3 destinationScale)
+        protected virtual IEnumerator TransitionTransform(TransformData source, TransformData target, Vector3 startPosition, Vector3 destinationPosition, Quaternion startRotation, Quaternion destinationRotation, Vector3 startScale, Vector3 destinationScale)
         {
             float elapsedTime = 0f;
             WaitForEndOfFrame delayInstruction = new WaitForEndOfFrame();
             while (elapsedTime < transitionDuration)
             {
                 float lerpFrame = (elapsedTime / transitionDuration);
-                givenTarget.transform.SetGlobalScale(Vector3.Lerp(startScale, destinationScale, lerpFrame));
-                givenTarget.transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
-                givenTarget.transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
+                target.transform.SetGlobalScale(Vector3.Lerp(startScale, destinationScale, lerpFrame));
+                target.transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
+                target.transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
                 elapsedTime += Time.deltaTime;
                 yield return delayInstruction;
             }
 
-            givenTarget.transform.SetGlobalScale(destinationScale);
-            givenTarget.transform.position = destinationPosition;
-            givenTarget.transform.rotation = destinationRotation;
-            AfterTransformUpdated?.Invoke(eventData.Set(givenSource, givenTarget));
+            target.transform.SetGlobalScale(destinationScale);
+            target.transform.position = destinationPosition;
+            target.transform.rotation = destinationRotation;
+            AfterTransformUpdated?.Invoke(eventData.Set(source, target));
         }
     }
 }
