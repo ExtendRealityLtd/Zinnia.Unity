@@ -160,6 +160,11 @@
             ProcessValue(value);
         }
 
+        protected virtual void Awake()
+        {
+            Value = defaultValue;
+        }
+
         protected virtual void OnEnable()
         {
             SubscribeToSources();
