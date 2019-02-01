@@ -175,7 +175,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Apply();
 
-            Assert.AreEqual(new Vector3(-1f, -1f, 5f).ToString(), targetObject.transform.position.ToString());
+            Assert.AreEqual(new Vector3(5f, -1f, 5f).ToString(), targetObject.transform.position.ToString());
             Assert.AreEqual(new Quaternion(0.5f, -0.5f, -0.5f, -0.5f).ToString(), targetObject.transform.rotation.ToString());
             Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
         }
@@ -223,7 +223,7 @@ namespace Test.Zinnia.Tracking.Modification
             offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
 
             subject.Apply();
-            Assert.AreEqual(new Vector3(2f, -1f, 2f).ToString(), targetObject.transform.position.ToString());
+            Assert.AreEqual(new Vector3(2f, 2f, 5f).ToString(), targetObject.transform.position.ToString());
             Assert.AreEqual(new Quaternion(0.5f, -0.5f, -0.5f, -0.5f).ToString(), targetObject.transform.rotation.ToString());
             Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
         }
