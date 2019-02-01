@@ -215,8 +215,8 @@
             TransformData targetData = new TransformData(target);
             BeforeTransformUpdated?.Invoke(eventData.Set(source, targetData));
             SetScale(source, targetData);
-            SetPosition(source, targetData);
             SetRotation(source, targetData);
+            SetPosition(source, targetData);
             ProcessTransform(source, targetData);
         }
 
@@ -256,7 +256,7 @@
             finalPosition = target.Position;
             if (applyTransformations.HasFlag(TransformProperties.Position))
             {
-                finalPosition = CalculatePosition(target, source.Position, source.Rotation, finalScale);
+                finalPosition = CalculatePosition(target, source.Position, finalRotation, finalScale);
             }
         }
 

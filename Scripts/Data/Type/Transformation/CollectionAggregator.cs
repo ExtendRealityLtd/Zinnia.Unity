@@ -86,7 +86,7 @@
         {
             if (CurrentIndex < 0 || CurrentIndex >= collection.Count)
             {
-                return default(TOutput);
+                return default;
             }
 
             SetElement(input);

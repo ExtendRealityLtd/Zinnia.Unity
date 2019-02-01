@@ -116,7 +116,7 @@ namespace Zinnia.Lib.Supyrb
                 }
             }
 
-            return default(T);
+            return default;
         }
 
         public static bool SetFieldOrPropertyValue(string fieldName, object obj, object value, bool includeAllBases = false, BindingFlags bindings = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)

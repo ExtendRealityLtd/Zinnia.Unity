@@ -40,7 +40,7 @@
 
             public void Clear()
             {
-                Set(default(ActiveCollisionPublisher.PayloadData), default(CollisionNotifier.EventData));
+                Set(default, default);
             }
         }
 

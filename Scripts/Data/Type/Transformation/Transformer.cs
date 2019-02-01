@@ -35,7 +35,7 @@
         {
             if (!isActiveAndEnabled)
             {
-                return default(TOutput);
+                return default;
             }
             return ProcessResult(input);
         }

@@ -42,7 +42,7 @@
 
             public void Clear()
             {
-                Set(default(RaycastHit?), default(IReadOnlyList<Vector3>));
+                Set(default, default);
             }
         }
 

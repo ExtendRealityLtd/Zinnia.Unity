@@ -54,7 +54,7 @@
 
             public void Clear()
             {
-                Set(default(Component), default(bool), default(Collision), default(Collider));
+                Set(default, default, default, default);
             }
 
             /// <inheritdoc />

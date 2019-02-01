@@ -31,7 +31,7 @@
         {
             if (gameObject == null)
             {
-                return default(T);
+                return default;
             }
 
             T foundComponent = gameObject.GetComponent<T>();

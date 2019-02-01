@@ -42,7 +42,7 @@
 
             public void Clear()
             {
-                Set(default(Vector3), default(float));
+                Set(default, default);
             }
         }
 

@@ -126,7 +126,7 @@
             }
 
             elements.Clear();
-            BecameEmpty?.Invoke(default(TElement));
+            BecameEmpty?.Invoke(default);
         }
 
         protected virtual void Start()
