@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Allows observing changes to a <see cref="HashSet{T}"/>.
@@ -14,18 +15,22 @@
         /// <summary>
         /// Emitted when a searched element is found.
         /// </summary>
+        [DocumentedByXml]
         public TEvent ElementFound = new TEvent();
         /// <summary>
         /// Emitted when a searched element is not found.
         /// </summary>
+        [DocumentedByXml]
         public TEvent ElementNotFound = new TEvent();
         /// <summary>
         /// Emitted when the collection has the last element removed from it and becomes empty.
         /// </summary>
+        [DocumentedByXml]
         public TEvent BecameEmpty = new TEvent();
         /// <summary>
         /// Emitted when the collection has the first element added to it and becomes populated.
         /// </summary>
+        [DocumentedByXml]
         public TEvent BecamePopulated = new TEvent();
 
         /// <summary>

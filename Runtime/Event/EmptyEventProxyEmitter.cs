@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Event
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.Events;
 
     /// <summary>
@@ -10,6 +11,7 @@
         /// <summary>
         /// Is emitted when Receive is called.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Emitted = new UnityEvent();
 
         /// <summary>

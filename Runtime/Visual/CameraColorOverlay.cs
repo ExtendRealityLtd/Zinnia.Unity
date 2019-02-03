@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Data.Type;
 
@@ -21,6 +22,7 @@
             /// <summary>
             /// The <see cref="Color"/> being applied to the camera overlay.
             /// </summary>
+            [DocumentedByXml]
             public Color color;
 
             public EventData Set(EventData source)
@@ -51,39 +53,48 @@
         /// <summary>
         /// A <see cref="Camera"/> collection to apply the color overlay to.
         /// </summary>
+        [DocumentedByXml]
         public CameraList validCameras;
         /// <summary>
         /// The <see cref="Color"/> of the overlay.
         /// </summary>
+        [DocumentedByXml]
         public Color overlayColor = Color.black;
         /// <summary>
         /// The <see cref="Material"/> to use for the overlay.
         /// </summary>
+        [DocumentedByXml]
         public Material overlayMaterial;
         /// <summary>
         /// The duration of time to apply the overlay <see cref="Color"/>.
         /// </summary>
+        [DocumentedByXml]
         public float addDuration;
         /// <summary>
         /// The duration of time to remove the overlay <see cref="Color"/>.
         /// </summary>
+        [DocumentedByXml]
         public float removeDuration = 1f;
         /// <summary>
         /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
         /// </summary>
+        [DocumentedByXml]
         public float appliedDuration;
 
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> is added.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Added = new UnityEvent();
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> is removed.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Removed = new UnityEvent();
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> has changed from the previous render frame.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Changed = new UnityEvent();
 
         protected float targetDuration;

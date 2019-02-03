@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Tracking.Follow.Modifier.Property;
 
@@ -11,23 +12,28 @@
         /// <summary>
         /// The modifier to change the scale.
         /// </summary>
+        [DocumentedByXml]
         public PropertyModifier scaleModifier;
         /// <summary>
         /// The modifier to change the rotation.
         /// </summary>
+        [DocumentedByXml]
         public PropertyModifier rotationModifier;
         /// <summary>
         /// The modifier to change the position.
         /// </summary>
+        [DocumentedByXml]
         public PropertyModifier positionModifier;
 
         /// <summary>
         /// Emitted before the follow is modified.
         /// </summary>
+        [DocumentedByXml]
         public ObjectFollower.UnityEvent Premodified = new ObjectFollower.UnityEvent();
         /// <summary>
         /// Emitted after the follow is modified.
         /// </summary>
+        [DocumentedByXml]
         public ObjectFollower.UnityEvent Modified = new ObjectFollower.UnityEvent();
 
         /// The current source being used in the modifier process.

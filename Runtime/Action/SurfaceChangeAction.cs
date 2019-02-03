@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Action
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -12,10 +13,12 @@
         /// <summary>
         /// The distance between the current surface and previous surface to consider a valid change.
         /// </summary>
+        [DocumentedByXml]
         public float changeDistance = 0.5f;
         /// <summary>
         /// The axes to check for distance differences on.
         /// </summary>
+        [DocumentedByXml]
         public Vector3State checkAxis = Vector3State.True;
 
         /// <summary>

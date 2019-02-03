@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Holds <see cref="GameObject"/>s to (de)activate.
@@ -11,6 +12,7 @@
         /// <summary>
         /// The <see cref="GameObject"/>s to (de)activate.
         /// </summary>
+        [DocumentedByXml]
         public List<GameObject> gameObjects = new List<GameObject>();
 
         /// <summary>

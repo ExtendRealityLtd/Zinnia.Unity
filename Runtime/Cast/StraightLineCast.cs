@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Casts a straight line and creates points at the origin and target.
@@ -11,6 +12,7 @@
         /// <summary>
         /// The maximum length to cast.
         /// </summary>
+        [DocumentedByXml]
         public float maximumLength = 100f;
 
         protected virtual void OnEnable()

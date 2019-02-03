@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
 
     /// <summary>
@@ -26,7 +27,7 @@
         /// <summary>
         /// The bounds in which the float must be to be considered a positive boolean.
         /// </summary>
-        [MinMaxRange(-1f, 1f), SerializeField]
+        [MinMaxRange(-1f, 1f), SerializeField, DocumentedByXml]
         protected FloatRange positiveBounds = new FloatRange(0f, 1f);
 
         /// <summary>

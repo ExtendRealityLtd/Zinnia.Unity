@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -12,6 +13,7 @@
         /// <summary>
         /// Actions to check the active state on.
         /// </summary>
+        [DocumentedByXml]
         public List<Action> actions = new List<Action>();
 
         protected virtual void Update()

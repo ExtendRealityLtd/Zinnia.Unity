@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
     /// <summary>
@@ -16,10 +17,12 @@
         /// <summary>
         /// The source of the <see cref="Transform"/> to extract from.
         /// </summary>
+        [DocumentedByXml]
         public GameObject source;
         /// <summary>
         /// Determines whether to extract the local property or the world property.
         /// </summary>
+        [DocumentedByXml]
         public bool useLocal;
 
         /// <summary>
@@ -34,6 +37,7 @@
         /// <summary>
         /// Emitted when the property is extracted.
         /// </summary>
+        [DocumentedByXml]
         public TEvent Extracted = new TEvent();
 
         /// <summary>

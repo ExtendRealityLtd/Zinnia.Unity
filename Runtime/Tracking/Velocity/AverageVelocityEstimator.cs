@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -12,22 +13,27 @@
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
+        [DocumentedByXml]
         public GameObject source;
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
+        [DocumentedByXml]
         public GameObject relativeTo;
         /// <summary>
         /// Automatically begin collecting samples for estimation.
         /// </summary>
+        [DocumentedByXml]
         public bool autoStartSampling = true;
         /// <summary>
         /// The number of average frames to collect samples for velocity estimation.
         /// </summary>
+        [DocumentedByXml]
         public int velocityAverageFrames = 5;
         /// <summary>
         /// The number of average frames to collect samples for angular velocity estimation.
         /// </summary>
+        [DocumentedByXml]
         public int angularVelocityAverageFrames = 10;
 
         protected bool collectSamples;

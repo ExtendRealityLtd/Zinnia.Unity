@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Emits the velocities of a given <see cref="VelocityTracker"/>.
@@ -20,15 +21,18 @@
         /// <summary>
         /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
         /// </summary>
+        [DocumentedByXml]
         public VelocityTracker source;
 
         /// <summary>
         /// Emitted when the Tracked Velocity is emitted.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent VelocityEmitted = new UnityEvent();
         /// <summary>
         /// Emitted when the Tracked Angular Velocity is emitted.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent AngularVelocityEmitted = new UnityEvent();
 
         /// <summary>

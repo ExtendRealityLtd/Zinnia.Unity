@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Rule
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -10,6 +11,7 @@
         /// <summary>
         /// The layers to check against.
         /// </summary>
+        [DocumentedByXml]
         public LayerMask layerMask;
 
         /// <inheritdoc />

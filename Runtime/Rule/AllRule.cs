@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -13,6 +14,7 @@
         /// <summary>
         /// The <see cref="IRule"/>s to check against.
         /// </summary>
+        [DocumentedByXml]
         public List<RuleContainer> rules = new List<RuleContainer>();
 
         /// <inheritdoc/>

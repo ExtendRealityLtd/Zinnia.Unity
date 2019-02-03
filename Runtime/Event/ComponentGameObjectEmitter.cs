@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Event
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -10,6 +11,7 @@
         /// <summary>
         /// The source to extract from.
         /// </summary>
+        [DocumentedByXml]
         public Component source;
 
         /// <summary>

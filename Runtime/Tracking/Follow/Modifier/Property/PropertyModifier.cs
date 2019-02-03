@@ -1,19 +1,26 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Tracking.Follow;
 
     public abstract class PropertyModifier : MonoBehaviour
     {
+        /// <summary>
+        /// Determines whether the offset will be applied on the modification.
+        /// </summary>
+        [DocumentedByXml]
         public bool applyOffset = true;
 
         /// <summary>
         /// Emitted before the property is modified.
         /// </summary>
+        [DocumentedByXml]
         public ObjectFollower.UnityEvent Premodified = new ObjectFollower.UnityEvent();
         /// <summary>
         /// Emitted after the property is modified.
         /// </summary>
+        [DocumentedByXml]
         public ObjectFollower.UnityEvent Modified = new ObjectFollower.UnityEvent();
 
         protected ObjectFollower.EventData eventData = new ObjectFollower.EventData();

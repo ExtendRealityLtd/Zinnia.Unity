@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
@@ -15,12 +16,13 @@
         /// <summary>
         /// The <see cref="Object"/> types to manage the enabled state on.
         /// </summary>
-        [TypePicker(typeof(Object))]
+        [TypePicker(typeof(Object)), DocumentedByXml]
         public List<SerializableType> types = new List<SerializableType>();
 
         /// <summary>
         /// The target to modify the enabled states for the provided <see cref="types"/>.
         /// </summary>
+        [DocumentedByXml]
         public GameObject target;
 
         /// <summary>

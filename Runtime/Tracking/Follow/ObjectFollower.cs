@@ -5,6 +5,7 @@
     using EmptyUnityEvent = UnityEngine.Events.UnityEvent;
     using System;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Process.Component;
     using Zinnia.Tracking.Follow.Modifier;
@@ -23,14 +24,17 @@
             /// <summary>
             /// The source utilize within the <see cref="FollowModifier"/>.
             /// </summary>
+            [DocumentedByXml]
             public GameObject source;
             /// <summary>
             /// The target to apply the <see cref="FollowModifier"/> on.
             /// </summary>
+            [DocumentedByXml]
             public GameObject target;
             /// <summary>
             /// The optional offset the target follow against the source.
             /// </summary>
+            [DocumentedByXml]
             public GameObject targetOffset;
 
             public EventData Set(EventData source)
@@ -63,11 +67,12 @@
         /// <summary>
         /// A <see cref="GameObject"/> collection of target offsets to offset the target against the source whilst following.
         /// </summary>
+        [DocumentedByXml]
         public List<GameObject> targetOffsets = new List<GameObject>();
         /// <summary>
         /// The <see cref="FollowModifier"/> to apply.
         /// </summary>
-        [Header("Follow Settings")]
+        [Header("Follow Settings"), DocumentedByXml]
         public FollowModifier followModifier;
 
         /// <summary>
@@ -83,10 +88,12 @@
         /// <summary>
         /// Emitted before any processing.
         /// </summary>
+        [DocumentedByXml]
         public EmptyUnityEvent Preprocessed = new EmptyUnityEvent();
         /// <summary>
         /// Emitted after all processing is complete.
         /// </summary>
+        [DocumentedByXml]
         public EmptyUnityEvent Processed = new EmptyUnityEvent();
 
         protected EventData eventData = new EventData();

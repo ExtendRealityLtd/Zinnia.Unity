@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Cast;
 
@@ -11,6 +12,7 @@
         /// <summary>
         /// The target to apply the rotations to.
         /// </summary>
+        [DocumentedByXml]
         public GameObject target;
 
         /// <summary>

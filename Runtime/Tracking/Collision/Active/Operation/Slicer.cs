@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Slices a selection of the collection from the given <see cref="startIndex"/> for the given <see cref="length"/> and provides the sliced collection and the remaining collection separately.
@@ -11,10 +12,12 @@
         /// <summary>
         /// The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.
         /// </summary>
+        [DocumentedByXml]
         public int startIndex;
         /// <summary>
         /// The number of elements in the slice.
         /// </summary>
+        [DocumentedByXml]
         public uint length = 1;
 
         /// <summary>
@@ -37,10 +40,12 @@
         /// <summary>
         /// Emitted when the sliced elements are taken from the collection.
         /// </summary>
+        [DocumentedByXml]
         public ActiveCollisionsContainer.UnityEvent Sliced = new ActiveCollisionsContainer.UnityEvent();
         /// <summary>
         /// Emitted when the remaining elements are left after slicing.
         /// </summary>
+        [DocumentedByXml]
         public ActiveCollisionsContainer.UnityEvent Remained = new ActiveCollisionsContainer.UnityEvent();
 
         /// <summary>

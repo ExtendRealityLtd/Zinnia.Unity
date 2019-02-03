@@ -3,6 +3,7 @@
     using UnityEngine;
     using System;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Allows actions to dynamically register listeners to other actions.
@@ -18,28 +19,34 @@
             /// <summary>
             /// Determines if the source can be used.
             /// </summary>
+            [DocumentedByXml]
             public bool enabled;
             /// <summary>
             /// The main container of the action.
             /// </summary>
+            [DocumentedByXml]
             public GameObject container;
             /// <summary>
             /// The action to subscribe to.
             /// </summary>
+            [DocumentedByXml]
             public Action action;
         }
 
         /// <summary>
         /// Registers the action sources when the component is enabled.
         /// </summary>
+        [DocumentedByXml]
         public bool registerOnEnable = true;
         /// <summary>
         /// The action that will have the sources populated by the given <see cref="sources"/>.
         /// </summary>
+        [DocumentedByXml]
         public Action target;
         /// <summary>
         /// A list of action sources to populate the target sources list with.
         /// </summary>
+        [DocumentedByXml]
         public List<ActionSource> sources = new List<ActionSource>();
 
         /// <summary>

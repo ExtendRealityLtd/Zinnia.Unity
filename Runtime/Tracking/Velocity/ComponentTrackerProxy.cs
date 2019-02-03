@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -10,6 +11,7 @@
         /// <summary>
         /// The <see cref="Component"/> that contains a <see cref="VelocityTracker"/>.
         /// </summary>
+        [DocumentedByXml]
         public Component proxySource;
 
         /// <summary>

@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/>'s <see cref="GameObject.tag"/> is part of a list.
@@ -12,6 +13,7 @@
         /// <summary>
         /// The tags to check against.
         /// </summary>
+        [DocumentedByXml]
         public List<string> tags = new List<string>();
 
         /// <inheritdoc />

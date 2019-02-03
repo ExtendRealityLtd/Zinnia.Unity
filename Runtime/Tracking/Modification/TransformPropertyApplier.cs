@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Enum;
     using Zinnia.Data.Type;
@@ -23,10 +24,12 @@
             /// <summary>
             /// The source <see cref="TransformData"/> to obtain the transformation properties from.
             /// </summary>
+            [DocumentedByXml]
             public TransformData source;
             /// <summary>
             /// The target <see cref="TransformData"/> to apply transformations to.
             /// </summary>
+            [DocumentedByXml]
             public TransformData target;
 
             public EventData Set(EventData source)
@@ -58,40 +61,48 @@
         /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
+        [DocumentedByXml]
         public TransformData source;
         /// <summary>
         /// The target to apply the transformations to.
         /// </summary>
+        [DocumentedByXml]
         public GameObject target;
         /// <summary>
         /// The offset/pivot when applying the transformations.
         /// </summary>
+        [DocumentedByXml]
         public GameObject offset;
         /// <summary>
         /// Determines which axes to apply on when utilizing the position offset.
         /// </summary>
+        [DocumentedByXml]
         public Vector3State applyPositionOffsetOnAxis = new Vector3State(true, true, true);
         /// <summary>
         /// Determines which axes to apply on when utilizing the rotation offset.
         /// </summary>
+        [DocumentedByXml]
         public Vector3State applyRotationOffsetOnAxis = new Vector3State(true, true, true);
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
         /// </summary>
-        [UnityFlags]
+        [UnityFlags, DocumentedByXml]
         public TransformProperties applyTransformations = (TransformProperties)(-1);
         /// <summary>
         /// The amount of time to take when transitioning from the current <see cref="Transform"/> state to the modified <see cref="Transform"/> state.
         /// </summary>
+        [DocumentedByXml]
         public float transitionDuration;
 
         /// <summary>
         /// Emitted before the transformation process occurs.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent BeforeTransformUpdated = new UnityEvent();
         /// <summary>
         /// Emitted after the transformation process has occured.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent AfterTransformUpdated = new UnityEvent();
 
         /// <summary>

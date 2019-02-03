@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
     /// <summary>
@@ -13,31 +14,38 @@
         /// <summary>
         /// The target to rotate.
         /// </summary>
+        [DocumentedByXml]
         public GameObject target;
         /// <summary>
         /// The object to look at when affecting rotation.
         /// </summary>
+        [DocumentedByXml]
         public GameObject lookAt;
         /// <summary>
         /// The object to be used as the pivot point for rotation.
         /// </summary>
+        [DocumentedByXml]
         public GameObject pivot;
         /// <summary>
         /// The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.
         /// </summary>
+        [DocumentedByXml]
         public float resetOrientationSpeed = 0.1f;
         /// <summary>
         /// Prevent z-axis rotation coming from the <see cref="lookAt"/> target.
         /// </summary>
+        [DocumentedByXml]
         public bool preventLookAtZRotation = true;
 
         /// <summary>
         /// Emitted when the orientation is reset.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent OrientationReset = new UnityEvent();
         /// <summary>
         /// Emitted when the orientation reset action is cancelled.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent OrientationResetCancelled = new UnityEvent();
 
         protected Quaternion targetInitialRotation;

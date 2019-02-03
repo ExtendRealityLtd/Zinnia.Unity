@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Allows counting the amount of attempts an element is added or removed from a <see cref="Dictionary{TKey, TValue}"/>.
@@ -15,10 +16,12 @@
         /// <summary>
         /// Emitted when an element is added for the first time.
         /// </summary>
+        [DocumentedByXml]
         public TEvent ElementAdded = new TEvent();
         /// <summary>
         /// Emitted when an element is removed completely.
         /// </summary>
+        [DocumentedByXml]
         public TEvent ElementRemoved = new TEvent();
 
         /// <summary>

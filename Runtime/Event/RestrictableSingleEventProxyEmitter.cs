@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Event
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.Events;
     using Zinnia.Extension;
     using Zinnia.Rule;
@@ -9,6 +10,7 @@
         /// <summary>
         /// Determines whether the received payload is valid to be re-emitted.
         /// </summary>
+        [DocumentedByXml]
         public RuleContainer receiveValidity;
 
         /// <summary>

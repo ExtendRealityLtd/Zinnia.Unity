@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Data.Type
 {
     using System;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Allows a boolean to be set per <see cref="UnityEngine.Vector3"/> element to provide a state reference.
@@ -11,14 +12,17 @@
         /// <summary>
         /// The X State of the <see cref="UnityEngine.Vector3"/>.
         /// </summary>
+        [DocumentedByXml]
         public bool xState;
         /// <summary>
         /// The Y State of the <see cref="UnityEngine.Vector3"/>.
         /// </summary>
+        [DocumentedByXml]
         public bool yState;
         /// <summary>
         /// The Z State of the <see cref="UnityEngine.Vector3"/>.
         /// </summary>
+        [DocumentedByXml]
         public bool zState;
 
         /// <summary>

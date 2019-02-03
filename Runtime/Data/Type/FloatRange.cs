@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Specifies a range of float values.
@@ -12,10 +13,12 @@
         /// <summary>
         /// The inclusive minimum value of the range.
         /// </summary>
+        [DocumentedByXml]
         public float minimum;
         /// <summary>
         /// The inclusive maximum value of the range.
         /// </summary>
+        [DocumentedByXml]
         public float maximum;
 
         /// <summary>

@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Determines whether an object is part of a list.
@@ -11,6 +12,7 @@
         /// <summary>
         /// The objects to check against.
         /// </summary>
+        [DocumentedByXml]
         public List<Object> objects = new List<Object>();
 
         /// <inheritdoc />

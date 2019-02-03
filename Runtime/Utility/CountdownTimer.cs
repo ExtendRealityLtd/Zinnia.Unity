@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Utility
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
 
@@ -11,27 +12,33 @@
         /// <summary>
         /// The time to start the countdown at.
         /// </summary>
+        [DocumentedByXml]
         public float startTime = 1f;
 
         /// <summary>
         /// Emitted when the countdown starts.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Started = new UnityEvent();
         /// <summary>
         /// Emitted when the countdown is cancelled.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Cancelled = new UnityEvent();
         /// <summary>
         /// Emitted when the countdown completes.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Completed = new UnityEvent();
         /// <summary>
         /// Emitted when the status of the countdown is checked and is still running.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent StillRunning = new UnityEvent();
         /// <summary>
         /// Emitted when the status of the countdown is checked and is not running.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent NotRunning = new UnityEvent();
 
         /// <summary>

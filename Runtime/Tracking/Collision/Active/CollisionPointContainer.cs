@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -21,15 +22,18 @@
         /// <summary>
         /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or just to search for the containing <see cref="Transform"/>.
         /// </summary>
+        [DocumentedByXml]
         public bool parentIsCollisionNotifier;
 
         /// <summary>
         /// Emitted when the collision point container is created.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Created = new UnityEvent();
         /// <summary>
         /// Emitted when the collision point container is destroyed.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Destroyed = new UnityEvent();
 
         /// <summary>

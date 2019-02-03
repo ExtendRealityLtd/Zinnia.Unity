@@ -5,6 +5,7 @@
     using System;
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -29,6 +30,7 @@
             /// <summary>
             /// The container of the source that is initiating the collision.
             /// </summary>
+            [DocumentedByXml]
             public GameObject sourceContainer;
 
             /// <summary>
@@ -53,11 +55,13 @@
         /// <summary>
         /// The data to publish to any available consumers.
         /// </summary>
+        [DocumentedByXml]
         public PayloadData payload = new PayloadData();
 
         /// <summary>
         /// Emitted the collision data is published.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Published = new UnityEvent();
 
         /// <summary>

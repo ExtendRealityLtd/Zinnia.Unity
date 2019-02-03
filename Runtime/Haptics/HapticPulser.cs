@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Haptics
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -7,7 +8,7 @@
     /// </summary>
     public abstract class HapticPulser : HapticProcess
     {
-        [Range(0f, 1f), SerializeField]
+        [Range(0f, 1f), SerializeField, DocumentedByXml]
         private float _intensity = 1f;
         /// <summary>
         /// The intensity of the haptic rumble.

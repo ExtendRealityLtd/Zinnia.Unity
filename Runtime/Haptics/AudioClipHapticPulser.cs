@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Creates a haptic pattern based on the waveform of an <see cref="UnityEngine.AudioClip"/> and utilizes a <see cref="HapticPulser"/> to create the effect.
@@ -11,14 +12,17 @@
         /// <summary>
         /// The pulse process to utilize.
         /// </summary>
+        [DocumentedByXml]
         public HapticPulser hapticPulser;
         /// <summary>
         /// The waveform to represent the haptic pattern.
         /// </summary>
+        [DocumentedByXml]
         public AudioClip audioClip;
         /// <summary>
         /// Multiplies the current audio peak to affect the wave intensity.
         /// </summary>
+        [DocumentedByXml]
         public float intensityMultiplier = 1f;
 
         /// <summary>

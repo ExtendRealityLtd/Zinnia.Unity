@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -10,10 +11,12 @@
         /// <summary>
         /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
         /// </summary>
+        [DocumentedByXml]
         public VelocityTracker source;
         /// <summary>
         /// The target <see cref="Rigidbody"/> to apply the source velocity data to.
         /// </summary>
+        [DocumentedByXml]
         public Rigidbody target;
 
         /// <summary>

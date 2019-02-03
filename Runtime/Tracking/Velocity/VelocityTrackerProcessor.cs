@@ -4,6 +4,7 @@
     using Zinnia.Extension;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// A proxy for reporting on velocity data on the first active <see cref="VelocityTracker"/> that is provided in the collection.
@@ -13,6 +14,7 @@
         /// <summary>
         /// Process the first active <see cref="VelocityTracker"/> found in the collection.
         /// </summary>
+        [DocumentedByXml]
         public List<VelocityTracker> velocityTrackers = new List<VelocityTracker>();
 
         private VelocityTracker _activeVelocityTracker;

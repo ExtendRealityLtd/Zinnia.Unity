@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Holds <see cref="Transform"/> information with the ability to override properties without affecting the scene <see cref="Transform"/>.
@@ -12,18 +13,22 @@
         /// <summary>
         /// A reference to the original <see cref="Transform"/>.
         /// </summary>
+        [DocumentedByXml]
         public Transform transform;
         /// <summary>
         /// Position override of the <see cref="Transform"/> object.
         /// </summary>
+        [DocumentedByXml]
         public Vector3? positionOverride;
         /// <summary>
         /// Rotation override of the <see cref="Transform"/> object.
         /// </summary>
+        [DocumentedByXml]
         public Quaternion? rotationOverride;
         /// <summary>
         /// Scale override of the <see cref="Transform"/> object.
         /// </summary>
+        [DocumentedByXml]
         public Vector3? scaleOverride;
 
         /// <summary>

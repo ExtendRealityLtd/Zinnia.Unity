@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Provides the basis for allowing a <see cref="GameObject"/> to be extracted and emitted in an event.
@@ -20,6 +21,7 @@
         /// <summary>
         /// Emitted when the <see cref="GameObject"/> is extracted.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Extracted = new UnityEvent();
 
         /// <summary>

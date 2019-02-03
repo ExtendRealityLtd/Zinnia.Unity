@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Cast
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -10,10 +11,12 @@
         /// <summary>
         /// The layers to ignore when casting.
         /// </summary>
+        [DocumentedByXml]
         public LayerMask layersToIgnore = Physics.IgnoreRaycastLayer;
         /// <summary>
         /// Determines whether the cast will interact with trigger colliders.
         /// </summary>
+        [DocumentedByXml]
         public QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.UseGlobal;
 
         /// <summary>

@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Holds a collection of key/value relations between GameObjects and allows searching for a given key in the collection to emit the linked value.
@@ -27,21 +28,25 @@
             /// <summary>
             /// The <see cref="GameObject"/> to use as the key for the relation.
             /// </summary>
+            [DocumentedByXml]
             public GameObject key;
             /// <summary>
             /// The <see cref="GameObject"/> to use as the value for the relation.
             /// </summary>
+            [DocumentedByXml]
             public GameObject value;
         }
 
         /// <summary>
         /// The collection of relations.
         /// </summary>
+        [DocumentedByXml]
         public List<Relation> relations = new List<Relation>();
 
         /// <summary>
         /// Emitted when a value is retrieved for a given key.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent ValueRetrieved = new UnityEvent();
 
         /// <summary>

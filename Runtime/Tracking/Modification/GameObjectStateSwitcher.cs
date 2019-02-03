@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Sets the state of the current target to the specified active state.
@@ -11,18 +12,22 @@
         /// <summary>
         /// A collection of targets to set the state on when it is the active index.
         /// </summary>
+        [DocumentedByXml]
         public List<GameObject> targets = new List<GameObject>();
         /// <summary>
         /// The state to set the active index target. All other targets will be set to the opposite state.
         /// </summary>
+        [DocumentedByXml]
         public bool targetState = true;
         /// <summary>
         /// Determines if to execute a switch when the component is enabled.
         /// </summary>
+        [DocumentedByXml]
         public bool switchOnEnable = true;
         /// <summary>
         /// The index in the collection to start at.
         /// </summary>
+        [DocumentedByXml]
         public int startIndex;
 
         /// <summary>

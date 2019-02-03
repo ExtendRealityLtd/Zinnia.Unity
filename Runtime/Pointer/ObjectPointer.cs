@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
     using Zinnia.Visual;
@@ -23,18 +24,22 @@
             /// <summary>
             /// Whether the <see cref="ObjectPointer"/> is currently activated.
             /// </summary>
+            [DocumentedByXml]
             public bool isActive;
             /// <summary>
             /// Whether the <see cref="ObjectPointer"/> is currently hovering over a target.
             /// </summary>
+            [DocumentedByXml]
             public bool isHovering;
             /// <summary>
             /// The duration that the <see cref="ObjectPointer"/> has been hovering over it's current target.
             /// </summary>
+            [DocumentedByXml]
             public float hoverDuration;
             /// <summary>
             /// The points cast data given to the <see cref="ObjectPointer"/>.
             /// </summary>
+            [DocumentedByXml]
             public PointsCast.EventData pointsCastData;
 
             public EventData Set(EventData source)
@@ -102,70 +107,86 @@
             /// <summary>
             /// Represents the <see cref="Element"/> when it's colliding with a valid object.
             /// </summary>
+            [DocumentedByXml]
             public GameObject validObject;
             /// <summary>
             /// Represents the <see cref="Element"/> when it's colliding with an invalid object or not colliding at all.
             /// </summary>
+            [DocumentedByXml]
             public GameObject invalidObject;
             /// <summary>
             /// Determines when the <see cref="Element"/> is visible.
             /// </summary>
+            [DocumentedByXml]
             public Visibility visibility = Visibility.OnWhenPointerActivated;
         }
 
         /// <summary>
         /// Determines if the <see cref="ObjectPointer"/> should be automatically activated when the script is enabled.
         /// </summary>
+        [DocumentedByXml]
         public bool activateOnEnable;
 
         /// <summary>
         /// Represents the origin, i.e. the first rendered point.
         /// </summary>
+        [DocumentedByXml]
         public Element origin = new Element();
         /// <summary>
         /// Represents the segments between <see cref="origin"/> and <see cref="destination"/>. This will get cloned to create all the segments.
         /// </summary>
+        [DocumentedByXml]
         public Element repeatedSegment = new Element();
         /// <summary>
         /// Represents the destination, i.e. the last rendered point.
         /// </summary>
+        [DocumentedByXml]
         public Element destination = new Element();
 
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> becomes active.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Activated = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> becomes inactive.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Deactivated = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> collides with a new target.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Entered = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> stops colliding with an existing target.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Exited = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> changes its hovering position over an existing target.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Hovering = new UnityEvent();
         /// <summary>
         /// Emitted whenever <see cref="Select"/> is called.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Selected = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> appears and becomes visible.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Appeared = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> disappears and becomes hidden.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Disappeared = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> elements change.
         /// </summary>
+        [DocumentedByXml]
         public PointsRendererUnityEvent RenderDataChanged = new PointsRendererUnityEvent();
 
         /// <summary>

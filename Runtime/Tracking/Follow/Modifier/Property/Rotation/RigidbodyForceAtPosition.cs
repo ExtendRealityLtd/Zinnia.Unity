@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -11,6 +12,7 @@
         /// <summary>
         /// The point where the attachment was made.
         /// </summary>
+        [DocumentedByXml]
         public GameObject attachmentPoint;
 
         /// <summary>

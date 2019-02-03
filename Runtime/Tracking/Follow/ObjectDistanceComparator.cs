@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
     /// <summary>
@@ -22,10 +23,12 @@
             /// <summary>
             /// The difference of the positions of the target and source.
             /// </summary>
+            [DocumentedByXml]
             public Vector3 difference;
             /// <summary>
             /// The distance between the source and target.
             /// </summary>
+            [DocumentedByXml]
             public float distance;
 
             public EventData Set(EventData source)
@@ -57,23 +60,28 @@
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
+        [DocumentedByXml]
         public GameObject source;
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
+        [DocumentedByXml]
         public GameObject target;
         /// <summary>
         /// The distance between the source and target that is considered to be exceeding the given threshold.
         /// </summary>
+        [DocumentedByXml]
         public float distanceThreshold = 1f;
 
         /// <summary>
         /// Emitted when the distance between the source and the target exceeds the threshold.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent ThresholdExceeded = new UnityEvent();
         /// <summary>
         /// Emitted when the distance between the source and the target falls back within the threshold.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent ThresholdResumed = new UnityEvent();
 
         /// <summary>

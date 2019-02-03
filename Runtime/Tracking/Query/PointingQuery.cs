@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Query
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Process;
@@ -15,23 +16,28 @@
         /// <summary>
         /// The object used as the origin to check if it is pointing towards <see cref="target"/>.
         /// </summary>
+        [DocumentedByXml]
         public GameObject source;
         /// <summary>
         /// The object that will be checked to see if <see cref="source"/> is pointing at it.
         /// </summary>
+        [DocumentedByXml]
         public GameObject target;
         /// <summary>
         /// A sphere radius that defines the volume in which <see cref="target"/> can be pointed at.
         /// </summary>
+        [DocumentedByXml]
         public float targetRadius = 0.1f;
 
         /// <summary>
         /// Emitted when <see cref="source"/> starts pointing at <see cref="target"/>.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent StartedPointingAtTarget = new UnityEvent();
         /// <summary>
         /// Emitted when <see cref="source"/> no longer points at <see cref="target"/>.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent StoppedPointingAtTarget = new UnityEvent();
 
         /// <summary>

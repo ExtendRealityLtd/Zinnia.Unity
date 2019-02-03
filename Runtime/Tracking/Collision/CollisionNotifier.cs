@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
     using Zinnia.Extension;
     using Zinnia.Rule;
@@ -24,18 +25,22 @@
             /// The source of this event in case it was forwarded.
             /// </summary>
             /// <remarks><see langword="null"/> if this event wasn't forwarded from anything.</remarks>
+            [DocumentedByXml]
             public Component forwardSource;
             /// <summary>
             /// Whether the collision was observed through a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
             /// </summary>
+            [DocumentedByXml]
             public bool isTrigger;
             /// <summary>
             /// The observed <see cref="Collision"/>. <see langword="null"/> if <see cref="isTrigger"/> is <see langword="true"/>.
             /// </summary>
+            [DocumentedByXml]
             public Collision collision;
             /// <summary>
             /// The observed <see cref="Collider"/>.
             /// </summary>
+            [DocumentedByXml]
             public Collider collider;
 
             public EventData Set(EventData source)
@@ -131,24 +136,28 @@
         /// <summary>
         /// The types of collisions that events will be emitted for.
         /// </summary>
-        [UnityFlags]
+        [UnityFlags, DocumentedByXml]
         public CollisionTypes emittedTypes = (CollisionTypes)(-1);
         /// <summary>
         /// Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.
         /// </summary>
+        [DocumentedByXml]
         public RuleContainer forwardingSourceValidity;
 
         /// <summary>
         /// Emitted when a collision starts.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent CollisionStarted = new UnityEvent();
         /// <summary>
         /// Emitted when the current collision changes.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent CollisionChanged = new UnityEvent();
         /// <summary>
         /// Emitted when the current collision stops.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent CollisionStopped = new UnityEvent();
 
         protected EventData eventData = new EventData();

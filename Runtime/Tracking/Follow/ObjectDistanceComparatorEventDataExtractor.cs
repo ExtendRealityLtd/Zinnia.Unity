@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Extracts the parts of <see cref="ObjectDistanceComparator.EventData"/> and emits them in separate events.
@@ -28,10 +29,12 @@
         /// <summary>
         /// Emitted when the <see cref="Vector3"/> is extracted.
         /// </summary>
+        [DocumentedByXml]
         public Vector3UnityEvent DifferenceExtracted = new Vector3UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="Vector3"/> is extracted.
         /// </summary>
+        [DocumentedByXml]
         public FloatUnityEvent DistanceExtracted = new FloatUnityEvent();
 
         /// <summary>

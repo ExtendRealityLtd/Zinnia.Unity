@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -15,7 +16,7 @@
         /// <summary>
         /// The component types to look for.
         /// </summary>
-        [TypePicker(typeof(Component))]
+        [TypePicker(typeof(Component)), DocumentedByXml]
         public List<SerializableType> componentTypes = new List<SerializableType>();
 
         /// <inheritdoc/>

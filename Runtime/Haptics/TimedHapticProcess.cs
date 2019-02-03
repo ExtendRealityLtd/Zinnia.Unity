@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Processes a given <see cref="HapticProcess"/> repeatedly for a given duration and with a pause interval between each process.
@@ -11,16 +12,17 @@
         /// <summary>
         /// The process to utilize.
         /// </summary>
+        [DocumentedByXml]
         public HapticProcess hapticProcess;
         /// <summary>
         /// The amount of time to keep repeating the process for.
         /// </summary>
-        [SerializeField]
+        [SerializeField, DocumentedByXml]
         protected float duration = 1f;
         /// <summary>
         /// The amount of time to pause after each process iteration.
         /// </summary>
-        [SerializeField]
+        [SerializeField, DocumentedByXml]
         protected float interval = 0.1f;
 
         /// <summary>

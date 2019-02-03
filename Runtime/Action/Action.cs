@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// The basis for all action types.
@@ -58,6 +59,7 @@
         /// <summary>
         /// The initial value of the action.
         /// </summary>
+        [DocumentedByXml]
         public TValue defaultValue;
 
         /// <summary>
@@ -68,20 +70,23 @@
         /// <summary>
         /// Emitted when the action becomes active.
         /// </summary>
+        [DocumentedByXml]
         public TEvent Activated = new TEvent();
         /// <summary>
         /// Emitted when the <see cref="Value"/> of the action changes.
         /// </summary>
+        [DocumentedByXml]
         public TEvent ValueChanged = new TEvent();
         /// <summary>
         /// Emitted when the action becomes deactivated.
         /// </summary>
+        [DocumentedByXml]
         public TEvent Deactivated = new TEvent();
 
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        [SerializeField]
+        [SerializeField, DocumentedByXml]
         protected List<TSelf> sources = new List<TSelf>();
 
         /// <summary>

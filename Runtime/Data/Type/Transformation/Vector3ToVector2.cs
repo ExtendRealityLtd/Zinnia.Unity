@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Transforms a <see cref="Vector3"/> to a <see cref="Vector2"/> and allows mapping of the relevant coordinates.
@@ -56,7 +57,7 @@
         /// <summary>
         /// The mechanism for mapping the <see cref="Vector3"/> coordinates to the <see cref="Vector2"/> coordinates.
         /// </summary>
-        [SerializeField]
+        [SerializeField, DocumentedByXml]
         protected CoordinateMap coordinateMap = CoordinateMap.XToXAndYToYExcludeZ;
 
         /// <summary>

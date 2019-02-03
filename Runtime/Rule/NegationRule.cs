@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Rule
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -11,6 +12,7 @@
         /// <summary>
         /// The <see cref="IRule"/> to negate.
         /// </summary>
+        [DocumentedByXml]
         public RuleContainer rule;
 
         /// <inheritdoc />

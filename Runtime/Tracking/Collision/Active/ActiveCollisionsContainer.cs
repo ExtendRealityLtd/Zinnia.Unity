@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Rule;
     using Zinnia.Extension;
 
@@ -18,6 +19,7 @@
         [Serializable]
         public class EventData
         {
+            [DocumentedByXml]
             public List<CollisionNotifier.EventData> activeCollisions = new List<CollisionNotifier.EventData>();
 
             public EventData Set(EventData source)
@@ -49,23 +51,28 @@
         /// <summary>
         /// Determines whether the collision is valid and to add it to the active collision collection.
         /// </summary>
+        [DocumentedByXml]
         public RuleContainer collisionValidity;
 
         /// <summary>
         /// Emitted when the first collision occurs.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent FirstStarted = new UnityEvent();
         /// <summary>
         /// Emitted when the collision count has changed.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent CountChanged = new UnityEvent();
         /// <summary>
         /// Emitted when the collision contents have changed.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent ContentsChanged = new UnityEvent();
         /// <summary>
         /// Emitted when there are no more collisions occuring.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent AllStopped = new UnityEvent();
 
         /// <summary>

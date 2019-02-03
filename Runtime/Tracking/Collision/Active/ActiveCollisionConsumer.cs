@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -20,10 +21,12 @@
             /// <summary>
             /// The publisher payload data that is being pushed to the consumer.
             /// </summary>
+            [DocumentedByXml]
             public ActiveCollisionPublisher.PayloadData publisher;
             /// <summary>
             /// The current collision data.
             /// </summary>
+            [DocumentedByXml]
             public CollisionNotifier.EventData currentCollision;
 
             public EventData Set(EventData source)
@@ -55,11 +58,13 @@
         /// <summary>
         /// The highest level container of the consumer to allow for nested consumers.
         /// </summary>
+        [DocumentedByXml]
         public GameObject container;
 
         /// <summary>
         /// Determines whether to consume the received call from specific publishers.
         /// </summary>
+        [DocumentedByXml]
         public RuleContainer publisherValidity;
 
         /// <summary>
@@ -83,10 +88,12 @@
         /// <summary>
         /// Emitted when the publisher call has been consumed.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Consumed = new UnityEvent();
         /// <summary>
         /// Emitted when the consumer is cleared.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Cleared = new UnityEvent();
 
         protected EventData eventData = new EventData();

@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Process;
 
@@ -14,6 +15,7 @@
         /// <summary>
         /// The associations in order they will be activated if they match the currently expected state.
         /// </summary>
+        [DocumentedByXml]
         public List<GameObjectsAssociation> associations = new List<GameObjectsAssociation>();
 
         /// <summary>

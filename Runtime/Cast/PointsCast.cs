@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Process;
     using Zinnia.Rule;
@@ -22,10 +23,12 @@
             /// <summary>
             /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything.
             /// </summary>
+            [DocumentedByXml]
             public RaycastHit? targetHit;
             /// <summary>
             /// The points along the the most recent cast.
             /// </summary>
+            [DocumentedByXml]
             public IReadOnlyList<Vector3> points;
 
             public EventData Set(EventData source)
@@ -57,19 +60,23 @@
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
+        [DocumentedByXml]
         public GameObject origin;
         /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
+        [DocumentedByXml]
         public PhysicsCast physicsCast;
         /// <summary>
         /// Allows to optionally determine targets based on the set rules.
         /// </summary>
+        [DocumentedByXml]
         public RuleContainer targetValidity;
 
         /// <summary>
         /// Emitted whenever the cast result changes.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent ResultsChanged = new UnityEvent();
 
         /// <summary>

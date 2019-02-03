@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.CameraRig
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Tracking.Velocity;
 
@@ -12,7 +13,7 @@
         /// <summary>
         /// The associated PlayArea.
         /// </summary>
-        [Header("PlayArea Settings"), SerializeField]
+        [Header("PlayArea Settings"), SerializeField, DocumentedByXml]
         protected GameObject playArea;
         #endregion
 
@@ -20,17 +21,17 @@
         /// <summary>
         /// The associated Headset.
         /// </summary>
-        [Header("Headset Settings"), SerializeField]
+        [Header("Headset Settings"), SerializeField, DocumentedByXml]
         protected GameObject headset;
         /// <summary>
         /// The associated Headset Camera.
         /// </summary>
-        [SerializeField]
+        [SerializeField, DocumentedByXml]
         protected Camera headsetCamera;
         /// <summary>
         /// The associated Headset Velocity Tracker.
         /// </summary>
-        [SerializeField]
+        [SerializeField, DocumentedByXml]
         protected VelocityTracker headsetVelocity;
         #endregion
 
@@ -38,12 +39,12 @@
         /// <summary>
         /// The associated Left Controller.
         /// </summary>
-        [Header("Left Controller Settings"), SerializeField]
+        [Header("Left Controller Settings"), SerializeField, DocumentedByXml]
         protected GameObject leftController;
         /// <summary>
         /// The associated Left Controller Velocity Tracker.
         /// </summary>
-        [SerializeField]
+        [SerializeField, DocumentedByXml]
         protected VelocityTracker leftControllerVelocity;
         #endregion
 
@@ -51,12 +52,12 @@
         /// <summary>
         /// The associated Right Controller.
         /// </summary>
-        [Header("Right Controller Settings"), SerializeField]
+        [Header("Right Controller Settings"), SerializeField, DocumentedByXml]
         protected GameObject rightController;
         /// <summary>
         /// The associated Right Controller Velocity Tracker.
         /// </summary>
-        [SerializeField]
+        [SerializeField, DocumentedByXml]
         protected VelocityTracker rightControllerVelocity;
         #endregion
 

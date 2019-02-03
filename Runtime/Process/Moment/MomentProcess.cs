@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Process.Moment
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -10,15 +11,17 @@
         /// <summary>
         /// The process to attach to the moment.
         /// </summary>
+        [DocumentedByXml]
         public ProcessContainer process;
         /// <summary>
         /// The process only executes if the <see cref="GameObject"/> is active and the <see cref="Component"/> is enabled.
         /// </summary>
+        [DocumentedByXml]
         public bool onlyProcessOnActiveAndEnabled = true;
         /// <summary>
         /// A percentage defining how often to process the <see cref="process"/>.
         /// </summary>
-        [Range(0f, 1f), SerializeField]
+        [Range(0f, 1f), SerializeField, DocumentedByXml]
         private float utilization = 1f;
 
         /// <summary>

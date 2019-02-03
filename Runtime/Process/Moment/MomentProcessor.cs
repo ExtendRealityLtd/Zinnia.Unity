@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -44,10 +45,12 @@
         /// <summary>
         /// The moment in which to process the given processes.
         /// </summary>
+        [DocumentedByXml]
         public Moment momentToProcess = Moment.PreRender;
         /// <summary>
         /// A collection of <see cref="MomentProcess"/> to process.
         /// </summary>
+        [DocumentedByXml]
         public List<MomentProcess> processes = new List<MomentProcess>();
 
         protected Moment subscribedMoment;

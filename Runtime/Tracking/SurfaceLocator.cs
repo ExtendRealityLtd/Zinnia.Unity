@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -27,31 +28,38 @@
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
+        [DocumentedByXml]
         public GameObject searchOrigin;
         /// <summary>
         /// The direction in which to cast to locate the nearest surface.
         /// </summary>
+        [DocumentedByXml]
         public Vector3 searchDirection;
         /// <summary>
         /// The distance to move the origin backwards through the <see cref="searchDirection"/> to ensure the origin isn't clipping a surface.
         /// </summary>
+        [DocumentedByXml]
         public float originOffset = -0.01f;
         /// <summary>
         /// The maximum distance to cast the <see cref="Ray"/>.
         /// </summary>
+        [DocumentedByXml]
         public float maximumDistance = 50f;
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
         /// </summary>
+        [DocumentedByXml]
         public RuleContainer targetValidity;
         /// <summary>
         /// An optional custom <see cref="PhysicsCast"/> object to affect the <see cref="Ray"/>.
         /// </summary>
+        [DocumentedByXml]
         public PhysicsCast physicsCast;
 
         /// <summary>
         /// Emitted when a new surface is located.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent SurfaceLocated = new UnityEvent();
 
         /// <summary>

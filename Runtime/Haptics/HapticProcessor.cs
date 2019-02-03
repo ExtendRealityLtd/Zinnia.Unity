@@ -3,6 +3,7 @@
     using Zinnia.Extension;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// A proxy for managing the first active <see cref="HapticProcess"/> that is provided in the collection.
@@ -12,6 +13,7 @@
         /// <summary>
         /// Process the first active <see cref="HapticProcess"/> found in the collection.
         /// </summary>
+        [DocumentedByXml]
         public List<HapticProcess> hapticProcesses = new List<HapticProcess>();
 
         private HapticProcess _activeHapticProcess;

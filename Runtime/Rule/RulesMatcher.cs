@@ -5,6 +5,7 @@
     using System;
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -21,16 +22,19 @@
             /// <summary>
             /// The rule to match against.
             /// </summary>
+            [DocumentedByXml]
             public RuleContainer rule;
             /// <summary>
             /// Emitted when the <see cref="rule"/> is valid.
             /// </summary>
+            [DocumentedByXml]
             public UnityEvent Matched = new UnityEvent();
         }
 
         /// <summary>
         /// A collection of rules to potentially match against.
         /// </summary>
+        [DocumentedByXml]
         public List<Element> elements = new List<Element>();
 
         /// <summary>

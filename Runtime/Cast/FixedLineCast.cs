@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Cast
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -10,6 +11,7 @@
         /// <summary>
         /// The current length of the cast.
         /// </summary>
+        [DocumentedByXml]
         public float currentLength = 1f;
 
         /// <summary>

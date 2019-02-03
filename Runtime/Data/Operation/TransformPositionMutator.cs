@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Operation
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -10,6 +11,7 @@
         /// <summary>
         /// An optional rotation offset.
         /// </summary>
+        [DocumentedByXml]
         public GameObject rotationOffset;
 
         /// <summary>

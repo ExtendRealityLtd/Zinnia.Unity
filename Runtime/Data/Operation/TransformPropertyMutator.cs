@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Operation
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
 
@@ -11,14 +12,17 @@
         /// <summary>
         /// The target to mutate.
         /// </summary>
+        [DocumentedByXml]
         public GameObject target;
         /// <summary>
         /// Determines whether to mutate the local or global values.
         /// </summary>
+        [DocumentedByXml]
         public bool useLocalValues;
         /// <summary>
         /// Determines which axes to mutate.
         /// </summary>
+        [DocumentedByXml]
         public Vector3State mutateOnAxis = Vector3State.True;
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -11,10 +12,12 @@
         /// <summary>
         /// The maximum squared magnitude of angular velocity that can be applied to the source <see cref="Transform"/>.
         /// </summary>
+        [DocumentedByXml]
         public float angularVelocityLimit = float.PositiveInfinity;
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
+        [DocumentedByXml]
         public float maxDistanceDelta = 10f;
 
         protected Rigidbody cachedTargetRigidbody;

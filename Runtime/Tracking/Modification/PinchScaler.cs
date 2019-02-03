@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -12,22 +13,27 @@
         /// <summary>
         /// The target to scale.
         /// </summary>
+        [DocumentedByXml]
         public GameObject target;
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
+        [DocumentedByXml]
         public GameObject primaryPoint;
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
+        [DocumentedByXml]
         public GameObject secondaryPoint;
         /// <summary>
         /// A scale factor multiplier.
         /// </summary>
+        [DocumentedByXml]
         public float multiplier = 1f;
         /// <summary>
         /// Determines whether to use local or global scale.
         /// </summary>
+        [DocumentedByXml]
         public bool useLocalScale = true;
 
         protected bool initialized;

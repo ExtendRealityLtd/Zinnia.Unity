@@ -2,6 +2,7 @@
 {
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -16,6 +17,7 @@
         /// <summary>
         /// The collection to aggregate.
         /// </summary>
+        [DocumentedByXml]
         public List<TInput> collection = new List<TInput>();
 
         /// <summary>

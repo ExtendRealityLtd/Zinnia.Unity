@@ -2,6 +2,7 @@
 {
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -20,6 +21,7 @@
         /// <summary>
         /// The tolerance of equality between two <see cref="float"/> values.
         /// </summary>
+        [DocumentedByXml]
         public float equalityTolerance = float.Epsilon;
 
         /// <inheritdoc />

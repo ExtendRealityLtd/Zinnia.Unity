@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// An <see cref="IProcessable"/> that runs a set method on each (or the first active) source collection against a collection of targets.
@@ -11,7 +12,7 @@
         /// <summary>
         /// Ceases the processing of the source collection after the first valid source is processed.
         /// </summary>
-        [Header("Process Settings")]
+        [Header("Process Settings"), DocumentedByXml]
         public bool ceaseAfterFirstSourceProcessed = true;
 
         /// <summary>

@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -44,6 +45,7 @@
         /// <summary>
         /// The unit to return the converted angle in.
         /// </summary>
+        [DocumentedByXml]
         public AngleUnit unit = AngleUnit.Degrees;
 
         [SerializeField]

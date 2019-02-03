@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Allows observing changes to a <see cref="List{T}"/>.
@@ -14,24 +15,28 @@
         /// <summary>
         /// The collection to observe changes of.
         /// </summary>
-        [SerializeField]
+        [SerializeField, DocumentedByXml]
         protected List<TElement> elements = new List<TElement>();
 
         /// <summary>
         /// Emitted when the first element is added to the collection.
         /// </summary>
+        [DocumentedByXml]
         public TEvent BecamePopulated = new TEvent();
         /// <summary>
         /// Emitted when an element is added to the collection.
         /// </summary>
+        [DocumentedByXml]
         public TEvent ElementAdded = new TEvent();
         /// <summary>
         /// Emitted when an element is removed from the collection.
         /// </summary>
+        [DocumentedByXml]
         public TEvent ElementRemoved = new TEvent();
         /// <summary>
         /// Emitted when the last element is removed from the collection.
         /// </summary>
+        [DocumentedByXml]
         public TEvent BecameEmpty = new TEvent();
 
         /// <summary>

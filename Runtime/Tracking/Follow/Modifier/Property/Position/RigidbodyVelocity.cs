@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Position
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -11,10 +12,12 @@
         /// <summary>
         /// The maximum squared magnitude of velocity that can be applied to the source.
         /// </summary>
+        [DocumentedByXml]
         public float velocityLimit = float.PositiveInfinity;
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
+        [DocumentedByXml]
         public float maxDistanceDelta = 10f;
 
         protected Rigidbody cachedTargetRigidbody;

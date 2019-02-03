@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -11,6 +12,7 @@
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
+        [DocumentedByXml]
         public GameObject source;
 
         /// <summary>
@@ -25,6 +27,7 @@
         /// <summary>
         /// Emitted when the collection is sorted.
         /// </summary>
+        [DocumentedByXml]
         public ActiveCollisionsContainer.UnityEvent Sorted = new ActiveCollisionsContainer.UnityEvent();
 
         /// <summary>

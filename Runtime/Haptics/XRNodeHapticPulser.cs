@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Haptics
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.XR;
 
     /// <summary>
@@ -10,10 +11,12 @@
         /// <summary>
         /// The node to pulse.
         /// </summary>
+        [DocumentedByXml]
         public XRNode node = XRNode.LeftHand;
         /// <summary>
         /// The duration to pulse <see cref="node"/> for.
         /// </summary>
+        [DocumentedByXml]
         public float duration = 0.005f;
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Action
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Process;
 
@@ -11,6 +12,7 @@
         /// <summary>
         /// The Action to re-emit the state for.
         /// </summary>
+        [DocumentedByXml]
         public Action action;
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Tracking.CameraRig
 {
     using System;
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
     using UnityEngine.Experimental.XR;
@@ -21,10 +22,12 @@
         /// <summary>
         /// Emitted when the play area dimensions are extracted.
         /// </summary>
+        [DocumentedByXml]
         public Vector3UnityEvent Extracted = new Vector3UnityEvent();
         /// <summary>
         /// Emitted when the play area dimensions can't be extracted.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent Failed = new UnityEvent();
 
         /// <summary>

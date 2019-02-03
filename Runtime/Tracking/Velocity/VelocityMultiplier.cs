@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -10,14 +11,17 @@
         /// <summary>
         /// The <see cref="VelocityTracker"/> to use as the source data.
         /// </summary>
+        [DocumentedByXml]
         public VelocityTracker source;
         /// <summary>
         /// The amount to multiply the source velocity by.
         /// </summary>
+        [DocumentedByXml]
         public float velocityMultiplier = 1f;
         /// <summary>
         /// The amount to multiply the source angular velocity by.
         /// </summary>
+        [DocumentedByXml]
         public float angularVelocityMultiplier = 1f;
 
         /// <inheritdoc />

@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Holds information about the located surface.
@@ -12,10 +13,12 @@
         /// <summary>
         /// The origin in which the surface search came from.
         /// </summary>
+        [DocumentedByXml]
         public Vector3 origin;
         /// <summary>
         /// The direction in which the surface search came from.
         /// </summary>
+        [DocumentedByXml]
         public Vector3 direction;
 
         /// <summary>

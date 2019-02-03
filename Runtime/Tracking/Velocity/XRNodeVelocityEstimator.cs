@@ -4,6 +4,7 @@
     using UnityEngine.XR;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Retrieves the velocity estimations for an <see cref="XRNode"/>.
@@ -13,6 +14,7 @@
         /// <summary>
         /// The node to query velocity estimations for.
         /// </summary>
+        [DocumentedByXml]
         public XRNode node = XRNode.LeftHand;
 
         /// <summary>

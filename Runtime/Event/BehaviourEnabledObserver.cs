@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Event
 {
     using System.Collections.Generic;
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
 
@@ -17,10 +18,12 @@
         /// <summary>
         /// The <see cref="Behaviour"/>s to observe.
         /// </summary>
+        [DocumentedByXml]
         public List<Behaviour> behaviours = new List<Behaviour>();
         /// <summary>
         /// Emitted when all <see cref="behaviours"/> are <see cref="Behaviour.isActiveAndEnabled"/>.
         /// </summary>
+        [DocumentedByXml]
         public UnityEvent ActiveAndEnabled = new UnityEvent();
 
         protected virtual void OnEnable()
