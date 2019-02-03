@@ -48,7 +48,7 @@
 
             public void Clear()
             {
-                Set(default(GameObject), default(GameObject), default(GameObject));
+                Set(default, default, default);
             }
         }
 

@@ -53,7 +53,7 @@
 
             public void Clear()
             {
-                Set(default(bool), default(bool), default(float), default(PointsCast.EventData));
+                Set(default, default, default, default);
             }
         }
 
@@ -504,7 +504,7 @@
             eventData.scaleOverride = (validDestinationTransform != null ? validDestinationTransform.lossyScale : Vector3.one);
             eventData.origin = transform.position;
             eventData.direction = transform.forward;
-            eventData.CollisionData = data?.targetHit ?? default(RaycastHit);
+            eventData.CollisionData = data?.targetHit ?? default;
             return eventData.Set(ActivationState, IsHovering, HoverDuration, data);
         }
     }

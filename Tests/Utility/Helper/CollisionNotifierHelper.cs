@@ -6,7 +6,7 @@ namespace Test.Zinnia.Utility.Helper
 
     public static class CollisionNotifierHelper
     {
-        public static CollisionNotifier.EventData GetEventData(out GameObject container, Vector3 position = default(Vector3))
+        public static CollisionNotifier.EventData GetEventData(out GameObject container, Vector3 position = default)
         {
             container = new GameObject();
             BoxCollider collider = container.AddComponent<BoxCollider>();

@@ -84,7 +84,7 @@
             }
 
             Elements.Clear();
-            BecameEmpty?.Invoke(default(TElement));
+            BecameEmpty?.Invoke(default);
         }
 
         /// <summary>
