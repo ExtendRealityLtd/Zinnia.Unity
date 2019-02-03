@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -48,13 +49,9 @@
         /// Adds an element to the start of the collection.
         /// </summary>
         /// <param name="element">The element to add.</param>
+        [RequiresBehaviourState]
         public virtual void AddToStart(TElement element)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             elements.Insert(0, element);
             EmitAddEvents(element);
         }
@@ -63,13 +60,9 @@
         /// Adds an element to the end of the collection.
         /// </summary>
         /// <param name="element">The element to add.</param>
+        [RequiresBehaviourState]
         public virtual void AddToEnd(TElement element)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             elements.Add(element);
             EmitAddEvents(element);
         }
@@ -78,13 +71,9 @@
         /// Removes the first occurrence of an element from the collection.
         /// </summary>
         /// <param name="element">The element to remove.</param>
+        [RequiresBehaviourState]
         public virtual void RemoveFirst(TElement element)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             elements.Remove(element);
             EmitRemoveEvents(element);
         }
@@ -93,13 +82,9 @@
         /// Removes the last occurrence of an element from the collection.
         /// </summary>
         /// <param name="element">The element to remove.</param>
+        [RequiresBehaviourState]
         public virtual void RemoveLast(TElement element)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             int index = elements.LastIndexOf(element);
             if (index != -1)
             {
@@ -113,13 +98,9 @@
         /// Removes all elements from the collection.
         /// </summary>
         /// <param name="removeFromFront">Whether to start the removal from the start or the end of the collection.</param>
+        [RequiresBehaviourState]
         public virtual void Clear(bool removeFromFront)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             if (!removeFromFront)
             {
                 elements.Reverse();

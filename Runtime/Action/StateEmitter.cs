@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Action
 {
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Process;
@@ -18,9 +19,10 @@
         /// <summary>
         /// Re-emits the state of the Action.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (!isActiveAndEnabled || action == null)
+            if (action == null)
             {
                 return;
             }

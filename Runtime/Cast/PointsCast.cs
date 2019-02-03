@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -107,9 +108,10 @@
         /// <summary>
         /// Casts and creates points along the cast.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void CastPoints()
         {
-            if (!isActiveAndEnabled || origin == null)
+            if (origin == null)
             {
                 return;
             }

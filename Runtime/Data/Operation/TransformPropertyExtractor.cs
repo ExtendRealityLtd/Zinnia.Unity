@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
@@ -61,9 +62,10 @@
         /// <summary>
         /// Extracts the property from the <see cref="source"/> transform.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void DoExtract()
         {
-            if (source == null || !isActiveAndEnabled)
+            if (source == null)
             {
                 return;
             }

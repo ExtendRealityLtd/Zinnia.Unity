@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
@@ -33,12 +34,9 @@
         /// </summary>
         /// <param name="input">The input to transform.</param>
         /// <returns>The transformed input or the default of <see cref="TOutput"/> if the current component is not <see cref="Behaviour.isActiveAndEnabled"/>.</returns>
+        [RequiresBehaviourState]
         public virtual TOutput Transform(TInput input)
         {
-            if (!isActiveAndEnabled)
-            {
-                return default;
-            }
             return ProcessResult(input);
         }
 

@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
@@ -175,9 +176,10 @@
         /// <summary>
         /// Applies the properties of the <see cref="source"/> parameter to the target.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (!isActiveAndEnabled || target == null || source?.transform == null)
+            if (target == null || source?.transform == null)
             {
                 return;
             }

@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -47,9 +48,10 @@
         /// Adds the given element to the set and if it is the first element added <see cref="BecamePopulated"/> is emitted with the added element.
         /// </summary>
         /// <param name="element">The element to add.</param>
+        [RequiresBehaviourState]
         public virtual void AddElement(TElement element)
         {
-            if (!isActiveAndEnabled || element == null)
+            if (element == null)
             {
                 return;
             }
@@ -65,13 +67,9 @@
         /// Removes the given element from the set and if it the last element removed <see cref="BecameEmpty"/> is emitted with the removed element.
         /// </summary>
         /// <param name="element">The element to remove.</param>
+        [RequiresBehaviourState]
         public virtual void RemoveElement(TElement element)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             if (Elements.Remove(element) && Elements.Count == 0)
             {
                 BecameEmpty?.Invoke(element);
@@ -81,13 +79,9 @@
         /// <summary>
         /// Clears all elements from the set and emits <see cref="BecameEmpty"/> with a null element.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void ClearElements()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             Elements.Clear();
             BecameEmpty?.Invoke(default);
         }
@@ -97,13 +91,9 @@
         /// </summary>
         /// <param name="element">The element to search for.</param>
         /// <returns><see langword="true"/> if the element is found.</returns>
+        [RequiresBehaviourState]
         public virtual bool Contains(TElement element)
         {
-            if (!isActiveAndEnabled)
-            {
-                return false;
-            }
-
             bool result = Elements.Contains(element);
             if (result)
             {

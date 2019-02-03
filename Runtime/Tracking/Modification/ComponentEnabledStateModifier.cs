@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
@@ -39,9 +40,10 @@
         /// Sets the enabled state of all matching <see cref="types"/> found on <see cref="target"/>.
         /// </summary>
         /// <param name="state">The enabled state to apply.</param>
+        [RequiresBehaviourState]
         public virtual void SetEnabledState(bool state)
         {
-            if (!isActiveAndEnabled || target == null)
+            if (target == null)
             {
                 return;
             }

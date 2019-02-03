@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Tracking.Follow;
@@ -40,9 +41,10 @@
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
+        [RequiresBehaviourState]
         public virtual void Modify(GameObject source, GameObject target, GameObject offset = null)
         {
-            if (!isActiveAndEnabled || source == null || target == null)
+            if (source == null || target == null)
             {
                 return;
             }

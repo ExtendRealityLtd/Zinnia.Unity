@@ -5,6 +5,7 @@
     using System;
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -41,13 +42,9 @@
         /// Attempts to match the given object to the rules within the <see cref="elements"/> collection. If a match occurs then the appropriate event is emitted.
         /// </summary>
         /// <param name="source">The source to provide to the rule for validity checking.</param>
+        [RequiresBehaviourState]
         public virtual void Match(object source)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             foreach (Element element in elements.EmptyIfNull().Where(target => target.rule.Accepts(source)))
             {
                 element.Matched?.Invoke();

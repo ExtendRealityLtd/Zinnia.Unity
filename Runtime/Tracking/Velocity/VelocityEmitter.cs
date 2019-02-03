@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -38,9 +39,10 @@
         /// <summary>
         /// Emits the Velocity of the Tracked Velocity.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void EmitVelocity()
         {
-            if (!isActiveAndEnabled || source == null)
+            if (source == null)
             {
                 return;
             }
@@ -51,9 +53,10 @@
         /// <summary>
         /// Emits the Angular Velocity of the Tracked Velocity.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void EmitAngularVelocity()
         {
-            if (!isActiveAndEnabled || source == null)
+            if (source == null)
             {
                 return;
             }

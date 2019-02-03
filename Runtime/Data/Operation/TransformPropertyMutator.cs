@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Operation
 {
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -183,9 +184,10 @@
         /// Determines if the process is valid.
         /// </summary>
         /// <returns><see langword="true"/> if it is valid.</returns>
+        [RequiresBehaviourState]
         protected virtual bool IsValid()
         {
-            return (isActiveAndEnabled && target != null);
+            return (target != null);
         }
     }
 }

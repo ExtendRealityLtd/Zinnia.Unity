@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
@@ -58,13 +59,9 @@
         /// <summary>
         /// Processes the current direction modification.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             if (preventLookAtZRotation)
             {
                 SetTargetRotationWithZLocking();
@@ -114,13 +111,9 @@
         /// Saves the existing orientation of the target.
         /// </summary>
         /// <param name="cancelResetOrientation">Determines whether to cancel any existing orientation reset process.</param>
+        [RequiresBehaviourState]
         public virtual void SaveOrientation(bool cancelResetOrientation = true)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             targetInitialRotation = (target != null ? target.transform.rotation : Quaternion.identity);
             pivotInitialRotation = (pivot != null ? pivot.transform.rotation : Quaternion.identity);
             if (cancelResetOrientation)
@@ -132,13 +125,9 @@
         /// <summary>
         /// Resets the orientation of the target to it's initial rotation.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void ResetOrientation()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             pivotReleaseRotation = (pivot != null ? pivot.transform.rotation : pivotReleaseRotation);
 
             if (resetOrientationSpeed < float.MaxValue && resetOrientationSpeed > 0f)

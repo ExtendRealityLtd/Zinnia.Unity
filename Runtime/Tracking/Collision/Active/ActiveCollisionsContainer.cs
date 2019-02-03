@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Rule;
     using Zinnia.Extension;
@@ -90,9 +91,10 @@
         /// Adds the given collision as an active collision.
         /// </summary>
         /// <param name="collisionData">The collision data.</param>
+        [RequiresBehaviourState]
         public virtual void Add(CollisionNotifier.EventData collisionData)
         {
-            if (!isActiveAndEnabled || !IsValidCollision(collisionData))
+            if (!IsValidCollision(collisionData))
             {
                 return;
             }
@@ -111,13 +113,9 @@
         /// Removes the given collision from being an active collision.
         /// </summary>
         /// <param name="collisionData">The collision data.</param>
+        [RequiresBehaviourState]
         public virtual void Remove(CollisionNotifier.EventData collisionData)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             if (Elements.Remove(collisionData))
             {
                 EmitEmptyEvents();
@@ -127,13 +125,9 @@
         /// <summary>
         /// Processes any changes to the contents of existing collisions.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void ProcessContentsChanged()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             ContentsChanged?.Invoke(eventData.Set(Elements));
         }
 

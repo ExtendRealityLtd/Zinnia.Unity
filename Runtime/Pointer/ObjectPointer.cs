@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
@@ -270,9 +271,10 @@
         /// <summary>
         /// The Activate method turns on the <see cref="ObjectPointer"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Activate()
         {
-            if (!isActiveAndEnabled || ActivationState)
+            if (ActivationState)
             {
                 return;
             }
@@ -293,13 +295,9 @@
         /// <summary>
         /// Gets the current <see cref="ObjectPointer"/> state and emits it through <see cref="Selected"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Select()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             SelectedTarget = (ActivationState ? HoverTarget : null);
             Selected?.Invoke(SelectedTarget);
         }
@@ -308,13 +306,9 @@
         /// Handles the provided data to transition state and emit the <see cref="ObjectPointer"/> events.
         /// </summary>
         /// <param name="data">The data describing the results of the most recent cast.</param>
+        [RequiresBehaviourState]
         public virtual void HandleData(PointsCast.EventData data)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             if (IsVisible)
             {
                 previousPointsCastData.Set(activePointsCastData);

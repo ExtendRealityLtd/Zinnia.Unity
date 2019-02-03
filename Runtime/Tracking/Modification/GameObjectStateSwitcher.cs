@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -38,13 +39,9 @@
         /// <summary>
         /// Switches to the next target in the collection and sets to the appropriate state.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void SwitchNext()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             activeIndex++;
             if (activeIndex >= targets.Count)
             {
@@ -57,13 +54,9 @@
         /// <summary>
         /// Switches to the previous target in the collection and sets to the appropriate state.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void SwitchPrevious()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             activeIndex--;
             if (activeIndex < 0)
             {
@@ -77,13 +70,9 @@
         /// Switches to the a specific target in the collection and sets to the appropriate state.
         /// </summary>
         /// <param name="index">The index of the collection to switch to.</param>
+        [RequiresBehaviourState]
         public virtual void SwitchTo(int index)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             activeIndex = Mathf.Clamp(index, 0, targets.Count - 1);
             Switch();
         }
@@ -100,13 +89,9 @@
         /// <summary>
         /// Switches the current active target state.
         /// </summary>
+        [RequiresBehaviourState]
         protected virtual void Switch()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             for (int index = 0; index < targets.Count; index++)
             {
                 targets[index].SetActive(index == activeIndex ? targetState : !targetState);

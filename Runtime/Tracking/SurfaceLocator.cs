@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Linq;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
@@ -103,9 +104,10 @@
         /// Locates the nearest available surface with the given <see cref="TransformData"/>.
         /// </summary>
         /// <param name="givenOrigin">The <see cref="TransformData"/> object to use as the origin for the surface search.</param>
+        [RequiresBehaviourState]
         public virtual void Locate(TransformData givenOrigin)
         {
-            if (!isActiveAndEnabled || givenOrigin == null || !givenOrigin.Valid)
+            if (givenOrigin == null || !givenOrigin.Valid)
             {
                 return;
             }

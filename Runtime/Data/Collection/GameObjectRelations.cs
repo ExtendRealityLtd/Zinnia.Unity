@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -54,13 +55,9 @@
         /// </summary>
         /// <param name="key">The key of the relation to get the value for.</param>
         /// <returns>The value for the given key.</returns>
+        [RequiresBehaviourState]
         public virtual GameObject GetValue(GameObject key)
         {
-            if (!isActiveAndEnabled)
-            {
-                return null;
-            }
-
             foreach (Relation relation in relations)
             {
                 if (key.Equals(relation.key))
@@ -77,13 +74,9 @@
         /// </summary>
         /// <param name="relationIndex">The index of the relation to get the value for.</param>
         /// <returns>The value for the given index.</returns>
+        [RequiresBehaviourState]
         public virtual GameObject GetValue(int relationIndex)
         {
-            if (!isActiveAndEnabled)
-            {
-                return null;
-            }
-
             for (int index = 0; index < relations.Count; index++)
             {
                 if (index == relationIndex)

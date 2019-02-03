@@ -5,6 +5,7 @@
     using System;
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -68,9 +69,10 @@
         /// Sets the active collisions by copying it from given <see cref="ActiveCollisionsContainer.EventData"/>.
         /// </summary>
         /// <param name="data">The data to copy from.</param>
+        [RequiresBehaviourState]
         public virtual void SetActiveCollisions(ActiveCollisionsContainer.EventData data)
         {
-            if (data == null || data.activeCollisions == null || !isActiveAndEnabled)
+            if (data == null || data.activeCollisions == null)
             {
                 return;
             }
@@ -83,13 +85,9 @@
         /// Sets the active collision data by copying it from given <see cref="PayloadData"/> as long as the component is active and enabled.
         /// </summary>
         /// <param name="payload">The data to copy from.</param>
+        [RequiresBehaviourState]
         public virtual void SetActiveCollisions(PayloadData payload)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             ForceSetActiveCollisions(payload);
         }
 
@@ -111,13 +109,9 @@
         /// <summary>
         /// Publishes itself and the current collision to all <see cref="ActiveCollisionConsumer"/> components found on any of the active collisions as long as the component is active and enabled.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Publish()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             ForcePublish();
         }
 

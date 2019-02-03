@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -48,13 +49,9 @@
         private int _currentTargetsIndex;
 
         /// <inheritdoc />
+        [RequiresBehaviourState]
         public override void Process()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             ApplySourcesToTargets(sources, targets);
         }
 

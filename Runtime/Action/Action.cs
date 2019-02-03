@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -130,13 +131,9 @@
         }
 
         /// <inheritdoc />
+        [RequiresBehaviourState]
         public override void EmitActivationState()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             if (IsActivated)
             {
                 Activated?.Invoke(Value);
@@ -153,9 +150,10 @@
         /// Acts on the value.
         /// </summary>
         /// <param name="value">The value to act on.</param>
+        [RequiresBehaviourState]
         public virtual void Receive(TValue value)
         {
-            if (!isActiveAndEnabled || IsValueEqual(value))
+            if (IsValueEqual(value))
             {
                 return;
             }

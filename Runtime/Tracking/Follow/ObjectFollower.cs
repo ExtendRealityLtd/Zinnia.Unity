@@ -5,6 +5,7 @@
     using EmptyUnityEvent = UnityEngine.Events.UnityEvent;
     using System;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Process.Component;
@@ -99,13 +100,9 @@
         protected EventData eventData = new EventData();
 
         /// <inheritdoc />
+        [RequiresBehaviourState]
         public override void Process()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             Preprocessed?.Invoke();
             base.Process();
             Processed?.Invoke();

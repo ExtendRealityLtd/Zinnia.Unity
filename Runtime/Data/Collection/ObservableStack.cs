@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -76,9 +77,10 @@
         /// Push an element onto the stack and emit the related events.
         /// </summary>
         /// <param name="element">The element to push onto the stack and to become the payload of the related event.</param>
+        [RequiresBehaviourState]
         public virtual void Push(TElement element)
         {
-            if (!isActiveAndEnabled || EventIndex >= elementEvents.Count || Stack.Contains(element))
+            if (EventIndex >= elementEvents.Count || Stack.Contains(element))
             {
                 return;
             }
@@ -115,10 +117,11 @@
         /// Pops the given element from the stack and subsequently remove any elements that are above the given element in the stack and emit the related events.
         /// </summary>
         /// <param name="element">The element to pop from the stack.</param>
+        [RequiresBehaviourState]
         public virtual void PopAt(TElement element)
         {
             int elementIndex = Stack.IndexOf(element);
-            if (!isActiveAndEnabled || elementIndex < 0)
+            if (elementIndex < 0)
             {
                 return;
             }

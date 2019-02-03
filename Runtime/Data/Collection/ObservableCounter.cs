@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -37,9 +38,10 @@
         /// Increases the count of the given element.
         /// </summary>
         /// <param name="element">The element to count.</param>
+        [RequiresBehaviourState]
         public virtual void IncreaseCount(TElement element)
         {
-            if (!isActiveAndEnabled || element == null)
+            if (element == null)
             {
                 return;
             }
@@ -60,10 +62,11 @@
         /// Decreases the count of the given element.
         /// </summary>
         /// <param name="element">The element to count.</param>
+        [RequiresBehaviourState]
         public virtual void DecreaseCount(TElement element)
         {
             int currentValue = 0;
-            if (!isActiveAndEnabled || element == null || !ElementsCounter.TryGetValue(element, out currentValue) || currentValue <= 0)
+            if (element == null || !ElementsCounter.TryGetValue(element, out currentValue) || currentValue <= 0)
             {
                 return;
             }
@@ -80,9 +83,10 @@
         /// Removes the element from the counter.
         /// </summary>
         /// <param name="element">The element to clear.</param>
+        [RequiresBehaviourState]
         public virtual void RemoveFromCount(TElement element)
         {
-            if (!isActiveAndEnabled || element == null || !ElementsCounter.Remove(element))
+            if (element == null || !ElementsCounter.Remove(element))
             {
                 return;
             }

@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -49,11 +50,12 @@
         /// Creates a new container if it already doesn't exist at the point of the collision in the given event data.
         /// </summary>
         /// <param name="eventData">Contains data about the collision.</param>
+        [RequiresBehaviourState]
         public virtual void Create(ActiveCollisionConsumer.EventData eventData)
         {
             GameObject collisionInitiator = eventData.publisher == null ? null : eventData.publisher.sourceContainer;
 
-            if (!isActiveAndEnabled || collisionInitiator == null || eventData.currentCollision?.collider == null || Container != null)
+            if (collisionInitiator == null || eventData.currentCollision?.collider == null || Container != null)
             {
                 return;
             }

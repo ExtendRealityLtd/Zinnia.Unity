@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
 
     /// <summary>
@@ -58,13 +59,9 @@
         /// Renders the given points.
         /// </summary>
         /// <param name="data">The data to render.</param>
+        [RequiresBehaviourState]
         public virtual void RenderData(PointsData data)
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             start = data.start;
             end = data.end;
 

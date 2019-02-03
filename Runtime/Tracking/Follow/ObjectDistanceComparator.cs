@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
@@ -119,9 +120,10 @@
         /// <summary>
         /// Checks to see if the distance between the source and target exceed the threshold.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (!isActiveAndEnabled || source == null || target == null)
+            if (source == null || target == null)
             {
                 return;
             }

@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Rule;
@@ -103,9 +104,10 @@
         /// </summary>
         /// <param name="publisher">The publisher payload data.</param>
         /// <param name="currentCollision">The current collision within published data.</param>
+        [RequiresBehaviourState]
         public virtual void Consume(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
         {
-            if (!isActiveAndEnabled || !publisherValidity.Accepts(publisher.PublisherContainer))
+            if (!publisherValidity.Accepts(publisher.PublisherContainer))
             {
                 return;
             }
@@ -118,13 +120,9 @@
         /// <summary>
         /// Clears the previously consumed data.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Clear()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             Cleared?.Invoke(eventData.Set(PublisherSource, CurrentCollision));
             PublisherSource = null;
             CurrentCollision = null;

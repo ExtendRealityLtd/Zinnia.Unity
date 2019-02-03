@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Utility
 {
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
@@ -53,13 +54,9 @@
         /// <summary>
         /// Starts the timer counting down.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Begin()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             IsRunning = true;
             Invoke(nameof(Complete), startTime);
             Started?.Invoke();
@@ -78,13 +75,9 @@
         /// <summary>
         /// Emits the current running status of the timer.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void EmitStatus()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
             if (IsRunning)
             {
                 StillRunning?.Invoke();
