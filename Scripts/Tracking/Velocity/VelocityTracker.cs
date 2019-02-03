@@ -17,32 +17,32 @@
         }
 
         /// <summary>
-        /// Gets the current velocity of the <see cref="source"/>.
+        /// Gets the current velocity of the source.
         /// </summary>
-        /// <returns>The current velocity of the <see cref="source"/></returns>
+        /// <returns>The current velocity of the source</returns>
         public virtual Vector3 GetVelocity()
         {
             return (IsActive() ? DoGetVelocity() : Vector3.zero);
         }
 
         /// <summary>
-        /// Gets the current angular velocity of the <see cref="source"/>.
+        /// Gets the current angular velocity of the source.
         /// </summary>
-        /// <returns>The current angular velocity of the <see cref="source"/></returns>
+        /// <returns>The current angular velocity of the source</returns>
         public virtual Vector3 GetAngularVelocity()
         {
             return (IsActive() ? DoGetAngularVelocity() : Vector3.zero);
         }
 
         /// <summary>
-        /// Gets the current velocity of the <see cref="source"/>.
+        /// Gets the current velocity of the source.
         /// </summary>
-        /// <returns>The current velocity of the <see cref="source"/></returns>
+        /// <returns>The current velocity of the source</returns>
         protected abstract Vector3 DoGetVelocity();
         /// <summary>
-        /// Gets the current angular velocity of the <see cref="source"/>.
+        /// Gets the current angular velocity of the source.
         /// </summary>
-        /// <returns>The current angular velocity of the <see cref="source"/></returns>
+        /// <returns>The current angular velocity of the source</returns>
         protected abstract Vector3 DoGetAngularVelocity();
     }
 }

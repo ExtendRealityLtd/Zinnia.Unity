@@ -16,9 +16,9 @@
         /// Sets the current length of the cast to the given length.
         /// </summary>
         /// <param name="length">The new current length of the cast.</param>
-        public virtual void SetCurrentLength(float currentLength)
+        public virtual void SetCurrentLength(float length)
         {
-            this.currentLength = currentLength;
+            this.currentLength = length;
         }
 
         /// <summary>

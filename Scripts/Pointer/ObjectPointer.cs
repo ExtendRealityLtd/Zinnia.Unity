@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// Defines the event with the <see cref="PointsRendererData"/> state.
+        /// Defines the event with the <see cref="PointsRenderer.PointsData"/> state.
         /// </summary>
         [Serializable]
         public class PointsRendererUnityEvent : UnityEvent<PointsRenderer.PointsData>
@@ -439,7 +439,7 @@
         }
 
         /// <summary>
-        /// Emits the <see cref="BecameVisible"/> or <see cref="BecameHidden"/> event for the current <see cref="IsVisible"/> state in case that state changed.
+        /// Emits the <see cref="Appeared"/> or <see cref="Disappeared"/> event for the current <see cref="IsVisible"/> state in case that state changed.
         /// </summary>
         protected virtual void TryEmitVisibilityEvent()
         {

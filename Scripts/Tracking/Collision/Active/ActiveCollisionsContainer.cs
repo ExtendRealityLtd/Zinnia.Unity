@@ -39,7 +39,7 @@
         }
 
         /// <summary>
-        /// Defines the event with the <see cref="List{CollisionNotifier.EventData}"/>.
+        /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
         public class UnityEvent : UnityEvent<EventData>
@@ -68,7 +68,7 @@
         /// </summary>
         public UnityEvent AllStopped = new UnityEvent();
 
-        // <summary>
+        /// <summary>
         /// The current active collisions.
         /// </summary>
         public List<CollisionNotifier.EventData> Elements

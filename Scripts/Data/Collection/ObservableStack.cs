@@ -32,6 +32,7 @@
     /// Allows observing changes to a stack.
     /// </summary>
     /// <typeparam name="TElement">The type of the elements in the stack.</typeparam>
+    /// <typeparam name="TElementEvents">The events to emit per element.</typeparam>
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type to use.</typeparam>
     public abstract class ObservableStack<TElement, TElementEvents, TEvent> : MonoBehaviour
         where TElementEvents : ObservableStackElementEvents<TElement, TEvent>

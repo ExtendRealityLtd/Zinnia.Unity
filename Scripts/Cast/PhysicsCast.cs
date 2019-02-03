@@ -17,7 +17,7 @@
         public QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.UseGlobal;
 
         /// <summary>
-        /// Generates a Raycast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.Raycast"/>.
+        /// Generates a Raycast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.Raycast(Ray,out RaycastHit,float,int,QueryTriggerInteraction)"/>.
         /// </summary>
         /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
         /// <param name="ray">The <see cref="Ray"/> to cast with.</param>
@@ -39,7 +39,7 @@
         }
 
         /// <summary>
-        /// Generates a RaycastAll either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.Raycast"/>.
+        /// Generates a RaycastAll either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.RaycastAll(Ray,float,int,QueryTriggerInteraction)"/>.
         /// </summary>
         /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
         /// <param name="ray">The <see cref="Ray"/> to cast with.</param>
@@ -60,7 +60,7 @@
         }
 
         /// <summary>
-        /// Generates a Linecast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.Linecast"/>.
+        /// Generates a Linecast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.Linecast(Vector3,Vector3,out RaycastHit,int,QueryTriggerInteraction)"/>.
         /// </summary>
         /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
         /// <param name="startPosition">The world position to start the Linecast from.</param>
@@ -82,7 +82,7 @@
         }
 
         /// <summary>
-        /// Generates a SphereCast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.SphereCast"/>.
+        /// Generates a SphereCast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.SphereCast(Vector3,float,Vector3,out RaycastHit,float,int,QueryTriggerInteraction)"/>.
         /// </summary>
         /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
         /// <param name="origin">The origin point of the sphere to cast.</param>
@@ -106,7 +106,7 @@
         }
 
         /// <summary>
-        /// Generates a SphereCastAll either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.SphereCast"/>.
+        /// Generates a SphereCastAll either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.SphereCastAll(Vector3,float,Vector3,float,int,QueryTriggerInteraction)"/>.
         /// </summary>
         /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
         /// <param name="origin">The origin point of the sphere to cast.</param>
@@ -129,7 +129,7 @@
         }
 
         /// <summary>
-        /// Generates a CapsuleCast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.CapsuleCast"/>.
+        /// Generates a CapsuleCast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.CapsuleCast(Vector3,Vector3,float,Vector3,out RaycastHit,float,int,QueryTriggerInteraction)"/>.
         /// </summary>
         /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
         /// <param name="point1">The center of the sphere at the start of the capsule.</param>
@@ -154,7 +154,7 @@
         }
 
         /// <summary>
-        /// Generates a CapsuleCastAll either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.CapsuleCast"/>.
+        /// Generates a CapsuleCastAll either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.CapsuleCastAll(Vector3,Vector3,float,Vector3,float,int,QueryTriggerInteraction)"/>.
         /// </summary>
         /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
         /// <param name="point1">The center of the sphere at the start of the capsule.</param>
@@ -178,7 +178,7 @@
         }
 
         /// <summary>
-        /// Generates a BoxCast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.BoxCast"/>.
+        /// Generates a BoxCast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.BoxCast(Vector3,Vector3,Vector3,out RaycastHit,Quaternion,float,int,QueryTriggerInteraction)"/>.
         /// </summary>
         /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
         /// <param name="center">The center of the box.</param>
@@ -203,7 +203,7 @@
         }
 
         /// <summary>
-        /// Generates a BoxCastAll either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.BoxCast"/>.
+        /// Generates a BoxCastAll either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.BoxCastAll(Vector3,Vector3,Vector3,Quaternion,float,int,QueryTriggerInteraction)"/>.
         /// </summary>
         /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
         /// <param name="center">The center of the box.</param>
@@ -227,19 +227,19 @@
         }
 
         /// <summary>
-        /// Generates a <see cref="Physics.Raycast"/> based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// Generates a <see cref="Physics.Raycast(Ray,out RaycastHit,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
         /// <param name="ray">The <see cref="Ray"/> to cast with.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
         /// <param name="length">The maximum length of the <see cref="Ray"/>.</param>
-        /// <returns><see langword="true"/> if the <see cref="Physics.Raycast"/> successfully collides with a valid <see cref="GameObject"/>.</returns>
+        /// <returns><see langword="true"/> if the raycast successfully collides with a valid <see cref="GameObject"/>.</returns>
         public virtual bool CustomRaycast(Ray ray, out RaycastHit hitData, float length)
         {
             return Physics.Raycast(ray, out hitData, length, ~layersToIgnore, triggerInteraction);
         }
 
         /// <summary>
-        /// Generates a <see cref="Physics.RaycastAll"/> based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// Generates a <see cref="Physics.RaycastAll(Ray,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
         /// <param name="ray">The <see cref="Ray"/> to cast with.</param>
         /// <param name="length">The maximum length of the <see cref="Ray"/>.</param>
@@ -250,37 +250,37 @@
         }
 
         /// <summary>
-        /// Generates a <see cref="Physics.Linecast"/> based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// Generates a <see cref="Physics.Linecast(Vector3,Vector3,out RaycastHit,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="startPosition">The world position to start the <see cref="Physics.Linecast"/> from.</param>
-        /// <param name="endPosition">The world position to end the <see cref="Physics.Linecast"/> at.</param>
+        /// <param name="startPosition">The world position to start the linecast from.</param>
+        /// <param name="endPosition">The world position to end the linecast at.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
-        /// <returns><see langword="true"/> if the <see cref="Physics.Linecast"/> successfully collides with a valid <see cref="GameObject"/>.</returns>
+        /// <returns><see langword="true"/> if the linecast successfully collides with a valid <see cref="GameObject"/>.</returns>
         public virtual bool CustomLinecast(Vector3 startPosition, Vector3 endPosition, out RaycastHit hitData)
         {
             return Physics.Linecast(startPosition, endPosition, out hitData, ~layersToIgnore, triggerInteraction);
         }
 
         /// <summary>
-        /// Generates a <see cref="Physics.SphereCast"/> based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// Generates a <see cref="Physics.SphereCast(Vector3,float,Vector3,out RaycastHit,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="origin">The origin point of the <see cref="Physics.SphereCast"/>.</param>
-        /// <param name="radius">The radius of the <see cref="Physics.SphereCast"/>.</param>
-        /// <param name="direction">The direction into which to sweep the <see cref="Physics.SphereCast"/>.</param>
+        /// <param name="origin">The origin point of the spherecast.</param>
+        /// <param name="radius">The radius of the spherecast.</param>
+        /// <param name="direction">The direction into which to sweep the spherecast.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
-        /// <returns><see langword="true"/> if the <see cref="Physics.SphereCast"/> successfully collides with a valid <see cref="GameObject"/>.</returns>
+        /// <returns><see langword="true"/> if the spherecast successfully collides with a valid <see cref="GameObject"/>.</returns>
         public virtual bool CustomSphereCast(Vector3 origin, float radius, Vector3 direction, out RaycastHit hitData, float maxDistance)
         {
             return Physics.SphereCast(origin, radius, direction, out hitData, maxDistance, ~layersToIgnore, triggerInteraction);
         }
 
         /// <summary>
-        /// Generates a <see cref="Physics.SphereCastAll"/> based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// Generates a <see cref="Physics.SphereCastAll(Vector3,float,Vector3,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="origin">The origin point of the <see cref="Physics.SphereCast"/>.</param>
-        /// <param name="radius">The radius of the <see cref="Physics.SphereCast"/>.</param>
-        /// <param name="direction">The direction into which to sweep the <see cref="Physics.SphereCast"/>.</param>
+        /// <param name="origin">The origin point of the spherecast.</param>
+        /// <param name="radius">The radius of the spherecast.</param>
+        /// <param name="direction">The direction into which to sweep the spherecast.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
         public virtual RaycastHit[] CustomSphereCastAll(Vector3 origin, float radius, Vector3 direction, float maxDistance)
@@ -289,27 +289,27 @@
         }
 
         /// <summary>
-        /// Generates a <see cref="Physics.CapsuleCast"/> based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// Generates a <see cref="Physics.CapsuleCast(Vector3,Vector3,float,Vector3,out RaycastHit,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="point1">The center of the sphere at the start of the <see cref="Physics.CapsuleCast"/>.</param>
-        /// <param name="point2">The center of the sphere at the end of the <see cref="Physics.CapsuleCast"/>.</param>
-        /// <param name="radius">The radius of the <see cref="Physics.CapsuleCast"/>.</param>
-        /// <param name="direction">The direction into which to sweep the <see cref="Physics.CapsuleCast"/>.</param>
+        /// <param name="point1">The center of the sphere at the start of the capsulecast.</param>
+        /// <param name="point2">The center of the sphere at the end of the capsulecast.</param>
+        /// <param name="radius">The radius of the capsulecast.</param>
+        /// <param name="direction">The direction into which to sweep the capsulecast.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
-        /// <returns><see langword="true"/> if the <see cref="Physics.CapsuleCast"/> successfully collides with a valid <see cref="GameObject"/>.</returns>
+        /// <returns><see langword="true"/> if the capsulecast successfully collides with a valid <see cref="GameObject"/>.</returns>
         public virtual bool CustomCapsuleCast(Vector3 point1, Vector3 point2, float radius, Vector3 direction, out RaycastHit hitData, float maxDistance)
         {
             return Physics.CapsuleCast(point1, point2, radius, direction, out hitData, maxDistance, ~layersToIgnore, triggerInteraction);
         }
 
         /// <summary>
-        /// Generates a <see cref="Physics.CapsuleCastAll"/> based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// Generates a <see cref="Physics.CapsuleCastAll(Vector3,Vector3,float,Vector3,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="point1">The center of the sphere at the start of the <see cref="Physics.CapsuleCast"/>.</param>
-        /// <param name="point2">The center of the sphere at the end of the <see cref="Physics.CapsuleCast"/>.</param>
-        /// <param name="radius">The radius of the <see cref="Physics.CapsuleCast"/>.</param>
-        /// <param name="direction">The direction into which to sweep the <see cref="Physics.CapsuleCast"/>.</param>
+        /// <param name="point1">The center of the sphere at the start of the capsulecast.</param>
+        /// <param name="point2">The center of the sphere at the end of the capsulecast.</param>
+        /// <param name="radius">The radius of the capsulecast.</param>
+        /// <param name="direction">The direction into which to sweep the capsulecast.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
         public virtual RaycastHit[] CustomCapsuleCastAll(Vector3 point1, Vector3 point2, float radius, Vector3 direction, float maxDistance)
@@ -318,28 +318,28 @@
         }
 
         /// <summary>
-        /// Generates a <see cref="Physics.BoxCast"/> based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// Generates a <see cref="Physics.BoxCast(Vector3,Vector3,Vector3,out RaycastHit,Quaternion,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="center">The center of the <see cref="Physics.BoxCast"/>.</param>
-        /// <param name="halfExtents">Half the size of the <see cref="Physics.BoxCast"/> in each dimension.</param>
-        /// <param name="direction">The direction in which to cast the <see cref="Physics.BoxCast"/>.</param>
+        /// <param name="center">The center of the boxcast.</param>
+        /// <param name="halfExtents">Half the size of the boxcast in each dimension.</param>
+        /// <param name="direction">The direction in which to cast the boxcast.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
-        /// <param name="orientation">The rotation of the <see cref="Physics.BoxCast"/>.</param>
-        /// <param name="maxDistance">The max length of the <see cref="Physics.BoxCast"/>.</param>
-        /// <returns><see langword="true"/> if the <see cref="Physics.BoxCast"/> successfully collides with a valid <see cref="GameObject"/>.</returns>
+        /// <param name="orientation">The rotation of the boxcast.</param>
+        /// <param name="maxDistance">The max length of the boxcast.</param>
+        /// <returns><see langword="true"/> if the boxcast successfully collides with a valid <see cref="GameObject"/>.</returns>
         public virtual bool CustomBoxCast(Vector3 center, Vector3 halfExtents, Vector3 direction, out RaycastHit hitData, Quaternion orientation, float maxDistance)
         {
             return Physics.BoxCast(center, halfExtents, direction, out hitData, orientation, maxDistance, ~layersToIgnore, triggerInteraction);
         }
 
         /// <summary>
-        /// Generates a <see cref="Physics.BoxCastAll"/> based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// Generates a <see cref="Physics.BoxCastAll(Vector3,Vector3,Vector3,Quaternion,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="center">The center of the <see cref="Physics.BoxCast"/>.</param>
-        /// <param name="halfExtents">Half the size of the <see cref="Physics.BoxCast"/> in each dimension.</param>
-        /// <param name="direction">The direction in which to cast the <see cref="Physics.BoxCast"/>.</param>
-        /// <param name="orientation">The rotation of the <see cref="Physics.BoxCast"/>.</param>
-        /// <param name="maxDistance">The max length of the <see cref="Physics.BoxCast"/>.</param>
+        /// <param name="center">The center of the boxcast.</param>
+        /// <param name="halfExtents">Half the size of the boxcast in each dimension.</param>
+        /// <param name="direction">The direction in which to cast the boxcast.</param>
+        /// <param name="orientation">The rotation of the boxcast.</param>
+        /// <param name="maxDistance">The max length of the boxcast.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
         public virtual RaycastHit[] CustomBoxCastAll(Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance)
         {

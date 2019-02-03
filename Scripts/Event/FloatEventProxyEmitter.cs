@@ -4,7 +4,7 @@
     using System;
 
     /// <summary>
-    /// Emits a <see cref="UnityEvent"/> with a <see cref="float"/> payload whenever the <see cref="Receive"/> method is called.
+    /// Emits a <see cref="UnityEvent"/> with a <see cref="float"/> payload whenever the <see cref="SingleEventProxyEmitter{TValue,TEvent}.Receive"/> method is called.
     /// </summary>
     public class FloatEventProxyEmitter : SingleEventProxyEmitter<float, FloatEventProxyEmitter.UnityEvent>
     {

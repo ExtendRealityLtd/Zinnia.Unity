@@ -6,7 +6,7 @@
     /// <summary>
     /// Defines the <c>[TypePicker]</c> attribute.
     /// </summary>
-    /// <remarks>This attribute is only valid on fields that use <see cref="SerializedType"/>.</remarks>
+    /// <remarks>This attribute is only valid on fields that use <see cref="Data.Type.SerializableType"/>.</remarks>
     public class TypePickerAttribute : PropertyAttribute
     {
         public readonly Type superType;

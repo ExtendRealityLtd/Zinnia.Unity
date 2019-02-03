@@ -23,7 +23,7 @@
         }
 
         /// <summary>
-        /// Sets the x value of the <see cref="CurrentIndex"/> element.
+        /// Sets the x value of the <see cref="CollectionAggregator{TInput,TOutput,TEvent}.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new x value.</param>
         public virtual void SetElementX(float value)
@@ -47,7 +47,7 @@
         }
 
         /// <summary>
-        /// Sets the y value of the <see cref="CurrentIndex"/> element.
+        /// Sets the y value of the <see cref="CollectionAggregator{TInput,TOutput,TEvent}.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new y value.</param>
         public virtual void SetElementY(float value)
@@ -71,7 +71,7 @@
         }
 
         /// <summary>
-        /// Sets the z value of the <see cref="CurrentIndex"/> element.
+        /// Sets the z value of the <see cref="CollectionAggregator{TInput,TOutput,TEvent}.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new z value.</param>
         public virtual void SetElementZ(float value)

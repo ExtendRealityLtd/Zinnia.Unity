@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Allows observing changes to a <see cref="HashSet{T}"/> of <see cref="GameObject"/>s.

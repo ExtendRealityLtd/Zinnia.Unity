@@ -8,7 +8,7 @@
     using Zinnia.Extension;
 
     /// <summary>
-    /// Publishes itself to all <see cref="ActiveCollisionConsumer"/> components found within the current <see cref="ActiveCollisions"/> collection.
+    /// Publishes itself to all <see cref="ActiveCollisionConsumer"/> components found within the current <see cref="PayloadData.ActiveCollisions"/> collection.
     /// </summary>
     public class ActiveCollisionPublisher : MonoBehaviour
     {

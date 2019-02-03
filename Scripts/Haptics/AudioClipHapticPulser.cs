@@ -62,7 +62,7 @@
         }
 
         /// <summary>
-        /// Resets the <see cref="HapticPulse.Intensity"/> back to it's original value.
+        /// Resets the <see cref="HapticPulser.Intensity"/> back to it's original value.
         /// </summary>
         protected virtual void ResetIntensity()
         {
