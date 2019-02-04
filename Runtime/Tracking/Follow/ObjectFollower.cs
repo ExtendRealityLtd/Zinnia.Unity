@@ -6,6 +6,7 @@
     using System;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySetterMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Process.Component;
@@ -79,12 +80,7 @@
         /// <summary>
         /// The current <see cref="targetOffsets"/> collection index.
         /// </summary>
-        public int CurrentTargetOffsetsIndex
-        {
-            get { return _currentTargetOffsetsIndex; }
-            set { _currentTargetOffsetsIndex = targetOffsets.GetWrappedAndClampedIndex(value); }
-        }
-        private int _currentTargetOffsetsIndex;
+        public int CurrentTargetOffsetsIndex { get; set; }
 
         /// <summary>
         /// Emitted before any processing.
@@ -96,8 +92,6 @@
         /// </summary>
         [DocumentedByXml]
         public EmptyUnityEvent Processed = new EmptyUnityEvent();
-
-        protected EventData eventData = new EventData();
 
         /// <inheritdoc />
         [RequiresBehaviourState]
@@ -163,6 +157,17 @@
                 throw new ArgumentException($"The `targetOffsets` at index [{CurrentTargetsIndex}] must be a child of the GameObject at `targets` index [{CurrentTargetsIndex}].");
             }
             followModifier.Modify(source, target, followOffset);
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="CurrentTargetOffsetsIndex"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(CurrentTargetOffsetsIndex))]
+        protected virtual void OnCurrentTargetOffsetsIndexChange(int previousValue, ref int newValue)
+        {
+            newValue = targetOffsets.GetWrappedAndClampedIndex(newValue);
         }
     }
 }

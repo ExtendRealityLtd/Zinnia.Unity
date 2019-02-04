@@ -30,7 +30,7 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetCoordinateMap(Vector2ToVector3.CoordinateMap.XToXAndYToY);
+            subject.CoordinateMap = Vector2ToVector3.CoordinateMapType.XToXAndYToY;
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
@@ -49,7 +49,7 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetCoordinateMap(Vector2ToVector3.CoordinateMap.XToXAndYToZ);
+            subject.CoordinateMap = Vector2ToVector3.CoordinateMapType.XToXAndYToZ;
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
@@ -68,7 +68,7 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetCoordinateMap(Vector2ToVector3.CoordinateMap.XToYAndYToX);
+            subject.CoordinateMap = Vector2ToVector3.CoordinateMapType.XToYAndYToX;
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
@@ -87,7 +87,7 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetCoordinateMap(Vector2ToVector3.CoordinateMap.XToYAndYToZ);
+            subject.CoordinateMap = Vector2ToVector3.CoordinateMapType.XToYAndYToZ;
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
@@ -106,7 +106,7 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetCoordinateMap(Vector2ToVector3.CoordinateMap.XToZAndYToX);
+            subject.CoordinateMap = Vector2ToVector3.CoordinateMapType.XToZAndYToX;
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
@@ -125,8 +125,8 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetCoordinateMap(Vector2ToVector3.CoordinateMap.XToZAndYToY);
-            subject.SetUnusedCoordinateValue(5f);
+            subject.CoordinateMap = Vector2ToVector3.CoordinateMapType.XToZAndYToY;
+            subject.UnusedCoordinateValue = 5f;
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
@@ -145,7 +145,7 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetCoordinateMap(Vector2ToVector3.CoordinateMap.XToXAndYToY);
+            subject.CoordinateMap = Vector2ToVector3.CoordinateMapType.XToXAndYToY;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.zero, subject.Result);
@@ -164,7 +164,7 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.SetCoordinateMap(Vector2ToVector3.CoordinateMap.XToXAndYToY);
+            subject.CoordinateMap = Vector2ToVector3.CoordinateMapType.XToXAndYToY;
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, subject.Result);

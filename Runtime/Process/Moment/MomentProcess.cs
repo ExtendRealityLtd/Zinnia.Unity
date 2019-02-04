@@ -1,5 +1,8 @@
 ﻿namespace Zinnia.Process.Moment
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertySetterMethod;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -21,24 +24,9 @@
         /// <summary>
         /// A percentage defining how often to process the <see cref="process"/>.
         /// </summary>
-        [Range(0f, 1f), SerializeField, DocumentedByXml]
-        private float utilization = 1f;
-
-        /// <summary>
-        /// A percentage defining how often to process the <see cref="process"/>.
-        /// </summary>
-        public float Utilization
-        {
-            get
-            {
-                return utilization;
-            }
-            set
-            {
-                utilization = Mathf.Clamp01(value);
-                UpdateDelay();
-            }
-        }
+        [Serialized, Validated]
+        [field: Range(0f, 1f), DocumentedByXml]
+        public float Utilization { get; set; } = 1f;
 
         /// <summary>
         /// Keeps track of how often calls to <see cref="Process"/> were ignored because of <see cref="Utilization"/>.
@@ -83,6 +71,18 @@
         protected virtual void UpdateDelay()
         {
             delay = (int)(1f / Utilization) - 1;
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="Utilization"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(Utilization))]
+        protected virtual void OnUtilizationChange(float previousValue, ref float newValue)
+        {
+            newValue = Mathf.Clamp01(newValue);
+            UpdateDelay();
         }
     }
 }

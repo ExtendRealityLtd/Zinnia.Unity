@@ -52,8 +52,8 @@ namespace Test.Zinnia.Data.Type.Transformation
             Assert.AreEqual(Vector2.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.SetX(2f);
-            subject.SetY(3f);
+            subject.CurrentX = 2f;
+            subject.CurrentY = 3f;
             Vector2 result = subject.Transform();
             Vector2 expectedResult = new Vector2(2f, 3f);
 

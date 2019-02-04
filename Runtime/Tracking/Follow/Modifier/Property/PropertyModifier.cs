@@ -1,6 +1,8 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Tracking.Follow;
@@ -10,8 +12,9 @@
         /// <summary>
         /// Determines whether the offset will be applied on the modification.
         /// </summary>
-        [DocumentedByXml]
-        public bool applyOffset = true;
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public bool applyOffset { get; set; } = true;
 
         /// <summary>
         /// Emitted before the property is modified.
@@ -25,15 +28,6 @@
         public ObjectFollower.UnityEvent Modified = new ObjectFollower.UnityEvent();
 
         protected ObjectFollower.EventData eventData = new ObjectFollower.EventData();
-
-        /// <summary>
-        /// Determines whether the offset will be applied on the modification.
-        /// </summary>
-        /// <param name="applyOffset"><see langword="true"/> will apply the offset during modification.</param>
-        public virtual void ApplyOffset(bool applyOffset)
-        {
-            this.applyOffset = applyOffset;
-        }
 
         /// <summary>
         /// Attempts modify the target.

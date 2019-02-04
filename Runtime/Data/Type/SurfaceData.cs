@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System;
+    using Malimbe.PropertySetterMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -24,29 +25,12 @@
         /// <summary>
         /// <see cref="RaycastHit"/> data about the current collision.
         /// </summary>
-        public RaycastHit CollisionData
-        {
-            get
-            {
-                return _collisionData;
-            }
-            set
-            {
-                PreviousCollisionData = _collisionData;
-                _collisionData = value;
-            }
-        }
+        public RaycastHit CollisionData { get; set; }
 
         /// <summary>
         /// <see cref="RaycastHit"/> data about the previous collision.
         /// </summary>
-        public RaycastHit PreviousCollisionData
-        {
-            get;
-            protected set;
-        }
-
-        protected RaycastHit _collisionData;
+        public RaycastHit PreviousCollisionData { get; protected set; }
 
         /// <summary>
         /// Creates a new <see cref="SurfaceData"/> with a default <see cref="origin"/> and <see cref="direction"/> for the collision search.
@@ -64,6 +48,17 @@
         {
             this.origin = origin;
             this.direction = direction;
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="CollisionData"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(CollisionData))]
+        protected virtual void OnCollisionDataChange(RaycastHit previousValue, ref RaycastHit newValue)
+        {
+            PreviousCollisionData = previousValue;
         }
     }
 }

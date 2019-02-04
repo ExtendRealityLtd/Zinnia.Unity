@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySetterMethod;
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -31,22 +32,12 @@
         /// <summary>
         /// The current <see cref="sources"/> collection index.
         /// </summary>
-        public int CurrentSourcesIndex
-        {
-            get { return _currentSourcesIndex; }
-            set { _currentSourcesIndex = sources.GetWrappedAndClampedIndex(value); }
-        }
-        private int _currentSourcesIndex;
+        public int CurrentSourcesIndex { get; set; }
 
         /// <summary>
         /// The current <see cref="targets"/> collection index.
         /// </summary>
-        public int CurrentTargetsIndex
-        {
-            get { return _currentTargetsIndex; }
-            set { _currentTargetsIndex = targets.GetWrappedAndClampedIndex(value); }
-        }
-        private int _currentTargetsIndex;
+        public int CurrentTargetsIndex { get; set; }
 
         /// <inheritdoc />
         [RequiresBehaviourState]
@@ -156,6 +147,28 @@
         protected override bool IsTargetValid(GameObject target)
         {
             return (base.IsTargetValid(target) && targetValidity.Accepts(target));
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="CurrentSourcesIndex"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(CurrentSourcesIndex))]
+        protected virtual void OnCurrentSourcesIndexChange(int previousValue, ref int newValue)
+        {
+            newValue = sources.GetWrappedAndClampedIndex(newValue);
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="CurrentTargetsIndex"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(CurrentTargetsIndex))]
+        protected virtual void OnCurrentTargetsIndexChange(int previousValue, ref int newValue)
+        {
+            newValue = targets.GetWrappedAndClampedIndex(newValue);
         }
     }
 }

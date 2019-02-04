@@ -1,6 +1,9 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertySetterMethod;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -12,8 +15,9 @@
         /// <summary>
         /// The <see cref="Component"/> that contains a <see cref="VelocityTracker"/>.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public Component proxySource;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public Component ProxySource { get; set; }
 
         /// <summary>
         /// The cached <see cref="VelocityTracker"/> found on the proxy <see cref="Component"/>.
@@ -29,20 +33,10 @@
         /// <summary>
         /// Sets the source of the <see cref="VelocityTracker"/> proxy.
         /// </summary>
-        /// <param name="proxySource">The <see cref="Component"/> that contains a <see cref="VelocityTracker"/>.</param>
-        public virtual void SetProxySource(Component proxySource)
-        {
-            this.proxySource = proxySource;
-            cachedVelocityTracker = (proxySource == null ? null : proxySource.GetComponentInChildren<VelocityTracker>());
-        }
-
-        /// <summary>
-        /// Sets the source of the <see cref="VelocityTracker"/> proxy.
-        /// </summary>
         /// <param name="proxySource">The <see cref="GameObject"/> that contains a <see cref="VelocityTracker"/>.</param>
         public virtual void SetProxySource(GameObject proxySource)
         {
-            SetProxySource(proxySource == null ? null : proxySource.GetComponent<Component>());
+            ProxySource = proxySource == null ? null : proxySource.GetComponent<Component>();
         }
 
         /// <summary>
@@ -63,6 +57,17 @@
         protected override Vector3 DoGetAngularVelocity()
         {
             return cachedVelocityTracker.GetAngularVelocity();
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="ProxySource"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(ProxySource))]
+        protected virtual void OnProxySourceChange(Component previousValue, ref Component newValue)
+        {
+            cachedVelocityTracker = newValue == null ? null : newValue.GetComponentInChildren<VelocityTracker>();
         }
     }
 }

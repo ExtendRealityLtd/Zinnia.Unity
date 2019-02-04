@@ -2,8 +2,10 @@
 {
     using System.Linq;
     using System.Collections.Generic;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertySetterMethod;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value when all given actions are in their active state.
@@ -13,16 +15,28 @@
         /// <summary>
         /// Actions to check the active state on.
         /// </summary>
-        [DocumentedByXml]
-        public List<Action> actions = new List<Action>();
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public List<Action> Actions { get; set; } = new List<Action>();
 
         protected virtual void Update()
         {
-            bool areAllActionsActivated = actions.EmptyIfNull().All(action => action.IsActivated);
+            bool areAllActionsActivated = Actions?.Count > 0 && Actions.All(action => action.IsActivated);
             if (areAllActionsActivated != IsActivated)
             {
                 Receive(areAllActionsActivated);
             }
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="Actions"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(Actions))]
+        protected virtual void OnActionsChange(List<Action> previousValue, ref List<Action> newValue)
+        {
+            Update();
         }
     }
 }

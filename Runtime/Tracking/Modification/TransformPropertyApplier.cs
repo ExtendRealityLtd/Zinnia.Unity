@@ -6,6 +6,8 @@
     using System.Collections;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Enum;
@@ -63,18 +65,21 @@
         /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public TransformData source;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public TransformData Source { get; set; }
         /// <summary>
         /// The target to apply the transformations to.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject target;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Target { get; set; }
         /// <summary>
         /// The offset/pivot when applying the transformations.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject offset;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Offset { get; set; }
         /// <summary>
         /// Determines which axes to apply on when utilizing the position offset.
         /// </summary>
@@ -117,79 +122,52 @@
         protected EventData eventData = new EventData();
 
         /// <summary>
-        /// Sets the <see cref="source"/> parameter.
+        /// Sets the <see cref="Source"/> parameter.
         /// </summary>
         /// <param name="source">The new source value.</param>
         public virtual void SetSource(GameObject source)
         {
             if (source != null)
             {
-                SetSource(new TransformData(source));
+                Source = new TransformData(source);
             }
         }
 
         /// <summary>
-        /// Sets the <see cref="source"/> parameter.
-        /// </summary>
-        /// <param name="source">The new source value.</param>
-        public virtual void SetSource(TransformData source)
-        {
-            this.source = source;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="target"/> parameter.
-        /// </summary>
-        /// <param name="target">The new target value.</param>
-        public virtual void SetTarget(GameObject target)
-        {
-            this.target = target;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="target"/> parameter.
+        /// Sets the <see cref="Target"/> parameter.
         /// </summary>
         /// <param name="target">The new target value.</param>
         public virtual void SetTarget(TransformData target)
         {
-            SetTarget(target.TryGetGameObject());
+            Target = target.TryGetGameObject();
         }
 
         /// <summary>
-        /// Sets the <see cref="offset"/> parameter.
-        /// </summary>
-        /// <param name="offset">The new offset value.</param>
-        public virtual void SetOffset(GameObject offset)
-        {
-            this.offset = offset;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="offset"/> parameter.
+        /// Sets the <see cref="Offset"/> parameter.
         /// </summary>
         /// <param name="offset">The new offset value.</param>
         public virtual void SetOffset(TransformData offset)
         {
-            SetOffset(offset.TryGetGameObject());
+            Offset = offset.TryGetGameObject();
         }
 
         /// <summary>
-        /// Applies the properties of the <see cref="source"/> parameter to the target.
+        /// Applies the properties of the <see cref="Source"/> parameter to the target.
         /// </summary>
         [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (target == null || source?.transform == null)
+            if (Target == null || Source?.transform == null)
             {
                 return;
             }
 
-            TransformData targetData = new TransformData(target);
-            BeforeTransformUpdated?.Invoke(eventData.Set(source, targetData));
-            Vector3 finalScale = CalculateScale(source, targetData);
-            Quaternion finalRotation = CalculateRotation(source, targetData);
-            Vector3 finalPosition = CalculatePosition(source, targetData, finalScale, finalRotation);
-            ProcessTransform(source, targetData, finalScale, finalRotation, finalPosition);
+            TransformData targetData = new TransformData(Target);
+            BeforeTransformUpdated?.Invoke(eventData.Set(Source, targetData));
+            Vector3 finalScale = CalculateScale(Source, targetData);
+            Quaternion finalRotation = CalculateRotation(Source, targetData);
+            Vector3 finalPosition = CalculatePosition(Source, targetData, finalScale, finalRotation);
+            ProcessTransform(Source, targetData, finalScale, finalRotation, finalPosition);
         }
 
         protected virtual void OnDisable()
@@ -226,12 +204,12 @@
                 return target.Rotation;
             }
 
-            if (offset == null)
+            if (Offset == null)
             {
                 return source.Rotation;
             }
 
-            Quaternion rotationAdjustedByOffset = source.Rotation * (target.Rotation * Quaternion.Inverse(offset.transform.rotation));
+            Quaternion rotationAdjustedByOffset = source.Rotation * (target.Rotation * Quaternion.Inverse(Offset.transform.rotation));
             Vector3 axisAdjustedRotation = GetOffsetData(applyRotationOffsetOnAxis, rotationAdjustedByOffset.eulerAngles, source.Rotation.eulerAngles);
             return Quaternion.Euler(axisAdjustedRotation);
         }
@@ -247,25 +225,25 @@
             Vector3 currentPosition = source.Position;
             if (!applyTransformations.HasFlag(TransformProperties.Position))
             {
-                if (offset == null)
+                if (Offset == null)
                 {
                     return target.Position;
                 }
 
-                currentPosition = GetOffsetData(applyPositionOffsetOnAxis, offset.transform.position, target.Position);
+                currentPosition = GetOffsetData(applyPositionOffsetOnAxis, Offset.transform.position, target.Position);
             }
 
-            if (offset == null)
+            if (Offset == null)
             {
                 return currentPosition;
             }
 
             if (!applyTransformations.HasFlag(TransformProperties.Rotation))
             {
-                return CalculatePositionWithOffset(currentPosition, target.Position, offset.transform.position);
+                return CalculatePositionWithOffset(currentPosition, target.Position, Offset.transform.position);
             }
 
-            Vector3 calculatedOffset = CalculatePositionWithOffset(Vector3.zero, target.Position, offset.transform.position) * -1f;
+            Vector3 calculatedOffset = CalculatePositionWithOffset(Vector3.zero, target.Position, Offset.transform.position) * -1f;
             Quaternion relativeRotation = Quaternion.Inverse(target.Rotation) * currentRotation;
             Vector3 adjustedOffset = relativeRotation * calculatedOffset;
             Vector3 scaleFactor = currentScale.Divide(target.Scale);

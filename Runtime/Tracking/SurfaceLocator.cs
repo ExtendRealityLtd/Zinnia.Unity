@@ -6,6 +6,8 @@
     using System.Linq;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
@@ -30,8 +32,9 @@
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject searchOrigin;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject SearchOrigin { get; set; }
         /// <summary>
         /// The direction in which to cast to locate the nearest surface.
         /// </summary>
@@ -76,15 +79,6 @@
         protected const float DISTANCE_VARIANCE = 0.0001f;
 
         /// <summary>
-        /// Sets the <see cref="searchOrigin"/> parameter.
-        /// </summary>
-        /// <param name="searchOrigin">The new searchOrigin value.</param>
-        public virtual void SetSearchOrigin(GameObject searchOrigin)
-        {
-            this.searchOrigin = searchOrigin;
-        }
-
-        /// <summary>
         /// Locates the nearest available surface upon a <see cref="MomentProcess"/>.
         /// </summary>
         public virtual void Process()
@@ -93,11 +87,11 @@
         }
 
         /// <summary>
-        /// Locates the nearest available surface with the specified <see cref="searchOrigin"/> <see cref="Transform"/>.
+        /// Locates the nearest available surface with the specified <see cref="SearchOrigin"/> <see cref="Transform"/>.
         /// </summary>
         public virtual void Locate()
         {
-            Locate(new TransformData(searchOrigin));
+            Locate(new TransformData(SearchOrigin));
         }
 
         /// <summary>

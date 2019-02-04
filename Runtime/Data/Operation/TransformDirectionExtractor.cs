@@ -1,5 +1,8 @@
 ﻿namespace Zinnia.Data.Operation
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -26,16 +29,12 @@
             Forward
         }
 
-        [SerializeField]
-        private AxisDirection _direction;
         /// <summary>
         /// The direction to extract from the <see cref="Transform"/>.
         /// </summary>
-        public AxisDirection Direction
-        {
-            get { return _direction; }
-            set { _direction = value; }
-        }
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public AxisDirection Direction { get; set; }
 
         /// <inheritdoc />
         protected override Vector3 ExtractValue()

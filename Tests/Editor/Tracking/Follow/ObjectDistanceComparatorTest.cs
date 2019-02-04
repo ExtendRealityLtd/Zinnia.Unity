@@ -37,8 +37,8 @@ namespace Test.Zinnia.Tracking.Follow
             GameObject source = new GameObject();
             GameObject target = new GameObject();
 
-            subject.source = source;
-            subject.target = target;
+            subject.Source = source;
+            subject.Target = target;
             subject.distanceThreshold = 0.5f;
 
             source.transform.position = Vector3.zero;
@@ -89,8 +89,8 @@ namespace Test.Zinnia.Tracking.Follow
 
             GameObject target = new GameObject();
 
-            subject.source = target;
-            subject.target = target;
+            subject.Source = target;
+            subject.Target = target;
             subject.distanceThreshold = 0.5f;
 
             target.transform.position = Vector3.zero;
@@ -140,7 +140,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.distanceThreshold = 0.5f;
 
             target.transform.position = Vector3.forward * 1f;
@@ -166,7 +166,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             GameObject source = new GameObject();
 
-            subject.source = source;
+            subject.Source = source;
             subject.distanceThreshold = 0.5f;
 
             subject.Process();
@@ -191,8 +191,8 @@ namespace Test.Zinnia.Tracking.Follow
             GameObject source = new GameObject();
             GameObject target = new GameObject();
 
-            subject.source = source;
-            subject.target = target;
+            subject.Source = source;
+            subject.Target = target;
             subject.distanceThreshold = 0.5f;
 
             source.transform.position = Vector3.zero;
@@ -223,8 +223,8 @@ namespace Test.Zinnia.Tracking.Follow
             GameObject source = new GameObject();
             GameObject target = new GameObject();
 
-            subject.source = source;
-            subject.target = target;
+            subject.Source = source;
+            subject.Target = target;
             subject.distanceThreshold = 0.5f;
 
             source.transform.position = Vector3.zero;

@@ -1,39 +1,33 @@
 ﻿namespace Zinnia.Event
 {
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
-    /// Extracts the <see cref="GameObject"/> from the <see cref="source"/> and emits an event containing the result.
+    /// Extracts the <see cref="GameObject"/> from the <see cref="Source"/> and emits an event containing the result.
     /// </summary>
     public class ComponentGameObjectEmitter : GameObjectEmitter
     {
         /// <summary>
         /// The source to extract from.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public Component source;
-
-        /// <summary>
-        /// Sets the current <see cref="source"/>.
-        /// </summary>
-        /// <param name="source">The new source.</param>
-        public virtual void SetSource(Component source)
-        {
-            this.source = source;
-        }
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public Component Source { get; set; }
 
         /// <inheritdoc />
         public override GameObject Extract()
         {
-            if (source == null)
+            if (Source == null)
             {
                 Result = null;
                 return null;
             }
 
-            Result = source.gameObject;
+            Result = Source.gameObject;
             return base.Extract();
         }
     }

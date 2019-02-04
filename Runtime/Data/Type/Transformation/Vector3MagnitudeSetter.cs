@@ -1,6 +1,8 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
     using System;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
@@ -21,17 +23,9 @@
         /// <summary>
         /// The magnitude to use when transforming values.
         /// </summary>
-        [DocumentedByXml]
-        public float magnitude = 1f;
-
-        /// <summary>
-        /// Sets the magnitude to use.
-        /// </summary>
-        /// <param name="magnitude">The magnitude to use when transforming values.</param>
-        public virtual void SetMagnitude(float magnitude)
-        {
-            this.magnitude = magnitude;
-        }
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public float Magnitude { get; set; } = 1f;
 
         /// <summary>
         /// Sets the magnitude to use.
@@ -39,17 +33,17 @@
         /// <param name="magnitudeSource">The source of the magnitude to use when transforming values.</param>
         public virtual void SetMagnitude(Vector3 magnitudeSource)
         {
-            magnitude = magnitudeSource.magnitude;
+            Magnitude = magnitudeSource.magnitude;
         }
 
         /// <summary>
-        /// Transforms the given <see cref="Vector3"/> by changing its magnitude to <see cref="magnitude"/>.
+        /// Transforms the given <see cref="Vector3"/> by changing its magnitude to <see cref="Magnitude"/>.
         /// </summary>
         /// <param name="input">The value to change the magnitude of.</param>
-        /// <returns>A new <see cref="Vector3"/> with the same direction as <paramref name="input"/> and a magnitude of <see cref="magnitude"/>.</returns>
+        /// <returns>A new <see cref="Vector3"/> with the same direction as <paramref name="input"/> and a magnitude of <see cref="Magnitude"/>.</returns>
         protected override Vector3 Process(Vector3 input)
         {
-            return input.normalized * magnitude;
+            return input.normalized * Magnitude;
         }
     }
 }

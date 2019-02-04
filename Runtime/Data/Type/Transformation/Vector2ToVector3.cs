@@ -3,6 +3,8 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -26,7 +28,7 @@
         /// <summary>
         /// The mapping of <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
         /// </summary>
-        public enum CoordinateMap
+        public enum CoordinateMapType
         {
             /// <summary>
             /// Maps (X,Y) to (X,Y,-)
@@ -57,31 +59,15 @@
         /// <summary>
         /// The mechanism for mapping the <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
         /// </summary>
-        [SerializeField, DocumentedByXml]
-        protected CoordinateMap coordinateMap = CoordinateMap.XToXAndYToY;
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public CoordinateMapType CoordinateMap { get; set; } = CoordinateMapType.XToXAndYToY;
         /// <summary>
         /// The value to set the unused coordinate to during the conversion.
         /// </summary>
-        [SerializeField, DocumentedByXml]
-        protected float unusedCoordinateValue;
-
-        /// <summary>
-        /// Sets the coordinate mapping used during the conversion.
-        /// </summary>
-        /// <param name="coordinateMap">The new coordinate mapping.</param>
-        public virtual void SetCoordinateMap(CoordinateMap coordinateMap)
-        {
-            this.coordinateMap = coordinateMap;
-        }
-
-        /// <summary>
-        /// Sets the value that set the unused coordinate during the conversion.
-        /// </summary>
-        /// <param name="unusedCoordinateValue">The new unused coordinate value.</param>
-        public virtual void SetUnusedCoordinateValue(float unusedCoordinateValue)
-        {
-            this.unusedCoordinateValue = unusedCoordinateValue;
-        }
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public float UnusedCoordinateValue { get; set; }
 
         /// <summary>
         /// Transforms the given <see cref="Vector2"/> into a <see cref="Vector3"/>.
@@ -90,20 +76,20 @@
         /// <returns>The transformed value.</returns>
         protected override Vector3 Process(Vector2 input)
         {
-            switch (coordinateMap)
+            switch (CoordinateMap)
             {
-                case CoordinateMap.XToXAndYToY:
-                    return new Vector3(input.x, input.y, unusedCoordinateValue);
-                case CoordinateMap.XToXAndYToZ:
-                    return new Vector3(input.x, unusedCoordinateValue, input.y);
-                case CoordinateMap.XToYAndYToX:
-                    return new Vector3(input.y, input.x, unusedCoordinateValue);
-                case CoordinateMap.XToYAndYToZ:
-                    return new Vector3(unusedCoordinateValue, input.x, input.y);
-                case CoordinateMap.XToZAndYToX:
-                    return new Vector3(input.y, unusedCoordinateValue, input.x);
-                case CoordinateMap.XToZAndYToY:
-                    return new Vector3(unusedCoordinateValue, input.y, input.x);
+                case CoordinateMapType.XToXAndYToY:
+                    return new Vector3(input.x, input.y, UnusedCoordinateValue);
+                case CoordinateMapType.XToXAndYToZ:
+                    return new Vector3(input.x, UnusedCoordinateValue, input.y);
+                case CoordinateMapType.XToYAndYToX:
+                    return new Vector3(input.y, input.x, UnusedCoordinateValue);
+                case CoordinateMapType.XToYAndYToZ:
+                    return new Vector3(UnusedCoordinateValue, input.x, input.y);
+                case CoordinateMapType.XToZAndYToX:
+                    return new Vector3(input.y, UnusedCoordinateValue, input.x);
+                case CoordinateMapType.XToZAndYToY:
+                    return new Vector3(UnusedCoordinateValue, input.y, input.x);
             }
             return Vector3.zero;
         }

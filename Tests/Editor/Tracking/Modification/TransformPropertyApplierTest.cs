@@ -45,61 +45,61 @@ namespace Test.Zinnia.Tracking.Modification
         public void SetSourceValid()
         {
             TransformData source = new TransformData(sourceObject);
-            Assert.IsNull(subject.source);
-            subject.SetSource(source);
-            Assert.AreEqual(source, subject.source);
+            Assert.IsNull(subject.Source);
+            subject.Source = source;
+            Assert.AreEqual(source, subject.Source);
         }
 
         [Test]
         public void SetSourceInvalid()
         {
             TransformData source = null;
-            Assert.IsNull(subject.source);
-            subject.SetSource(source);
-            Assert.IsNull(subject.source);
+            Assert.IsNull(subject.Source);
+            subject.Source = source;
+            Assert.IsNull(subject.Source);
         }
 
         [Test]
         public void SetTargetValid()
         {
             TransformData target = new TransformData(targetObject);
-            Assert.IsNull(subject.target);
+            Assert.IsNull(subject.Target);
             subject.SetTarget(target);
-            Assert.AreEqual(targetObject, subject.target);
+            Assert.AreEqual(targetObject, subject.Target);
         }
 
         [Test]
         public void SetTargetInvalid()
         {
             TransformData target = null;
-            Assert.IsNull(subject.target);
+            Assert.IsNull(subject.Target);
             subject.SetTarget(target);
-            Assert.IsNull(subject.target);
+            Assert.IsNull(subject.Target);
         }
 
         [Test]
         public void SetOffsetValid()
         {
             TransformData offset = new TransformData(offsetObject);
-            Assert.IsNull(subject.offset);
+            Assert.IsNull(subject.Offset);
             subject.SetOffset(offset);
-            Assert.AreEqual(offsetObject, subject.offset);
+            Assert.AreEqual(offsetObject, subject.Offset);
         }
 
         [Test]
         public void SetOffsetInvalid()
         {
             TransformData offset = null;
-            Assert.IsNull(subject.offset);
+            Assert.IsNull(subject.Offset);
             subject.SetOffset(offset);
-            Assert.IsNull(subject.offset);
+            Assert.IsNull(subject.Offset);
         }
 
         [Test]
         public void ModifyPositionNoOffsetInstantTransition()
         {
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
             subject.applyTransformations = TransformProperties.Position;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -115,8 +115,8 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ModifyRotationNoOffsetInstantTransition()
         {
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
             subject.applyTransformations = TransformProperties.Rotation;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -134,8 +134,8 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ModifyScaleNoOffsetInstantTransition()
         {
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
             subject.applyTransformations = TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -157,9 +157,9 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ModifyTransformWithOffset()
         {
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
-            subject.offset = offsetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
+            subject.Offset = offsetObject;
             subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -183,9 +183,9 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ModifyTransformWithOffsetNoRotation()
         {
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
-            subject.offset = offsetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
+            subject.Offset = offsetObject;
             subject.applyTransformations = TransformProperties.Position | TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -209,9 +209,9 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ModifyTransformWithXOffsetOnly()
         {
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
-            subject.offset = offsetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
+            subject.Offset = offsetObject;
             subject.applyPositionOffsetOnAxis = new Vector3State(true, false, false);
             subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
@@ -245,7 +245,7 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ModifyTransformNoSource()
         {
-            subject.target = targetObject;
+            subject.Target = targetObject;
 
             sourceTransformData.transform.position = Vector3.one * 2f;
             sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
@@ -261,7 +261,7 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ModifyTransformNoTarget()
         {
-            subject.source = new TransformData(sourceObject);
+            subject.Source = new TransformData(sourceObject);
 
             sourceTransformData.transform.position = Vector3.one * 2f;
             sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
@@ -282,8 +282,8 @@ namespace Test.Zinnia.Tracking.Modification
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
 
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
             subject.Apply();
             Assert.IsTrue(beforeTransformUpdatedMock.Received);
             Assert.IsTrue(afterTransformUpdatedMock.Received);
@@ -297,8 +297,8 @@ namespace Test.Zinnia.Tracking.Modification
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
 
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
             subject.gameObject.SetActive(false);
 
             subject.Apply();
@@ -315,8 +315,8 @@ namespace Test.Zinnia.Tracking.Modification
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
 
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
             subject.enabled = false;
 
             subject.Apply();
@@ -330,8 +330,8 @@ namespace Test.Zinnia.Tracking.Modification
         {
             sourceTransformData.transform.position = Vector3.one;
 
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
             subject.applyTransformations = TransformProperties.Position;
             subject.gameObject.SetActive(false);
 
@@ -345,8 +345,8 @@ namespace Test.Zinnia.Tracking.Modification
         {
             sourceTransformData.transform.position = Vector3.one;
 
-            subject.source = new TransformData(sourceObject);
-            subject.target = targetObject;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
             subject.applyTransformations = TransformProperties.Position;
             subject.enabled = false;
 

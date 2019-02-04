@@ -44,7 +44,7 @@ namespace Test.Zinnia.Tracking
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.searchOrigin = searchOrigin;
+            subject.SearchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
 
             //Process just calls Locate() so may as well just test the first point
@@ -63,7 +63,7 @@ namespace Test.Zinnia.Tracking
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.searchOrigin = searchOrigin;
+            subject.SearchOrigin = searchOrigin;
             subject.searchDirection = Vector3.down;
 
             Physics.Simulate(Time.fixedDeltaTime);
@@ -91,7 +91,7 @@ namespace Test.Zinnia.Tracking
                 Interface = negationRule
             };
 
-            subject.searchOrigin = searchOrigin;
+            subject.SearchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
 
             Physics.Simulate(Time.fixedDeltaTime);
@@ -107,7 +107,7 @@ namespace Test.Zinnia.Tracking
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.searchOrigin = searchOrigin;
+            subject.SearchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
             subject.gameObject.SetActive(false);
             Physics.Simulate(Time.fixedDeltaTime);
@@ -124,7 +124,7 @@ namespace Test.Zinnia.Tracking
 
             validSurface.transform.position = Vector3.forward * 5f;
 
-            subject.searchOrigin = searchOrigin;
+            subject.SearchOrigin = searchOrigin;
             subject.searchDirection = Vector3.forward;
             subject.enabled = false;
             Physics.Simulate(Time.fixedDeltaTime);

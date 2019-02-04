@@ -5,6 +5,8 @@
     using System.Collections;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
@@ -16,25 +18,28 @@
         /// <summary>
         /// The target to rotate.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject target;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Target { get; set; }
         /// <summary>
         /// The object to look at when affecting rotation.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject lookAt;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject LookAt { get; set; }
         /// <summary>
         /// The object to be used as the pivot point for rotation.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject pivot;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Pivot { get; set; }
         /// <summary>
         /// The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.
         /// </summary>
         [DocumentedByXml]
         public float resetOrientationSpeed = 0.1f;
         /// <summary>
-        /// Prevent z-axis rotation coming from the <see cref="lookAt"/> target.
+        /// Prevent z-axis rotation coming from the <see cref="LookAt"/> target.
         /// </summary>
         [DocumentedByXml]
         public bool preventLookAtZRotation = true;
@@ -73,38 +78,11 @@
         }
 
         /// <summary>
-        /// Sets the target.
-        /// </summary>
-        /// <param name="target">The new target.</param>
-        public virtual void SetTarget(GameObject target)
-        {
-            this.target = target;
-        }
-
-        /// <summary>
-        /// Sets the lookAt.
-        /// </summary>
-        /// <param name="lookAt">The new lookAt.</param>
-        public virtual void SetLookAt(GameObject lookAt)
-        {
-            this.lookAt = lookAt;
-        }
-
-        /// <summary>
-        /// Sets the pivot.
-        /// </summary>
-        /// <param name="pivot">The new pivot.</param>
-        public virtual void SetPivot(GameObject pivot)
-        {
-            this.pivot = pivot;
-        }
-
-        /// <summary>
         /// Clears the existing pivot.
         /// </summary>
         public virtual void ClearPivot()
         {
-            pivotReleaseRotation = (pivot != null ? pivot.transform.rotation : Quaternion.identity);
+            pivotReleaseRotation = (Pivot != null ? Pivot.transform.rotation : Quaternion.identity);
         }
 
         /// <summary>
@@ -114,8 +92,8 @@
         [RequiresBehaviourState]
         public virtual void SaveOrientation(bool cancelResetOrientation = true)
         {
-            targetInitialRotation = (target != null ? target.transform.rotation : Quaternion.identity);
-            pivotInitialRotation = (pivot != null ? pivot.transform.rotation : Quaternion.identity);
+            targetInitialRotation = (Target != null ? Target.transform.rotation : Quaternion.identity);
+            pivotInitialRotation = (Pivot != null ? Pivot.transform.rotation : Quaternion.identity);
             if (cancelResetOrientation)
             {
                 CancelResetOrientation();
@@ -128,7 +106,7 @@
         [RequiresBehaviourState]
         public virtual void ResetOrientation()
         {
-            pivotReleaseRotation = (pivot != null ? pivot.transform.rotation : pivotReleaseRotation);
+            pivotReleaseRotation = (Pivot != null ? Pivot.transform.rotation : pivotReleaseRotation);
 
             if (resetOrientationSpeed < float.MaxValue && resetOrientationSpeed > 0f)
             {
@@ -163,12 +141,12 @@
         /// </summary>
         protected virtual void SetOrientationToSaved()
         {
-            if (target == null)
+            if (Target == null)
             {
                 return;
             }
 
-            target.transform.rotation = GetActualInitialRotation();
+            Target.transform.rotation = GetActualInitialRotation();
             OrientationReset?.Invoke();
         }
 
@@ -177,12 +155,12 @@
         /// </summary>
         protected virtual void SetTargetRotation()
         {
-            if (target == null || lookAt == null || pivot == null)
+            if (Target == null || LookAt == null || Pivot == null)
             {
                 return;
             }
 
-            target.transform.rotation = Quaternion.LookRotation(lookAt.transform.position - pivot.transform.position, lookAt.transform.forward);
+            Target.transform.rotation = Quaternion.LookRotation(LookAt.transform.position - Pivot.transform.position, LookAt.transform.forward);
         }
 
         /// <summary>
@@ -190,18 +168,18 @@
         /// </summary>
         protected virtual void SetTargetRotationWithZLocking()
         {
-            if (target == null || lookAt == null || pivot == null)
+            if (Target == null || LookAt == null || Pivot == null)
             {
                 return;
             }
 
-            Vector3 normalizedForward = (lookAt.transform.position - pivot.transform.position).normalized;
-            Quaternion rightLocked = Quaternion.LookRotation(normalizedForward, Vector3.Cross(-pivot.transform.right, normalizedForward).normalized);
-            Quaternion rightLockedDelta = Quaternion.Inverse(target.transform.rotation) * rightLocked;
-            Quaternion upLocked = Quaternion.LookRotation(normalizedForward, pivot.transform.forward);
-            Quaternion upLockedDelta = Quaternion.Inverse(target.transform.rotation) * upLocked;
+            Vector3 normalizedForward = (LookAt.transform.position - Pivot.transform.position).normalized;
+            Quaternion rightLocked = Quaternion.LookRotation(normalizedForward, Vector3.Cross(-Pivot.transform.right, normalizedForward).normalized);
+            Quaternion rightLockedDelta = Quaternion.Inverse(Target.transform.rotation) * rightLocked;
+            Quaternion upLocked = Quaternion.LookRotation(normalizedForward, Pivot.transform.forward);
+            Quaternion upLockedDelta = Quaternion.Inverse(Target.transform.rotation) * upLocked;
 
-            target.transform.rotation = (CalculateLockedAngle(upLockedDelta) < CalculateLockedAngle(rightLockedDelta) ? upLocked : rightLocked);
+            Target.transform.rotation = (CalculateLockedAngle(upLockedDelta) < CalculateLockedAngle(rightLockedDelta) ? upLocked : rightLocked);
         }
 
         /// <summary>
@@ -227,17 +205,17 @@
         /// <returns>The enumerator.</returns>
         protected virtual IEnumerator ResetOrientationRoutine()
         {
-            if (target == null)
+            if (Target == null)
             {
                 yield break;
             }
 
             float elapsedTime = 0f;
-            targetReleaseRotation = target.transform.rotation;
+            targetReleaseRotation = Target.transform.rotation;
 
             while (elapsedTime < resetOrientationSpeed)
             {
-                target.transform.rotation = Quaternion.Lerp(targetReleaseRotation, GetActualInitialRotation(), (elapsedTime / resetOrientationSpeed));
+                Target.transform.rotation = Quaternion.Lerp(targetReleaseRotation, GetActualInitialRotation(), (elapsedTime / resetOrientationSpeed));
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }

@@ -1,5 +1,8 @@
-﻿namespace Zinnia.Cast
+namespace Zinnia.Cast
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertySetterMethod;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -11,17 +14,9 @@
         /// <summary>
         /// The current length of the cast.
         /// </summary>
-        [DocumentedByXml]
-        public float currentLength = 1f;
-
-        /// <summary>
-        /// Sets the current length of the cast to the given length.
-        /// </summary>
-        /// <param name="length">The new current length of the cast.</param>
-        public virtual void SetCurrentLength(float length)
-        {
-            this.currentLength = length;
-        }
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public float CurrentLength { get; set; } = 1f;
 
         /// <summary>
         /// Sets the current length of the cast from the given event data.
@@ -32,7 +27,7 @@
             TargetHit = data?.targetHit;
             if (data?.points.Count >= 2)
             {
-                currentLength = Vector3.Distance(data.points[0], data.points[1]);
+                CurrentLength = Vector3.Distance(data.points[0], data.points[1]);
             }
         }
 
@@ -40,7 +35,29 @@
         protected override void GeneratePoints()
         {
             points[0] = origin.transform.position;
-            points[1] = origin.transform.position + origin.transform.forward * Mathf.Clamp(currentLength, 0f, maximumLength);
+            points[1] = origin.transform.position + origin.transform.forward * CurrentLength;
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="StraightLineCast.MaximumLength"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(MaximumLength))]
+        protected virtual void OnMaximumLengthChange(float previousValue, ref float newValue)
+        {
+            CurrentLength = Mathf.Clamp(CurrentLength, 0f, newValue);
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="CurrentLength"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(CurrentLength))]
+        protected virtual void OnCurrentLengthChange(float previousValue, ref float newValue)
+        {
+            newValue = Mathf.Clamp(newValue, 0f, MaximumLength);
         }
     }
 }

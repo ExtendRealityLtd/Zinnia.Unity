@@ -28,7 +28,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.types.Add(typeof(Light));
-            subject.target = containingObject;
+            subject.Target = containingObject;
 
             Assert.IsTrue(behaviour.enabled);
             subject.SetEnabledState(false);
@@ -42,7 +42,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             MeshRenderer renderer = containingObject.AddComponent<MeshRenderer>();
             subject.types.Add(typeof(MeshRenderer));
-            subject.target = containingObject;
+            subject.Target = containingObject;
 
             Assert.IsTrue(renderer.enabled);
             subject.SetEnabledState(false);
@@ -58,7 +58,7 @@ namespace Test.Zinnia.Tracking.Modification
             MeshRenderer renderer = containingObject.AddComponent<MeshRenderer>();
             subject.types.Add(typeof(Light));
             subject.types.Add(typeof(MeshRenderer));
-            subject.target = containingObject;
+            subject.Target = containingObject;
 
             Assert.IsTrue(behaviour.enabled);
             Assert.IsTrue(renderer.enabled);
@@ -75,7 +75,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.types.Add(typeof(Renderer));
-            subject.target = containingObject;
+            subject.Target = containingObject;
 
             Assert.IsTrue(behaviour.enabled);
             subject.SetEnabledState(false);
@@ -98,7 +98,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.types.Add(typeof(Light));
-            subject.target = containingObject;
+            subject.Target = containingObject;
 
             subject.gameObject.SetActive(false);
 
@@ -113,7 +113,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.types.Add(typeof(Light));
-            subject.target = containingObject;
+            subject.Target = containingObject;
 
             subject.enabled = false;
 

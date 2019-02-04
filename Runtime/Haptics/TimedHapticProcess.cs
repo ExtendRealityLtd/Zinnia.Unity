@@ -2,6 +2,8 @@
 {
     using UnityEngine;
     using System.Collections;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -14,34 +16,20 @@
         /// </summary>
         [DocumentedByXml]
         public HapticProcess hapticProcess;
-        /// <summary>
-        /// The amount of time to keep repeating the process for.
-        /// </summary>
-        [SerializeField, DocumentedByXml]
-        protected float duration = 1f;
-        /// <summary>
-        /// The amount of time to pause after each process iteration.
-        /// </summary>
-        [SerializeField, DocumentedByXml]
-        protected float interval = 0.1f;
 
         /// <summary>
         /// The amount of time to keep repeating the process for.
         /// </summary>
-        public float Duration
-        {
-            get { return duration; }
-            set { duration = value; }
-        }
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public float Duration { get; set; } = 1f;
 
         /// <summary>
         /// The amount of time to pause after each process iteration.
         /// </summary>
-        public float Interval
-        {
-            get { return interval; }
-            set { interval = value; }
-        }
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public float Interval { get; set; } = 0.1f;
 
         /// <summary>
         /// A reference to the started routine.

@@ -2,6 +2,8 @@
 {
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
@@ -15,18 +17,21 @@
         /// <summary>
         /// The target to scale.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject target;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Target { get; set; }
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject primaryPoint;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject PrimaryPoint { get; set; }
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject secondaryPoint;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject SecondaryPoint { get; set; }
         /// <summary>
         /// A scale factor multiplier.
         /// </summary>
@@ -48,7 +53,7 @@
         [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (target == null || primaryPoint == null || secondaryPoint == null)
+            if (Target == null || PrimaryPoint == null || SecondaryPoint == null)
             {
                 return;
             }
@@ -71,55 +76,12 @@
         {
             if (useLocalScale)
             {
-                target.transform.localScale = originalScale;
+                Target.transform.localScale = originalScale;
             }
             else
             {
-                target.transform.SetGlobalScale(originalScale);
+                Target.transform.SetGlobalScale(originalScale);
             }
-        }
-
-        /// <summary>
-        /// Sets the target.
-        /// </summary>
-        /// <param name="target">The new target.</param>
-        public virtual void SetTarget(GameObject target)
-        {
-            this.target = target;
-        }
-
-        /// <summary>
-        /// Sets the primary point.
-        /// </summary>
-        /// <param name="primaryPoint">The new primary point.</param>
-        public virtual void SetPrimaryPoint(GameObject primaryPoint)
-        {
-            this.primaryPoint = primaryPoint;
-        }
-
-        /// <summary>
-        /// Clears the existing primary point.
-        /// </summary>
-        public virtual void ClearPrimaryPoint()
-        {
-            initialized = false;
-        }
-
-        /// <summary>
-        /// Sets the secondary point.
-        /// </summary>
-        /// <param name="secondaryPoint">The new secondary point.</param>
-        public virtual void SetSecondaryPoint(GameObject secondaryPoint)
-        {
-            this.secondaryPoint = secondaryPoint;
-        }
-
-        /// <summary>
-        /// Clears the existing secondary point.
-        /// </summary>
-        public virtual void ClearSecondaryPoint()
-        {
-            initialized = false;
         }
 
         protected virtual void OnEnable()
@@ -138,11 +100,11 @@
                 Vector3 newScale = (Vector3.one * distanceDelta) * multiplier;
                 if (useLocalScale)
                 {
-                    target.transform.localScale += newScale;
+                    Target.transform.localScale += newScale;
                 }
                 else
                 {
-                    target.transform.SetGlobalScale(target.transform.lossyScale + newScale);
+                    Target.transform.SetGlobalScale(Target.transform.lossyScale + newScale);
                 }
             }
             previousDistance = GetDistance();
@@ -155,7 +117,7 @@
         /// <returns>The distance between the points.</returns>
         protected virtual float GetDistance()
         {
-            return Vector3.Distance(primaryPoint.transform.position, secondaryPoint.transform.position);
+            return Vector3.Distance(PrimaryPoint.transform.position, SecondaryPoint.transform.position);
         }
 
         /// <summary>
@@ -164,7 +126,7 @@
         /// <returns>The scale of the target.</returns>
         protected virtual Vector3 GetTargetScale()
         {
-            return (useLocalScale ? target.transform.localScale : target.transform.lossyScale);
+            return (useLocalScale ? Target.transform.localScale : Target.transform.lossyScale);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
@@ -13,8 +15,9 @@
         /// <summary>
         /// The point where the attachment was made.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject attachmentPoint;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject AttachmentPoint { get; set; }
 
         /// <summary>
         /// A cached version of the target rigidbody.
@@ -24,15 +27,6 @@
         /// A cached version of the target.
         /// </summary>
         protected GameObject cachedTarget;
-
-        /// <summary>
-        /// Sets the attachment point.
-        /// </summary>
-        /// <param name="attachmentPoint">The new attachment point.</param>
-        public virtual void SetAttachmentPoint(GameObject attachmentPoint)
-        {
-            this.attachmentPoint = attachmentPoint;
-        }
 
         /// <summary>
         /// Applies a force at the attachment point position to the target rigidbody creating torque for rotation.
@@ -45,13 +39,13 @@
             cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.TryGetComponent<Rigidbody>(true) : cachedTargetRigidbody);
             cachedTarget = target;
 
-            if (cachedTargetRigidbody == null || source == null || attachmentPoint == null)
+            if (cachedTargetRigidbody == null || source == null || AttachmentPoint == null)
             {
                 return;
             }
 
-            Vector3 rotationForce = source.transform.position - attachmentPoint.transform.position;
-            cachedTargetRigidbody.AddForceAtPosition(rotationForce, attachmentPoint.transform.position, ForceMode.VelocityChange);
+            Vector3 rotationForce = source.transform.position - AttachmentPoint.transform.position;
+            cachedTargetRigidbody.AddForceAtPosition(rotationForce, AttachmentPoint.transform.position, ForceMode.VelocityChange);
         }
     }
 }

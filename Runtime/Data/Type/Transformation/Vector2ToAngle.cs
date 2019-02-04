@@ -3,6 +3,9 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertySetterMethod;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -48,20 +51,12 @@
         [DocumentedByXml]
         public AngleUnit unit = AngleUnit.Degrees;
 
-        [SerializeField]
-        private Vector2 _origin = new Vector2(0f, 1f);
         /// <summary>
         /// The direction that defines the origin (i.e. zero) angle.
         /// </summary>
-        public Vector2 Origin
-        {
-            get { return _origin; }
-            set
-            {
-                _origin = value;
-                NormalizeOrigin();
-            }
-        }
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public Vector2 Origin { get; set; } = new Vector2(0f, 1f);
 
         /// <summary>
         /// The full circle in radians.
@@ -85,17 +80,15 @@
                     * (unit == AngleUnit.Degrees ? 180f / Math.PI : 1f));
         }
 
-        protected virtual void OnValidate()
-        {
-            NormalizeOrigin();
-        }
-
         /// <summary>
-        /// Normalizes <see cref="Origin"/>.
+        /// Handles changes to <see cref="Origin"/>.
         /// </summary>
-        protected virtual void NormalizeOrigin()
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(Origin))]
+        protected virtual void OnOriginChange(Vector2 previousValue, ref Vector2 newValue)
         {
-            _origin = _origin.normalized;
+            newValue = newValue.normalized;
         }
     }
 }

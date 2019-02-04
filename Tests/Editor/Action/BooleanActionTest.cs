@@ -267,7 +267,7 @@ namespace Test.Zinnia.Action
             GameObject sourceObject = new GameObject();
             BooleanActionMock sourceMock = sourceObject.AddComponent<BooleanActionMock>();
 
-            Assert.AreEqual(0, subject.Sources.Count);
+            Assert.AreEqual(0, subject.ReadOnlySources.Count);
 
             sourceMock.Receive(true);
 
@@ -280,7 +280,7 @@ namespace Test.Zinnia.Action
 
             subject.AddSource(sourceMock);
 
-            Assert.AreEqual(1, subject.Sources.Count);
+            Assert.AreEqual(1, subject.ReadOnlySources.Count);
 
             sourceMock.Receive(true);
 
@@ -307,7 +307,7 @@ namespace Test.Zinnia.Action
 
             subject.AddSource(sourceMock);
 
-            Assert.AreEqual(1, subject.Sources.Count);
+            Assert.AreEqual(1, subject.ReadOnlySources.Count);
 
             sourceMock.Receive(true);
 
@@ -323,7 +323,7 @@ namespace Test.Zinnia.Action
             deactivatedListenerMock.Reset();
             changedListenerMock.Reset();
 
-            Assert.AreEqual(0, subject.Sources.Count);
+            Assert.AreEqual(0, subject.ReadOnlySources.Count);
 
             sourceMock.Receive(true);
 
@@ -350,7 +350,7 @@ namespace Test.Zinnia.Action
 
             subject.AddSource(sourceMock);
 
-            Assert.AreEqual(1, subject.Sources.Count);
+            Assert.AreEqual(1, subject.ReadOnlySources.Count);
 
             sourceMock.Receive(true);
 
@@ -366,7 +366,7 @@ namespace Test.Zinnia.Action
             deactivatedListenerMock.Reset();
             changedListenerMock.Reset();
 
-            Assert.AreEqual(0, subject.Sources.Count);
+            Assert.AreEqual(0, subject.ReadOnlySources.Count);
 
             sourceMock.Receive(true);
 

@@ -5,6 +5,8 @@
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Data.Attribute;
@@ -24,32 +26,24 @@
         /// <summary>
         /// The target to modify the enabled states for the provided <see cref="types"/>.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject target;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Target { get; set; }
 
         /// <summary>
-        /// Sets the current <see cref="target"/>.
-        /// </summary>
-        /// <param name="target">The new target.</param>
-        public virtual void SetTarget(GameObject target)
-        {
-            this.target = target;
-        }
-
-        /// <summary>
-        /// Sets the enabled state of all matching <see cref="types"/> found on <see cref="target"/>.
+        /// Sets the enabled state of all matching <see cref="types"/> found on <see cref="Target"/>.
         /// </summary>
         /// <param name="state">The enabled state to apply.</param>
         [RequiresBehaviourState]
         public virtual void SetEnabledState(bool state)
         {
-            if (target == null)
+            if (Target == null)
             {
                 return;
             }
 
             IEnumerable<Object> targetObjects = types.EmptyIfNull()
-                .SelectMany(serializableType => target.GetComponentsInChildren(serializableType, true));
+                .SelectMany(serializableType => Target.GetComponentsInChildren(serializableType, true));
 
             foreach (Object targetObject in targetObjects)
             {

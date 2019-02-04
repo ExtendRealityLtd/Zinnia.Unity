@@ -2,6 +2,8 @@
 {
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
@@ -14,8 +16,9 @@
         /// <summary>
         /// The target to mutate.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject target;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Target { get; set; }
         /// <summary>
         /// Determines whether to mutate the local or global values.
         /// </summary>
@@ -28,19 +31,10 @@
         public Vector3State mutateOnAxis = Vector3State.True;
 
         /// <summary>
-        /// Sets the target.
-        /// </summary>
-        /// <param name="target">The new target.</param>
-        public virtual void SetTarget(GameObject target)
-        {
-            this.target = target;
-        }
-
-        /// <summary>
         /// Sets the property to the new value.
         /// </summary>
         /// <param name="input">The value to set it to.</param>
-        /// <returns>The mutated value if the current component is <see cref="Behaviour.isActiveAndEnabled"/> and the <see cref="target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
+        /// <returns>The mutated value if the current component is <see cref="Behaviour.isActiveAndEnabled"/> and the <see cref="Target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
         public virtual Vector3 SetProperty(Vector3 input)
         {
             if (!IsValid())
@@ -72,7 +66,7 @@
         /// Increments the property by the given value.
         /// </summary>
         /// <param name="input">The value to increment by.</param>
-        /// <returns>The mutated value if the current component is <see cref="Behaviour.isActiveAndEnabled"/> and the <see cref="target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
+        /// <returns>The mutated value if the current component is <see cref="Behaviour.isActiveAndEnabled"/> and the <see cref="Target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
         public virtual Vector3 IncrementProperty(Vector3 input)
         {
             if (!IsValid())
@@ -187,7 +181,7 @@
         [RequiresBehaviourState]
         protected virtual bool IsValid()
         {
-            return (target != null);
+            return (Target != null);
         }
     }
 }

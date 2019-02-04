@@ -53,7 +53,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.source = containingObject;
+            subject.Source = containingObject;
 
             Assert.AreEqual("one,two,three", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
             Assert.IsFalse(sortedMock.Received);
@@ -78,7 +78,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.source = containingObject;
+            subject.Source = containingObject;
 
             Assert.AreEqual("", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
             Assert.IsFalse(sortedMock.Received);
@@ -113,7 +113,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.source = containingObject;
+            subject.Source = containingObject;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual("one,two,three", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
@@ -153,7 +153,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.source = containingObject;
+            subject.Source = containingObject;
             subject.enabled = false;
 
             Assert.AreEqual("one,two,three", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));

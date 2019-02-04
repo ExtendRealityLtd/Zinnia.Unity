@@ -23,36 +23,18 @@
         /// <summary>
         /// A float to use as the current x value of the Vector2.
         /// </summary>
-        protected float currentX;
+        public float CurrentX { get; set; }
         /// <summary>
         /// A float to use as the current y value of the Vector2.
         /// </summary>
-        protected float currentY;
-
-        /// <summary>
-        /// Sets the x value of the Vector2.
-        /// </summary>
-        /// <param name="input">The float to use as the x value.</param>
-        public virtual void SetX(float input)
-        {
-            currentX = input;
-        }
-
-        /// <summary>
-        /// Sets the y value of the Vector2.
-        /// </summary>
-        /// <param name="input">The float to use as the y value.</param>
-        public virtual void SetY(float input)
-        {
-            currentY = input;
-        }
+        public float CurrentY { get; set; }
 
         /// <summary>
         /// Builds a float array from the current set x and y values and transforms it into a Vector2.
         /// </summary>
         public virtual Vector2 Transform()
         {
-            float[] input = new float[] { currentX, currentY };
+            float[] input = new float[] { CurrentX, CurrentY };
             return Transform(input);
         }
 

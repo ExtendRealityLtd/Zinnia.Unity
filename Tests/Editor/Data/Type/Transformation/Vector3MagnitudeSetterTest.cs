@@ -22,29 +22,17 @@ namespace Test.Zinnia.Data.Type.Transformation
             Object.DestroyImmediate(subject.gameObject);
         }
 
-        [TestCase(0f), TestCase(1f), TestCase(-2f), TestCase(123f), TestCase(float.MaxValue)]
-        public void SetFloatMagnitude(float expected)
-        {
-            subject.magnitude = 2f;
-
-            Assert.AreEqual(2f, subject.magnitude);
-
-            subject.SetMagnitude(expected);
-
-            Assert.AreEqual(expected, subject.magnitude);
-        }
-
         [Test]
         public void SetVectorMagnitude()
         {
-            subject.magnitude = 2f;
+            subject.Magnitude = 2f;
 
-            Assert.AreEqual(2f, subject.magnitude);
+            Assert.AreEqual(2f, subject.Magnitude);
 
             Vector3 expected = new Vector3(1f, 2f, 3f);
             subject.SetMagnitude(expected);
 
-            Assert.AreEqual(expected.magnitude, subject.magnitude);
+            Assert.AreEqual(expected.magnitude, subject.Magnitude);
         }
 
         [Test]
@@ -56,7 +44,7 @@ namespace Test.Zinnia.Data.Type.Transformation
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.magnitude = 2f;
+            subject.Magnitude = 2f;
             Vector3 input = new Vector3(1f, -2f, 5f);
             Vector3 result = subject.Transform(input);
             Vector3 expectedResult = new Vector3(0.3651484f, -0.7302967f, 1.825742f);

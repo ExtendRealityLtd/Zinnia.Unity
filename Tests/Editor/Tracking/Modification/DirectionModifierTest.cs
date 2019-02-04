@@ -32,9 +32,9 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject lookAt = new GameObject();
             GameObject pivot = new GameObject();
 
-            subject.target = target;
-            subject.lookAt = lookAt;
-            subject.pivot = pivot;
+            subject.Target = target;
+            subject.LookAt = lookAt;
+            subject.Pivot = pivot;
             subject.preventLookAtZRotation = false;
 
             lookAt.transform.position = Vector3.up * 2f;
@@ -58,9 +58,9 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject lookAt = new GameObject();
             GameObject pivot = new GameObject();
 
-            subject.target = target;
-            subject.lookAt = lookAt;
-            subject.pivot = pivot;
+            subject.Target = target;
+            subject.LookAt = lookAt;
+            subject.Pivot = pivot;
             subject.preventLookAtZRotation = true;
 
             lookAt.transform.position = Vector3.up * 2f;
@@ -83,8 +83,8 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject target = new GameObject();
             GameObject pivot = new GameObject();
 
-            subject.target = target;
-            subject.pivot = pivot;
+            subject.Target = target;
+            subject.Pivot = pivot;
 
             pivot.transform.position = Vector3.back * 0.5f;
 
@@ -104,8 +104,8 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject target = new GameObject();
             GameObject lookAt = new GameObject();
 
-            subject.target = target;
-            subject.lookAt = lookAt;
+            subject.Target = target;
+            subject.LookAt = lookAt;
 
             lookAt.transform.position = Vector3.up * 2f;
 
@@ -126,9 +126,9 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject lookAt = new GameObject();
             GameObject pivot = new GameObject();
 
-            subject.target = target;
-            subject.lookAt = lookAt;
-            subject.pivot = pivot;
+            subject.Target = target;
+            subject.LookAt = lookAt;
+            subject.Pivot = pivot;
             subject.gameObject.SetActive(false);
 
             lookAt.transform.position = Vector3.up * 2f;
@@ -152,9 +152,9 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject lookAt = new GameObject();
             GameObject pivot = new GameObject();
 
-            subject.target = target;
-            subject.lookAt = lookAt;
-            subject.pivot = pivot;
+            subject.Target = target;
+            subject.LookAt = lookAt;
+            subject.Pivot = pivot;
             subject.gameObject.SetActive(false);
 
             lookAt.transform.position = Vector3.up * 2f;
@@ -181,9 +181,9 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject lookAt = new GameObject();
             GameObject pivot = new GameObject();
 
-            subject.target = target;
-            subject.lookAt = lookAt;
-            subject.pivot = pivot;
+            subject.Target = target;
+            subject.LookAt = lookAt;
+            subject.Pivot = pivot;
             subject.resetOrientationSpeed = 0f;
             subject.preventLookAtZRotation = false;
 

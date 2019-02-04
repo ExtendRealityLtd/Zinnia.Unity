@@ -33,7 +33,7 @@ namespace Test.Zinnia.Event
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            subject.SetSource(source.transform);
+            subject.Source = source.transform;
 
             Assert.IsFalse(extractedMock.Received);
             subject.Extract();

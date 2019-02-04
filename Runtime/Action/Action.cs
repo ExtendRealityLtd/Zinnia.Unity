@@ -4,7 +4,11 @@
     using UnityEngine.Events;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertySetterMethod;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Zinnia.Extension;
 
     /// <summary>
     /// The basis for all action types.
@@ -66,7 +70,7 @@
         /// <summary>
         /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public IReadOnlyList<TSelf> Sources => sources;
+        public IReadOnlyList<TSelf> ReadOnlySources => Sources;
 
         /// <summary>
         /// Emitted when the action becomes active.
@@ -87,8 +91,9 @@
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        [SerializeField, DocumentedByXml]
-        protected List<TSelf> sources = new List<TSelf>();
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        protected List<TSelf> Sources { get; set; } = new List<TSelf>();
 
         /// <summary>
         /// The value of the action.
@@ -107,7 +112,7 @@
                 return;
             }
 
-            sources.Add((TSelf)action);
+            Sources.Add((TSelf)action);
             SubscribeToSource((TSelf)action);
         }
 
@@ -120,14 +125,14 @@
             }
 
             UnsubscribeFromSource((TSelf)action);
-            sources.Remove((TSelf)action);
+            Sources.Remove((TSelf)action);
         }
 
         /// <inheritdoc />
         public override void ClearSources()
         {
             UnsubscribeFromSources();
-            sources.Clear();
+            Sources.Clear();
         }
 
         /// <inheritdoc />
@@ -210,7 +215,7 @@
         /// </summary>
         protected virtual void SubscribeToSources()
         {
-            sources.ForEach(SubscribeToSource);
+            Sources.ForEach(SubscribeToSource);
         }
 
         /// <summary>
@@ -218,7 +223,7 @@
         /// </summary>
         protected virtual void UnsubscribeFromSources()
         {
-            sources.ForEach(UnsubscribeFromSource);
+            Sources.ForEach(UnsubscribeFromSource);
         }
 
         /// <summary>
@@ -259,6 +264,25 @@
         protected virtual bool ShouldActivate(TValue value)
         {
             return !defaultValue.Equals(value);
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="Sources"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(Sources))]
+        protected virtual void OnSourcesChange(List<TSelf> previousValue, ref List<TSelf> newValue)
+        {
+            foreach (TSelf source in previousValue.EmptyIfNull())
+            {
+                UnsubscribeFromSource(source);
+            }
+
+            foreach (TSelf source in newValue.EmptyIfNull())
+            {
+                SubscribeToSource(source);
+            }
         }
     }
 }

@@ -2,6 +2,8 @@
 {
     using UnityEngine;
     using System.Linq;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -12,8 +14,9 @@
         /// <summary>
         /// The maximum length to cast.
         /// </summary>
-        [DocumentedByXml]
-        public float maximumLength = 100f;
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public float MaximumLength { get; set; } = 100f;
 
         protected virtual void OnEnable()
         {
@@ -39,11 +42,11 @@
         {
             Ray ray = new Ray(origin.transform.position, origin.transform.forward);
             RaycastHit hitData;
-            bool hasCollided = PhysicsCast.Raycast(physicsCast, ray, out hitData, maximumLength, Physics.IgnoreRaycastLayer);
+            bool hasCollided = PhysicsCast.Raycast(physicsCast, ray, out hitData, MaximumLength, Physics.IgnoreRaycastLayer);
             TargetHit = (hasCollided ? hitData : (RaycastHit?)null);
 
             points[0] = origin.transform.position;
-            points[1] = (hasCollided ? hitData.point : origin.transform.position + origin.transform.forward * maximumLength);
+            points[1] = (hasCollided ? hitData.point : origin.transform.position + origin.transform.forward * MaximumLength);
         }
     }
 }

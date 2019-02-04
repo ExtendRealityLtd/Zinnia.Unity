@@ -1,5 +1,8 @@
 ﻿namespace Zinnia.Haptics
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertySetterMethod;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -8,15 +11,22 @@
     /// </summary>
     public abstract class HapticPulser : HapticProcess
     {
-        [Range(0f, 1f), SerializeField, DocumentedByXml]
-        private float _intensity = 1f;
         /// <summary>
         /// The intensity of the haptic rumble.
         /// </summary>
-        public float Intensity
+        [Serialized, Validated]
+        [field: Range(0f, 1f), DocumentedByXml]
+        public float Intensity { get; set; } = 1f;
+
+        /// <summary>
+        /// Handles changes to <see cref="Intensity"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(Intensity))]
+        protected virtual void OnIntensityChange(float previousValue, ref float newValue)
         {
-            get { return _intensity; }
-            set { _intensity = Mathf.Clamp01(value); }
+            newValue = Mathf.Clamp01(newValue);
         }
     }
 }

@@ -3,6 +3,8 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -26,7 +28,7 @@
         /// <summary>
         /// The mapping of <see cref="Vector3"/> coordinates to the <see cref="Vector2"/> coordinates.
         /// </summary>
-        public enum CoordinateMap
+        public enum CoordinateMapType
         {
             /// <summary>
             /// Maps (X,Y,Z) to (X,Y)
@@ -57,17 +59,9 @@
         /// <summary>
         /// The mechanism for mapping the <see cref="Vector3"/> coordinates to the <see cref="Vector2"/> coordinates.
         /// </summary>
-        [SerializeField, DocumentedByXml]
-        protected CoordinateMap coordinateMap = CoordinateMap.XToXAndYToYExcludeZ;
-
-        /// <summary>
-        /// Sets the coordinate mapping used during the conversion.
-        /// </summary>
-        /// <param name="coordinateMap">The new coordinate mapping.</param>
-        public virtual void SetCoordinateMap(CoordinateMap coordinateMap)
-        {
-            this.coordinateMap = coordinateMap;
-        }
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public CoordinateMapType CoordinateMap { get; set; } = CoordinateMapType.XToXAndYToYExcludeZ;
 
         /// <summary>
         /// Transforms the given <see cref="Vector3"/> into a <see cref="Vector2"/>.
@@ -76,19 +70,19 @@
         /// <returns>The transformed value.</returns>
         protected override Vector2 Process(Vector3 input)
         {
-            switch (coordinateMap)
+            switch (CoordinateMap)
             {
-                case CoordinateMap.XToXAndYToYExcludeZ:
+                case CoordinateMapType.XToXAndYToYExcludeZ:
                     return new Vector3(input.x, input.y);
-                case CoordinateMap.XToYAndYToXExcludeZ:
+                case CoordinateMapType.XToYAndYToXExcludeZ:
                     return new Vector3(input.y, input.x);
-                case CoordinateMap.YToYAndZToXExcludeX:
+                case CoordinateMapType.YToYAndZToXExcludeX:
                     return new Vector3(input.z, input.y);
-                case CoordinateMap.YToXAndZToYExcludeX:
+                case CoordinateMapType.YToXAndZToYExcludeX:
                     return new Vector3(input.y, input.z);
-                case CoordinateMap.XToXAndZToYExcludeY:
+                case CoordinateMapType.XToXAndZToYExcludeY:
                     return new Vector3(input.x, input.z);
-                case CoordinateMap.XToYAndZToXExcludeY:
+                case CoordinateMapType.XToYAndZToXExcludeY:
                     return new Vector3(input.z, input.x);
             }
             return Vector2.zero;

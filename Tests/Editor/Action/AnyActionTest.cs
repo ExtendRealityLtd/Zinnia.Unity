@@ -34,8 +34,8 @@ namespace Test.Zinnia.Action
             actionA.SetIsActivated(false);
             actionB.SetIsActivated(false);
 
-            subject.actions.Add(actionA);
-            subject.actions.Add(actionB);
+            subject.Actions.Add(actionA);
+            subject.Actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -74,8 +74,8 @@ namespace Test.Zinnia.Action
             actionA.SetIsActivated(false);
             actionB.SetIsActivated(false);
 
-            subject.actions.Add(actionA);
-            subject.actions.Add(actionB);
+            subject.Actions.Add(actionA);
+            subject.Actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -117,8 +117,8 @@ namespace Test.Zinnia.Action
             actionA.SetIsActivated(true);
             actionB.SetIsActivated(true);
 
-            subject.actions.Add(actionA);
-            subject.actions.Add(actionB);
+            subject.Actions.Add(actionA);
+            subject.Actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -157,8 +157,8 @@ namespace Test.Zinnia.Action
             actionA.SetIsActivated(false);
             actionB.SetIsActivated(false);
 
-            subject.actions.Add(actionA);
-            subject.actions.Add(actionB);
+            subject.Actions.Add(actionA);
+            subject.Actions.Add(actionB);
 
             UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
 
@@ -212,8 +212,8 @@ namespace Test.Zinnia.Action
             actionA.SetIsActivated(false);
             actionB.SetIsActivated(false);
 
-            subject.actions.Add(actionA);
-            subject.actions.Add(actionB);
+            subject.Actions.Add(actionA);
+            subject.Actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -253,8 +253,8 @@ namespace Test.Zinnia.Action
             actionA.SetIsActivated(false);
             actionB.SetIsActivated(false);
 
-            subject.actions.Add(actionA);
-            subject.actions.Add(actionB);
+            subject.Actions.Add(actionA);
+            subject.Actions.Add(actionB);
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();

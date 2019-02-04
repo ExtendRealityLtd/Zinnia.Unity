@@ -1,6 +1,8 @@
 ﻿namespace Zinnia.Data.Operation
 {
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -12,52 +14,44 @@
         /// <summary>
         /// An optional rotation offset.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject rotationOffset;
-
-        /// <summary>
-        /// Sets the rotation offset.
-        /// </summary>
-        /// <param name="rotationOffset">The new rotation offset.</param>
-        public virtual void SetRotationOffset(GameObject rotationOffset)
-        {
-            this.rotationOffset = rotationOffset;
-        }
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject RotationOffset { get; set; }
 
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)
         {
-            return target.transform.position[axis];
+            return Target.transform.position[axis];
         }
 
         /// <inheritdoc/>
         protected override float GetLocalAxisValue(int axis)
         {
-            return target.transform.localPosition[axis];
+            return Target.transform.localPosition[axis];
         }
 
         /// <inheritdoc/>
         protected override Vector3 IncrementGlobal(Vector3 input)
         {
-            return target.transform.position += LockIncrementInput(GetRotationOffset() * input);
+            return Target.transform.position += LockIncrementInput(GetRotationOffset() * input);
         }
 
         /// <inheritdoc/>
         protected override Vector3 IncrementLocal(Vector3 input)
         {
-            return target.transform.localPosition += LockIncrementInput(GetRotationOffset() * input);
+            return Target.transform.localPosition += LockIncrementInput(GetRotationOffset() * input);
         }
 
         /// <inheritdoc/>
         protected override Vector3 SetGlobal(Vector3 input)
         {
-            return target.transform.position = LockSetInput(GetRotationOffset() * input);
+            return Target.transform.position = LockSetInput(GetRotationOffset() * input);
         }
 
         /// <inheritdoc/>
         protected override Vector3 SetLocal(Vector3 input)
         {
-            return target.transform.localPosition = LockSetInput(GetRotationOffset() * input);
+            return Target.transform.localPosition = LockSetInput(GetRotationOffset() * input);
         }
 
         /// <summary>
@@ -66,7 +60,7 @@
         /// <returns>The rotation offset.</returns>
         protected virtual Quaternion GetRotationOffset()
         {
-            return (rotationOffset == null ? Quaternion.identity : (useLocalValues ? rotationOffset.transform.localRotation : rotationOffset.transform.rotation));
+            return (RotationOffset == null ? Quaternion.identity : (useLocalValues ? RotationOffset.transform.localRotation : RotationOffset.transform.rotation));
         }
     }
 }

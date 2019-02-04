@@ -2,6 +2,7 @@
 {
     using UnityEngine.Events;
     using System.Collections.Generic;
+    using Malimbe.PropertySetterMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -23,12 +24,7 @@
         /// <summary>
         /// The current collection index to add the given value to.
         /// </summary>
-        public int CurrentIndex
-        {
-            get { return _currentIndex; }
-            set { _currentIndex = collection.GetWrappedAndClampedIndex(value); }
-        }
-        private int _currentIndex;
+        public int CurrentIndex { get; set; }
 
         /// <summary>
         /// Updates the collection at the <see cref="CurrentIndex"/> with the given <see cref="TInput"/>.
@@ -91,6 +87,17 @@
 
             SetElement(input);
             return ProcessCollection();
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="CurrentIndex"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(CurrentIndex))]
+        protected virtual void OnCurrentIndexChange(int previousValue, ref int newValue)
+        {
+            newValue = collection.GetWrappedAndClampedIndex(newValue);
         }
     }
 }

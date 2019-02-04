@@ -3,6 +3,8 @@
     using UnityEngine;
     using System;
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -14,18 +16,21 @@
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject source;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Source { get; set; }
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject relativeTo;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject RelativeTo { get; set; }
         /// <summary>
-        /// Automatically begin collecting samples for estimation.
+        /// Whether samples are currently being collected.
         /// </summary>
-        [DocumentedByXml]
-        public bool autoStartSampling = true;
+        [Serialized, Validated]
+        [field: DocumentedByXml]
+        public bool IsEstimating { get; set; } = true;
         /// <summary>
         /// The number of average frames to collect samples for velocity estimation.
         /// </summary>
@@ -37,7 +42,6 @@
         [DocumentedByXml]
         public int angularVelocityAverageFrames = 10;
 
-        protected bool collectSamples;
         protected int currentSampleCount;
         protected Vector3[] velocitySamples = Array.Empty<Vector3>();
         protected Vector3[] angularVelocitySamples = Array.Empty<Vector3>();
@@ -49,56 +53,13 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return (base.IsActive() && source != null && source.gameObject.activeInHierarchy);
+            return (base.IsActive() && Source != null && Source.gameObject.activeInHierarchy);
         }
 
         /// <summary>
-        /// Sets the <see cref="source"/> parameter.
+        /// The acceleration of the <see cref="Source"/>.
         /// </summary>
-        /// <param name="source">The new source value.</param>
-        public virtual void SetSource(GameObject source)
-        {
-            this.source = source;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="relativeTo"/> parameter.
-        /// </summary>
-        /// <param name="relativeTo">The new relativeTo value.</param>
-        public virtual void SetRelativeTo(GameObject relativeTo)
-        {
-            this.relativeTo = relativeTo;
-        }
-
-        /// <summary>
-        /// Manually enables the collecting of samples for the estimation process.
-        /// </summary>
-        public virtual void StartEstimation()
-        {
-            collectSamples = true;
-        }
-
-        /// <summary>
-        /// Manually disables the collecting of samples for the estimation process.
-        /// </summary>
-        public virtual void EndEstimation()
-        {
-            collectSamples = false;
-        }
-
-        /// <summary>
-        /// Gets whether samples are currently being collected.
-        /// </summary>
-        /// <returns><see langword="true"/> if samples are currently being collected.</returns>
-        public virtual bool IsEstimating()
-        {
-            return collectSamples;
-        }
-
-        /// <summary>
-        /// The acceleration of the <see cref="source"/>.
-        /// </summary>
-        /// <returns>Acceleration of the <see cref="source"/>.</returns>
+        /// <returns>Acceleration of the <see cref="Source"/>.</returns>
         public virtual Vector3 GetAcceleration()
         {
             if (!IsActive())
@@ -127,11 +88,10 @@
         {
             velocitySamples = new Vector3[velocityAverageFrames];
             angularVelocitySamples = new Vector3[angularVelocityAverageFrames];
-            previousPosition = source.TryGetPosition();
-            previousRotation = source.TryGetRotation();
-            previousRelativePosition = relativeTo.TryGetPosition();
-            previousRelativeRotation = relativeTo.TryGetRotation();
-            collectSamples = autoStartSampling;
+            previousPosition = Source.TryGetPosition();
+            previousRotation = Source.TryGetRotation();
+            previousRelativePosition = RelativeTo.TryGetPosition();
+            previousRelativeRotation = RelativeTo.TryGetRotation();
         }
 
         protected virtual void LateUpdate()
@@ -185,7 +145,7 @@
         /// </summary>
         protected virtual void ProcessEstimation()
         {
-            if (collectSamples)
+            if (IsEstimating)
             {
                 float factor = GetFactor();
                 EstimateVelocity(factor);
@@ -209,9 +169,9 @@
                 return;
             }
 
-            Vector3 currentRelativePosition = relativeTo.TryGetPosition();
+            Vector3 currentRelativePosition = RelativeTo.TryGetPosition();
             Vector3 relativeDeltaPosition = currentRelativePosition - previousRelativePosition;
-            Vector3 currentPosition = source.TryGetPosition();
+            Vector3 currentPosition = Source.TryGetPosition();
             int sampleIndex = currentSampleCount % velocitySamples.Length;
             velocitySamples[sampleIndex] = factor * ((currentPosition - previousPosition) - relativeDeltaPosition);
             previousPosition = currentPosition;
@@ -229,9 +189,9 @@
                 return;
             }
 
-            Quaternion currentRelativeRotation = relativeTo.TryGetRotation();
+            Quaternion currentRelativeRotation = RelativeTo.TryGetRotation();
             Quaternion relativeDeltaRotation = currentRelativeRotation * Quaternion.Inverse(previousRelativeRotation);
-            Quaternion currentRotation = source.TryGetRotation();
+            Quaternion currentRotation = Source.TryGetRotation();
             Quaternion deltaRotation = Quaternion.Inverse(relativeDeltaRotation) * (currentRotation * Quaternion.Inverse(previousRotation));
             float theta = 2.0f * Mathf.Acos(Mathf.Clamp(deltaRotation.w, -1.0f, 1.0f));
             if (theta > Mathf.PI)

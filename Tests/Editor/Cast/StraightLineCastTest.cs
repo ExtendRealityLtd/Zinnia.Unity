@@ -62,14 +62,14 @@ namespace Test.Zinnia.Cast
             subject.origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
-            subject.maximumLength = validSurface.transform.position.z / 2f;
+            subject.MaximumLength = validSurface.transform.position.z / 2f;
 
             subject.ManualOnEnable();
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Vector3 expectedStart = Vector3.zero;
-            Vector3 expectedEnd = Vector3.forward * subject.maximumLength;
+            Vector3 expectedEnd = Vector3.forward * subject.MaximumLength;
 
             Assert.AreEqual(expectedStart, subject.Points[0]);
             Assert.AreEqual(expectedEnd, subject.Points[1]);

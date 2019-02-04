@@ -24,7 +24,7 @@ namespace Test.Zinnia.Association
         [TearDown]
         public void TearDown()
         {
-            foreach (GameObject gameObject in subject.associations.EmptyIfNull()
+            foreach (GameObject gameObject in subject.Associations.EmptyIfNull()
                 .SelectMany(association => association.gameObjects.EmptyIfNull()))
             {
                 Object.DestroyImmediate(gameObject);
@@ -37,7 +37,7 @@ namespace Test.Zinnia.Association
         [Test]
         public void ProcessActivates()
         {
-            Assert.IsFalse(subject.wasActivateCalled);
+            subject.wasActivateCalled = false;
             subject.Process();
             Assert.IsTrue(subject.wasActivateCalled);
         }
@@ -52,7 +52,7 @@ namespace Test.Zinnia.Association
             associationMock.gameObjects.Add(gameObject);
             associationMock.shouldBeActive = true;
 
-            subject.associations.Add(associationMock);
+            subject.Associations.Add(associationMock);
 
             subject.Activate();
             Assert.IsTrue(gameObject.activeSelf);
@@ -69,7 +69,7 @@ namespace Test.Zinnia.Association
             GameObjectsAssociationMock associationMock = containingObject.AddComponent<GameObjectsAssociationMock>();
             associationMock.shouldBeActive = true;
 
-            subject.associations.Add(associationMock);
+            subject.Associations.Add(associationMock);
 
             subject.Activate();
             Assert.AreEqual(associationMock, subject.CurrentAssociation);
@@ -85,7 +85,7 @@ namespace Test.Zinnia.Association
             associationMock.gameObjects.Add(new GameObject());
             associationMock.gameObjects.Add(new GameObject());
 
-            subject.associations.Add(associationMock);
+            subject.Associations.Add(associationMock);
 
             LogAssert.Expect(LogType.Warning, new Regex("multiple association"));
             subject.ManualAwake();
@@ -94,7 +94,7 @@ namespace Test.Zinnia.Association
         [Test]
         public void OnEnableActivates()
         {
-            Assert.IsFalse(subject.wasActivateCalled);
+            subject.wasActivateCalled = false;
             subject.ManualOnEnable();
             Assert.IsTrue(subject.wasActivateCalled);
         }
@@ -102,7 +102,7 @@ namespace Test.Zinnia.Association
         [Test]
         public void OnDisableDeactivates()
         {
-            Assert.IsFalse(subject.wasDeactivateCalled);
+            subject.wasDeactivateCalled = false;
             subject.ManualOnDisable();
             Assert.IsTrue(subject.wasDeactivateCalled);
         }

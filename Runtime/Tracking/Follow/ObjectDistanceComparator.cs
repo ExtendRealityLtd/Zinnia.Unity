@@ -5,6 +5,9 @@
     using System;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.PropertySetterMethod;
+    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
@@ -12,7 +15,7 @@
     /// Compares the distance between two GameObjects and emits an event when a given threshold is exceeded or falls within it.
     /// </summary>
     /// <remarks>
-    /// If the <see cref="source"/> and the <see cref="target"/> are the same <see cref="GameObject"/> then the initial position of the <see cref="target"/> is used as the <see cref="source"/> position.
+    /// If the <see cref="Source"/> and the <see cref="Target"/> are the same <see cref="GameObject"/> then the initial position of the <see cref="Target"/> is used as the <see cref="Source"/> position.
     /// </remarks>
     public class ObjectDistanceComparator : MonoBehaviour, IProcessable
     {
@@ -62,13 +65,15 @@
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject source;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Source { get; set; }
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
-        [DocumentedByXml, Cleared]
-        public GameObject target;
+        [Serialized, Validated, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Target { get; set; }
         /// <summary>
         /// The distance between the source and target that is considered to be exceeding the given threshold.
         /// </summary>
@@ -123,12 +128,12 @@
         [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (source == null || target == null)
+            if (Source == null || Target == null)
             {
                 return;
             }
 
-            Difference = target.transform.position - GetSourcePosition();
+            Difference = Target.transform.position - GetSourcePosition();
             Distance = Difference.magnitude;
             Exceeding = Distance >= distanceThreshold;
 
@@ -153,37 +158,17 @@
         }
 
         /// <summary>
-        /// Sets the <see cref="source"/> parameter.
-        /// </summary>
-        /// <param name="source">The new source value.</param>
-        public virtual void SetSource(GameObject source)
-        {
-            this.source = source;
-            SavePosition();
-        }
-
-        /// <summary>
-        /// Attempts to save the current <see cref="target"/> position as the initial position if the <see cref="source"/> and the <see cref="target"/> are the same <see cref="GameObject"/>.
+        /// Attempts to save the current <see cref="Target"/> position as the initial position if the <see cref="Source"/> and the <see cref="Target"/> are the same <see cref="GameObject"/>.
         /// </summary>
         public virtual void SavePosition()
         {
-            if (source == null || source != target)
+            if (Source == null || Source != Target)
             {
                 return;
             }
 
-            sourcePosition = target.transform.position;
+            sourcePosition = Target.transform.position;
             previousState = false;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="target"/> parameter.
-        /// </summary>
-        /// <param name="target">The new target value.</param>
-        public virtual void SetTarget(GameObject target)
-        {
-            this.target = target;
-            SavePosition();
         }
 
         protected virtual void OnEnable()
@@ -192,17 +177,39 @@
         }
 
         /// <summary>
-        /// Gets the actual position for the <see cref="source"/> based on whether it's a different <see cref="GameObject"/> or whether it is set up to use the initial position of the <see cref="target"/>.
+        /// Gets the actual position for the <see cref="Source"/> based on whether it's a different <see cref="GameObject"/> or whether it is set up to use the initial position of the <see cref="Target"/>.
         /// </summary>
         /// <returns>The appropriate position.</returns>
         protected virtual Vector3 GetSourcePosition()
         {
-            if (source == null)
+            if (Source == null)
             {
                 return Vector3.zero;
             }
 
-            return (source == target ? sourcePosition : source.transform.position);
+            return (Source == Target ? sourcePosition : Source.transform.position);
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="Source"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(Source))]
+        protected virtual void OnSourceChange(GameObject previousValue, ref GameObject newValue)
+        {
+            SavePosition();
+        }
+
+        /// <summary>
+        /// Handles changes to <see cref="Target"/>.
+        /// </summary>
+        /// <param name="previousValue">The previous value.</param>
+        /// <param name="newValue">The new value.</param>
+        [CalledBySetter(nameof(Target))]
+        protected virtual void OnTargetChange(GameObject previousValue, ref GameObject newValue)
+        {
+            SavePosition();
         }
     }
 }
