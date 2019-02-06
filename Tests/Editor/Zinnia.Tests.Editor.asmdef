@@ -1,0 +1,20 @@
+{
+    "name": "Zinnia.Tests.Editor",
+    "references": [
+        "Zinnia.Runtime",
+        "Zinnia.Editor",
+        "Zinnia.Tests.Utility"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Weavers>
+  <Malimbe.FodyRunner>
+    <LogLevel>Error, Warning</LogLevel>
+    <AssemblyNameRegex>^Zinnia</AssemblyNameRegex>
+  </Malimbe.FodyRunner>
+  <Malimbe.BehaviourStateRequirementMethod/>
+  <Malimbe.MemberClearanceMethod/>
+  <Malimbe.PropertySerializationAttribute/>
+  <Malimbe.PropertySetterMethod/>
+  <Malimbe.PropertyValidationMethod/>
+  <Malimbe.XmlDocumentationAttribute IdentifierReplacementFormat="`{0}`"/>
+</Weavers>

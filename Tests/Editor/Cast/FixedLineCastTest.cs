@@ -31,7 +31,7 @@ namespace Test.Zinnia.Cast
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.origin = subject.gameObject;
-            subject.currentLength = 10f;
+            subject.CurrentLength = 10f;
 
             subject.ManualOnEnable();
             subject.Process();

@@ -266,7 +266,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
     public class ActiveCollisionConsumerMock : ActiveCollisionConsumer
     {
-        public bool received = false;
+        public bool received;
 
         public override void Consume(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
         {

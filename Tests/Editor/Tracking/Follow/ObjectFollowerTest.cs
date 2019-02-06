@@ -95,7 +95,7 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void AllTargetsFollowSourceNoOffsets()
         {
-            /// The play area alias moves and all SDK play areas follow it.
+            // The play area alias moves and all SDK play areas follow it.
 
             UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
             UnityEventListenerMock processedMock = new UnityEventListenerMock();
@@ -139,7 +139,7 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void TargetFollowsFirstActiveSourceNoOffsets()
         {
-            /// The first active SDK HMD moves and the target HMD alias follows
+            // The first active SDK HMD moves and the target HMD alias follows
 
             UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
             UnityEventListenerMock processedMock = new UnityEventListenerMock();

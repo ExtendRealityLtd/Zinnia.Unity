@@ -1,0 +1,17 @@
+{
+    "name": "Zinnia.Editor",
+    "references": [
+        "Zinnia.Runtime",
+        "Supyrb.Editor"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

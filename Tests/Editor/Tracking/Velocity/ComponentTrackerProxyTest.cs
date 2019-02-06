@@ -57,9 +57,9 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
 
             subject.SetProxySource(sourceObject);
-            Assert.AreEqual(sourceObject.TryGetComponent<Component>(), subject.proxySource);
+            Assert.AreEqual(sourceObject.TryGetComponent<Component>(), subject.ProxySource);
             subject.ClearProxySource();
-            Assert.IsNull(subject.proxySource);
+            Assert.IsNull(subject.ProxySource);
             Object.DestroyImmediate(sourceObject);
         }
 

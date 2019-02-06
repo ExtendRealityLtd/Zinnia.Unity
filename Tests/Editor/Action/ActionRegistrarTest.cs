@@ -206,11 +206,11 @@ namespace Test.Zinnia.Action
             subject.sources.Add(oneActionSource);
             subject.sources.Add(twoActionSource);
 
-            Assert.AreEqual(0, targetAction.Sources.Count);
+            Assert.AreEqual(0, targetAction.ReadOnlySources.Count);
 
             subject.ManualOnEnable();
 
-            Assert.AreEqual(2, targetAction.Sources.Count);
+            Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
             Assert.IsNull(subject.SourceLimit);
 
             Object.DestroyImmediate(targetActionObject);
@@ -249,13 +249,13 @@ namespace Test.Zinnia.Action
             subject.sources.Add(oneActionSource);
             subject.sources.Add(twoActionSource);
 
-            Assert.AreEqual(0, targetAction.Sources.Count);
+            Assert.AreEqual(0, targetAction.ReadOnlySources.Count);
 
             subject.ManualOnEnable();
             subject.Register(twoSourceActionObject);
 
-            Assert.AreEqual(1, targetAction.Sources.Count);
-            Assert.AreEqual(twoSourceAction, targetAction.Sources[0]);
+            Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
+            Assert.AreEqual(twoSourceAction, targetAction.ReadOnlySources[0]);
             Assert.AreEqual(twoSourceActionObject, subject.SourceLimit);
 
             Object.DestroyImmediate(targetActionObject);
@@ -293,11 +293,11 @@ namespace Test.Zinnia.Action
             subject.sources.Add(oneActionSource);
             subject.sources.Add(twoActionSource);
 
-            Assert.AreEqual(0, targetAction.Sources.Count);
+            Assert.AreEqual(0, targetAction.ReadOnlySources.Count);
 
             subject.ManualOnEnable();
 
-            Assert.AreEqual(1, targetAction.Sources.Count);
+            Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
             Assert.IsNull(subject.SourceLimit);
 
             Object.DestroyImmediate(targetActionObject);
@@ -336,12 +336,12 @@ namespace Test.Zinnia.Action
             subject.sources.Add(twoActionSource);
             subject.ManualOnEnable();
 
-            Assert.AreEqual(2, targetAction.Sources.Count);
+            Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
 
             subject.Unregister(oneSourceActionObject);
 
-            Assert.AreEqual(1, targetAction.Sources.Count);
-            Assert.AreEqual(twoSourceAction, targetAction.Sources[0]);
+            Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
+            Assert.AreEqual(twoSourceAction, targetAction.ReadOnlySources[0]);
 
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);
@@ -379,14 +379,14 @@ namespace Test.Zinnia.Action
             subject.sources.Add(twoActionSource);
             subject.ManualOnEnable();
 
-            Assert.AreEqual(2, targetAction.Sources.Count);
+            Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
 
             oneActionSource.enabled = false;
 
             subject.Unregister(oneSourceActionObject);
 
-            Assert.AreEqual(1, targetAction.Sources.Count);
-            Assert.AreEqual(twoSourceAction, targetAction.Sources[0]);
+            Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
+            Assert.AreEqual(twoSourceAction, targetAction.ReadOnlySources[0]);
 
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);
@@ -424,11 +424,11 @@ namespace Test.Zinnia.Action
             subject.sources.Add(twoActionSource);
             subject.ManualOnEnable();
 
-            Assert.AreEqual(2, targetAction.Sources.Count);
+            Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
 
             subject.Clear();
 
-            Assert.AreEqual(0, targetAction.Sources.Count);
+            Assert.AreEqual(0, targetAction.ReadOnlySources.Count);
 
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);

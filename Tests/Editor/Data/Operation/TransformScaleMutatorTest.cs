@@ -30,7 +30,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = true;
             subject.mutateOnAxis = Vector3State.True;
 
@@ -49,7 +49,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = false;
             subject.mutateOnAxis = Vector3State.True;
 
@@ -68,7 +68,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = true;
             subject.mutateOnAxis = new Vector3State(true, false, true);
 
@@ -89,7 +89,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = false;
             subject.mutateOnAxis = new Vector3State(false, true, false);
 
@@ -110,7 +110,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = true;
             subject.mutateOnAxis = Vector3State.True;
 
@@ -133,7 +133,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = false;
             subject.mutateOnAxis = Vector3State.True;
 
@@ -156,7 +156,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = true;
             subject.mutateOnAxis = new Vector3State(true, false, true);
 
@@ -182,7 +182,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = false;
             subject.mutateOnAxis = new Vector3State(false, true, false);
 
@@ -208,7 +208,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = true;
             subject.mutateOnAxis = Vector3State.True;
             subject.gameObject.SetActive(false);
@@ -228,7 +228,7 @@ namespace Test.Zinnia.Data.Operation
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
             subject.useLocalValues = true;
             subject.mutateOnAxis = Vector3State.True;
             subject.enabled = false;

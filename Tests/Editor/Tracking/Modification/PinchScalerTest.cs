@@ -31,9 +31,9 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject primaryPoint = new GameObject();
             GameObject secondaryPoint = new GameObject();
 
-            subject.target = target;
-            subject.primaryPoint = primaryPoint;
-            subject.secondaryPoint = secondaryPoint;
+            subject.Target = target;
+            subject.PrimaryPoint = primaryPoint;
+            subject.SecondaryPoint = secondaryPoint;
 
             Assert.AreEqual(Vector3.one, target.transform.localScale);
 
@@ -56,9 +56,9 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject primaryPoint = new GameObject();
             GameObject secondaryPoint = new GameObject();
 
-            subject.target = target;
-            subject.primaryPoint = primaryPoint;
-            subject.secondaryPoint = secondaryPoint;
+            subject.Target = target;
+            subject.PrimaryPoint = primaryPoint;
+            subject.SecondaryPoint = secondaryPoint;
             subject.multiplier = 2f;
 
             Assert.AreEqual(Vector3.one, target.transform.localScale);
@@ -81,8 +81,8 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject target = new GameObject();
             GameObject secondaryPoint = new GameObject();
 
-            subject.target = target;
-            subject.secondaryPoint = secondaryPoint;
+            subject.Target = target;
+            subject.SecondaryPoint = secondaryPoint;
 
             Assert.AreEqual(Vector3.one, target.transform.localScale);
 
@@ -102,8 +102,8 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject target = new GameObject();
             GameObject primaryPoint = new GameObject();
 
-            subject.target = target;
-            subject.primaryPoint = primaryPoint;
+            subject.Target = target;
+            subject.PrimaryPoint = primaryPoint;
 
             Assert.AreEqual(Vector3.one, target.transform.localScale);
 
@@ -124,9 +124,9 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject primaryPoint = new GameObject();
             GameObject secondaryPoint = new GameObject();
 
-            subject.target = target;
-            subject.primaryPoint = primaryPoint;
-            subject.secondaryPoint = secondaryPoint;
+            subject.Target = target;
+            subject.PrimaryPoint = primaryPoint;
+            subject.SecondaryPoint = secondaryPoint;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.one, target.transform.localScale);
@@ -150,9 +150,9 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject primaryPoint = new GameObject();
             GameObject secondaryPoint = new GameObject();
 
-            subject.target = target;
-            subject.primaryPoint = primaryPoint;
-            subject.secondaryPoint = secondaryPoint;
+            subject.Target = target;
+            subject.PrimaryPoint = primaryPoint;
+            subject.SecondaryPoint = secondaryPoint;
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.one, target.transform.localScale);
@@ -173,7 +173,7 @@ namespace Test.Zinnia.Tracking.Modification
         public void SaveAndRestoreScale()
         {
             GameObject target = new GameObject();
-            subject.target = target;
+            subject.Target = target;
 
             Assert.AreEqual(Vector3.one, target.transform.localScale);
             subject.SaveCurrentScale();

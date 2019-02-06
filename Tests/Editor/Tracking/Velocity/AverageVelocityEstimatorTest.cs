@@ -47,7 +47,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void IsActiveSourceActive()
         {
-            subject.source = source;
+            subject.Source = source;
 
             bool actualResult = subject.IsActive();
             Assert.IsTrue(actualResult);
@@ -57,7 +57,7 @@ namespace Test.Zinnia.Tracking.Velocity
         public void IsActiveSourceInActive()
         {
             source.gameObject.SetActive(false);
-            subject.source = source;
+            subject.Source = source;
 
             bool actualResult = subject.IsActive();
             Assert.IsFalse(actualResult);
@@ -71,44 +71,14 @@ namespace Test.Zinnia.Tracking.Velocity
         }
 
         [Test]
-        public void StartEstimation()
-        {
-            subject.autoStartSampling = false;
-            subject.ManualOnEnable();
-            subject.StartEstimation();
-
-            Assert.IsTrue(subject.IsEstimating());
-        }
-
-        [Test]
-        public void EndEstimation()
-        {
-            subject.autoStartSampling = false;
-            subject.ManualOnEnable();
-            subject.StartEstimation();
-            subject.EndEstimation();
-
-            Assert.IsFalse(subject.IsEstimating());
-        }
-
-        [Test]
-        public void AutoStartEstimation()
-        {
-            subject.autoStartSampling = true;
-            subject.ManualOnEnable();
-
-            Assert.IsTrue(subject.IsEstimating());
-        }
-
-        [Test]
         public void GetVelocityAutoStartEstimating()
         {
             Vector3 expectedResult = new Vector3(1.6f, 1.6f, 1.6f);
             Vector3 unexpectedResult = Vector3.zero;
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = true;
+            subject.Source = source;
+            subject.IsEstimating = true;
             subject.ManualOnEnable();
 
             ProcessPositions(exampleSourcePositions);
@@ -125,11 +95,11 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = false;
+            subject.Source = source;
+            subject.IsEstimating = false;
             subject.velocityAverageFrames = 0;
             subject.ManualOnEnable();
-            subject.StartEstimation();
+            subject.IsEstimating = true;
 
             ProcessPositions(exampleSourcePositions);
 
@@ -145,11 +115,11 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = false;
+            subject.Source = source;
+            subject.IsEstimating = false;
             subject.velocityAverageFrames = 4;
             subject.ManualOnEnable();
-            subject.StartEstimation();
+            subject.IsEstimating = true;
 
             ProcessPositions(exampleSourcePositions);
 
@@ -165,11 +135,11 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = Vector3.zero;
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = false;
+            subject.Source = source;
+            subject.IsEstimating = false;
             subject.velocityAverageFrames = 5;
             subject.ManualOnEnable();
-            subject.StartEstimation();
+            subject.IsEstimating = true;
 
             ProcessPositions(exampleSourcePositions);
 
@@ -185,11 +155,11 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = false;
+            subject.Source = source;
+            subject.IsEstimating = false;
             subject.velocityAverageFrames = 0;
             subject.ManualOnEnable();
-            subject.EndEstimation();
+            subject.IsEstimating = false;
 
             ProcessPositions(exampleSourcePositions);
 
@@ -205,7 +175,7 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
             subject.ManualOnEnable();
-            subject.StartEstimation();
+            subject.IsEstimating = true;
 
             ProcessPositions(exampleSourcePositions);
 
@@ -221,8 +191,8 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = Vector3.zero;
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = true;
+            subject.Source = source;
+            subject.IsEstimating = true;
             subject.angularVelocityAverageFrames = 5;
             subject.ManualOnEnable();
 
@@ -240,11 +210,11 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = false;
+            subject.Source = source;
+            subject.IsEstimating = false;
             subject.angularVelocityAverageFrames = 0;
             subject.ManualOnEnable();
-            subject.StartEstimation();
+            subject.IsEstimating = true;
 
             ProcessRotations(exampleSourceRotations);
 
@@ -260,11 +230,11 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = false;
+            subject.Source = source;
+            subject.IsEstimating = false;
             subject.angularVelocityAverageFrames = 4;
             subject.ManualOnEnable();
-            subject.StartEstimation();
+            subject.IsEstimating = true;
 
             ProcessRotations(exampleSourceRotations);
 
@@ -280,11 +250,11 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = Vector3.zero;
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = false;
+            subject.Source = source;
+            subject.IsEstimating = false;
             subject.angularVelocityAverageFrames = 5;
             subject.ManualOnEnable();
-            subject.StartEstimation();
+            subject.IsEstimating = true;
 
             ProcessRotations(exampleSourceRotations);
 
@@ -300,11 +270,11 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = false;
+            subject.Source = source;
+            subject.IsEstimating = false;
             subject.angularVelocityAverageFrames = 0;
             subject.ManualOnEnable();
-            subject.EndEstimation();
+            subject.IsEstimating = false;
 
             ProcessRotations(exampleSourceRotations);
 
@@ -320,7 +290,7 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
             subject.ManualOnEnable();
-            subject.StartEstimation();
+            subject.IsEstimating = true;
 
             ProcessRotations(exampleSourceRotations);
 
@@ -336,11 +306,11 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = Vector3.zero;
 
             // Ensure the subject has a valid source to check
-            subject.source = source;
-            subject.autoStartSampling = false;
+            subject.Source = source;
+            subject.IsEstimating = false;
             subject.velocityAverageFrames = 5;
             subject.ManualOnEnable();
-            subject.StartEstimation();
+            subject.IsEstimating = true;
 
             ProcessPositions(exampleSourcePositions);
 
