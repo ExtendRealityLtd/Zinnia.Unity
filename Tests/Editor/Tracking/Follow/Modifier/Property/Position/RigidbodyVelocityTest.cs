@@ -101,7 +101,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
             Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
 
-            subject.applyOffset = false;
+            subject.ApplyOffset = false;
             subject.Modify(source, target, offset);
 
             Assert.AreEqual(expectedVelocity.ToString(), subjectRigidbody.velocity.ToString());

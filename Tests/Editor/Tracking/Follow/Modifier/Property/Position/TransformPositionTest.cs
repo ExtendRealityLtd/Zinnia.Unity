@@ -74,7 +74,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             target.transform.position = Vector3.zero;
             offset.transform.position = Vector3.one * 0.5f;
 
-            subject.applyOffset = false;
+            subject.ApplyOffset = false;
             subject.Modify(source, target, offset);
 
             Assert.AreEqual(Vector3.one, source.transform.position);

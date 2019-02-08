@@ -74,7 +74,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
             source.transform.localScale = Vector3.one;
             offset.transform.localScale = Vector3.one * 0.5f;
 
-            subject.applyOffset = false;
+            subject.ApplyOffset = false;
             subject.Modify(source, target, offset);
 
             Assert.AreEqual(Vector3.one, source.transform.localScale);
