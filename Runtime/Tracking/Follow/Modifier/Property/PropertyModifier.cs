@@ -14,7 +14,7 @@
         /// </summary>
         [Serialized, Validated]
         [field: DocumentedByXml]
-        public bool applyOffset { get; set; } = true;
+        public bool ApplyOffset { get; set; } = true;
 
         /// <summary>
         /// Emitted before the property is modified.
@@ -43,7 +43,7 @@
                 return;
             }
 
-            offset = (applyOffset ? offset : null);
+            offset = (ApplyOffset ? offset : null);
 
             Premodified?.Invoke(eventData.Set(source, target, offset));
             DoModify(source, target, offset);

@@ -79,7 +79,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             target.transform.rotation = Quaternion.identity;
             offset.transform.rotation = Quaternion.Euler(0f, 45f, 0f);
 
-            subject.applyOffset = false;
+            subject.ApplyOffset = false;
             subject.Modify(source, target, offset);
 
             Assert.AreEqual(sourceRotation, source.transform.rotation);
