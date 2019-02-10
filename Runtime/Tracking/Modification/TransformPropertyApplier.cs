@@ -219,6 +219,8 @@
         /// </summary>
         /// <param name="source">The source <see cref="TransformData"/> that will be used to determine the position transformation that is to be applied.</param>
         /// <param name="target">The target <see cref="TransformData"/> that will have the position transformations applied to.</param>
+        /// <param name="currentScale">The current scale to apply to the target.</param>
+        /// <param name="currentRotation">The current rotation to apply to the target.</param>
         /// <returns>The calculated position.</returns>
         protected virtual Vector3 CalculatePosition(TransformData source, TransformData target, Vector3 currentScale, Quaternion currentRotation)
         {
