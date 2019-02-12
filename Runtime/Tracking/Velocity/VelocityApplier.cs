@@ -20,7 +20,7 @@
         public Rigidbody target;
 
         /// <summary>
-        /// Applies the velocity data to the target <see cref="Rigidbody"/>.
+        /// Applies the velocity data to the <see cref="target"/>.
         /// </summary>
         public virtual void Apply()
         {
