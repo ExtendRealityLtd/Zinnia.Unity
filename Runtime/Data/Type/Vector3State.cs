@@ -26,14 +26,29 @@
         public bool zState;
 
         /// <summary>
-        /// Default Vector3State of all false.
+        /// Shorthand for writing <c>Vector3State(false, false, false)</c>.
         /// </summary>
         public static readonly Vector3State False = new Vector3State(false, false, false);
 
         /// <summary>
-        /// Default Vector3State of all true.
+        /// Shorthand for writing <c>Vector3State(true, true, true)</c>.
         /// </summary>
         public static readonly Vector3State True = new Vector3State(true, true, true);
+
+        /// <summary>
+        /// Shorthand for writing <c>Vector3State(true, false, false)</c>.
+        /// </summary>
+        public static readonly Vector3State XOnly = new Vector3State(true, false, false);
+
+        /// <summary>
+        /// Shorthand for writing <c>Vector3State(false, true, false)</c>.
+        /// </summary>
+        public static readonly Vector3State YOnly = new Vector3State(false, true, false);
+
+        /// <summary>
+        /// Shorthand for writing <c>Vector3State(false, false, true)</c>.
+        /// </summary>
+        public static readonly Vector3State ZOnly = new Vector3State(false, false, true);
 
         /// <summary>
         /// The Constructor that allows setting the individual states at instantiation.

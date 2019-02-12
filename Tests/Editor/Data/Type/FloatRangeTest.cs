@@ -32,6 +32,14 @@ namespace Test.Zinnia.Data.Type
         }
 
         [Test]
+        public void ConstructFromStaticZero()
+        {
+            FloatRange range = FloatRange.Zero;
+            Assert.AreEqual(0f, range.minimum);
+            Assert.AreEqual(0f, range.maximum);
+        }
+
+        [Test]
         public void Contains()
         {
             FloatRange range = new FloatRange(0.3f, 0.8f);

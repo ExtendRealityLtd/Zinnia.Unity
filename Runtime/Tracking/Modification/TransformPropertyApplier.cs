@@ -9,10 +9,10 @@
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Zinnia.Extension;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Enum;
     using Zinnia.Data.Type;
-    using Zinnia.Extension;
 
     /// <summary>
     /// Applies the transform properties from a given source <see cref="Transform"/> onto the given target <see cref="Transform"/>.
@@ -100,6 +100,11 @@
         /// </summary>
         [DocumentedByXml]
         public float transitionDuration;
+        /// <summary>
+        /// The threshold the current <see cref="Transform"/> properties can be within of the destination properties to be considered equal.
+        /// </summary>
+        [DocumentedByXml]
+        public float transitionDestinationThreshold = 0.01f;
 
         /// <summary>
         /// Emitted before the transformation process occurs.
@@ -335,18 +340,35 @@
             WaitForEndOfFrame delayInstruction = new WaitForEndOfFrame();
             while (elapsedTime < transitionDuration)
             {
-                float lerpFrame = (elapsedTime / transitionDuration);
+                float lerpFrame = elapsedTime / transitionDuration;
                 target.transform.SetGlobalScale(Vector3.Lerp(startScale, destinationScale, lerpFrame));
                 target.transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
                 target.transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
-                elapsedTime += Time.deltaTime;
+                elapsedTime += ArePropertiesEqual(startPosition, destinationPosition, startRotation, destinationRotation, startScale, destinationScale) ? transitionDuration : Time.deltaTime;
                 yield return delayInstruction;
             }
 
             target.transform.SetGlobalScale(destinationScale);
-            target.transform.rotation = destinationRotation;
             target.transform.position = destinationPosition;
+            target.transform.rotation = destinationRotation;
             AfterTransformUpdated?.Invoke(eventData.Set(source, target));
+        }
+
+        /// <summary>
+        /// Determines whether the start properties equal the destination properties.
+        /// </summary>
+        /// <param name="startPosition">The initial position of the <see cref="Transform"/>.</param>
+        /// <param name="destinationPosition">The final position for the <see cref="Transform"/>.</param>
+        /// <param name="startRotation">The initial rotation of the <see cref="Transform"/>.</param>
+        /// <param name="destinationRotation">The final rotation of the <see cref="Transform"/>.</param>
+        /// <param name="startScale">The initial scale of the <see cref="Transform"/>.</param>
+        /// <param name="destinationScale">The final scale of the <see cref="Transform"/>.</param>
+        /// <returns>Whether the start properties equal the destination properties.</returns>
+        protected virtual bool ArePropertiesEqual(Vector3 startPosition, Vector3 destinationPosition, Quaternion startRotation, Quaternion destinationRotation, Vector3 startScale, Vector3 destinationScale)
+        {
+            return startPosition.ApproxEquals(destinationPosition, transitionDestinationThreshold)
+                && startRotation.eulerAngles.ApproxEquals(destinationRotation.eulerAngles, transitionDestinationThreshold)
+                && startScale.ApproxEquals(destinationScale, transitionDestinationThreshold);
         }
     }
 }
