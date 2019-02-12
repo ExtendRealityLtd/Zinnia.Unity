@@ -22,6 +22,11 @@
         public float maximum;
 
         /// <summary>
+        /// Shorthand for writing <c>FloatRange(0f, 0f)</c>.
+        /// </summary>
+        public static readonly FloatRange Zero = new FloatRange(0f, 0f);
+
+        /// <summary>
         /// Constructs a new range with the minimum value being <see cref="float.MinValue"/> and the maximum value being <see cref="float.MaxValue"/>.
         /// </summary>
         public FloatRange()
@@ -58,7 +63,7 @@
         /// <returns><see langword="true"/> if the value is found within the range.</returns>
         public bool Contains(float value)
         {
-            return (value >= minimum && value <= maximum);
+            return value >= minimum && value <= maximum;
         }
 
         /// <summary>
