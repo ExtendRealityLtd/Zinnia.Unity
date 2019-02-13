@@ -1,5 +1,17 @@
 # Changelog
 
+# [8.2.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.1.4...v8.2.0) (2019-02-13)
+
+
+### Bug Fixes
+
+* **UnityIntegration:** prevent serialization issues ([3ef85e2](https://github.com/ExtendRealityLtd/Malimbe/commit/3ef85e2))
+
+
+### Features
+
+* **SerializedProperty:** support properties with just a get or set ([afb09cf](https://github.com/ExtendRealityLtd/Malimbe/commit/afb09cf))
+
 ## [8.1.4](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.1.3...v8.1.4) (2019-02-05)
 
 
