@@ -67,7 +67,7 @@
         private Coroutine decelerationRoutine;
 
         /// <summary>
-        /// Applies the velocity data to the <see cref="target"/>.
+        /// Applies the velocity data to the <see cref="Target"/>.
         /// </summary>
         public virtual void Apply()
         {
