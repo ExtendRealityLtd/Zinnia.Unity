@@ -74,8 +74,10 @@
         [RequiresBehaviourState]
         public virtual void RemoveFirst(TElement element)
         {
-            elements.Remove(element);
-            EmitRemoveEvents(element);
+            if (elements.Remove(element))
+            {
+                EmitRemoveEvents(element);
+            }
         }
 
         /// <summary>
@@ -86,11 +88,12 @@
         public virtual void RemoveLast(TElement element)
         {
             int index = elements.LastIndexOf(element);
-            if (index != -1)
+            if (index == -1)
             {
-                elements.RemoveAt(index);
+                return;
             }
 
+            elements.RemoveAt(index);
             EmitRemoveEvents(element);
         }
 
@@ -101,6 +104,11 @@
         [RequiresBehaviourState]
         public virtual void Clear(bool removeFromFront)
         {
+            if (elements.Count == 0)
+            {
+                return;
+            }
+
             if (!removeFromFront)
             {
                 elements.Reverse();
@@ -117,13 +125,15 @@
 
         protected virtual void Start()
         {
-            for (int index = 0; index < Elements.Count; index++)
+            for (int index = 0; index < elements.Count; index++)
             {
+                TElement element = elements[index];
+                ElementAdded?.Invoke(element);
+
                 if (index == 0)
                 {
-                    BecamePopulated?.Invoke(Elements[index]);
+                    BecamePopulated?.Invoke(element);
                 }
-                ElementAdded?.Invoke(Elements[index]);
             }
         }
 
