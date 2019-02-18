@@ -123,6 +123,13 @@ namespace Test.Zinnia.Data.Collection
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
+            subject.RemoveFirst(elementOne);
+
+            Assert.IsFalse(becamePopulatedMock.Received);
+            Assert.IsFalse(elementAddedMock.Received);
+            Assert.IsFalse(elementRemovedMock.Received);
+            Assert.IsFalse(becameEmptyMock.Received);
+
             subject.AddToEnd(elementOne);
             subject.AddToEnd(elementTwo);
             subject.AddToEnd(elementOne);
@@ -196,6 +203,13 @@ namespace Test.Zinnia.Data.Collection
             subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
+
+            subject.RemoveLast(elementOne);
+
+            Assert.IsFalse(becamePopulatedMock.Received);
+            Assert.IsFalse(elementAddedMock.Received);
+            Assert.IsFalse(elementRemovedMock.Received);
+            Assert.IsFalse(becameEmptyMock.Received);
 
             subject.AddToEnd(elementOne);
             subject.AddToEnd(elementTwo);
@@ -271,6 +285,13 @@ namespace Test.Zinnia.Data.Collection
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
+            subject.Clear(false);
+
+            Assert.IsFalse(becamePopulatedMock.Received);
+            Assert.IsFalse(elementAddedMock.Received);
+            Assert.IsFalse(elementRemovedMock.Received);
+            Assert.IsFalse(becameEmptyMock.Received);
+
             subject.AddToEnd(elementOne);
             subject.AddToEnd(elementTwo);
             subject.AddToEnd(elementOne);
@@ -309,6 +330,13 @@ namespace Test.Zinnia.Data.Collection
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
+            subject.Clear(true);
+
+            Assert.IsFalse(becamePopulatedMock.Received);
+            Assert.IsFalse(elementAddedMock.Received);
+            Assert.IsFalse(elementRemovedMock.Received);
+            Assert.IsFalse(becameEmptyMock.Received);
+
             subject.AddToEnd(elementOne);
             subject.AddToEnd(elementTwo);
             subject.AddToEnd(elementOne);
@@ -331,6 +359,40 @@ namespace Test.Zinnia.Data.Collection
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
+        }
+
+        [Test]
+        public void EmitsOnStart()
+        {
+            GameObjectObservableListMock mock = containingObject.AddComponent<GameObjectObservableListMock>();
+            GameObject elementOne = new GameObject();
+            GameObject elementTwo = new GameObject();
+            mock.AddToStart(elementOne);
+            mock.AddToEnd(elementTwo);
+
+            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
+            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
+            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
+            mock.BecamePopulated.AddListener(becamePopulatedMock.Listen);
+            mock.ElementAdded.AddListener(elementAddedMock.Listen);
+            mock.ElementRemoved.AddListener(elementRemovedMock.Listen);
+            mock.BecameEmpty.AddListener(becameEmptyMock.Listen);
+
+            mock.ManualStart();
+
+            Assert.IsTrue(becamePopulatedMock.Received);
+            Assert.IsTrue(elementAddedMock.Received);
+            Assert.IsFalse(elementRemovedMock.Received);
+            Assert.IsFalse(becameEmptyMock.Received);
+        }
+
+        private sealed class GameObjectObservableListMock : GameObjectObservableList
+        {
+            public void ManualStart()
+            {
+                Start();
+            }
         }
     }
 }
