@@ -20,6 +20,9 @@
         [Serializable]
         public class EventData
         {
+            /// <summary>
+            /// The current active collisions.
+            /// </summary>
             [DocumentedByXml]
             public List<CollisionNotifier.EventData> activeCollisions = new List<CollisionNotifier.EventData>();
 
