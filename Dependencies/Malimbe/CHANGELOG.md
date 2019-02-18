@@ -1,5 +1,21 @@
 # Changelog
 
+## [8.2.2](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.1...v8.2.2) (2019-02-18)
+
+
+### Bug Fixes
+
+* run weavers on nested types where necessary ([28b4fde](https://github.com/ExtendRealityLtd/Malimbe/commit/28b4fde))
+* **XmlToTooltip:** support multiple XML tags in single summary ([049d3fc](https://github.com/ExtendRealityLtd/Malimbe/commit/049d3fc))
+
+## [8.2.1](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.0...v8.2.1) (2019-02-16)
+
+
+### Bug Fixes
+
+* **UnityIntegration:** ensure weaved assemblies are picked up ([9a1c50b](https://github.com/ExtendRealityLtd/Malimbe/commit/9a1c50b))
+* **UnityIntegration:** prevent NullReferenceException ([11b1c4e](https://github.com/ExtendRealityLtd/Malimbe/commit/11b1c4e))
+
 # [8.2.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.1.4...v8.2.0) (2019-02-13)
 
 
