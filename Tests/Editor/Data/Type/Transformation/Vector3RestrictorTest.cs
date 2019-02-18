@@ -7,7 +7,7 @@ namespace Test.Zinnia.Data.Type.Transformation
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
 
-    public class Vector3RestrictorTest : MonoBehaviour
+    public class Vector3RestrictorTest
     {
         private GameObject containingObject;
         private Vector3Restrictor subject;
@@ -22,8 +22,8 @@ namespace Test.Zinnia.Data.Type.Transformation
         [TearDown]
         public void TearDown()
         {
-            DestroyImmediate(subject);
-            DestroyImmediate(containingObject);
+            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
