@@ -7,7 +7,6 @@
     using Malimbe.PropertySetterMethod;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -32,7 +31,7 @@
         /// </summary>
         public virtual void Activate()
         {
-            GameObjectsAssociation desiredAssociation = Associations.EmptyIfNull().FirstOrDefault(association => association.ShouldBeActive());
+            GameObjectsAssociation desiredAssociation = Associations.FirstOrDefault(association => association.ShouldBeActive());
             if (desiredAssociation == null || CurrentAssociation == desiredAssociation)
             {
                 return;
@@ -40,18 +39,17 @@
 
             CurrentAssociation = desiredAssociation;
 
-            IEnumerable<GameObjectsAssociation> otherAssociations = Associations.EmptyIfNull()
-                .Except(
-                    new[]
-                    {
-                        desiredAssociation
-                    });
-            foreach (GameObject otherAssociationObject in otherAssociations.SelectMany(otherAssociation => otherAssociation.gameObjects.EmptyIfNull()))
+            IEnumerable<GameObjectsAssociation> otherAssociations = Associations.Except(
+                new[]
+                {
+                    desiredAssociation
+                });
+            foreach (GameObject otherAssociationObject in otherAssociations.SelectMany(otherAssociation => otherAssociation.gameObjects))
             {
                 otherAssociationObject.SetActive(false);
             }
 
-            foreach (GameObject associationObject in desiredAssociation.gameObjects.EmptyIfNull())
+            foreach (GameObject associationObject in desiredAssociation.gameObjects)
             {
                 associationObject.SetActive(true);
             }
@@ -72,7 +70,7 @@
 
         protected virtual void Awake()
         {
-            if (Associations.EmptyIfNull().Any(association => association.gameObjects.EmptyIfNull().Any(associationObject => associationObject.activeInHierarchy)))
+            if (Associations.Any(association => association.gameObjects.Any(associationObject => associationObject.activeInHierarchy)))
             {
                 Debug.LogWarning($"At least one association object is active in the scene on {nameof(Awake)} of this {GetType().Name}. Having multiple association objects active at the same time will most likely lead to issues. Make sure to deactivate them all before you play or create a build.");
             }
@@ -94,10 +92,10 @@
         /// <param name="associations">The associations to deactivate.</param>
         protected virtual void Deactivate(IEnumerable<GameObjectsAssociation> associations)
         {
-            foreach (GameObject associationObject in associations.EmptyIfNull()
+            foreach (GameObject associationObject in associations
                 .Append(CurrentAssociation)
                 .Where(association => association != null)
-                .SelectMany(association => association.gameObjects.EmptyIfNull()))
+                .SelectMany(association => association.gameObjects))
             {
                 associationObject.SetActive(false);
             }

@@ -1,5 +1,4 @@
 ﻿using Zinnia.Association;
-using Zinnia.Extension;
 
 namespace Test.Zinnia.Association
 {
@@ -24,8 +23,7 @@ namespace Test.Zinnia.Association
         [TearDown]
         public void TearDown()
         {
-            foreach (GameObject gameObject in subject.Associations.EmptyIfNull()
-                .SelectMany(association => association.gameObjects.EmptyIfNull()))
+            foreach (GameObject gameObject in subject.Associations.SelectMany(association => association.gameObjects))
             {
                 Object.DestroyImmediate(gameObject);
             }

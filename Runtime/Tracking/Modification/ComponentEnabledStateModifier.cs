@@ -8,7 +8,6 @@
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
 
@@ -42,9 +41,7 @@
                 return;
             }
 
-            IEnumerable<Object> targetObjects = types.EmptyIfNull()
-                .SelectMany(serializableType => Target.GetComponentsInChildren(serializableType, true));
-
+            IEnumerable<Object> targetObjects = types.SelectMany(serializableType => Target.GetComponentsInChildren(serializableType, true));
             foreach (Object targetObject in targetObjects)
             {
                 Behaviour potentialBehaviour = targetObject as Behaviour;

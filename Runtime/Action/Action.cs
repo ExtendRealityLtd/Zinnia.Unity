@@ -8,7 +8,6 @@
     using Malimbe.PropertySetterMethod;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
 
     /// <summary>
     /// The basis for all action types.
@@ -274,12 +273,12 @@
         [CalledBySetter(nameof(Sources))]
         protected virtual void OnSourcesChange(List<TSelf> previousValue, ref List<TSelf> newValue)
         {
-            foreach (TSelf source in previousValue.EmptyIfNull())
+            foreach (TSelf source in previousValue)
             {
                 UnsubscribeFromSource(source);
             }
 
-            foreach (TSelf source in newValue.EmptyIfNull())
+            foreach (TSelf source in newValue)
             {
                 SubscribeToSource(source);
             }

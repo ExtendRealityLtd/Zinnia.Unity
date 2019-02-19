@@ -20,7 +20,7 @@
         /// <inheritdoc />
         public bool Accepts(object target)
         {
-            return rules.EmptyIfNull().Any(rule => rule.Accepts(target));
+            return rules.Any(rule => rule.Accepts(target));
         }
     }
 }

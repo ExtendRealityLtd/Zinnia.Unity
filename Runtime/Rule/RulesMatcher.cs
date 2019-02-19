@@ -45,7 +45,7 @@
         [RequiresBehaviourState]
         public virtual void Match(object source)
         {
-            foreach (Element element in elements.EmptyIfNull().Where(target => target.rule.Accepts(source)))
+            foreach (Element element in elements.Where(target => target.rule.Accepts(source)))
             {
                 element.Matched?.Invoke();
             }

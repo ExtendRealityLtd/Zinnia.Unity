@@ -6,7 +6,6 @@
     using Malimbe.PropertySetterMethod;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value when any given actions are in their active state.
@@ -22,7 +21,7 @@
 
         protected virtual void Update()
         {
-            bool areAnyActionsActivated = Actions.EmptyIfNull().Any(action => action.IsActivated);
+            bool areAnyActionsActivated = Actions.Any(action => action.IsActivated);
             if (areAnyActionsActivated != IsActivated)
             {
                 Receive(areAnyActionsActivated);

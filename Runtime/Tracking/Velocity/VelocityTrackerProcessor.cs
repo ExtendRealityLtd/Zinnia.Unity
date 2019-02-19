@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
     using UnityEngine;
-    using Zinnia.Extension;
     using System.Collections.Generic;
     using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
@@ -55,7 +54,7 @@
         /// </summary>
         protected virtual void SetActiveVelocityTracker()
         {
-            ActiveVelocityTracker = velocityTrackers.EmptyIfNull().FirstOrDefault(tracker => tracker.IsActive());
+            ActiveVelocityTracker = velocityTrackers.FirstOrDefault(tracker => tracker.IsActive());
         }
     }
 }
