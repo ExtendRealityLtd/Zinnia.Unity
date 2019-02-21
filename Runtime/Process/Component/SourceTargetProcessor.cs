@@ -50,7 +50,7 @@
         /// <returns><see langword="true"/> if the source is valid to process.</returns>
         protected virtual bool IsSourceValid(TSource source)
         {
-            return (source != null);
+            return !EqualityComparer<TSource>.Default.Equals(source, default);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@
         /// <returns><see langword="true"/> if the target is valid to process.</returns>
         protected virtual bool IsTargetValid(TTarget target)
         {
-            return (target != null);
+            return !EqualityComparer<TTarget>.Default.Equals(target, default);
         }
 
         /// <summary>

@@ -40,7 +40,7 @@
         [RequiresBehaviourState]
         public virtual void IncreaseCount(TElement element)
         {
-            if (element == null)
+            if (EqualityComparer<TElement>.Default.Equals(element, default))
             {
                 return;
             }
@@ -65,7 +65,7 @@
         public virtual void DecreaseCount(TElement element)
         {
             int currentValue = 0;
-            if (element == null || !ElementsCounter.TryGetValue(element, out currentValue) || currentValue <= 0)
+            if (EqualityComparer<TElement>.Default.Equals(element, default) || !ElementsCounter.TryGetValue(element, out currentValue) || currentValue <= 0)
             {
                 return;
             }
@@ -85,7 +85,7 @@
         [RequiresBehaviourState]
         public virtual void RemoveFromCount(TElement element)
         {
-            if (element == null || !ElementsCounter.Remove(element))
+            if (EqualityComparer<TElement>.Default.Equals(element, default) || !ElementsCounter.Remove(element))
             {
                 return;
             }
@@ -101,7 +101,7 @@
         {
             foreach (TElement element in ElementsCounter.Keys)
             {
-                if (!Equals(element, default(TElement)))
+                if (!EqualityComparer<TElement>.Default.Equals(element, default))
                 {
                     ElementRemoved?.Invoke(element);
                 }

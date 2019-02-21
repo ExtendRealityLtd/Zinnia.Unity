@@ -252,7 +252,7 @@
         /// <returns><see langword="true"/> if the given <see cref="TValue"/> is equal to the action's cached <see cref="Value"/>.</returns>
         protected virtual bool IsValueEqual(TValue value)
         {
-            return Value.Equals(value);
+            return EqualityComparer<TValue>.Default.Equals(Value, value);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@
         /// <returns><see langword="true"/> if the action should activate.</returns>
         protected virtual bool ShouldActivate(TValue value)
         {
-            return !defaultValue.Equals(value);
+            return !EqualityComparer<TValue>.Default.Equals(defaultValue, value);
         }
 
         /// <summary>
