@@ -167,8 +167,8 @@
         /// <returns><see langword="true"/> if events should be emitted.</returns>
         protected virtual bool CanEmit(EventData data)
         {
-            return (data.isTrigger && emittedTypes.HasFlag(CollisionTypes.Trigger)
-                    || !data.isTrigger && emittedTypes.HasFlag(CollisionTypes.Collision))
+            return (data.isTrigger && (emittedTypes & CollisionTypes.Trigger) != 0
+                    || !data.isTrigger && (emittedTypes & CollisionTypes.Collision) != 0)
                 && (data.forwardSource == null
                     || forwardingSourceValidity.Accepts(data.forwardSource.gameObject));
         }
