@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
-    using System.Linq;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
@@ -97,12 +96,18 @@
         /// <summary>
         /// Clears all elements from the counter.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Clear()
         {
-            foreach (TElement element in ElementsCounter.Keys.ToList())
+            foreach (TElement element in ElementsCounter.Keys)
             {
-                RemoveFromCount(element);
+                if (!Equals(element, default(TElement)))
+                {
+                    ElementRemoved?.Invoke(element);
+                }
             }
+
+            ElementsCounter.Clear();
         }
 
         /// <summary>

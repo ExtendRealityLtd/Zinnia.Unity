@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
     using UnityEngine;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -79,7 +78,13 @@
             SlicedList.activeCollisions.AddRange(originalList.activeCollisions.GetRange((int)actualStartIndex, (int)actualLength));
             Sliced?.Invoke(SlicedList);
 
-            RemainingList.activeCollisions.AddRange(originalList.activeCollisions.Except(SlicedList.activeCollisions));
+            foreach (CollisionNotifier.EventData originalCollision in originalList.activeCollisions)
+            {
+                if (!SlicedList.activeCollisions.Contains(originalCollision))
+                {
+                    RemainingList.activeCollisions.Add(originalCollision);
+                }
+            }
             Remained?.Invoke(RemainingList);
 
             return SlicedList;

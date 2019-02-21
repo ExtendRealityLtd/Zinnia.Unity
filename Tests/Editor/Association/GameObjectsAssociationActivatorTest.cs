@@ -5,7 +5,6 @@ namespace Test.Zinnia.Association
     using UnityEngine;
     using UnityEngine.TestTools;
     using NUnit.Framework;
-    using System.Linq;
     using System.Text.RegularExpressions;
 
     public class GameObjectsAssociationActivatorTest
@@ -23,9 +22,12 @@ namespace Test.Zinnia.Association
         [TearDown]
         public void TearDown()
         {
-            foreach (GameObject gameObject in subject.Associations.SelectMany(association => association.gameObjects))
+            foreach (GameObjectsAssociation association in subject.Associations)
             {
-                Object.DestroyImmediate(gameObject);
+                foreach (GameObject associatedObject in association.gameObjects)
+                {
+                    Object.DestroyImmediate(associatedObject);
+                }
             }
 
             Object.DestroyImmediate(subject);

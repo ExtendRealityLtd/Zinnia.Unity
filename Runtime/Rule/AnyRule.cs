@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -20,7 +19,15 @@
         /// <inheritdoc />
         public bool Accepts(object target)
         {
-            return rules.Any(rule => rule.Accepts(target));
+            foreach (RuleContainer rule in rules)
+            {
+                if (rule.Accepts(target))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

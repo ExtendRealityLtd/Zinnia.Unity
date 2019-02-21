@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -25,7 +24,15 @@
                 return false;
             }
 
-            return rules.All(rule => rule.Accepts(target));
+            foreach (RuleContainer rule in rules)
+            {
+                if (!rule.Accepts(target))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -3,7 +3,6 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
     using Zinnia.Process;
@@ -68,7 +67,16 @@
                 ray,
                 difference.magnitude,
                 Physics.IgnoreRaycastLayer);
-            bool isObscured = raycastHits.Any(hit => hit.transform.gameObject != source && hit.collider != target);
+            bool isObscured = false;
+            foreach (RaycastHit hit in raycastHits)
+            {
+                if (hit.transform.gameObject != source && hit.collider != target)
+                {
+                    isObscured = true;
+                    break;
+                }
+            }
+
             if (isObscured == wasPreviouslyObscured)
             {
                 return;

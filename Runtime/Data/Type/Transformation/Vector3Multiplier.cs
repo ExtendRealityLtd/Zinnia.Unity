@@ -3,7 +3,6 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Linq;
     using Zinnia.Extension;
 
     /// <summary>
@@ -97,18 +96,13 @@
         /// <inheritdoc />
         protected override Vector3 ProcessCollection()
         {
-            return collection.Aggregate(Multiply);
-        }
+            Vector3 product = Vector3.one;
+            foreach (Vector3 element in collection)
+            {
+                product = Vector3.Scale(product, element);
+            }
 
-        /// <summary>
-        /// Multiplies two <see cref="Vector3"/> values.
-        /// </summary>
-        /// <param name="multiplicand">The value to be multiplied.</param>
-        /// <param name="multiplier">The value to multiply with.</param>
-        /// <returns>The calculated value.</returns>
-        protected virtual Vector3 Multiply(Vector3 multiplicand, Vector3 multiplier)
-        {
-            return Vector3.Scale(multiplicand, multiplier);
+            return product;
         }
     }
 }

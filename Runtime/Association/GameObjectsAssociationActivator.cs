@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.PropertySetterMethod;
     using Malimbe.PropertyValidationMethod;
@@ -31,7 +30,16 @@
         /// </summary>
         public virtual void Activate()
         {
-            GameObjectsAssociation desiredAssociation = Associations.FirstOrDefault(association => association.ShouldBeActive());
+            GameObjectsAssociation desiredAssociation = null;
+            foreach (GameObjectsAssociation association in Associations)
+            {
+                if (association.ShouldBeActive())
+                {
+                    desiredAssociation = association;
+                    break;
+                }
+            }
+
             if (desiredAssociation == null || CurrentAssociation == desiredAssociation)
             {
                 return;
@@ -39,19 +47,22 @@
 
             CurrentAssociation = desiredAssociation;
 
-            IEnumerable<GameObjectsAssociation> otherAssociations = Associations.Except(
-                new[]
-                {
-                    desiredAssociation
-                });
-            foreach (GameObject otherAssociationObject in otherAssociations.SelectMany(otherAssociation => otherAssociation.gameObjects))
+            foreach (GameObjectsAssociation association in Associations)
             {
-                otherAssociationObject.SetActive(false);
+                if (association == desiredAssociation)
+                {
+                    continue;
+                }
+
+                foreach (GameObject associatedObject in association.gameObjects)
+                {
+                    associatedObject.SetActive(false);
+                }
             }
 
-            foreach (GameObject associationObject in desiredAssociation.gameObjects)
+            foreach (GameObject associatedObject in desiredAssociation.gameObjects)
             {
-                associationObject.SetActive(true);
+                associatedObject.SetActive(true);
             }
         }
 
@@ -70,9 +81,16 @@
 
         protected virtual void Awake()
         {
-            if (Associations.Any(association => association.gameObjects.Any(associationObject => associationObject.activeInHierarchy)))
+            foreach (GameObjectsAssociation association in Associations)
             {
-                Debug.LogWarning($"At least one association object is active in the scene on {nameof(Awake)} of this {GetType().Name}. Having multiple association objects active at the same time will most likely lead to issues. Make sure to deactivate them all before you play or create a build.");
+                foreach (GameObject associatedObject in association.gameObjects)
+                {
+                    if (associatedObject.activeInHierarchy)
+                    {
+                        Debug.LogWarning($"At least one association object is active in the scene on {nameof(Awake)} of this {GetType().Name}. Having multiple association objects active at the same time will most likely lead to issues. Make sure to deactivate them all before you play or create a build.");
+                        return;
+                    }
+                }
             }
         }
 
@@ -92,15 +110,23 @@
         /// <param name="associations">The associations to deactivate.</param>
         protected virtual void Deactivate(IEnumerable<GameObjectsAssociation> associations)
         {
-            foreach (GameObject associationObject in associations
-                .Append(CurrentAssociation)
-                .Where(association => association != null)
-                .SelectMany(association => association.gameObjects))
+            foreach (GameObjectsAssociation association in associations)
             {
-                associationObject.SetActive(false);
+                foreach (GameObject associatedObject in association.gameObjects)
+                {
+                    associatedObject.SetActive(false);
+                }
             }
 
-            CurrentAssociation = null;
+            if (CurrentAssociation != null)
+            {
+                foreach (GameObject associatedObject in CurrentAssociation.gameObjects)
+                {
+                    associatedObject.SetActive(false);
+                }
+
+                CurrentAssociation = null;
+            }
         }
 
         /// <summary>

@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
@@ -21,9 +20,15 @@
         /// <inheritdoc/>
         protected override bool Accepts(GameObject targetGameObject)
         {
-            return componentTypes
-                .Where(serializedType => serializedType.ActualType != null)
-                .Any(serializedType => targetGameObject.GetComponent(serializedType) != null);
+            foreach (SerializableType serializedType in componentTypes)
+            {
+                if (serializedType.ActualType != null && targetGameObject.GetComponent(serializedType) != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

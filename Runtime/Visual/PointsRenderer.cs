@@ -3,7 +3,6 @@
     using UnityEngine;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
 
@@ -89,14 +88,19 @@
             segmentClones.ForEach(Destroy);
             segmentClones.Clear();
 
-            foreach (GameObject renderElement in new[]
+            if (start != null)
             {
-                start,
-                repeatedSegment,
-                end
-            }.Where(currentElement => currentElement != null))
+                start.SetActive(false);
+            }
+
+            if (repeatedSegment != null)
             {
-                renderElement.SetActive(false);
+                repeatedSegment.SetActive(false);
+            }
+
+            if (end != null)
+            {
+                end.SetActive(false);
             }
         }
 

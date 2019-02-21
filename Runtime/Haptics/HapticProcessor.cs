@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Haptics
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -33,7 +32,17 @@
         /// </summary>
         protected override void DoBegin()
         {
-            ActiveHapticProcess = hapticProcesses.FirstOrDefault(process => process.IsActive());
+            HapticProcess firstActiveProcess = null;
+            foreach (HapticProcess process in hapticProcesses)
+            {
+                if (process.IsActive())
+                {
+                    firstActiveProcess = process;
+                    break;
+                }
+            }
+
+            ActiveHapticProcess = firstActiveProcess;
             if (ActiveHapticProcess != null)
             {
                 ActiveHapticProcess.Begin();

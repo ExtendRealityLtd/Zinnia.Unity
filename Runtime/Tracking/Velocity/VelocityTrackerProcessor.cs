@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -54,7 +53,17 @@
         /// </summary>
         protected virtual void SetActiveVelocityTracker()
         {
-            ActiveVelocityTracker = velocityTrackers.FirstOrDefault(tracker => tracker.IsActive());
+            VelocityTracker firstActiveTracker = null;
+            foreach (VelocityTracker tracker in velocityTrackers)
+            {
+                if (tracker.IsActive())
+                {
+                    firstActiveTracker = tracker;
+                    break;
+                }
+            }
+
+            ActiveVelocityTracker = firstActiveTracker;
         }
     }
 }

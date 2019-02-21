@@ -3,8 +3,6 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
     using Zinnia.Extension;
@@ -180,13 +178,13 @@
         /// </summary>
         /// <param name="data">The <see cref="EventData"/> that holds the containing <see cref="Transform"/></param>
         /// <returns>A <see cref="CollisionNotifier"/> collection for items found on the containing <see cref="Transform"/> component.</returns>
-        protected virtual IEnumerable<CollisionNotifier> GetNotifiers(EventData data)
+        protected virtual CollisionNotifier[] GetNotifiers(EventData data)
         {
             Transform reference = data.collider.GetContainingTransform();
 
             if (transform.IsChildOf(reference))
             {
-                return Enumerable.Empty<CollisionNotifier>();
+                return Array.Empty<CollisionNotifier>();
             }
 
             return reference.GetComponentsInChildren<CollisionNotifier>();

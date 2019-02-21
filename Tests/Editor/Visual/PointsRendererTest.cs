@@ -2,9 +2,9 @@
 
 namespace Test.Zinnia.Visual
 {
+    using System.Collections.Generic;
     using UnityEngine;
     using NUnit.Framework;
-    using System.Linq;
 
     public class PointsRendererTest
     {
@@ -160,9 +160,15 @@ namespace Test.Zinnia.Visual
             return newObject;
         }
 
-        protected virtual GameObject[] FindObjectsContainingName(string name)
+        protected virtual IEnumerable<GameObject> FindObjectsContainingName(string name)
         {
-            return Object.FindObjectsOfType<GameObject>().Where(obj => obj.name.Contains(name)).ToArray<GameObject>();
+            foreach (GameObject foundObject in Object.FindObjectsOfType<GameObject>())
+            {
+                if (foundObject.name.Contains(name))
+                {
+                    yield return foundObject;
+                }
+            }
         }
     }
 }
