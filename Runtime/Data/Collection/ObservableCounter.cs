@@ -45,14 +45,13 @@
                 return;
             }
 
-            if (!ElementsCounter.ContainsKey(element))
+            if (ElementsCounter.ContainsKey(element))
             {
-                ElementsCounter.Add(element, 0);
+                ElementsCounter[element]++;
             }
-
-            ElementsCounter[element]++;
-            if (ElementsCounter[element] == 1)
+            else
             {
+                ElementsCounter.Add(element, 1);
                 ElementAdded?.Invoke(element);
             }
         }
@@ -64,18 +63,26 @@
         [RequiresBehaviourState]
         public virtual void DecreaseCount(TElement element)
         {
-            int currentValue = 0;
-            if (EqualityComparer<TElement>.Default.Equals(element, default) || !ElementsCounter.TryGetValue(element, out currentValue) || currentValue <= 0)
+            if (EqualityComparer<TElement>.Default.Equals(element, default))
             {
                 return;
             }
 
-            ElementsCounter[element]--;
-            if (ElementsCounter[element] <= 0)
+            if (!ElementsCounter.TryGetValue(element, out int counter))
             {
-                ElementsCounter.Remove(element);
-                ElementRemoved?.Invoke(element);
+                return;
             }
+
+            counter--;
+            ElementsCounter[element] = counter;
+
+            if (counter > 0)
+            {
+                return;
+            }
+
+            ElementsCounter.Remove(element);
+            ElementRemoved?.Invoke(element);
         }
 
         /// <summary>
@@ -117,8 +124,7 @@
         /// <returns>The count of the given element.</returns>
         public virtual int GetCount(TElement element)
         {
-            int countValue = 0;
-            ElementsCounter.TryGetValue(element, out countValue);
+            ElementsCounter.TryGetValue(element, out int countValue);
             return countValue;
         }
     }
