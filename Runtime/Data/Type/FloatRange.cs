@@ -5,10 +5,10 @@
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
-    /// Specifies a range of float values.
+    /// Specifies a valid range between a lower and upper float value limit.
     /// </summary>
     [Serializable]
-    public class FloatRange
+    public struct FloatRange
     {
         /// <summary>
         /// The inclusive minimum value of the range.
@@ -22,18 +22,9 @@
         public float maximum;
 
         /// <summary>
-        /// Shorthand for writing <c>FloatRange(0f, 0f)</c>.
+        /// Shorthand for writing <c>FloatRange(float.MinValue, float.MaxValue)</c>.
         /// </summary>
-        public static readonly FloatRange Zero = new FloatRange(0f, 0f);
-
-        /// <summary>
-        /// Constructs a new range with the minimum value being <see cref="float.MinValue"/> and the maximum value being <see cref="float.MaxValue"/>.
-        /// </summary>
-        public FloatRange()
-        {
-            minimum = float.MinValue;
-            maximum = float.MaxValue;
-        }
+        public static readonly FloatRange MinMax = new FloatRange(float.MinValue, float.MaxValue);
 
         /// <summary>
         /// Constructs a new range with the given minimum and maximum values.

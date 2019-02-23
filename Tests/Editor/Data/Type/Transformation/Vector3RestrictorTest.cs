@@ -60,7 +60,7 @@ namespace Test.Zinnia.Data.Type.Transformation
 
             transformedListenerMock.Reset();
 
-            subject.yBounds = new FloatRange(float.MinValue, float.MaxValue);
+            subject.yBounds = FloatRange.MinMax;
 
             expected = new Vector3(2f, -5f, 2f);
 

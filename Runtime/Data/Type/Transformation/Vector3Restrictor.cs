@@ -26,17 +26,17 @@
         /// The minimum and maximum values that the x coordinate can be.
         /// </summary>
         [DocumentedByXml]
-        public FloatRange xBounds = new FloatRange();
+        public FloatRange xBounds = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the y coordinate can be.
         /// </summary>
         [DocumentedByXml]
-        public FloatRange yBounds = new FloatRange();
+        public FloatRange yBounds = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the z coordinate can be.
         /// </summary>
         [DocumentedByXml]
-        public FloatRange zBounds = new FloatRange();
+        public FloatRange zBounds = FloatRange.MinMax;
 
         /// <summary>
         /// Transforms the given input by clamping it within the specified bounds.

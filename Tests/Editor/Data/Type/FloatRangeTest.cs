@@ -11,8 +11,8 @@ namespace Test.Zinnia.Data.Type
         public void DefaultConstructor()
         {
             FloatRange range = new FloatRange();
-            Assert.AreEqual(float.MinValue, range.minimum);
-            Assert.AreEqual(float.MaxValue, range.maximum);
+            Assert.AreEqual(0f, range.minimum);
+            Assert.AreEqual(0f, range.maximum);
         }
 
         [Test]
@@ -32,11 +32,11 @@ namespace Test.Zinnia.Data.Type
         }
 
         [Test]
-        public void ConstructFromStaticZero()
+        public void ConstructFromStaticMinMax()
         {
-            FloatRange range = FloatRange.Zero;
-            Assert.AreEqual(0f, range.minimum);
-            Assert.AreEqual(0f, range.maximum);
+            FloatRange range = FloatRange.MinMax;
+            Assert.AreEqual(float.MinValue, range.minimum);
+            Assert.AreEqual(float.MaxValue, range.maximum);
         }
 
         [Test]
