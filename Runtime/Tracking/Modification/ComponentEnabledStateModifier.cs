@@ -1,14 +1,12 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
-    using System.Linq;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
 
@@ -42,22 +40,22 @@
                 return;
             }
 
-            IEnumerable<Object> targetObjects = types.EmptyIfNull()
-                .SelectMany(serializableType => Target.GetComponentsInChildren(serializableType, true));
-
-            foreach (Object targetObject in targetObjects)
+            foreach (SerializableType serializableType in types)
             {
-                Behaviour potentialBehaviour = targetObject as Behaviour;
-                if (potentialBehaviour != null)
+                foreach (Component targetObject in Target.GetComponentsInChildren(serializableType, true))
                 {
-                    potentialBehaviour.enabled = state;
-                    continue;
-                }
+                    Behaviour potentialBehaviour = targetObject as Behaviour;
+                    if (potentialBehaviour != null)
+                    {
+                        potentialBehaviour.enabled = state;
+                        continue;
+                    }
 
-                Renderer potentialRenderer = targetObject as Renderer;
-                if (potentialRenderer != null)
-                {
-                    potentialRenderer.enabled = state;
+                    Renderer potentialRenderer = targetObject as Renderer;
+                    if (potentialRenderer != null)
+                    {
+                        potentialRenderer.enabled = state;
+                    }
                 }
             }
         }

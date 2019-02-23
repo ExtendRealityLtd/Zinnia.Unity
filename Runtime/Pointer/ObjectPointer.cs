@@ -3,8 +3,6 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
@@ -373,7 +371,7 @@
             pointsData.repeatedSegment = GetElementRepresentation(repeatedSegment);
             pointsData.end = GetElementRepresentation(destination);
 
-            GameObject[] gameObjects =
+            GameObject[] unusedGameObjects =
             {
                 origin.validObject,
                 origin.invalidObject,
@@ -383,36 +381,32 @@
                 destination.invalidObject
             };
 
-            IEnumerable<GameObject> unusedGameObjects = gameObjects.Except(
-                    new[]
-                    {
-                        pointsData.start,
-                        pointsData.repeatedSegment,
-                        pointsData.end
-                    })
-                .Concat(
-                    new[]
-                    {
-                        repeatedSegment.validObject,
-                        repeatedSegment.invalidObject
-                    })
-                .Where(pointElement => pointElement != null);
-
             foreach (GameObject unusedGameObject in unusedGameObjects)
             {
-                unusedGameObject.SetActive(false);
+                if (unusedGameObject != null
+                    && (unusedGameObject != pointsData.start
+                        && unusedGameObject != pointsData.repeatedSegment
+                        && unusedGameObject != pointsData.end
+                        || unusedGameObject == repeatedSegment.validObject
+                        || unusedGameObject == repeatedSegment.invalidObject))
+                {
+                    unusedGameObject.SetActive(false);
+                }
             }
 
-            IEnumerable<GameObject> usedGameObjects = new[]
+            GameObject[] usedGameObjects =
             {
                 pointsData.start,
                 pointsData.repeatedSegment,
                 pointsData.end
-            }.Where(pointElement => pointElement != null);
+            };
 
             foreach (GameObject usedGameObject in usedGameObjects)
             {
-                usedGameObject.SetActive(true);
+                if (usedGameObject != null)
+                {
+                    usedGameObject.SetActive(true);
+                }
             }
 
             RenderDataChanged?.Invoke(pointsData);

@@ -2,7 +2,6 @@
 {
     using UnityEngine.Events;
     using System;
-    using System.Linq;
 
     /// <summary>
     /// Sums up a collection of <see cref="float"/>s.
@@ -23,7 +22,13 @@
         /// <inheritdoc />
         protected override float ProcessCollection()
         {
-            return collection.Sum();
+            float sum = 0f;
+            foreach (float element in collection)
+            {
+                sum += element;
+            }
+
+            return sum;
         }
     }
 }

@@ -3,7 +3,6 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Linq;
     using Zinnia.Extension;
 
     /// <summary>
@@ -73,18 +72,13 @@
         /// <inheritdoc />
         protected override Vector2 ProcessCollection()
         {
-            return collection.Aggregate(Multiply);
-        }
+            Vector2 product = Vector2.one;
+            foreach (Vector2 element in collection)
+            {
+                product = Vector2.Scale(product, element);
+            }
 
-        /// <summary>
-        /// Multiplies two <see cref="Vector2"/> values.
-        /// </summary>
-        /// <param name="multiplicand">The value to be multiplied.</param>
-        /// <param name="multiplier">The value to multiply with.</param>
-        /// <returns>The calculated value.</returns>
-        protected virtual Vector2 Multiply(Vector2 multiplicand, Vector2 multiplier)
-        {
-            return Vector2.Scale(multiplicand, multiplier);
+            return product;
         }
     }
 }

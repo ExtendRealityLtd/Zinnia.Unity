@@ -3,7 +3,6 @@
     using UnityEngine;
     using UnityEngine.XR;
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -45,7 +44,15 @@
         protected virtual XRNodeState GetNodeState()
         {
             InputTracking.GetNodeStates(nodesStates);
-            return nodesStates.FirstOrDefault(state => state.nodeType == node);
+            foreach (XRNodeState state in nodesStates)
+            {
+                if (state.nodeType == node)
+                {
+                    return state;
+                }
+            }
+
+            return new XRNodeState();
         }
     }
 }

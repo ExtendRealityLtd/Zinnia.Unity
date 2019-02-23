@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using System.Linq;
     using System.Collections.Generic;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.PropertySetterMethod;
@@ -21,7 +20,16 @@
 
         protected virtual void Update()
         {
-            bool areAllActionsActivated = Actions?.Count > 0 && Actions.All(action => action.IsActivated);
+            bool areAllActionsActivated = Actions.Count > 0;
+            foreach (Action action in Actions)
+            {
+                if (!action.IsActivated)
+                {
+                    areAllActionsActivated = false;
+                    break;
+                }
+            }
+
             if (areAllActionsActivated != IsActivated)
             {
                 Receive(areAllActionsActivated);

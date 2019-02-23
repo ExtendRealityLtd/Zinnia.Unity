@@ -188,7 +188,7 @@
         /// <returns>The calculated scale.</returns>
         protected virtual Vector3 CalculateScale(TransformData source, TransformData target)
         {
-            if (!applyTransformations.HasFlag(TransformProperties.Scale))
+            if ((applyTransformations & TransformProperties.Scale) == 0)
             {
                 return target.Scale;
             }
@@ -204,7 +204,7 @@
         /// <returns>The calculated rotation.</returns>
         protected virtual Quaternion CalculateRotation(TransformData source, TransformData target)
         {
-            if (!applyTransformations.HasFlag(TransformProperties.Rotation))
+            if ((applyTransformations & TransformProperties.Rotation) == 0)
             {
                 return target.Rotation;
             }
@@ -230,7 +230,7 @@
         protected virtual Vector3 CalculatePosition(TransformData source, TransformData target, Vector3 currentScale, Quaternion currentRotation)
         {
             Vector3 currentPosition = source.Position;
-            if (!applyTransformations.HasFlag(TransformProperties.Position))
+            if ((applyTransformations & TransformProperties.Position) == 0)
             {
                 if (Offset == null)
                 {
@@ -245,7 +245,7 @@
                 return currentPosition;
             }
 
-            if (!applyTransformations.HasFlag(TransformProperties.Rotation))
+            if ((applyTransformations & TransformProperties.Rotation) == 0)
             {
                 return CalculatePositionWithOffset(currentPosition, target.Position, Offset.transform.position);
             }

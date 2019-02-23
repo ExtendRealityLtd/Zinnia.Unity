@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Cast
 {
     using UnityEngine;
-    using System.Linq;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
@@ -20,7 +19,8 @@
 
         protected virtual void OnEnable()
         {
-            points.AddRange(Enumerable.Repeat(Vector3.zero, 2));
+            points.Add(Vector3.zero);
+            points.Add(Vector3.zero);
         }
 
         protected virtual void OnDisable()

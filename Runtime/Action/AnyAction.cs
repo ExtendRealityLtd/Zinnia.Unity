@@ -1,12 +1,10 @@
 ﻿namespace Zinnia.Action
 {
-    using System.Linq;
     using System.Collections.Generic;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.PropertySetterMethod;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value when any given actions are in their active state.
@@ -22,7 +20,16 @@
 
         protected virtual void Update()
         {
-            bool areAnyActionsActivated = Actions.EmptyIfNull().Any(action => action.IsActivated);
+            bool areAnyActionsActivated = false;
+            foreach (Action action in Actions)
+            {
+                if (action.IsActivated)
+                {
+                    areAnyActionsActivated = true;
+                    break;
+                }
+            }
+
             if (areAnyActionsActivated != IsActivated)
             {
                 Receive(areAnyActionsActivated);

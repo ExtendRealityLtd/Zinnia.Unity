@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
-    using System.Linq;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
@@ -41,19 +40,18 @@
         [RequiresBehaviourState]
         public virtual void IncreaseCount(TElement element)
         {
-            if (element == null)
+            if (EqualityComparer<TElement>.Default.Equals(element, default))
             {
                 return;
             }
 
-            if (!ElementsCounter.ContainsKey(element))
+            if (ElementsCounter.ContainsKey(element))
             {
-                ElementsCounter.Add(element, 0);
+                ElementsCounter[element]++;
             }
-
-            ElementsCounter[element]++;
-            if (ElementsCounter[element] == 1)
+            else
             {
+                ElementsCounter.Add(element, 1);
                 ElementAdded?.Invoke(element);
             }
         }
@@ -65,18 +63,26 @@
         [RequiresBehaviourState]
         public virtual void DecreaseCount(TElement element)
         {
-            int currentValue = 0;
-            if (element == null || !ElementsCounter.TryGetValue(element, out currentValue) || currentValue <= 0)
+            if (EqualityComparer<TElement>.Default.Equals(element, default))
             {
                 return;
             }
 
-            ElementsCounter[element]--;
-            if (ElementsCounter[element] <= 0)
+            if (!ElementsCounter.TryGetValue(element, out int counter))
             {
-                ElementsCounter.Remove(element);
-                ElementRemoved?.Invoke(element);
+                return;
             }
+
+            counter--;
+            ElementsCounter[element] = counter;
+
+            if (counter > 0)
+            {
+                return;
+            }
+
+            ElementsCounter.Remove(element);
+            ElementRemoved?.Invoke(element);
         }
 
         /// <summary>
@@ -86,7 +92,7 @@
         [RequiresBehaviourState]
         public virtual void RemoveFromCount(TElement element)
         {
-            if (element == null || !ElementsCounter.Remove(element))
+            if (EqualityComparer<TElement>.Default.Equals(element, default) || !ElementsCounter.Remove(element))
             {
                 return;
             }
@@ -97,12 +103,18 @@
         /// <summary>
         /// Clears all elements from the counter.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Clear()
         {
-            foreach (TElement element in ElementsCounter.Keys.ToList())
+            foreach (TElement element in ElementsCounter.Keys)
             {
-                RemoveFromCount(element);
+                if (!EqualityComparer<TElement>.Default.Equals(element, default))
+                {
+                    ElementRemoved?.Invoke(element);
+                }
             }
+
+            ElementsCounter.Clear();
         }
 
         /// <summary>
@@ -112,8 +124,7 @@
         /// <returns>The count of the given element.</returns>
         public virtual int GetCount(TElement element)
         {
-            int countValue = 0;
-            ElementsCounter.TryGetValue(element, out countValue);
+            ElementsCounter.TryGetValue(element, out int countValue);
             return countValue;
         }
     }

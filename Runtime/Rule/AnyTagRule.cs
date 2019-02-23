@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -19,7 +18,15 @@
         /// <inheritdoc />
         protected override bool Accepts(GameObject targetGameObject)
         {
-            return tags.Any(targetGameObject.CompareTag);
+            foreach (string testedTag in tags)
+            {
+                if (targetGameObject.CompareTag(testedTag))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

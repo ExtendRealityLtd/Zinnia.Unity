@@ -8,7 +8,6 @@
     using Malimbe.PropertySetterMethod;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
 
     /// <summary>
     /// The basis for all action types.
@@ -253,7 +252,7 @@
         /// <returns><see langword="true"/> if the given <see cref="TValue"/> is equal to the action's cached <see cref="Value"/>.</returns>
         protected virtual bool IsValueEqual(TValue value)
         {
-            return Value.Equals(value);
+            return EqualityComparer<TValue>.Default.Equals(Value, value);
         }
 
         /// <summary>
@@ -263,7 +262,7 @@
         /// <returns><see langword="true"/> if the action should activate.</returns>
         protected virtual bool ShouldActivate(TValue value)
         {
-            return !defaultValue.Equals(value);
+            return !EqualityComparer<TValue>.Default.Equals(defaultValue, value);
         }
 
         /// <summary>
@@ -274,12 +273,12 @@
         [CalledBySetter(nameof(Sources))]
         protected virtual void OnSourcesChange(List<TSelf> previousValue, ref List<TSelf> newValue)
         {
-            foreach (TSelf source in previousValue.EmptyIfNull())
+            foreach (TSelf source in previousValue)
             {
                 UnsubscribeFromSource(source);
             }
 
-            foreach (TSelf source in newValue.EmptyIfNull())
+            foreach (TSelf source in newValue)
             {
                 SubscribeToSource(source);
             }

@@ -3,7 +3,6 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Linq;
 
     /// <summary>
     /// Subtracts a collection of <see cref="Vector3"/>s by subtracting each one from the first entry in the collection.
@@ -24,18 +23,18 @@
         /// <inheritdoc />
         protected override Vector3 ProcessCollection()
         {
-            return collection.Aggregate(Subtract);
-        }
+            if (collection.Count == 0)
+            {
+                return Vector3.zero;
+            }
 
-        /// <summary>
-        /// Subtracts two <see cref="Vector3"/> values.
-        /// </summary>
-        /// <param name="subtractFrom">The value to subtract from.</param>
-        /// <param name="subtractWith">The value to subtract with</param>
-        /// <returns>The calculated value.</returns>
-        protected virtual Vector3 Subtract(Vector3 subtractFrom, Vector3 subtractWith)
-        {
-            return subtractFrom - subtractWith;
+            Vector3 difference = collection[0];
+            for (int index = 1; index < collection.Count; index++)
+            {
+                difference -= collection[index];
+            }
+
+            return difference;
         }
     }
 }

@@ -3,7 +3,6 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Linq;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
@@ -140,11 +139,11 @@
         /// </summary>
         /// <param name="reference">The reference to start searching for <see cref="ActiveCollisionConsumer"/> components in.</param>
         /// <returns>The obtained collection.</returns>
-        protected virtual IEnumerable<ActiveCollisionConsumer> GetConsumers(Transform reference)
+        protected virtual ActiveCollisionConsumer[] GetConsumers(Transform reference)
         {
             if (reference == null || transform.IsChildOf(reference))
             {
-                return Enumerable.Empty<ActiveCollisionConsumer>();
+                return Array.Empty<ActiveCollisionConsumer>();
             }
 
             return reference.GetComponentsInChildren<ActiveCollisionConsumer>();

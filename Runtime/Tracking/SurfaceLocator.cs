@@ -3,7 +3,6 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Linq;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -165,7 +164,13 @@
         /// <returns><see langword="true"/> if a valid surface is located.</returns>
         protected virtual bool FindAllCollisions(Ray tracerRaycast)
         {
-            foreach (RaycastHit collision in PhysicsCast.RaycastAll(physicsCast, tracerRaycast, maximumDistance, Physics.IgnoreRaycastLayer).OrderBy(hit => hit.distance))
+            RaycastHit[] raycastHits = PhysicsCast.RaycastAll(
+                physicsCast,
+                tracerRaycast,
+                maximumDistance,
+                Physics.IgnoreRaycastLayer);
+            Array.Sort(raycastHits, (x, y) => (int)(x.distance - y.distance));
+            foreach (RaycastHit collision in raycastHits)
             {
                 if (ValidSurface(collision))
                 {

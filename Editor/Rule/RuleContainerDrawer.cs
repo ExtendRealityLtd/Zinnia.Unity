@@ -5,7 +5,6 @@
     using UnityEngine;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(RuleContainer), true)]
@@ -18,7 +17,7 @@
             Type type = fieldInfo.FieldType;
             if (type.IsGenericType)
             {
-                type = type.GenericTypeArguments.Single();
+                type = type.GenericTypeArguments[0];
             }
 
             if (type.HasElementType)
@@ -36,7 +35,7 @@
                 throw new ArgumentException();
             }
 
-            type = type.GenericTypeArguments.Single();
+            type = type.GenericTypeArguments[0];
 
             using (new EditorGUI.PropertyScope(position, label, property))
             {

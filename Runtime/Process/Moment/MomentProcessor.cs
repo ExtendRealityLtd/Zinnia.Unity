@@ -2,9 +2,7 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using System.Linq;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
 
     /// <summary>
     /// Iterates through the given <see cref="MomentProcess"/> array and executes the <see cref="MomentProcess.process"/> method on the given Unity game loop moment.
@@ -152,7 +150,7 @@
         /// </summary>
         protected virtual void Process()
         {
-            foreach (MomentProcess currentProcess in processes.EmptyIfNull().Where(process => process != null))
+            foreach (MomentProcess currentProcess in processes)
             {
                 currentProcess.Process();
             }

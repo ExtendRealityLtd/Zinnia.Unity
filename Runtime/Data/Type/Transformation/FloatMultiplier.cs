@@ -2,7 +2,6 @@
 {
     using UnityEngine.Events;
     using System;
-    using System.Linq;
 
     /// <summary>
     /// Multiplies a collection of <see cref="float"/>s by multiplying each one to the next entry in the collection.
@@ -23,18 +22,13 @@
         /// <inheritdoc />
         protected override float ProcessCollection()
         {
-            return collection.Aggregate(Multiply);
-        }
+            float product = 1f;
+            foreach (float element in collection)
+            {
+                product *= element;
+            }
 
-        /// <summary>
-        /// Multiplies two <see cref="float"/> values.
-        /// </summary>
-        /// <param name="multiplicand">The value to be multiplied.</param>
-        /// <param name="multiplier">The value to multiply with.</param>
-        /// <returns>The calculated value.</returns>
-        protected virtual float Multiply(float multiplicand, float multiplier)
-        {
-            return multiplicand * multiplier;
+            return product;
         }
     }
 }

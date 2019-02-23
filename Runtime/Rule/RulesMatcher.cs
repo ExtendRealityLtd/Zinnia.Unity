@@ -3,7 +3,6 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Linq;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
@@ -45,9 +44,12 @@
         [RequiresBehaviourState]
         public virtual void Match(object source)
         {
-            foreach (Element element in elements.EmptyIfNull().Where(target => target.rule.Accepts(source)))
+            foreach (Element element in elements)
             {
-                element.Matched?.Invoke();
+                if (element.rule.Accepts(source))
+                {
+                    element.Matched?.Invoke();
+                }
             }
         }
     }

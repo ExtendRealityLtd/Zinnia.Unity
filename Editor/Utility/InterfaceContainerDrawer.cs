@@ -3,7 +3,6 @@
     using UnityEngine;
     using UnityEditor;
     using System;
-    using System.Linq;
 
     [CustomPropertyDrawer(typeof(InterfaceContainer), true)]
     public class InterfaceContainerDrawer : PropertyDrawer
@@ -13,7 +12,7 @@
             Type type = fieldInfo.FieldType;
             if (type.IsGenericType)
             {
-                type = type.GenericTypeArguments.Single();
+                type = type.GenericTypeArguments[0];
             }
 
             if (type.HasElementType)
@@ -31,7 +30,7 @@
                 throw new ArgumentException();
             }
 
-            type = type.GenericTypeArguments.Single();
+            type = type.GenericTypeArguments[0];
             label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;
 
             using (new EditorGUI.PropertyScope(position, label, property))
