@@ -1,5 +1,18 @@
 # Changelog
 
+## [8.2.3](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.2...v8.2.3) (2019-02-24)
+
+
+### Bug Fixes
+
+* **Runner:** prevent exception when no config is used ([164877f](https://github.com/ExtendRealityLtd/Malimbe/commit/164877f))
+* **UnityIntegration:** prevent NullReferenceException ([62b55a4](https://github.com/ExtendRealityLtd/Malimbe/commit/62b55a4))
+
+
+### Performance Improvements
+
+* **UnityIntegration:** only reload assemblies that changed ([354296a](https://github.com/ExtendRealityLtd/Malimbe/commit/354296a))
+
 ## [8.2.2](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.1...v8.2.2) (2019-02-18)
 
 
