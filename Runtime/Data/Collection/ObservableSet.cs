@@ -67,7 +67,7 @@
         [RequiresBehaviourState]
         public virtual void AddElement(TElement element)
         {
-            if (Equals(element, default(TElement)))
+            if (EqualityComparer<TElement>.Default.Equals(element, default))
             {
                 return;
             }
