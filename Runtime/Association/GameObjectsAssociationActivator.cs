@@ -108,7 +108,7 @@
         /// Deactivates the association that is currently activated and all other known associations.
         /// </summary>
         /// <param name="associations">The associations to deactivate.</param>
-        protected virtual void Deactivate(IEnumerable<GameObjectsAssociation> associations)
+        protected virtual void Deactivate(List<GameObjectsAssociation> associations)
         {
             foreach (GameObjectsAssociation association in associations)
             {
