@@ -65,6 +65,11 @@
         public UnityEvent Published = new UnityEvent();
 
         /// <summary>
+        /// A reused instance to use when looking up <see cref="ActiveCollisionConsumer"/> components.
+        /// </summary>
+        protected readonly List<ActiveCollisionConsumer> activeCollisionConsumers = new List<ActiveCollisionConsumer>();
+
+        /// <summary>
         /// Sets the active collisions by copying it from given <see cref="ActiveCollisionsContainer.EventData"/>.
         /// </summary>
         /// <param name="data">The data to copy from.</param>
@@ -139,14 +144,18 @@
         /// </summary>
         /// <param name="reference">The reference to start searching for <see cref="ActiveCollisionConsumer"/> components in.</param>
         /// <returns>The obtained collection.</returns>
-        protected virtual ActiveCollisionConsumer[] GetConsumers(Transform reference)
+        protected virtual List<ActiveCollisionConsumer> GetConsumers(Transform reference)
         {
             if (reference == null || transform.IsChildOf(reference))
             {
-                return Array.Empty<ActiveCollisionConsumer>();
+                activeCollisionConsumers.Clear();
+            }
+            else
+            {
+                reference.GetComponentsInChildren(activeCollisionConsumers);
             }
 
-            return reference.GetComponentsInChildren<ActiveCollisionConsumer>();
+            return activeCollisionConsumers;
         }
     }
 }

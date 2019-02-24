@@ -11,29 +11,30 @@ namespace Test.Zinnia.Tracking.Collision.Active
     public class CollisionPointContainerTest
     {
         private GameObject containingObject;
-        private CollisionPointContainerMock subject;
+        private CollisionPointContainer subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<CollisionPointContainerMock>();
+            subject = containingObject.AddComponent<CollisionPointContainer>();
         }
 
         [TearDown]
         public void TearDown()
         {
+            Object.DestroyImmediate(subject.Container);
             Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
-        public void CreateAndClear()
+        public void SetAndClear()
         {
             UnityEventListenerMock createdMock = new UnityEventListenerMock();
             UnityEventListenerMock clearedMock = new UnityEventListenerMock();
-            subject.Created.AddListener(createdMock.Listen);
-            subject.Destroyed.AddListener(clearedMock.Listen);
+            subject.PointSet.AddListener(createdMock.Listen);
+            subject.PointUnset.AddListener(clearedMock.Listen);
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
@@ -52,7 +53,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Assert.IsFalse(clearedMock.Received);
             Assert.IsNull(subject.Container);
 
-            subject.Create(eventData);
+            subject.Set(eventData);
 
             Assert.IsTrue(createdMock.Received);
             Assert.IsFalse(clearedMock.Received);
@@ -65,23 +66,23 @@ namespace Test.Zinnia.Tracking.Collision.Active
             createdMock.Reset();
             clearedMock.Reset();
 
-            subject.Destroy();
+            subject.Unset();
 
             Assert.IsFalse(createdMock.Received);
             Assert.IsTrue(clearedMock.Received);
-            Assert.IsNull(subject.Container);
+            Assert.IsNotNull(subject.Container);
 
             Object.DestroyImmediate(publisherObject);
             Object.DestroyImmediate(collisionNotifierContainer);
         }
 
         [Test]
-        public void CreateOnlyOnce()
+        public void SetOnlyOnce()
         {
             UnityEventListenerMock createdMock = new UnityEventListenerMock();
             UnityEventListenerMock clearedMock = new UnityEventListenerMock();
-            subject.Created.AddListener(createdMock.Listen);
-            subject.Destroyed.AddListener(clearedMock.Listen);
+            subject.PointSet.AddListener(createdMock.Listen);
+            subject.PointUnset.AddListener(clearedMock.Listen);
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
@@ -113,7 +114,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Assert.IsFalse(clearedMock.Received);
             Assert.IsNull(subject.Container);
 
-            subject.Create(eventData);
+            subject.Set(eventData);
 
             Assert.IsTrue(createdMock.Received);
             Assert.IsFalse(clearedMock.Received);
@@ -126,7 +127,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             createdMock.Reset();
             clearedMock.Reset();
 
-            subject.Create(eventDataAlt);
+            subject.Set(eventDataAlt);
 
             Assert.IsFalse(createdMock.Received);
             Assert.IsFalse(clearedMock.Received);
@@ -140,15 +141,6 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Object.DestroyImmediate(publisherObjectAlt);
             Object.DestroyImmediate(collisionNotifierContainer);
             Object.DestroyImmediate(collisionNotifierContainerAlt);
-        }
-    }
-
-    public class CollisionPointContainerMock : CollisionPointContainer
-    {
-        protected override void DestroyContainer()
-        {
-            DestroyImmediate(Container);
-            Container = null;
         }
     }
 }

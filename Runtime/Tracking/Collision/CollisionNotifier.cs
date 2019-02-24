@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
     using Zinnia.Extension;
@@ -158,7 +159,14 @@
         [DocumentedByXml]
         public UnityEvent CollisionStopped = new UnityEvent();
 
-        protected EventData eventData = new EventData();
+        /// <summary>
+        /// A reused instance to use when raising any of the events.
+        /// </summary>
+        protected readonly EventData eventData = new EventData();
+        /// <summary>
+        /// A reused instance to use when looking up <see cref="CollisionNotifier"/> components.
+        /// </summary>
+        protected readonly List<CollisionNotifier> collisionNotifiers = new List<CollisionNotifier>();
 
         /// <summary>
         /// Determines whether events should be emitted.
@@ -178,16 +186,20 @@
         /// </summary>
         /// <param name="data">The <see cref="EventData"/> that holds the containing <see cref="Transform"/></param>
         /// <returns>A <see cref="CollisionNotifier"/> collection for items found on the containing <see cref="Transform"/> component.</returns>
-        protected virtual CollisionNotifier[] GetNotifiers(EventData data)
+        protected virtual List<CollisionNotifier> GetNotifiers(EventData data)
         {
             Transform reference = data.collider.GetContainingTransform();
 
             if (transform.IsChildOf(reference))
             {
-                return Array.Empty<CollisionNotifier>();
+                collisionNotifiers.Clear();
+            }
+            else
+            {
+                reference.GetComponentsInChildren(collisionNotifiers);
             }
 
-            return reference.GetComponentsInChildren<CollisionNotifier>();
+            return collisionNotifiers;
         }
 
         protected virtual void OnCollisionStarted(EventData data)
