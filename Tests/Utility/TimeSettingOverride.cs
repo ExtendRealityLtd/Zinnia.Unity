@@ -2,17 +2,12 @@
 {
     using UnityEngine;
 
-    [AddComponentMenu("")]
     public class TimeSettingOverride
     {
         private float savedFixedDeltaTime;
         private float savedMaximumDeltaTime;
         private float savedTimeScale;
         private float savedMaximumParticleDeltaTime;
-
-        public TimeSettingOverride()
-        {
-        }
 
         public TimeSettingOverride(float fixedDeltaTime, float maximumDeltaTime, float timeScale, float maximumParticleDeltaTime)
         {
