@@ -24,16 +24,14 @@
         /// <inheritdoc />
         protected override Vector3 DoGetVelocity()
         {
-            Vector3 result = Vector3.zero;
-            GetNodeState().TryGetVelocity(out result);
+            GetNodeState().TryGetVelocity(out Vector3 result);
             return result;
         }
 
         /// <inheritdoc />
         protected override Vector3 DoGetAngularVelocity()
         {
-            Vector3 result = Vector3.zero;
-            GetNodeState().TryGetAngularVelocity(out result);
+            GetNodeState().TryGetAngularVelocity(out Vector3 result);
             return result;
         }
 

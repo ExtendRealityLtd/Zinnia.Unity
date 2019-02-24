@@ -41,8 +41,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             publisher.sourceContainer = publisherObject;
             publisherObject.transform.position = Vector3.one;
 
-            GameObject collisionNotifierContainer = new GameObject(); ;
-            CollisionNotifier.EventData collisionNotifierEventData = CollisionNotifierHelper.GetEventData(out collisionNotifierContainer);
+            CollisionNotifier.EventData collisionNotifierEventData = CollisionNotifierHelper.GetEventData(out GameObject collisionNotifierContainer);
             collisionNotifierContainer.transform.position = Vector3.one * 2f;
             collisionNotifierContainer.transform.rotation = Quaternion.Euler(Vector3.forward * 90f);
 
@@ -89,8 +88,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             publisher.sourceContainer = publisherObject;
             publisherObject.transform.position = Vector3.one;
 
-            GameObject collisionNotifierContainer = new GameObject(); ;
-            CollisionNotifier.EventData collisionNotifierEventData = CollisionNotifierHelper.GetEventData(out collisionNotifierContainer);
+            CollisionNotifier.EventData collisionNotifierEventData = CollisionNotifierHelper.GetEventData(out GameObject collisionNotifierContainer);
             collisionNotifierContainer.transform.position = Vector3.one * 2f;
             collisionNotifierContainer.transform.rotation = Quaternion.Euler(Vector3.forward * 90f);
 
@@ -102,8 +100,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             publisherAlt.sourceContainer = publisherObjectAlt;
             publisherObjectAlt.transform.position = Vector3.one;
 
-            GameObject collisionNotifierContainerAlt = new GameObject(); ;
-            CollisionNotifier.EventData collisionNotifierEventDataAlt = CollisionNotifierHelper.GetEventData(out collisionNotifierContainerAlt);
+            CollisionNotifier.EventData collisionNotifierEventDataAlt = CollisionNotifierHelper.GetEventData(out GameObject collisionNotifierContainerAlt);
             collisionNotifierContainerAlt.transform.position = Vector3.one * 4f;
             collisionNotifierContainerAlt.transform.rotation = Quaternion.Euler(Vector3.up * 90f);
 
