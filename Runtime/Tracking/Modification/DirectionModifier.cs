@@ -8,6 +8,7 @@
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -112,7 +113,7 @@
             {
                 resetOrientationRoutine = StartCoroutine(ResetOrientationRoutine());
             }
-            else if (resetOrientationSpeed == 0f)
+            else if (resetOrientationSpeed.ApproxEquals(0f))
             {
                 SetOrientationToSaved();
             }

@@ -45,7 +45,7 @@
             {
                 Vector3 angularTarget = angle * axis;
                 Vector3 calculatedAngularVelocity = Vector3.MoveTowards(cachedTargetRigidbody.angularVelocity, angularTarget, maxDistanceDelta);
-                if (angularVelocityLimit == float.PositiveInfinity || calculatedAngularVelocity.sqrMagnitude < angularVelocityLimit)
+                if (float.IsPositiveInfinity(angularVelocityLimit) || calculatedAngularVelocity.sqrMagnitude < angularVelocityLimit)
                 {
                     cachedTargetRigidbody.angularVelocity = calculatedAngularVelocity;
                 }
