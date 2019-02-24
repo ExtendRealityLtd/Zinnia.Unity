@@ -785,7 +785,7 @@ namespace Test.Zinnia.Pointer
             Object.DestroyImmediate(blocker);
         }
 
-        protected PointsCast.EventData CastPoints(Vector3[] points, bool validHit = true, Ray? realRay = null)
+        protected static PointsCast.EventData CastPoints(Vector3[] points, bool validHit = true, Ray? realRay = null)
         {
             if (validHit)
             {

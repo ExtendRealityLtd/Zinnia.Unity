@@ -81,7 +81,7 @@
             return Vector2.zero;
         }
 
-        private void Error(Rect position, GUIContent label)
+        private static void Error(Rect position, GUIContent label)
         {
             EditorGUI.LabelField(position, label, new GUIContent("Use only with Vector2 or FloatRange"));
         }
