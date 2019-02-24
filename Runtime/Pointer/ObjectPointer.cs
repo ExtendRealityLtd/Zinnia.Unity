@@ -486,15 +486,15 @@
         /// <returns>A <see cref="EventData"/> object of the <see cref="ObjectPointer"/>'s current state.</returns>
         protected virtual EventData GetEventData(PointsCast.EventData data)
         {
-            Transform targetTransform = data?.targetHit?.transform;
-            Transform validDestinationTransform = (destination != null && destination.validObject != null ? destination.validObject.transform : null);
+            Transform validDestinationTransform = destination == null || destination.validObject == null ? null : destination.validObject.transform;
+            Transform pointerTransform = transform;
 
-            eventData.transform = transform;
-            eventData.positionOverride = (validDestinationTransform != null ? (Vector3?)validDestinationTransform.position : data.targetHit?.point);
-            eventData.rotationOverride = (validDestinationTransform != null ? validDestinationTransform.localRotation : Quaternion.identity);
-            eventData.scaleOverride = (validDestinationTransform != null ? validDestinationTransform.lossyScale : Vector3.one);
-            eventData.origin = transform.position;
-            eventData.direction = transform.forward;
+            eventData.transform = pointerTransform;
+            eventData.positionOverride = validDestinationTransform == null ? data.targetHit?.point : validDestinationTransform.position;
+            eventData.rotationOverride = validDestinationTransform == null ? Quaternion.identity : validDestinationTransform.localRotation;
+            eventData.scaleOverride = validDestinationTransform == null ? Vector3.one : validDestinationTransform.lossyScale;
+            eventData.origin = pointerTransform.position;
+            eventData.direction = pointerTransform.forward;
             eventData.CollisionData = data?.targetHit ?? default;
             return eventData.Set(ActivationState, IsHovering, HoverDuration, data);
         }

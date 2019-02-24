@@ -40,13 +40,15 @@
         /// </summary>
         protected virtual void GeneratePoints()
         {
-            Ray ray = new Ray(origin.transform.position, origin.transform.forward);
-            RaycastHit hitData;
-            bool hasCollided = PhysicsCast.Raycast(physicsCast, ray, out hitData, MaximumLength, Physics.IgnoreRaycastLayer);
-            TargetHit = (hasCollided ? hitData : (RaycastHit?)null);
+            Vector3 originPosition = origin.transform.position;
+            Vector3 originForward = origin.transform.forward;
 
-            points[0] = origin.transform.position;
-            points[1] = (hasCollided ? hitData.point : origin.transform.position + origin.transform.forward * MaximumLength);
+            Ray ray = new Ray(originPosition, originForward);
+            bool hasCollided = PhysicsCast.Raycast(physicsCast, ray, out RaycastHit hitData, MaximumLength, Physics.IgnoreRaycastLayer);
+            TargetHit = hasCollided ? hitData : (RaycastHit?)null;
+
+            points[0] = originPosition;
+            points[1] = hasCollided ? hitData.point : originPosition + originForward * MaximumLength;
         }
     }
 }

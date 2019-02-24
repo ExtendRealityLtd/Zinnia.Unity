@@ -44,8 +44,9 @@
                 return;
             }
 
-            Vector3 rotationForce = source.transform.position - AttachmentPoint.transform.position;
-            cachedTargetRigidbody.AddForceAtPosition(rotationForce, AttachmentPoint.transform.position, ForceMode.VelocityChange);
+            Vector3 attachmentPointPosition = AttachmentPoint.transform.position;
+            Vector3 rotationForce = source.transform.position - attachmentPointPosition;
+            cachedTargetRigidbody.AddForceAtPosition(rotationForce, attachmentPointPosition, ForceMode.VelocityChange);
         }
     }
 }

@@ -175,11 +175,12 @@
 
             Vector3 normalizedForward = (LookAt.transform.position - Pivot.transform.position).normalized;
             Quaternion rightLocked = Quaternion.LookRotation(normalizedForward, Vector3.Cross(-Pivot.transform.right, normalizedForward).normalized);
-            Quaternion rightLockedDelta = Quaternion.Inverse(Target.transform.rotation) * rightLocked;
+            Quaternion targetRotation = Target.transform.rotation;
+            Quaternion rightLockedDelta = Quaternion.Inverse(targetRotation) * rightLocked;
             Quaternion upLocked = Quaternion.LookRotation(normalizedForward, Pivot.transform.forward);
-            Quaternion upLockedDelta = Quaternion.Inverse(Target.transform.rotation) * upLocked;
+            Quaternion upLockedDelta = Quaternion.Inverse(targetRotation) * upLocked;
 
-            Target.transform.rotation = (CalculateLockedAngle(upLockedDelta) < CalculateLockedAngle(rightLockedDelta) ? upLocked : rightLocked);
+            Target.transform.rotation = CalculateLockedAngle(upLockedDelta) < CalculateLockedAngle(rightLockedDelta) ? upLocked : rightLocked;
         }
 
         /// <summary>

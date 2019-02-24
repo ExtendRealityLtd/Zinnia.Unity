@@ -60,8 +60,9 @@
         /// </summary>
         public virtual void Process()
         {
-            Vector3 difference = target.transform.position - source.transform.position;
-            Ray ray = new Ray(source.transform.position, difference);
+            Vector3 sourcePosition = source.transform.position;
+            Vector3 difference = target.transform.position - sourcePosition;
+            Ray ray = new Ray(sourcePosition, difference);
             RaycastHit[] raycastHits = PhysicsCast.RaycastAll(
                 physicsCast,
                 ray,
