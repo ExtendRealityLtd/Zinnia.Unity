@@ -191,8 +191,7 @@
         protected virtual float CalculateLockedAngle(Quaternion lockedDelta)
         {
             float lockedAngle;
-            Vector3 lockedAxis;
-            lockedDelta.ToAngleAxis(out lockedAngle, out lockedAxis);
+            lockedDelta.ToAngleAxis(out lockedAngle, out Vector3 _);
             if (lockedAngle > 180f)
             {
                 lockedAngle -= 360f;

@@ -64,9 +64,8 @@
                     $"{(hasReference ? "Remove" : "Add a new")} {type.Name} {(hasReference ? "from" : "to")} this game object.");
                 float addButtonWidth;
                 float removeButtonWidth;
-                float buttonMaxWidth;
-                GUI.skin.button.CalcMinMaxWidth(new GUIContent("+"), out addButtonWidth, out buttonMaxWidth);
-                GUI.skin.button.CalcMinMaxWidth(new GUIContent("-"), out removeButtonWidth, out buttonMaxWidth);
+                GUI.skin.button.CalcMinMaxWidth(new GUIContent("+"), out addButtonWidth, out float _);
+                GUI.skin.button.CalcMinMaxWidth(new GUIContent("-"), out removeButtonWidth, out float _);
                 float buttonWidth = Mathf.Max(addButtonWidth, removeButtonWidth);
 
                 using (EditorGUI.ChangeCheckScope changeCheckScope = new EditorGUI.ChangeCheckScope())
