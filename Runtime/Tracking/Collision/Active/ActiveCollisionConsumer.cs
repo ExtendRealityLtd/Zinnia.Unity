@@ -97,7 +97,7 @@
         [DocumentedByXml]
         public UnityEvent Cleared = new UnityEvent();
 
-        protected EventData eventData = new EventData();
+        protected readonly EventData eventData = new EventData();
 
         /// <summary>
         /// Consumes data from a from a <see cref="ActiveCollisionPublisher"/>.

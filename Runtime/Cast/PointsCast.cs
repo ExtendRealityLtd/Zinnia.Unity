@@ -100,8 +100,8 @@
         /// </summary>
         public IReadOnlyList<Vector3> Points => points;
 
-        protected List<Vector3> points = new List<Vector3>();
-        protected EventData eventData = new EventData();
+        protected readonly List<Vector3> points = new List<Vector3>();
+        protected readonly EventData eventData = new EventData();
 
         private RaycastHit? targetHit;
 

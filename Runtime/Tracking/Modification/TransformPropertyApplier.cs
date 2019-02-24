@@ -124,7 +124,7 @@
         /// <summary>
         /// The cached event data payload.
         /// </summary>
-        protected EventData eventData = new EventData();
+        protected readonly EventData eventData = new EventData();
         /// <summary>
         /// A reused data instance for <see cref="Source"/>.
         /// </summary>

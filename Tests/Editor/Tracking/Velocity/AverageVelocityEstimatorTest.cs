@@ -11,7 +11,7 @@ namespace Test.Zinnia.Tracking.Velocity
         private GameObject source;
         private AverageVelocityEstimatorMock subject;
 
-        private Vector3[] exampleSourcePositions = new Vector3[]
+        private static readonly Vector3[] exampleSourcePositions = new Vector3[]
         {
             new Vector3(0f, 0f, 0f),
             new Vector3(1f, 1f, 1f),
@@ -20,7 +20,7 @@ namespace Test.Zinnia.Tracking.Velocity
             new Vector3(8f, 8f, 8f)
         };
 
-        private Quaternion[] exampleSourceRotations = new Quaternion[]
+        private static readonly Quaternion[] exampleSourceRotations = new Quaternion[]
         {
             new Quaternion(1f, 0f, 0f, 0f),
             new Quaternion(0.707f, 0.707f, 0f, 0f),

@@ -14,7 +14,7 @@
         [DocumentedByXml]
         public ActiveCollisionsContainer.UnityEvent Reversed = new ActiveCollisionsContainer.UnityEvent();
 
-        protected ActiveCollisionsContainer.EventData reversedList = new ActiveCollisionsContainer.EventData();
+        protected readonly ActiveCollisionsContainer.EventData reversedList = new ActiveCollisionsContainer.EventData();
 
         /// <summary>
         /// Reverses the given collision collection.

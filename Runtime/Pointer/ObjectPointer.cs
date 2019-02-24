@@ -261,11 +261,11 @@
             }
         }
 
-        protected PointsCast.EventData activePointsCastData = new PointsCast.EventData();
-        protected PointsCast.EventData previousPointsCastData = new PointsCast.EventData();
+        protected readonly PointsCast.EventData activePointsCastData = new PointsCast.EventData();
+        protected readonly PointsCast.EventData previousPointsCastData = new PointsCast.EventData();
         protected bool? previousVisibility;
-        protected EventData eventData = new EventData();
-        PointsRenderer.PointsData pointsData = new PointsRenderer.PointsData();
+        protected readonly EventData eventData = new EventData();
+        protected readonly PointsRenderer.PointsData pointsData = new PointsRenderer.PointsData();
 
         /// <summary>
         /// The Activate method turns on the <see cref="ObjectPointer"/>.

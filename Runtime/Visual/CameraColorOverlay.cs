@@ -103,7 +103,7 @@
         protected Color currentColor = new Color(0f, 0f, 0f, 0f);
         protected Color deltaColor = new Color(0f, 0f, 0f, 0f);
         protected Coroutine blinkRoutine;
-        protected EventData eventData = new EventData();
+        protected readonly EventData eventData = new EventData();
 
         /// <summary>
         /// Applies the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="addDuration"/>.

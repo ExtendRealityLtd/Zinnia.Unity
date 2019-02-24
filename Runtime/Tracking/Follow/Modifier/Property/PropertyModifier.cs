@@ -27,7 +27,7 @@
         [DocumentedByXml]
         public ObjectFollower.UnityEvent Modified = new ObjectFollower.UnityEvent();
 
-        protected ObjectFollower.EventData eventData = new ObjectFollower.EventData();
+        protected readonly ObjectFollower.EventData eventData = new ObjectFollower.EventData();
 
         /// <summary>
         /// Attempts modify the target.
