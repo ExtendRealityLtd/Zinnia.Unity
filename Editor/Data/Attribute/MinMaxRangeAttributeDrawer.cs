@@ -59,7 +59,7 @@
         private Vector2 BuildSlider(Rect position, GUIContent label, Vector2 range, out bool valid)
         {
             float fieldWidth = GUI.skin.textField.CalcSize(new GUIContent(1.23456f.ToString(CultureInfo.InvariantCulture))).x; ;
-            float fieldPadding = 5f;
+            const float fieldPadding = 5f;
             float min = range.x;
             float max = range.y;
 

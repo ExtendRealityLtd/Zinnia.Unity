@@ -17,7 +17,7 @@
 
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             float updatePositionX = position.x;
-            float labelWidth = 15f;
+            const float labelWidth = 15f;
             float fieldWidth = (position.width / 3f) - labelWidth;
 
             using (new EditorGUI.PropertyScope(position, GUIContent.none, xState))

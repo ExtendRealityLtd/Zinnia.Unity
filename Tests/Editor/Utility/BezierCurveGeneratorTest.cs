@@ -10,7 +10,7 @@ namespace Test.Zinnia.Utility
         [Test]
         public void GeneratePoints()
         {
-            int curvePoints = 10;
+            const int curvePoints = 10;
             Vector3 origin = Vector3.zero;
             Vector3 forward = Vector3.forward * 4;
             Vector3 down = (Vector3.forward * 4) + (Vector3.down * 2);
