@@ -812,7 +812,7 @@ namespace Test.Zinnia.Data.Collection
 
             GameObject objectOne = new GameObject();
 
-            subject.elementEvents.Add(eventsOne); ;
+            subject.elementEvents.Add(eventsOne);
 
             subject.Push(objectOne);
 
