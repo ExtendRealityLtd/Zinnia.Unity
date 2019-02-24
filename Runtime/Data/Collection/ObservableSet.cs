@@ -163,7 +163,10 @@
         public virtual void OnAfterDeserialize()
         {
             elements.Clear();
-            _elements.ForEach(element => elements.Add(element));
+            foreach (TElement element in _elements)
+            {
+                elements.Add(element);
+            }
         }
 
         protected virtual void Start()

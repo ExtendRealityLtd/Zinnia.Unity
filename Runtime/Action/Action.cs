@@ -214,7 +214,10 @@
         /// </summary>
         protected virtual void SubscribeToSources()
         {
-            Sources.ForEach(SubscribeToSource);
+            foreach (TSelf source in Sources)
+            {
+                SubscribeToSource(source);
+            }
         }
 
         /// <summary>
@@ -222,7 +225,10 @@
         /// </summary>
         protected virtual void UnsubscribeFromSources()
         {
-            Sources.ForEach(UnsubscribeFromSource);
+            foreach (TSelf source in Sources)
+            {
+                UnsubscribeFromSource(source);
+            }
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
+    using System.Collections.Generic;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.PropertyValidationMethod;
@@ -12,6 +13,25 @@
     /// </summary>
     public class NearestSorter : MonoBehaviour
     {
+        /// <summary>
+        /// Compares two <see cref="CollisionNotifier.EventData"/> based on their containing <see cref="Transform"/>'s distance to a given <see cref="Vector3"/>.
+        /// </summary>
+        protected class EventDataComparer : IComparer<CollisionNotifier.EventData>
+        {
+            /// <summary>
+            /// The position to check against.
+            /// </summary>
+            public Vector3 sourcePosition;
+
+            /// <inheritdoc />
+            public virtual int Compare(CollisionNotifier.EventData x, CollisionNotifier.EventData y)
+            {
+                float distance1 = Vector3.Distance(x.collider.GetContainingTransform().position, sourcePosition);
+                float distance2 = Vector3.Distance(y.collider.GetContainingTransform().position, sourcePosition);
+                return distance1.CompareTo(distance2);
+            }
+        }
+
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
@@ -35,6 +55,11 @@
         public ActiveCollisionsContainer.UnityEvent Sorted = new ActiveCollisionsContainer.UnityEvent();
 
         /// <summary>
+        /// Compares two <see cref="CollisionNotifier.EventData"/>.
+        /// </summary>
+        protected static readonly EventDataComparer Comparer = new EventDataComparer();
+
+        /// <summary>
         /// Sorts the given collision collection by the collisions that are nearest to the source <see cref="Transform"/>.
         /// </summary>
         /// <param name="originalList">The original collision collection.</param>
@@ -56,15 +81,8 @@
             }
 
             SortedList.Set(originalList);
-
-            SortedList.activeCollisions.Sort(
-            (data1, data2) =>
-                {
-                    float distance1 = Vector3.Distance(data1.collider.GetContainingTransform().position, Source.transform.position);
-                    float distance2 = Vector3.Distance(data2.collider.GetContainingTransform().position, Source.transform.position);
-                    return distance1.CompareTo(distance2);
-                }
-            );
+            Comparer.sourcePosition = Source.transform.position;
+            SortedList.activeCollisions.Sort(Comparer);
 
             Sorted?.Invoke(SortedList);
             return SortedList;
