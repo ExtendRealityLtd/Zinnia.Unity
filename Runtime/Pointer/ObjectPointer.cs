@@ -7,6 +7,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
     using Zinnia.Visual;
 
     /// <summary>
@@ -371,43 +372,16 @@
             pointsData.repeatedSegment = GetElementRepresentation(repeatedSegment);
             pointsData.end = GetElementRepresentation(destination);
 
-            GameObject[] unusedGameObjects =
-            {
-                origin.validObject,
-                origin.invalidObject,
-                repeatedSegment.validObject,
-                repeatedSegment.invalidObject,
-                destination.validObject,
-                destination.invalidObject
-            };
+            TryDeactivateElementObject(origin.validObject);
+            TryDeactivateElementObject(origin.invalidObject);
+            TryDeactivateElementObject(repeatedSegment.validObject);
+            TryDeactivateElementObject(repeatedSegment.invalidObject);
+            TryDeactivateElementObject(destination.validObject);
+            TryDeactivateElementObject(destination.invalidObject);
 
-            foreach (GameObject unusedGameObject in unusedGameObjects)
-            {
-                if (unusedGameObject != null
-                    && (unusedGameObject != pointsData.start
-                        && unusedGameObject != pointsData.repeatedSegment
-                        && unusedGameObject != pointsData.end
-                        || unusedGameObject == repeatedSegment.validObject
-                        || unusedGameObject == repeatedSegment.invalidObject))
-                {
-                    unusedGameObject.SetActive(false);
-                }
-            }
-
-            GameObject[] usedGameObjects =
-            {
-                pointsData.start,
-                pointsData.repeatedSegment,
-                pointsData.end
-            };
-
-            foreach (GameObject usedGameObject in usedGameObjects)
-            {
-                if (usedGameObject != null)
-                {
-                    usedGameObject.SetActive(true);
-                }
-            }
+            pointsData.start.TrySetActive(true);
+            pointsData.repeatedSegment.TrySetActive(true);
+            pointsData.end.TrySetActive(true);
 
             RenderDataChanged?.Invoke(pointsData);
             TryEmitVisibilityEvent();
@@ -488,6 +462,21 @@
                     return null;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(element.visibility), element.visibility, null);
+            }
+        }
+
+        /// <summary>
+        /// Attempts to deactivate an object that is an element of this <see cref="ObjectPointer"/> if it's not one of the elements that should stay activated.
+        /// </summary>
+        /// <param name="elementObject">The object to check and deactivate if needed.</param>
+        protected virtual void TryDeactivateElementObject(GameObject elementObject)
+        {
+            if (elementObject != null
+                && elementObject != pointsData.start
+                && elementObject != pointsData.repeatedSegment
+                && elementObject != pointsData.end)
+            {
+                elementObject.gameObject.SetActive(false);
             }
         }
 
