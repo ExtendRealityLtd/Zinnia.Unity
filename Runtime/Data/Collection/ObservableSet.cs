@@ -67,7 +67,7 @@
         [RequiresBehaviourState]
         public virtual void AddElement(TElement element)
         {
-            if (Equals(element, default(TElement)))
+            if (EqualityComparer<TElement>.Default.Equals(element, default))
             {
                 return;
             }
@@ -163,7 +163,10 @@
         public virtual void OnAfterDeserialize()
         {
             elements.Clear();
-            _elements.ForEach(element => elements.Add(element));
+            foreach (TElement element in _elements)
+            {
+                elements.Add(element);
+            }
         }
 
         protected virtual void Start()

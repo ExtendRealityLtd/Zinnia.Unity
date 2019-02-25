@@ -13,8 +13,7 @@ namespace Test.Zinnia.Utility.Mock
 
         public static VelocityTrackerMock Generate(bool active, Vector3 velocity, Vector3 angularVelocity)
         {
-            GameObject container;
-            return Generate(active, velocity, angularVelocity, out container);
+            return Generate(active, velocity, angularVelocity, out GameObject _);
         }
 
         public static VelocityTrackerMock Generate(bool active, Vector3 velocity, Vector3 angularVelocity, out GameObject container)

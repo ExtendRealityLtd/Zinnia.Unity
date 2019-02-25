@@ -34,8 +34,9 @@ namespace Zinnia.Cast
         /// <inheritdoc />
         protected override void GeneratePoints()
         {
-            points[0] = origin.transform.position;
-            points[1] = origin.transform.position + origin.transform.forward * CurrentLength;
+            Vector3 originPosition = origin.transform.position;
+            points[0] = originPosition;
+            points[1] = originPosition + origin.transform.forward * CurrentLength;
         }
 
         /// <summary>

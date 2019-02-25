@@ -71,11 +71,15 @@
                 return SlicedList;
             }
 
-            uint collectionCount = (uint)originalList.activeCollisions.Count;
-            uint actualStartIndex = GetStartIndex(startIndex, collectionCount);
-            uint actualLength = GetRangeLength(actualStartIndex, length, collectionCount);
+            int collectionCount = originalList.activeCollisions.Count;
+            int actualStartIndex = GetStartIndex(startIndex, collectionCount);
+            int actualLength = GetRangeLength(actualStartIndex, (int)length, collectionCount);
 
-            SlicedList.activeCollisions.AddRange(originalList.activeCollisions.GetRange((int)actualStartIndex, (int)actualLength));
+            for (int index = actualStartIndex; index < actualStartIndex + actualLength; index++)
+            {
+                SlicedList.activeCollisions.Add(originalList.activeCollisions[index]);
+            }
+
             Sliced?.Invoke(SlicedList);
 
             foreach (CollisionNotifier.EventData originalCollision in originalList.activeCollisions)
@@ -109,9 +113,9 @@
         /// <param name="checkIndex">The index to start from.</param>
         /// <param name="count">The total length of the entire collection</param>
         /// <returns>The actual start index to start from.</returns>
-        protected virtual uint GetStartIndex(int checkIndex, uint count)
+        protected virtual int GetStartIndex(int checkIndex, int count)
         {
-            return (uint)Mathf.Clamp((checkIndex < 0 ? count + checkIndex : checkIndex), 0, count);
+            return Mathf.Clamp((checkIndex < 0 ? count + checkIndex : checkIndex), 0, count);
         }
 
         /// <summary>
@@ -121,13 +125,13 @@
         /// <param name="checkLength">The length of elements to return.</param>
         /// <param name="count">The total length of the entire collection</param>
         /// <returns>The actual valid length for the given range.</returns>
-        protected virtual uint GetRangeLength(uint checkIndex, uint checkLength, uint count)
+        protected virtual int GetRangeLength(int checkIndex, int checkLength, int count)
         {
-            uint returnLength = checkLength;
-            uint actualLength = checkIndex + checkLength;
+            int returnLength = checkLength;
+            int actualLength = checkIndex + checkLength;
             if (actualLength >= count)
             {
-                uint offset = actualLength - count;
+                int offset = actualLength - count;
                 returnLength = checkLength - offset;
             }
 

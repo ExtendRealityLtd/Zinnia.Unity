@@ -36,7 +36,7 @@
         /// <summary>
         /// The size of the audio buffer.
         /// </summary>
-        protected int bufferSize = 8192;
+        protected const int BufferSize = 8192;
 
         /// <inheritdoc />
         public override bool IsActive()
@@ -79,8 +79,8 @@
         /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
         protected virtual IEnumerator HapticProcessRoutine()
         {
-            float[] audioData = new float[bufferSize];
-            int sampleOffset = -bufferSize;
+            float[] audioData = new float[BufferSize];
+            int sampleOffset = -BufferSize;
             float startTime = Time.time;
             float length = audioClip.length;
             float endTime = startTime + length;
@@ -89,7 +89,7 @@
             {
                 float lerpVal = (Time.time - startTime) / length;
                 int sampleIndex = (int)(sampleRate * lerpVal);
-                if (sampleIndex >= sampleOffset + bufferSize)
+                if (sampleIndex >= sampleOffset + BufferSize)
                 {
                     audioClip.GetData(audioData, sampleIndex);
                     sampleOffset = sampleIndex;

@@ -88,7 +88,7 @@
             protected set;
         } = new List<CollisionNotifier.EventData>();
 
-        protected EventData eventData = new EventData();
+        protected readonly EventData eventData = new EventData();
 
         /// <summary>
         /// Adds the given collision as an active collision.

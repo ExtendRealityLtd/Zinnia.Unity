@@ -120,7 +120,7 @@
 
         protected bool previousState;
         protected Vector3 sourcePosition;
-        protected EventData eventData = new EventData();
+        protected readonly EventData eventData = new EventData();
 
         /// <summary>
         /// Checks to see if the distance between the source and target exceed the threshold.

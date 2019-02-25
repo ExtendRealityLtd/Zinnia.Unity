@@ -44,7 +44,7 @@
         protected virtual void Pulse(float intensity, float duration)
         {
             InputDevice device = InputDevices.GetDeviceAtXRNode(node);
-            if (device == null || !device.TryGetHapticCapabilities(out nodeHapticCapabilities))
+            if (!device.TryGetHapticCapabilities(out nodeHapticCapabilities))
             {
                 return;
             }

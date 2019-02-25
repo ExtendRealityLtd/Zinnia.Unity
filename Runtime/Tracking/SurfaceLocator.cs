@@ -69,13 +69,16 @@
         /// <summary>
         /// The located surface.
         /// </summary>
-        public SurfaceData SurfaceData
-        {
-            get;
-            protected set;
-        }
+        public readonly SurfaceData surfaceData = new SurfaceData();
 
+        /// <summary>
+        /// The distance to consider a position change.
+        /// </summary>
         protected const float DISTANCE_VARIANCE = 0.0001f;
+        /// <summary>
+        /// A reused data instance.
+        /// </summary>
+        protected readonly TransformData transformData = new TransformData();
 
         /// <summary>
         /// Locates the nearest available surface upon a <see cref="MomentProcess"/>.
@@ -90,7 +93,8 @@
         /// </summary>
         public virtual void Locate()
         {
-            Locate(new TransformData(SearchOrigin));
+            transformData.transform = SearchOrigin == null ? null : SearchOrigin.transform;
+            Locate(transformData);
         }
 
         /// <summary>
@@ -107,8 +111,8 @@
 
             if (CastRay(givenOrigin.Position, searchDirection) && PositionChanged(DISTANCE_VARIANCE))
             {
-                SurfaceData.rotationOverride = givenOrigin.Rotation;
-                SurfaceLocated?.Invoke(SurfaceData);
+                surfaceData.rotationOverride = givenOrigin.Rotation;
+                SurfaceLocated?.Invoke(surfaceData);
             }
         }
 
@@ -119,7 +123,7 @@
         /// <returns><see langword="true"/> if the surface position has changed or no previous surface data is found.</returns>
         protected virtual bool PositionChanged(float checkDistance)
         {
-            return (SurfaceData.PreviousCollisionData.transform == null || !SurfaceData.Position.ApproxEquals(SurfaceData.PreviousCollisionData.point, checkDistance));
+            return surfaceData.PreviousCollisionData.transform == null || !surfaceData.Position.ApproxEquals(surfaceData.PreviousCollisionData.point, checkDistance);
         }
 
         /// <summary>
@@ -131,12 +135,8 @@
         protected virtual bool CastRay(Vector3 givenOrigin, Vector3 givenDirection)
         {
             givenOrigin = givenOrigin + (givenDirection.normalized * originOffset);
-            if (SurfaceData == null)
-            {
-                SurfaceData = new SurfaceData();
-            }
-            SurfaceData.origin = givenOrigin;
-            SurfaceData.direction = givenDirection;
+            surfaceData.origin = givenOrigin;
+            surfaceData.direction = givenDirection;
             Ray tracerRaycast = new Ray(givenOrigin, givenDirection);
             return (targetValidity == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast));
         }
@@ -182,14 +182,14 @@
         }
 
         /// <summary>
-        /// Sets the <see cref="SurfaceData"/> collision information.
+        /// Sets the <see cref="surfaceData"/> collision information.
         /// </summary>
-        /// <param name="collision">The data to use when setting the SurfaceData.</param>
+        /// <param name="collision">The data to use when setting <see cref="surfaceData"/>.</param>
         protected virtual void SetSurfaceData(RaycastHit collision)
         {
-            SurfaceData.CollisionData = collision;
-            SurfaceData.transform = SurfaceData.CollisionData.transform;
-            SurfaceData.positionOverride = SurfaceData.CollisionData.point;
+            surfaceData.CollisionData = collision;
+            surfaceData.transform = surfaceData.CollisionData.transform;
+            surfaceData.positionOverride = surfaceData.CollisionData.point;
         }
 
         /// <summary>

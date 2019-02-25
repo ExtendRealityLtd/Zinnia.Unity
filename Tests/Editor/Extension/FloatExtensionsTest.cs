@@ -28,8 +28,8 @@ namespace Test.Zinnia.Extension
         [Test]
         public void ApproxEqualsFalse()
         {
-            float a = 0f;
-            float b = 1f;
+            const float a = 0f;
+            const float b = 1f;
             float tolerance = 0f;
             Assert.IsFalse(a.ApproxEquals(b, tolerance));
             tolerance = 0.5f;

@@ -4,6 +4,7 @@
     using UnityEditor.IMGUI.Controls;
     using UnityEngine;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
@@ -14,6 +15,8 @@
 
         protected Type type;
         protected Type[] componentTypes;
+        protected readonly List<Type> searchedComponentTypes = new List<Type>();
+
         protected Action<Type> selectAction;
 
         protected SearchField searchField;
@@ -34,6 +37,7 @@
                         AddComponentMenu addComponentMenuAttribute = possibleComponentType.GetCustomAttributes<AddComponentMenu>(true).FirstOrDefault();
                         return type.IsAssignableFrom(possibleComponentType)
                             && !possibleComponentType.IsAbstract
+                            && !possibleComponentType.IsNestedPrivate
                             && (addComponentMenuAttribute == null
                                 || !string.IsNullOrWhiteSpace(addComponentMenuAttribute.componentMenu));
                     })
@@ -51,6 +55,11 @@
             labelStyle = new GUIStyle(EditorStyles.label);
         }
 
+        protected virtual void OnDisable()
+        {
+            searchText = null;
+        }
+
         protected virtual void OnGUI()
         {
             Event currentEvent = Event.current;
@@ -63,9 +72,6 @@
                 return;
             }
 
-            Type[] matchingComponentTypes = componentTypes
-                .Where(type1 => Regex.IsMatch(type1.Name, $".*{searchText}.*", RegexOptions.IgnoreCase))
-                .ToArray();
             if (currentEvent.type == EventType.KeyDown)
             {
                 if (currentEvent.keyCode == KeyCode.DownArrow)
@@ -83,8 +89,6 @@
                 }
             }
 
-            selectionIndex = Math.Min(matchingComponentTypes.Length - 1, Math.Max(0, selectionIndex));
-
             using (new EditorGUILayout.VerticalScope("grey_border"))
             {
                 const float searchRectPadding = 8f;
@@ -95,7 +99,16 @@
                 searchRect.height = 30f;
 
                 searchField.SetFocus();
-                searchText = searchField.OnGUI(searchRect, searchText);
+                string newSearchText = searchField.OnGUI(searchRect, searchText);
+                if (searchText != newSearchText || searchedComponentTypes.Count == 0 && string.IsNullOrEmpty(newSearchText))
+                {
+                    searchText = newSearchText;
+                    searchedComponentTypes.Clear();
+                    searchedComponentTypes.AddRange(componentTypes.Where(type1 => Regex.IsMatch(type1.Name, $".*{searchText}.*", RegexOptions.IgnoreCase)));
+                }
+
+                selectionIndex = Math.Min(searchedComponentTypes.Count - 1, Math.Max(0, selectionIndex));
+
                 EditorGUILayout.Separator();
 
                 using (EditorGUILayout.ScrollViewScope scrollViewScope = new EditorGUILayout.ScrollViewScope(scrollPosition, EditorStyles.helpBox))
@@ -104,12 +117,12 @@
 
                     if (currentEvent.type == EventType.MouseDown && currentEvent.button == 0 || currentEvent.type == EventType.KeyDown && (currentEvent.keyCode == KeyCode.Return || currentEvent.keyCode == KeyCode.KeypadEnter))
                     {
-                        selectAction(matchingComponentTypes[selectionIndex]);
+                        selectAction(searchedComponentTypes[selectionIndex]);
                         Close();
                         return;
                     }
 
-                    for (int index = 0; index < matchingComponentTypes.Length; index++)
+                    for (int index = 0; index < searchedComponentTypes.Count; index++)
                     {
                         Color previousBackgroundColor = GUI.backgroundColor;
                         Texture2D previousNormalBackground = labelStyle.normal.background;
@@ -120,7 +133,7 @@
                             EditorGUILayout.BeginHorizontal();
                         }
 
-                        Type matchingComponentType = matchingComponentTypes[index];
+                        Type matchingComponentType = searchedComponentTypes[index];
                         EditorGUILayout.LabelField(
                             new GUIContent(
                                 ObjectNames.NicifyVariableName(matchingComponentType.Name),

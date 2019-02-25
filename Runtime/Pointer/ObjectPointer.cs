@@ -7,6 +7,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
     using Zinnia.Visual;
 
     /// <summary>
@@ -260,11 +261,11 @@
             }
         }
 
-        protected PointsCast.EventData activePointsCastData = new PointsCast.EventData();
-        protected PointsCast.EventData previousPointsCastData = new PointsCast.EventData();
+        protected readonly PointsCast.EventData activePointsCastData = new PointsCast.EventData();
+        protected readonly PointsCast.EventData previousPointsCastData = new PointsCast.EventData();
         protected bool? previousVisibility;
-        protected EventData eventData = new EventData();
-        PointsRenderer.PointsData pointsData = new PointsRenderer.PointsData();
+        protected readonly EventData eventData = new EventData();
+        protected readonly PointsRenderer.PointsData pointsData = new PointsRenderer.PointsData();
 
         /// <summary>
         /// The Activate method turns on the <see cref="ObjectPointer"/>.
@@ -371,43 +372,16 @@
             pointsData.repeatedSegment = GetElementRepresentation(repeatedSegment);
             pointsData.end = GetElementRepresentation(destination);
 
-            GameObject[] unusedGameObjects =
-            {
-                origin.validObject,
-                origin.invalidObject,
-                repeatedSegment.validObject,
-                repeatedSegment.invalidObject,
-                destination.validObject,
-                destination.invalidObject
-            };
+            TryDeactivateElementObject(origin.validObject);
+            TryDeactivateElementObject(origin.invalidObject);
+            TryDeactivateElementObject(repeatedSegment.validObject);
+            TryDeactivateElementObject(repeatedSegment.invalidObject);
+            TryDeactivateElementObject(destination.validObject);
+            TryDeactivateElementObject(destination.invalidObject);
 
-            foreach (GameObject unusedGameObject in unusedGameObjects)
-            {
-                if (unusedGameObject != null
-                    && (unusedGameObject != pointsData.start
-                        && unusedGameObject != pointsData.repeatedSegment
-                        && unusedGameObject != pointsData.end
-                        || unusedGameObject == repeatedSegment.validObject
-                        || unusedGameObject == repeatedSegment.invalidObject))
-                {
-                    unusedGameObject.SetActive(false);
-                }
-            }
-
-            GameObject[] usedGameObjects =
-            {
-                pointsData.start,
-                pointsData.repeatedSegment,
-                pointsData.end
-            };
-
-            foreach (GameObject usedGameObject in usedGameObjects)
-            {
-                if (usedGameObject != null)
-                {
-                    usedGameObject.SetActive(true);
-                }
-            }
+            pointsData.start.TrySetActive(true);
+            pointsData.repeatedSegment.TrySetActive(true);
+            pointsData.end.TrySetActive(true);
 
             RenderDataChanged?.Invoke(pointsData);
             TryEmitVisibilityEvent();
@@ -492,20 +466,35 @@
         }
 
         /// <summary>
+        /// Attempts to deactivate an object that is an element of this <see cref="ObjectPointer"/> if it's not one of the elements that should stay activated.
+        /// </summary>
+        /// <param name="elementObject">The object to check and deactivate if needed.</param>
+        protected virtual void TryDeactivateElementObject(GameObject elementObject)
+        {
+            if (elementObject != null
+                && elementObject != pointsData.start
+                && elementObject != pointsData.repeatedSegment
+                && elementObject != pointsData.end)
+            {
+                elementObject.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
         /// Builds a valid <see cref="ObjectPointer"/> payload to use in the events.
         /// </summary>
         /// <returns>A <see cref="EventData"/> object of the <see cref="ObjectPointer"/>'s current state.</returns>
         protected virtual EventData GetEventData(PointsCast.EventData data)
         {
-            Transform targetTransform = data?.targetHit?.transform;
-            Transform validDestinationTransform = (destination != null && destination.validObject != null ? destination.validObject.transform : null);
+            Transform validDestinationTransform = destination == null || destination.validObject == null ? null : destination.validObject.transform;
+            Transform pointerTransform = transform;
 
-            eventData.transform = transform;
-            eventData.positionOverride = (validDestinationTransform != null ? (Vector3?)validDestinationTransform.position : data.targetHit?.point);
-            eventData.rotationOverride = (validDestinationTransform != null ? validDestinationTransform.localRotation : Quaternion.identity);
-            eventData.scaleOverride = (validDestinationTransform != null ? validDestinationTransform.lossyScale : Vector3.one);
-            eventData.origin = transform.position;
-            eventData.direction = transform.forward;
+            eventData.transform = pointerTransform;
+            eventData.positionOverride = validDestinationTransform == null ? data.targetHit?.point : validDestinationTransform.position;
+            eventData.rotationOverride = validDestinationTransform == null ? Quaternion.identity : validDestinationTransform.localRotation;
+            eventData.scaleOverride = validDestinationTransform == null ? Vector3.one : validDestinationTransform.lossyScale;
+            eventData.origin = pointerTransform.position;
+            eventData.direction = pointerTransform.forward;
             eventData.CollisionData = data?.targetHit ?? default;
             return eventData.Set(ActivationState, IsHovering, HoverDuration, data);
         }

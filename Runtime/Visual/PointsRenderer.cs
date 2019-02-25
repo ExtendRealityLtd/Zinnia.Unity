@@ -66,7 +66,10 @@
 
             if (repeatedSegment != data.repeatedSegment)
             {
-                segmentClones.ForEach(Destroy);
+                foreach (GameObject segmentClone in segmentClones)
+                {
+                    Destroy(segmentClone);
+                }
                 segmentClones.Clear();
 
                 repeatedSegment = data.repeatedSegment;
@@ -85,7 +88,10 @@
 
         protected virtual void OnDisable()
         {
-            segmentClones.ForEach(Destroy);
+            foreach (GameObject segmentClone in segmentClones)
+            {
+                Destroy(segmentClone);
+            }
             segmentClones.Clear();
 
             if (start != null)

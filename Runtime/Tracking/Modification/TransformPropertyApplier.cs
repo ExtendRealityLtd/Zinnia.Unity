@@ -124,7 +124,15 @@
         /// <summary>
         /// The cached event data payload.
         /// </summary>
-        protected EventData eventData = new EventData();
+        protected readonly EventData eventData = new EventData();
+        /// <summary>
+        /// A reused data instance for <see cref="Source"/>.
+        /// </summary>
+        protected readonly TransformData sourceTransformData = new TransformData();
+        /// <summary>
+        /// A reused data instance for <see cref="Target"/>.
+        /// </summary>
+        protected readonly TransformData targetTransformData = new TransformData();
 
         /// <summary>
         /// Sets the <see cref="Source"/> parameter.
@@ -132,10 +140,10 @@
         /// <param name="source">The new source value.</param>
         public virtual void SetSource(GameObject source)
         {
-            if (source != null)
-            {
-                Source = new TransformData(source);
-            }
+            sourceTransformData.transform = source == null ? null : source.transform;
+            sourceTransformData.positionOverride = null;
+            sourceTransformData.rotationOverride = null;
+            sourceTransformData.scaleOverride = null;
         }
 
         /// <summary>
@@ -167,12 +175,12 @@
                 return;
             }
 
-            TransformData targetData = new TransformData(Target);
-            BeforeTransformUpdated?.Invoke(eventData.Set(Source, targetData));
-            Vector3 finalScale = CalculateScale(Source, targetData);
-            Quaternion finalRotation = CalculateRotation(Source, targetData);
-            Vector3 finalPosition = CalculatePosition(Source, targetData, finalScale, finalRotation);
-            ProcessTransform(Source, targetData, finalScale, finalRotation, finalPosition);
+            targetTransformData.transform = Target.transform;
+            BeforeTransformUpdated?.Invoke(eventData.Set(Source, targetTransformData));
+            Vector3 finalScale = CalculateScale(Source, targetTransformData);
+            Quaternion finalRotation = CalculateRotation(Source, targetTransformData);
+            Vector3 finalPosition = CalculatePosition(Source, targetTransformData, finalScale, finalRotation);
+            ProcessTransform(Source, targetTransformData, finalScale, finalRotation, finalPosition);
         }
 
         protected virtual void OnDisable()

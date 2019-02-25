@@ -60,7 +60,7 @@
             protected set;
         }
 
-        protected ObjectFollower.EventData eventData = new ObjectFollower.EventData();
+        protected readonly ObjectFollower.EventData eventData = new ObjectFollower.EventData();
 
         /// <summary>
         /// Attempts to call each of the given <see cref="PropertyModifier"/> options to modify the target.

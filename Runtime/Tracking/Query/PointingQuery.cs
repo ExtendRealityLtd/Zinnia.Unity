@@ -50,9 +50,12 @@
         /// </summary>
         public virtual void Process()
         {
-            float distance = Vector3.Distance(target.transform.position, source.transform.position);
-            Vector3 glancePoint = source.transform.position + (source.transform.forward * distance);
-            bool isPointing = Vector3.Distance(target.transform.position, glancePoint) <= targetRadius;
+            Vector3 sourcePosition = source.transform.position;
+            Vector3 targetPosition = target.transform.position;
+
+            float distance = Vector3.Distance(targetPosition, sourcePosition);
+            Vector3 glancePoint = sourcePosition + (source.transform.forward * distance);
+            bool isPointing = Vector3.Distance(targetPosition, glancePoint) <= targetRadius;
             if (isPointing == wasPreviouslyPointing)
             {
                 return;

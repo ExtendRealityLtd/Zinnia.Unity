@@ -30,12 +30,12 @@
         /// Emitted when the collision point container is created.
         /// </summary>
         [DocumentedByXml]
-        public UnityEvent Created = new UnityEvent();
+        public UnityEvent PointSet = new UnityEvent();
         /// <summary>
         /// Emitted when the collision point container is destroyed.
         /// </summary>
         [DocumentedByXml]
-        public UnityEvent Destroyed = new UnityEvent();
+        public UnityEvent PointUnset = new UnityEvent();
 
         /// <summary>
         /// The created container.
@@ -45,49 +45,70 @@
             get;
             protected set;
         }
+        /// <summary>
+        /// Whether <see cref="Container"/> is <see cref="Set"/> or <see cref="Unset"/>.
+        /// </summary>
+        public bool IsSet { get; private set; }
 
         /// <summary>
-        /// Creates a new container if it already doesn't exist at the point of the collision in the given event data.
+        /// Creates a new container if it doesn't already exist and sets it to be at the point of the collision of the given event data.
         /// </summary>
         /// <param name="eventData">Contains data about the collision.</param>
         [RequiresBehaviourState]
-        public virtual void Create(ActiveCollisionConsumer.EventData eventData)
+        public virtual void Set(ActiveCollisionConsumer.EventData eventData)
         {
-            GameObject collisionInitiator = eventData.publisher == null ? null : eventData.publisher.sourceContainer;
-
-            if (collisionInitiator == null || eventData.currentCollision?.collider == null || Container != null)
+            if (IsSet)
             {
                 return;
             }
 
-            GameObject collidingObject = (parentIsCollisionNotifier ? eventData.currentCollision.collider.GetComponentInParent<CollisionNotifier>().gameObject : eventData.currentCollision.collider.GetContainingTransform().gameObject);
+            GameObject collisionInitiator = eventData.publisher?.sourceContainer;
+            Collider collisionCollider = eventData.currentCollision?.collider;
+            if (collisionInitiator == null || collisionCollider == null)
+            {
+                return;
+            }
 
-            Container = new GameObject($"[Zinnia][CollisionPointContainer][{collisionInitiator.name}]");
-            Container.transform.SetParent(collidingObject.transform);
+            GameObject collidingObject = parentIsCollisionNotifier
+                ? collisionCollider.GetComponentInParent<CollisionNotifier>().gameObject
+                : collisionCollider.GetContainingTransform().gameObject;
+
+            if (Container == null)
+            {
+                Container = new GameObject();
+            }
+
+            Container.name = $"[Zinnia][CollisionPointContainer][{collisionInitiator.name}]";
+            Container.transform.parent = collidingObject.transform;
             Container.transform.position = collisionInitiator.transform.position;
             Container.transform.rotation = collisionInitiator.transform.rotation;
             Container.transform.localScale = Vector3.one;
+            Container.SetActive(true);
 
-            Created?.Invoke(Container);
+            IsSet = true;
+
+            PointSet?.Invoke(Container);
         }
 
         /// <summary>
-        /// Destroys the existing created container data.
+        /// Unsets the created container.
         /// </summary>
-        public virtual void Destroy()
+        public virtual void Unset()
         {
-            if (Container != null)
+            if (!IsSet)
             {
-                Destroyed?.Invoke(Container);
-                DestroyContainer();
+                return;
             }
+
+            Container.SetActive(false);
+            Container.transform.parent = transform;
+            IsSet = false;
+            PointUnset?.Invoke(Container);
         }
 
-        /// <summary>
-        /// Destroys the container object.
-        /// </summary>
-        protected virtual void DestroyContainer()
+        protected virtual void OnDisable()
         {
+            Unset();
             Destroy(Container);
             Container = null;
         }

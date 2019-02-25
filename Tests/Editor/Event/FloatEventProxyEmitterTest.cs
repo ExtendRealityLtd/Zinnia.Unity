@@ -30,7 +30,7 @@ namespace Test.Zinnia.Event
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            float payload = 10f;
+            const float payload = 10f;
 
             Assert.IsFalse(emittedMock.Received);
             subject.Receive(payload);
@@ -45,7 +45,7 @@ namespace Test.Zinnia.Event
             subject.Emitted.AddListener(emittedMock.Listen);
             subject.gameObject.SetActive(false);
 
-            float payload = 10f;
+            const float payload = 10f;
 
             Assert.IsFalse(emittedMock.Received);
             subject.Receive(payload);
@@ -60,7 +60,7 @@ namespace Test.Zinnia.Event
             subject.Emitted.AddListener(emittedMock.Listen);
             subject.enabled = false;
 
-            float payload = 10f;
+            const float payload = 10f;
 
             Assert.IsFalse(emittedMock.Received);
             subject.Receive(payload);

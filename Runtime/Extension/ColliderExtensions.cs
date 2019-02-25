@@ -19,7 +19,8 @@
                 return null;
             }
 
-            return (collider.attachedRigidbody != null ? collider.attachedRigidbody.transform : collider.transform);
+            Rigidbody attachedRigidbody = collider.attachedRigidbody;
+            return attachedRigidbody == null ? collider.transform : attachedRigidbody.transform;
         }
     }
 }

@@ -156,27 +156,23 @@ namespace Supyrb
             return false;
         }
 
-        public static IEnumerable<Type> GetBaseClassesAndInterfaces(this Type type, bool includeSelf = false)
+        public static HashSet<Type> GetBaseClassesAndInterfaces(this Type type, bool includeSelf = false)
         {
-            List<Type> allTypes = new List<Type>();
+            HashSet<Type> allTypes = new HashSet<Type>();
 
             if (includeSelf)
             {
                 allTypes.Add(type);
             }
 
-            if (type.BaseType == typeof(object))
+            foreach (Type @interface in type.GetInterfaces())
             {
-                allTypes.AddRange(type.GetInterfaces());
+                allTypes.Add(@interface);
             }
-            else
+
+            if (type.BaseType != typeof(object))
             {
-                allTypes.AddRange(
-                        Enumerable
-                        .Repeat(type.BaseType, 1)
-                        .Concat(type.GetInterfaces())
-                        .Concat(type.BaseType.GetBaseClassesAndInterfaces())
-                        .Distinct());
+                allTypes.UnionWith(type.BaseType.GetBaseClassesAndInterfaces(true));
             }
 
             return allTypes;

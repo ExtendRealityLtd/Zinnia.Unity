@@ -58,8 +58,8 @@
 
         private Vector2 BuildSlider(Rect position, GUIContent label, Vector2 range, out bool valid)
         {
-            float fieldWidth = GUI.skin.textField.CalcSize(new GUIContent(1.23456f.ToString(CultureInfo.InvariantCulture))).x; ;
-            float fieldPadding = 5f;
+            float fieldWidth = GUI.skin.textField.CalcSize(new GUIContent(1.23456f.ToString(CultureInfo.InvariantCulture))).x;
+            const float fieldPadding = 5f;
             float min = range.x;
             float max = range.y;
 
@@ -81,7 +81,7 @@
             return Vector2.zero;
         }
 
-        private void Error(Rect position, GUIContent label)
+        private static void Error(Rect position, GUIContent label)
         {
             EditorGUI.LabelField(position, label, new GUIContent("Use only with Vector2 or FloatRange"));
         }
