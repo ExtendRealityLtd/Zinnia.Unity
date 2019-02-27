@@ -1,7 +1,8 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -16,6 +17,7 @@
         public RuleContainer rule;
 
         /// <inheritdoc />
+        [RequiresBehaviourState]
         public bool Accepts(object target)
         {
             return !rule.Accepts(target);
