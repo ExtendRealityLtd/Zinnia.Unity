@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.2.4](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.3...v8.2.4) (2019-02-27)
+
+
+### Bug Fixes
+
+* **PropertyValidation:** import generic arguments ([ca0fcd3](https://github.com/ExtendRealityLtd/Malimbe/commit/ca0fcd3))
+
 ## [8.2.3](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.2...v8.2.3) (2019-02-24)
 
 
