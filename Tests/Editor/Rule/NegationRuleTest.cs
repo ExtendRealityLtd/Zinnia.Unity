@@ -53,5 +53,27 @@ namespace Test.Zinnia.Rule
             };
             Assert.IsFalse(container.Accepts(containingObject));
         }
+
+        [Test]
+        public void RefusesInactiveGameObject()
+        {
+            subject.rule = new RuleContainer
+            {
+                Interface = new FalseRuleStub()
+            };
+            subject.gameObject.SetActive(false);
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesInactiveComponent()
+        {
+            subject.rule = new RuleContainer
+            {
+                Interface = new FalseRuleStub()
+            };
+            subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
     }
 }

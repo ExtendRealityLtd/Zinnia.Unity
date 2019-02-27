@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/>'s <see cref="GameObject.layer"/> is part of a list.

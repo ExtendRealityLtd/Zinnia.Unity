@@ -49,5 +49,21 @@ namespace Test.Zinnia.Rule
             subject.layerMask = LayerMask.NameToLayer("Ignore Raycast");
             Assert.IsFalse(container.Accepts(containingObject));
         }
+
+        [Test]
+        public void RefusesInactiveGameObject()
+        {
+            subject.layerMask = LayerMask.NameToLayer("UI");
+            subject.gameObject.SetActive(false);
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesInactiveComponent()
+        {
+            subject.layerMask = LayerMask.NameToLayer("UI");
+            subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
     }
 }

@@ -41,9 +41,25 @@ namespace Test.Zinnia.Rule
         }
 
         [Test]
-        public void RefusesInactive()
+        public void RefusesInactiveContainer()
         {
             containingObject.SetActive(false);
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesInactiveGameObject()
+        {
+            containingObject.SetActive(true);
+            subject.gameObject.SetActive(false);
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesInactiveComponent()
+        {
+            containingObject.SetActive(true);
+            subject.enabled = false;
             Assert.IsFalse(container.Accepts(containingObject));
         }
     }

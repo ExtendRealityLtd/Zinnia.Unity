@@ -49,5 +49,21 @@ namespace Test.Zinnia.Rule
 
             Object.DestroyImmediate(wrongGameObject);
         }
+
+        [Test]
+        public void RefusesInactiveGameObject()
+        {
+            subject.objects.Add(containingObject);
+            subject.gameObject.SetActive(false);
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesInactiveComponent()
+        {
+            subject.objects.Add(containingObject);
+            subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
     }
 }

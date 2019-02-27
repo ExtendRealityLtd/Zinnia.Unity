@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
 
     /// <summary>
@@ -17,6 +18,7 @@
         public List<RuleContainer> rules = new List<RuleContainer>();
 
         /// <inheritdoc />
+        [RequiresBehaviourState]
         public bool Accepts(object target)
         {
             foreach (RuleContainer rule in rules)

@@ -51,6 +51,26 @@ namespace Test.Zinnia.Rule
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
+        [Test]
+        public void RefusesInactiveGameObject()
+        {
+            containingObject.AddComponent<TestScript>();
+            subject.componentTypes.Add(typeof(TestScript));
+
+            subject.gameObject.SetActive(false);
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesInactiveComponent()
+        {
+            containingObject.AddComponent<TestScript>();
+            subject.componentTypes.Add(typeof(TestScript));
+
+            subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
         private class TestScript : MonoBehaviour
         {
         }
