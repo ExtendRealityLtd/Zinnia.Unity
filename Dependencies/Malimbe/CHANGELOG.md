@@ -1,5 +1,17 @@
 # Changelog
 
+# [9.1.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.0.0...v9.1.0) (2019-03-04)
+
+
+### Bug Fixes
+
+* **UnityIntegration:** exception when unselecting scripts in project ([dfc8628](https://github.com/ExtendRealityLtd/Malimbe/commit/dfc8628))
+
+
+### Features
+
+* **MemberChange:** only call change methods when isActiveAndEnabled ([d0b0120](https://github.com/ExtendRealityLtd/Malimbe/commit/d0b0120))
+
 # [9.0.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.4...v9.0.0) (2019-03-04)
 
 
