@@ -367,10 +367,10 @@
         /// </summary>
         protected virtual void UpdateRenderData()
         {
-            pointsData.points = (activePointsCastData.points ?? Array.Empty<Vector3>());
-            pointsData.start = GetElementRepresentation(origin);
-            pointsData.repeatedSegment = GetElementRepresentation(repeatedSegment);
-            pointsData.end = GetElementRepresentation(destination);
+            pointsData.Points = (activePointsCastData.points ?? Array.Empty<Vector3>());
+            pointsData.StartPoint = GetElementRepresentation(origin);
+            pointsData.RepeatedSegmentPoint = GetElementRepresentation(repeatedSegment);
+            pointsData.EndPoint = GetElementRepresentation(destination);
 
             TryDeactivateElementObject(origin.validObject);
             TryDeactivateElementObject(origin.invalidObject);
@@ -379,9 +379,9 @@
             TryDeactivateElementObject(destination.validObject);
             TryDeactivateElementObject(destination.invalidObject);
 
-            pointsData.start.TrySetActive(true);
-            pointsData.repeatedSegment.TrySetActive(true);
-            pointsData.end.TrySetActive(true);
+            pointsData.StartPoint.TrySetActive(true);
+            pointsData.RepeatedSegmentPoint.TrySetActive(true);
+            pointsData.EndPoint.TrySetActive(true);
 
             RenderDataChanged?.Invoke(pointsData);
             TryEmitVisibilityEvent();
@@ -472,9 +472,9 @@
         protected virtual void TryDeactivateElementObject(GameObject elementObject)
         {
             if (elementObject != null
-                && elementObject != pointsData.start
-                && elementObject != pointsData.repeatedSegment
-                && elementObject != pointsData.end)
+                && elementObject != pointsData.StartPoint
+                && elementObject != pointsData.RepeatedSegmentPoint
+                && elementObject != pointsData.EndPoint)
             {
                 elementObject.gameObject.SetActive(false);
             }

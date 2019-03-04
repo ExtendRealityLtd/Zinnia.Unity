@@ -42,7 +42,7 @@ namespace Test.Zinnia.Visual
             Assert.IsFalse(colorOverlayAddedMock.Received);
             colorOverlayAddedMock.Reset();
 
-            subject.overlayColor = Color.red;
+            subject.OverlayColor = Color.red;
             subject.AddColorOverlay();
 
             Assert.IsTrue(colorOverlayAddedMock.Received);
