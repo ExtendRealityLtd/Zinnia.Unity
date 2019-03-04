@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Data.Operation
 {
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -32,7 +32,7 @@
         /// <summary>
         /// The direction to extract from the <see cref="Transform"/>.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public AxisDirection Direction { get; set; }
 

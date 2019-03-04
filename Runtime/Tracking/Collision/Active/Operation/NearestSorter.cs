@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
@@ -35,7 +35,7 @@
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
 

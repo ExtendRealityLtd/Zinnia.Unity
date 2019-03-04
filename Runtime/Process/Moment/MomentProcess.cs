@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Process.Moment
 {
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertySetterMethod;*/
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -24,7 +24,7 @@
         /// <summary>
         /// A percentage defining how often to process the <see cref="process"/>.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: Range(0f, 1f), DocumentedByXml]
         public float Utilization { get; set; } = 1f;
 
@@ -78,7 +78,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Utilization))]
+        /*[CalledBySetter(nameof(Utilization))]*/
         protected virtual void OnUtilizationChange(float previousValue, ref float newValue)
         {
             newValue = Mathf.Clamp01(newValue);

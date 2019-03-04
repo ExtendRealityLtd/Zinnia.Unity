@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertySetterMethod;*/
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -14,7 +14,7 @@
         /// <summary>
         /// Actions to check the active state on.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public List<Action> Actions { get; set; } = new List<Action>();
 
@@ -41,7 +41,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Actions))]
+        /*[CalledBySetter(nameof(Actions))]*/
         protected virtual void OnActionsChange(List<Action> previousValue, ref List<Action> newValue)
         {
             Update();

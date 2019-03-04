@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Utility
 {
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertySetterMethod;*/
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -14,7 +14,7 @@
         /// <summary>
         /// The contained object.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         protected Object Field { get; set; }
 
@@ -23,7 +23,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Field))]
+        /*[CalledBySetter(nameof(Field))]*/
         protected virtual void OnFieldChange(Object previousValue, ref Object newValue)
         {
         }
