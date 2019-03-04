@@ -1,5 +1,34 @@
 # Changelog
 
+# [9.0.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.4...v9.0.0) (2019-03-04)
+
+
+### Bug Fixes
+
+* **PropertySerialization:** fix null reference exception ([97fdf72](https://github.com/ExtendRealityLtd/Malimbe/commit/97fdf72))
+* **UnityIntegration:** remove manual weaving menu item entry ([1404254](https://github.com/ExtendRealityLtd/Malimbe/commit/1404254))
+
+
+### Code Refactoring
+
+* **PropertyValidation:** remove property validation ([1e1c8f7](https://github.com/ExtendRealityLtd/Malimbe/commit/1e1c8f7))
+
+
+### Features
+
+* **MemberChange:** overhaul PropertySetter for Unity usage ([173a358](https://github.com/ExtendRealityLtd/Malimbe/commit/173a358))
+
+
+### BREAKING CHANGES
+
+* **MemberChange:** `CalledBySetterAttribute` has been replaced with
+`CalledBeforeChangeOfAttribute` and `CalledAfterChangeOfAttribute`.
+Please see the latest Readme for more details.
+* **PropertyValidation:** Property validation has been removed from Malimbe.
+For an alternative solution please look out for a future version of
+this project or
+[Zinnia](https://github.com/ExtendRealityLtd/Zinnia.Unity).
+
 ## [8.2.4](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.3...v8.2.4) (2019-02-27)
 
 
