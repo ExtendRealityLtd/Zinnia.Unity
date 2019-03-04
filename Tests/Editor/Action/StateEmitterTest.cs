@@ -25,9 +25,7 @@ namespace Test.Zinnia.Action
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
-            Object.DestroyImmediate(action);
             Object.DestroyImmediate(actionObject);
         }
 
@@ -42,7 +40,7 @@ namespace Test.Zinnia.Action
             action.Deactivated.AddListener(deactivatedListenerMock.Listen);
             action.ValueChanged.AddListener(changedListenerMock.Listen);
 
-            subject.action = action;
+            subject.Action = action;
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -132,7 +130,7 @@ namespace Test.Zinnia.Action
             action.Deactivated.AddListener(deactivatedListenerMock.Listen);
             action.ValueChanged.AddListener(changedListenerMock.Listen);
 
-            subject.action = action;
+            subject.Action = action;
             subject.gameObject.SetActive(false);
 
             Assert.IsFalse(activatedListenerMock.Received);
@@ -167,7 +165,7 @@ namespace Test.Zinnia.Action
             action.Deactivated.AddListener(deactivatedListenerMock.Listen);
             action.ValueChanged.AddListener(changedListenerMock.Listen);
 
-            subject.action = action;
+            subject.Action = action;
             subject.enabled = false;
 
             Assert.IsFalse(activatedListenerMock.Received);
@@ -202,7 +200,7 @@ namespace Test.Zinnia.Action
             action.Deactivated.AddListener(deactivatedListenerMock.Listen);
             action.ValueChanged.AddListener(changedListenerMock.Listen);
 
-            subject.action = action;
+            subject.Action = action;
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);

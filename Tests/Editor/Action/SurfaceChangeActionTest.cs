@@ -22,7 +22,6 @@ namespace Test.Zinnia.Action
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -31,8 +30,8 @@ namespace Test.Zinnia.Action
         {
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             subject.Activated.AddListener(activatedListenerMock.Listen);
-            subject.changeDistance = 1f;
-            subject.checkAxis = Vector3State.True;
+            subject.ChangeDistance = 1f;
+            subject.CheckAxis = Vector3State.True;
 
             SurfaceData surfaceData = new SurfaceData(Vector3.one, Vector3.down);
 
@@ -61,8 +60,8 @@ namespace Test.Zinnia.Action
         {
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             subject.Activated.AddListener(activatedListenerMock.Listen);
-            subject.changeDistance = 1f;
-            subject.checkAxis = new Vector3State(false, true, false);
+            subject.ChangeDistance = 1f;
+            subject.CheckAxis = new Vector3State(false, true, false);
 
             SurfaceData surfaceData = new SurfaceData(Vector3.one, Vector3.down);
 

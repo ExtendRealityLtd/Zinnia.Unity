@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
+    using System;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
@@ -46,7 +47,6 @@
         [DocumentedByXml]
         public TEvent BecameEmpty = new TEvent();
 
-
         /// <summary>
         /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will wrap around.
         /// </summary>
@@ -57,12 +57,18 @@
         /// <summary>
         /// The collection to observe changes of.
         /// </summary>
-        public IReadOnlyList<TElement> ReadOnlyElements => Elements;
+        public IReadOnlyList<TElement> ReadOnlyElements => wasStartCalled
+            ? (IReadOnlyList<TElement>)Elements
+            : Array.Empty<TElement>();
 
         /// <summary>
         /// The collection to observe changes of.
         /// </summary>
         protected abstract List<TElement> Elements { get; set; }
+        /// <summary>
+        /// Whether <see cref="Start"/> was called.
+        /// </summary>
+        protected bool wasStartCalled { get; set; }
 
         /// <summary>
         /// Checks to see if the collection contains the given element.
@@ -255,6 +261,8 @@
 
         protected virtual void Start()
         {
+            wasStartCalled = true;
+
             if (ReadOnlyElements == null)
             {
                 return;
@@ -263,7 +271,7 @@
             for (int index = 0; index < ReadOnlyElements.Count; index++)
             {
                 TElement element = ReadOnlyElements[index];
-                if (element == null)
+                if (EqualityComparer<TElement>.Default.Equals(element, default))
                 {
                     continue;
                 }

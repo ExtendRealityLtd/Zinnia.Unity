@@ -21,7 +21,6 @@ namespace Test.Zinnia.Action
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -108,12 +107,15 @@ namespace Test.Zinnia.Action
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
 
-            subject.defaultValue = 1f;
-            subject.ManualAwake();
-
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
+
+            subject.DefaultValue = 1f;
+
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
 
             activatedListenerMock.Reset();
             deactivatedListenerMock.Reset();
@@ -122,8 +124,8 @@ namespace Test.Zinnia.Action
             subject.Receive(1f);
 
             Assert.IsFalse(activatedListenerMock.Received);
-            Assert.IsFalse(deactivatedListenerMock.Received);
-            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsTrue(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
 
             activatedListenerMock.Reset();
             deactivatedListenerMock.Reset();
@@ -157,8 +159,11 @@ namespace Test.Zinnia.Action
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
 
-            subject.defaultValue = 0f;
-            subject.ManualAwake();
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            subject.DefaultValue = 0f;
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -202,10 +207,10 @@ namespace Test.Zinnia.Action
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
 
+            subject.gameObject.SetActive(false);
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
-            subject.gameObject.SetActive(false);
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -225,10 +230,10 @@ namespace Test.Zinnia.Action
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
 
+            subject.enabled = false;
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
-            subject.enabled = false;
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -244,11 +249,6 @@ namespace Test.Zinnia.Action
 
     public class FloatActionMock : FloatAction
     {
-        public virtual void ManualAwake()
-        {
-            Awake();
-        }
-
         public virtual void SetIsActivated(bool value)
         {
             IsActivated = value;

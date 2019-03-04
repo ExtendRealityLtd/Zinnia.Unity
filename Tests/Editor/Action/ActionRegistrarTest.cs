@@ -1,183 +1,44 @@
 ﻿using Zinnia.Action;
+using Zinnia.Action.Collection;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Action
 {
     using UnityEngine;
+    using System.Collections;
     using NUnit.Framework;
+    using UnityEngine.TestTools;
 
     public class ActionRegistrarTest
     {
         private GameObject containingObject;
-        private ActionRegistrarMock subject;
+        private ActionRegistrar subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<ActionRegistrarMock>();
+            containingObject.SetActive(false);
+
+            ActionRegistrarSourceObservableList sources = containingObject.AddComponent<ActionRegistrarSourceObservableList>();
+            GameObjectObservableList limits = containingObject.AddComponent<GameObjectObservableList>();
+
+            subject = containingObject.AddComponent<ActionRegistrar>();
+            subject.enabled = false;
+            subject.Sources = sources;
+            subject.SourceLimits = limits;
+
+            containingObject.SetActive(true);
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void EnableSource()
-        {
-            GameObject oneSourceActionObject = new GameObject();
-            BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-            GameObject twoSourceActionObject = new GameObject();
-            BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-
-            ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = false,
-                container = oneSourceActionObject,
-                action = oneSourceAction
-            };
-
-            ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = false,
-                container = twoSourceActionObject,
-                action = twoSourceAction
-            };
-
-            subject.registerOnEnable = false;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
-
-            Assert.IsFalse(subject.sources[0].enabled);
-            Assert.IsFalse(subject.sources[1].enabled);
-
-            subject.EnableSource(oneSourceActionObject);
-
-            Assert.IsTrue(subject.sources[0].enabled);
-            Assert.IsFalse(subject.sources[1].enabled);
-
-            Object.DestroyImmediate(oneSourceActionObject);
-            Object.DestroyImmediate(twoSourceActionObject);
-        }
-
-        [Test]
-        public void DisableSource()
-        {
-            GameObject oneSourceActionObject = new GameObject();
-            BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-            GameObject twoSourceActionObject = new GameObject();
-            BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-
-            ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = true,
-                container = oneSourceActionObject,
-                action = oneSourceAction
-            };
-
-            ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = true,
-                container = twoSourceActionObject,
-                action = twoSourceAction
-            };
-
-            subject.registerOnEnable = false;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
-
-            Assert.IsTrue(subject.sources[0].enabled);
-            Assert.IsTrue(subject.sources[1].enabled);
-
-            subject.DisableSource(oneSourceActionObject);
-
-            Assert.IsFalse(subject.sources[0].enabled);
-            Assert.IsTrue(subject.sources[1].enabled);
-
-            Object.DestroyImmediate(oneSourceActionObject);
-            Object.DestroyImmediate(twoSourceActionObject);
-        }
-
-        [Test]
-        public void EnableAllSource()
-        {
-            GameObject oneSourceActionObject = new GameObject();
-            BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-            GameObject twoSourceActionObject = new GameObject();
-            BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-
-            ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = false,
-                container = oneSourceActionObject,
-                action = oneSourceAction
-            };
-
-            ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = false,
-                container = twoSourceActionObject,
-                action = twoSourceAction
-            };
-
-            subject.registerOnEnable = false;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
-
-            Assert.IsFalse(subject.sources[0].enabled);
-            Assert.IsFalse(subject.sources[1].enabled);
-
-            subject.EnableAllSources();
-
-            Assert.IsTrue(subject.sources[0].enabled);
-            Assert.IsTrue(subject.sources[1].enabled);
-
-            Object.DestroyImmediate(oneSourceActionObject);
-            Object.DestroyImmediate(twoSourceActionObject);
-        }
-
-        [Test]
-        public void DisableAllSource()
-        {
-            GameObject oneSourceActionObject = new GameObject();
-            BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-            GameObject twoSourceActionObject = new GameObject();
-            BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-
-            ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = true,
-                container = oneSourceActionObject,
-                action = oneSourceAction
-            };
-
-            ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = true,
-                container = twoSourceActionObject,
-                action = twoSourceAction
-            };
-
-            subject.registerOnEnable = false;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
-
-            Assert.IsTrue(subject.sources[0].enabled);
-            Assert.IsTrue(subject.sources[1].enabled);
-
-            subject.DisableAllSources();
-
-            Assert.IsFalse(subject.sources[0].enabled);
-            Assert.IsFalse(subject.sources[1].enabled);
-
-            Object.DestroyImmediate(oneSourceActionObject);
-            Object.DestroyImmediate(twoSourceActionObject);
-        }
-
-        [Test]
-        public void RegisterOnEnable()
+        [UnityTest]
+        public IEnumerator RegisterOnEnable()
         {
             GameObject targetActionObject = new GameObject();
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
@@ -190,37 +51,43 @@ namespace Test.Zinnia.Action
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = true,
-                container = oneSourceActionObject,
-                action = oneSourceAction
+                Enabled = true,
+                Container = oneSourceActionObject,
+                Action = oneSourceAction
             };
 
             ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = true,
-                container = twoSourceActionObject,
-                action = twoSourceAction
+                Enabled = true,
+                Container = twoSourceActionObject,
+                Action = twoSourceAction
             };
 
-            subject.target = targetAction;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
+            subject.Target = targetAction;
+            subject.Sources.Add(oneActionSource);
+            subject.Sources.Add(twoActionSource);
+            subject.SourceLimits.Add(null);
 
             Assert.AreEqual(0, targetAction.ReadOnlySources.Count);
 
-            subject.ManualOnEnable();
+            subject.enabled = true;
+            yield return null;
 
             Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
-            Assert.IsNull(subject.SourceLimit);
+            Assert.AreEqual(1, subject.SourceLimits.ReadOnlyElements.Count);
+            Assert.IsNull(subject.SourceLimits.ReadOnlyElements[0]);
 
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);
             Object.DestroyImmediate(twoSourceActionObject);
         }
 
-        [Test]
-        public void RegisterSpecific()
+        [UnityTest]
+        public IEnumerator RegisterSpecific()
         {
+            subject.enabled = true;
+            yield return null;
+
             GameObject targetActionObject = new GameObject();
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
 
@@ -232,39 +99,37 @@ namespace Test.Zinnia.Action
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = true,
-                container = oneSourceActionObject,
-                action = oneSourceAction
+                Enabled = true,
+                Container = oneSourceActionObject,
+                Action = oneSourceAction
             };
 
             ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = true,
-                container = twoSourceActionObject,
-                action = twoSourceAction
+                Enabled = true,
+                Container = twoSourceActionObject,
+                Action = twoSourceAction
             };
 
-            subject.registerOnEnable = false;
-            subject.target = targetAction;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
+            subject.Target = targetAction;
+            subject.Sources.Add(oneActionSource);
+            subject.Sources.Add(twoActionSource);
 
             Assert.AreEqual(0, targetAction.ReadOnlySources.Count);
 
-            subject.ManualOnEnable();
-            subject.Register(twoSourceActionObject);
+            subject.SourceLimits.Add(twoSourceActionObject);
 
             Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
             Assert.AreEqual(twoSourceAction, targetAction.ReadOnlySources[0]);
-            Assert.AreEqual(twoSourceActionObject, subject.SourceLimit);
+            Assert.AreEqual(twoSourceActionObject, subject.SourceLimits.ReadOnlyElements[0]);
 
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);
             Object.DestroyImmediate(twoSourceActionObject);
         }
 
-        [Test]
-        public void RegisterOnlyEnabled()
+        [UnityTest]
+        public IEnumerator RegisterOnlyEnabled()
         {
             GameObject targetActionObject = new GameObject();
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
@@ -277,37 +142,43 @@ namespace Test.Zinnia.Action
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = false,
-                container = oneSourceActionObject,
-                action = oneSourceAction
+                Enabled = false,
+                Container = oneSourceActionObject,
+                Action = oneSourceAction
             };
 
             ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = true,
-                container = twoSourceActionObject,
-                action = twoSourceAction
+                Enabled = true,
+                Container = twoSourceActionObject,
+                Action = twoSourceAction
             };
 
-            subject.target = targetAction;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
+            subject.Target = targetAction;
+            subject.Sources.Add(oneActionSource);
+            subject.Sources.Add(twoActionSource);
+            subject.SourceLimits.Add(null);
 
             Assert.AreEqual(0, targetAction.ReadOnlySources.Count);
 
-            subject.ManualOnEnable();
+            subject.enabled = true;
+            yield return null;
 
             Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
-            Assert.IsNull(subject.SourceLimit);
+            Assert.AreEqual(1, subject.SourceLimits.ReadOnlyElements.Count);
+            Assert.IsNull(subject.SourceLimits.ReadOnlyElements[0]);
 
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);
             Object.DestroyImmediate(twoSourceActionObject);
         }
 
-        [Test]
-        public void Unregister()
+        [UnityTest]
+        public IEnumerator Unregister()
         {
+            subject.enabled = true;
+            yield return null;
+
             GameObject targetActionObject = new GameObject();
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
 
@@ -319,26 +190,27 @@ namespace Test.Zinnia.Action
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = true,
-                container = oneSourceActionObject,
-                action = oneSourceAction
+                Enabled = true,
+                Container = oneSourceActionObject,
+                Action = oneSourceAction
             };
 
             ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = true,
-                container = twoSourceActionObject,
-                action = twoSourceAction
+                Enabled = true,
+                Container = twoSourceActionObject,
+                Action = twoSourceAction
             };
 
-            subject.target = targetAction;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
-            subject.ManualOnEnable();
+            subject.Target = targetAction;
+            subject.Sources.Add(oneActionSource);
+            subject.Sources.Add(twoActionSource);
+            subject.SourceLimits.Add(oneSourceActionObject);
+            subject.SourceLimits.Add(twoSourceActionObject);
 
             Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
 
-            subject.Unregister(oneSourceActionObject);
+            subject.SourceLimits.Remove(oneSourceActionObject);
 
             Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
             Assert.AreEqual(twoSourceAction, targetAction.ReadOnlySources[0]);
@@ -348,9 +220,12 @@ namespace Test.Zinnia.Action
             Object.DestroyImmediate(twoSourceActionObject);
         }
 
-        [Test]
-        public void UnregisterEvenIfDisabled()
+        [UnityTest]
+        public IEnumerator UnregisterEvenIfDisabled()
         {
+            subject.enabled = true;
+            yield return null;
+
             GameObject targetActionObject = new GameObject();
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
 
@@ -362,28 +237,29 @@ namespace Test.Zinnia.Action
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = true,
-                container = oneSourceActionObject,
-                action = oneSourceAction
+                Enabled = true,
+                Container = oneSourceActionObject,
+                Action = oneSourceAction
             };
 
             ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
             {
-                enabled = true,
-                container = twoSourceActionObject,
-                action = twoSourceAction
+                Enabled = true,
+                Container = twoSourceActionObject,
+                Action = twoSourceAction
             };
 
-            subject.target = targetAction;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
-            subject.ManualOnEnable();
+            subject.Target = targetAction;
+            subject.Sources.Add(oneActionSource);
+            subject.Sources.Add(twoActionSource);
+            subject.SourceLimits.Add(oneSourceActionObject);
+            subject.SourceLimits.Add(twoSourceActionObject);
 
             Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
 
-            oneActionSource.enabled = false;
+            oneActionSource.Enabled = false;
 
-            subject.Unregister(oneSourceActionObject);
+            subject.SourceLimits.Remove(oneSourceActionObject);
 
             Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
             Assert.AreEqual(twoSourceAction, targetAction.ReadOnlySources[0]);
@@ -391,56 +267,6 @@ namespace Test.Zinnia.Action
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);
             Object.DestroyImmediate(twoSourceActionObject);
-        }
-
-        [Test]
-        public void Clear()
-        {
-            GameObject targetActionObject = new GameObject();
-            BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
-
-            GameObject oneSourceActionObject = new GameObject();
-            BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-
-            GameObject twoSourceActionObject = new GameObject();
-            BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
-
-            ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = true,
-                container = oneSourceActionObject,
-                action = oneSourceAction
-            };
-
-            ActionRegistrar.ActionSource twoActionSource = new ActionRegistrar.ActionSource
-            {
-                enabled = true,
-                container = twoSourceActionObject,
-                action = twoSourceAction
-            };
-
-            subject.target = targetAction;
-            subject.sources.Add(oneActionSource);
-            subject.sources.Add(twoActionSource);
-            subject.ManualOnEnable();
-
-            Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
-
-            subject.Clear();
-
-            Assert.AreEqual(0, targetAction.ReadOnlySources.Count);
-
-            Object.DestroyImmediate(targetActionObject);
-            Object.DestroyImmediate(oneSourceActionObject);
-            Object.DestroyImmediate(twoSourceActionObject);
-        }
-    }
-
-    public class ActionRegistrarMock : ActionRegistrar
-    {
-        public virtual void ManualOnEnable()
-        {
-            OnEnable();
         }
     }
 }
