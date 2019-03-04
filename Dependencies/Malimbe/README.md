@@ -26,7 +26,7 @@ Releases follow the [Semantic Versioning (SemVer) system][SemVer].
 Please follow these steps to install the package using a local location until the Unity Package Manager (UPM) allows third parties to publish packages to the UPM feed:
 
 1. Download a release from the [Releases] page and extract it into your folder you use to keep your packages. It is recommended to make that folder part of your project and therefore [version controlled][VCS].
-1. Open your project created with the Unity software version 2018.3 (or above) project and follow [Unity's instructions][UPM-Instructions] on how to add the package to your project using UPM.
+1. Open your project created with the Unity software version 2018.3 (or above) and follow [Unity's instructions][UPM-Instructions] on how to add the package to your project using UPM.
 1. Anywhere in your Unity software project add a [`FodyWeavers.xml` file][FodyWeavers].
 1. Configure the various weavers Malimbe offers, e.g.:
     ```xml
@@ -39,10 +39,9 @@ Please follow these steps to install the package using a local location until th
         <AssemblyNameRegex>^Assembly-CSharp</AssemblyNameRegex>
       </Malimbe.FodyRunner>
       <Malimbe.BehaviourStateRequirementMethod/>
+      <Malimbe.MemberChangeMethod/>
       <Malimbe.MemberClearanceMethod/>
       <Malimbe.PropertySerializationAttribute/>
-      <Malimbe.PropertySetterMethod/>
-      <Malimbe.PropertyValidationMethod/>
       <Malimbe.XmlDocumentationAttribute IdentifierReplacementFormat="`{0}`"/>
     </Weavers>
     ```
@@ -74,7 +73,6 @@ A standalone library that allows running Fody without MSBuild or Visual Studio.
 Weaves assemblies using `FodyRunner` in the Unity software Editor after the Unity softwared compiled them.
 
 * There is no need to manually run the weaving process. The library just needs to be part of a Unity software project (it's configured to only run in the Editor) to be used. It hooks into the various callbacks the Unity software offers and automatically weaves any assembly on startup as well as when they change.
-* Once the library is loaded in the Editor a menu item `Tools/Malimbe/Weave All Assemblies` allows to manually trigger the weaving process for all assemblies in the current project. This is useful when a `FodyWeavers.xml` file was changed.
 
 ### `BehaviourStateRequirementMethod`
 
@@ -82,6 +80,17 @@ A Unity software specific weaver. Changes a method to return early if a combinat
 
 * Annotate a method with `[RequiresBehaviourState]` to use this. The method needs to be defined in a type that derives from `UnityEngine.Behaviour`, e.g. a `MonoBehaviour`.
 * Use the attribute constructor's parameters to configure the specific state you need the GameObject and the Behaviour to be in.
+
+### `MemberChangeMethod.Fody`
+
+A Unity software specific weaver. Calls a method before or after a data member (field or property) is changed.
+
+* Annotate a method with `[CalledBeforeChangeOf(nameof(SomeFieldOrProperty))]` (or `CalledAfterChangeOfAttribute`) to use this. The accessibility level of the method doesn't matter and the name lookup is case insensitive.
+* The method needs to follow the signature pattern `void MethodName()`. Use the data member's accessor in the method body to retrieve the current value. The method will only be called when [`Application.isPlaying`][Application.isPlaying] is `true`.
+* The referenced data member needs to be declared in the same type the method is declared in. For a property member a getter is required.
+* A custom Editor `InspectorEditor` is part of `FodyRunner.UnityIntegration` and is automatically used to draw the inspector for any type that doesn't use a custom editor. This custom editor calls the configured methods on change of a data member annotated with one of the two attributes above.
+  * Note that this is only done when the Editor is playing, as changes at design time should be handled by using [`PropertyAttribute`][PropertyAttribute]s and calling the same method that uses `CalledAfterChangeOfAttribute` for this data member in `OnEnable` of the declaring type. With that in place the data member's state will properly be handled, right at startup and from there on by the annotated change handling methods.
+  * Inherit from `InspectorEditor` in custom editors for types that use one of the two attributes above and override the method `DrawProperty`.
 
 ### `MemberClearanceMethod.Fody`
 
@@ -104,26 +113,6 @@ A Unity software specific weaver. Ensures the backing field for a property is se
 * If the property is an [auto-implemented property][Auto-Implemented Property] the backing field will be renamed to match the property's name for viewing in the Unity software inspector. All backing field usages inside methods of the declaring type will be updated to use this new name. Since C# doesn't allow multiple members of a type to share a name, the backing field's name will differ in the first character's case. E.g.:
   * `public int Counter { get; set; }` will use a backing field called `counter`.
   * `protected bool isValid { get; private set; }` will use a backing field called `IsValid`.
-
-### `PropertySetterMethod.Fody`
-
-A generic weaver. Calls a method at the end of a property's setter.
-
-* Annotate a method with `[CalledBySetter(nameof(SomeProperty))]` to use this. The accessibility level of the method doesn't matter and the name lookup is case insensitive. A call to this method will be added to the _end_ of the property's setter.
-* The method needs to follow the signature pattern `void MethodName(T previousValue, ref T newValue)` where `T` is the property's type. This allows the method's body to use the previous and new values and also offers the ability to change the final value by setting `newValue` if needed.
-* The property needs to be declared in the same type the method is declared in. Both a getter and setter are required for the property.
-
-### `PropertyValidationMethod.Fody`
-
-A generic weaver (though made for the Unity software). Creates a `OnValidate()` method that validates a property.
-
-* Annotate a property with `[Validated]` to use this. The property needs both a getter and setter.
-* Instead of `OnValidate` the method name can be customized with the XML _attribute_ `MethodName`, e.g.:
-  ```xml
-    <Malimbe.PropertyValidationMethod MethodName="Validate" />
-  ```
-* In case the method already exists the additional instructions will be weaved into the _end_ of the method. The method name lookup is case insensitive.
-* If necessary the method and the base type's method will be adjusted to override the method of the same name. Accessibility levels are also adjusted as needed.
 
 ### `XmlDocumentationAttribute.Fody`
 
@@ -185,6 +174,8 @@ These materials are not sponsored by or affiliated with Unity Technologies or it
 [Regex]: https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expressions
 [Auto-Implemented Property]: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties
 [Unity]: https://unity3d.com/
+[Application.isPlaying]: https://docs.unity3d.com/ScriptReference/Application-isPlaying.html
+[PropertyAttribute]: https://docs.unity3d.com/ScriptReference/PropertyAttribute.html
 
 [Fody's naming]: https://github.com/Fody/Fody#naming
 [Malimbus]: https://en.wikipedia.org/wiki/Malimbus
