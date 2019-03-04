@@ -283,7 +283,7 @@
         /// <summary>
         /// Called after <see cref="OverlayMaterial"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(OverlayMaterial)), RequiresBehaviourState]
+        [CalledAfterChangeOf(nameof(OverlayMaterial))]
         protected virtual void OnAfterOverlayMaterialChanged()
         {
             CopyMaterialOverlayToWorking();
