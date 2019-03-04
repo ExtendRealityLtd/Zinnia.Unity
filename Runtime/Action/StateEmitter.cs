@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Action
 {
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Process;
@@ -13,8 +14,9 @@
         /// <summary>
         /// The Action to re-emit the state for.
         /// </summary>
-        [DocumentedByXml]
-        public Action action;
+        [Serialized]
+        [field: DocumentedByXml]
+        public Action Action { get; set; }
 
         /// <summary>
         /// Re-emits the state of the Action.
@@ -22,12 +24,12 @@
         [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (action == null)
+            if (Action == null)
             {
                 return;
             }
 
-            action.EmitActivationState();
+            Action.EmitActivationState();
         }
     }
 }

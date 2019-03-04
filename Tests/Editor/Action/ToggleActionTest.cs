@@ -21,7 +21,6 @@ namespace Test.Zinnia.Action
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -114,10 +113,10 @@ namespace Test.Zinnia.Action
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
 
+            subject.gameObject.SetActive(false);
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
-            subject.gameObject.SetActive(false);
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -137,10 +136,10 @@ namespace Test.Zinnia.Action
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
 
+            subject.enabled = false;
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
-            subject.enabled = false;
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
