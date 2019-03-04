@@ -54,10 +54,10 @@ namespace Test.Zinnia.Visual
 
             PointsRenderer.PointsData data = new PointsRenderer.PointsData()
             {
-                start = start,
-                repeatedSegment = segment,
-                end = end,
-                points = points
+                StartPoint = start,
+                RepeatedSegmentPoint = segment,
+                EndPoint = end,
+                Points = points
             };
 
             Vector3[] expectedSegmentPositions = new Vector3[]
@@ -108,10 +108,10 @@ namespace Test.Zinnia.Visual
 
             PointsRenderer.PointsData data = new PointsRenderer.PointsData()
             {
-                start = start,
-                repeatedSegment = segment,
-                end = end,
-                points = points
+                StartPoint = start,
+                RepeatedSegmentPoint = segment,
+                EndPoint = end,
+                Points = points
             };
 
             Vector3[] expectedSegmentPositions = new Vector3[]

@@ -4,6 +4,8 @@
     using System;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -20,38 +22,57 @@
             /// <summary>
             /// Represents the start, i.e. the first rendered point.
             /// </summary>
-            public GameObject start;
+            [Serialized]
+            [field: DocumentedByXml]
+            public GameObject StartPoint { get; set; }
             /// <summary>
-            /// Represents the segments between <see cref="start"/> and <see cref="end"/>. This will get cloned to create all the segments.
+            /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
             /// </summary>
-            public GameObject repeatedSegment;
+            [Serialized]
+            [field: DocumentedByXml]
+            public GameObject RepeatedSegmentPoint { get; set; }
             /// <summary>
             /// Represents the end, i.e. the last rendered point.
             /// </summary>
-            public GameObject end;
+            [Serialized]
+            [field: DocumentedByXml]
+            public GameObject EndPoint { get; set; }
             /// <summary>
             /// The points along the the most recent cast.
             /// </summary>
-            public IReadOnlyList<Vector3> points;
+            [Serialized]
+            [field: DocumentedByXml]
+            public IReadOnlyList<Vector3> Points { get; set; }
         }
 
         /// <summary>
         /// The direction to scale the segment <see cref="GameObject"/>s in. Set axes to 0 to disable scaling on that axis.
         /// </summary>
-        public Vector3 segmentScaleDirection = Vector3.forward;
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3 SegmentScaleDirection { get; set; } = Vector3.forward;
         /// <summary>
         /// Represents the start, i.e. the first rendered point.
         /// </summary>
-        public GameObject start;
+        [Serialized]
+        [field: DocumentedByXml]
+        public GameObject Start { get; set; }
         /// <summary>
-        /// Represents the segments between <see cref="start"/> and <see cref="end"/>. This will get cloned to create all the segments.
+        /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
         /// </summary>
-        public GameObject repeatedSegment;
+        [Serialized]
+        [field: DocumentedByXml]
+        public GameObject RepeatedSegment { get; set; }
         /// <summary>
         /// Represents the end, i.e. the last rendered point.
         /// </summary>
-        public GameObject end;
+        [Serialized]
+        [field: DocumentedByXml]
+        public GameObject End { get; set; }
 
+        /// <summary>
+        /// A collection of segment clones.
+        /// </summary>
         protected readonly List<GameObject> segmentClones = new List<GameObject>();
 
         /// <summary>
@@ -61,10 +82,10 @@
         [RequiresBehaviourState]
         public virtual void RenderData(PointsData data)
         {
-            start = data.start;
-            end = data.end;
+            Start = data.StartPoint;
+            End = data.EndPoint;
 
-            if (repeatedSegment != data.repeatedSegment)
+            if (RepeatedSegment != data.RepeatedSegmentPoint)
             {
                 foreach (GameObject segmentClone in segmentClones)
                 {
@@ -72,17 +93,17 @@
                 }
                 segmentClones.Clear();
 
-                repeatedSegment = data.repeatedSegment;
+                RepeatedSegment = data.RepeatedSegmentPoint;
             }
 
-            UpdateNumberOfClones(data.points);
+            UpdateNumberOfClones(data.Points);
 
-            UpdateElement(data.points, 0, false, start);
-            UpdateElement(data.points, data.points.Count - 1, false, end);
+            UpdateElement(data.Points, 0, false, Start);
+            UpdateElement(data.Points, data.Points.Count - 1, false, End);
 
             for (int index = 0; index < segmentClones.Count; index++)
             {
-                UpdateElement(data.points, index, true, segmentClones[index]);
+                UpdateElement(data.Points, index, true, segmentClones[index]);
             }
         }
 
@@ -94,19 +115,19 @@
             }
             segmentClones.Clear();
 
-            if (start != null)
+            if (Start != null)
             {
-                start.SetActive(false);
+                Start.SetActive(false);
             }
 
-            if (repeatedSegment != null)
+            if (RepeatedSegment != null)
             {
-                repeatedSegment.SetActive(false);
+                RepeatedSegment.SetActive(false);
             }
 
-            if (end != null)
+            if (End != null)
             {
-                end.SetActive(false);
+                End.SetActive(false);
             }
         }
 
@@ -116,7 +137,7 @@
         /// <param name="points">The points to create cloned elements for.</param>
         protected virtual void UpdateNumberOfClones(IReadOnlyList<Vector3> points)
         {
-            if (repeatedSegment == null)
+            if (RepeatedSegment == null)
             {
                 return;
             }
@@ -130,7 +151,7 @@
 
             for (int index = segmentClones.Count; index < targetCount; index++)
             {
-                segmentClones.Add(Instantiate(repeatedSegment, repeatedSegment.transform.parent));
+                segmentClones.Add(Instantiate(RepeatedSegment, RepeatedSegment.transform.parent));
             }
         }
 
@@ -167,9 +188,9 @@
 
             for (int index = 0; index < 3; index++)
             {
-                if (Math.Abs(segmentScaleDirection[index]) >= float.Epsilon)
+                if (Math.Abs(SegmentScaleDirection[index]) >= float.Epsilon)
                 {
-                    scale[index] = segmentScaleDirection[index] * scaleTarget;
+                    scale[index] = SegmentScaleDirection[index] * scaleTarget;
                 }
             }
 
