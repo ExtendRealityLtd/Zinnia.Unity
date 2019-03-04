@@ -2,7 +2,7 @@
 {
     using System;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
@@ -23,7 +23,7 @@
         /// <summary>
         /// The magnitude to use when transforming values.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float Magnitude { get; set; } = 1f;
 

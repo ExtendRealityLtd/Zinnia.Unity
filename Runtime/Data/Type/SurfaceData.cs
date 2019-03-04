@@ -2,7 +2,7 @@
 {
     using UnityEngine;
     using System;
-    using Malimbe.PropertySetterMethod;
+    /*using Malimbe.PropertySetterMethod;*/
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -55,7 +55,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(CollisionData))]
+        /*[CalledBySetter(nameof(CollisionData))]*/
         protected virtual void OnCollisionDataChange(RaycastHit previousValue, ref RaycastHit newValue)
         {
             PreviousCollisionData = previousValue;

@@ -2,7 +2,7 @@
 {
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -14,7 +14,7 @@
         /// <summary>
         /// An optional rotation offset.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject RotationOffset { get; set; }
 

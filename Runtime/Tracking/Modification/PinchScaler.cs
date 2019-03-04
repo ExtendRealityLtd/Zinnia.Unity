@@ -3,7 +3,7 @@
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
@@ -17,19 +17,19 @@
         /// <summary>
         /// The target to scale.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject PrimaryPoint { get; set; }
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject SecondaryPoint { get; set; }
         /// <summary>

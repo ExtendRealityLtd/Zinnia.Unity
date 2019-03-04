@@ -6,7 +6,7 @@
     using System;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.PropertySetterMethod;
+    /*using Malimbe.PropertySetterMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
     using Zinnia.Process.Component;
@@ -164,7 +164,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(CurrentTargetOffsetsIndex))]
+        /*[CalledBySetter(nameof(CurrentTargetOffsetsIndex))]*/
         protected virtual void OnCurrentTargetOffsetsIndexChange(int previousValue, ref int newValue)
         {
             newValue = targetOffsets.GetWrappedAndClampedIndex(newValue);

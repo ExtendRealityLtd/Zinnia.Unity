@@ -2,7 +2,7 @@
 {
     using UnityEngine.Events;
     using System.Collections.Generic;
-    using Malimbe.PropertySetterMethod;
+    /*using Malimbe.PropertySetterMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -94,7 +94,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(CurrentIndex))]
+        /*[CalledBySetter(nameof(CurrentIndex))]*/
         protected virtual void OnCurrentIndexChange(int previousValue, ref int newValue)
         {
             newValue = collection.GetWrappedAndClampedIndex(newValue);

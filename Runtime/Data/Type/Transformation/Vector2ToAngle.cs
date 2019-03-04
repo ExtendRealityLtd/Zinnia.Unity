@@ -4,8 +4,8 @@
     using UnityEngine.Events;
     using System;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertySetterMethod;*/
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -54,7 +54,7 @@
         /// <summary>
         /// The direction that defines the origin (i.e. zero) angle.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public Vector2 Origin { get; set; } = new Vector2(0f, 1f);
 
@@ -85,7 +85,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Origin))]
+        /*[CalledBySetter(nameof(Origin))]*/
         protected virtual void OnOriginChange(Vector2 previousValue, ref Vector2 newValue)
         {
             newValue = newValue.normalized;

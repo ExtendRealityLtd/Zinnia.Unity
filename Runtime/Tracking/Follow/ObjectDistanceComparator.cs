@@ -6,8 +6,8 @@
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertySetterMethod;*/
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
@@ -65,13 +65,13 @@
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
@@ -195,7 +195,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Source))]
+        /*[CalledBySetter(nameof(Source))]*/
         protected virtual void OnSourceChange(GameObject previousValue, ref GameObject newValue)
         {
             SavePosition();
@@ -206,7 +206,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Target))]
+        /*[CalledBySetter(nameof(Target))]*/
         protected virtual void OnTargetChange(GameObject previousValue, ref GameObject newValue)
         {
             SavePosition();

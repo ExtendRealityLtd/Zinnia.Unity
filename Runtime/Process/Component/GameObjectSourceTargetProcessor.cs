@@ -3,7 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.PropertySetterMethod;
+    /*using Malimbe.PropertySetterMethod;*/
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -154,7 +154,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(CurrentSourcesIndex))]
+        /*[CalledBySetter(nameof(CurrentSourcesIndex))]*/
         protected virtual void OnCurrentSourcesIndexChange(int previousValue, ref int newValue)
         {
             newValue = sources.GetWrappedAndClampedIndex(newValue);
@@ -165,7 +165,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(CurrentTargetsIndex))]
+        /*[CalledBySetter(nameof(CurrentTargetsIndex))]*/
         protected virtual void OnCurrentTargetsIndexChange(int previousValue, ref int newValue)
         {
             newValue = targets.GetWrappedAndClampedIndex(newValue);

@@ -3,7 +3,7 @@
     using UnityEngine;
     using System.Collections;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -20,14 +20,14 @@
         /// <summary>
         /// The amount of time to keep repeating the process for.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float Duration { get; set; } = 1f;
 
         /// <summary>
         /// The amount of time to pause after each process iteration.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float Interval { get; set; } = 0.1f;
 

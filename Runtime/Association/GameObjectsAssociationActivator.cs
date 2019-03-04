@@ -3,8 +3,8 @@
     using UnityEngine;
     using System.Collections.Generic;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertySetterMethod;*/
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Process;
 
@@ -16,7 +16,7 @@
         /// <summary>
         /// The associations in order they will be activated if they match the currently expected state.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public List<GameObjectsAssociation> Associations { get; set; } = new List<GameObjectsAssociation>();
 
@@ -134,7 +134,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Associations))]
+        /*[CalledBySetter(nameof(Associations))]*/
         protected virtual void OnAssociationsChange(List<GameObjectsAssociation> previousValue, ref List<GameObjectsAssociation> newValue)
         {
             Deactivate(previousValue);

@@ -2,7 +2,7 @@
 {
     using UnityEngine;
     using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
     using Zinnia.Data.Type;
@@ -15,14 +15,14 @@
         /// <summary>
         /// The drag applied to the rotation to slow it down.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float AngularDrag { get; set; } = 1f;
 
         /// <summary>
         /// Determines which axes to rotate.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public Vector3State FollowOnAxis { get; set; } = Vector3State.True;
 

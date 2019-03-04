@@ -2,7 +2,7 @@
 {
     using UnityEngine;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -13,7 +13,7 @@
         /// <summary>
         /// The maximum length to cast.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float MaximumLength { get; set; } = 100f;
 

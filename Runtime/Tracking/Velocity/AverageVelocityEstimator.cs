@@ -4,7 +4,7 @@
     using System;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -16,19 +16,19 @@
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject RelativeTo { get; set; }
         /// <summary>
         /// Whether samples are currently being collected.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public bool IsEstimating { get; set; } = true;
         /// <summary>

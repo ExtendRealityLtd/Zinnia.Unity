@@ -2,8 +2,8 @@
 {
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertySetterMethod;*/
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -15,7 +15,7 @@
         /// <summary>
         /// The <see cref="Component"/> that contains a <see cref="VelocityTracker"/>.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public Component ProxySource { get; set; }
 
@@ -64,7 +64,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(ProxySource))]
+        /*[CalledBySetter(nameof(ProxySource))]*/
         protected virtual void OnProxySourceChange(Component previousValue, ref Component newValue)
         {
             cachedVelocityTracker = newValue == null ? null : newValue.GetComponentInChildren<VelocityTracker>();

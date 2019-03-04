@@ -6,7 +6,7 @@
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
@@ -31,7 +31,7 @@
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject SearchOrigin { get; set; }
         /// <summary>

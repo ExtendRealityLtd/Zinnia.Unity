@@ -2,7 +2,7 @@
 {
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Tracking.Follow;
@@ -12,7 +12,7 @@
         /// <summary>
         /// Determines whether the offset will be applied on the modification.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public bool ApplyOffset { get; set; } = true;
 

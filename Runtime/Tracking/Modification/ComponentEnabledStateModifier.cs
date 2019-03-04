@@ -5,7 +5,7 @@
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
@@ -24,7 +24,7 @@
         /// <summary>
         /// The target to modify the enabled states for the provided <see cref="types"/>.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, /*Validated,*/ Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
 

@@ -5,8 +5,8 @@
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertySetterMethod;*/
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -90,7 +90,7 @@
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         protected List<TSelf> Sources { get; set; } = new List<TSelf>();
 
@@ -276,7 +276,7 @@
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Sources))]
+        /*[CalledBySetter(nameof(Sources))]*/
         protected virtual void OnSourcesChange(List<TSelf> previousValue, ref List<TSelf> newValue)
         {
             foreach (TSelf source in previousValue)

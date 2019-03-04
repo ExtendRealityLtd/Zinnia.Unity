@@ -1,8 +1,8 @@
 namespace Zinnia.Cast
 {
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertySetterMethod;*/
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
@@ -14,7 +14,7 @@ namespace Zinnia.Cast
         /// <summary>
         /// The current length of the cast.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float CurrentLength { get; set; } = 1f;
 
@@ -44,7 +44,7 @@ namespace Zinnia.Cast
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(MaximumLength))]
+        /*[CalledBySetter(nameof(MaximumLength))]*/
         protected virtual void OnMaximumLengthChange(float previousValue, ref float newValue)
         {
             CurrentLength = Mathf.Clamp(CurrentLength, 0f, newValue);
@@ -55,7 +55,7 @@ namespace Zinnia.Cast
         /// </summary>
         /// <param name="previousValue">The previous value.</param>
         /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(CurrentLength))]
+        /*[CalledBySetter(nameof(CurrentLength))]*/
         protected virtual void OnCurrentLengthChange(float previousValue, ref float newValue)
         {
             newValue = Mathf.Clamp(newValue, 0f, MaximumLength);

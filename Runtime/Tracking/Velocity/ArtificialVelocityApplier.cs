@@ -3,7 +3,7 @@
     using UnityEngine;
     using System.Collections;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -15,49 +15,49 @@
         /// <summary>
         /// The object to apply the artificial velocities to.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
 
         /// <summary>
         /// The velocity to apply.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public Vector3 Velocity { get; set; }
 
         /// <summary>
         /// The angular velocity to apply.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public Vector3 AngularVelocity { get; set; }
 
         /// <summary>
         /// The drag to apply to reduce the directional velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float Drag { get; set; } = 1f;
 
         /// <summary>
         /// The angular drag to apply to reduce the rotational velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float AngularDrag { get; set; } = 0.5f;
 
         /// <summary>
         /// The tolerance the velocity can be within zero to be considered nil.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float NilVelocityTolerance { get; set; } = 0.001f;
 
         /// <summary>
         /// The tolerance the angular velocity can be within zero to be considered nil.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, /*Validated*/]
         [field: DocumentedByXml]
         public float NilAngularVelocityTolerance { get; set; } = 0.001f;
 
