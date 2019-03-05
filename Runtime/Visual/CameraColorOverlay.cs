@@ -287,7 +287,7 @@
         /// Called after <see cref="OverlayMaterial"/> has been changed.
         /// </summary>
         [CalledAfterChangeOf(nameof(OverlayMaterial))]
-        protected virtual void OnAfterOverlayMaterialChanged()
+        protected virtual void OnAfterOverlayMaterialChange()
         {
             CopyMaterialOverlayToWorking();
         }
