@@ -277,7 +277,10 @@
         protected virtual void CopyMaterialOverlayToWorking()
         {
             Destroy(workingMaterial);
-            workingMaterial = new Material(OverlayMaterial);
+            if (OverlayMaterial != null)
+            {
+                workingMaterial = new Material(OverlayMaterial);
+            }
         }
 
         /// <summary>
