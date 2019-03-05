@@ -277,14 +277,17 @@
         protected virtual void CopyMaterialOverlayToWorking()
         {
             Destroy(workingMaterial);
-            workingMaterial = new Material(OverlayMaterial);
+            if (OverlayMaterial != null)
+            {
+                workingMaterial = new Material(OverlayMaterial);
+            }
         }
 
         /// <summary>
         /// Called after <see cref="OverlayMaterial"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(OverlayMaterial)), RequiresBehaviourState]
-        protected virtual void OnAfterOverlayMaterialChanged()
+        [CalledAfterChangeOf(nameof(OverlayMaterial))]
+        protected virtual void OnAfterOverlayMaterialChange()
         {
             CopyMaterialOverlayToWorking();
         }
