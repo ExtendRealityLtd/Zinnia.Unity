@@ -8,6 +8,7 @@
     [CustomPropertyDrawer(typeof(TypePickerAttribute))]
     public class TypePickerAttributeDrawer : PropertyDrawer
     {
+        private const string collectionLabelText = "Selected Type";
         private Type type;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -16,8 +17,9 @@
 
             using (new EditorGUI.PropertyScope(position, label, property))
             {
-                Rect buttonPosition = EditorGUI.PrefixLabel(position, label);
                 SerializedProperty assemblyQualifiedTypeNameProperty = property.FindPropertyRelative("assemblyQualifiedTypeName");
+                label.text = label.text == assemblyQualifiedTypeNameProperty.stringValue ? collectionLabelText : label.text;
+                Rect buttonPosition = EditorGUI.PrefixLabel(position, label);
 
                 if (type?.AssemblyQualifiedName != assemblyQualifiedTypeNameProperty.stringValue)
                 {
@@ -34,6 +36,7 @@
                     min = GUIUtility.GUIToScreenPoint(position.min),
                     max = GUIUtility.GUIToScreenPoint(position.max)
                 };
+
                 Type superType = ((TypePickerAttribute)attribute).superType;
                 TypePickerWindow.Show(
                     creatorRect,
