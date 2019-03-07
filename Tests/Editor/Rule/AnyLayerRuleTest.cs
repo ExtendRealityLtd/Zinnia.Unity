@@ -33,7 +33,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void AcceptsMatch()
         {
-            subject.layerMask = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.NameToLayer("UI");
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
@@ -46,14 +46,14 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesDifferent()
         {
-            subject.layerMask = LayerMask.NameToLayer("Ignore Raycast");
+            subject.LayerMask = LayerMask.NameToLayer("Ignore Raycast");
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
         [Test]
         public void RefusesInactiveGameObject()
         {
-            subject.layerMask = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.NameToLayer("UI");
             subject.gameObject.SetActive(false);
             Assert.IsFalse(container.Accepts(containingObject));
         }
@@ -61,7 +61,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesInactiveComponent()
         {
-            subject.layerMask = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.NameToLayer("UI");
             subject.enabled = false;
             Assert.IsFalse(container.Accepts(containingObject));
         }

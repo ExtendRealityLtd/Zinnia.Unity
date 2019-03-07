@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Rule
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Data.Attribute;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Data.Type;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/> has any component found in a list.
@@ -14,13 +14,19 @@
         /// <summary>
         /// The component types to look for.
         /// </summary>
-        [TypePicker(typeof(Component)), DocumentedByXml]
-        public List<SerializableType> componentTypes = new List<SerializableType>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public SerializableTypeObservableList ComponentTypes { get; set; }
 
         /// <inheritdoc/>
         protected override bool Accepts(GameObject targetGameObject)
         {
-            foreach (SerializableType serializedType in componentTypes)
+            if (ComponentTypes == null)
+            {
+                return false;
+            }
+
+            foreach (SerializableType serializedType in ComponentTypes.ReadOnlyElements)
             {
                 if (serializedType.ActualType != null && targetGameObject.GetComponent(serializedType) != null)
                 {

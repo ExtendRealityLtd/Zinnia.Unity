@@ -16,23 +16,9 @@
     public abstract class ObservableList<TElement, TEvent> : MonoBehaviour where TEvent : UnityEvent<TElement>, new()
     {
         /// <summary>
-        /// The collection to observe changes of.
-        /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        protected List<TElement> Elements { get; set; } = new List<TElement>();
-
-        /// <summary>
-        /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will wrap around.
-        /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public int CurrentIndex { get; set; }
-
-        /// <summary>
         /// Emitted when the searched element is found.
         /// </summary>
-        [DocumentedByXml]
+        [Header("List Events"), DocumentedByXml]
         public TEvent Found = new TEvent();
         /// <summary>
         /// Emitted when the searched element is not found.
@@ -60,10 +46,23 @@
         [DocumentedByXml]
         public TEvent BecameEmpty = new TEvent();
 
+
+        /// <summary>
+        /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will wrap around.
+        /// </summary>
+        [Serialized]
+        [field: Header("List Settings"), DocumentedByXml]
+        public int CurrentIndex { get; set; }
+
         /// <summary>
         /// The collection to observe changes of.
         /// </summary>
         public IReadOnlyList<TElement> ReadOnlyElements => Elements;
+
+        /// <summary>
+        /// The collection to observe changes of.
+        /// </summary>
+        protected abstract List<TElement> Elements { get; set; }
 
         /// <summary>
         /// Checks to see if the collection contains the given element.
@@ -256,9 +255,19 @@
 
         protected virtual void Start()
         {
+            if (ReadOnlyElements == null)
+            {
+                return;
+            }
+
             for (int index = 0; index < ReadOnlyElements.Count; index++)
             {
                 TElement element = ReadOnlyElements[index];
+                if (element == null)
+                {
+                    continue;
+                }
+
                 ElementAdded?.Invoke(element);
 
                 if (index == 0)

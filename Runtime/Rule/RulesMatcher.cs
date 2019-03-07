@@ -3,9 +3,9 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Collections.Generic;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
 
     /// <summary>
@@ -22,8 +22,10 @@
             /// <summary>
             /// The rule to match against.
             /// </summary>
-            [DocumentedByXml]
-            public RuleContainer rule;
+            [Serialized]
+            [field: DocumentedByXml]
+            public RuleContainer Rule { get; set; }
+
             /// <summary>
             /// Emitted when the <see cref="rule"/> is valid.
             /// </summary>
@@ -34,8 +36,9 @@
         /// <summary>
         /// A collection of rules to potentially match against.
         /// </summary>
-        [DocumentedByXml]
-        public List<Element> elements = new List<Element>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public RulesMatcherElementObservableList Elements { get; set; }
 
         /// <summary>
         /// Attempts to match the given object to the rules within the <see cref="elements"/> collection. If a match occurs then the appropriate event is emitted.
@@ -44,9 +47,14 @@
         [RequiresBehaviourState]
         public virtual void Match(object source)
         {
-            foreach (Element element in elements)
+            if (Elements == null)
             {
-                if (element.rule.Accepts(source))
+                return;
+            }
+
+            foreach (Element element in Elements.ReadOnlyElements)
+            {
+                if (element.Rule.Accepts(source))
                 {
                     element.Matched?.Invoke();
                 }
