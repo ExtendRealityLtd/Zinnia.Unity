@@ -16,8 +16,10 @@
 
             using (new EditorGUI.PropertyScope(position, label, property))
             {
-                Rect buttonPosition = EditorGUI.PrefixLabel(position, label);
                 SerializedProperty assemblyQualifiedTypeNameProperty = property.FindPropertyRelative("assemblyQualifiedTypeName");
+                int? index = property.TryGetIndex();
+                label.text = index == null ? label.text : $"Element {index}";
+                Rect buttonPosition = EditorGUI.PrefixLabel(position, label);
 
                 if (type?.AssemblyQualifiedName != assemblyQualifiedTypeNameProperty.stringValue)
                 {
@@ -34,6 +36,7 @@
                     min = GUIUtility.GUIToScreenPoint(position.min),
                     max = GUIUtility.GUIToScreenPoint(position.max)
                 };
+
                 Type superType = ((TypePickerAttribute)attribute).superType;
                 TypePickerWindow.Show(
                     creatorRect,
