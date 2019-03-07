@@ -1,6 +1,7 @@
-﻿using Zinnia.Extension;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
 using Zinnia.Utility;
+using Zinnia.Extension;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Rule
 {
@@ -57,12 +58,24 @@ namespace Test.Zinnia.Rule
         [Test]
         public void AcceptsMatch()
         {
-            subject.tags.Add(validTag);
+            StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            subject.Tags = tags;
+            tags.Add(validTag);
+
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
         [Test]
         public void RefusesEmpty()
+        {
+            StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            subject.Tags = tags;
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesNullTags()
         {
             Assert.IsFalse(container.Accepts(containingObject));
         }
@@ -70,7 +83,10 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesDifferent()
         {
-            subject.tags.Add(invalidTag);
+            StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            subject.Tags = tags;
+            tags.Add(invalidTag);
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
     }

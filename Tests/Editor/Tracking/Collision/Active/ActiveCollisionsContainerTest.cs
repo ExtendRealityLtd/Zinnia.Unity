@@ -1,4 +1,5 @@
 ﻿using Zinnia.Rule;
+using Zinnia.Data.Collection;
 using Zinnia.Tracking.Collision;
 using Zinnia.Tracking.Collision.Active;
 
@@ -99,8 +100,11 @@ namespace Test.Zinnia.Tracking.Collision.Active
             oneContainer.AddComponent<RuleStub>();
             NegationRule negationRule = oneContainer.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = oneContainer.AddComponent<AnyComponentTypeRule>();
-            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
-            negationRule.rule = new RuleContainer
+            SerializableTypeObservableList rules = containingObject.AddComponent<SerializableTypeObservableList>();
+            anyComponentTypeRule.ComponentTypes = rules;
+            rules.Add(typeof(RuleStub));
+
+            negationRule.Rule = new RuleContainer
             {
                 Interface = anyComponentTypeRule
             };

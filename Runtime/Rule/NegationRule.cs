@@ -1,8 +1,9 @@
 ﻿namespace Zinnia.Rule
 {
     using UnityEngine;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
 
     /// <summary>
@@ -13,14 +14,15 @@
         /// <summary>
         /// The <see cref="IRule"/> to negate.
         /// </summary>
-        [DocumentedByXml]
-        public RuleContainer rule;
+        [Serialized]
+        [field: DocumentedByXml]
+        public RuleContainer Rule { get; set; }
 
         /// <inheritdoc />
         [RequiresBehaviourState]
         public bool Accepts(object target)
         {
-            return !rule.Accepts(target);
+            return !Rule.Accepts(target);
         }
     }
 }

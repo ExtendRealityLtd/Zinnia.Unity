@@ -1,9 +1,10 @@
 ﻿namespace Zinnia.Rule
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Determines whether an object is part of a list.
@@ -13,15 +14,21 @@
         /// <summary>
         /// The objects to check against.
         /// </summary>
-        [DocumentedByXml]
-        public List<Object> objects = new List<Object>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public UnityObjectObservableList Objects { get; set; }
 
         /// <inheritdoc />
         [RequiresBehaviourState]
         public virtual bool Accepts(object target)
         {
+            if (Objects == null)
+            {
+                return false;
+            }
+
             Object targetObject = target as Object;
-            return targetObject != null && objects.Contains(targetObject);
+            return targetObject != null && Objects.Contains(targetObject);
         }
     }
 }

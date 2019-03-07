@@ -1,5 +1,6 @@
 ﻿using Zinnia.Rule;
 using Zinnia.Tracking;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Tracking
 {
@@ -81,8 +82,11 @@ namespace Test.Zinnia.Tracking
             validSurface.AddComponent<RuleStub>();
             NegationRule negationRule = validSurface.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
-            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
-            negationRule.rule = new RuleContainer
+            SerializableTypeObservableList rules = containingObject.AddComponent<SerializableTypeObservableList>();
+            anyComponentTypeRule.ComponentTypes = rules;
+            rules.Add(typeof(RuleStub));
+
+            negationRule.Rule = new RuleContainer
             {
                 Interface = anyComponentTypeRule
             };
