@@ -115,7 +115,7 @@
                 {
                     scrollPosition = scrollViewScope.scrollPosition;
 
-                    if (currentEvent.type == EventType.MouseDown && currentEvent.button == 0 || currentEvent.type == EventType.KeyDown && (currentEvent.keyCode == KeyCode.Return || currentEvent.keyCode == KeyCode.KeypadEnter))
+                    if (selectionIndex != -1 && currentEvent.type == EventType.MouseDown && currentEvent.button == 0 || currentEvent.type == EventType.KeyDown && (currentEvent.keyCode == KeyCode.Return || currentEvent.keyCode == KeyCode.KeypadEnter))
                     {
                         selectAction(searchedComponentTypes[selectionIndex]);
                         Close();
