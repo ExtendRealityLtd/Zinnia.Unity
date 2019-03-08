@@ -1,10 +1,9 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertyValidationMethod;*/
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -15,7 +14,7 @@
         /// <summary>
         /// The point where the attachment was made.
         /// </summary>
-        [Serialized, /*Validated,*/ Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject AttachmentPoint { get; set; }
 
@@ -36,7 +35,7 @@
         /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
-            cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.TryGetComponent<Rigidbody>(true) : cachedTargetRigidbody);
+            cachedTargetRigidbody = cachedTargetRigidbody == null || target != cachedTarget ? target.TryGetComponent<Rigidbody>(true) : cachedTargetRigidbody;
             cachedTarget = target;
 
             if (cachedTargetRigidbody == null || source == null || AttachmentPoint == null)

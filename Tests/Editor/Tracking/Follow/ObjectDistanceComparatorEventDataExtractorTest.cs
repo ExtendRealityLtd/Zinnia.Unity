@@ -32,8 +32,8 @@ namespace Test.Zinnia.Tracking.Follow
 
             ObjectDistanceComparator.EventData eventData = new ObjectDistanceComparator.EventData
             {
-                difference = new Vector3(2f, 5f, 10f),
-                distance = 42.123f
+                CurrentDifference = new Vector3(2f, 5f, 10f),
+                CurrentDistance = 42.123f
             };
 
             Assert.IsFalse(differenceExtractedMock.Received);
@@ -41,8 +41,8 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Extract(eventData);
 
-            Assert.AreEqual(eventData.difference, differenceExtractedMock.Value);
-            Assert.AreEqual(eventData.distance, distanceExtractedMock.Value);
+            Assert.AreEqual(eventData.CurrentDifference, differenceExtractedMock.Value);
+            Assert.AreEqual(eventData.CurrentDistance, distanceExtractedMock.Value);
         }
     }
 }

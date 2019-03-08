@@ -3,8 +3,8 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
 
     /// <summary>
     /// Extracts the parts of <see cref="ObjectDistanceComparator.EventData"/> and emits them in separate events.
@@ -45,8 +45,8 @@
         [RequiresBehaviourState]
         public virtual void Extract(ObjectDistanceComparator.EventData eventData)
         {
-            DifferenceExtracted?.Invoke(eventData.difference);
-            DistanceExtracted?.Invoke(eventData.distance);
+            DifferenceExtracted?.Invoke(eventData.CurrentDifference);
+            DistanceExtracted?.Invoke(eventData.CurrentDistance);
         }
     }
 }

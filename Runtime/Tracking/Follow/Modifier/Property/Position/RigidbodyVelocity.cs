@@ -1,7 +1,8 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Position
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -12,15 +13,23 @@
         /// <summary>
         /// The maximum squared magnitude of velocity that can be applied to the source.
         /// </summary>
-        [DocumentedByXml]
-        public float velocityLimit = float.PositiveInfinity;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float VelocityLimit { get; set; } = float.PositiveInfinity;
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
-        [DocumentedByXml]
-        public float maxDistanceDelta = 10f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float MaxDistanceDelta { get; set; } = 10f;
 
+        /// <summary>
+        /// A cached version of the target rigidbody.
+        /// </summary>
         protected Rigidbody cachedTargetRigidbody;
+        /// <summary>
+        /// A cached version of the target.
+        /// </summary>
         protected GameObject cachedTarget;
 
         /// <summary>
@@ -31,14 +40,14 @@
         /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
-            cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.TryGetComponent<Rigidbody>(true) : cachedTargetRigidbody);
+            cachedTargetRigidbody = cachedTargetRigidbody == null || target != cachedTarget ? target.TryGetComponent<Rigidbody>(true) : cachedTargetRigidbody;
             cachedTarget = target;
 
             Vector3 positionDelta = source.transform.position - (offset != null ? offset.transform.position : target.transform.position);
             Vector3 velocityTarget = positionDelta / Time.fixedDeltaTime;
-            Vector3 calculatedVelocity = Vector3.MoveTowards(cachedTargetRigidbody.velocity, velocityTarget, maxDistanceDelta);
+            Vector3 calculatedVelocity = Vector3.MoveTowards(cachedTargetRigidbody.velocity, velocityTarget, MaxDistanceDelta);
 
-            if (calculatedVelocity.sqrMagnitude < velocityLimit)
+            if (calculatedVelocity.sqrMagnitude < VelocityLimit)
             {
                 cachedTargetRigidbody.velocity = calculatedVelocity;
             }

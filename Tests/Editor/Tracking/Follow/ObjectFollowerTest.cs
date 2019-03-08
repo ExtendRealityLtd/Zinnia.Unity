@@ -33,11 +33,12 @@ namespace Test.Zinnia.Tracking.Follow
         public void AddTargetOffset()
         {
             GameObject offset = new GameObject("offset");
+            subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
 
-            Assert.IsEmpty(subject.targetOffsets);
-            subject.AddTargetOffset(offset);
-            Assert.AreEqual(1, subject.targetOffsets.Count);
-            Assert.AreEqual(offset, subject.targetOffsets[0]);
+            Assert.IsEmpty(subject.TargetOffsets.ReadOnlyElements);
+            subject.TargetOffsets.Add(offset);
+            Assert.AreEqual(1, subject.TargetOffsets.ReadOnlyElements.Count);
+            Assert.AreEqual(offset, subject.TargetOffsets.ReadOnlyElements[0]);
             Object.DestroyImmediate(offset);
         }
 
@@ -45,13 +46,14 @@ namespace Test.Zinnia.Tracking.Follow
         public void RemoveTargetOffset()
         {
             GameObject offset = new GameObject("offset");
+            subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
 
-            subject.AddTargetOffset(offset);
-            Assert.AreEqual(1, subject.targetOffsets.Count);
-            Assert.AreEqual(offset, subject.targetOffsets[0]);
+            subject.TargetOffsets.Add(offset);
+            Assert.AreEqual(1, subject.TargetOffsets.ReadOnlyElements.Count);
+            Assert.AreEqual(offset, subject.TargetOffsets.ReadOnlyElements[0]);
 
-            subject.RemoveTargetOffset(offset);
-            Assert.IsEmpty(subject.targetOffsets);
+            subject.TargetOffsets.Remove(offset);
+            Assert.IsEmpty(subject.TargetOffsets.ReadOnlyElements);
             Object.DestroyImmediate(offset);
         }
 
@@ -62,17 +64,19 @@ namespace Test.Zinnia.Tracking.Follow
             GameObject offset2 = new GameObject("offset2");
             GameObject newOffset1 = new GameObject("new offset1");
 
-            subject.AddTargetOffset(offset1);
-            subject.AddTargetOffset(offset2);
-            Assert.AreEqual(2, subject.targetOffsets.Count);
+            subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
 
-            subject.CurrentTargetOffsetsIndex = 0;
+            subject.TargetOffsets.Add(offset1);
+            subject.TargetOffsets.Add(offset2);
+            Assert.AreEqual(2, subject.TargetOffsets.ReadOnlyElements.Count);
 
-            subject.SetTargetOffsetAtCurrentIndex(newOffset1);
+            subject.TargetOffsets.CurrentIndex = 0;
 
-            Assert.AreEqual(2, subject.targetOffsets.Count);
-            Assert.AreEqual(newOffset1, subject.targetOffsets[0]);
-            Assert.AreEqual(offset2, subject.targetOffsets[1]);
+            subject.TargetOffsets.SetAtCurrentIndex(newOffset1);
+
+            Assert.AreEqual(2, subject.TargetOffsets.ReadOnlyElements.Count);
+            Assert.AreEqual(newOffset1, subject.TargetOffsets.ReadOnlyElements[0]);
+            Assert.AreEqual(offset2, subject.TargetOffsets.ReadOnlyElements[1]);
 
             Object.DestroyImmediate(offset1);
             Object.DestroyImmediate(offset2);
@@ -84,12 +88,14 @@ namespace Test.Zinnia.Tracking.Follow
         {
             GameObject offset = new GameObject("offset");
 
-            subject.AddTargetOffset(offset);
-            Assert.AreEqual(1, subject.targetOffsets.Count);
-            Assert.AreEqual(offset, subject.targetOffsets[0]);
+            subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
 
-            subject.ClearTargetOffsets();
-            Assert.IsEmpty(subject.targetOffsets);
+            subject.TargetOffsets.Add(offset);
+            Assert.AreEqual(1, subject.TargetOffsets.ReadOnlyElements.Count);
+            Assert.AreEqual(offset, subject.TargetOffsets.ReadOnlyElements[0]);
+
+            subject.TargetOffsets.Clear(false);
+            Assert.IsEmpty(subject.TargetOffsets.ReadOnlyElements);
             Object.DestroyImmediate(offset);
         }
 
@@ -124,7 +130,7 @@ namespace Test.Zinnia.Tracking.Follow
             subject.Targets.Add(target3);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            subject.followModifier = followModifierMock;
+            subject.FollowModifier = followModifierMock;
 
             subject.Process();
 
@@ -182,7 +188,7 @@ namespace Test.Zinnia.Tracking.Follow
             source3.SetActive(true);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            subject.followModifier = followModifierMock;
+            subject.FollowModifier = followModifierMock;
 
             subject.Process();
 
@@ -239,7 +245,7 @@ namespace Test.Zinnia.Tracking.Follow
             target3.SetActive(true);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            subject.followModifier = followModifierMock;
+            subject.FollowModifier = followModifierMock;
 
             subject.Process();
 
@@ -275,6 +281,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
 
             targetOffset1.transform.SetParent(target1.transform);
             targetOffset2.transform.SetParent(target2.transform);
@@ -294,12 +301,13 @@ namespace Test.Zinnia.Tracking.Follow
             subject.Targets.Add(target1);
             subject.Targets.Add(target2);
             subject.Targets.Add(target3);
-            subject.AddTargetOffset(targetOffset1);
-            subject.AddTargetOffset(targetOffset2);
-            subject.AddTargetOffset(targetOffset3);
+
+            subject.TargetOffsets.Add(targetOffset1);
+            subject.TargetOffsets.Add(targetOffset2);
+            subject.TargetOffsets.Add(targetOffset3);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            subject.followModifier = followModifierMock;
+            subject.FollowModifier = followModifierMock;
 
             subject.Process();
 
@@ -339,17 +347,19 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
 
             subject.Sources.Add(source);
             subject.Targets.Add(target1);
             subject.Targets.Add(target2);
             subject.Targets.Add(target3);
-            subject.AddTargetOffset(targetOffset1);
-            subject.AddTargetOffset(targetOffset2);
-            subject.AddTargetOffset(targetOffset3);
+
+            subject.TargetOffsets.Add(targetOffset1);
+            subject.TargetOffsets.Add(targetOffset2);
+            subject.TargetOffsets.Add(targetOffset3);
 
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
-            subject.followModifier = followModifierMock;
+            subject.FollowModifier = followModifierMock;
 
             Assert.Throws<System.ArgumentException>(() => subject.Process());
 
