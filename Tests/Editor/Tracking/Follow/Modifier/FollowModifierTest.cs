@@ -51,9 +51,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            subject.positionModifier = positionMock;
-            subject.rotationModifier = rotationMock;
-            subject.scaleModifier = scaleMock;
+            subject.PositionModifier = positionMock;
+            subject.RotationModifier = rotationMock;
+            subject.ScaleModifier = scaleMock;
 
             subject.Modify(source, target, offset);
 
@@ -95,9 +95,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            subject.positionModifier = positionMock;
-            subject.rotationModifier = rotationMock;
-            subject.scaleModifier = scaleMock;
+            subject.PositionModifier = positionMock;
+            subject.RotationModifier = rotationMock;
+            subject.ScaleModifier = scaleMock;
 
             subject.Modify(source, target);
 
@@ -138,9 +138,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            subject.positionModifier = positionMock;
-            subject.rotationModifier = rotationMock;
-            subject.scaleModifier = scaleMock;
+            subject.PositionModifier = positionMock;
+            subject.RotationModifier = rotationMock;
+            subject.ScaleModifier = scaleMock;
 
             subject.Modify(null, target, offset);
 
@@ -182,9 +182,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            subject.positionModifier = positionMock;
-            subject.rotationModifier = rotationMock;
-            subject.scaleModifier = scaleMock;
+            subject.PositionModifier = positionMock;
+            subject.RotationModifier = rotationMock;
+            subject.ScaleModifier = scaleMock;
 
             subject.Modify(source, null, offset);
 
@@ -226,9 +226,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            subject.positionModifier = positionMock;
-            subject.rotationModifier = rotationMock;
-            subject.scaleModifier = scaleMock;
+            subject.PositionModifier = positionMock;
+            subject.RotationModifier = rotationMock;
+            subject.ScaleModifier = scaleMock;
 
             subject.gameObject.SetActive(false);
             subject.Modify(source, target, offset);
@@ -272,9 +272,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            subject.positionModifier = positionMock;
-            subject.rotationModifier = rotationMock;
-            subject.scaleModifier = scaleMock;
+            subject.PositionModifier = positionMock;
+            subject.RotationModifier = rotationMock;
+            subject.ScaleModifier = scaleMock;
 
             subject.enabled = false;
             subject.Modify(source, target, offset);
