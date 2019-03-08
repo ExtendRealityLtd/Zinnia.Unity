@@ -37,7 +37,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
             publisherChild.transform.SetParent(publisherSource.transform);
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
-            publisher.sourceContainer = publisherSource;
+            publisher.SourceContainer = publisherSource;
 
             Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
@@ -62,7 +62,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
             publisherChild.transform.SetParent(publisherSource.transform);
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
-            publisher.sourceContainer = publisherSource;
+            publisher.SourceContainer = publisherSource;
 
             ActiveCollisionConsumer.EventData eventData = new ActiveCollisionConsumer.EventData();
             eventData.Set(publisher, null);
@@ -90,7 +90,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
             publisherChild.transform.SetParent(publisherSource.transform);
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
-            publisher.sourceContainer = publisherSource;
+            publisher.SourceContainer = publisherSource;
 
             Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
@@ -116,7 +116,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
             publisherChild.transform.SetParent(publisherSource.transform);
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
-            publisher.sourceContainer = publisherSource;
+            publisher.SourceContainer = publisherSource;
 
             Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);

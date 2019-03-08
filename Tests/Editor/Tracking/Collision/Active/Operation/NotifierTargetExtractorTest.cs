@@ -35,7 +35,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
             Collider collider = new GameObject().AddComponent<BoxCollider>();
             CollisionNotifier.EventData eventData = new CollisionNotifier.EventData
             {
-                collider = collider
+                ColliderData = collider
             };
 
             Assert.IsNull(subject.Result);
@@ -58,7 +58,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
             Collider collider = new GameObject().AddComponent<BoxCollider>();
             CollisionNotifier.EventData eventData = new CollisionNotifier.EventData
             {
-                collider = collider
+                ColliderData = collider
             };
 
             Assert.IsNull(subject.Result);
@@ -82,7 +82,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
             Collider collider = new GameObject().AddComponent<BoxCollider>();
             CollisionNotifier.EventData eventData = new CollisionNotifier.EventData
             {
-                collider = collider
+                ColliderData = collider
             };
 
             Assert.IsNull(subject.Result);
