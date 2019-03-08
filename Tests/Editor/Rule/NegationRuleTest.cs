@@ -31,7 +31,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void AcceptsFalse()
         {
-            subject.rule = new RuleContainer
+            subject.Rule = new RuleContainer
             {
                 Interface = new FalseRuleStub()
             };
@@ -47,7 +47,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesTrue()
         {
-            subject.rule = new RuleContainer
+            subject.Rule = new RuleContainer
             {
                 Interface = new TrueRuleStub()
             };
@@ -57,7 +57,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesInactiveGameObject()
         {
-            subject.rule = new RuleContainer
+            subject.Rule = new RuleContainer
             {
                 Interface = new FalseRuleStub()
             };
@@ -68,7 +68,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesInactiveComponent()
         {
-            subject.rule = new RuleContainer
+            subject.Rule = new RuleContainer
             {
                 Interface = new FalseRuleStub()
             };

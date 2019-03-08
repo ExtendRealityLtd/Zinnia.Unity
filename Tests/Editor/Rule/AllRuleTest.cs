@@ -1,5 +1,6 @@
 ﻿using Zinnia.Extension;
 using Zinnia.Rule;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Rule
 {
@@ -31,21 +32,34 @@ namespace Test.Zinnia.Rule
         [Test]
         public void AcceptsMatch()
         {
-            subject.rules.Add(
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            subject.Rules = rules;
+
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
-            subject.rules.Add(
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
+
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
         [Test]
         public void RefusesEmpty()
+        {
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            subject.Rules = rules;
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesNullRules()
         {
             Assert.IsFalse(container.Accepts(containingObject));
         }
@@ -53,50 +67,64 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesDifferent()
         {
-            subject.rules.Add(
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            subject.Rules = rules;
+
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
-            subject.rules.Add(
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new FalseRuleStub()
                 });
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
         [Test]
         public void RefusesInactiveGameObject()
         {
-            subject.rules.Add(
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            subject.Rules = rules;
+
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
-            subject.rules.Add(
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
+
             subject.gameObject.SetActive(false);
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
         [Test]
         public void RefusesInactiveComponent()
         {
-            subject.rules.Add(
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            subject.Rules = rules;
+
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
-            subject.rules.Add(
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
+
             subject.enabled = false;
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
     }

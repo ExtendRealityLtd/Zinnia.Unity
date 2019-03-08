@@ -1,10 +1,11 @@
 ﻿namespace Zinnia.Rule
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Determines whether all <see cref="IRule"/>s in a list are accepting an object.
@@ -14,19 +15,20 @@
         /// <summary>
         /// The <see cref="IRule"/>s to check against.
         /// </summary>
-        [DocumentedByXml]
-        public List<RuleContainer> rules = new List<RuleContainer>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public RuleContainerObservableList Rules { get; set; }
 
         /// <inheritdoc/>
         [RequiresBehaviourState]
         public bool Accepts(object target)
         {
-            if (rules == null || rules.Count == 0)
+            if (Rules == null || Rules.ReadOnlyElements.Count == 0)
             {
                 return false;
             }
 
-            foreach (RuleContainer rule in rules)
+            foreach (RuleContainer rule in Rules.ReadOnlyElements)
             {
                 if (!rule.Accepts(target))
                 {

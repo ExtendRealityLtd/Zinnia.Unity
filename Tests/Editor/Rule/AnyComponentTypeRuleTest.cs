@@ -1,5 +1,6 @@
-﻿using Zinnia.Extension;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
+using Zinnia.Extension;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Rule
 {
@@ -32,13 +33,24 @@ namespace Test.Zinnia.Rule
         public void AcceptsMatch()
         {
             containingObject.AddComponent<TestScript>();
-            subject.componentTypes.Add(typeof(TestScript));
+            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
 
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
         [Test]
         public void RefusesEmpty()
+        {
+            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            subject.ComponentTypes = componentTypes;
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesNullComponentTypes()
         {
             Assert.IsFalse(container.Accepts(containingObject));
         }
@@ -47,7 +59,10 @@ namespace Test.Zinnia.Rule
         public void RefusesDifferent()
         {
             containingObject.AddComponent<Light>();
-            subject.componentTypes.Add(typeof(TestScript));
+            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
@@ -55,7 +70,9 @@ namespace Test.Zinnia.Rule
         public void RefusesInactiveGameObject()
         {
             containingObject.AddComponent<TestScript>();
-            subject.componentTypes.Add(typeof(TestScript));
+            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
 
             subject.gameObject.SetActive(false);
             Assert.IsFalse(container.Accepts(containingObject));
@@ -65,7 +82,9 @@ namespace Test.Zinnia.Rule
         public void RefusesInactiveComponent()
         {
             containingObject.AddComponent<TestScript>();
-            subject.componentTypes.Add(typeof(TestScript));
+            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
 
             subject.enabled = false;
             Assert.IsFalse(container.Accepts(containingObject));
