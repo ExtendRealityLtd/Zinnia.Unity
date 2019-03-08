@@ -3,13 +3,12 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Process;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Modifies the given target direction by rotating it to look at a point in space whilst pivoting on another point in space.
@@ -19,31 +18,33 @@
         /// <summary>
         /// The target to rotate.
         /// </summary>
-        [Serialized, /*Validated,*/ Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// The object to look at when affecting rotation.
         /// </summary>
-        [Serialized, /*Validated,*/ Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject LookAt { get; set; }
         /// <summary>
         /// The object to be used as the pivot point for rotation.
         /// </summary>
-        [Serialized, /*Validated,*/ Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Pivot { get; set; }
         /// <summary>
         /// The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.
         /// </summary>
-        [DocumentedByXml]
-        public float resetOrientationSpeed = 0.1f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float ResetOrientationSpeed { get; set; } = 0.1f;
         /// <summary>
         /// Prevent z-axis rotation coming from the <see cref="LookAt"/> target.
         /// </summary>
-        [DocumentedByXml]
-        public bool preventLookAtZRotation = true;
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool PreventLookAtZRotation { get; set; } = true;
 
         /// <summary>
         /// Emitted when the orientation is reset.
@@ -56,10 +57,25 @@
         [DocumentedByXml]
         public UnityEvent OrientationResetCancelled = new UnityEvent();
 
+        /// <summary>
+        /// The initial rotation of the <see cref="Target"/>.
+        /// </summary>
         protected Quaternion targetInitialRotation;
+        /// <summary>
+        /// The rotation of the <see cref="Target"/> when released.
+        /// </summary>
         protected Quaternion targetReleaseRotation;
+        /// <summary>
+        /// The initial rotation of the <see cref="Pivot"/>.
+        /// </summary>
         protected Quaternion pivotInitialRotation;
+        /// <summary>
+        /// The rotation of the <see cref="Pivot"/> when released.
+        /// </summary>
         protected Quaternion pivotReleaseRotation;
+        /// <summary>
+        /// A reference to the started routine.
+        /// </summary>
         protected Coroutine resetOrientationRoutine;
 
         /// <summary>
@@ -68,7 +84,7 @@
         [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (preventLookAtZRotation)
+            if (PreventLookAtZRotation)
             {
                 SetTargetRotationWithZLocking();
             }
@@ -83,7 +99,7 @@
         /// </summary>
         public virtual void ClearPivot()
         {
-            pivotReleaseRotation = (Pivot != null ? Pivot.transform.rotation : Quaternion.identity);
+            pivotReleaseRotation = Pivot != null ? Pivot.transform.rotation : Quaternion.identity;
         }
 
         /// <summary>
@@ -93,8 +109,8 @@
         [RequiresBehaviourState]
         public virtual void SaveOrientation(bool cancelResetOrientation = true)
         {
-            targetInitialRotation = (Target != null ? Target.transform.rotation : Quaternion.identity);
-            pivotInitialRotation = (Pivot != null ? Pivot.transform.rotation : Quaternion.identity);
+            targetInitialRotation = Target != null ? Target.transform.rotation : Quaternion.identity;
+            pivotInitialRotation = Pivot != null ? Pivot.transform.rotation : Quaternion.identity;
             if (cancelResetOrientation)
             {
                 CancelResetOrientation();
@@ -107,13 +123,13 @@
         [RequiresBehaviourState]
         public virtual void ResetOrientation()
         {
-            pivotReleaseRotation = (Pivot != null ? Pivot.transform.rotation : pivotReleaseRotation);
+            pivotReleaseRotation = Pivot != null ? Pivot.transform.rotation : pivotReleaseRotation;
 
-            if (resetOrientationSpeed < float.MaxValue && resetOrientationSpeed > 0f)
+            if (ResetOrientationSpeed < float.MaxValue && ResetOrientationSpeed > 0f)
             {
                 resetOrientationRoutine = StartCoroutine(ResetOrientationRoutine());
             }
-            else if (resetOrientationSpeed.ApproxEquals(0f))
+            else if (ResetOrientationSpeed.ApproxEquals(0f))
             {
                 SetOrientationToSaved();
             }
@@ -191,8 +207,7 @@
         /// <returns>The calculated angle.</returns>
         protected virtual float CalculateLockedAngle(Quaternion lockedDelta)
         {
-            float lockedAngle;
-            lockedDelta.ToAngleAxis(out lockedAngle, out Vector3 _);
+            lockedDelta.ToAngleAxis(out float lockedAngle, out Vector3 _);
             if (lockedAngle > 180f)
             {
                 lockedAngle -= 360f;
@@ -214,9 +229,9 @@
             float elapsedTime = 0f;
             targetReleaseRotation = Target.transform.rotation;
 
-            while (elapsedTime < resetOrientationSpeed)
+            while (elapsedTime < ResetOrientationSpeed)
             {
-                Target.transform.rotation = Quaternion.Lerp(targetReleaseRotation, GetActualInitialRotation(), (elapsedTime / resetOrientationSpeed));
+                Target.transform.rotation = Quaternion.Lerp(targetReleaseRotation, GetActualInitialRotation(), elapsedTime / ResetOrientationSpeed);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }

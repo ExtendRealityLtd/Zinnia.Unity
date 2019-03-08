@@ -1,8 +1,10 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Cast;
 
     /// <summary>
@@ -13,8 +15,9 @@
         /// <summary>
         /// The target to apply the rotations to.
         /// </summary>
-        [DocumentedByXml]
-        public GameObject target;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Target { get; set; }
 
         /// <summary>
         /// Handles the provided data to rotate the <see cref="GameObject"/>.
@@ -23,12 +26,12 @@
         [RequiresBehaviourState]
         public virtual void HandleData(PointsCast.EventData data)
         {
-            if (target == null || data.targetHit == null)
+            if (Target == null || data.targetHit == null)
             {
                 return;
             }
 
-            target.transform.rotation = Quaternion.FromToRotation(Vector3.up, data.targetHit.Value.normal);
+            Target.transform.rotation = Quaternion.FromToRotation(Vector3.up, data.targetHit.Value.normal);
         }
     }
 }

@@ -1,14 +1,12 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
-    using System.Collections.Generic;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Data.Attribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Data.Type;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Provides the ability to modify the enabled state of a <see cref="Behaviour"/> or <see cref="Renderer"/> component.
@@ -18,29 +16,30 @@
         /// <summary>
         /// The <see cref="Object"/> types to manage the enabled state on.
         /// </summary>
-        [TypePicker(typeof(Object)), DocumentedByXml]
-        public List<SerializableType> types = new List<SerializableType>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public SerializableTypeBehaviourObservableList Types { get; set; }
 
         /// <summary>
-        /// The target to modify the enabled states for the provided <see cref="types"/>.
+        /// The target to modify the enabled states for the provided <see cref="Types"/>.
         /// </summary>
-        [Serialized, /*Validated,*/ Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
 
         /// <summary>
-        /// Sets the enabled state of all matching <see cref="types"/> found on <see cref="Target"/>.
+        /// Sets the enabled state of all matching <see cref="Types"/> found on <see cref="Target"/>.
         /// </summary>
         /// <param name="state">The enabled state to apply.</param>
         [RequiresBehaviourState]
         public virtual void SetEnabledState(bool state)
         {
-            if (Target == null)
+            if (Types == null || Target == null)
             {
                 return;
             }
 
-            foreach (SerializableType serializableType in types)
+            foreach (SerializableType serializableType in Types.ReadOnlyElements)
             {
                 foreach (Component targetObject in Target.GetComponentsInChildren(serializableType, true))
                 {

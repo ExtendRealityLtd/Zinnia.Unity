@@ -30,7 +30,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
 
             Assert.AreEqual(Quaternion.identity, target.transform.rotation);
 
@@ -56,7 +56,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             GameObject target = new GameObject();
 
-            subject.target = target;
+            subject.Target = target;
 
             Assert.AreEqual(Quaternion.identity, target.transform.rotation);
 
