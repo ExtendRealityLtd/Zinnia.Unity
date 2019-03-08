@@ -1,7 +1,9 @@
 ﻿namespace Zinnia.Tracking.CameraRig
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Tracking.Velocity;
 
     /// <summary>
@@ -13,52 +15,60 @@
         /// <summary>
         /// The associated PlayArea.
         /// </summary>
-        [Header("PlayArea Settings"), DocumentedByXml]
-        public GameObject playArea;
+        [Serialized, Cleared]
+        [field: Header("PlayArea Settings"), DocumentedByXml]
+        public GameObject PlayArea { get; set; }
         #endregion
 
         #region Headset Settings
         /// <summary>
         /// The associated Headset.
         /// </summary>
-        [Header("Headset Settings"), DocumentedByXml]
-        public GameObject headset;
+        [Serialized, Cleared]
+        [field: Header("Headset Settings"), DocumentedByXml]
+        public GameObject Headset { get; set; }
         /// <summary>
         /// The associated Headset Camera.
         /// </summary>
-        [DocumentedByXml]
-        public Camera headsetCamera;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public Camera HeadsetCamera { get; set; }
         /// <summary>
         /// The associated Headset Velocity Tracker.
         /// </summary>
-        [DocumentedByXml]
-        public VelocityTracker headsetVelocityTracker;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public VelocityTracker HeadsetVelocityTracker { get; set; }
         #endregion
 
         #region Left Controller Settings
         /// <summary>
         /// The associated Left Controller.
         /// </summary>
-        [Header("Left Controller Settings"), DocumentedByXml]
-        public GameObject leftController;
+        [Serialized, Cleared]
+        [field: Header("Left Controller Settings"), DocumentedByXml]
+        public GameObject LeftController { get; set; }
         /// <summary>
         /// The associated Left Controller Velocity Tracker.
         /// </summary>
-        [DocumentedByXml]
-        public VelocityTracker leftControllerVelocityTracker;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public VelocityTracker LeftControllerVelocityTracker { get; set; }
         #endregion
 
         #region Right Controller Settings
         /// <summary>
         /// The associated Right Controller.
         /// </summary>
-        [Header("Right Controller Settings"), DocumentedByXml]
-        public GameObject rightController;
+        [Serialized, Cleared]
+        [field: Header("Right Controller Settings"), DocumentedByXml]
+        public GameObject RightController { get; set; }
         /// <summary>
         /// The associated Right Controller Velocity Tracker.
         /// </summary>
-        [DocumentedByXml]
-        public VelocityTracker rightControllerVelocityTracker;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public VelocityTracker RightControllerVelocityTracker { get; set; }
         #endregion
     }
 }
