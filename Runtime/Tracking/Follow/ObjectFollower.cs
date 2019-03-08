@@ -132,7 +132,7 @@
             }
             else
             {
-                targetOffsets[CurrentTargetsIndex] = targetOffset;
+                targetOffsets[Targets.CurrentIndex] = targetOffset;
             }
         }
 
@@ -151,10 +151,10 @@
         /// <param name="target">The target to apply the follow data to.</param>
         protected override void ApplySourceToTarget(GameObject source, GameObject target)
         {
-            GameObject followOffset = (targetOffsets.Count > 0 ? targetOffsets[targetOffsets.GetWrappedAndClampedIndex(CurrentTargetsIndex)] : null);
-            if (followOffset != null && !followOffset.transform.IsChildOf(targets[CurrentTargetsIndex].transform))
+            GameObject followOffset = targetOffsets.Count > 0 ? targetOffsets[targetOffsets.GetWrappedAndClampedIndex(Targets.CurrentIndex)] : null;
+            if (followOffset != null && !followOffset.transform.IsChildOf(Targets.ReadOnlyElements[Targets.CurrentIndex].transform))
             {
-                throw new ArgumentException($"The `targetOffsets` at index [{CurrentTargetsIndex}] must be a child of the GameObject at `targets` index [{CurrentTargetsIndex}].");
+                throw new ArgumentException($"The `targetOffsets` at index [{Targets.CurrentIndex}] must be a child of the GameObject at `targets` index [{Targets.CurrentIndex}].");
             }
             followModifier.Modify(source, target, followOffset);
         }
