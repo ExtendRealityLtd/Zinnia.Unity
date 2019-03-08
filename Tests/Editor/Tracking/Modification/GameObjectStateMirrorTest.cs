@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Modification;
+﻿using Zinnia.Data.Collection;
+using Zinnia.Tracking.Modification;
 
 namespace Test.Zinnia.Tracking.Modification
 {
@@ -32,10 +33,13 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.AddSource(source);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+
+            subject.Sources.Add(source);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             source.gameObject.SetActive(true);
 
@@ -64,10 +68,13 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.AddSource(source);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+
+            subject.Sources.Add(source);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             source.gameObject.SetActive(false);
 
@@ -96,10 +103,13 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.AddSource(source);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+
+            subject.Sources.Add(source);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             source.gameObject.SetActive(true);
 
