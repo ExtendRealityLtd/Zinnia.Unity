@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -13,9 +12,16 @@
         /// <summary>
         /// The contained object.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        protected Object Field { get; set; }
+        [SerializeField, DocumentedByXml]
+        protected Object field;
+        /// <summary>
+        /// The contained object.
+        /// </summary>
+        protected Object Field
+        {
+            get => field;
+            set => field = value;
+        }
 
         /// <summary>
         /// Called after <see cref="Field"/> has been changed.
@@ -64,7 +70,14 @@
         /// <inheritdoc />
         public void OnAfterDeserialize()
         {
-            OnAfterFieldChange();
+            if (Field is TInterface @interface)
+            {
+                _interface = @interface;
+            }
+            else
+            {
+                Field = null;
+            }
         }
 
         /// <inheritdoc />
