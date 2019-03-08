@@ -97,7 +97,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = false;
-            subject.velocityAverageFrames = 0;
+            subject.VelocityAverageFrames = 0;
             subject.ManualOnEnable();
             subject.IsEstimating = true;
 
@@ -117,7 +117,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = false;
-            subject.velocityAverageFrames = 4;
+            subject.VelocityAverageFrames = 4;
             subject.ManualOnEnable();
             subject.IsEstimating = true;
 
@@ -137,7 +137,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = false;
-            subject.velocityAverageFrames = 5;
+            subject.VelocityAverageFrames = 5;
             subject.ManualOnEnable();
             subject.IsEstimating = true;
 
@@ -157,7 +157,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = false;
-            subject.velocityAverageFrames = 0;
+            subject.VelocityAverageFrames = 0;
             subject.ManualOnEnable();
             subject.IsEstimating = false;
 
@@ -193,7 +193,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = true;
-            subject.angularVelocityAverageFrames = 5;
+            subject.AngularVelocityAverageFrames = 5;
             subject.ManualOnEnable();
 
             ProcessRotations(exampleSourceRotations);
@@ -212,7 +212,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = false;
-            subject.angularVelocityAverageFrames = 0;
+            subject.AngularVelocityAverageFrames = 0;
             subject.ManualOnEnable();
             subject.IsEstimating = true;
 
@@ -232,7 +232,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = false;
-            subject.angularVelocityAverageFrames = 4;
+            subject.AngularVelocityAverageFrames = 4;
             subject.ManualOnEnable();
             subject.IsEstimating = true;
 
@@ -252,7 +252,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = false;
-            subject.angularVelocityAverageFrames = 5;
+            subject.AngularVelocityAverageFrames = 5;
             subject.ManualOnEnable();
             subject.IsEstimating = true;
 
@@ -272,7 +272,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = false;
-            subject.angularVelocityAverageFrames = 0;
+            subject.AngularVelocityAverageFrames = 0;
             subject.ManualOnEnable();
             subject.IsEstimating = false;
 
@@ -308,7 +308,7 @@ namespace Test.Zinnia.Tracking.Velocity
             // Ensure the subject has a valid source to check
             subject.Source = source;
             subject.IsEstimating = false;
-            subject.velocityAverageFrames = 5;
+            subject.VelocityAverageFrames = 5;
             subject.ManualOnEnable();
             subject.IsEstimating = true;
 

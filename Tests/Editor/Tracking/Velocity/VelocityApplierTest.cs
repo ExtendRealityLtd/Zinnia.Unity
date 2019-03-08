@@ -29,11 +29,11 @@ namespace Test.Zinnia.Tracking.Velocity
         public void Apply()
         {
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
-            subject.source = tracker;
-            subject.target = containingObject.AddComponent<Rigidbody>();
+            subject.Source = tracker;
+            subject.Target = containingObject.AddComponent<Rigidbody>();
             subject.Apply();
-            Assert.AreEqual(tracker.GetVelocity(), subject.target.velocity);
-            Assert.AreEqual(tracker.GetAngularVelocity(), subject.target.angularVelocity);
+            Assert.AreEqual(tracker.GetVelocity(), subject.Target.velocity);
+            Assert.AreEqual(tracker.GetAngularVelocity(), subject.Target.angularVelocity);
 
             Object.DestroyImmediate(tracker.gameObject);
         }
@@ -41,17 +41,17 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void ApplyNoSource()
         {
-            subject.target = containingObject.AddComponent<Rigidbody>();
+            subject.Target = containingObject.AddComponent<Rigidbody>();
 
-            Vector3 originalVelocity = subject.target.velocity;
-            Vector3 originalAngularVelocity = subject.target.angularVelocity;
+            Vector3 originalVelocity = subject.Target.velocity;
+            Vector3 originalAngularVelocity = subject.Target.angularVelocity;
 
             Assert.AreEqual(Vector3.zero, originalVelocity);
             Assert.AreEqual(Vector3.zero, originalAngularVelocity);
 
             subject.Apply();
-            Assert.AreEqual(originalVelocity, subject.target.velocity);
-            Assert.AreEqual(originalAngularVelocity, subject.target.angularVelocity);
+            Assert.AreEqual(originalVelocity, subject.Target.velocity);
+            Assert.AreEqual(originalAngularVelocity, subject.Target.angularVelocity);
         }
     }
 }
