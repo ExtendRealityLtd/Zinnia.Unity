@@ -76,7 +76,7 @@
             }
             else
             {
-                Field = null;
+                field = null;
             }
         }
 
