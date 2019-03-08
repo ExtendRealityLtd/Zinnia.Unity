@@ -3,17 +3,16 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Cast;
-    using Zinnia.Data.Type;
-    using Zinnia.Extension;
+    using Zinnia.Rule;
     using Zinnia.Process;
     using Zinnia.Process.Moment;
-    using Zinnia.Rule;
+    using Zinnia.Extension;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// Casts a <see cref="Ray"/> in a given direction and looks for the nearest valid surface.
@@ -31,34 +30,39 @@
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
-        [Serialized, /*Validated,*/ Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject SearchOrigin { get; set; }
         /// <summary>
         /// The direction in which to cast to locate the nearest surface.
         /// </summary>
-        [DocumentedByXml]
-        public Vector3 searchDirection;
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3 SearchDirection { get; set; }
         /// <summary>
-        /// The distance to move the origin backwards through the <see cref="searchDirection"/> to ensure the origin isn't clipping a surface.
+        /// The distance to move the origin backwards through the <see cref="SearchDirection"/> to ensure the origin isn't clipping a surface.
         /// </summary>
-        [DocumentedByXml]
-        public float originOffset = -0.01f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float OriginOffset { get; set; } = -0.01f;
         /// <summary>
         /// The maximum distance to cast the <see cref="Ray"/>.
         /// </summary>
-        [DocumentedByXml]
-        public float maximumDistance = 50f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float MaximumDistance { get; set; } = 50f;
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
         /// </summary>
-        [DocumentedByXml]
-        public RuleContainer targetValidity;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer TargetValidity { get; set; }
         /// <summary>
-        /// An optional custom <see cref="PhysicsCast"/> object to affect the <see cref="Ray"/>.
+        /// An optional custom <see cref="Cast.PhysicsCast"/> object to affect the <see cref="Ray"/>.
         /// </summary>
-        [DocumentedByXml]
-        public PhysicsCast physicsCast;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public PhysicsCast PhysicsCast { get; set; }
 
         /// <summary>
         /// Emitted when a new surface is located.
@@ -109,7 +113,7 @@
                 return;
             }
 
-            if (CastRay(givenOrigin.Position, searchDirection) && PositionChanged(DISTANCE_VARIANCE))
+            if (CastRay(givenOrigin.Position, SearchDirection) && PositionChanged(DISTANCE_VARIANCE))
             {
                 surfaceData.rotationOverride = givenOrigin.Rotation;
                 SurfaceLocated?.Invoke(surfaceData);
@@ -134,11 +138,11 @@
         /// <returns><see langword="true"/> if a valid surface is located.</returns>
         protected virtual bool CastRay(Vector3 givenOrigin, Vector3 givenDirection)
         {
-            givenOrigin = givenOrigin + (givenDirection.normalized * originOffset);
+            givenOrigin = givenOrigin + (givenDirection.normalized * OriginOffset);
             surfaceData.origin = givenOrigin;
             surfaceData.direction = givenDirection;
             Ray tracerRaycast = new Ray(givenOrigin, givenDirection);
-            return (targetValidity == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast));
+            return TargetValidity == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast);
         }
 
         /// <summary>
@@ -149,7 +153,7 @@
         protected virtual bool FindFirstCollision(Ray tracerRaycast)
         {
             RaycastHit collision;
-            if (PhysicsCast.Raycast(physicsCast, tracerRaycast, out collision, maximumDistance, Physics.IgnoreRaycastLayer))
+            if (PhysicsCast.Raycast(PhysicsCast, tracerRaycast, out collision, MaximumDistance, Physics.IgnoreRaycastLayer))
             {
                 SetSurfaceData(collision);
                 return true;
@@ -165,9 +169,9 @@
         protected virtual bool FindAllCollisions(Ray tracerRaycast)
         {
             RaycastHit[] raycastHits = PhysicsCast.RaycastAll(
-                physicsCast,
+                PhysicsCast,
                 tracerRaycast,
-                maximumDistance,
+                MaximumDistance,
                 Physics.IgnoreRaycastLayer);
             Array.Sort(raycastHits, (x, y) => (int)(x.distance - y.distance));
             foreach (RaycastHit collision in raycastHits)
@@ -199,9 +203,9 @@
         /// <returns><see langword="true"/> if the <see cref="RaycastHit"/> data contains a valid surface.</returns>
         protected virtual bool ValidSurface(RaycastHit collisionData)
         {
-            if (targetValidity != null && collisionData.transform != null)
+            if (TargetValidity != null && collisionData.transform != null)
             {
-                return targetValidity.Accepts(collisionData.transform.gameObject);
+                return TargetValidity.Accepts(collisionData.transform.gameObject);
             }
             return true;
         }

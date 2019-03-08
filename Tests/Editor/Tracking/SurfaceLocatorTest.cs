@@ -46,7 +46,7 @@ namespace Test.Zinnia.Tracking
             validSurface.transform.position = Vector3.forward * 5f;
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.forward;
+            subject.SearchDirection = Vector3.forward;
 
             //Process just calls Locate() so may as well just test the first point
             Physics.Simulate(Time.fixedDeltaTime);
@@ -65,7 +65,7 @@ namespace Test.Zinnia.Tracking
             validSurface.transform.position = Vector3.forward * 5f;
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.down;
+            subject.SearchDirection = Vector3.down;
 
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Locate();
@@ -90,13 +90,13 @@ namespace Test.Zinnia.Tracking
             {
                 Interface = anyComponentTypeRule
             };
-            subject.targetValidity = new RuleContainer
+            subject.TargetValidity = new RuleContainer
             {
                 Interface = negationRule
             };
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.forward;
+            subject.SearchDirection = Vector3.forward;
 
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Locate();
@@ -112,7 +112,7 @@ namespace Test.Zinnia.Tracking
             validSurface.transform.position = Vector3.forward * 5f;
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.forward;
+            subject.SearchDirection = Vector3.forward;
             subject.gameObject.SetActive(false);
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
@@ -129,7 +129,7 @@ namespace Test.Zinnia.Tracking
             validSurface.transform.position = Vector3.forward * 5f;
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.forward;
+            subject.SearchDirection = Vector3.forward;
             subject.enabled = false;
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
