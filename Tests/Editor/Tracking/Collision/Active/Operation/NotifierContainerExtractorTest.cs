@@ -34,7 +34,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             GameObject forwardSource = new GameObject();
             CollisionNotifier.EventData notifier = new CollisionNotifier.EventData();
-            notifier.forwardSource = forwardSource.GetComponent<Component>();
+            notifier.ForwardSource = forwardSource.GetComponent<Component>();
 
             Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
@@ -55,7 +55,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             GameObject forwardSource = new GameObject();
             CollisionNotifier.EventData notifier = new CollisionNotifier.EventData();
-            notifier.forwardSource = forwardSource.GetComponent<Component>();
+            notifier.ForwardSource = forwardSource.GetComponent<Component>();
 
             Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);
@@ -77,7 +77,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             GameObject forwardSource = new GameObject();
             CollisionNotifier.EventData notifier = new CollisionNotifier.EventData();
-            notifier.forwardSource = forwardSource.GetComponent<Component>();
+            notifier.ForwardSource = forwardSource.GetComponent<Component>();
 
             Assert.IsNull(subject.Result);
             Assert.IsFalse(extractedMock.Received);

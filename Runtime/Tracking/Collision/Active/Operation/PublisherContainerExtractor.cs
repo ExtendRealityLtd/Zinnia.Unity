@@ -15,13 +15,13 @@
         /// <returns>The source container within the publisher.</returns>
         public virtual GameObject Extract(ActiveCollisionPublisher.PayloadData publisher)
         {
-            if (publisher == null || publisher.sourceContainer == null)
+            if (publisher == null || publisher.SourceContainer == null)
             {
                 Result = null;
                 return null;
             }
 
-            Result = publisher.sourceContainer;
+            Result = publisher.SourceContainer;
             return base.Extract();
         }
 
@@ -32,7 +32,7 @@
         /// <returns>The source container within the publisher.</returns>
         public virtual GameObject Extract(ActiveCollisionConsumer.EventData eventData)
         {
-            return Extract(eventData?.publisher);
+            return Extract(eventData?.Publisher);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@
         /// <param name="eventData">The event data to extract the source container from.</param>
         public virtual void DoExtract(ActiveCollisionConsumer.EventData eventData)
         {
-            Extract(eventData?.publisher);
+            Extract(eventData?.Publisher);
         }
     }
 }

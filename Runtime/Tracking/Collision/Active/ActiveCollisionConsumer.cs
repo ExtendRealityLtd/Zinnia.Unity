@@ -3,10 +3,12 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Extension;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Rule;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Consumes a published <see cref="ActiveCollisionPublisher"/>.
@@ -22,23 +24,25 @@
             /// <summary>
             /// The publisher payload data that is being pushed to the consumer.
             /// </summary>
-            [DocumentedByXml]
-            public ActiveCollisionPublisher.PayloadData publisher;
+            [Serialized, Cleared]
+            [field: DocumentedByXml]
+            public ActiveCollisionPublisher.PayloadData Publisher { get; set; }
             /// <summary>
             /// The current collision data.
             /// </summary>
-            [DocumentedByXml]
-            public CollisionNotifier.EventData currentCollision;
+            [Serialized, Cleared]
+            [field: DocumentedByXml]
+            public CollisionNotifier.EventData CurrentCollision { get; set; }
 
             public EventData Set(EventData source)
             {
-                return Set(source.publisher, source.currentCollision);
+                return Set(source.Publisher, source.CurrentCollision);
             }
 
             public EventData Set(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
             {
-                this.publisher = publisher;
-                this.currentCollision = currentCollision;
+                Publisher = publisher;
+                CurrentCollision = currentCollision;
                 return this;
             }
 
@@ -59,32 +63,26 @@
         /// <summary>
         /// The highest level container of the consumer to allow for nested consumers.
         /// </summary>
-        [DocumentedByXml]
-        public GameObject container;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Container { get; set; }
 
         /// <summary>
         /// Determines whether to consume the received call from specific publishers.
         /// </summary>
-        [DocumentedByXml]
-        public RuleContainer publisherValidity;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer PublisherValidity { get; set; }
 
         /// <summary>
         /// The publisher payload that was last received from.
         /// </summary>
-        public ActiveCollisionPublisher.PayloadData PublisherSource
-        {
-            get;
-            protected set;
-        }
+        public ActiveCollisionPublisher.PayloadData PublisherSource { get; protected set; }
 
         /// <summary>
-        /// The current collision data from the broadcaster.
+        /// The current active collision data from the broadcaster.
         /// </summary>
-        public CollisionNotifier.EventData CurrentCollision
-        {
-            get;
-            protected set;
-        }
+        public CollisionNotifier.EventData ActiveCollision { get; protected set; }
 
         /// <summary>
         /// Emitted when the publisher call has been consumed.
@@ -97,6 +95,9 @@
         [DocumentedByXml]
         public UnityEvent Cleared = new UnityEvent();
 
+        /// <summary>
+        /// The event data emitted when collisions are consumed.
+        /// </summary>
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
@@ -107,13 +108,13 @@
         [RequiresBehaviourState]
         public virtual void Consume(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
         {
-            if (!publisherValidity.Accepts(publisher.PublisherContainer))
+            if (!PublisherValidity.Accepts(publisher.PublisherContainer))
             {
                 return;
             }
 
             PublisherSource = publisher;
-            CurrentCollision = currentCollision;
+            ActiveCollision = currentCollision;
             Consumed?.Invoke(eventData.Set(PublisherSource, currentCollision));
         }
 
@@ -123,9 +124,9 @@
         [RequiresBehaviourState]
         public virtual void Clear()
         {
-            Cleared?.Invoke(eventData.Set(PublisherSource, CurrentCollision));
+            Cleared?.Invoke(eventData.Set(PublisherSource, ActiveCollision));
             PublisherSource = null;
-            CurrentCollision = null;
+            ActiveCollision = null;
         }
     }
 }

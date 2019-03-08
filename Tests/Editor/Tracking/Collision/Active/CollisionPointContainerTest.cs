@@ -38,7 +38,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
-            publisher.sourceContainer = publisherObject;
+            publisher.SourceContainer = publisherObject;
             publisherObject.transform.position = Vector3.one;
 
             CollisionNotifier.EventData collisionNotifierEventData = CollisionNotifierHelper.GetEventData(out GameObject collisionNotifierContainer);
@@ -85,7 +85,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
-            publisher.sourceContainer = publisherObject;
+            publisher.SourceContainer = publisherObject;
             publisherObject.transform.position = Vector3.one;
 
             CollisionNotifier.EventData collisionNotifierEventData = CollisionNotifierHelper.GetEventData(out GameObject collisionNotifierContainer);
@@ -97,7 +97,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject publisherObjectAlt = new GameObject();
             ActiveCollisionPublisher.PayloadData publisherAlt = new ActiveCollisionPublisher.PayloadData();
-            publisherAlt.sourceContainer = publisherObjectAlt;
+            publisherAlt.SourceContainer = publisherObjectAlt;
             publisherObjectAlt.transform.position = Vector3.one;
 
             CollisionNotifier.EventData collisionNotifierEventDataAlt = CollisionNotifierHelper.GetEventData(out GameObject collisionNotifierContainerAlt);
