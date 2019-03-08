@@ -59,7 +59,7 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Target = target;
             subject.PrimaryPoint = primaryPoint;
             subject.SecondaryPoint = secondaryPoint;
-            subject.multiplier = 2f;
+            subject.Multiplier = 2f;
 
             Assert.AreEqual(Vector3.one, target.transform.localScale);
 

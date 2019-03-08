@@ -100,7 +100,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
-            subject.applyTransformations = TransformProperties.Position;
+            subject.ApplyTransformations = TransformProperties.Position;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
 
@@ -117,7 +117,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
-            subject.applyTransformations = TransformProperties.Rotation;
+            subject.ApplyTransformations = TransformProperties.Rotation;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
@@ -136,7 +136,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
-            subject.applyTransformations = TransformProperties.Scale;
+            subject.ApplyTransformations = TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
@@ -160,7 +160,7 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.Offset = offsetObject;
-            subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
+            subject.ApplyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
@@ -186,7 +186,7 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.Offset = offsetObject;
-            subject.applyTransformations = TransformProperties.Position | TransformProperties.Scale;
+            subject.ApplyTransformations = TransformProperties.Position | TransformProperties.Scale;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
@@ -212,8 +212,8 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.Offset = offsetObject;
-            subject.applyPositionOffsetOnAxis = new Vector3State(true, false, false);
-            subject.applyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
+            subject.ApplyPositionOffsetOnAxis = new Vector3State(true, false, false);
+            subject.ApplyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
             sourceTransformData.transform.position = Vector3.one * 2f;
             sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
@@ -332,7 +332,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
-            subject.applyTransformations = TransformProperties.Position;
+            subject.ApplyTransformations = TransformProperties.Position;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -347,7 +347,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
-            subject.applyTransformations = TransformProperties.Position;
+            subject.ApplyTransformations = TransformProperties.Position;
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
