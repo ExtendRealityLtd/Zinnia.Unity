@@ -29,8 +29,8 @@ namespace Test.Zinnia.Tracking.Velocity
         public void GetVelocity()
         {
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
-            subject.source = tracker;
-            subject.velocityMultiplier = 2f;
+            subject.Source = tracker;
+            subject.VelocityMultiplierFactor = 2f;
             Assert.AreEqual(Vector3.one * 2f, subject.GetVelocity());
             Assert.AreEqual(Vector3.one, subject.GetAngularVelocity());
 
@@ -41,8 +41,8 @@ namespace Test.Zinnia.Tracking.Velocity
         public void GetAngularVelocity()
         {
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
-            subject.source = tracker;
-            subject.angularVelocityMultiplier = 2f;
+            subject.Source = tracker;
+            subject.AngularVelocityMultiplierFactor = 2f;
             Assert.AreEqual(Vector3.one, subject.GetVelocity());
             Assert.AreEqual(Vector3.one * 2f, subject.GetAngularVelocity());
 
@@ -53,9 +53,9 @@ namespace Test.Zinnia.Tracking.Velocity
         public void InactiveSource()
         {
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
-            subject.source = tracker;
-            subject.angularVelocityMultiplier = 2f;
-            subject.source.enabled = false;
+            subject.Source = tracker;
+            subject.AngularVelocityMultiplierFactor = 2f;
+            subject.Source.enabled = false;
             Assert.AreEqual(Vector3.zero, subject.GetVelocity());
             Assert.AreEqual(Vector3.zero, subject.GetAngularVelocity());
 
@@ -66,8 +66,8 @@ namespace Test.Zinnia.Tracking.Velocity
         public void InactiveComponent()
         {
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
-            subject.source = tracker;
-            subject.angularVelocityMultiplier = 2f;
+            subject.Source = tracker;
+            subject.AngularVelocityMultiplierFactor = 2f;
             subject.enabled = false;
             Assert.AreEqual(Vector3.zero, subject.GetVelocity());
             Assert.AreEqual(Vector3.zero, subject.GetAngularVelocity());

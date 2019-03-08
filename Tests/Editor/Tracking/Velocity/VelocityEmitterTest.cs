@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Velocity
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
 
-
     public class VelocityEmitterTest
     {
         private GameObject containingObject;
@@ -36,7 +35,7 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.AngularVelocityEmitted.AddListener(angularVelocityEmittedMock.Listen);
 
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
-            subject.source = tracker;
+            subject.Source = tracker;
 
             subject.EmitAll();
 
@@ -56,7 +55,7 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.AngularVelocityEmitted.AddListener(angularVelocityEmittedMock.Listen);
 
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
-            subject.source = tracker;
+            subject.Source = tracker;
             subject.gameObject.SetActive(false);
 
             subject.EmitAll();
@@ -77,7 +76,7 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.AngularVelocityEmitted.AddListener(angularVelocityEmittedMock.Listen);
 
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
-            subject.source = tracker;
+            subject.Source = tracker;
             subject.enabled = false;
 
             subject.EmitAll();

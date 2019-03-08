@@ -1,4 +1,5 @@
 ﻿using Zinnia.Tracking.Velocity;
+using Zinnia.Tracking.Velocity.Collection;
 
 namespace Test.Zinnia.Tracking.Velocity
 {
@@ -32,9 +33,12 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(1f, 1f, 1f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -55,9 +59,12 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(2f, 2f, 2f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -78,9 +85,12 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(3f, 3f, 3f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -101,9 +111,12 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);
@@ -135,9 +148,13 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
+
             subject.GetVelocity();
 
             VelocityTrackerMock expectedResult = trackerThree;
@@ -159,9 +176,13 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
+
             subject.GetAngularVelocity();
 
             VelocityTrackerMock expectedResult = trackerTwo;
@@ -183,9 +204,12 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(1f, 1f, 1f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -206,9 +230,12 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(2f, 2f, 2f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -229,9 +256,12 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(3f, 3f, 3f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -252,9 +282,12 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);

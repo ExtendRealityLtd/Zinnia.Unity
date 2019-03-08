@@ -8,9 +8,9 @@
     public abstract class VelocityTracker : MonoBehaviour
     {
         /// <summary>
-        /// The state of whether the <see cref="Component"/> is active.
+        /// The state of whether the <see cref="Behaviour"/> is active.
         /// </summary>
-        /// <returns>Whether the <see cref="Component"/> is considered active.</returns>
+        /// <returns>Whether the <see cref="Behaviour"/> is considered active.</returns>
         public virtual bool IsActive()
         {
             return isActiveAndEnabled;
@@ -22,7 +22,7 @@
         /// <returns>The current velocity of the source</returns>
         public virtual Vector3 GetVelocity()
         {
-            return (IsActive() ? DoGetVelocity() : Vector3.zero);
+            return IsActive() ? DoGetVelocity() : Vector3.zero;
         }
 
         /// <summary>

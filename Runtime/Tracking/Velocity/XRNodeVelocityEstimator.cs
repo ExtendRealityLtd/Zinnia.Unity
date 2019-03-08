@@ -4,6 +4,7 @@
     using UnityEngine.XR;
     using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Retrieves the velocity estimations for an <see cref="XRNode"/>.
@@ -13,8 +14,9 @@
         /// <summary>
         /// The node to query velocity estimations for.
         /// </summary>
-        [DocumentedByXml]
-        public XRNode node = XRNode.LeftHand;
+        [Serialized]
+        [field: DocumentedByXml]
+        public XRNode Node { get; set; } = XRNode.LeftHand;
 
         /// <summary>
         /// A collection of node states.
@@ -36,7 +38,7 @@
         }
 
         /// <summary>
-        /// Gets the state of <see cref="node"/>.
+        /// Gets the state of <see cref="Node"/>.
         /// </summary>
         /// <returns>The associated node state.</returns>
         protected virtual XRNodeState GetNodeState()
@@ -44,7 +46,7 @@
             InputTracking.GetNodeStates(nodesStates);
             foreach (XRNodeState state in nodesStates)
             {
-                if (state.nodeType == node)
+                if (state.nodeType == Node)
                 {
                     return state;
                 }
