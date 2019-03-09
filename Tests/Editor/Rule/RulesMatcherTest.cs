@@ -1,4 +1,5 @@
 ﻿using Zinnia.Rule;
+using Zinnia.Rule.Collection;
 using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Rule
