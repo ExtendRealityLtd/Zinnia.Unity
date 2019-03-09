@@ -1,7 +1,8 @@
 ﻿namespace Zinnia.Haptics
 {
-    using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Haptics.Collection;
 
     /// <summary>
     /// A proxy for managing the first active <see cref="HapticProcess"/> that is provided in the collection.
@@ -11,8 +12,9 @@
         /// <summary>
         /// Process the first active <see cref="HapticProcess"/> found in the collection.
         /// </summary>
-        [DocumentedByXml]
-        public List<HapticProcess> hapticProcesses = new List<HapticProcess>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public HapticProcessObservableList HapticProcesses { get; set; }
 
         private HapticProcess _activeHapticProcess;
         /// <summary>
@@ -33,7 +35,7 @@
         protected override void DoBegin()
         {
             HapticProcess firstActiveProcess = null;
-            foreach (HapticProcess process in hapticProcesses)
+            foreach (HapticProcess process in HapticProcesses.ReadOnlyElements)
             {
                 if (process.IsActive())
                 {

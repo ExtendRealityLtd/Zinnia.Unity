@@ -3,34 +3,38 @@
     using UnityEngine;
     using System.Collections;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
-    /// Creates a haptic pattern based on the waveform of an <see cref="UnityEngine.AudioClip"/> and utilizes a <see cref="HapticPulser"/> to create the effect.
+    /// Creates a haptic pattern based on the waveform of an <see cref="UnityEngine.AudioClip"/> and utilizes a <see cref="Haptics.HapticPulser"/> to create the effect.
     /// </summary>
     public class AudioClipHapticPulser : HapticProcess
     {
         /// <summary>
         /// The pulse process to utilize.
         /// </summary>
-        [DocumentedByXml]
-        public HapticPulser hapticPulser;
+        [Serialized]
+        [field: DocumentedByXml]
+        public HapticPulser HapticPulser { get; set; }
         /// <summary>
         /// The waveform to represent the haptic pattern.
         /// </summary>
-        [DocumentedByXml]
-        public AudioClip audioClip;
+        [Serialized]
+        [field: DocumentedByXml]
+        public AudioClip AudioClip { get; set; }
         /// <summary>
         /// Multiplies the current audio peak to affect the wave intensity.
         /// </summary>
-        [DocumentedByXml]
-        public float intensityMultiplier = 1f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float IntensityMultiplier { get; set; } = 1f;
 
         /// <summary>
         /// A reference to the started routine.
         /// </summary>
         protected Coroutine hapticRoutine;
         /// <summary>
-        /// The original intensity of the provided <see cref="HapticPulser"/> to reset back to after the process is complete.
+        /// The original intensity of <see cref="HapticPulser"/> to reset back to after the process is complete.
         /// </summary>
         protected float cachedIntensity;
         /// <summary>
@@ -41,13 +45,13 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return (base.IsActive() && hapticPulser != null && audioClip != null && hapticPulser.IsActive());
+            return base.IsActive() && HapticPulser != null && AudioClip != null && HapticPulser.IsActive();
         }
 
         /// <inheritdoc />
         protected override void DoBegin()
         {
-            cachedIntensity = hapticPulser.Intensity;
+            cachedIntensity = HapticPulser.Intensity;
             hapticRoutine = StartCoroutine(HapticProcessRoutine());
         }
 
@@ -61,7 +65,7 @@
 
             StopCoroutine(hapticRoutine);
             hapticRoutine = null;
-            hapticPulser.Cancel();
+            HapticPulser.Cancel();
             ResetIntensity();
         }
 
@@ -70,11 +74,11 @@
         /// </summary>
         protected virtual void ResetIntensity()
         {
-            hapticPulser.Intensity = cachedIntensity;
+            HapticPulser.Intensity = cachedIntensity;
         }
 
         /// <summary>
-        /// Enumerates through the given <see cref="AudioClip"/> and pulses for each amplitude of the wave.
+        /// Enumerates through <see cref="AudioClip"/> and pulses for each amplitude of the wave.
         /// </summary>
         /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
         protected virtual IEnumerator HapticProcessRoutine()
@@ -82,21 +86,21 @@
             float[] audioData = new float[BufferSize];
             int sampleOffset = -BufferSize;
             float startTime = Time.time;
-            float length = audioClip.length;
+            float length = AudioClip.length;
             float endTime = startTime + length;
-            float sampleRate = audioClip.samples;
+            float sampleRate = AudioClip.samples;
             while (Time.time <= endTime)
             {
                 float lerpVal = (Time.time - startTime) / length;
                 int sampleIndex = (int)(sampleRate * lerpVal);
                 if (sampleIndex >= sampleOffset + BufferSize)
                 {
-                    audioClip.GetData(audioData, sampleIndex);
+                    AudioClip.GetData(audioData, sampleIndex);
                     sampleOffset = sampleIndex;
                 }
                 float currentSample = Mathf.Abs(audioData[sampleIndex - sampleOffset]);
-                hapticPulser.Intensity = currentSample * intensityMultiplier;
-                hapticPulser.Begin();
+                HapticPulser.Intensity = currentSample * IntensityMultiplier;
+                HapticPulser.Begin();
                 yield return null;
             }
             ResetIntensity();
