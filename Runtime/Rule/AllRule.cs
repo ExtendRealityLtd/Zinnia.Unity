@@ -5,7 +5,7 @@
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
-    using Zinnia.Data.Collection;
+    using Zinnia.Rule.Collection;
 
     /// <summary>
     /// Determines whether all <see cref="IRule"/>s in a list are accepting an object.

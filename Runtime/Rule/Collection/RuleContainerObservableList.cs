@@ -1,9 +1,9 @@
-﻿namespace Zinnia.Data.Collection
+﻿namespace Zinnia.Rule.Collection
 {
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
-    using Zinnia.Rule;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Allows observing changes to a <see cref="List{T}"/> of <see cref="RuleContainer"/>s.
