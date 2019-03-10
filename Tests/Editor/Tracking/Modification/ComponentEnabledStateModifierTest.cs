@@ -4,6 +4,8 @@ using Zinnia.Tracking.Modification;
 namespace Test.Zinnia.Tracking.Modification
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
 
     public class ComponentEnabledStateModifierTest
@@ -24,11 +26,12 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void SetEnabledStateOfBehaviour()
+        [UnityTest]
+        public IEnumerator SetEnabledStateOfBehaviour()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            yield return null;
 
             subject.Types.Add(typeof(Light));
             subject.Target = containingObject;
@@ -40,11 +43,12 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsTrue(behaviour.enabled);
         }
 
-        [Test]
-        public void SetEnabledStateOfRenderer()
+        [UnityTest]
+        public IEnumerator SetEnabledStateOfRenderer()
         {
             MeshRenderer renderer = containingObject.AddComponent<MeshRenderer>();
             subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            yield return null;
 
             subject.Types.Add(typeof(MeshRenderer));
             subject.Target = containingObject;
@@ -56,13 +60,14 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsTrue(renderer.enabled);
         }
 
-        [Test]
-        public void SetEnabledStateOfBehaviourAndRenderer()
+        [UnityTest]
+        public IEnumerator SetEnabledStateOfBehaviourAndRenderer()
         {
+            MeshRenderer renderer = containingObject.AddComponent<MeshRenderer>();
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            yield return null;
 
-            MeshRenderer renderer = containingObject.AddComponent<MeshRenderer>();
             subject.Types.Add(typeof(Light));
             subject.Types.Add(typeof(MeshRenderer));
             subject.Target = containingObject;
@@ -77,11 +82,12 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsTrue(renderer.enabled);
         }
 
-        [Test]
-        public void SetEnabledStateOfInvalidType()
+        [UnityTest]
+        public IEnumerator SetEnabledStateOfInvalidType()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            yield return null;
 
             subject.Types.Add(typeof(Renderer));
             subject.Target = containingObject;
@@ -91,11 +97,12 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsTrue(behaviour.enabled);
         }
 
-        [Test]
-        public void SetEnabledStateInvalidTarget()
+        [UnityTest]
+        public IEnumerator SetEnabledStateInvalidTarget()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            yield return null;
 
             subject.Types.Add(typeof(Light));
 
@@ -104,11 +111,12 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsTrue(behaviour.enabled);
         }
 
-        [Test]
-        public void SetEnabledStateInactiveGameObject()
+        [UnityTest]
+        public IEnumerator SetEnabledStateInactiveGameObject()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            yield return null;
 
             subject.Types.Add(typeof(Light));
             subject.Target = containingObject;
@@ -121,11 +129,12 @@ namespace Test.Zinnia.Tracking.Modification
         }
 
 
-        [Test]
-        public void SetEnabledStateInactiveComponent()
+        [UnityTest]
+        public IEnumerator SetEnabledStateInactiveComponent()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
             subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            yield return null;
 
             subject.Types.Add(typeof(Light));
             subject.Target = containingObject;
