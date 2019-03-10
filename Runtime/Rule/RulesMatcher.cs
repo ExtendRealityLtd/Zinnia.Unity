@@ -7,6 +7,7 @@
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
+    using Zinnia.Rule.Collection;
 
     /// <summary>
     /// Matches a given object against a collections of rules and emits the associated event.

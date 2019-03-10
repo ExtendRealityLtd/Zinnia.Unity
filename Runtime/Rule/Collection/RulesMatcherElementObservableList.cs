@@ -1,7 +1,8 @@
-﻿namespace Zinnia.Rule
+﻿namespace Zinnia.Rule.Collection
 {
     using UnityEngine.Events;
     using System;
+    using System.Collections.Generic;
     using Zinnia.Data.Collection;
 
     /// <summary>
