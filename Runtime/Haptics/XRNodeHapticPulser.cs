@@ -1,7 +1,8 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.XR;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Creates a timed haptic pulse on an <see cref="XRNode"/>.
@@ -11,23 +12,25 @@
         /// <summary>
         /// The node to pulse.
         /// </summary>
-        [DocumentedByXml]
-        public XRNode node = XRNode.LeftHand;
+        [Serialized]
+        [field: DocumentedByXml]
+        public XRNode Node { get; set; } = XRNode.LeftHand;
         /// <summary>
-        /// The duration to pulse <see cref="node"/> for.
+        /// The duration to pulse <see cref="Node"/> for.
         /// </summary>
-        [DocumentedByXml]
-        public float duration = 0.005f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float Duration { get; set; } = 0.005f;
 
         /// <summary>
-        /// The haptic capabilities of <see cref="node"/>.
+        /// The haptic capabilities of <see cref="Node"/>.
         /// </summary>
         protected HapticCapabilities nodeHapticCapabilities;
 
         /// <inheritdoc />
         protected override void DoBegin()
         {
-            Pulse(Intensity, duration);
+            Pulse(Intensity, Duration);
         }
 
         /// <inheritdoc />
@@ -37,13 +40,13 @@
         }
 
         /// <summary>
-        /// Sends a pulse to <see cref="node"/>.
+        /// Sends a pulse to <see cref="Node"/>.
         /// </summary>
         /// <param name="intensity">The intensity to pulse with.</param>
         /// <param name="duration">The duration to pulse for.</param>
         protected virtual void Pulse(float intensity, float duration)
         {
-            InputDevice device = InputDevices.GetDeviceAtXRNode(node);
+            InputDevice device = InputDevices.GetDeviceAtXRNode(Node);
             if (!device.TryGetHapticCapabilities(out nodeHapticCapabilities))
             {
                 return;
