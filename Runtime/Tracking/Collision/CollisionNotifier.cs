@@ -4,10 +4,12 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using Zinnia.Data.Attribute;
-    using Zinnia.Extension;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Rule;
+    using Zinnia.Extension;
+    using Zinnia.Data.Attribute;
 
     /// <summary>
     /// Allows emitting collision data via events.
@@ -24,35 +26,39 @@
             /// The source of this event in case it was forwarded.
             /// </summary>
             /// <remarks><see langword="null"/> if this event wasn't forwarded from anything.</remarks>
-            [DocumentedByXml]
-            public Component forwardSource;
+            [Serialized, Cleared]
+            [field: DocumentedByXml]
+            public Component ForwardSource { get; set; }
             /// <summary>
             /// Whether the collision was observed through a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
             /// </summary>
-            [DocumentedByXml]
-            public bool isTrigger;
+            [Serialized]
+            [field: DocumentedByXml]
+            public bool IsTrigger { get; set; }
             /// <summary>
-            /// The observed <see cref="Collision"/>. <see langword="null"/> if <see cref="isTrigger"/> is <see langword="true"/>.
+            /// The observed <see cref="Collision"/>. <see langword="null"/> if <see cref="IsTrigger"/> is <see langword="true"/>.
             /// </summary>
-            [DocumentedByXml]
-            public Collision collision;
+            [Serialized]
+            [field: DocumentedByXml]
+            public Collision CollisionData { get; set; }
             /// <summary>
             /// The observed <see cref="Collider"/>.
             /// </summary>
-            [DocumentedByXml]
-            public Collider collider;
+            [Serialized]
+            [field: DocumentedByXml]
+            public Collider ColliderData { get; set; }
 
             public EventData Set(EventData source)
             {
-                return Set(source.forwardSource, source.isTrigger, source.collision, source.collider);
+                return Set(source.ForwardSource, source.IsTrigger, source.CollisionData, source.ColliderData);
             }
 
             public EventData Set(Component forwardSource, bool isTrigger, Collision collision, Collider collider)
             {
-                this.forwardSource = forwardSource;
-                this.isTrigger = isTrigger;
-                this.collision = collision;
-                this.collider = collider;
+                ForwardSource = forwardSource;
+                IsTrigger = isTrigger;
+                CollisionData = collision;
+                ColliderData = collider;
                 return this;
             }
 
@@ -74,7 +80,7 @@
                     return true;
                 }
 
-                return Equals(collider.GetContainingTransform(), other.collider.GetContainingTransform());
+                return Equals(ColliderData.GetContainingTransform(), other.ColliderData.GetContainingTransform());
             }
 
             /// <inheritdoc />
@@ -101,7 +107,7 @@
             /// <inheritdoc />
             public override int GetHashCode()
             {
-                return collider.GetContainingTransform().GetHashCode();
+                return ColliderData.GetContainingTransform().GetHashCode();
             }
 
             public static bool operator ==(EventData left, EventData right) => Equals(left, right);
@@ -135,13 +141,15 @@
         /// <summary>
         /// The types of collisions that events will be emitted for.
         /// </summary>
-        [UnityFlags, DocumentedByXml]
-        public CollisionTypes emittedTypes = (CollisionTypes)(-1);
+        [Serialized]
+        [field: DocumentedByXml, UnityFlags]
+        public CollisionTypes EmittedTypes { get; set; } = (CollisionTypes)(-1);
         /// <summary>
         /// Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.
         /// </summary>
-        [DocumentedByXml]
-        public RuleContainer forwardingSourceValidity;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer ForwardingSourceValidity { get; set; }
 
         /// <summary>
         /// Emitted when a collision starts.
@@ -175,10 +183,10 @@
         /// <returns><see langword="true"/> if events should be emitted.</returns>
         protected virtual bool CanEmit(EventData data)
         {
-            return (data.isTrigger && (emittedTypes & CollisionTypes.Trigger) != 0
-                    || !data.isTrigger && (emittedTypes & CollisionTypes.Collision) != 0)
-                && (data.forwardSource == null
-                    || forwardingSourceValidity.Accepts(data.forwardSource.gameObject));
+            return (data.IsTrigger && (EmittedTypes & CollisionTypes.Trigger) != 0
+                    || !data.IsTrigger && (EmittedTypes & CollisionTypes.Collision) != 0)
+                && (data.ForwardSource == null
+                    || ForwardingSourceValidity.Accepts(data.ForwardSource.gameObject));
         }
 
         /// <summary>
@@ -188,7 +196,7 @@
         /// <returns>A <see cref="CollisionNotifier"/> collection for items found on the containing <see cref="Transform"/> component.</returns>
         protected virtual List<CollisionNotifier> GetNotifiers(EventData data)
         {
-            Transform reference = data.collider.GetContainingTransform();
+            Transform reference = data.ColliderData.GetContainingTransform();
 
             if (transform.IsChildOf(reference))
             {

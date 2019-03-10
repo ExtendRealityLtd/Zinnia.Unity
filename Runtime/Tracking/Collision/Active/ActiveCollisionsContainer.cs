@@ -4,8 +4,10 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Rule;
     using Zinnia.Extension;
 
@@ -23,24 +25,25 @@
             /// <summary>
             /// The current active collisions.
             /// </summary>
-            [DocumentedByXml]
-            public List<CollisionNotifier.EventData> activeCollisions = new List<CollisionNotifier.EventData>();
+            [Serialized]
+            [field: DocumentedByXml]
+            public List<CollisionNotifier.EventData> ActiveCollisions { get; set; } = new List<CollisionNotifier.EventData>();
 
             public EventData Set(EventData source)
             {
-                return Set(source.activeCollisions);
+                return Set(source.ActiveCollisions);
             }
 
             public EventData Set(List<CollisionNotifier.EventData> activeCollisions)
             {
-                this.activeCollisions.Clear();
-                this.activeCollisions.AddRange(activeCollisions);
+                ActiveCollisions.Clear();
+                ActiveCollisions.AddRange(activeCollisions);
                 return this;
             }
 
             public void Clear()
             {
-                activeCollisions.Clear();
+                ActiveCollisions.Clear();
             }
         }
 
@@ -55,8 +58,9 @@
         /// <summary>
         /// Determines whether the collision is valid and to add it to the active collision collection.
         /// </summary>
-        [DocumentedByXml]
-        public RuleContainer collisionValidity;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer CollisionValidity { get; set; }
 
         /// <summary>
         /// Emitted when the first collision occurs.
@@ -82,12 +86,11 @@
         /// <summary>
         /// The current active collisions.
         /// </summary>
-        public List<CollisionNotifier.EventData> Elements
-        {
-            get;
-            protected set;
-        } = new List<CollisionNotifier.EventData>();
+        public List<CollisionNotifier.EventData> Elements { get; protected set; } = new List<CollisionNotifier.EventData>();
 
+        /// <summary>
+        /// The event data emitted on active collision events.
+        /// </summary>
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
@@ -102,9 +105,8 @@
                 return;
             }
 
-            bool wasEmpty = (Elements.Count == 0);
             Elements.Add(CloneEventData(collisionData));
-            if (wasEmpty)
+            if (Elements.Count == 1)
             {
                 FirstStarted?.Invoke(eventData.Set(Elements));
             }
@@ -136,6 +138,11 @@
 
         protected virtual void OnDisable()
         {
+            if (Elements.Count == 0)
+            {
+                return;
+            }
+
             Elements.Clear();
             EmitEmptyEvents();
         }
@@ -145,10 +152,11 @@
         /// </summary>
         protected virtual void EmitEmptyEvents()
         {
-            if ((Elements.Count == 0))
+            if (Elements.Count == 0)
             {
                 AllStopped?.Invoke(eventData.Set(Elements));
             }
+
             CountChanged?.Invoke(eventData.Set(Elements));
             ProcessContentsChanged();
         }
@@ -170,7 +178,7 @@
         /// <returns>The validity result of the collision.</returns>
         protected virtual bool IsValidCollision(CollisionNotifier.EventData collisionData)
         {
-            return (collisionData.collider != null && collisionValidity.Accepts(collisionData.collider.gameObject));
+            return collisionData.ColliderData != null && CollisionValidity.Accepts(collisionData.ColliderData.gameObject);
         }
 
     }

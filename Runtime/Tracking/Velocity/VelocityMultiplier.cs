@@ -1,7 +1,9 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Multiplies the given source velocity data.
@@ -11,35 +13,38 @@
         /// <summary>
         /// The <see cref="VelocityTracker"/> to use as the source data.
         /// </summary>
-        [DocumentedByXml]
-        public VelocityTracker source;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public VelocityTracker Source { get; set; }
         /// <summary>
         /// The amount to multiply the source velocity by.
         /// </summary>
-        [DocumentedByXml]
-        public float velocityMultiplier = 1f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float VelocityMultiplierFactor { get; set; } = 1f;
         /// <summary>
         /// The amount to multiply the source angular velocity by.
         /// </summary>
-        [DocumentedByXml]
-        public float angularVelocityMultiplier = 1f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float AngularVelocityMultiplierFactor { get; set; } = 1f;
 
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return (base.IsActive() && source != null && source.isActiveAndEnabled);
+            return base.IsActive() && Source != null && Source.isActiveAndEnabled;
         }
 
         /// <inheritdoc />
         protected override Vector3 DoGetVelocity()
         {
-            return source.GetVelocity() * velocityMultiplier;
+            return Source.GetVelocity() * VelocityMultiplierFactor;
         }
 
         /// <inheritdoc />
         protected override Vector3 DoGetAngularVelocity()
         {
-            return source.GetAngularVelocity() * angularVelocityMultiplier;
+            return Source.GetAngularVelocity() * AngularVelocityMultiplierFactor;
         }
     }
 }

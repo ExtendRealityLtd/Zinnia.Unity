@@ -8,11 +8,11 @@ namespace Test.Zinnia.Utility.Helper
         public static string GetNamesOfActiveCollisions(ActiveCollisionsContainer.EventData list, string separator = ",")
         {
             string returnString = "";
-            for (int index = 0; index < list.activeCollisions.Count; index++)
+            for (int index = 0; index < list.ActiveCollisions.Count; index++)
             {
-                CollisionNotifier.EventData data = list.activeCollisions[index];
-                returnString += data.collider.name;
-                if (index < list.activeCollisions.Count - 1)
+                CollisionNotifier.EventData data = list.ActiveCollisions[index];
+                returnString += data.ColliderData.name;
+                if (index < list.ActiveCollisions.Count - 1)
                 {
                     returnString += separator;
                 }

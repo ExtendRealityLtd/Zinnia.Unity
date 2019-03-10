@@ -1,8 +1,9 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Tracking.Velocity.Collection;
 
     /// <summary>
     /// A proxy for reporting on velocity data on the first active <see cref="VelocityTracker"/> that is provided in the collection.
@@ -12,19 +13,23 @@
         /// <summary>
         /// Process the first active <see cref="VelocityTracker"/> found in the collection.
         /// </summary>
-        [DocumentedByXml]
-        public List<VelocityTracker> velocityTrackers = new List<VelocityTracker>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public VelocityTrackerObservableList VelocityTrackers { get; set; }
 
-        private VelocityTracker _activeVelocityTracker;
+        /// <summary>
+        /// The backing field for holding the value of <see cref="ActiveVelocityTracker"/>.
+        /// </summary>
+        private VelocityTracker activeVelocityTracker;
         /// <summary>
         /// The current active <see cref="VelocityTracker"/> that is reporting velocities.
         /// </summary>
         public VelocityTracker ActiveVelocityTracker
         {
-            get => _activeVelocityTracker != null && _activeVelocityTracker.IsActive() ? _activeVelocityTracker : null;
+            get => activeVelocityTracker != null && activeVelocityTracker.IsActive() ? activeVelocityTracker : null;
             protected set
             {
-                _activeVelocityTracker = value;
+                activeVelocityTracker = value;
             }
         }
 
@@ -35,7 +40,7 @@
         protected override Vector3 DoGetVelocity()
         {
             SetActiveVelocityTracker();
-            return (ActiveVelocityTracker != null ? ActiveVelocityTracker.GetVelocity() : Vector3.zero);
+            return ActiveVelocityTracker != null ? ActiveVelocityTracker.GetVelocity() : Vector3.zero;
         }
 
         /// <summary>
@@ -45,16 +50,22 @@
         protected override Vector3 DoGetAngularVelocity()
         {
             SetActiveVelocityTracker();
-            return (ActiveVelocityTracker != null ? ActiveVelocityTracker.GetAngularVelocity() : Vector3.zero);
+            return ActiveVelocityTracker != null ? ActiveVelocityTracker.GetAngularVelocity() : Vector3.zero;
         }
 
         /// <summary>
-        /// Sets the active <see cref="VelocityTracker"/> from the <see cref="velocityTrackers"/> collection.
+        /// Sets the active <see cref="VelocityTracker"/> from the <see cref="VelocityTrackers"/> collection.
         /// </summary>
         protected virtual void SetActiveVelocityTracker()
         {
+            if (VelocityTrackers == null)
+            {
+                ActiveVelocityTracker = null;
+                return;
+            }
+
             VelocityTracker firstActiveTracker = null;
-            foreach (VelocityTracker tracker in velocityTrackers)
+            foreach (VelocityTracker tracker in VelocityTrackers.ReadOnlyElements)
             {
                 if (tracker.IsActive())
                 {

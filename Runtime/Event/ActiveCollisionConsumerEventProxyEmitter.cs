@@ -20,7 +20,7 @@
         /// <inheritdoc />
         protected override object GetTargetToCheck()
         {
-            return Payload?.publisher?.PublisherContainer;
+            return Payload?.Publisher?.PublisherContainer;
         }
     }
 }

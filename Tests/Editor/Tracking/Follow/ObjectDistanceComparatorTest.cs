@@ -39,7 +39,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Source = source;
             subject.Target = target;
-            subject.distanceThreshold = 0.5f;
+            subject.DistanceThreshold = 0.5f;
 
             source.transform.position = Vector3.zero;
             target.transform.position = Vector3.zero;
@@ -91,7 +91,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Source = target;
             subject.Target = target;
-            subject.distanceThreshold = 0.5f;
+            subject.DistanceThreshold = 0.5f;
 
             target.transform.position = Vector3.zero;
 
@@ -141,7 +141,7 @@ namespace Test.Zinnia.Tracking.Follow
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.distanceThreshold = 0.5f;
+            subject.DistanceThreshold = 0.5f;
 
             target.transform.position = Vector3.forward * 1f;
 
@@ -167,7 +167,7 @@ namespace Test.Zinnia.Tracking.Follow
             GameObject source = new GameObject();
 
             subject.Source = source;
-            subject.distanceThreshold = 0.5f;
+            subject.DistanceThreshold = 0.5f;
 
             subject.Process();
 
@@ -193,7 +193,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Source = source;
             subject.Target = target;
-            subject.distanceThreshold = 0.5f;
+            subject.DistanceThreshold = 0.5f;
 
             source.transform.position = Vector3.zero;
             target.transform.position = Vector3.forward * 1f;
@@ -225,7 +225,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Source = source;
             subject.Target = target;
-            subject.distanceThreshold = 0.5f;
+            subject.DistanceThreshold = 0.5f;
 
             source.transform.position = Vector3.zero;
             target.transform.position = Vector3.forward * 1f;

@@ -15,13 +15,13 @@
         /// <returns>The <see cref="GameObject"/> of the <see cref="Collider"/> within the event data.</returns>
         public virtual GameObject Extract(CollisionNotifier.EventData eventData)
         {
-            if (eventData == null || eventData.collider == null)
+            if (eventData == null || eventData.ColliderData == null)
             {
                 Result = null;
                 return null;
             }
 
-            Result = eventData.collider.gameObject;
+            Result = eventData.ColliderData.gameObject;
             return base.Extract();
         }
 

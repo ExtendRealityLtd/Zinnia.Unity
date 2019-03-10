@@ -39,7 +39,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
-            publisher.sourceContainer = publisherObject;
+            publisher.SourceContainer = publisherObject;
 
             Assert.IsFalse(consumedMock.Received);
             Assert.IsFalse(clearedMock.Received);
@@ -80,7 +80,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             {
                 Interface = anyComponentTypeRule
             };
-            subject.publisherValidity = new RuleContainer
+            subject.PublisherValidity = new RuleContainer
             {
                 Interface = negationRule
             };
@@ -111,7 +111,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
-            publisher.sourceContainer = publisherObject;
+            publisher.SourceContainer = publisherObject;
 
             subject.gameObject.SetActive(false);
             subject.Consume(publisher, null);
@@ -135,7 +135,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
-            publisher.sourceContainer = publisherObject;
+            publisher.SourceContainer = publisherObject;
 
             subject.enabled = false;
             subject.Consume(publisher, null);

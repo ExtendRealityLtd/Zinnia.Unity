@@ -1,9 +1,9 @@
 ﻿using Zinnia.Tracking.Modification;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Tracking.Modification
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using NUnit.Framework;
 
     public class GameObjectStateSwitcherTest
@@ -32,12 +32,17 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 0;
 
             subject.ManualOnEnable();
+            subject.SwitchToStartIndex();
 
             Assert.IsTrue(objectA.activeInHierarchy);
             Assert.IsFalse(objectB.activeInHierarchy);
@@ -73,12 +78,17 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 0;
 
             subject.ManualOnEnable();
+            subject.SwitchToStartIndex();
 
             Assert.IsTrue(objectA.activeInHierarchy);
             Assert.IsFalse(objectB.activeInHierarchy);
@@ -114,12 +124,17 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 0;
 
             subject.ManualOnEnable();
+            subject.SwitchToStartIndex();
 
             Assert.IsTrue(objectA.activeInHierarchy);
             Assert.IsFalse(objectB.activeInHierarchy);
@@ -167,12 +182,17 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = false;
-            subject.switchOnEnable = true;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = false;
+            subject.StartIndex = 0;
 
             subject.ManualOnEnable();
+            subject.SwitchToStartIndex();
 
             Assert.IsFalse(objectA.activeInHierarchy);
             Assert.IsTrue(objectB.activeInHierarchy);
@@ -196,12 +216,17 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 1;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 1;
 
             subject.ManualOnEnable();
+            subject.SwitchToStartIndex();
 
             Assert.IsFalse(objectA.activeInHierarchy);
             Assert.IsTrue(objectB.activeInHierarchy);
@@ -225,12 +250,17 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 2;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 2;
 
             subject.ManualOnEnable();
+            subject.SwitchToStartIndex();
 
             Assert.IsFalse(objectA.activeInHierarchy);
             Assert.IsFalse(objectB.activeInHierarchy);
@@ -254,10 +284,14 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 0;
 
             subject.ManualOnEnable();
 
@@ -283,10 +317,14 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 1;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 1;
 
             subject.ManualOnEnable();
 
@@ -312,10 +350,14 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 2;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 2;
 
             subject.ManualOnEnable();
 
@@ -341,10 +383,14 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 0;
 
             subject.gameObject.SetActive(false);
 
@@ -370,10 +416,14 @@ namespace Test.Zinnia.Tracking.Modification
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = targets;
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.StartIndex = 0;
 
             subject.enabled = false;
 

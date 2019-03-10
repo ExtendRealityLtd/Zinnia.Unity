@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Modification;
+﻿using Zinnia.Data.Collection;
+using Zinnia.Tracking.Modification;
 
 namespace Test.Zinnia.Tracking.Modification
 {
@@ -27,7 +28,9 @@ namespace Test.Zinnia.Tracking.Modification
         public void SetEnabledStateOfBehaviour()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.types.Add(typeof(Light));
+            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+
+            subject.Types.Add(typeof(Light));
             subject.Target = containingObject;
 
             Assert.IsTrue(behaviour.enabled);
@@ -41,7 +44,9 @@ namespace Test.Zinnia.Tracking.Modification
         public void SetEnabledStateOfRenderer()
         {
             MeshRenderer renderer = containingObject.AddComponent<MeshRenderer>();
-            subject.types.Add(typeof(MeshRenderer));
+            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+
+            subject.Types.Add(typeof(MeshRenderer));
             subject.Target = containingObject;
 
             Assert.IsTrue(renderer.enabled);
@@ -55,9 +60,11 @@ namespace Test.Zinnia.Tracking.Modification
         public void SetEnabledStateOfBehaviourAndRenderer()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
+            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+
             MeshRenderer renderer = containingObject.AddComponent<MeshRenderer>();
-            subject.types.Add(typeof(Light));
-            subject.types.Add(typeof(MeshRenderer));
+            subject.Types.Add(typeof(Light));
+            subject.Types.Add(typeof(MeshRenderer));
             subject.Target = containingObject;
 
             Assert.IsTrue(behaviour.enabled);
@@ -74,7 +81,9 @@ namespace Test.Zinnia.Tracking.Modification
         public void SetEnabledStateOfInvalidType()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.types.Add(typeof(Renderer));
+            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+
+            subject.Types.Add(typeof(Renderer));
             subject.Target = containingObject;
 
             Assert.IsTrue(behaviour.enabled);
@@ -86,7 +95,9 @@ namespace Test.Zinnia.Tracking.Modification
         public void SetEnabledStateInvalidTarget()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.types.Add(typeof(Light));
+            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+
+            subject.Types.Add(typeof(Light));
 
             Assert.IsTrue(behaviour.enabled);
             subject.SetEnabledState(false);
@@ -97,7 +108,9 @@ namespace Test.Zinnia.Tracking.Modification
         public void SetEnabledStateInactiveGameObject()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.types.Add(typeof(Light));
+            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+
+            subject.Types.Add(typeof(Light));
             subject.Target = containingObject;
 
             subject.gameObject.SetActive(false);
@@ -112,7 +125,9 @@ namespace Test.Zinnia.Tracking.Modification
         public void SetEnabledStateInactiveComponent()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.types.Add(typeof(Light));
+            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+
+            subject.Types.Add(typeof(Light));
             subject.Target = containingObject;
 
             subject.enabled = false;

@@ -2,18 +2,18 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
-    using EmptyUnityEvent = UnityEngine.Events.UnityEvent;
     using System;
-    using System.Collections.Generic;
-    using Malimbe.BehaviourStateRequirementMethod;
-    /*using Malimbe.PropertySetterMethod;*/
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
+    using Zinnia.Data.Collection;
     using Zinnia.Process.Component;
     using Zinnia.Tracking.Follow.Modifier;
 
     /// <summary>
-    /// Mirrors the <see cref="Transform"/> properties of another <see cref="Transform"/> based on the given <see cref="FollowModifier"/>.
+    /// Mirrors the <see cref="Transform"/> properties of another <see cref="Transform"/> based on the given <see cref="Modifier.FollowModifier"/>.
     /// </summary>
     public class ObjectFollower : GameObjectSourceTargetProcessor
     {
@@ -24,31 +24,34 @@
         public class EventData
         {
             /// <summary>
-            /// The source utilize within the <see cref="FollowModifier"/>.
+            /// The source utilize within the <see cref="Modifier.FollowModifier"/>.
             /// </summary>
-            [DocumentedByXml]
-            public GameObject source;
+            [Serialized, Cleared]
+            [field: DocumentedByXml]
+            public GameObject EventSource { get; set; }
             /// <summary>
-            /// The target to apply the <see cref="FollowModifier"/> on.
+            /// The target to apply the <see cref="Modifier.FollowModifier"/> on.
             /// </summary>
-            [DocumentedByXml]
-            public GameObject target;
+            [Serialized, Cleared]
+            [field: DocumentedByXml]
+            public GameObject EventTarget { get; set; }
             /// <summary>
             /// The optional offset the target follow against the source.
             /// </summary>
-            [DocumentedByXml]
-            public GameObject targetOffset;
+            [Serialized, Cleared]
+            [field: DocumentedByXml]
+            public GameObject EventTargetOffset { get; set; }
 
             public EventData Set(EventData source)
             {
-                return Set(source.source, source.target, source.targetOffset);
+                return Set(source.EventSource, source.EventTarget, source.EventTargetOffset);
             }
 
             public EventData Set(GameObject source, GameObject target, GameObject targetOffset = null)
             {
-                this.source = source;
-                this.target = target;
-                this.targetOffset = targetOffset;
+                EventSource = source;
+                EventTarget = target;
+                EventTargetOffset = targetOffset;
                 return this;
             }
 
@@ -62,36 +65,33 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<EventData>
+        public class FollowEvent : UnityEvent<EventData>
         {
         }
 
         /// <summary>
         /// A <see cref="GameObject"/> collection of target offsets to offset the target against the source whilst following.
         /// </summary>
-        [DocumentedByXml]
-        public List<GameObject> targetOffsets = new List<GameObject>();
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObjectObservableList TargetOffsets { get; set; }
         /// <summary>
-        /// The <see cref="FollowModifier"/> to apply.
+        /// The <see cref="Modifier.FollowModifier"/> to apply.
         /// </summary>
-        [Header("Follow Settings"), DocumentedByXml]
-        public FollowModifier followModifier;
-
-        /// <summary>
-        /// The current <see cref="targetOffsets"/> collection index.
-        /// </summary>
-        public int CurrentTargetOffsetsIndex { get; set; }
+        [Serialized, Cleared]
+        [field: Header("Follow Settings"), DocumentedByXml]
+        public FollowModifier FollowModifier { get; set; }
 
         /// <summary>
         /// Emitted before any processing.
         /// </summary>
         [DocumentedByXml]
-        public EmptyUnityEvent Preprocessed = new EmptyUnityEvent();
+        public UnityEvent Preprocessed = new UnityEvent();
         /// <summary>
         /// Emitted after all processing is complete.
         /// </summary>
         [DocumentedByXml]
-        public EmptyUnityEvent Processed = new EmptyUnityEvent();
+        public UnityEvent Processed = new UnityEvent();
 
         /// <inheritdoc />
         [RequiresBehaviourState]
@@ -102,72 +102,33 @@
             Processed?.Invoke();
         }
 
-        /// <summary>
-        /// Adds the given targetOffset to the targetOffsets collection.
-        /// </summary>
-        /// <param name="targetOffset">The targetOffset to add.</param>
-        public virtual void AddTargetOffset(GameObject targetOffset)
-        {
-            targetOffsets.Add(targetOffset);
-        }
-
-        /// <summary>
-        /// Removes the given targetOffset from the targetOffsets collection.
-        /// </summary>
-        /// <param name="targetOffset">The targetOffset to remove.</param>
-        public virtual void RemoveTargetOffset(GameObject targetOffset)
-        {
-            targetOffsets.Remove(targetOffset);
-        }
-
-        /// <summary>
-        /// Sets the given targetOffset at the current targetOffsets index.
-        /// </summary>
-        /// <param name="targetOffset">The targetOffset to set.</param>
-        public virtual void SetTargetOffsetAtCurrentIndex(GameObject targetOffset)
-        {
-            if (targetOffsets.Count == 0)
-            {
-                targetOffsets.Add(targetOffset);
-            }
-            else
-            {
-                targetOffsets[CurrentTargetsIndex] = targetOffset;
-            }
-        }
-
-        /// <summary>
-        /// Clears the targetOffsets collection.
-        /// </summary>
-        public virtual void ClearTargetOffsets()
-        {
-            targetOffsets.Clear();
-        }
-
-        /// <summary>
         /// Applies the follow modification of the given source to the given target.
         /// </summary>
         /// <param name="source">The source to take the follow data from.</param>
         /// <param name="target">The target to apply the follow data to.</param>
         protected override void ApplySourceToTarget(GameObject source, GameObject target)
         {
-            GameObject followOffset = (targetOffsets.Count > 0 ? targetOffsets[targetOffsets.GetWrappedAndClampedIndex(CurrentTargetsIndex)] : null);
-            if (followOffset != null && !followOffset.transform.IsChildOf(targets[CurrentTargetsIndex].transform))
+            GameObject followOffset = GetFollowOffset();
+            if (followOffset != null && !followOffset.transform.IsChildOf(Targets.ReadOnlyElements[Targets.CurrentIndex].transform))
             {
-                throw new ArgumentException($"The `targetOffsets` at index [{CurrentTargetsIndex}] must be a child of the GameObject at `targets` index [{CurrentTargetsIndex}].");
+                throw new ArgumentException($"The `targetOffsets` at index [{Targets.CurrentIndex}] must be a child of the GameObject at `targets` index [{Targets.CurrentIndex}].");
             }
-            followModifier.Modify(source, target, followOffset);
+            FollowModifier.Modify(source, target, followOffset);
         }
 
         /// <summary>
-        /// Handles changes to <see cref="CurrentTargetOffsetsIndex"/>.
+        /// Gets the Follow Offset for the current target offset based on the current target index.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        /*[CalledBySetter(nameof(CurrentTargetOffsetsIndex))]*/
-        protected virtual void OnCurrentTargetOffsetsIndexChange(int previousValue, ref int newValue)
+        /// <returns></returns>
+        protected virtual GameObject GetFollowOffset()
         {
-            newValue = targetOffsets.GetWrappedAndClampedIndex(newValue);
+            if (Targets == null || TargetOffsets == null || Targets.ReadOnlyElements.Count == 0 || TargetOffsets.ReadOnlyElements.Count == 0)
+            {
+                return null;
+            }
+
+            int currentIndexTargets = TargetOffsets.ReadOnlyElements.GetWrappedAndClampedIndex(Targets.CurrentIndex);
+            return TargetOffsets.ReadOnlyElements[currentIndexTargets];
         }
     }
 }
