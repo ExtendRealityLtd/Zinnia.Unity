@@ -24,16 +24,11 @@
         [field: DocumentedByXml]
         public bool TargetState { get; set; } = true;
         /// <summary>
-        /// The index in the collection to start at.
+        /// The current active index in the targets collection.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
-        public int StartIndex { get; set; }
-
-        /// <summary>
-        /// The current active index in the targets collection.
-        /// </summary>
-        public int CurrentIndex { get; protected set; }
+        public int CurrentIndex { get; set; }
 
         /// <summary>
         /// Switches to the next target in the collection and sets to the appropriate state.
@@ -77,17 +72,12 @@
         }
 
         /// <summary>
-        /// Switches to the target at the <see cref="StartIndex"/> in the collection and sets to the appropriate state.
+        /// Switches to the target at the <see cref="CurrentIndex"/> in the collection and sets to the appropriate state.
         /// </summary>
         [RequiresBehaviourState]
-        public virtual void SwitchToStartIndex()
+        public virtual void SwitchToCurrentIndex()
         {
-            SwitchTo(StartIndex);
-        }
-
-        protected virtual void OnEnable()
-        {
-            CurrentIndex = StartIndex;
+            SwitchTo(CurrentIndex);
         }
 
         /// <summary>
