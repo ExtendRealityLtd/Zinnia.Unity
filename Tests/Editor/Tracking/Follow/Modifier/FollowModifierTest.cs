@@ -22,7 +22,6 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -66,7 +65,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsTrue(rotationMock.modified);
             Assert.IsTrue(scaleMock.modified);
 
-            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(offset);
         }
@@ -110,7 +109,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsTrue(rotationMock.modified);
             Assert.IsTrue(scaleMock.modified);
 
-            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
         }
 
@@ -153,7 +152,6 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(offset);
         }
@@ -197,7 +195,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(source);
             Object.DestroyImmediate(offset);
         }
 
@@ -242,7 +240,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(offset);
         }
@@ -288,7 +286,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Assert.IsFalse(rotationMock.modified);
             Assert.IsFalse(scaleMock.modified);
 
-            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(offset);
         }

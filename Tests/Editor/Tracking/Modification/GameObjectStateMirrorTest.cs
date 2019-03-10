@@ -21,7 +21,6 @@ namespace Test.Zinnia.Tracking.Modification
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -58,6 +57,11 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsTrue(target1.gameObject.activeInHierarchy);
             Assert.IsTrue(target2.gameObject.activeInHierarchy);
             Assert.IsTrue(target3.gameObject.activeInHierarchy);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target1);
+            Object.DestroyImmediate(target2);
+            Object.DestroyImmediate(target3);
         }
 
         [Test]
@@ -93,6 +97,11 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsFalse(target1.gameObject.activeInHierarchy);
             Assert.IsFalse(target2.gameObject.activeInHierarchy);
             Assert.IsFalse(target3.gameObject.activeInHierarchy);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target1);
+            Object.DestroyImmediate(target2);
+            Object.DestroyImmediate(target3);
         }
 
         [Test]
@@ -137,6 +146,11 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsFalse(target1.gameObject.activeInHierarchy);
             Assert.IsFalse(target2.gameObject.activeInHierarchy);
             Assert.IsFalse(target3.gameObject.activeInHierarchy);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target1);
+            Object.DestroyImmediate(target2);
+            Object.DestroyImmediate(target3);
         }
     }
 }

@@ -20,7 +20,6 @@ namespace Test.Zinnia.Tracking.Modification
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -181,6 +180,8 @@ namespace Test.Zinnia.Tracking.Modification
             target.transform.localScale = Vector3.one * 2f;
             subject.RestoreSavedScale();
             Assert.AreEqual(Vector3.one, target.transform.localScale);
+
+            Object.DestroyImmediate(target);
         }
     }
 }
