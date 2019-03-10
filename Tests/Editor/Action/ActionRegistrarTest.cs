@@ -74,8 +74,8 @@ namespace Test.Zinnia.Action
             yield return null;
 
             Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
-            Assert.AreEqual(1, subject.SourceLimits.ReadOnlyElements.Count);
-            Assert.IsNull(subject.SourceLimits.ReadOnlyElements[0]);
+            Assert.AreEqual(1, subject.SourceLimits.SubscribableElements.Count);
+            Assert.IsNull(subject.SourceLimits.SubscribableElements[0]);
 
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);
@@ -121,7 +121,7 @@ namespace Test.Zinnia.Action
 
             Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
             Assert.AreEqual(twoSourceAction, targetAction.ReadOnlySources[0]);
-            Assert.AreEqual(twoSourceActionObject, subject.SourceLimits.ReadOnlyElements[0]);
+            Assert.AreEqual(twoSourceActionObject, subject.SourceLimits.SubscribableElements[0]);
 
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);
@@ -165,8 +165,8 @@ namespace Test.Zinnia.Action
             yield return null;
 
             Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
-            Assert.AreEqual(1, subject.SourceLimits.ReadOnlyElements.Count);
-            Assert.IsNull(subject.SourceLimits.ReadOnlyElements[0]);
+            Assert.AreEqual(1, subject.SourceLimits.SubscribableElements.Count);
+            Assert.IsNull(subject.SourceLimits.SubscribableElements[0]);
 
             Object.DestroyImmediate(targetActionObject);
             Object.DestroyImmediate(oneSourceActionObject);

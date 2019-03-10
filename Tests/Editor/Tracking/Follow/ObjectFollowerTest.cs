@@ -38,10 +38,10 @@ namespace Test.Zinnia.Tracking.Follow
             subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
 
-            Assert.IsEmpty(subject.TargetOffsets.ReadOnlyElements);
+            Assert.IsEmpty(subject.TargetOffsets.SubscribableElements);
             subject.TargetOffsets.Add(offset);
-            Assert.AreEqual(1, subject.TargetOffsets.ReadOnlyElements.Count);
-            Assert.AreEqual(offset, subject.TargetOffsets.ReadOnlyElements[0]);
+            Assert.AreEqual(1, subject.TargetOffsets.SubscribableElements.Count);
+            Assert.AreEqual(offset, subject.TargetOffsets.SubscribableElements[0]);
             Object.DestroyImmediate(offset);
         }
 
@@ -53,11 +53,11 @@ namespace Test.Zinnia.Tracking.Follow
             yield return null;
 
             subject.TargetOffsets.Add(offset);
-            Assert.AreEqual(1, subject.TargetOffsets.ReadOnlyElements.Count);
-            Assert.AreEqual(offset, subject.TargetOffsets.ReadOnlyElements[0]);
+            Assert.AreEqual(1, subject.TargetOffsets.SubscribableElements.Count);
+            Assert.AreEqual(offset, subject.TargetOffsets.SubscribableElements[0]);
 
             subject.TargetOffsets.Remove(offset);
-            Assert.IsEmpty(subject.TargetOffsets.ReadOnlyElements);
+            Assert.IsEmpty(subject.TargetOffsets.SubscribableElements);
             Object.DestroyImmediate(offset);
         }
 
@@ -73,15 +73,15 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.TargetOffsets.Add(offset1);
             subject.TargetOffsets.Add(offset2);
-            Assert.AreEqual(2, subject.TargetOffsets.ReadOnlyElements.Count);
+            Assert.AreEqual(2, subject.TargetOffsets.SubscribableElements.Count);
 
             subject.TargetOffsets.CurrentIndex = 0;
 
             subject.TargetOffsets.SetAtCurrentIndex(newOffset1);
 
-            Assert.AreEqual(2, subject.TargetOffsets.ReadOnlyElements.Count);
-            Assert.AreEqual(newOffset1, subject.TargetOffsets.ReadOnlyElements[0]);
-            Assert.AreEqual(offset2, subject.TargetOffsets.ReadOnlyElements[1]);
+            Assert.AreEqual(2, subject.TargetOffsets.SubscribableElements.Count);
+            Assert.AreEqual(newOffset1, subject.TargetOffsets.SubscribableElements[0]);
+            Assert.AreEqual(offset2, subject.TargetOffsets.SubscribableElements[1]);
 
             Object.DestroyImmediate(offset1);
             Object.DestroyImmediate(offset2);
@@ -97,11 +97,11 @@ namespace Test.Zinnia.Tracking.Follow
             yield return null;
 
             subject.TargetOffsets.Add(offset);
-            Assert.AreEqual(1, subject.TargetOffsets.ReadOnlyElements.Count);
-            Assert.AreEqual(offset, subject.TargetOffsets.ReadOnlyElements[0]);
+            Assert.AreEqual(1, subject.TargetOffsets.SubscribableElements.Count);
+            Assert.AreEqual(offset, subject.TargetOffsets.SubscribableElements[0]);
 
             subject.TargetOffsets.Clear(false);
-            Assert.IsEmpty(subject.TargetOffsets.ReadOnlyElements);
+            Assert.IsEmpty(subject.TargetOffsets.SubscribableElements);
             Object.DestroyImmediate(offset);
         }
 

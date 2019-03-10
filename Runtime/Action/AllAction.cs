@@ -47,7 +47,7 @@
             Actions.ElementAdded.AddListener(OnActionAdded);
             Actions.ElementRemoved.AddListener(OnActionRemoved);
 
-            foreach (Action action in Actions.ReadOnlyElements)
+            foreach (Action action in Actions.SubscribableElements)
             {
                 action.ActivationStateChanged.AddListener(OnActionActivationStateChanged);
             }
@@ -61,7 +61,7 @@
             Actions.ElementAdded.RemoveListener(OnActionAdded);
             Actions.ElementRemoved.RemoveListener(OnActionRemoved);
 
-            foreach (Action action in Actions.ReadOnlyElements)
+            foreach (Action action in Actions.SubscribableElements)
             {
                 action.ActivationStateChanged.RemoveListener(OnActionActivationStateChanged);
             }
@@ -82,8 +82,8 @@
                 return;
             }
 
-            bool areAllActionsActivated = Actions.ReadOnlyElements.Count > 0 != DefaultValue;
-            foreach (Action action in Actions.ReadOnlyElements)
+            bool areAllActionsActivated = Actions.SubscribableElements.Count > 0 != DefaultValue;
+            foreach (Action action in Actions.SubscribableElements)
             {
                 if (!action.IsActivated)
                 {

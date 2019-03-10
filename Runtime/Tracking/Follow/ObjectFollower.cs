@@ -109,7 +109,7 @@
         protected override void ApplySourceToTarget(GameObject source, GameObject target)
         {
             GameObject followOffset = GetFollowOffset();
-            if (followOffset != null && !followOffset.transform.IsChildOf(Targets.ReadOnlyElements[Targets.CurrentIndex].transform))
+            if (followOffset != null && !followOffset.transform.IsChildOf(Targets.SubscribableElements[Targets.CurrentIndex].transform))
             {
                 throw new ArgumentException($"The `targetOffsets` at index [{Targets.CurrentIndex}] must be a child of the GameObject at `targets` index [{Targets.CurrentIndex}].");
             }
@@ -122,13 +122,13 @@
         /// <returns></returns>
         protected virtual GameObject GetFollowOffset()
         {
-            if (Targets == null || TargetOffsets == null || Targets.ReadOnlyElements.Count == 0 || TargetOffsets.ReadOnlyElements.Count == 0)
+            if (Targets == null || TargetOffsets == null || Targets.SubscribableElements.Count == 0 || TargetOffsets.SubscribableElements.Count == 0)
             {
                 return null;
             }
 
-            int currentIndexTargets = TargetOffsets.ReadOnlyElements.GetWrappedAndClampedIndex(Targets.CurrentIndex);
-            return TargetOffsets.ReadOnlyElements[currentIndexTargets];
+            int currentIndexTargets = TargetOffsets.SubscribableElements.GetWrappedAndClampedIndex(Targets.CurrentIndex);
+            return TargetOffsets.SubscribableElements[currentIndexTargets];
         }
     }
 }

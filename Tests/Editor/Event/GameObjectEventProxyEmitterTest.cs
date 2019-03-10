@@ -55,7 +55,7 @@ namespace Test.Zinnia.Event
             rule.Objects = objects;
 
             objects.Add(digestValid);
-            subject.receiveValidity = new RuleContainer
+            subject.ReceiveValidity = new RuleContainer
             {
                 Interface = rule
             };
