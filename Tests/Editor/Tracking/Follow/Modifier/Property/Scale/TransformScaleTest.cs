@@ -20,7 +20,6 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -82,6 +81,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
+            Object.DestroyImmediate(offset);
         }
 
         [Test]

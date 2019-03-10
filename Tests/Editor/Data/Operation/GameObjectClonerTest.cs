@@ -21,7 +21,6 @@ namespace Test.Zinnia.Data.Operation
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -45,6 +44,8 @@ namespace Test.Zinnia.Data.Operation
             Assert.IsNull(actual);
             Assert.IsFalse(clonedMock.Received);
             Assert.IsNull(clonedMock.Value);
+
+            Object.DestroyImmediate(actual);
         }
 
         [Test]
@@ -99,6 +100,7 @@ namespace Test.Zinnia.Data.Operation
 
             Object.DestroyImmediate(actual);
             Object.DestroyImmediate(source);
+            Object.DestroyImmediate(expected);
         }
 
         [Test]
