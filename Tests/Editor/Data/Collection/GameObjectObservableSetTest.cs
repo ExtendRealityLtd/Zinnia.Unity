@@ -640,6 +640,9 @@ namespace Test.Zinnia.Data.Collection
             Assert.IsTrue(elementAddedMock.Received);
             Assert.IsFalse(elementRemovedMock.Received);
             Assert.IsFalse(becameEmptyMock.Received);
+
+            Object.DestroyImmediate(elementOne);
+            Object.DestroyImmediate(elementTwo);
         }
 
         private sealed class GameObjectObservableSetMock : GameObjectObservableSet
