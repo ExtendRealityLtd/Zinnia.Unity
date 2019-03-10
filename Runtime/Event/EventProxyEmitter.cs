@@ -13,7 +13,7 @@
         /// <returns><see langword="true"/> if the emitter is in a valid state.</returns>
         protected virtual bool IsValid()
         {
-            return (isActiveAndEnabled);
+            return isActiveAndEnabled;
         }
     }
 }

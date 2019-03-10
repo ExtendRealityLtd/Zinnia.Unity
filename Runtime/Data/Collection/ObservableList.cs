@@ -55,11 +55,13 @@
         public int CurrentIndex { get; set; }
 
         /// <summary>
-        /// The collection to observe changes of.
+        /// The elements to observe changes of, accessible from components that *are* keeping in sync with the state of the collection by subscribing to the list mutation events. Alternatively use <see cref="NonSubscribableElements"/> instead.
         /// </summary>
-        public IReadOnlyList<TElement> ReadOnlyElements => wasStartCalled
-            ? (IReadOnlyList<TElement>)Elements
-            : Array.Empty<TElement>();
+        public IReadOnlyList<TElement> SubscribableElements => wasStartCalled ? (IReadOnlyList<TElement>)Elements : Array.Empty<TElement>();
+        /// <summary>
+        /// The elements to observe changes of, accessible from components that are *not* interested in keeping in sync with the state of the collection. Alternatively use <see cref="SubscribableElements"/> instead.
+        /// </summary>
+        public IReadOnlyList<TElement> NonSubscribableElements => Elements;
 
         /// <summary>
         /// The collection to observe changes of.
@@ -121,7 +123,7 @@
         [RequiresBehaviourState]
         public virtual void AddAt(TElement element, int index)
         {
-            if (ReadOnlyElements.Count == 0)
+            if (SubscribableElements.Count == 0)
             {
                 Add(element);
                 return;
@@ -153,7 +155,7 @@
         [RequiresBehaviourState]
         public virtual void SetAt(TElement element, int index)
         {
-            if (ReadOnlyElements.Count == 0)
+            if (SubscribableElements.Count == 0)
             {
                 return;
             }
@@ -214,13 +216,13 @@
         [RequiresBehaviourState]
         public virtual void RemoveAt(int index)
         {
-            if (ReadOnlyElements.Count == 0)
+            if (SubscribableElements.Count == 0)
             {
                 return;
             }
 
             index = Elements.GetWrappedAndClampedIndex(index);
-            TElement removedElement = ReadOnlyElements[index];
+            TElement removedElement = SubscribableElements[index];
             Elements.RemoveAt(index);
             EmitRemoveEvents(removedElement);
         }
@@ -241,7 +243,7 @@
         [RequiresBehaviourState]
         public virtual void Clear(bool removeFromFront)
         {
-            if (ReadOnlyElements.Count == 0)
+            if (SubscribableElements.Count == 0)
             {
                 return;
             }
@@ -251,7 +253,7 @@
                 Elements.Reverse();
             }
 
-            foreach (TElement element in ReadOnlyElements)
+            foreach (TElement element in SubscribableElements)
             {
                 ElementRemoved?.Invoke(element);
             }
@@ -264,14 +266,14 @@
         {
             wasStartCalled = true;
 
-            if (ReadOnlyElements == null)
+            if (SubscribableElements == null)
             {
                 return;
             }
 
-            for (int index = 0; index < ReadOnlyElements.Count; index++)
+            for (int index = 0; index < SubscribableElements.Count; index++)
             {
-                TElement element = ReadOnlyElements[index];
+                TElement element = SubscribableElements[index];
                 if (EqualityComparer<TElement>.Default.Equals(element, default))
                 {
                     continue;
@@ -294,7 +296,7 @@
         {
             ElementAdded?.Invoke(element);
 
-            if (ReadOnlyElements.Count == 1)
+            if (SubscribableElements.Count == 1)
             {
                 BecamePopulated?.Invoke(element);
             }
@@ -308,7 +310,7 @@
         {
             ElementRemoved?.Invoke(element);
 
-            if (ReadOnlyElements.Count == 0)
+            if (SubscribableElements.Count == 0)
             {
                 BecameEmpty?.Invoke(element);
             }

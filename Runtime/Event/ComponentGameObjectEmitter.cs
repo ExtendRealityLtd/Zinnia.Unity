@@ -1,10 +1,9 @@
 ﻿namespace Zinnia.Event
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertyValidationMethod;*/
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Extracts the <see cref="GameObject"/> from the <see cref="Source"/> and emits an event containing the result.
@@ -14,7 +13,7 @@
         /// <summary>
         /// The source to extract from.
         /// </summary>
-        [Serialized, /*Validated,*/ Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public Component Source { get; set; }
 

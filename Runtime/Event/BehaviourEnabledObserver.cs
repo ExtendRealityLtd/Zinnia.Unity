@@ -1,9 +1,12 @@
 ﻿namespace Zinnia.Event
 {
-    using System.Collections.Generic;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
+    using System.Collections;
+    using Malimbe.MemberChangeMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Emits an event once a list of <see cref="Behaviour"/>s all are <see cref="Behaviour.isActiveAndEnabled"/>.
@@ -11,43 +14,138 @@
     public class BehaviourEnabledObserver : MonoBehaviour
     {
         /// <summary>
-        /// The minimum time allowed to be passed to <see cref="MonoBehaviour.InvokeRepeating"/>.
+        /// The time between each <see cref="Behaviour.enabled"/> check.
         /// </summary>
-        public const float MinimumRepeatRate = 0.000011f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float CheckDelay { get; set; } = 0.000011f;
+        /// <summary>
+        /// The maximum amount of time to perform the <see cref="Behaviour.enabled"/> check before ending.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public float MaximumRunTime { get; set; } = float.PositiveInfinity;
 
         /// <summary>
         /// The <see cref="Behaviour"/>s to observe.
         /// </summary>
-        [DocumentedByXml]
-        public List<Behaviour> behaviours = new List<Behaviour>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public BehaviourObservableList Behaviours { get; set; }
+
         /// <summary>
-        /// Emitted when all <see cref="behaviours"/> are <see cref="Behaviour.isActiveAndEnabled"/>.
+        /// Emitted when all <see cref="Behaviours"/> are <see cref="Behaviour.isActiveAndEnabled"/>.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent ActiveAndEnabled = new UnityEvent();
 
-        protected virtual void OnEnable()
-        {
-            InvokeRepeating(nameof(Check), MinimumRepeatRate, MinimumRepeatRate);
-        }
+        /// <summary>
+        /// A reference to the started routine.
+        /// </summary>
+        protected Coroutine behaviourCheckRoutine;
+        /// <summary>
+        /// Delays the <see cref="behaviourCheckRoutine"/> by <see cref="CheckDelay"/> seconds.
+        /// </summary>
+        protected WaitForSeconds checkDelayYieldInstruction;
+        /// <summary>
+        /// The amount of time until the <see cref="behaviourCheckRoutine"/> is cancelled.
+        /// </summary>
+        protected float timeUntilCheckIsCancelled;
 
-        protected virtual void OnDisable()
+        /// <summary>
+        /// Initiates the check of the <see cref="Behaviours"/> state if no existing check is already running.
+        /// </summary>
+        public virtual void BeginCheck()
         {
-            CancelInvoke(nameof(Check));
+            if (behaviourCheckRoutine == null)
+            {
+                behaviourCheckRoutine = StartCoroutine(Check());
+            }
         }
 
         /// <summary>
-        /// Checks whether all <see cref="behaviours"/> are <see cref="Behaviour.isActiveAndEnabled"/> and emits <see cref="ActiveAndEnabled"/> if they are.
+        /// Cancels any running check of the <see cref="Behaviours"/> state.
         /// </summary>
-        protected virtual void Check()
+        public virtual void EndCheck()
         {
-            if (!behaviours.TrueForAll(behaviour => behaviour.isActiveAndEnabled))
+            if (behaviourCheckRoutine == null)
             {
                 return;
             }
 
-            CancelInvoke(nameof(Check));
+            StopCoroutine(behaviourCheckRoutine);
+            behaviourCheckRoutine = null;
+        }
+
+        protected virtual void OnEnable()
+        {
+            BeginCheck();
+        }
+
+        protected virtual void OnDisable()
+        {
+            EndCheck();
+        }
+
+        /// <summary>
+        /// Checks to see if the <see cref="Behaviours"/> specified have been enabled in the scene.
+        /// </summary>
+        /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
+        protected virtual IEnumerator Check()
+        {
+            checkDelayYieldInstruction = new WaitForSeconds(CheckDelay);
+            timeUntilCheckIsCancelled = Time.time + MaximumRunTime;
+            while (Time.time < timeUntilCheckIsCancelled)
+            {
+                if (AreBehavioursEnabled())
+                {
+                    break;
+                }
+                yield return checkDelayYieldInstruction;
+            }
+            behaviourCheckRoutine = null;
+        }
+
+        /// <summary>
+        /// Checks whether all <see cref="Behaviours"/> are <see cref="Behaviour.isActiveAndEnabled"/> and emits <see cref="ActiveAndEnabled"/> if they are.
+        /// </summary>
+        /// <returns>Whether all <see cref="Behaviours"/> are active and enabled.</returns>
+        protected virtual bool AreBehavioursEnabled()
+        {
+            if (Behaviours == null || Behaviours.NonSubscribableElements.Count == 0)
+            {
+                return false;
+            }
+
+            foreach (Behaviour behaviour in Behaviours.NonSubscribableElements)
+            {
+                if (!behaviour.isActiveAndEnabled)
+                {
+                    return false;
+                }
+            }
+
             ActiveAndEnabled?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// Called after <see cref="CheckDelay"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(CheckDelay))]
+        protected virtual void OnAfterCheckDelayChange()
+        {
+            checkDelayYieldInstruction = new WaitForSeconds(CheckDelay);
+        }
+
+        /// <summary>
+        /// Called after <see cref="MaximumRunTime"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(MaximumRunTime))]
+        protected virtual void OnAfterMaximumRunTimeChange()
+        {
+            float remainingRunTime = timeUntilCheckIsCancelled - Time.time;
+            timeUntilCheckIsCancelled = MaximumRunTime - remainingRunTime;
         }
     }
 }

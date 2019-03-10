@@ -1,7 +1,9 @@
 ﻿namespace Zinnia.Event
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.Events;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -10,8 +12,9 @@
         /// <summary>
         /// Determines whether the received payload is valid to be re-emitted.
         /// </summary>
-        [DocumentedByXml]
-        public RuleContainer receiveValidity;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer ReceiveValidity { get; set; }
 
         /// <summary>
         /// Gets the target for the validity check.
@@ -22,7 +25,7 @@
         /// <inheritdoc />
         protected override bool IsValid()
         {
-            return (base.IsValid() && receiveValidity.Accepts(GetTargetToCheck()));
+            return base.IsValid() && ReceiveValidity.Accepts(GetTargetToCheck());
         }
     }
 }

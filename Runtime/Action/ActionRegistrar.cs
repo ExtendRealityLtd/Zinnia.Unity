@@ -140,9 +140,9 @@
             }
 
             // It is expected that we have less SourceLimits than we have Sources, so this order of nesting the loops is the preferred one.
-            foreach (GameObject limit in SourceLimits.ReadOnlyElements)
+            foreach (GameObject limit in SourceLimits.SubscribableElements)
             {
-                foreach (ActionSource source in Sources.ReadOnlyElements)
+                foreach (ActionSource source in Sources.SubscribableElements)
                 {
                     TryAddTargetSource(source, limit);
                 }
@@ -193,7 +193,7 @@
         [RequiresBehaviourState]
         protected virtual void OnSourceAdded(ActionSource source)
         {
-            foreach (GameObject limit in SourceLimits.ReadOnlyElements)
+            foreach (GameObject limit in SourceLimits.SubscribableElements)
             {
                 TryAddTargetSource(source, limit);
             }
@@ -206,7 +206,7 @@
         [RequiresBehaviourState]
         protected virtual void OnSourceRemoved(ActionSource source)
         {
-            foreach (GameObject limit in SourceLimits.ReadOnlyElements)
+            foreach (GameObject limit in SourceLimits.SubscribableElements)
             {
                 TryRemoveTargetSource(source, limit);
             }
@@ -219,7 +219,7 @@
         [RequiresBehaviourState]
         protected virtual void OnSourceLimitAdded(GameObject limit)
         {
-            foreach (ActionSource source in Sources.ReadOnlyElements)
+            foreach (ActionSource source in Sources.SubscribableElements)
             {
                 TryAddTargetSource(source, limit);
             }
@@ -232,7 +232,7 @@
         [RequiresBehaviourState]
         protected virtual void OnSourceLimitRemoved(GameObject limit)
         {
-            foreach (ActionSource source in Sources.ReadOnlyElements)
+            foreach (ActionSource source in Sources.SubscribableElements)
             {
                 TryRemoveTargetSource(source, limit);
             }
@@ -271,7 +271,7 @@
             }
 
             RemoveSourcesListeners();
-            foreach (ActionSource source in Sources.ReadOnlyElements)
+            foreach (ActionSource source in Sources.SubscribableElements)
             {
                 OnSourceRemoved(source);
             }
@@ -299,7 +299,7 @@
             }
 
             RemoveSourcesLimitsListeners();
-            foreach (GameObject limit in SourceLimits.ReadOnlyElements)
+            foreach (GameObject limit in SourceLimits.SubscribableElements)
             {
                 OnSourceLimitRemoved(limit);
             }

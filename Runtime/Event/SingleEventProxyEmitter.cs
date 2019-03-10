@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Event
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.Events;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Emits a UnityEvent with a single payload whenever the Receive method is called.
@@ -13,11 +13,7 @@
         /// <summary>
         /// The most recent received payload.
         /// </summary>
-        public TValue Payload
-        {
-            get;
-            protected set;
-        }
+        public TValue Payload { get; protected set; }
 
         /// <summary>
         /// Is emitted when Receive is called.

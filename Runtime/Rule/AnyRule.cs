@@ -28,7 +28,7 @@
                 return false;
             }
 
-            foreach (RuleContainer rule in Rules.ReadOnlyElements)
+            foreach (RuleContainer rule in Rules.SubscribableElements)
             {
                 if (rule.Accepts(target))
                 {

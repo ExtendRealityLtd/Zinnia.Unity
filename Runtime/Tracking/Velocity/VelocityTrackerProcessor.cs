@@ -65,7 +65,7 @@
             }
 
             VelocityTracker firstActiveTracker = null;
-            foreach (VelocityTracker tracker in VelocityTrackers.ReadOnlyElements)
+            foreach (VelocityTracker tracker in VelocityTrackers.SubscribableElements)
             {
                 if (tracker.IsActive())
                 {

@@ -23,12 +23,12 @@
         [RequiresBehaviourState]
         public bool Accepts(object target)
         {
-            if (Rules == null || Rules.ReadOnlyElements.Count == 0)
+            if (Rules == null || Rules.SubscribableElements.Count == 0)
             {
                 return false;
             }
 
-            foreach (RuleContainer rule in Rules.ReadOnlyElements)
+            foreach (RuleContainer rule in Rules.SubscribableElements)
             {
                 if (!rule.Accepts(target))
                 {

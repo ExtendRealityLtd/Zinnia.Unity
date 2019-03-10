@@ -37,7 +37,7 @@
         public virtual void SwitchNext()
         {
             CurrentIndex++;
-            if (CurrentIndex >= Targets.ReadOnlyElements.Count)
+            if (CurrentIndex >= Targets.SubscribableElements.Count)
             {
                 CurrentIndex = 0;
             }
@@ -54,7 +54,7 @@
             CurrentIndex--;
             if (CurrentIndex < 0)
             {
-                CurrentIndex = Targets.ReadOnlyElements.Count - 1;
+                CurrentIndex = Targets.SubscribableElements.Count - 1;
             }
 
             Switch();
@@ -67,7 +67,7 @@
         [RequiresBehaviourState]
         public virtual void SwitchTo(int index)
         {
-            CurrentIndex = Mathf.Clamp(index, 0, Targets.ReadOnlyElements.Count - 1);
+            CurrentIndex = Mathf.Clamp(index, 0, Targets.SubscribableElements.Count - 1);
             Switch();
         }
 
@@ -85,9 +85,9 @@
         /// </summary>
         protected virtual void Switch()
         {
-            for (int index = 0; index < Targets.ReadOnlyElements.Count; index++)
+            for (int index = 0; index < Targets.SubscribableElements.Count; index++)
             {
-                Targets.ReadOnlyElements[index].SetActive(index == CurrentIndex ? TargetState : !TargetState);
+                Targets.SubscribableElements[index].SetActive(index == CurrentIndex ? TargetState : !TargetState);
             }
         }
     }
