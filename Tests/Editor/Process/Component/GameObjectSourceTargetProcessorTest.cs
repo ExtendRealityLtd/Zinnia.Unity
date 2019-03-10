@@ -5,6 +5,8 @@ using Zinnia.Process.Component;
 namespace Test.Zinnia.Process.Component
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
 
@@ -27,11 +29,12 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void AddSource()
+        [UnityTest]
+        public IEnumerator AddSource()
         {
             GameObject source = new GameObject("source");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             Assert.IsEmpty(subject.Sources.ReadOnlyElements);
 
@@ -43,11 +46,12 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(source);
         }
 
-        [Test]
-        public void RemoveSource()
+        [UnityTest]
+        public IEnumerator RemoveSource()
         {
             GameObject source = new GameObject("source");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Sources.Add(source);
 
@@ -61,14 +65,15 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(source);
         }
 
-        [Test]
-        public void SetSourceAtCurrentIndex()
+        [UnityTest]
+        public IEnumerator SetSourceAtCurrentIndex()
         {
             GameObject source1 = new GameObject("source1");
             GameObject source2 = new GameObject("source2");
             GameObject newSource1 = new GameObject("new source1");
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Sources.Add(source1);
             subject.Sources.Add(source2);
@@ -88,12 +93,13 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(newSource1);
         }
 
-        [Test]
-        public void ClearSources()
+        [UnityTest]
+        public IEnumerator ClearSources()
         {
             GameObject source = new GameObject("source");
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Sources.Add(source);
 
@@ -107,12 +113,13 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(source);
         }
 
-        [Test]
-        public void AddTarget()
+        [UnityTest]
+        public IEnumerator AddTarget()
         {
             GameObject target = new GameObject("target");
 
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             Assert.IsEmpty(subject.Targets.ReadOnlyElements);
 
@@ -124,11 +131,12 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target);
         }
 
-        [Test]
-        public void RemoveTarget()
+        [UnityTest]
+        public IEnumerator RemoveTarget()
         {
             GameObject target = new GameObject("target");
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Targets.Add(target);
 
@@ -142,13 +150,14 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target);
         }
 
-        [Test]
-        public void SetTargetAtCurrentIndex()
+        [UnityTest]
+        public IEnumerator SetTargetAtCurrentIndex()
         {
             GameObject target1 = new GameObject("target1");
             GameObject target2 = new GameObject("target2");
             GameObject newTarget1 = new GameObject("new target1");
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Targets.Add(target1);
             subject.Targets.Add(target2);
@@ -168,11 +177,12 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(newTarget1);
         }
 
-        [Test]
-        public void ClearTargets()
+        [UnityTest]
+        public IEnumerator ClearTargets()
         {
             GameObject target = new GameObject("target");
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Targets.Add(target);
 
@@ -186,8 +196,8 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target);
         }
 
-        [Test]
-        public void ProcessAllTargetsAgainstSource()
+        [UnityTest]
+        public IEnumerator ProcessAllTargetsAgainstSource()
         {
             GameObject source1 = new GameObject("source1");
             GameObject target1 = new GameObject("target1");
@@ -195,6 +205,7 @@ namespace Test.Zinnia.Process.Component
             GameObject target3 = new GameObject("target3");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Sources.Add(source1);
             subject.Targets.Add(target1);
@@ -219,8 +230,8 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void ProcessFirstActiveSourceAgainstTargetThenCease()
+        [UnityTest]
+        public IEnumerator ProcessFirstActiveSourceAgainstTargetThenCease()
         {
             GameObject source1 = new GameObject("source1");
             GameObject source2 = new GameObject("source2");
@@ -228,6 +239,7 @@ namespace Test.Zinnia.Process.Component
             GameObject target1 = new GameObject("target1");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.CeaseAfterFirstSourceProcessed = true;
 
@@ -287,8 +299,8 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target1);
         }
 
-        [Test]
-        public void ProcessFirstActiveSourceAgainstTargetThenContinue()
+        [UnityTest]
+        public IEnumerator ProcessFirstActiveSourceAgainstTargetThenContinue()
         {
             GameObject source1 = new GameObject("source1");
             GameObject source2 = new GameObject("source2");
@@ -296,6 +308,7 @@ namespace Test.Zinnia.Process.Component
             GameObject target1 = new GameObject("target1");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.CeaseAfterFirstSourceProcessed = false;
 
@@ -355,8 +368,8 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target1);
         }
 
-        [Test]
-        public void ProcessFirstActiveSourceAgainstValidTargetThenCease()
+        [UnityTest]
+        public IEnumerator ProcessFirstActiveSourceAgainstValidTargetThenCease()
         {
             GameObject source1 = new GameObject("source1");
             GameObject source2 = new GameObject("source2");
@@ -366,6 +379,7 @@ namespace Test.Zinnia.Process.Component
             GameObject target3 = new GameObject("target3");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.CeaseAfterFirstSourceProcessed = true;
 
@@ -453,8 +467,8 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void ProcessInactiveGameObject()
+        [UnityTest]
+        public IEnumerator ProcessInactiveGameObject()
         {
             GameObject source1 = new GameObject("source1");
             GameObject target1 = new GameObject("target1");
@@ -462,6 +476,7 @@ namespace Test.Zinnia.Process.Component
             GameObject target3 = new GameObject("target3");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Sources.Add(source1);
             subject.Targets.Add(target1);
@@ -488,8 +503,8 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void ProcessInactiveComponent()
+        [UnityTest]
+        public IEnumerator ProcessInactiveComponent()
         {
             GameObject source1 = new GameObject("source1");
             GameObject target1 = new GameObject("target1");
@@ -497,6 +512,7 @@ namespace Test.Zinnia.Process.Component
             GameObject target3 = new GameObject("target3");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Sources.Add(source1);
             subject.Targets.Add(target1);
