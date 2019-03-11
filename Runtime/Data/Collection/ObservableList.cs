@@ -113,6 +113,21 @@
         }
 
         /// <summary>
+        /// Adds an element to the end of the collection as long as it does not already exist in the collection.
+        /// </summary>
+        /// <param name="element">The unique element to add.</param>
+        [RequiresBehaviourState]
+        public virtual void AddUnique(TElement element)
+        {
+            if (Elements.Contains(element))
+            {
+                return;
+            }
+
+            Add(element);
+        }
+
+        /// <summary>
         /// Adds an element to the given index of the collection.
         /// </summary>
         /// <remarks>
@@ -123,7 +138,7 @@
         [RequiresBehaviourState]
         public virtual void AddAt(TElement element, int index)
         {
-            if (SubscribableElements.Count == 0)
+            if (Elements.Count == 0)
             {
                 Add(element);
                 return;
@@ -132,6 +147,25 @@
             index = Elements.GetWrappedAndClampedIndex(index);
             Elements.Insert(index, element);
             EmitAddEvents(element);
+        }
+
+        /// <summary>
+        /// Adds an element to the given index of the collection as long as it does not already exist in the collection.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="element">The unique element to add.</param>
+        /// <param name="index">The index to add at. In case this index is out of bounds for the collection it will wrap around.</param>
+        [RequiresBehaviourState]
+        public virtual void AddUniqueAt(TElement element, int index)
+        {
+            if (Elements.Contains(element))
+            {
+                return;
+            }
+
+            AddAt(element, index);
         }
 
         /// <summary>
@@ -145,6 +179,21 @@
         }
 
         /// <summary>
+        /// Adds an element at the <see cref="CurrentIndex"/> as long as it does not already exist in the collection.
+        /// </summary>
+        /// <param name="element">The unique element to add.</param>
+        [RequiresBehaviourState]
+        public virtual void AddUniqueAtCurrentIndex(TElement element)
+        {
+            if (Elements.Contains(element))
+            {
+                return;
+            }
+
+            AddAtCurrentIndex(element);
+        }
+
+        /// <summary>
         /// Sets the given element at the given index.
         /// </summary>
         /// <remarks>
@@ -155,7 +204,7 @@
         [RequiresBehaviourState]
         public virtual void SetAt(TElement element, int index)
         {
-            if (SubscribableElements.Count == 0)
+            if (Elements.Count == 0)
             {
                 return;
             }
@@ -168,6 +217,25 @@
         }
 
         /// <summary>
+        /// Sets the given element at the given index as long as it does not already exist in the collection.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="element">The unique element to set.</param>
+        /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will wrap around.</param>
+        [RequiresBehaviourState]
+        public virtual void SetUniqueAt(TElement element, int index)
+        {
+            if (Elements.Contains(element))
+            {
+                return;
+            }
+
+            SetAt(element, index);
+        }
+
+        /// <summary>
         /// Sets the given element at the <see cref="CurrentIndex"/>.
         /// </summary>
         /// <param name="element">The element to set.</param>
@@ -175,6 +243,16 @@
         public virtual void SetAtCurrentIndex(TElement element)
         {
             SetAt(element, CurrentIndex);
+        }
+
+        /// <summary>
+        /// Sets the given element at the <see cref="CurrentIndex"/> as long as it does not already exist in the collection.
+        /// </summary>
+        /// <param name="element">The unique element to set.</param>
+        [RequiresBehaviourState]
+        public virtual void SetUniqueAtCurrentIndex(TElement element)
+        {
+            SetUniqueAt(element, CurrentIndex);
         }
 
         /// <summary>
@@ -216,13 +294,13 @@
         [RequiresBehaviourState]
         public virtual void RemoveAt(int index)
         {
-            if (SubscribableElements.Count == 0)
+            if (Elements.Count == 0)
             {
                 return;
             }
 
             index = Elements.GetWrappedAndClampedIndex(index);
-            TElement removedElement = SubscribableElements[index];
+            TElement removedElement = Elements[index];
             Elements.RemoveAt(index);
             EmitRemoveEvents(removedElement);
         }
@@ -243,7 +321,7 @@
         [RequiresBehaviourState]
         public virtual void Clear(bool removeFromFront)
         {
-            if (SubscribableElements.Count == 0)
+            if (Elements.Count == 0)
             {
                 return;
             }
@@ -253,7 +331,7 @@
                 Elements.Reverse();
             }
 
-            foreach (TElement element in SubscribableElements)
+            foreach (TElement element in Elements)
             {
                 ElementRemoved?.Invoke(element);
             }
@@ -266,14 +344,14 @@
         {
             wasStartCalled = true;
 
-            if (SubscribableElements == null)
+            if (Elements == null)
             {
                 return;
             }
 
-            for (int index = 0; index < SubscribableElements.Count; index++)
+            for (int index = 0; index < Elements.Count; index++)
             {
-                TElement element = SubscribableElements[index];
+                TElement element = Elements[index];
                 if (EqualityComparer<TElement>.Default.Equals(element, default))
                 {
                     continue;
@@ -296,7 +374,7 @@
         {
             ElementAdded?.Invoke(element);
 
-            if (SubscribableElements.Count == 1)
+            if (Elements.Count == 1)
             {
                 BecamePopulated?.Invoke(element);
             }
@@ -310,7 +388,7 @@
         {
             ElementRemoved?.Invoke(element);
 
-            if (SubscribableElements.Count == 0)
+            if (Elements.Count == 0)
             {
                 BecameEmpty?.Invoke(element);
             }
