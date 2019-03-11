@@ -27,11 +27,7 @@
         /// <summary>
         /// The extracted <see cref="GameObject"/>.
         /// </summary>
-        public GameObject Result
-        {
-            get;
-            protected set;
-        }
+        public GameObject Result { get; protected set; }
 
         /// <summary>
         /// Extracts the <see cref="GameObject"/>/

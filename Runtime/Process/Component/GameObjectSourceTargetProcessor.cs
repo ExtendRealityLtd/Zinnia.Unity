@@ -42,7 +42,7 @@
         [RequiresBehaviourState]
         public override void Process()
         {
-            ApplySourcesToTargets(Sources.ReadOnlyElements, Targets.ReadOnlyElements);
+            ApplySourcesToTargets(Sources.SubscribableElements, Targets.SubscribableElements);
         }
 
         /// <inheritdoc />

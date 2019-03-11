@@ -52,13 +52,13 @@ namespace Test.Zinnia.Action.Collection
             subject.Add(oneActionSource);
             subject.Add(twoActionSource);
 
-            Assert.IsFalse(subject.ReadOnlyElements[0].Enabled);
-            Assert.IsFalse(subject.ReadOnlyElements[1].Enabled);
+            Assert.IsFalse(subject.SubscribableElements[0].Enabled);
+            Assert.IsFalse(subject.SubscribableElements[1].Enabled);
 
             subject.EnableSource(oneSourceActionObject);
 
-            Assert.IsTrue(subject.ReadOnlyElements[0].Enabled);
-            Assert.IsFalse(subject.ReadOnlyElements[1].Enabled);
+            Assert.IsTrue(subject.SubscribableElements[0].Enabled);
+            Assert.IsFalse(subject.SubscribableElements[1].Enabled);
 
             Object.DestroyImmediate(oneSourceActionObject);
             Object.DestroyImmediate(twoSourceActionObject);
@@ -89,13 +89,13 @@ namespace Test.Zinnia.Action.Collection
             subject.Add(oneActionSource);
             subject.Add(twoActionSource);
 
-            Assert.IsTrue(subject.ReadOnlyElements[0].Enabled);
-            Assert.IsTrue(subject.ReadOnlyElements[1].Enabled);
+            Assert.IsTrue(subject.SubscribableElements[0].Enabled);
+            Assert.IsTrue(subject.SubscribableElements[1].Enabled);
 
             subject.DisableSource(oneSourceActionObject);
 
-            Assert.IsFalse(subject.ReadOnlyElements[0].Enabled);
-            Assert.IsTrue(subject.ReadOnlyElements[1].Enabled);
+            Assert.IsFalse(subject.SubscribableElements[0].Enabled);
+            Assert.IsTrue(subject.SubscribableElements[1].Enabled);
 
             Object.DestroyImmediate(oneSourceActionObject);
             Object.DestroyImmediate(twoSourceActionObject);
@@ -126,13 +126,13 @@ namespace Test.Zinnia.Action.Collection
             subject.Add(oneActionSource);
             subject.Add(twoActionSource);
 
-            Assert.IsFalse(subject.ReadOnlyElements[0].Enabled);
-            Assert.IsFalse(subject.ReadOnlyElements[1].Enabled);
+            Assert.IsFalse(subject.SubscribableElements[0].Enabled);
+            Assert.IsFalse(subject.SubscribableElements[1].Enabled);
 
             subject.EnableAllSources();
 
-            Assert.IsTrue(subject.ReadOnlyElements[0].Enabled);
-            Assert.IsTrue(subject.ReadOnlyElements[1].Enabled);
+            Assert.IsTrue(subject.SubscribableElements[0].Enabled);
+            Assert.IsTrue(subject.SubscribableElements[1].Enabled);
 
             Object.DestroyImmediate(oneSourceActionObject);
             Object.DestroyImmediate(twoSourceActionObject);
@@ -163,13 +163,13 @@ namespace Test.Zinnia.Action.Collection
             subject.Add(oneActionSource);
             subject.Add(twoActionSource);
 
-            Assert.IsTrue(subject.ReadOnlyElements[0].Enabled);
-            Assert.IsTrue(subject.ReadOnlyElements[1].Enabled);
+            Assert.IsTrue(subject.SubscribableElements[0].Enabled);
+            Assert.IsTrue(subject.SubscribableElements[1].Enabled);
 
             subject.DisableAllSources();
 
-            Assert.IsFalse(subject.ReadOnlyElements[0].Enabled);
-            Assert.IsFalse(subject.ReadOnlyElements[1].Enabled);
+            Assert.IsFalse(subject.SubscribableElements[0].Enabled);
+            Assert.IsFalse(subject.SubscribableElements[1].Enabled);
 
             Object.DestroyImmediate(oneSourceActionObject);
             Object.DestroyImmediate(twoSourceActionObject);
