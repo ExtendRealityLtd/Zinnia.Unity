@@ -5,6 +5,8 @@ using Zinnia.Data.Collection;
 namespace Test.Zinnia.Rule
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
 
@@ -26,8 +28,8 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void Match()
+        [UnityTest]
+        public IEnumerator Match()
         {
             GameObject objectOne = new GameObject();
             GameObject objectTwo = new GameObject();
@@ -41,7 +43,9 @@ namespace Test.Zinnia.Rule
             elementTwo.Matched.AddListener(ruleTwoMatched.Listen);
 
             RulesMatcherElementObservableList elements = containingObject.AddComponent<RulesMatcherElementObservableList>();
+            yield return null;
             subject.Elements = elements;
+
             elements.Add(elementOne);
             elements.Add(elementTwo);
 
@@ -65,8 +69,8 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(objectTwo);
         }
 
-        [Test]
-        public void MatchMultiple()
+        [UnityTest]
+        public IEnumerator MatchMultiple()
         {
             GameObject objectOne = new GameObject();
             GameObject objectTwo = new GameObject();
@@ -83,7 +87,9 @@ namespace Test.Zinnia.Rule
             elementThree.Matched.AddListener(ruleThreeMatched.Listen);
 
             RulesMatcherElementObservableList elements = containingObject.AddComponent<RulesMatcherElementObservableList>();
+            yield return null;
             subject.Elements = elements;
+
             elements.Add(elementOne);
             elements.Add(elementTwo);
             elements.Add(elementThree);
@@ -102,8 +108,8 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(objectTwo);
         }
 
-        [Test]
-        public void MatchInactiveGameObject()
+        [UnityTest]
+        public IEnumerator MatchInactiveGameObject()
         {
             GameObject objectOne = new GameObject();
             GameObject objectTwo = new GameObject();
@@ -117,7 +123,9 @@ namespace Test.Zinnia.Rule
             elementTwo.Matched.AddListener(ruleTwoMatched.Listen);
 
             RulesMatcherElementObservableList elements = containingObject.AddComponent<RulesMatcherElementObservableList>();
+            yield return null;
             subject.Elements = elements;
+
             elements.Add(elementOne);
             elements.Add(elementTwo);
 
@@ -135,8 +143,8 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(objectTwo);
         }
 
-        [Test]
-        public void MatchInactiveComponent()
+        [UnityTest]
+        public IEnumerator MatchInactiveComponent()
         {
             GameObject objectOne = new GameObject();
             GameObject objectTwo = new GameObject();
@@ -150,7 +158,9 @@ namespace Test.Zinnia.Rule
             elementTwo.Matched.AddListener(ruleTwoMatched.Listen);
 
             RulesMatcherElementObservableList elements = containingObject.AddComponent<RulesMatcherElementObservableList>();
+            yield return null;
             subject.Elements = elements;
+
             elements.Add(elementOne);
             elements.Add(elementTwo);
 

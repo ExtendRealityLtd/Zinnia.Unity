@@ -6,10 +6,12 @@ using Zinnia.Tracking.Collision.Active;
 namespace Test.Zinnia.Tracking.Collision.Active
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
-    using Test.Zinnia.Utility.Helper;
     using Test.Zinnia.Utility.Stub;
+    using Test.Zinnia.Utility.Helper;
 
     public class ActiveCollisionsContainerTest
     {
@@ -81,8 +83,8 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Object.DestroyImmediate(twoContainer);
         }
 
-        [Test]
-        public void AddInvalidCollisionDueToRule()
+        [UnityTest]
+        public IEnumerator AddInvalidCollisionDueToRule()
         {
             UnityEventListenerMock firstStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock countChangedMock = new UnityEventListenerMock();
@@ -100,6 +102,8 @@ namespace Test.Zinnia.Tracking.Collision.Active
             NegationRule negationRule = oneContainer.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = oneContainer.AddComponent<AnyComponentTypeRule>();
             SerializableTypeObservableList rules = containingObject.AddComponent<SerializableTypeObservableList>();
+            yield return null;
+
             anyComponentTypeRule.ComponentTypes = rules;
             rules.Add(typeof(RuleStub));
 

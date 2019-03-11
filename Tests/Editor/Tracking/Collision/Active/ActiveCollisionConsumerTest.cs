@@ -5,6 +5,8 @@ using Zinnia.Tracking.Collision.Active;
 namespace Test.Zinnia.Tracking.Collision.Active
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
@@ -56,8 +58,8 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Object.DestroyImmediate(publisherObject);
         }
 
-        [Test]
-        public void ConsumeExclusion()
+        [UnityTest]
+        public IEnumerator ConsumeExclusion()
         {
             UnityEventListenerMock consumedMock = new UnityEventListenerMock();
             UnityEventListenerMock clearedMock = new UnityEventListenerMock();
@@ -73,6 +75,8 @@ namespace Test.Zinnia.Tracking.Collision.Active
             NegationRule negationRule = containingObject.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = containingObject.AddComponent<AnyComponentTypeRule>();
             SerializableTypeObservableList rules = containingObject.AddComponent<SerializableTypeObservableList>();
+            yield return null;
+
             anyComponentTypeRule.ComponentTypes = rules;
             rules.Add(typeof(RuleStub));
 

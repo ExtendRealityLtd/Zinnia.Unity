@@ -5,6 +5,8 @@ using Zinnia.Data.Collection;
 namespace Test.Zinnia.Rule
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
 
     public class ListContainsRuleTest
@@ -28,20 +30,24 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void AcceptsMatch()
+        [UnityTest]
+        public IEnumerator AcceptsMatch()
         {
             UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
             subject.Objects = objects;
             objects.Add(containingObject);
 
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesEmpty()
+        [UnityTest]
+        public IEnumerator RefusesEmpty()
         {
             UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
             subject.Objects = objects;
 
             Assert.IsFalse(container.Accepts(containingObject));
@@ -53,11 +59,13 @@ namespace Test.Zinnia.Rule
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesDifferent()
+        [UnityTest]
+        public IEnumerator RefusesDifferent()
         {
             GameObject wrongGameObject = new GameObject();
             UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
             subject.Objects = objects;
             objects.Add(wrongGameObject);
 
@@ -66,10 +74,12 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(wrongGameObject);
         }
 
-        [Test]
-        public void RefusesInactiveGameObject()
+        [UnityTest]
+        public IEnumerator RefusesInactiveGameObject()
         {
             UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
             subject.Objects = objects;
             objects.Add(containingObject);
 
@@ -77,10 +87,12 @@ namespace Test.Zinnia.Rule
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesInactiveComponent()
+        [UnityTest]
+        public IEnumerator RefusesInactiveComponent()
         {
             UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
             subject.Objects = objects;
             objects.Add(containingObject);
 

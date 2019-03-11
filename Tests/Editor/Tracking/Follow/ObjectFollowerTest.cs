@@ -6,6 +6,8 @@ using Zinnia.Tracking.Follow.Modifier;
 namespace Test.Zinnia.Tracking.Follow
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
@@ -29,11 +31,12 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void AddTargetOffset()
+        [UnityTest]
+        public IEnumerator AddTargetOffset()
         {
             GameObject offset = new GameObject("offset");
             subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             Assert.IsEmpty(subject.TargetOffsets.ReadOnlyElements);
             subject.TargetOffsets.Add(offset);
@@ -42,11 +45,12 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(offset);
         }
 
-        [Test]
-        public void RemoveTargetOffset()
+        [UnityTest]
+        public IEnumerator RemoveTargetOffset()
         {
             GameObject offset = new GameObject("offset");
             subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.TargetOffsets.Add(offset);
             Assert.AreEqual(1, subject.TargetOffsets.ReadOnlyElements.Count);
@@ -57,14 +61,15 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(offset);
         }
 
-        [Test]
-        public void SetTargetOffsetAtCurrentIndex()
+        [UnityTest]
+        public IEnumerator SetTargetOffsetAtCurrentIndex()
         {
             GameObject offset1 = new GameObject("offset1");
             GameObject offset2 = new GameObject("offset2");
             GameObject newOffset1 = new GameObject("new offset1");
 
             subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.TargetOffsets.Add(offset1);
             subject.TargetOffsets.Add(offset2);
@@ -83,12 +88,13 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(newOffset1);
         }
 
-        [Test]
-        public void ClearTargetOffsets()
+        [UnityTest]
+        public IEnumerator ClearTargetOffsets()
         {
             GameObject offset = new GameObject("offset");
 
             subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.TargetOffsets.Add(offset);
             Assert.AreEqual(1, subject.TargetOffsets.ReadOnlyElements.Count);
@@ -99,8 +105,8 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(offset);
         }
 
-        [Test]
-        public void AllTargetsFollowSourceNoOffsets()
+        [UnityTest]
+        public IEnumerator AllTargetsFollowSourceNoOffsets()
         {
             // The play area alias moves and all SDK play areas follow it.
 
@@ -117,6 +123,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             source.transform.position = Vector3.one;
 
@@ -146,8 +153,8 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void TargetFollowsFirstActiveSourceNoOffsets()
+        [UnityTest]
+        public IEnumerator TargetFollowsFirstActiveSourceNoOffsets()
         {
             // The first active SDK HMD moves and the target HMD alias follows
 
@@ -163,6 +170,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             source1.transform.position = Vector3.one;
             source2.transform.position = Vector3.one * 2f;
@@ -205,8 +213,8 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(target);
         }
 
-        [Test]
-        public void OnlActiveTargetsFollowSourceNoOffsets()
+        [UnityTest]
+        public IEnumerator OnlActiveTargetsFollowSourceNoOffsets()
         {
             UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
             UnityEventListenerMock processedMock = new UnityEventListenerMock();
@@ -221,6 +229,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             source.transform.position = Vector3.one;
 
@@ -261,8 +270,8 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void AllTargetsFollowSourceWithOffsets()
+        [UnityTest]
+        public IEnumerator AllTargetsFollowSourceWithOffsets()
         {
             UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
             UnityEventListenerMock processedMock = new UnityEventListenerMock();
@@ -282,6 +291,7 @@ namespace Test.Zinnia.Tracking.Follow
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
             subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             targetOffset1.transform.SetParent(target1.transform);
             targetOffset2.transform.SetParent(target2.transform);
@@ -327,8 +337,8 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(targetOffset3);
         }
 
-        [Test]
-        public void TargetOffsetNotChildException()
+        [UnityTest]
+        public IEnumerator TargetOffsetNotChildException()
         {
             UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
             UnityEventListenerMock processedMock = new UnityEventListenerMock();
@@ -348,6 +358,7 @@ namespace Test.Zinnia.Tracking.Follow
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
             subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
             subject.Sources.Add(source);
             subject.Targets.Add(target1);

@@ -6,6 +6,8 @@ using Zinnia.Data.Collection;
 namespace Test.Zinnia.Rule
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using System.Collections.Generic;
     using NUnit.Framework;
 
@@ -55,20 +57,22 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void AcceptsMatch()
+        [UnityTest]
+        public IEnumerator AcceptsMatch()
         {
             StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            yield return null;
             subject.Tags = tags;
             tags.Add(validTag);
 
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesEmpty()
+        [UnityTest]
+        public IEnumerator RefusesEmpty()
         {
             StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            yield return null;
             subject.Tags = tags;
 
             Assert.IsFalse(container.Accepts(containingObject));
@@ -80,10 +84,11 @@ namespace Test.Zinnia.Rule
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesDifferent()
+        [UnityTest]
+        public IEnumerator RefusesDifferent()
         {
             StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            yield return null;
             subject.Tags = tags;
             tags.Add(invalidTag);
 

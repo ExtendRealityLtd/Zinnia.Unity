@@ -65,10 +65,11 @@
         /// The collection to observe changes of.
         /// </summary>
         protected abstract List<TElement> Elements { get; set; }
+
         /// <summary>
         /// Whether <see cref="Start"/> was called.
         /// </summary>
-        protected bool wasStartCalled { get; set; }
+        protected bool wasStartCalled;
 
         /// <summary>
         /// Checks to see if the collection contains the given element.

@@ -5,6 +5,8 @@ using Zinnia.Extension;
 namespace Test.Zinnia.Rule
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
 
@@ -29,10 +31,11 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void AcceptsMatch()
+        [UnityTest]
+        public IEnumerator AcceptsMatch()
         {
             RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
             subject.Rules = rules;
 
             rules.Add(
@@ -49,10 +52,11 @@ namespace Test.Zinnia.Rule
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesEmpty()
+        [UnityTest]
+        public IEnumerator RefusesEmpty()
         {
             RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
             subject.Rules = rules;
 
             Assert.IsFalse(container.Accepts(containingObject));
@@ -64,10 +68,11 @@ namespace Test.Zinnia.Rule
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesDifferent()
+        [UnityTest]
+        public IEnumerator RefusesDifferent()
         {
             RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
             subject.Rules = rules;
 
             rules.Add(
@@ -84,10 +89,11 @@ namespace Test.Zinnia.Rule
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesInactiveGameObject()
+        [UnityTest]
+        public IEnumerator RefusesInactiveGameObject()
         {
             RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
             subject.Rules = rules;
 
             rules.Add(
@@ -106,10 +112,11 @@ namespace Test.Zinnia.Rule
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesInactiveComponent()
+        [UnityTest]
+        public IEnumerator RefusesInactiveComponent()
         {
             RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
             subject.Rules = rules;
 
             rules.Add(

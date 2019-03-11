@@ -5,6 +5,8 @@ using Zinnia.Data.Collection;
 namespace Test.Zinnia.Tracking
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
@@ -72,8 +74,8 @@ namespace Test.Zinnia.Tracking
             Assert.IsFalse(surfaceLocatedMock.Received);
         }
 
-        [Test]
-        public void InvalidSurfaceDueToPolicy()
+        [UnityTest]
+        public IEnumerator InvalidSurfaceDueToPolicy()
         {
             UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
             subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
@@ -83,6 +85,8 @@ namespace Test.Zinnia.Tracking
             NegationRule negationRule = validSurface.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
             SerializableTypeObservableList rules = containingObject.AddComponent<SerializableTypeObservableList>();
+            yield return null;
+
             anyComponentTypeRule.ComponentTypes = rules;
             rules.Add(typeof(RuleStub));
 
