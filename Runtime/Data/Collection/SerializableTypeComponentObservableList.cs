@@ -12,7 +12,7 @@
     /// <summary>
     /// Allows observing changes to a <see cref="List{T}"/> of <see cref="SerializableType"/>s.
     /// </summary>
-    public class SerializableTypeObservableList : ObservableList<SerializableType, SerializableTypeObservableList.UnityEvent>
+    public class SerializableTypeComponentObservableList : ObservableList<SerializableType, SerializableTypeComponentObservableList.UnityEvent>
     {
         /// <summary>
         /// The collection to observe changes of.

@@ -16,7 +16,7 @@
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
-        public SerializableTypeObservableList ComponentTypes { get; set; }
+        public SerializableTypeComponentObservableList ComponentTypes { get; set; }
 
         /// <inheritdoc/>
         protected override bool Accepts(GameObject targetGameObject)
