@@ -89,7 +89,7 @@ namespace Test.Zinnia.Cast
             validSurface.AddComponent<RuleStub>();
             NegationRule negationRule = validSurface.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
-            SerializableTypeObservableList rules = containingObject.AddComponent<SerializableTypeObservableList>();
+            SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             anyComponentTypeRule.ComponentTypes = rules;
             rules.Add(typeof(RuleStub));
 

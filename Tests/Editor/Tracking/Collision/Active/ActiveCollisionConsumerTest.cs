@@ -74,7 +74,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             publisherObject.AddComponent<RuleStub>();
             NegationRule negationRule = containingObject.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = containingObject.AddComponent<AnyComponentTypeRule>();
-            SerializableTypeObservableList rules = containingObject.AddComponent<SerializableTypeObservableList>();
+            SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
 
             anyComponentTypeRule.ComponentTypes = rules;
