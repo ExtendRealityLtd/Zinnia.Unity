@@ -35,7 +35,7 @@ namespace Test.Zinnia.Rule
         public IEnumerator AcceptsMatch()
         {
             containingObject.AddComponent<TestScript>();
-            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
             subject.ComponentTypes = componentTypes;
             componentTypes.Add(typeof(TestScript));
@@ -46,7 +46,7 @@ namespace Test.Zinnia.Rule
         [UnityTest]
         public IEnumerator RefusesEmpty()
         {
-            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
             subject.ComponentTypes = componentTypes;
 
@@ -63,7 +63,7 @@ namespace Test.Zinnia.Rule
         public IEnumerator RefusesDifferent()
         {
             containingObject.AddComponent<Light>();
-            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
             subject.ComponentTypes = componentTypes;
             componentTypes.Add(typeof(TestScript));
@@ -75,7 +75,7 @@ namespace Test.Zinnia.Rule
         public IEnumerator RefusesInactiveGameObject()
         {
             containingObject.AddComponent<TestScript>();
-            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
             subject.ComponentTypes = componentTypes;
             componentTypes.Add(typeof(TestScript));
@@ -88,7 +88,7 @@ namespace Test.Zinnia.Rule
         public IEnumerator RefusesInactiveComponent()
         {
             containingObject.AddComponent<TestScript>();
-            SerializableTypeObservableList componentTypes = containingObject.AddComponent<SerializableTypeObservableList>();
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
             subject.ComponentTypes = componentTypes;
             componentTypes.Add(typeof(TestScript));

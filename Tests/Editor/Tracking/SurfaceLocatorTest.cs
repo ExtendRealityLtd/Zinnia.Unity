@@ -84,7 +84,7 @@ namespace Test.Zinnia.Tracking
             validSurface.AddComponent<RuleStub>();
             NegationRule negationRule = validSurface.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
-            SerializableTypeObservableList rules = containingObject.AddComponent<SerializableTypeObservableList>();
+            SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
 
             anyComponentTypeRule.ComponentTypes = rules;
