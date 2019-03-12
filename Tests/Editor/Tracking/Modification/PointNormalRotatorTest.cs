@@ -41,7 +41,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             PointsCast.EventData data = new PointsCast.EventData
             {
-                targetHit = cast
+                TargetHit = cast
             };
 
             subject.HandleData(data);
@@ -67,7 +67,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             PointsCast.EventData data = new PointsCast.EventData
             {
-                targetHit = cast
+                TargetHit = cast
             };
 
             subject.enabled = false;

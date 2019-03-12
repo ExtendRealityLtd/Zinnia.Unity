@@ -797,15 +797,15 @@ namespace Test.Zinnia.Pointer
                 }
                 return new PointsCast.EventData()
                 {
-                    points = points,
-                    targetHit = hit
+                    Points = points,
+                    TargetHit = hit
                 };
             }
             else
             {
                 return new PointsCast.EventData()
                 {
-                    points = points
+                    Points = points
                 };
             }
         }

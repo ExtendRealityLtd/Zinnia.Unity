@@ -4,8 +4,10 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
     using Zinnia.Process;
     using Zinnia.Rule;
@@ -24,23 +26,24 @@
             /// <summary>
             /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything.
             /// </summary>
-            [DocumentedByXml]
-            public RaycastHit? targetHit;
+            [Serialized]
+            [field: DocumentedByXml]
+            public RaycastHit? TargetHit { get; set; }
+
             /// <summary>
             /// The points along the the most recent cast.
             /// </summary>
-            [DocumentedByXml]
-            public IReadOnlyList<Vector3> points;
+            public IReadOnlyList<Vector3> Points { get; set; }
 
             public EventData Set(EventData source)
             {
-                return Set(source.targetHit, source.points);
+                return Set(source.TargetHit, source.Points);
             }
 
             public EventData Set(RaycastHit? targetHit, IReadOnlyList<Vector3> points)
             {
-                this.targetHit = targetHit;
-                this.points = points;
+                TargetHit = targetHit;
+                Points = points;
                 return this;
             }
 
@@ -61,18 +64,21 @@
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
-        [DocumentedByXml]
-        public GameObject origin;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Origin { get; set; }
         /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
-        [DocumentedByXml]
-        public PhysicsCast physicsCast;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public PhysicsCast PhysicsCast { get; set; }
         /// <summary>
         /// Allows to optionally determine targets based on the set rules.
         /// </summary>
-        [DocumentedByXml]
-        public RuleContainer targetValidity;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer TargetValidity { get; set; }
 
         /// <summary>
         /// Emitted whenever the cast result changes.
@@ -81,7 +87,7 @@
         public UnityEvent ResultsChanged = new UnityEvent();
 
         /// <summary>
-        /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="targetValidity"/>.
+        /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/>.
         /// </summary>
         public RaycastHit? TargetHit
         {
@@ -91,19 +97,27 @@
             }
             protected set
             {
-                targetHit = (value != null && targetValidity.Accepts(value.Value.transform.gameObject) ? value : null);
+                targetHit = value != null && TargetValidity.Accepts(value.Value.transform.gameObject) ? value : null;
             }
         }
+        /// <summary>
+        /// The data held for a valid raycast hit.
+        /// </summary>
+        private RaycastHit? targetHit;
 
         /// <summary>
         /// The points along the the most recent cast.
         /// </summary>
         public IReadOnlyList<Vector3> Points => points;
 
+        /// <summary>
+        /// The points along the the most recent cast.
+        /// </summary>
         protected readonly List<Vector3> points = new List<Vector3>();
+        /// <summary>
+        /// The data to emit with an event.
+        /// </summary>
         protected readonly EventData eventData = new EventData();
-
-        private RaycastHit? targetHit;
 
         /// <summary>
         /// Casts and creates points along the cast.
@@ -111,7 +125,7 @@
         [RequiresBehaviourState]
         public virtual void CastPoints()
         {
-            if (origin == null)
+            if (Origin == null)
             {
                 return;
             }
