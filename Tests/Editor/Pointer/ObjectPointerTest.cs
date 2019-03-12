@@ -11,6 +11,9 @@ namespace Test.Zinnia.Pointer
     {
         private GameObject containingObject;
         private ObjectPointerMock subject;
+        private PointerElement origin;
+        private PointerElement segment;
+        private PointerElement destination;
 
         private GameObject validOrigin;
         private GameObject invalidOrigin;
@@ -24,6 +27,7 @@ namespace Test.Zinnia.Pointer
         {
             Physics.autoSimulation = false;
             containingObject = new GameObject();
+            containingObject.SetActive(false);
             subject = containingObject.AddComponent<ObjectPointerMock>();
 
             validOrigin = new GameObject();
@@ -32,12 +36,28 @@ namespace Test.Zinnia.Pointer
             invalidSegment = new GameObject();
             validDestination = new GameObject();
             invalidDestination = new GameObject();
+
+            origin = containingObject.AddComponent<PointerElement>();
+            segment = containingObject.AddComponent<PointerElement>();
+            destination = containingObject.AddComponent<PointerElement>();
+
+            origin.ValidObject = validOrigin;
+            origin.InvalidObject = invalidOrigin;
+            subject.Origin = origin;
+
+            segment.ValidObject = validSegment;
+            segment.InvalidObject = invalidSegment;
+            subject.RepeatedSegment = segment;
+
+            segment.ValidObject = validDestination;
+            segment.InvalidObject = invalidDestination;
+            subject.Destination = destination;
+            containingObject.SetActive(true);
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
 
             Object.DestroyImmediate(validOrigin);
@@ -55,12 +75,12 @@ namespace Test.Zinnia.Pointer
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
 
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
@@ -78,7 +98,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsTrue(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -102,7 +122,7 @@ namespace Test.Zinnia.Pointer
             PointsCast.EventData straightCast = CastPoints(castPoints);
 
             subject.HandleData(straightCast);
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsTrue(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -114,7 +134,7 @@ namespace Test.Zinnia.Pointer
             activatedListenerMock.Reset();
             deactivatedListenerMock.Reset();
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsTrue(deactivatedListenerMock.Received);
@@ -134,12 +154,12 @@ namespace Test.Zinnia.Pointer
         {
             UnityEventListenerMock selectListenerMock = new UnityEventListenerMock();
 
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Selected.AddListener(selectListenerMock.Listen);
 
@@ -148,7 +168,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(selectListenerMock.Received);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
             subject.Select();
 
             Assert.IsTrue(selectListenerMock.Received);
@@ -169,7 +189,7 @@ namespace Test.Zinnia.Pointer
             PointsCast.EventData straightCast = CastPoints(castPoints);
 
             subject.HandleData(straightCast);
-            subject.ManualUpdate();
+            subject.Process();
             subject.Select();
 
             Assert.IsTrue(selectListenerMock.Received);
@@ -187,7 +207,7 @@ namespace Test.Zinnia.Pointer
             subject.enabled = false;
             subject.Activate();
             Assert.IsFalse(activatedListenerMock.Received);
-            Assert.IsFalse(subject.ActivationState);
+            Assert.IsFalse(subject.IsActivated);
         }
 
         [Test]
@@ -196,12 +216,12 @@ namespace Test.Zinnia.Pointer
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
 
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
@@ -219,7 +239,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsTrue(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
@@ -249,17 +269,17 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void OriginAlwaysVisible()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.origin.visibility = ObjectPointer.Element.Visibility.AlwaysOn;
+            subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOn;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -269,7 +289,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -279,7 +299,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -292,17 +312,17 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void SegmentAlwaysVisible()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.repeatedSegment.visibility = ObjectPointer.Element.Visibility.AlwaysOn;
+            subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOn;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -312,7 +332,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -322,7 +342,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -335,17 +355,17 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void DestinationAlwaysVisible()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.destination.visibility = ObjectPointer.Element.Visibility.AlwaysOn;
+            subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOn;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -355,7 +375,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -365,7 +385,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -378,18 +398,18 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void SegmentAndDestinationAlwaysVisible()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.repeatedSegment.visibility = ObjectPointer.Element.Visibility.AlwaysOn;
-            subject.destination.visibility = ObjectPointer.Element.Visibility.AlwaysOn;
+            subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOn;
+            subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOn;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -399,7 +419,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -409,7 +429,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -422,19 +442,19 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void ElementsAlwaysVisible()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.origin.visibility = ObjectPointer.Element.Visibility.AlwaysOn;
-            subject.repeatedSegment.visibility = ObjectPointer.Element.Visibility.AlwaysOn;
-            subject.destination.visibility = ObjectPointer.Element.Visibility.AlwaysOn;
+            subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOn;
+            subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOn;
+            subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOn;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -444,7 +464,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -454,7 +474,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -467,17 +487,17 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void OriginAlwaysHidden()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.origin.visibility = ObjectPointer.Element.Visibility.AlwaysOff;
+            subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOff;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -487,7 +507,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -497,7 +517,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -510,17 +530,17 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void SegmentAlwaysHidden()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.repeatedSegment.visibility = ObjectPointer.Element.Visibility.AlwaysOff;
+            subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOff;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -530,7 +550,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -540,7 +560,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -553,17 +573,17 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void DestinationAlwaysHidden()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.destination.visibility = ObjectPointer.Element.Visibility.AlwaysOff;
+            subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOff;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -573,7 +593,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -583,7 +603,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -596,18 +616,18 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void SegmentAndDestinationAlwaysHidden()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.repeatedSegment.visibility = ObjectPointer.Element.Visibility.AlwaysOff;
-            subject.destination.visibility = ObjectPointer.Element.Visibility.AlwaysOff;
+            subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOff;
+            subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOff;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -617,7 +637,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsTrue(invalidOrigin.activeInHierarchy);
@@ -627,7 +647,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -640,19 +660,19 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void ElementsAlwaysHidden()
         {
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
-            subject.origin.visibility = ObjectPointer.Element.Visibility.AlwaysOff;
-            subject.repeatedSegment.visibility = ObjectPointer.Element.Visibility.AlwaysOff;
-            subject.destination.visibility = ObjectPointer.Element.Visibility.AlwaysOff;
+            subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOff;
+            subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOff;
+            subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOff;
 
             subject.ManualOnEnable();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -662,7 +682,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -672,7 +692,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(invalidDestination.activeInHierarchy);
 
             subject.Deactivate();
-            subject.ManualUpdate();
+            subject.Process();
 
             Assert.IsFalse(validOrigin.activeInHierarchy);
             Assert.IsFalse(invalidOrigin.activeInHierarchy);
@@ -687,20 +707,19 @@ namespace Test.Zinnia.Pointer
         {
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
 
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
-
-            subject.activateOnEnable = true;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Activated.AddListener(activatedListenerMock.Listen);
 
             Assert.IsFalse(activatedListenerMock.Received);
 
             subject.ManualOnEnable();
+            subject.Activate();
 
             Assert.IsTrue(activatedListenerMock.Received);
 
@@ -719,12 +738,12 @@ namespace Test.Zinnia.Pointer
             UnityEventListenerMock exitListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock hoverListenerMock = new UnityEventListenerMock();
 
-            subject.origin.validObject = validOrigin;
-            subject.origin.invalidObject = invalidOrigin;
-            subject.repeatedSegment.validObject = validSegment;
-            subject.repeatedSegment.invalidObject = invalidSegment;
-            subject.destination.validObject = validDestination;
-            subject.destination.invalidObject = invalidDestination;
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Entered.AddListener(enterListenerMock.Listen);
             subject.Exited.AddListener(exitListenerMock.Listen);
@@ -737,7 +756,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(hoverListenerMock.Received);
 
             subject.Activate();
-            subject.ManualUpdate();
+            subject.Process();
 
             //No valid target so still should be false
             Assert.IsFalse(enterListenerMock.Received);
@@ -823,11 +842,6 @@ namespace Test.Zinnia.Pointer
         {
             enabled = false;
             OnDisable();
-        }
-
-        public void ManualUpdate()
-        {
-            Update();
         }
     }
 }
