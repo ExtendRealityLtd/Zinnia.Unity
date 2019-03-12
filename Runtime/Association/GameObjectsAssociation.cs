@@ -1,8 +1,9 @@
 ﻿namespace Zinnia.Association
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Holds <see cref="GameObject"/>s to (de)activate.
@@ -12,11 +13,12 @@
         /// <summary>
         /// The <see cref="GameObject"/>s to (de)activate.
         /// </summary>
-        [DocumentedByXml]
-        public List<GameObject> gameObjects = new List<GameObject>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public GameObjectObservableList GameObjects { get; set; }
 
         /// <summary>
-        /// Whether the <see cref="gameObjects"/> should be activated.
+        /// Whether the <see cref="GameObjects"/> should be activated.
         /// </summary>
         /// <returns></returns>
         public abstract bool ShouldBeActive();
