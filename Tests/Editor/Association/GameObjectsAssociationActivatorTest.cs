@@ -1,4 +1,6 @@
 ﻿using Zinnia.Association;
+using Zinnia.Association.Collection;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Association
 {
@@ -11,27 +13,31 @@ namespace Test.Zinnia.Association
     {
         private GameObject containingObject;
         private GameObjectsAssociationActivatorMock subject;
+        private GameObjectsAssociationObservableList associations;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
+            containingObject.SetActive(false);
             subject = containingObject.AddComponent<GameObjectsAssociationActivatorMock>();
+            associations = containingObject.AddComponent<GameObjectsAssociationObservableList>();
+            subject.Associations = associations;
+            containingObject.SetActive(true);
         }
 
         [TearDown]
         public void TearDown()
         {
-            foreach (GameObjectsAssociation association in subject.Associations)
+            foreach (GameObjectsAssociation association in subject.Associations.NonSubscribableElements)
             {
-                foreach (GameObject associatedObject in association.gameObjects)
+                foreach (GameObject associatedObject in association.GameObjects.NonSubscribableElements)
                 {
-                    Object.DestroyImmediate(associatedObject);
+                    Object.Destroy(associatedObject);
                 }
             }
 
-            Object.DestroyImmediate(subject);
-            Object.DestroyImmediate(containingObject);
+            Object.Destroy(containingObject);
         }
 
         [Test]
@@ -49,7 +55,8 @@ namespace Test.Zinnia.Association
             gameObject.SetActive(false);
 
             GameObjectsAssociationMock associationMock = containingObject.AddComponent<GameObjectsAssociationMock>();
-            associationMock.gameObjects.Add(gameObject);
+            associationMock.GameObjects = containingObject.AddComponent<GameObjectObservableList>();
+            associationMock.GameObjects.Add(gameObject);
             associationMock.shouldBeActive = true;
 
             subject.Associations.Add(associationMock);
@@ -67,6 +74,7 @@ namespace Test.Zinnia.Association
             Assert.IsNull(subject.CurrentAssociation);
 
             GameObjectsAssociationMock associationMock = containingObject.AddComponent<GameObjectsAssociationMock>();
+            associationMock.GameObjects = containingObject.AddComponent<GameObjectObservableList>();
             associationMock.shouldBeActive = true;
 
             subject.Associations.Add(associationMock);
@@ -82,8 +90,9 @@ namespace Test.Zinnia.Association
         public void AwakeLogsWarningForMultipleActiveGameObjects()
         {
             GameObjectsAssociationMock associationMock = containingObject.AddComponent<GameObjectsAssociationMock>();
-            associationMock.gameObjects.Add(new GameObject());
-            associationMock.gameObjects.Add(new GameObject());
+            associationMock.GameObjects = containingObject.AddComponent<GameObjectObservableList>();
+            associationMock.GameObjects.Add(new GameObject());
+            associationMock.GameObjects.Add(new GameObject());
 
             subject.Associations.Add(associationMock);
 
