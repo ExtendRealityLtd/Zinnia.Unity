@@ -5,6 +5,8 @@ using Zinnia.Data.Collection;
 namespace Test.Zinnia.Cast
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
@@ -27,7 +29,6 @@ namespace Test.Zinnia.Cast
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
             Object.DestroyImmediate(validSurface);
             Physics.autoSimulation = true;
@@ -38,12 +39,12 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 
-            subject.maximumLength = new Vector2(5f, 5f);
-            subject.segmentCount = 5;
+            subject.MaximumLength = new Vector2(5f, 5f);
+            subject.SegmentCount = 5;
 
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
@@ -71,12 +72,12 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 
-            subject.maximumLength = new Vector2(2f, 5f);
-            subject.segmentCount = 5;
+            subject.MaximumLength = new Vector2(2f, 5f);
+            subject.SegmentCount = 5;
 
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
@@ -104,12 +105,12 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 
-            subject.maximumLength = new Vector2(5f, 2f);
-            subject.segmentCount = 5;
+            subject.MaximumLength = new Vector2(5f, 2f);
+            subject.SegmentCount = 5;
 
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
@@ -132,12 +133,12 @@ namespace Test.Zinnia.Cast
             Assert.IsTrue(castResultsChangedMock.Received);
         }
 
-        [Test]
-        public void CastPointsInvalidTarget()
+        [UnityTest]
+        public IEnumerator CastPointsInvalidTarget()
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
             validSurface.AddComponent<RuleStub>();
@@ -146,18 +147,19 @@ namespace Test.Zinnia.Cast
             SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             anyComponentTypeRule.ComponentTypes = rules;
             rules.Add(typeof(RuleStub));
+            yield return null;
 
             negationRule.Rule = new RuleContainer
             {
                 Interface = anyComponentTypeRule
             };
-            subject.targetValidity = new RuleContainer
+            subject.TargetValidity = new RuleContainer
             {
                 Interface = negationRule
             };
 
-            subject.maximumLength = new Vector2(5f, 5f);
-            subject.segmentCount = 5;
+            subject.MaximumLength = new Vector2(5f, 5f);
+            subject.SegmentCount = 5;
 
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
@@ -185,12 +187,12 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 
-            subject.maximumLength = new Vector2(5f, 5f);
-            subject.segmentCount = 5;
+            subject.MaximumLength = new Vector2(5f, 5f);
+            subject.SegmentCount = 5;
             subject.gameObject.SetActive(false);
 
             Physics.Simulate(Time.fixedDeltaTime);
@@ -206,12 +208,12 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
 
-            subject.maximumLength = new Vector2(5f, 5f);
-            subject.segmentCount = 5;
+            subject.MaximumLength = new Vector2(5f, 5f);
+            subject.SegmentCount = 5;
             subject.enabled = false;
 
             Physics.Simulate(Time.fixedDeltaTime);

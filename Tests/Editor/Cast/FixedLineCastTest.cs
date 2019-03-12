@@ -21,7 +21,6 @@ namespace Test.Zinnia.Cast
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -30,7 +29,7 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
             subject.CurrentLength = 10f;
 
             subject.ManualOnEnable();
