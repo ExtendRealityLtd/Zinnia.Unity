@@ -2,8 +2,8 @@
 {
     using UnityEngine;
     using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.MemberChangeMethod;
 
     /// <summary>
     /// Casts a straight line and creates points at the origin and target.
@@ -13,7 +13,7 @@
         /// <summary>
         /// The maximum length to cast.
         /// </summary>
-        [Serialized, /*Validated*/]
+        [Serialized]
         [field: DocumentedByXml]
         public float MaximumLength { get; set; } = 100f;
 
@@ -40,15 +40,21 @@
         /// </summary>
         protected virtual void GeneratePoints()
         {
-            Vector3 originPosition = origin.transform.position;
-            Vector3 originForward = origin.transform.forward;
+            Vector3 originPosition = Origin.transform.position;
+            Vector3 originForward = Origin.transform.forward;
 
             Ray ray = new Ray(originPosition, originForward);
-            bool hasCollided = PhysicsCast.Raycast(physicsCast, ray, out RaycastHit hitData, MaximumLength, Physics.IgnoreRaycastLayer);
+            bool hasCollided = PhysicsCast.Raycast(PhysicsCast, ray, out RaycastHit hitData, MaximumLength, Physics.IgnoreRaycastLayer);
             TargetHit = hasCollided ? hitData : (RaycastHit?)null;
 
             points[0] = originPosition;
             points[1] = hasCollided ? hitData.point : originPosition + originForward * MaximumLength;
         }
+
+        /// <summary>
+        /// Called after <see cref="MaximumLength"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(MaximumLength))]
+        protected virtual void OnAfterMaximumLengthChange() { }
     }
 }
