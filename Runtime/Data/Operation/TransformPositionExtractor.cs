@@ -10,7 +10,7 @@
         /// <inheritdoc />
         protected override Vector3 ExtractValue()
         {
-            return useLocal ? source.transform.localPosition : source.transform.position;
+            return UseLocal ? Source.transform.localPosition : Source.transform.position;
         }
     }
 }

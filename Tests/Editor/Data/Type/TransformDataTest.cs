@@ -11,7 +11,7 @@ namespace Test.Zinnia.Data.Type
         public void DefaultConstructor()
         {
             TransformData transformData = new TransformData();
-            Assert.IsNull(transformData.transform);
+            Assert.IsNull(transformData.Transform);
         }
 
         [Test]
@@ -19,7 +19,7 @@ namespace Test.Zinnia.Data.Type
         {
             Transform defaultTransform = new GameObject().transform;
             TransformData transformData = new TransformData(defaultTransform);
-            Assert.AreEqual(defaultTransform, transformData.transform);
+            Assert.AreEqual(defaultTransform, transformData.Transform);
             Object.DestroyImmediate(defaultTransform.gameObject);
         }
 
@@ -29,7 +29,7 @@ namespace Test.Zinnia.Data.Type
             Transform defaultTransform = new GameObject().transform;
             TransformData transformData = new TransformData(defaultTransform);
             Assert.AreEqual(Vector3.zero, transformData.Position);
-            transformData.positionOverride = Vector3.one;
+            transformData.PositionOverride = Vector3.one;
             Assert.AreEqual(Vector3.one, transformData.Position);
             Object.DestroyImmediate(defaultTransform.gameObject);
         }
@@ -41,7 +41,7 @@ namespace Test.Zinnia.Data.Type
             TransformData transformData = new TransformData(defaultTransform);
             Quaternion rotationOverride = new Quaternion(1f, 1f, 1f, 0f);
             Assert.AreEqual(Quaternion.identity, transformData.Rotation);
-            transformData.rotationOverride = rotationOverride;
+            transformData.RotationOverride = rotationOverride;
             Assert.AreEqual(rotationOverride, transformData.Rotation);
             Object.DestroyImmediate(defaultTransform.gameObject);
         }
@@ -52,7 +52,7 @@ namespace Test.Zinnia.Data.Type
             Transform defaultTransform = new GameObject().transform;
             TransformData transformData = new TransformData(defaultTransform);
             Assert.AreEqual(Vector3.one, transformData.Scale);
-            transformData.scaleOverride = Vector3.zero;
+            transformData.ScaleOverride = Vector3.zero;
             Assert.AreEqual(Vector3.zero, transformData.Scale);
             Object.DestroyImmediate(defaultTransform.gameObject);
         }

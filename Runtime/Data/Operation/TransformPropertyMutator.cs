@@ -1,11 +1,10 @@
 ﻿namespace Zinnia.Data.Operation
 {
+    using UnityEngine;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
-    using UnityEngine;
     using Zinnia.Data.Type;
 
     /// <summary>
@@ -16,19 +15,21 @@
         /// <summary>
         /// The target to mutate.
         /// </summary>
-        [Serialized, /*Validated,*/ Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// Determines whether to mutate the local or global values.
         /// </summary>
-        [DocumentedByXml]
-        public bool useLocalValues;
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool UseLocalValues { get; set; }
         /// <summary>
         /// Determines which axes to mutate.
         /// </summary>
-        [DocumentedByXml]
-        public Vector3State mutateOnAxis = Vector3State.True;
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3State MutateOnAxis { get; set; } = Vector3State.True;
 
         /// <summary>
         /// Sets the property to the new value.
@@ -43,7 +44,7 @@
             }
 
             input = LockSetInput(input);
-            if (useLocalValues)
+            if (UseLocalValues)
             {
                 return SetLocal(input);
             }
@@ -75,7 +76,7 @@
             }
 
             input = LockIncrementInput(input);
-            if (useLocalValues)
+            if (UseLocalValues)
             {
                 return IncrementLocal(input);
             }
@@ -138,9 +139,9 @@
         /// <returns>The input locked on the required axes.</returns>
         protected virtual Vector3 LockSetInput(Vector3 input)
         {
-            input.x = mutateOnAxis.xState ? input.x : GetAxisValue(0);
-            input.y = mutateOnAxis.yState ? input.y : GetAxisValue(1);
-            input.z = mutateOnAxis.zState ? input.z : GetAxisValue(2);
+            input.x = MutateOnAxis.xState ? input.x : GetAxisValue(0);
+            input.y = MutateOnAxis.yState ? input.y : GetAxisValue(1);
+            input.z = MutateOnAxis.zState ? input.z : GetAxisValue(2);
             return input;
         }
 
@@ -151,9 +152,9 @@
         /// <returns>The input locked on the required axes.</returns>
         protected virtual Vector3 LockIncrementInput(Vector3 input)
         {
-            input.x = mutateOnAxis.xState ? input.x : 0f;
-            input.y = mutateOnAxis.yState ? input.y : 0f;
-            input.z = mutateOnAxis.zState ? input.z : 0f;
+            input.x = MutateOnAxis.xState ? input.x : 0f;
+            input.y = MutateOnAxis.yState ? input.y : 0f;
+            input.z = MutateOnAxis.zState ? input.z : 0f;
             return input;
         }
 
@@ -164,14 +165,7 @@
         /// <returns>The axis value.</returns>
         protected virtual float GetAxisValue(int axis)
         {
-            if (useLocalValues)
-            {
-                return GetLocalAxisValue(axis);
-            }
-            else
-            {
-                return GetGlobalAxisValue(axis);
-            }
+            return UseLocalValues ? GetLocalAxisValue(axis) : GetGlobalAxisValue(axis);
         }
 
         /// <summary>
@@ -181,7 +175,7 @@
         [RequiresBehaviourState]
         protected virtual bool IsValid()
         {
-            return (Target != null);
+            return Target != null;
         }
     }
 }

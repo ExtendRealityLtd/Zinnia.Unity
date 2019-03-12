@@ -2,6 +2,7 @@
 {
     using UnityEngine.Events;
     using System;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Sums up a collection of <see cref="float"/>s.
@@ -9,7 +10,7 @@
     /// <example>
     /// 1f + 2f + 3f = 6f
     /// </example>
-    public class FloatAdder : CollectionAggregator<float, float, FloatAdder.UnityEvent>
+    public class FloatAdder : CollectionAggregator<float, float, FloatAdder.UnityEvent, FloatObservableList, FloatObservableList.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the aggregated <see cref="float"/> value.
@@ -23,7 +24,7 @@
         protected override float ProcessCollection()
         {
             float sum = 0f;
-            foreach (float element in collection)
+            foreach (float element in Collection.NonSubscribableElements)
             {
                 sum += element;
             }

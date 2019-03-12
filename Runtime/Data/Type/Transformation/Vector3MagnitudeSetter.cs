@@ -1,11 +1,10 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using System;
-    using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertyValidationMethod;*/
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
+    using System;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Transforms a <see cref="Vector3"/> by changing its magnitude.
@@ -23,7 +22,7 @@
         /// <summary>
         /// The magnitude to use when transforming values.
         /// </summary>
-        [Serialized, /*Validated*/]
+        [Serialized]
         [field: DocumentedByXml]
         public float Magnitude { get; set; } = 1f;
 

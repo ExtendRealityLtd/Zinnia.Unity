@@ -174,12 +174,12 @@
         [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (Target == null || Source?.transform == null)
+            if (Target == null || Source?.Transform == null)
             {
                 return;
             }
 
-            targetTransformData.transform = Target.transform;
+            targetTransformData.Transform = Target.transform;
             BeforeTransformUpdated?.Invoke(eventData.Set(Source, targetTransformData));
             Vector3 finalScale = CalculateScale(Source, targetTransformData);
             Quaternion finalRotation = CalculateRotation(Source, targetTransformData);
@@ -295,9 +295,9 @@
         {
             if (TransitionDuration.ApproxEquals(0f))
             {
-                target.transform.SetGlobalScale(currentScale);
-                target.transform.rotation = currentRotation;
-                target.transform.position = currentPosition;
+                target.Transform.SetGlobalScale(currentScale);
+                target.Transform.rotation = currentRotation;
+                target.Transform.position = currentPosition;
                 AfterTransformUpdated?.Invoke(eventData.Set(source, target));
             }
             else
@@ -353,16 +353,16 @@
             while (elapsedTime < TransitionDuration)
             {
                 float lerpFrame = elapsedTime / TransitionDuration;
-                target.transform.SetGlobalScale(Vector3.Lerp(startScale, destinationScale, lerpFrame));
-                target.transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
-                target.transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
+                target.Transform.SetGlobalScale(Vector3.Lerp(startScale, destinationScale, lerpFrame));
+                target.Transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
+                target.Transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
                 elapsedTime += ArePropertiesEqual(startPosition, destinationPosition, startRotation, destinationRotation, startScale, destinationScale) ? TransitionDuration : Time.deltaTime;
                 yield return delayInstruction;
             }
 
-            target.transform.SetGlobalScale(destinationScale);
-            target.transform.position = destinationPosition;
-            target.transform.rotation = destinationRotation;
+            target.Transform.SetGlobalScale(destinationScale);
+            target.Transform.position = destinationPosition;
+            target.Transform.rotation = destinationRotation;
             AfterTransformUpdated?.Invoke(eventData.Set(source, target));
         }
 
@@ -389,10 +389,10 @@
         [CalledAfterChangeOf(nameof(Source))]
         protected virtual void OnAfterSourceChange()
         {
-            sourceTransformData.transform = Source != null ? Source.transform : null;
-            sourceTransformData.positionOverride = null;
-            sourceTransformData.rotationOverride = null;
-            sourceTransformData.scaleOverride = null;
+            sourceTransformData.Transform = Source != null ? Source.Transform : null;
+            sourceTransformData.PositionOverride = null;
+            sourceTransformData.RotationOverride = null;
+            sourceTransformData.ScaleOverride = null;
         }
     }
 }

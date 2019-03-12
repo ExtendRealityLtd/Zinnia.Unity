@@ -22,7 +22,6 @@ namespace Test.Zinnia.Data.Collection
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -39,11 +38,17 @@ namespace Test.Zinnia.Data.Collection
             GameObject keyThree = new GameObject();
             GameObject valueThree = new GameObject();
 
-            GameObjectRelations.Relation relationOne = new GameObjectRelations.Relation() { key = keyOne, value = valueOne };
-            GameObjectRelations.Relation relationTwo = new GameObjectRelations.Relation() { key = keyTwo, value = valueTwo };
-            GameObjectRelations.Relation relationThree = new GameObjectRelations.Relation() { key = keyThree, value = valueThree };
+            GameObjectRelationObservableList relations = containingObject.AddComponent<GameObjectRelationObservableList>();
+            subject.Relations = relations;
 
-            subject.relations = new List<GameObjectRelations.Relation>() { relationOne, relationTwo, relationThree };
+            GameObjectRelationObservableList.Relation relationOne = new GameObjectRelationObservableList.Relation() { Key = keyOne, Value = valueOne };
+            GameObjectRelationObservableList.Relation relationTwo = new GameObjectRelationObservableList.Relation() { Key = keyTwo, Value = valueTwo };
+            GameObjectRelationObservableList.Relation relationThree = new GameObjectRelationObservableList.Relation() { Key = keyThree, Value = valueThree };
+
+
+            subject.Relations.Add(relationOne);
+            subject.Relations.Add(relationTwo);
+            subject.Relations.Add(relationThree);
 
             Assert.IsFalse(valueRetrievedListenerMock.Received);
 
@@ -72,10 +77,14 @@ namespace Test.Zinnia.Data.Collection
             GameObject keyThree = new GameObject();
             GameObject valueThree = new GameObject();
 
-            GameObjectRelations.Relation relationOne = new GameObjectRelations.Relation() { key = keyOne, value = valueOne };
-            GameObjectRelations.Relation relationThree = new GameObjectRelations.Relation() { key = keyThree, value = valueThree };
+            GameObjectRelationObservableList relations = containingObject.AddComponent<GameObjectRelationObservableList>();
+            subject.Relations = relations;
 
-            subject.relations = new List<GameObjectRelations.Relation>() { relationOne, relationThree };
+            GameObjectRelationObservableList.Relation relationOne = new GameObjectRelationObservableList.Relation() { Key = keyOne, Value = valueOne };
+            GameObjectRelationObservableList.Relation relationThree = new GameObjectRelationObservableList.Relation() { Key = keyThree, Value = valueThree };
+
+            subject.Relations.Add(relationOne);
+            subject.Relations.Add(relationThree);
 
             Assert.IsFalse(valueRetrievedListenerMock.Received);
 
@@ -104,11 +113,16 @@ namespace Test.Zinnia.Data.Collection
             GameObject keyThree = new GameObject();
             GameObject valueThree = new GameObject();
 
-            GameObjectRelations.Relation relationOne = new GameObjectRelations.Relation() { key = keyOne, value = valueOne };
-            GameObjectRelations.Relation relationTwo = new GameObjectRelations.Relation() { key = keyTwo, value = valueTwo };
-            GameObjectRelations.Relation relationThree = new GameObjectRelations.Relation() { key = keyThree, value = valueThree };
+            GameObjectRelationObservableList relations = containingObject.AddComponent<GameObjectRelationObservableList>();
+            subject.Relations = relations;
 
-            subject.relations = new List<GameObjectRelations.Relation>() { relationOne, relationTwo, relationThree };
+            GameObjectRelationObservableList.Relation relationOne = new GameObjectRelationObservableList.Relation() { Key = keyOne, Value = valueOne };
+            GameObjectRelationObservableList.Relation relationTwo = new GameObjectRelationObservableList.Relation() { Key = keyTwo, Value = valueTwo };
+            GameObjectRelationObservableList.Relation relationThree = new GameObjectRelationObservableList.Relation() { Key = keyThree, Value = valueThree };
+
+            subject.Relations.Add(relationOne);
+            subject.Relations.Add(relationTwo);
+            subject.Relations.Add(relationThree);
 
             Assert.IsFalse(valueRetrievedListenerMock.Received);
 
@@ -137,10 +151,14 @@ namespace Test.Zinnia.Data.Collection
             GameObject keyThree = new GameObject();
             GameObject valueThree = new GameObject();
 
-            GameObjectRelations.Relation relationOne = new GameObjectRelations.Relation() { key = keyOne, value = valueOne };
-            GameObjectRelations.Relation relationThree = new GameObjectRelations.Relation() { key = keyThree, value = valueThree };
+            GameObjectRelationObservableList relations = containingObject.AddComponent<GameObjectRelationObservableList>();
+            subject.Relations = relations;
 
-            subject.relations = new List<GameObjectRelations.Relation>() { relationOne, relationThree };
+            GameObjectRelationObservableList.Relation relationOne = new GameObjectRelationObservableList.Relation() { Key = keyOne, Value = valueOne };
+            GameObjectRelationObservableList.Relation relationThree = new GameObjectRelationObservableList.Relation() { Key = keyThree, Value = valueThree };
+
+            subject.Relations.Add(relationOne);
+            subject.Relations.Add(relationThree);
 
             Assert.IsFalse(valueRetrievedListenerMock.Received);
 
