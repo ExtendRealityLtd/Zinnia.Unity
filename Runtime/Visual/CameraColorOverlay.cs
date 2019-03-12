@@ -8,8 +8,8 @@
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
+    using Zinnia.Rule;
     using Zinnia.Extension;
-    using Zinnia.Data.Type;
 
     /// <summary>
     /// Applies a color over the valid cameras and can be used to fade the screen view.
@@ -55,11 +55,11 @@
         }
 
         /// <summary>
-        /// A <see cref="Camera"/> collection to apply the color overlay to.
+        /// The rules to determine which scene cameras to apply the overlay to.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
-        public CameraList ValidCameras { get; set; }
+        public RuleContainer CameraValidity { get; set; }
         /// <summary>
         /// The <see cref="Color"/> of the overlay.
         /// </summary>
@@ -231,10 +231,10 @@
         /// <summary>
         /// The moment before <see cref="Camera"/> render that will apply the <see cref="Color"/> overlay.
         /// </summary>
-        /// <param name="cam">The <see cref="Camera"/> to apply onto.</param>
-        protected virtual void PostRender(Camera cam)
+        /// <param name="sceneCamera">The <see cref="Camera"/> to apply onto.</param>
+        protected virtual void PostRender(Camera sceneCamera)
         {
-            if (ValidCameras == null || !ValidCameras.cameras.Contains(cam))
+            if (!CameraValidity.Accepts(sceneCamera))
             {
                 return;
             }
