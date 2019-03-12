@@ -105,7 +105,7 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
 
             Vector3 finalPosition = Vector3.one + Vector3.forward;
-            sourceTransformData.transform.position = finalPosition;
+            sourceTransformData.Transform.position = finalPosition;
 
             subject.Apply();
 
@@ -123,8 +123,8 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
 
             Quaternion finalRotation = new Quaternion(1f, 0f, 0f, 0f);
-            sourceTransformData.transform.position = Vector3.one;
-            sourceTransformData.transform.rotation = finalRotation;
+            sourceTransformData.Transform.position = Vector3.one;
+            sourceTransformData.Transform.rotation = finalRotation;
             subject.Apply();
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -143,9 +143,9 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
 
             Vector3 finalScale = (Vector3.one * 2f) + Vector3.forward;
-            sourceTransformData.transform.position = Vector3.one;
-            sourceTransformData.transform.rotation = new Quaternion(1f, 0f, 0f, 0f);
-            sourceTransformData.transform.localScale = finalScale;
+            sourceTransformData.Transform.position = Vector3.one;
+            sourceTransformData.Transform.rotation = new Quaternion(1f, 0f, 0f, 0f);
+            sourceTransformData.Transform.localScale = finalScale;
 
             subject.Apply();
 
@@ -166,9 +166,9 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
             Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
 
-            sourceTransformData.transform.position = Vector3.one * 2f;
-            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            sourceTransformData.transform.localScale = Vector3.one * 3f;
+            sourceTransformData.Transform.position = Vector3.one * 2f;
+            sourceTransformData.Transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.Transform.localScale = Vector3.one * 3f;
 
             offsetObject.transform.position = Vector3.one;
             offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
@@ -192,9 +192,9 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
             Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
 
-            sourceTransformData.transform.position = Vector3.one * 2f;
-            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            sourceTransformData.transform.localScale = Vector3.one * 3f;
+            sourceTransformData.Transform.position = Vector3.one * 2f;
+            sourceTransformData.Transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.Transform.localScale = Vector3.one * 3f;
 
             offsetObject.transform.position = Vector3.one;
             offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
@@ -215,9 +215,9 @@ namespace Test.Zinnia.Tracking.Modification
             subject.ApplyPositionOffsetOnAxis = new Vector3State(true, false, false);
             subject.ApplyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
-            sourceTransformData.transform.position = Vector3.one * 2f;
-            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            sourceTransformData.transform.localScale = Vector3.one * 3f;
+            sourceTransformData.Transform.position = Vector3.one * 2f;
+            sourceTransformData.Transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.Transform.localScale = Vector3.one * 3f;
 
             offsetObject.transform.position = Vector3.one;
             offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
@@ -231,9 +231,9 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ModifyTransformNoSourceOrTarget()
         {
-            sourceTransformData.transform.position = Vector3.one * 2f;
-            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            sourceTransformData.transform.localScale = Vector3.one * 3f;
+            sourceTransformData.Transform.position = Vector3.one * 2f;
+            sourceTransformData.Transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.Transform.localScale = Vector3.one * 3f;
 
             subject.Apply();
 
@@ -247,9 +247,9 @@ namespace Test.Zinnia.Tracking.Modification
         {
             subject.Target = targetObject;
 
-            sourceTransformData.transform.position = Vector3.one * 2f;
-            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            sourceTransformData.transform.localScale = Vector3.one * 3f;
+            sourceTransformData.Transform.position = Vector3.one * 2f;
+            sourceTransformData.Transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.Transform.localScale = Vector3.one * 3f;
 
             subject.Apply();
 
@@ -263,9 +263,9 @@ namespace Test.Zinnia.Tracking.Modification
         {
             subject.Source = new TransformData(sourceObject);
 
-            sourceTransformData.transform.position = Vector3.one * 2f;
-            sourceTransformData.transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
-            sourceTransformData.transform.localScale = Vector3.one * 3f;
+            sourceTransformData.Transform.position = Vector3.one * 2f;
+            sourceTransformData.Transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
+            sourceTransformData.Transform.localScale = Vector3.one * 3f;
 
             subject.Apply();
 
@@ -328,7 +328,7 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void NoModifyPositionOnInactiveGameObject()
         {
-            sourceTransformData.transform.position = Vector3.one;
+            sourceTransformData.Transform.position = Vector3.one;
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
@@ -343,7 +343,7 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void NoModifyPositionOnDisabledComponent()
         {
-            sourceTransformData.transform.position = Vector3.one;
+            sourceTransformData.Transform.position = Vector3.one;
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;

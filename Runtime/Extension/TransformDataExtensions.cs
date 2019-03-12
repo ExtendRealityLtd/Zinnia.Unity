@@ -15,7 +15,7 @@
         /// <returns>The <see cref="GameObject"/> if one exists on the given <see cref="TransformData"/>.</returns>
         public static GameObject TryGetGameObject(this TransformData transformData)
         {
-            return (transformData?.transform == null ? null : transformData.transform.gameObject);
+            return (transformData?.Transform == null ? null : transformData.Transform.gameObject);
         }
     }
 }

@@ -31,8 +31,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = Vector3State.True;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -50,8 +50,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = false;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = false;
+            subject.MutateOnAxis = Vector3State.True;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -69,8 +69,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = new Vector3State(true, false, true);
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = new Vector3State(true, false, true);
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -90,8 +90,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = false;
-            subject.mutateOnAxis = new Vector3State(false, true, false);
+            subject.UseLocalValues = false;
+            subject.MutateOnAxis = new Vector3State(false, true, false);
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -111,8 +111,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = Vector3State.True;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -134,8 +134,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = false;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = false;
+            subject.MutateOnAxis = Vector3State.True;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -157,8 +157,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = new Vector3State(true, false, true);
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = new Vector3State(true, false, true);
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -182,8 +182,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = false;
-            subject.mutateOnAxis = new Vector3State(false, true, false);
+            subject.UseLocalValues = false;
+            subject.MutateOnAxis = new Vector3State(false, true, false);
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -209,8 +209,8 @@ namespace Test.Zinnia.Data.Operation
             offset.transform.eulerAngles = new Vector3(10f, 20f, 30f);
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = Vector3State.True;
             subject.RotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
@@ -233,8 +233,8 @@ namespace Test.Zinnia.Data.Operation
             offset.transform.eulerAngles = new Vector3(10f, 20f, 30f);
 
             subject.Target = target;
-            subject.useLocalValues = false;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = false;
+            subject.MutateOnAxis = Vector3State.True;
             subject.RotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -257,8 +257,8 @@ namespace Test.Zinnia.Data.Operation
             offset.transform.eulerAngles = new Vector3(10f, 20f, 30f);
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = new Vector3State(true, false, true);
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = new Vector3State(true, false, true);
             subject.RotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
@@ -282,8 +282,8 @@ namespace Test.Zinnia.Data.Operation
             offset.transform.eulerAngles = new Vector3(10f, 20f, 30f);
 
             subject.Target = target;
-            subject.useLocalValues = false;
-            subject.mutateOnAxis = new Vector3State(false, true, false);
+            subject.UseLocalValues = false;
+            subject.MutateOnAxis = new Vector3State(false, true, false);
             subject.RotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -307,8 +307,8 @@ namespace Test.Zinnia.Data.Operation
             offset.transform.eulerAngles = new Vector3(10f, 20f, 30f);
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = Vector3State.True;
             subject.RotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
@@ -338,8 +338,8 @@ namespace Test.Zinnia.Data.Operation
             offset.transform.eulerAngles = new Vector3(10f, 20f, 30f);
 
             subject.Target = target;
-            subject.useLocalValues = false;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = false;
+            subject.MutateOnAxis = Vector3State.True;
             subject.RotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -368,8 +368,8 @@ namespace Test.Zinnia.Data.Operation
             offset.transform.eulerAngles = new Vector3(10f, 20f, 30f);
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = new Vector3State(true, false, true);
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = new Vector3State(true, false, true);
             subject.RotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
@@ -399,8 +399,8 @@ namespace Test.Zinnia.Data.Operation
             offset.transform.eulerAngles = new Vector3(10f, 20f, 30f);
 
             subject.Target = target;
-            subject.useLocalValues = false;
-            subject.mutateOnAxis = new Vector3State(false, true, false);
+            subject.UseLocalValues = false;
+            subject.MutateOnAxis = new Vector3State(false, true, false);
             subject.RotationOffset = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -428,8 +428,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = Vector3State.True;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
@@ -448,8 +448,8 @@ namespace Test.Zinnia.Data.Operation
             GameObject target = new GameObject();
 
             subject.Target = target;
-            subject.useLocalValues = true;
-            subject.mutateOnAxis = Vector3State.True;
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = Vector3State.True;
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);

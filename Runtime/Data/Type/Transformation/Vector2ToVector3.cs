@@ -4,7 +4,6 @@
     using UnityEngine.Events;
     using System;
     using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -59,13 +58,13 @@
         /// <summary>
         /// The mechanism for mapping the <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
         /// </summary>
-        [Serialized, /*Validated*/]
+        [Serialized]
         [field: DocumentedByXml]
         public CoordinateMapType CoordinateMap { get; set; } = CoordinateMapType.XToXAndYToY;
         /// <summary>
         /// The value to set the unused coordinate to during the conversion.
         /// </summary>
-        [Serialized, /*Validated*/]
+        [Serialized]
         [field: DocumentedByXml]
         public float UnusedCoordinateValue { get; set; }
 

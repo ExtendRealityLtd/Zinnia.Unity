@@ -30,7 +30,7 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
-            subject.source = containingObject;
+            subject.Source = containingObject;
 
             Vector3 result = subject.Extract();
 
@@ -55,7 +55,7 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
-            subject.source = containingObject;
+            subject.Source = containingObject;
 
             subject.Process();
 
@@ -78,7 +78,7 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
-            subject.source = containingObject;
+            subject.Source = containingObject;
             subject.gameObject.SetActive(false);
 
             Vector3 result = subject.Extract();
@@ -104,7 +104,7 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
-            subject.source = containingObject;
+            subject.Source = containingObject;
             subject.enabled = false;
 
             Vector3 result = subject.Extract();

@@ -27,11 +27,7 @@
         /// <summary>
         /// The elements being counted.
         /// </summary>
-        public Dictionary<TElement, int> ElementsCounter
-        {
-            get;
-            protected set;
-        } = new Dictionary<TElement, int>();
+        public Dictionary<TElement, int> ElementsCounter { get; protected set; } = new Dictionary<TElement, int>();
 
         /// <summary>
         /// Increases the count of the given element.

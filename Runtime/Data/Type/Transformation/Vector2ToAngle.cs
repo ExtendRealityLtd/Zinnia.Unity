@@ -3,9 +3,8 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
-    /*using Malimbe.PropertySetterMethod;*/
-    /*using Malimbe.PropertyValidationMethod;*/
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
 
@@ -48,13 +47,14 @@
         /// <summary>
         /// The unit to return the converted angle in.
         /// </summary>
-        [DocumentedByXml]
-        public AngleUnit unit = AngleUnit.Degrees;
+        [Serialized]
+        [field: DocumentedByXml]
+        public AngleUnit Unit { get; set; } = AngleUnit.Degrees;
 
         /// <summary>
         /// The direction that defines the origin (i.e. zero) angle.
         /// </summary>
-        [Serialized, /*Validated*/]
+        [Serialized]
         [field: DocumentedByXml]
         public Vector2 Origin { get; set; } = new Vector2(0f, 1f);
 
@@ -77,18 +77,20 @@
 
             return (float)
                 ((Math.Atan2(Origin.y, Origin.x) - Math.Atan2(input.y, input.x) + fullCircle) % fullCircle
-                    * (unit == AngleUnit.Degrees ? 180f / Math.PI : 1f));
+                    * (Unit == AngleUnit.Degrees ? 180f / Math.PI : 1f));
         }
 
         /// <summary>
-        /// Handles changes to <see cref="Origin"/>.
+        /// Called after <see cref="Origin"/> has been changed.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        /*[CalledBySetter(nameof(Origin))]*/
-        protected virtual void OnOriginChange(Vector2 previousValue, ref Vector2 newValue)
+        [CalledAfterChangeOf(nameof(Origin))]
+        protected virtual void OnAfterOriginChange()
         {
-            newValue = newValue.normalized;
+            Vector2 normalizedOrigin = Origin.normalized;
+            if (!Origin.ApproxEquals(normalizedOrigin))
+            {
+                Origin = normalizedOrigin;
+            }
         }
     }
 }

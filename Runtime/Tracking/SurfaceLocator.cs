@@ -97,7 +97,7 @@
         /// </summary>
         public virtual void Locate()
         {
-            transformData.transform = SearchOrigin == null ? null : SearchOrigin.transform;
+            transformData.Transform = SearchOrigin == null ? null : SearchOrigin.transform;
             Locate(transformData);
         }
 
@@ -108,14 +108,14 @@
         [RequiresBehaviourState]
         public virtual void Locate(TransformData givenOrigin)
         {
-            if (givenOrigin == null || !givenOrigin.Valid)
+            if (givenOrigin == null || !givenOrigin.IsValid)
             {
                 return;
             }
 
             if (CastRay(givenOrigin.Position, SearchDirection) && PositionChanged(DISTANCE_VARIANCE))
             {
-                surfaceData.rotationOverride = givenOrigin.Rotation;
+                surfaceData.RotationOverride = givenOrigin.Rotation;
                 SurfaceLocated?.Invoke(surfaceData);
             }
         }
@@ -139,8 +139,8 @@
         protected virtual bool CastRay(Vector3 givenOrigin, Vector3 givenDirection)
         {
             givenOrigin = givenOrigin + (givenDirection.normalized * OriginOffset);
-            surfaceData.origin = givenOrigin;
-            surfaceData.direction = givenDirection;
+            surfaceData.Origin = givenOrigin;
+            surfaceData.Direction = givenDirection;
             Ray tracerRaycast = new Ray(givenOrigin, givenDirection);
             return TargetValidity == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast);
         }
@@ -192,8 +192,8 @@
         protected virtual void SetSurfaceData(RaycastHit collision)
         {
             surfaceData.CollisionData = collision;
-            surfaceData.transform = surfaceData.CollisionData.transform;
-            surfaceData.positionOverride = surfaceData.CollisionData.point;
+            surfaceData.Transform = surfaceData.CollisionData.transform;
+            surfaceData.PositionOverride = surfaceData.CollisionData.point;
         }
 
         /// <summary>

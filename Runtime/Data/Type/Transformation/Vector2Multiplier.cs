@@ -3,7 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Zinnia.Extension;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Multiplies a collection of <see cref="Vector2"/>s by multiplying each one to the next entry in the collection.
@@ -11,7 +11,7 @@
     /// <example>
     /// (2f,3f) * [3f,4f] = (6f,12f)
     /// </example>
-    public class Vector2Multiplier : CollectionAggregator<Vector2, Vector2, Vector2Multiplier.UnityEvent>
+    public class Vector2Multiplier : CollectionAggregator<Vector2, Vector2, Vector2Multiplier.UnityEvent, Vector2ObservableList, Vector2ObservableList.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the multiplied <see cref="Vector2"/> value.
@@ -22,58 +22,54 @@
         }
 
         /// <summary>
-        /// Sets the x value of the <see cref="CollectionAggregator{TInput,TOutput,TEvent}.CurrentIndex"/> element.
+        /// Sets the x value of the <see cref="Collection.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new x value.</param>
-        public virtual void SetElementX(float value)
+        public virtual void SetComponentX(float value)
         {
-            Vector2 currentValue = collection[CurrentIndex];
+            Vector2 currentValue = Collection.NonSubscribableElements[Collection.CurrentIndex];
             currentValue.x = value;
-            collection[CurrentIndex] = currentValue;
+            Collection.SetAtCurrentIndex(currentValue);
         }
 
         /// <summary>
         /// Sets the x value of the given index element.
         /// </summary>
-        /// <param name="index">The index in the collection to update at.</param>
         /// <param name="value">The new x value.</param>
-        public virtual void SetElementX(int index, float value)
+        /// <param name="index">The index in the collection to update at.</param>
+        public virtual void SetComponentX(float value, int index)
         {
-            index = collection.GetWrappedAndClampedIndex(index);
-            Vector2 currentValue = collection[index];
-            currentValue.x = value;
-            collection[index] = currentValue;
+            Collection.CurrentIndex = index;
+            SetComponentX(value);
         }
 
         /// <summary>
-        /// Sets the y value of the <see cref="CollectionAggregator{TInput,TOutput,TEvent}.CurrentIndex"/> element.
+        /// Sets the y value of the <see cref="Collection.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new y value.</param>
-        public virtual void SetElementY(float value)
+        public virtual void SetComponentY(float value)
         {
-            Vector2 currentValue = collection[CurrentIndex];
+            Vector2 currentValue = Collection.NonSubscribableElements[Collection.CurrentIndex];
             currentValue.y = value;
-            collection[CurrentIndex] = currentValue;
+            Collection.SetAtCurrentIndex(currentValue);
         }
 
         /// <summary>
         /// Sets the y value of the given index element.
         /// </summary>
-        /// <param name="index">The index in the collection to update at.</param>
         /// <param name="value">The new y value.</param>
-        public virtual void SetElementY(int index, float value)
+        /// <param name="index">The index in the collection to update at.</param>
+        public virtual void SetComponentY(float value, int index)
         {
-            index = collection.GetWrappedAndClampedIndex(index);
-            Vector2 currentValue = collection[index];
-            currentValue.y = value;
-            collection[index] = currentValue;
+            Collection.CurrentIndex = index;
+            SetComponentY(value);
         }
 
         /// <inheritdoc />
         protected override Vector2 ProcessCollection()
         {
             Vector2 product = Vector2.one;
-            foreach (Vector2 element in collection)
+            foreach (Vector2 element in Collection.NonSubscribableElements)
             {
                 product = Vector2.Scale(product, element);
             }

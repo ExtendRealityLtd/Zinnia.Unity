@@ -13,7 +13,7 @@ namespace Test.Zinnia.Extension
         {
             TransformData valid = new TransformData(new GameObject());
             Assert.NotNull(valid.TryGetGameObject());
-            Object.DestroyImmediate(valid.transform.gameObject);
+            Object.DestroyImmediate(valid.Transform.gameObject);
         }
 
         [Test]

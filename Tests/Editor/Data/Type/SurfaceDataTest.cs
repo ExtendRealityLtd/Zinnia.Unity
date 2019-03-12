@@ -11,16 +11,16 @@ namespace Test.Zinnia.Data.Type
         public void DefaultConstructor()
         {
             SurfaceData surfaceData = new SurfaceData();
-            Assert.AreEqual(Vector3.zero, surfaceData.origin);
-            Assert.AreEqual(Vector3.zero, surfaceData.direction);
+            Assert.AreEqual(Vector3.zero, surfaceData.Origin);
+            Assert.AreEqual(Vector3.zero, surfaceData.Direction);
         }
 
         [Test]
         public void OriginConstructor()
         {
             SurfaceData surfaceData = new SurfaceData(Vector3.one, Vector3.forward);
-            Assert.AreEqual(Vector3.one, surfaceData.origin);
-            Assert.AreEqual(Vector3.forward, surfaceData.direction);
+            Assert.AreEqual(Vector3.one, surfaceData.Origin);
+            Assert.AreEqual(Vector3.forward, surfaceData.Direction);
         }
 
         [Test]
@@ -42,8 +42,8 @@ namespace Test.Zinnia.Data.Type
             Physics.Raycast(forwardRay, out forwardHit);
 
             //Set up the initial collision of a surface
-            surfaceData.origin = Vector3.zero;
-            surfaceData.direction = Vector3.forward;
+            surfaceData.Origin = Vector3.zero;
+            surfaceData.Direction = Vector3.forward;
             surfaceData.CollisionData = forwardHit;
 
             //Do an second different collision
@@ -53,12 +53,12 @@ namespace Test.Zinnia.Data.Type
             Physics.Raycast(downwardRay, out downwardHit);
 
             //Set up the initial collision of a surface
-            surfaceData.origin = Vector3.zero;
-            surfaceData.direction = Vector3.down;
+            surfaceData.Origin = Vector3.zero;
+            surfaceData.Direction = Vector3.down;
             surfaceData.CollisionData = downwardHit;
 
-            Assert.AreEqual(Vector3.zero, surfaceData.origin);
-            Assert.AreEqual(Vector3.down, surfaceData.direction);
+            Assert.AreEqual(Vector3.zero, surfaceData.Origin);
+            Assert.AreEqual(Vector3.down, surfaceData.Direction);
             Assert.AreEqual(bottom.transform, surfaceData.CollisionData.transform);
             Assert.AreEqual(front.transform, surfaceData.PreviousCollisionData.transform);
 
