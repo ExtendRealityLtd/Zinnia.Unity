@@ -27,7 +27,7 @@
         /// <returns>The transformed value.</returns>
         protected override float Process(bool input)
         {
-            return (input ? 1f : 0f);
+            return input ? 1f : 0f;
         }
     }
 }

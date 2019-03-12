@@ -5,6 +5,8 @@
     using System;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.MemberClearanceMethod;
     using Zinnia.Process;
 
     /// <summary>
@@ -12,28 +14,25 @@
     /// </summary>
     /// <typeparam name="TElement">The element type to extract.</typeparam>
     /// <typeparam name="TEvent">The event to emit on extraction.</typeparam>
-    public abstract class TransformPropertyExtractor<TElement, TEvent> : MonoBehaviour, IProcessable
-        where TEvent : UnityEvent<TElement>, new()
+    public abstract class TransformPropertyExtractor<TElement, TEvent> : MonoBehaviour, IProcessable where TEvent : UnityEvent<TElement>, new()
     {
         /// <summary>
         /// The source of the <see cref="Transform"/> to extract from.
         /// </summary>
-        [DocumentedByXml]
-        public GameObject source;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Source { get; set; }
         /// <summary>
         /// Determines whether to extract the local property or the world property.
         /// </summary>
-        [DocumentedByXml]
-        public bool useLocal;
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool UseLocal { get; set; }
 
         /// <summary>
         /// The last extracted property value.
         /// </summary>
-        public TElement LastExtractedValue
-        {
-            get;
-            protected set;
-        }
+        public TElement LastExtractedValue { get; protected set; }
 
         /// <summary>
         /// Emitted when the property is extracted.
@@ -50,9 +49,10 @@
         }
 
         /// <summary>
-        /// Extracts the property from the <see cref="source"/> transform.
+        /// Extracts the property from the <see cref="Source"/> transform.
         /// </summary>
         /// <returns>The property value.</returns>
+        [RequiresBehaviourState]
         public virtual TElement Extract()
         {
             DoExtract();
@@ -60,12 +60,12 @@
         }
 
         /// <summary>
-        /// Extracts the property from the <see cref="source"/> transform.
+        /// Extracts the property from the <see cref="Source"/> transform.
         /// </summary>
         [RequiresBehaviourState]
         public virtual void DoExtract()
         {
-            if (source == null)
+            if (Source == null)
             {
                 return;
             }

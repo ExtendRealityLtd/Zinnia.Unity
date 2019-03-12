@@ -55,7 +55,7 @@
         /// <returns><see langword="true"/> if the <see cref="SurfaceData"/> given is valid.</returns>
         protected virtual bool ValidSurfaceData(SurfaceData surfaceData)
         {
-            return surfaceData != null && surfaceData.Valid;
+            return surfaceData != null && surfaceData.IsValid;
         }
 
         /// <summary>

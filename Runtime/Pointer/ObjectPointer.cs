@@ -489,12 +489,12 @@
             Transform validDestinationTransform = destination == null || destination.validObject == null ? null : destination.validObject.transform;
             Transform pointerTransform = transform;
 
-            eventData.transform = pointerTransform;
-            eventData.positionOverride = validDestinationTransform == null ? data.targetHit?.point : validDestinationTransform.position;
-            eventData.rotationOverride = validDestinationTransform == null ? Quaternion.identity : validDestinationTransform.localRotation;
-            eventData.scaleOverride = validDestinationTransform == null ? Vector3.one : validDestinationTransform.lossyScale;
-            eventData.origin = pointerTransform.position;
-            eventData.direction = pointerTransform.forward;
+            eventData.Transform = pointerTransform;
+            eventData.PositionOverride = validDestinationTransform == null ? data.targetHit?.point : validDestinationTransform.position;
+            eventData.RotationOverride = validDestinationTransform == null ? Quaternion.identity : validDestinationTransform.localRotation;
+            eventData.ScaleOverride = validDestinationTransform == null ? Vector3.one : validDestinationTransform.lossyScale;
+            eventData.Origin = pointerTransform.position;
+            eventData.Direction = pointerTransform.forward;
             eventData.CollisionData = data?.targetHit ?? default;
             return eventData.Set(ActivationState, IsHovering, HoverDuration, data);
         }

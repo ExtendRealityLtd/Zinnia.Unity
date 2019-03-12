@@ -31,9 +31,9 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.xBounds = new FloatRange(-2f, 2f);
-            subject.yBounds = new FloatRange(-3f, 3f);
-            subject.zBounds = new FloatRange(-2f, 2f);
+            subject.XBounds = new FloatRange(-2f, 2f);
+            subject.YBounds = new FloatRange(-3f, 3f);
+            subject.ZBounds = new FloatRange(-2f, 2f);
 
             Assert.IsFalse(transformedListenerMock.Received);
 
@@ -48,7 +48,7 @@ namespace Test.Zinnia.Data.Type.Transformation
 
             transformedListenerMock.Reset();
 
-            subject.yBounds = new FloatRange(1f, 3f);
+            subject.YBounds = new FloatRange(1f, 3f);
 
             expected = new Vector3(2f, 1f, 2f);
 
@@ -60,7 +60,7 @@ namespace Test.Zinnia.Data.Type.Transformation
 
             transformedListenerMock.Reset();
 
-            subject.yBounds = FloatRange.MinMax;
+            subject.YBounds = FloatRange.MinMax;
 
             expected = new Vector3(2f, -5f, 2f);
 
@@ -76,9 +76,9 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.xBounds = new FloatRange(-2f, 2f);
-            subject.yBounds = new FloatRange(-3f, 3f);
-            subject.zBounds = new FloatRange(-2f, 2f);
+            subject.XBounds = new FloatRange(-2f, 2f);
+            subject.YBounds = new FloatRange(-3f, 3f);
+            subject.ZBounds = new FloatRange(-2f, 2f);
             subject.gameObject.SetActive(false);
 
             Assert.IsFalse(transformedListenerMock.Received);
@@ -98,9 +98,9 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.xBounds = new FloatRange(-2f, 2f);
-            subject.yBounds = new FloatRange(-3f, 3f);
-            subject.zBounds = new FloatRange(-2f, 2f);
+            subject.XBounds = new FloatRange(-2f, 2f);
+            subject.YBounds = new FloatRange(-3f, 3f);
+            subject.ZBounds = new FloatRange(-2f, 2f);
             subject.enabled = false;
 
             Assert.IsFalse(transformedListenerMock.Received);

@@ -10,7 +10,7 @@
         /// <inheritdoc />
         protected override Vector3 ExtractValue()
         {
-            return useLocal ? source.transform.localEulerAngles : source.transform.eulerAngles;
+            return UseLocal ? Source.transform.localEulerAngles : Source.transform.eulerAngles;
         }
     }
 }

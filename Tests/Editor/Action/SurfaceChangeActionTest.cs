@@ -41,14 +41,14 @@ namespace Test.Zinnia.Action
                 point = Vector3.zero
             };
             surfaceData.CollisionData = ray;
-            surfaceData.positionOverride = ray.point;
+            surfaceData.PositionOverride = ray.point;
             //set surface to one so there is a change between surface positions
             ray = new RaycastHit
             {
                 point = Vector3.one
             };
             surfaceData.CollisionData = ray;
-            surfaceData.positionOverride = ray.point;
+            surfaceData.PositionOverride = ray.point;
 
             subject.Receive(surfaceData);
 
@@ -71,14 +71,14 @@ namespace Test.Zinnia.Action
                 point = Vector3.zero
             };
             surfaceData.CollisionData = ray;
-            surfaceData.positionOverride = ray.point;
+            surfaceData.PositionOverride = ray.point;
             //set surface to one so there is a change between surface positions
             ray = new RaycastHit
             {
                 point = Vector3.one
             };
             surfaceData.CollisionData = ray;
-            surfaceData.positionOverride = ray.point;
+            surfaceData.PositionOverride = ray.point;
 
             subject.Receive(surfaceData);
 

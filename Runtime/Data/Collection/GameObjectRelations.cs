@@ -3,9 +3,9 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Holds a collection of key/value relations between GameObjects and allows searching for a given key in the collection to emit the linked value.
@@ -21,28 +21,11 @@
         }
 
         /// <summary>
-        /// A relationship between a key <see cref="GameObject"/> and it's associated value <see cref="GameObject"/>.
-        /// </summary>
-        [Serializable]
-        public class Relation
-        {
-            /// <summary>
-            /// The <see cref="GameObject"/> to use as the key for the relation.
-            /// </summary>
-            [DocumentedByXml]
-            public GameObject key;
-            /// <summary>
-            /// The <see cref="GameObject"/> to use as the value for the relation.
-            /// </summary>
-            [DocumentedByXml]
-            public GameObject value;
-        }
-
-        /// <summary>
         /// The collection of relations.
         /// </summary>
-        [DocumentedByXml]
-        public List<Relation> relations = new List<Relation>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public GameObjectRelationObservableList Relations { get; set; }
 
         /// <summary>
         /// Emitted when a value is retrieved for a given key.
@@ -58,12 +41,12 @@
         [RequiresBehaviourState]
         public virtual GameObject GetValue(GameObject key)
         {
-            foreach (Relation relation in relations)
+            foreach (GameObjectRelationObservableList.Relation relation in Relations.NonSubscribableElements)
             {
-                if (key.Equals(relation.key))
+                if (key.Equals(relation.Key))
                 {
-                    ValueRetrieved?.Invoke(relation.value);
-                    return relation.value;
+                    ValueRetrieved?.Invoke(relation.Value);
+                    return relation.Value;
                 }
             }
             return null;
@@ -77,11 +60,11 @@
         [RequiresBehaviourState]
         public virtual GameObject GetValue(int relationIndex)
         {
-            for (int index = 0; index < relations.Count; index++)
+            for (int index = 0; index < Relations.NonSubscribableElements.Count; index++)
             {
                 if (index == relationIndex)
                 {
-                    GameObject foundValue = relations[index].value;
+                    GameObject foundValue = Relations.NonSubscribableElements[index].Value;
                     ValueRetrieved?.Invoke(foundValue);
                     return foundValue;
                 }

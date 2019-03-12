@@ -3,6 +3,8 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Transforms a float array to a Vector2.
@@ -23,10 +25,14 @@
         /// <summary>
         /// A float to use as the current x value of the Vector2.
         /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
         public float CurrentX { get; set; }
         /// <summary>
         /// A float to use as the current y value of the Vector2.
         /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
         public float CurrentY { get; set; }
 
         /// <summary>
@@ -53,7 +59,7 @@
         /// <returns>The transformed value or <see cref="Vector2.zero"/> if the input isn't two-dimensional.</returns>
         protected override Vector2 Process(float[] input)
         {
-            return (input.Length >= 2 ? new Vector2(input[0], input[1]) : Vector2.zero);
+            return input.Length >= 2 ? new Vector2(input[0], input[1]) : Vector2.zero;
         }
     }
 }

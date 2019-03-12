@@ -2,8 +2,9 @@
 {
     using UnityEngine;
     using System;
-    /*using Malimbe.PropertySetterMethod;*/
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.MemberChangeMethod;
 
     /// <summary>
     /// Holds information about the located surface.
@@ -14,13 +15,15 @@
         /// <summary>
         /// The origin in which the surface search came from.
         /// </summary>
-        [DocumentedByXml]
-        public Vector3 origin;
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3 Origin { get; set; }
         /// <summary>
         /// The direction in which the surface search came from.
         /// </summary>
-        [DocumentedByXml]
-        public Vector3 direction;
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3 Direction { get; set; }
 
         /// <summary>
         /// <see cref="RaycastHit"/> data about the current collision.
@@ -33,32 +36,28 @@
         public RaycastHit PreviousCollisionData { get; protected set; }
 
         /// <summary>
-        /// Creates a new <see cref="SurfaceData"/> with a default <see cref="origin"/> and <see cref="direction"/> for the collision search.
+        /// Creates a new <see cref="SurfaceData"/> with a default <see cref="Origin"/> and <see cref="Direction"/> for the collision search.
         /// </summary>
-        public SurfaceData()
-        {
-        }
+        public SurfaceData() { }
 
         /// <summary>
-        /// Creates a new <see cref="SurfaceData"/> with a given <see cref="origin"/> and <see cref="direction"/> for the collision search.
+        /// Creates a new <see cref="SurfaceData"/> with a given <see cref="Origin"/> and <see cref="Direction"/> for the collision search.
         /// </summary>
         /// <param name="origin">The given origin to instantiate the <see cref="SurfaceData"/> with.</param>
         /// <param name="direction">The given direction to instantiate the <see cref="SurfaceData"/> with.</param>
         public SurfaceData(Vector3 origin, Vector3 direction)
         {
-            this.origin = origin;
-            this.direction = direction;
+            Origin = origin;
+            Direction = direction;
         }
 
         /// <summary>
-        /// Handles changes to <see cref="CollisionData"/>.
+        /// Called before <see cref="CollisionData"/> has been changed.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        /*[CalledBySetter(nameof(CollisionData))]*/
-        protected virtual void OnCollisionDataChange(RaycastHit previousValue, ref RaycastHit newValue)
+        [CalledBeforeChangeOf(nameof(CollisionData))]
+        protected virtual void OnBeforeCollisionDataChange()
         {
-            PreviousCollisionData = previousValue;
+            PreviousCollisionData = CollisionData;
         }
     }
 }

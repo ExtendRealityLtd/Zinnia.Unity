@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Transforms a <see cref="Vector3"/> by clamping the coordinates to be within given boundaries.
@@ -25,18 +26,21 @@
         /// <summary>
         /// The minimum and maximum values that the x coordinate can be.
         /// </summary>
-        [DocumentedByXml]
-        public FloatRange xBounds = FloatRange.MinMax;
+        [Serialized]
+        [field: DocumentedByXml]
+        public FloatRange XBounds { get; set; }  = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the y coordinate can be.
         /// </summary>
-        [DocumentedByXml]
-        public FloatRange yBounds = FloatRange.MinMax;
+        [Serialized]
+        [field: DocumentedByXml]
+        public FloatRange YBounds { get; set; } = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the z coordinate can be.
         /// </summary>
-        [DocumentedByXml]
-        public FloatRange zBounds = FloatRange.MinMax;
+        [Serialized]
+        [field: DocumentedByXml]
+        public FloatRange ZBounds { get; set; } = FloatRange.MinMax;
 
         /// <summary>
         /// Transforms the given input by clamping it within the specified bounds.
@@ -46,9 +50,9 @@
         protected override Vector3 Process(Vector3 input)
         {
             return new Vector3(
-                Mathf.Clamp(input.x, xBounds.minimum, xBounds.maximum),
-                Mathf.Clamp(input.y, yBounds.minimum, yBounds.maximum),
-                Mathf.Clamp(input.z, zBounds.minimum, zBounds.maximum)
+                Mathf.Clamp(input.x, XBounds.minimum, XBounds.maximum),
+                Mathf.Clamp(input.y, YBounds.minimum, YBounds.maximum),
+                Mathf.Clamp(input.z, ZBounds.minimum, ZBounds.maximum)
                 );
         }
     }

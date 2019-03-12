@@ -55,7 +55,7 @@ namespace Test.Zinnia.Tracking
             subject.Process();
 
             Assert.IsTrue(surfaceLocatedMock.Received);
-            Assert.AreEqual(validSurface.transform, subject.surfaceData.transform);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
         }
 
         [Test]

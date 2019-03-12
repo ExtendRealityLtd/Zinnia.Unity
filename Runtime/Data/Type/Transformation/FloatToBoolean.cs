@@ -4,6 +4,7 @@
     using UnityEngine.Events;
     using System;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Data.Attribute;
 
     /// <summary>
@@ -27,17 +28,9 @@
         /// <summary>
         /// The bounds in which the float must be to be considered a positive boolean.
         /// </summary>
-        [MinMaxRange(-1f, 1f), SerializeField, DocumentedByXml]
-        protected FloatRange positiveBounds = new FloatRange(0f, 1f);
-
-        /// <summary>
-        /// Sets the positive bounds.
-        /// </summary>
-        /// <param name="positiveBounds">The new positive bounds.</param>
-        public virtual void SetPositiveBounds(FloatRange positiveBounds)
-        {
-            this.positiveBounds = new FloatRange(positiveBounds.minimum, positiveBounds.maximum);
-        }
+        [Serialized]
+        [field: DocumentedByXml, MinMaxRange(-1f, 1f)]
+        protected FloatRange PositiveBounds { get; set; } = new FloatRange(0f, 1f);
 
         /// <summary>
         /// Sets the positive bounds from a given Vector2.
@@ -45,7 +38,7 @@
         /// <param name="positiveBounds">The new positive bounds.</param>
         public virtual void SetPositiveBounds(Vector2 positiveBounds)
         {
-            this.positiveBounds = new FloatRange(positiveBounds);
+            PositiveBounds = new FloatRange(positiveBounds);
         }
 
         /// <summary>
@@ -55,7 +48,7 @@
         /// <returns>The transformed value.</returns>
         protected override bool Process(float input)
         {
-            return positiveBounds.Contains(input);
+            return PositiveBounds.Contains(input);
         }
     }
 }
