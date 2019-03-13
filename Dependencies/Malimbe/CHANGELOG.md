@@ -1,5 +1,20 @@
 # Changelog
 
+## [9.2.2](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.2.1...v9.2.2) (2019-03-12)
+
+
+### Bug Fixes
+
+* **packaging:** use latest Unity version ([e8fa0d5](https://github.com/ExtendRealityLtd/Malimbe/commit/e8fa0d5))
+* **UnityIntegration:** improve performance by deferring lookups ([b83d158](https://github.com/ExtendRealityLtd/Malimbe/commit/b83d158))
+
+# [9.2.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.1.2...v9.2.0) (2019-03-12)
+
+
+### Features
+
+* **UnityIntegration:** allow customizing InspectorEditor ([fc33861](https://github.com/ExtendRealityLtd/Malimbe/commit/fc33861))
+
 ## [9.1.2](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.1.1...v9.1.2) (2019-03-09)
 
 
