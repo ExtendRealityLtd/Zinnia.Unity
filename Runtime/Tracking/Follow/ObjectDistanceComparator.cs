@@ -3,12 +3,11 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Process;
 
     /// <summary>
@@ -28,23 +27,25 @@
             /// <summary>
             /// The difference of the positions of the target and source.
             /// </summary>
-            [DocumentedByXml]
-            public Vector3 difference;
+            [Serialized]
+            [field: DocumentedByXml]
+            public Vector3 CurrentDifference { get; set; }
             /// <summary>
             /// The distance between the source and target.
             /// </summary>
-            [DocumentedByXml]
-            public float distance;
+            [Serialized]
+            [field: DocumentedByXml]
+            public float CurrentDistance { get; set; }
 
             public EventData Set(EventData source)
             {
-                return Set(source.difference, source.distance);
+                return Set(source.CurrentDifference, source.CurrentDistance);
             }
 
             public EventData Set(Vector3 difference, float distance)
             {
-                this.difference = difference;
-                this.distance = distance;
+                CurrentDifference = difference;
+                CurrentDistance = distance;
                 return this;
             }
 
@@ -65,20 +66,21 @@
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// The distance between the source and target that is considered to be exceeding the given threshold.
         /// </summary>
-        [DocumentedByXml]
-        public float distanceThreshold = 1f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float DistanceThreshold { get; set; } = 1f;
 
         /// <summary>
         /// Emitted when the distance between the source and the target exceeds the threshold.
@@ -94,32 +96,29 @@
         /// <summary>
         /// The difference of the positions of the target and source.
         /// </summary>
-        public Vector3 Difference
-        {
-            get;
-            protected set;
-        }
+        public Vector3 Difference { get; protected set; }
 
         /// <summary>
         /// The distance between the source and target.
         /// </summary>
-        public float Distance
-        {
-            get;
-            protected set;
-        }
+        public float Distance { get; protected set; }
 
         /// <summary>
         /// Determines if the distance between the source and target is exceeding the threshold.
         /// </summary>
-        public bool Exceeding
-        {
-            get;
-            protected set;
-        }
+        public bool Exceeding { get; protected set; }
 
+        /// <summary>
+        /// The previous state of the distance threshold being exceeded.
+        /// </summary>
         protected bool previousState;
+        /// <summary>
+        /// The current position of <see cref="Source"/>.
+        /// </summary>
         protected Vector3 sourcePosition;
+        /// <summary>
+        /// The event data to emit.
+        /// </summary>
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
@@ -135,12 +134,12 @@
 
             Difference = Target.transform.position - GetSourcePosition();
             Distance = Difference.magnitude;
-            Exceeding = Distance >= distanceThreshold;
+            Exceeding = Distance >= DistanceThreshold;
 
             bool didStateChange = previousState != Exceeding;
             previousState = Exceeding;
 
-            if (!didStateChange && distanceThreshold > 0f)
+            if (!didStateChange && DistanceThreshold > 0f)
             {
                 return;
             }
@@ -187,27 +186,23 @@
                 return Vector3.zero;
             }
 
-            return (Source == Target ? sourcePosition : Source.transform.position);
+            return Source == Target ? sourcePosition : Source.transform.position;
         }
 
         /// <summary>
-        /// Handles changes to <see cref="Source"/>.
+        /// Called after <see cref="Source"/> has been changed.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Source))]
-        protected virtual void OnSourceChange(GameObject previousValue, ref GameObject newValue)
+        [CalledAfterChangeOf(nameof(Source))]
+        protected virtual void OnAfterSourceChange()
         {
             SavePosition();
         }
 
         /// <summary>
-        /// Handles changes to <see cref="Target"/>.
+        /// Called after <see cref="Target"/> has been changed.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Target))]
-        protected virtual void OnTargetChange(GameObject previousValue, ref GameObject newValue)
+        [CalledAfterChangeOf(nameof(Target))]
+        protected virtual void OnAfterTargetChange()
         {
             SavePosition();
         }

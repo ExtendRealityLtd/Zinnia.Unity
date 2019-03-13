@@ -1,9 +1,12 @@
 ﻿using Zinnia.Rule;
 using Zinnia.Tracking;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Tracking
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
@@ -45,14 +48,14 @@ namespace Test.Zinnia.Tracking
             validSurface.transform.position = Vector3.forward * 5f;
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.forward;
+            subject.SearchDirection = Vector3.forward;
 
             //Process just calls Locate() so may as well just test the first point
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
             Assert.IsTrue(surfaceLocatedMock.Received);
-            Assert.AreEqual(validSurface.transform, subject.surfaceData.transform);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
         }
 
         [Test]
@@ -64,15 +67,15 @@ namespace Test.Zinnia.Tracking
             validSurface.transform.position = Vector3.forward * 5f;
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.down;
+            subject.SearchDirection = Vector3.down;
 
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Locate();
             Assert.IsFalse(surfaceLocatedMock.Received);
         }
 
-        [Test]
-        public void InvalidSurfaceDueToPolicy()
+        [UnityTest]
+        public IEnumerator InvalidSurfaceDueToPolicy()
         {
             UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
             subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
@@ -81,18 +84,23 @@ namespace Test.Zinnia.Tracking
             validSurface.AddComponent<RuleStub>();
             NegationRule negationRule = validSurface.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
-            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
-            negationRule.rule = new RuleContainer
+            SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+
+            anyComponentTypeRule.ComponentTypes = rules;
+            rules.Add(typeof(RuleStub));
+
+            negationRule.Rule = new RuleContainer
             {
                 Interface = anyComponentTypeRule
             };
-            subject.targetValidity = new RuleContainer
+            subject.TargetValidity = new RuleContainer
             {
                 Interface = negationRule
             };
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.forward;
+            subject.SearchDirection = Vector3.forward;
 
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Locate();
@@ -108,7 +116,7 @@ namespace Test.Zinnia.Tracking
             validSurface.transform.position = Vector3.forward * 5f;
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.forward;
+            subject.SearchDirection = Vector3.forward;
             subject.gameObject.SetActive(false);
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
@@ -125,7 +133,7 @@ namespace Test.Zinnia.Tracking
             validSurface.transform.position = Vector3.forward * 5f;
 
             subject.SearchOrigin = searchOrigin;
-            subject.searchDirection = Vector3.forward;
+            subject.SearchDirection = Vector3.forward;
             subject.enabled = false;
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();

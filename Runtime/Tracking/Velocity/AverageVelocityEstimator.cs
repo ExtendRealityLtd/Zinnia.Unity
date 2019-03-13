@@ -2,10 +2,11 @@
 {
     using UnityEngine;
     using System;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
 
     /// <summary>
@@ -16,31 +17,33 @@
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject RelativeTo { get; set; }
         /// <summary>
         /// Whether samples are currently being collected.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public bool IsEstimating { get; set; } = true;
         /// <summary>
         /// The number of average frames to collect samples for velocity estimation.
         /// </summary>
-        [DocumentedByXml]
-        public int velocityAverageFrames = 5;
+        [Serialized]
+        [field: DocumentedByXml]
+        public int VelocityAverageFrames { get; set; } = 5;
         /// <summary>
         /// The number of average frames to collect samples for angular velocity estimation.
         /// </summary>
-        [DocumentedByXml]
-        public int angularVelocityAverageFrames = 10;
+        [Serialized]
+        [field: DocumentedByXml]
+        public int AngularVelocityAverageFrames { get; set; } = 10;
 
         protected int currentSampleCount;
         protected Vector3[] velocitySamples = Array.Empty<Vector3>();
@@ -53,13 +56,14 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return (base.IsActive() && Source != null && Source.gameObject.activeInHierarchy);
+            return base.IsActive() && Source != null && Source.gameObject.activeInHierarchy;
         }
 
         /// <summary>
         /// The acceleration of the <see cref="Source"/>.
         /// </summary>
         /// <returns>Acceleration of the <see cref="Source"/>.</returns>
+        [RequiresBehaviourState]
         public virtual Vector3 GetAcceleration()
         {
             if (!IsActive())
@@ -86,8 +90,8 @@
 
         protected virtual void OnEnable()
         {
-            velocitySamples = new Vector3[velocityAverageFrames];
-            angularVelocitySamples = new Vector3[angularVelocityAverageFrames];
+            velocitySamples = new Vector3[VelocityAverageFrames];
+            angularVelocitySamples = new Vector3[AngularVelocityAverageFrames];
             previousPosition = Source.TryGetPosition();
             previousRotation = Source.TryGetRotation();
             previousRelativePosition = RelativeTo.TryGetPosition();
@@ -135,7 +139,7 @@
                 {
                     estimate += samples[index];
                 }
-                estimate *= (1.0f / sampleCount);
+                estimate *= 1.0f / sampleCount;
             }
             return estimate;
         }
@@ -173,7 +177,7 @@
             Vector3 relativeDeltaPosition = currentRelativePosition - previousRelativePosition;
             Vector3 currentPosition = Source.TryGetPosition();
             int sampleIndex = currentSampleCount % velocitySamples.Length;
-            velocitySamples[sampleIndex] = factor * ((currentPosition - previousPosition) - relativeDeltaPosition);
+            velocitySamples[sampleIndex] = factor * (currentPosition - previousPosition - relativeDeltaPosition);
             previousPosition = currentPosition;
             previousRelativePosition = currentRelativePosition;
         }
@@ -209,6 +213,44 @@
             angularVelocitySamples[sampleIndex] = angularVelocity;
             previousRotation = currentRotation;
             previousRelativeRotation = currentRelativeRotation;
+        }
+
+        /// <summary>
+        /// Called after <see cref="Source"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Source))]
+        protected virtual void OnAfterSourceChange()
+        {
+            previousPosition = Source.TryGetPosition();
+            previousRotation = Source.TryGetRotation();
+        }
+
+        /// <summary>
+        /// Called after <see cref="RelativeTo"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(RelativeTo))]
+        protected virtual void OnAfterRelativeToChange()
+        {
+            previousRelativePosition = RelativeTo.TryGetPosition();
+            previousRelativeRotation = RelativeTo.TryGetRotation();
+        }
+
+        /// <summary>
+        /// Called after <see cref="VelocityAverageFrames"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(VelocityAverageFrames))]
+        protected virtual void OnAfterVelocityAverageFramesChange()
+        {
+            velocitySamples = new Vector3[VelocityAverageFrames];
+        }
+
+        /// <summary>
+        /// Called after <see cref="AngularVelocityAverageFrames"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(AngularVelocityAverageFrames))]
+        protected virtual void OnAfterAngularVelocityAverageFramesChange()
+        {
+            angularVelocitySamples = new Vector3[AngularVelocityAverageFrames];
         }
     }
 }

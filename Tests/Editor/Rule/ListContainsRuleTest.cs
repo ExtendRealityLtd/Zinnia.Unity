@@ -1,9 +1,12 @@
-﻿using Zinnia.Extension;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
+using Zinnia.Extension;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Rule
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
 
     public class ListContainsRuleTest
@@ -27,41 +30,72 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void AcceptsMatch()
+        [UnityTest]
+        public IEnumerator AcceptsMatch()
         {
-            subject.objects.Add(containingObject);
+            UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
+            subject.Objects = objects;
+            objects.Add(containingObject);
+
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesEmpty()
+        [UnityTest]
+        public IEnumerator RefusesEmpty()
         {
+            UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
+            subject.Objects = objects;
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
         [Test]
-        public void RefusesDifferent()
+        public void RefusesNullObjects()
+        {
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator RefusesDifferent()
         {
             GameObject wrongGameObject = new GameObject();
-            subject.objects.Add(wrongGameObject);
+            UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
+            subject.Objects = objects;
+            objects.Add(wrongGameObject);
+
             Assert.IsFalse(container.Accepts(containingObject));
 
             Object.DestroyImmediate(wrongGameObject);
         }
 
-        [Test]
-        public void RefusesInactiveGameObject()
+        [UnityTest]
+        public IEnumerator RefusesInactiveGameObject()
         {
-            subject.objects.Add(containingObject);
+            UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
+            subject.Objects = objects;
+            objects.Add(containingObject);
+
             subject.gameObject.SetActive(false);
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesInactiveComponent()
+        [UnityTest]
+        public IEnumerator RefusesInactiveComponent()
         {
-            subject.objects.Add(containingObject);
+            UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
+            subject.Objects = objects;
+            objects.Add(containingObject);
+
             subject.enabled = false;
             Assert.IsFalse(container.Accepts(containingObject));
         }

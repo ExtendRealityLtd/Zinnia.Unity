@@ -1,9 +1,9 @@
 ﻿using Zinnia.Data.Type.Transformation;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Data.Type.Transformation
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
 
@@ -22,7 +22,6 @@ namespace Test.Zinnia.Data.Type.Transformation
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -31,13 +30,19 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<float>(new float[3]);
+            FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(0f);
+            subject.Collection.Add(0f);
+            subject.Collection.Add(0f);
+
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.SetElement(0, 1f);
-            subject.SetElement(1, 2f);
-            subject.CurrentIndex = 2;
+            subject.Collection.SetAt(1f, 0);
+            subject.Collection.SetAt(2f, 1);
+            subject.Collection.CurrentIndex = 2;
+
             float result = subject.Transform(3f);
 
             Assert.AreEqual(6f, result);
@@ -50,14 +55,18 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<float>(new float[3]);
+            FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(0f);
+            subject.Collection.Add(0f);
+            subject.Collection.Add(0f);
 
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.SetElement(0, 1f);
-            subject.SetElement(1, 2f);
-            float result = subject.Transform(2, 3f);
+            subject.Collection.SetAt(1f, 0);
+            subject.Collection.SetAt(2f, 1);
+            float result = subject.Transform(3f, 2);
 
             Assert.AreEqual(6f, result);
             Assert.AreEqual(6f, subject.Result);
@@ -69,7 +78,10 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<float>(new float[2]);
+            FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(0f);
+            subject.Collection.Add(0f);
 
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
@@ -77,9 +89,9 @@ namespace Test.Zinnia.Data.Type.Transformation
             // adds 1 to index 0 -> adds 2 to index 1 -> attempts to add 3 to index 2 but is out of range so sets it at index 1
             // collection result is [1f, 3f]
 
-            subject.SetElement(0, 1f);
-            subject.SetElement(1, 2f);
-            float result = subject.Transform(2, 3f);
+            subject.Collection.SetAt(1f, 0);
+            subject.Collection.SetAt(2f, 1);
+            float result = subject.Transform(3f, 2);
 
             Assert.AreEqual(4f, result);
             Assert.AreEqual(4f, subject.Result);
@@ -91,14 +103,18 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<float>(new float[2]);
+            FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(0f);
+            subject.Collection.Add(0f);
+
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.SetElement(0, 1f);
-            float result = subject.Transform(1, 3f);
+            subject.Collection.SetAt(1f, 0);
+            float result = subject.Transform(3f, 1);
 
             Assert.AreEqual(0f, result);
             Assert.AreEqual(0f, subject.Result);
@@ -110,14 +126,18 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<float>(new float[2]);
+            FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(0f);
+            subject.Collection.Add(0f);
+
             subject.enabled = false;
 
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.SetElement(0, 1f);
-            float result = subject.Transform(1, 3f);
+            subject.Collection.SetAt(1f, 0);
+            float result = subject.Transform(3f, 1);
 
             Assert.AreEqual(0f, result);
             Assert.AreEqual(0f, subject.Result);

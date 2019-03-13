@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Action
 {
-    using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Zinnia.Action.Collection;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value when any given actions are in their active state.
@@ -12,39 +12,164 @@
     public class AnyAction : BooleanAction
     {
         /// <summary>
-        /// Actions to check the active state on.
+        /// <see cref="Action"/>s to check the active state on.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
-        public List<Action> Actions { get; set; } = new List<Action>();
+        public ActionObservableList Actions { get; set; }
 
-        protected virtual void Update()
+        protected override void OnEnable()
         {
-            bool areAnyActionsActivated = false;
-            foreach (Action action in Actions)
+            if (Actions == null)
             {
-                if (action.IsActivated)
-                {
-                    areAnyActionsActivated = true;
-                    break;
-                }
+                return;
             }
 
-            if (areAnyActionsActivated != IsActivated)
+            AddActionsListeners();
+            CheckAllActions();
+        }
+
+        protected override void OnDisable()
+        {
+            if (Actions == null)
             {
-                Receive(areAnyActionsActivated);
+                return;
+            }
+
+            RemoveActionsListeners();
+        }
+
+        /// <summary>
+        /// Subscribes to events of <see cref="Actions"/>.
+        /// </summary>
+        protected virtual void AddActionsListeners()
+        {
+            Actions.ElementAdded.AddListener(OnActionAdded);
+            Actions.ElementRemoved.AddListener(OnActionRemoved);
+
+            foreach (Action action in Actions.SubscribableElements)
+            {
+                action.ActivationStateChanged.AddListener(OnActionActivationStateChanged);
             }
         }
 
         /// <summary>
-        /// Handles changes to <see cref="Actions"/>.
+        /// Unsubscribes from events of <see cref="Actions"/>.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Actions))]
-        protected virtual void OnActionsChange(List<Action> previousValue, ref List<Action> newValue)
+        protected virtual void RemoveActionsListeners()
         {
-            Update();
+            Actions.ElementAdded.RemoveListener(OnActionAdded);
+            Actions.ElementRemoved.RemoveListener(OnActionRemoved);
+
+            foreach (Action action in Actions.SubscribableElements)
+            {
+                action.ActivationStateChanged.RemoveListener(OnActionActivationStateChanged);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether all <see cref="Actions"/> are <see cref="Action.IsActivated"/> and calls <see cref="Action{TSelf,TValue,TEvent}.Receive"/> on this instance to update its own activation state if necessary.
+        /// </summary>
+        protected virtual void CheckAllActions()
+        {
+            if (Actions == null)
+            {
+                if (IsActivated)
+                {
+                    Receive(DefaultValue);
+                }
+
+                return;
+            }
+
+            bool areAllActionsActivated = DefaultValue;
+            foreach (Action action in Actions.SubscribableElements)
+            {
+                if (action.IsActivated)
+                {
+                    areAllActionsActivated = !DefaultValue;
+                    break;
+                }
+            }
+
+            if (areAllActionsActivated != IsActivated)
+            {
+                Receive(areAllActionsActivated);
+            }
+        }
+
+        /// <summary>
+        /// Called after the <see cref="Action.IsActivated"/> state of any element in <see cref="Actions"/> changes.
+        /// </summary>
+        /// <param name="isActionActivated">Whether the action is activated.</param>
+        [RequiresBehaviourState]
+        protected virtual void OnActionActivationStateChanged(bool isActionActivated)
+        {
+            if (IsActivated && !isActionActivated)
+            {
+                CheckAllActions();
+            }
+            else if (!IsActivated && isActionActivated)
+            {
+                Receive(!DefaultValue);
+            }
+        }
+
+        /// <summary>
+        /// Called after an element is added to <see cref="Actions"/>.
+        /// </summary>
+        /// <param name="action">The element added to the collection.</param>
+        [RequiresBehaviourState]
+        protected virtual void OnActionAdded(Action action)
+        {
+            if (action == null)
+            {
+                return;
+            }
+
+            OnActionActivationStateChanged(action.IsActivated);
+            action.ActivationStateChanged.AddListener(OnActionActivationStateChanged);
+        }
+
+        /// <summary>
+        /// Called after an element is removed from <see cref="Actions"/>.
+        /// </summary>
+        /// <param name="action">The element removed from the collection.</param>
+        [RequiresBehaviourState]
+        protected virtual void OnActionRemoved(Action action)
+        {
+            if (action != null)
+            {
+                action.ActivationStateChanged.RemoveListener(OnActionActivationStateChanged);
+            }
+
+            CheckAllActions();
+        }
+
+        /// <summary>
+        /// Called before <see cref="Actions"/> has been changed.
+        /// </summary>
+        [CalledBeforeChangeOf(nameof(Actions))]
+        protected virtual void OnBeforeActionsChange()
+        {
+            if (Actions != null)
+            {
+                RemoveActionsListeners();
+            }
+        }
+
+        /// <summary>
+        /// Called after <see cref="Actions"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Actions))]
+        protected virtual void OnAfterActionsChange()
+        {
+            if (Actions != null)
+            {
+                AddActionsListeners();
+            }
+
+            CheckAllActions();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Target = target;
             subject.LookAt = lookAt;
             subject.Pivot = pivot;
-            subject.preventLookAtZRotation = false;
+            subject.PreventLookAtZRotation = false;
 
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;
@@ -61,7 +61,7 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Target = target;
             subject.LookAt = lookAt;
             subject.Pivot = pivot;
-            subject.preventLookAtZRotation = true;
+            subject.PreventLookAtZRotation = true;
 
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;
@@ -184,8 +184,8 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Target = target;
             subject.LookAt = lookAt;
             subject.Pivot = pivot;
-            subject.resetOrientationSpeed = 0f;
-            subject.preventLookAtZRotation = false;
+            subject.ResetOrientationSpeed = 0f;
+            subject.PreventLookAtZRotation = false;
 
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;

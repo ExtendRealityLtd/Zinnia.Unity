@@ -3,8 +3,9 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -21,10 +22,11 @@
         }
 
         /// <summary>
-        /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or just to search for the containing <see cref="Transform"/>.
+        /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or to just search for the containing <see cref="Transform"/>.
         /// </summary>
-        [DocumentedByXml]
-        public bool parentIsCollisionNotifier;
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool IsParentCollisionNotifier { get; set; }
 
         /// <summary>
         /// Emitted when the collision point container is created.
@@ -62,14 +64,14 @@
                 return;
             }
 
-            GameObject collisionInitiator = eventData.publisher?.sourceContainer;
-            Collider collisionCollider = eventData.currentCollision?.collider;
+            GameObject collisionInitiator = eventData.Publisher?.SourceContainer;
+            Collider collisionCollider = eventData.CurrentCollision?.ColliderData;
             if (collisionInitiator == null || collisionCollider == null)
             {
                 return;
             }
 
-            GameObject collidingObject = parentIsCollisionNotifier
+            GameObject collidingObject = IsParentCollisionNotifier
                 ? collisionCollider.GetComponentInParent<CollisionNotifier>().gameObject
                 : collisionCollider.GetContainingTransform().gameObject;
 
@@ -95,7 +97,7 @@
         /// </summary>
         public virtual void Unset()
         {
-            if (!IsSet)
+            if (!IsSet || Container == null)
             {
                 return;
             }

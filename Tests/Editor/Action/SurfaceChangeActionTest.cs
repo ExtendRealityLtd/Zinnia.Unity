@@ -22,7 +22,6 @@ namespace Test.Zinnia.Action
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -31,8 +30,8 @@ namespace Test.Zinnia.Action
         {
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             subject.Activated.AddListener(activatedListenerMock.Listen);
-            subject.changeDistance = 1f;
-            subject.checkAxis = Vector3State.True;
+            subject.ChangeDistance = 1f;
+            subject.CheckAxis = Vector3State.True;
 
             SurfaceData surfaceData = new SurfaceData(Vector3.one, Vector3.down);
 
@@ -42,14 +41,14 @@ namespace Test.Zinnia.Action
                 point = Vector3.zero
             };
             surfaceData.CollisionData = ray;
-            surfaceData.positionOverride = ray.point;
+            surfaceData.PositionOverride = ray.point;
             //set surface to one so there is a change between surface positions
             ray = new RaycastHit
             {
                 point = Vector3.one
             };
             surfaceData.CollisionData = ray;
-            surfaceData.positionOverride = ray.point;
+            surfaceData.PositionOverride = ray.point;
 
             subject.Receive(surfaceData);
 
@@ -61,8 +60,8 @@ namespace Test.Zinnia.Action
         {
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             subject.Activated.AddListener(activatedListenerMock.Listen);
-            subject.changeDistance = 1f;
-            subject.checkAxis = new Vector3State(false, true, false);
+            subject.ChangeDistance = 1f;
+            subject.CheckAxis = new Vector3State(false, true, false);
 
             SurfaceData surfaceData = new SurfaceData(Vector3.one, Vector3.down);
 
@@ -72,14 +71,14 @@ namespace Test.Zinnia.Action
                 point = Vector3.zero
             };
             surfaceData.CollisionData = ray;
-            surfaceData.positionOverride = ray.point;
+            surfaceData.PositionOverride = ray.point;
             //set surface to one so there is a change between surface positions
             ray = new RaycastHit
             {
                 point = Vector3.one
             };
             surfaceData.CollisionData = ray;
-            surfaceData.positionOverride = ray.point;
+            surfaceData.PositionOverride = ray.point;
 
             subject.Receive(surfaceData);
 

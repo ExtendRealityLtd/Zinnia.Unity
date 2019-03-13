@@ -30,7 +30,7 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.unit = Vector2ToAngle.AngleUnit.Degrees;
+            subject.Unit = Vector2ToAngle.AngleUnit.Degrees;
             subject.Origin = new Vector2(0f, 1f);
 
             Assert.AreEqual(0f, subject.Result);
@@ -99,7 +99,7 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.unit = Vector2ToAngle.AngleUnit.Radians;
+            subject.Unit = Vector2ToAngle.AngleUnit.Radians;
 
             subject.Origin = new Vector2(0f, 1f);
 

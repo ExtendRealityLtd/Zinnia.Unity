@@ -1,14 +1,17 @@
 ﻿using Zinnia.Rule;
+using Zinnia.Data.Collection;
 using Zinnia.Tracking.Collision;
 using Zinnia.Tracking.Collision.Active;
 
 namespace Test.Zinnia.Tracking.Collision.Active
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
-    using Test.Zinnia.Utility.Helper;
     using Test.Zinnia.Utility.Stub;
+    using Test.Zinnia.Utility.Helper;
 
     public class ActiveCollisionsContainerTest
     {
@@ -25,7 +28,6 @@ namespace Test.Zinnia.Tracking.Collision.Active
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -81,8 +83,8 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Object.DestroyImmediate(twoContainer);
         }
 
-        [Test]
-        public void AddInvalidCollisionDueToRule()
+        [UnityTest]
+        public IEnumerator AddInvalidCollisionDueToRule()
         {
             UnityEventListenerMock firstStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock countChangedMock = new UnityEventListenerMock();
@@ -99,12 +101,17 @@ namespace Test.Zinnia.Tracking.Collision.Active
             oneContainer.AddComponent<RuleStub>();
             NegationRule negationRule = oneContainer.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = oneContainer.AddComponent<AnyComponentTypeRule>();
-            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
-            negationRule.rule = new RuleContainer
+            SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+
+            anyComponentTypeRule.ComponentTypes = rules;
+            rules.Add(typeof(RuleStub));
+
+            negationRule.Rule = new RuleContainer
             {
                 Interface = anyComponentTypeRule
             };
-            subject.collisionValidity = new RuleContainer
+            subject.CollisionValidity = new RuleContainer
             {
                 Interface = negationRule
             };
@@ -375,37 +382,39 @@ namespace Test.Zinnia.Tracking.Collision.Active
         [Test]
         public void RemoveInactiveGameObject()
         {
+            ActiveCollisionsContainerNoDisableClearMock altSubject = containingObject.AddComponent<ActiveCollisionsContainerNoDisableClearMock>();
+
             UnityEventListenerMock firstStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock countChangedMock = new UnityEventListenerMock();
             UnityEventListenerMock contentsChangedMock = new UnityEventListenerMock();
             UnityEventListenerMock allStoppedMock = new UnityEventListenerMock();
 
-            subject.FirstStarted.AddListener(firstStartedMock.Listen);
-            subject.CountChanged.AddListener(countChangedMock.Listen);
-            subject.ContentsChanged.AddListener(contentsChangedMock.Listen);
-            subject.AllStopped.AddListener(allStoppedMock.Listen);
+            altSubject.FirstStarted.AddListener(firstStartedMock.Listen);
+            altSubject.CountChanged.AddListener(countChangedMock.Listen);
+            altSubject.ContentsChanged.AddListener(contentsChangedMock.Listen);
+            altSubject.AllStopped.AddListener(allStoppedMock.Listen);
 
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
 
-            subject.Add(oneData);
+            altSubject.Add(oneData);
             firstStartedMock.Reset();
             countChangedMock.Reset();
             contentsChangedMock.Reset();
             allStoppedMock.Reset();
 
-            subject.gameObject.SetActive(false);
+            altSubject.gameObject.SetActive(false);
 
-            Assert.AreEqual(1, subject.Elements.Count);
+            Assert.AreEqual(1, altSubject.Elements.Count);
 
             Assert.IsFalse(firstStartedMock.Received);
             Assert.IsFalse(countChangedMock.Received);
             Assert.IsFalse(contentsChangedMock.Received);
             Assert.IsFalse(allStoppedMock.Received);
 
-            subject.Remove(oneData);
+            altSubject.Remove(oneData);
 
-            Assert.AreEqual(1, subject.Elements.Count);
+            Assert.AreEqual(1, altSubject.Elements.Count);
 
             Assert.IsFalse(firstStartedMock.Received);
             Assert.IsFalse(countChangedMock.Received);
@@ -418,37 +427,39 @@ namespace Test.Zinnia.Tracking.Collision.Active
         [Test]
         public void RemoveInactiveComponent()
         {
+            ActiveCollisionsContainerNoDisableClearMock altSubject = containingObject.AddComponent<ActiveCollisionsContainerNoDisableClearMock>();
+
             UnityEventListenerMock firstStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock countChangedMock = new UnityEventListenerMock();
             UnityEventListenerMock contentsChangedMock = new UnityEventListenerMock();
             UnityEventListenerMock allStoppedMock = new UnityEventListenerMock();
 
-            subject.FirstStarted.AddListener(firstStartedMock.Listen);
-            subject.CountChanged.AddListener(countChangedMock.Listen);
-            subject.ContentsChanged.AddListener(contentsChangedMock.Listen);
-            subject.AllStopped.AddListener(allStoppedMock.Listen);
+            altSubject.FirstStarted.AddListener(firstStartedMock.Listen);
+            altSubject.CountChanged.AddListener(countChangedMock.Listen);
+            altSubject.ContentsChanged.AddListener(contentsChangedMock.Listen);
+            altSubject.AllStopped.AddListener(allStoppedMock.Listen);
 
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
 
-            subject.Add(oneData);
+            altSubject.Add(oneData);
             firstStartedMock.Reset();
             countChangedMock.Reset();
             contentsChangedMock.Reset();
             allStoppedMock.Reset();
 
-            subject.enabled = false;
+            altSubject.enabled = false;
 
-            Assert.AreEqual(1, subject.Elements.Count);
+            Assert.AreEqual(1, altSubject.Elements.Count);
 
             Assert.IsFalse(firstStartedMock.Received);
             Assert.IsFalse(countChangedMock.Received);
             Assert.IsFalse(contentsChangedMock.Received);
             Assert.IsFalse(allStoppedMock.Received);
 
-            subject.Remove(oneData);
+            altSubject.Remove(oneData);
 
-            Assert.AreEqual(1, subject.Elements.Count);
+            Assert.AreEqual(1, altSubject.Elements.Count);
 
             Assert.IsFalse(firstStartedMock.Received);
             Assert.IsFalse(countChangedMock.Received);
@@ -513,13 +524,18 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Assert.IsFalse(contentsChangedMock.Received);
             Assert.IsFalse(allStoppedMock.Received);
         }
-    }
 
-    public class ActiveCollisionsContainerMock : ActiveCollisionsContainer
-    {
-        public virtual void ManualOnDisable()
+        private class ActiveCollisionsContainerMock : ActiveCollisionsContainer
         {
-            base.OnDisable();
+            public virtual void ManualOnDisable()
+            {
+                base.OnDisable();
+            }
+        }
+
+        private class ActiveCollisionsContainerNoDisableClearMock : ActiveCollisionsContainer
+        {
+            protected override void OnDisable() { }
         }
     }
 }

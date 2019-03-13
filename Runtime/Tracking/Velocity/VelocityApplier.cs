@@ -1,7 +1,10 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
 
     /// <summary>
     /// Applies the velocity data from the given <see cref="VelocityTracker"/> to the given <see cref="Rigidbody"/>.
@@ -11,26 +14,29 @@
         /// <summary>
         /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
         /// </summary>
-        [DocumentedByXml]
-        public VelocityTracker source;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public VelocityTracker Source { get; set; }
         /// <summary>
         /// The target <see cref="Rigidbody"/> to apply the source velocity data to.
         /// </summary>
-        [DocumentedByXml]
-        public Rigidbody target;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public Rigidbody Target { get; set; }
 
         /// <summary>
-        /// Applies the velocity data to the <see cref="target"/>.
+        /// Applies the velocity data to the <see cref="Target"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (source == null || target == null)
+            if (Source == null || Target == null)
             {
                 return;
             }
 
-            target.velocity = source.GetVelocity();
-            target.angularVelocity = source.GetAngularVelocity();
+            Target.velocity = Source.GetVelocity();
+            Target.angularVelocity = Source.GetAngularVelocity();
         }
     }
 }

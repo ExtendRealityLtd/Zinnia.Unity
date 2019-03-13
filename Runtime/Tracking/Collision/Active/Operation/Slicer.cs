@@ -2,22 +2,25 @@
 {
     using UnityEngine;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
-    /// Slices a selection of the collection from the given <see cref="startIndex"/> for the given <see cref="length"/> and provides the sliced collection and the remaining collection separately.
+    /// Slices a selection of the collection from the given <see cref="StartIndex"/> for the given <see cref="Length"/> and provides the sliced collection and the remaining collection separately.
     /// </summary>
     public class Slicer : MonoBehaviour
     {
         /// <summary>
         /// The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.
         /// </summary>
-        [DocumentedByXml]
-        public int startIndex;
+        [Serialized]
+        [field: DocumentedByXml]
+        public int StartIndex { get; set; }
         /// <summary>
         /// The number of elements in the slice.
         /// </summary>
-        [DocumentedByXml]
-        public uint length = 1;
+        [Serialized]
+        [field: DocumentedByXml]
+        public uint Length { get; set; } = 1;
 
         /// <summary>
         /// The elements that have been sliced out of the list.
@@ -71,22 +74,22 @@
                 return SlicedList;
             }
 
-            int collectionCount = originalList.activeCollisions.Count;
-            int actualStartIndex = GetStartIndex(startIndex, collectionCount);
-            int actualLength = GetRangeLength(actualStartIndex, (int)length, collectionCount);
+            int collectionCount = originalList.ActiveCollisions.Count;
+            int actualStartIndex = GetStartIndex(StartIndex, collectionCount);
+            int actualLength = GetRangeLength(actualStartIndex, (int)Length, collectionCount);
 
             for (int index = actualStartIndex; index < actualStartIndex + actualLength; index++)
             {
-                SlicedList.activeCollisions.Add(originalList.activeCollisions[index]);
+                SlicedList.ActiveCollisions.Add(originalList.ActiveCollisions[index]);
             }
 
             Sliced?.Invoke(SlicedList);
 
-            foreach (CollisionNotifier.EventData originalCollision in originalList.activeCollisions)
+            foreach (CollisionNotifier.EventData originalCollision in originalList.ActiveCollisions)
             {
-                if (!SlicedList.activeCollisions.Contains(originalCollision))
+                if (!SlicedList.ActiveCollisions.Contains(originalCollision))
                 {
-                    RemainingList.activeCollisions.Add(originalCollision);
+                    RemainingList.ActiveCollisions.Add(originalCollision);
                 }
             }
             Remained?.Invoke(RemainingList);
@@ -115,7 +118,7 @@
         /// <returns>The actual start index to start from.</returns>
         protected virtual int GetStartIndex(int checkIndex, int count)
         {
-            return Mathf.Clamp((checkIndex < 0 ? count + checkIndex : checkIndex), 0, count);
+            return Mathf.Clamp(checkIndex < 0 ? count + checkIndex : checkIndex, 0, count);
         }
 
         /// <summary>

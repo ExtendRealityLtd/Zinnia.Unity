@@ -56,9 +56,9 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectTwo = new GameObject();
             GameObject objectThree = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
-            subject.elementEvents.Add(eventsTwo);
-            subject.elementEvents.Add(eventsThree);
+            subject.ElementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsTwo);
+            subject.ElementEvents.Add(eventsThree);
 
             Assert.IsFalse(elementOnePushedMock.Received);
             Assert.IsFalse(elementOnePoppedMock.Received);
@@ -152,8 +152,8 @@ namespace Test.Zinnia.Data.Collection
 
             GameObject objectOne = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
-            subject.elementEvents.Add(eventsTwo);
+            subject.ElementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsTwo);
 
             Assert.IsFalse(elementOnePushedMock.Received);
             Assert.IsFalse(elementOnePoppedMock.Received);
@@ -204,7 +204,7 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectOne = new GameObject();
             GameObject objectTwo = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsOne);
 
             Assert.IsFalse(elementOnePushedMock.Received);
             Assert.IsFalse(elementOnePoppedMock.Received);
@@ -243,7 +243,7 @@ namespace Test.Zinnia.Data.Collection
 
             GameObject objectOne = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsOne);
             subject.gameObject.SetActive(false);
             subject.Push(objectOne);
 
@@ -267,7 +267,7 @@ namespace Test.Zinnia.Data.Collection
 
             GameObject objectOne = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsOne);
             subject.enabled = false;
             subject.Push(objectOne);
 
@@ -309,9 +309,9 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectTwo = new GameObject();
             GameObject objectThree = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
-            subject.elementEvents.Add(eventsTwo);
-            subject.elementEvents.Add(eventsThree);
+            subject.ElementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsTwo);
+            subject.ElementEvents.Add(eventsThree);
 
             subject.Push(objectOne);
             subject.Push(objectTwo);
@@ -385,9 +385,9 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectTwo = new GameObject();
             GameObject objectThree = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
-            subject.elementEvents.Add(eventsTwo);
-            subject.elementEvents.Add(eventsThree);
+            subject.ElementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsTwo);
+            subject.ElementEvents.Add(eventsThree);
 
             subject.Push(objectOne);
             subject.Push(objectTwo);
@@ -461,9 +461,9 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectTwo = new GameObject();
             GameObject objectThree = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
-            subject.elementEvents.Add(eventsTwo);
-            subject.elementEvents.Add(eventsThree);
+            subject.ElementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsTwo);
+            subject.ElementEvents.Add(eventsThree);
 
             subject.Push(objectOne);
             subject.Push(objectTwo);
@@ -538,9 +538,9 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectTwo = new GameObject();
             GameObject objectThree = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
-            subject.elementEvents.Add(eventsTwo);
-            subject.elementEvents.Add(eventsThree);
+            subject.ElementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsTwo);
+            subject.ElementEvents.Add(eventsThree);
 
             subject.Push(objectOne);
             subject.Push(objectTwo);
@@ -597,7 +597,7 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectOne = new GameObject();
             GameObject objectTwo = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsOne);
 
             subject.Push(objectOne);
 
@@ -633,7 +633,7 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectOne = new GameObject();
             GameObject objectTwo = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsOne);
 
             elementOnePushedMock.Reset();
             elementOnePoppedMock.Reset();
@@ -666,7 +666,7 @@ namespace Test.Zinnia.Data.Collection
 
             GameObject objectOne = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsOne);
 
             elementOnePushedMock.Reset();
             elementOnePoppedMock.Reset();
@@ -695,7 +695,7 @@ namespace Test.Zinnia.Data.Collection
 
             GameObject objectOne = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsOne);
 
             elementOnePushedMock.Reset();
             elementOnePoppedMock.Reset();
@@ -748,9 +748,9 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectTwo = new GameObject();
             GameObject objectThree = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
-            subject.elementEvents.Add(eventsTwo);
-            subject.elementEvents.Add(eventsThree);
+            subject.ElementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsTwo);
+            subject.ElementEvents.Add(eventsThree);
 
             subject.Push(objectOne);
             subject.Push(objectTwo);
@@ -812,7 +812,7 @@ namespace Test.Zinnia.Data.Collection
 
             GameObject objectOne = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsOne);
 
             subject.Push(objectOne);
 
@@ -864,9 +864,9 @@ namespace Test.Zinnia.Data.Collection
             GameObject objectTwo = new GameObject();
             GameObject objectThree = new GameObject();
 
-            subject.elementEvents.Add(eventsOne);
-            subject.elementEvents.Add(eventsTwo);
-            subject.elementEvents.Add(eventsThree);
+            subject.ElementEvents.Add(eventsOne);
+            subject.ElementEvents.Add(eventsTwo);
+            subject.ElementEvents.Add(eventsThree);
 
             subject.Push(objectOne);
             subject.Push(objectTwo);

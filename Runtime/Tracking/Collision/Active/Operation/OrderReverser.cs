@@ -38,7 +38,7 @@
             }
 
             reversedList.Set(originalList);
-            reversedList.activeCollisions.Reverse();
+            reversedList.ActiveCollisions.Reverse();
 
             Reversed?.Invoke(reversedList);
             return reversedList;

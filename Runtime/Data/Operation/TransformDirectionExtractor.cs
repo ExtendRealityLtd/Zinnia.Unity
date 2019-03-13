@@ -1,9 +1,8 @@
 ﻿namespace Zinnia.Data.Operation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Extracts a chosen axis of a <see cref="Transform"/>.
@@ -32,7 +31,7 @@
         /// <summary>
         /// The direction to extract from the <see cref="Transform"/>.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public AxisDirection Direction { get; set; }
 
@@ -42,11 +41,11 @@
             switch (Direction)
             {
                 case AxisDirection.Right:
-                    return useLocal ? Vector3.right : source.transform.right;
+                    return UseLocal ? Vector3.right : Source.transform.right;
                 case AxisDirection.Up:
-                    return useLocal ? Vector3.up : source.transform.up;
+                    return UseLocal ? Vector3.up : Source.transform.up;
                 case AxisDirection.Forward:
-                    return useLocal ? Vector3.forward : source.transform.forward;
+                    return UseLocal ? Vector3.forward : Source.transform.forward;
             }
 
             return Vector3.zero;

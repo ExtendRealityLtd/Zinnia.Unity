@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Action
 {
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
@@ -15,13 +15,35 @@
     public abstract class Action : MonoBehaviour
     {
         /// <summary>
-        /// Determines whether the action is currently activated.
+        /// Defines the event with the <see cref="bool"/>.
+        /// </summary>
+        [Serializable]
+        public class BooleanUnityEvent : UnityEvent<bool> { }
+
+        /// <summary>
+        /// Emitted when <see cref="IsActivated"/> changes.
+        /// </summary>
+        [DocumentedByXml]
+        public BooleanUnityEvent ActivationStateChanged = new BooleanUnityEvent();
+
+        /// <summary>
+        /// Whether the action is currently activated.
         /// </summary>
         public bool IsActivated
         {
-            get;
-            protected set;
+            get => isActivated;
+            protected set
+            {
+                if (isActivated == value)
+                {
+                    return;
+                }
+
+                isActivated = value;
+                ActivationStateChanged?.Invoke(value);
+            }
         }
+        private bool isActivated;
 
         /// <summary>
         /// Adds a given action to the sources collection.
@@ -43,12 +65,12 @@
         public abstract void EmitActivationState();
 
         /// <summary>
-        /// Determines whether the event should be emitted.
+        /// Whether the event should be emitted.
         /// </summary>
         /// <returns><see langword="true"/> if the event should be emitted.</returns>
         protected virtual bool CanEmit()
         {
-            return (isActiveAndEnabled);
+            return isActiveAndEnabled;
         }
     }
 
@@ -63,13 +85,15 @@
         /// <summary>
         /// The initial value of the action.
         /// </summary>
-        [DocumentedByXml]
-        public TValue defaultValue;
-
+        [Serialized]
+        [field: DocumentedByXml]
+        public TValue DefaultValue { get; set; }
         /// <summary>
-        /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
+        /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public IReadOnlyList<TSelf> ReadOnlySources => Sources;
+        [Serialized]
+        [field: DocumentedByXml]
+        protected List<TSelf> Sources { get; set; } = new List<TSelf>();
 
         /// <summary>
         /// Emitted when the action becomes active.
@@ -88,22 +112,16 @@
         public TEvent Deactivated = new TEvent();
 
         /// <summary>
-        /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
-        /// </summary>
-        [Serialized, Validated]
-        [field: DocumentedByXml]
-        protected List<TSelf> Sources { get; set; } = new List<TSelf>();
-
-        /// <summary>
         /// The value of the action.
         /// </summary>
-        public TValue Value
-        {
-            get;
-            protected set;
-        }
+        public TValue Value { get; protected set; }
+        /// <summary>
+        /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
+        /// </summary>
+        public IReadOnlyList<TSelf> ReadOnlySources => Sources;
 
         /// <inheritdoc />
+        [RequiresBehaviourState]
         public override void AddSource(Action action)
         {
             if (action == null)
@@ -116,6 +134,7 @@
         }
 
         /// <inheritdoc />
+        [RequiresBehaviourState]
         public override void RemoveSource(Action action)
         {
             if (action == null)
@@ -128,6 +147,7 @@
         }
 
         /// <inheritdoc />
+        [RequiresBehaviourState]
         public override void ClearSources()
         {
             UnsubscribeFromSources();
@@ -167,7 +187,7 @@
 
         protected virtual void Awake()
         {
-            Value = defaultValue;
+            Value = DefaultValue;
         }
 
         protected virtual void OnEnable()
@@ -177,7 +197,7 @@
 
         protected virtual void OnDisable()
         {
-            ProcessValue(defaultValue);
+            ProcessValue(DefaultValue);
             UnsubscribeFromSources();
         }
 
@@ -187,11 +207,6 @@
         /// <param name="source">The source action to subscribe listeners on.</param>
         protected virtual void SubscribeToSource(TSelf source)
         {
-            if (source == null)
-            {
-                return;
-            }
-
             source.ValueChanged.AddListener(Receive);
         }
 
@@ -201,11 +216,6 @@
         /// <param name="source">The source action to unsubscribe listeners on.</param>
         protected virtual void UnsubscribeFromSource(TSelf source)
         {
-            if (source == null)
-            {
-                return;
-            }
-
             source.ValueChanged.RemoveListener(Receive);
         }
 
@@ -214,6 +224,11 @@
         /// </summary>
         protected virtual void SubscribeToSources()
         {
+            if (Sources == null)
+            {
+                return;
+            }
+
             foreach (TSelf source in Sources)
             {
                 SubscribeToSource(source);
@@ -225,6 +240,11 @@
         /// </summary>
         protected virtual void UnsubscribeFromSources()
         {
+            if (Sources == null)
+            {
+                return;
+            }
+
             foreach (TSelf source in Sources)
             {
                 UnsubscribeFromSource(source);
@@ -252,7 +272,7 @@
         }
 
         /// <summary>
-        /// Determines if the given <see cref="TValue"/> is equal to the action's cached <see cref="Value"/>.
+        /// Whether the given <see cref="TValue"/> is equal to the action's cached <see cref="Value"/>.
         /// </summary>
         /// <param name="value">The value to check equality for.</param>
         /// <returns><see langword="true"/> if the given <see cref="TValue"/> is equal to the action's cached <see cref="Value"/>.</returns>
@@ -262,32 +282,47 @@
         }
 
         /// <summary>
-        /// Determines if the action should become active.
+        /// Whether the action should become active.
         /// </summary>
         /// <param name="value">The current value to check activation state on.</param>
         /// <returns><see langword="true"/> if the action should activate.</returns>
         protected virtual bool ShouldActivate(TValue value)
         {
-            return !EqualityComparer<TValue>.Default.Equals(defaultValue, value);
+            return !EqualityComparer<TValue>.Default.Equals(DefaultValue, value);
         }
 
         /// <summary>
-        /// Handles changes to <see cref="Sources"/>.
+        /// Called after <see cref="DefaultValue"/> has been changed.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Sources))]
-        protected virtual void OnSourcesChange(List<TSelf> previousValue, ref List<TSelf> newValue)
+        [CalledAfterChangeOf(nameof(DefaultValue))]
+        protected virtual void OnAfterDefaultValueChange()
         {
-            foreach (TSelf source in previousValue)
+            bool shouldActivate = ShouldActivate(Value);
+            if (IsActivated == shouldActivate)
             {
-                UnsubscribeFromSource(source);
+                return;
             }
 
-            foreach (TSelf source in newValue)
-            {
-                SubscribeToSource(source);
-            }
+            IsActivated = shouldActivate;
+            EmitActivationState();
+        }
+
+        /// <summary>
+        /// Called before <see cref="Sources"/> has been changed.
+        /// </summary>
+        [CalledBeforeChangeOf(nameof(Sources))]
+        protected virtual void OnBeforeSourcesChange()
+        {
+            UnsubscribeFromSources();
+        }
+
+        /// <summary>
+        /// Called after <see cref="Sources"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Sources))]
+        protected virtual void OnAfterSourcesChange()
+        {
+            SubscribeToSources();
         }
     }
 }

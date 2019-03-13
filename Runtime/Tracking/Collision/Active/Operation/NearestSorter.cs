@@ -1,11 +1,10 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
+    using UnityEngine;
     using System.Collections.Generic;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using UnityEngine;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -21,13 +20,15 @@
             /// <summary>
             /// The position to check against.
             /// </summary>
-            public Vector3 sourcePosition;
+            [Serialized]
+            [field: DocumentedByXml]
+            public Vector3 SourcePosition { get; set; }
 
             /// <inheritdoc />
             public virtual int Compare(CollisionNotifier.EventData x, CollisionNotifier.EventData y)
             {
-                float distance1 = Vector3.Distance(x.collider.GetContainingTransform().position, sourcePosition);
-                float distance2 = Vector3.Distance(y.collider.GetContainingTransform().position, sourcePosition);
+                float distance1 = Vector3.Distance(x.ColliderData.GetContainingTransform().position, SourcePosition);
+                float distance2 = Vector3.Distance(y.ColliderData.GetContainingTransform().position, SourcePosition);
                 return distance1.CompareTo(distance2);
             }
         }
@@ -35,7 +36,7 @@
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
 
@@ -81,8 +82,8 @@
             }
 
             SortedList.Set(originalList);
-            Comparer.sourcePosition = Source.transform.position;
-            SortedList.activeCollisions.Sort(Comparer);
+            Comparer.SourcePosition = Source.transform.position;
+            SortedList.ActiveCollisions.Sort(Comparer);
 
             Sorted?.Invoke(SortedList);
             return SortedList;

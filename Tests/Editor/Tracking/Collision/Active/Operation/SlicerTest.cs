@@ -70,8 +70,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 0;
-            subject.length = 1;
+            subject.StartIndex = 0;
+            subject.Length = 1;
 
             Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -136,8 +136,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = -1;
-            subject.length = 1;
+            subject.StartIndex = -1;
+            subject.Length = 1;
 
             Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -202,8 +202,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 2;
-            subject.length = 1;
+            subject.StartIndex = 2;
+            subject.Length = 1;
 
             Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -268,8 +268,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 2;
-            subject.length = 2;
+            subject.StartIndex = 2;
+            subject.Length = 2;
 
             Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -334,8 +334,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 0;
-            subject.length = 3;
+            subject.StartIndex = 0;
+            subject.Length = 3;
 
             Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -400,8 +400,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 3;
-            subject.length = 3;
+            subject.StartIndex = 3;
+            subject.Length = 3;
 
             Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -466,8 +466,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 4;
-            subject.length = 3;
+            subject.StartIndex = 4;
+            subject.Length = 3;
 
             Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -532,8 +532,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = -3;
-            subject.length = 3;
+            subject.StartIndex = -3;
+            subject.Length = 3;
 
             Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -599,8 +599,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = -2;
-            subject.length = 3;
+            subject.StartIndex = -2;
+            subject.Length = 3;
 
             Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -665,8 +665,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = eventData.activeCollisions.Count + 1;
-            subject.length = 1;
+            subject.StartIndex = eventData.ActiveCollisions.Count + 1;
+            subject.Length = 1;
 
             ActiveCollisionsContainer.EventData remainedList;
             ActiveCollisionsContainer.EventData slicedList = subject.Slice(eventData, out remainedList);
@@ -726,8 +726,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 0;
-            subject.length = 0;
+            subject.StartIndex = 0;
+            subject.Length = 0;
 
             ActiveCollisionsContainer.EventData remainedList;
             ActiveCollisionsContainer.EventData slicedList = subject.Slice(eventData, out remainedList);
@@ -757,8 +757,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
             List<CollisionNotifier.EventData> collisionList = new List<CollisionNotifier.EventData>();
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 0;
-            subject.length = 1;
+            subject.StartIndex = 0;
+            subject.Length = 1;
 
             Assert.AreEqual("", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
 
@@ -801,8 +801,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 0;
-            subject.length = 1;
+            subject.StartIndex = 0;
+            subject.Length = 1;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual("one,two,three", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
@@ -850,8 +850,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
 
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
 
-            subject.startIndex = 0;
-            subject.length = 1;
+            subject.StartIndex = 0;
+            subject.Length = 1;
             subject.enabled = false;
 
             Assert.AreEqual("one,two,three", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));

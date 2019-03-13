@@ -1,10 +1,8 @@
 ﻿namespace Zinnia.Utility
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.MemberChangeMethod;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// A container for an <see cref="Object"/> that implements an interface that can be utilized within a Unity Inspector.
@@ -14,19 +12,22 @@
         /// <summary>
         /// The contained object.
         /// </summary>
-        [Serialized, Validated]
-        [field: DocumentedByXml]
-        protected Object Field { get; set; }
+        [SerializeField, DocumentedByXml]
+        protected Object field;
+        /// <summary>
+        /// The contained object.
+        /// </summary>
+        protected Object Field
+        {
+            get => field;
+            set => field = value;
+        }
 
         /// <summary>
-        /// Handles changes to <see cref="Field"/>.
+        /// Called after <see cref="Field"/> has been changed.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Field))]
-        protected virtual void OnFieldChange(Object previousValue, ref Object newValue)
-        {
-        }
+        [CalledAfterChangeOf(nameof(Field))]
+        protected virtual void OnAfterFieldChange() { }
     }
 
     /// <summary>
@@ -35,6 +36,9 @@
     /// <typeparam name="TInterface">The interface type to contain.</typeparam>
     public abstract class InterfaceContainer<TInterface> : InterfaceContainer, ISerializationCallbackReceiver
     {
+        /// <summary>
+        /// The contained interface.
+        /// </summary>
         public TInterface Interface
         {
             get
@@ -59,19 +63,6 @@
         private TInterface _interface;
 
         /// <inheritdoc />
-        protected override void OnFieldChange(Object previousValue, ref Object newValue)
-        {
-            if (newValue is TInterface @interface)
-            {
-                _interface = @interface;
-            }
-            else
-            {
-                newValue = null;
-            }
-        }
-
-        /// <inheritdoc />
         public void OnBeforeSerialize()
         {
         }
@@ -79,7 +70,27 @@
         /// <inheritdoc />
         public void OnAfterDeserialize()
         {
-            Field = Field;
+            if (Field is TInterface @interface)
+            {
+                _interface = @interface;
+            }
+            else
+            {
+                field = null;
+            }
+        }
+
+        /// <inheritdoc />
+        protected override void OnAfterFieldChange()
+        {
+            if (Field is TInterface @interface)
+            {
+                _interface = @interface;
+            }
+            else if (Field != null)
+            {
+                Field = null;
+            }
         }
     }
 }

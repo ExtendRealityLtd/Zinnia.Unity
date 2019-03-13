@@ -1,8 +1,10 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Tracking.Follow.Modifier.Property;
 
     /// <summary>
@@ -13,29 +15,32 @@
         /// <summary>
         /// The modifier to change the scale.
         /// </summary>
-        [DocumentedByXml]
-        public PropertyModifier scaleModifier;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public PropertyModifier ScaleModifier { get; set; }
         /// <summary>
         /// The modifier to change the rotation.
         /// </summary>
-        [DocumentedByXml]
-        public PropertyModifier rotationModifier;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public PropertyModifier RotationModifier { get; set; }
         /// <summary>
         /// The modifier to change the position.
         /// </summary>
-        [DocumentedByXml]
-        public PropertyModifier positionModifier;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public PropertyModifier PositionModifier { get; set; }
 
         /// <summary>
         /// Emitted before the follow is modified.
         /// </summary>
         [DocumentedByXml]
-        public ObjectFollower.UnityEvent Premodified = new ObjectFollower.UnityEvent();
+        public ObjectFollower.FollowEvent Premodified = new ObjectFollower.FollowEvent();
         /// <summary>
         /// Emitted after the follow is modified.
         /// </summary>
         [DocumentedByXml]
-        public ObjectFollower.UnityEvent Modified = new ObjectFollower.UnityEvent();
+        public ObjectFollower.FollowEvent Modified = new ObjectFollower.FollowEvent();
 
         /// The current source being used in the modifier process.
         public GameObject CachedSource
@@ -60,6 +65,9 @@
             protected set;
         }
 
+        /// <summary>
+        /// The event data to emit before and after each property type has been modified.
+        /// </summary>
         protected readonly ObjectFollower.EventData eventData = new ObjectFollower.EventData();
 
         /// <summary>
@@ -78,17 +86,17 @@
 
             Premodified?.Invoke(eventData.Set(source, target, offset));
 
-            if (scaleModifier != null)
+            if (ScaleModifier != null)
             {
-                scaleModifier.Modify(source, target, offset);
+                ScaleModifier.Modify(source, target, offset);
             }
-            if (rotationModifier != null)
+            if (RotationModifier != null)
             {
-                rotationModifier.Modify(source, target, offset);
+                RotationModifier.Modify(source, target, offset);
             }
-            if (positionModifier != null)
+            if (PositionModifier != null)
             {
-                positionModifier.Modify(source, target, offset);
+                PositionModifier.Modify(source, target, offset);
             }
 
             Modified?.Invoke(eventData.Set(source, target, offset));
@@ -100,13 +108,13 @@
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        /// <returns><see langword="true"/> if the cache contains a valid source and target.</returns>
+        /// <returns>Whether the cache contains a valid source and target.</returns>
         protected virtual bool ValidateCache(GameObject source, GameObject target, GameObject offset = null)
         {
             CachedSource = source;
             CachedTarget = target;
             CachedOffset = offset;
-            return (CachedSource != null && CachedTarget != null);
+            return CachedSource != null && CachedTarget != null;
         }
     }
 }

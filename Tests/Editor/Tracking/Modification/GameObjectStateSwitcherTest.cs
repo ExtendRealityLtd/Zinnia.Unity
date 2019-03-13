@@ -1,21 +1,23 @@
 ﻿using Zinnia.Tracking.Modification;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Tracking.Modification
 {
     using UnityEngine;
-    using System.Collections.Generic;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
 
     public class GameObjectStateSwitcherTest
     {
         private GameObject containingObject;
-        private GameObjectStateSwitcherMock subject;
+        private GameObjectStateSwitcher subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<GameObjectStateSwitcherMock>();
+            subject = containingObject.AddComponent<GameObjectStateSwitcher>();
         }
 
         [TearDown]
@@ -25,19 +27,25 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void SwitchNext()
+        [UnityTest]
+        public IEnumerator SwitchNext()
         {
             GameObject objectA = new GameObject();
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
 
-            subject.ManualOnEnable();
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 0;
+
+            subject.SwitchToCurrentIndex();
 
             Assert.IsTrue(objectA.activeInHierarchy);
             Assert.IsFalse(objectB.activeInHierarchy);
@@ -66,19 +74,25 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(objectC);
         }
 
-        [Test]
-        public void SwitchPrevious()
+        [UnityTest]
+        public IEnumerator SwitchPrevious()
         {
             GameObject objectA = new GameObject();
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
 
-            subject.ManualOnEnable();
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 0;
+
+            subject.SwitchToCurrentIndex();
 
             Assert.IsTrue(objectA.activeInHierarchy);
             Assert.IsFalse(objectB.activeInHierarchy);
@@ -107,19 +121,25 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(objectC);
         }
 
-        [Test]
-        public void SwitchTo()
+        [UnityTest]
+        public IEnumerator SwitchTo()
         {
             GameObject objectA = new GameObject();
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
 
-            subject.ManualOnEnable();
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 0;
+
+            subject.SwitchToCurrentIndex();
 
             Assert.IsTrue(objectA.activeInHierarchy);
             Assert.IsFalse(objectB.activeInHierarchy);
@@ -160,19 +180,25 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(objectC);
         }
 
-        [Test]
-        public void SwitchFalseState()
+        [UnityTest]
+        public IEnumerator SwitchFalseState()
         {
             GameObject objectA = new GameObject();
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = false;
-            subject.switchOnEnable = true;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
 
-            subject.ManualOnEnable();
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = false;
+            subject.CurrentIndex = 0;
+
+            subject.SwitchToCurrentIndex();
 
             Assert.IsFalse(objectA.activeInHierarchy);
             Assert.IsTrue(objectB.activeInHierarchy);
@@ -189,19 +215,25 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(objectC);
         }
 
-        [Test]
-        public void SwitchNextStartAt1()
+        [UnityTest]
+        public IEnumerator SwitchNextStartAt1()
         {
             GameObject objectA = new GameObject();
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 1;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
 
-            subject.ManualOnEnable();
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 1;
+
+            subject.SwitchToCurrentIndex();
 
             Assert.IsFalse(objectA.activeInHierarchy);
             Assert.IsTrue(objectB.activeInHierarchy);
@@ -218,109 +250,28 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(objectC);
         }
 
-        [Test]
-        public void SwitchNextStartAt2()
+        [UnityTest]
+        public IEnumerator SwitchNextStartAt2()
         {
             GameObject objectA = new GameObject();
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = true;
-            subject.startIndex = 2;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
 
-            subject.ManualOnEnable();
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 2;
+
+            subject.SwitchToCurrentIndex();
 
             Assert.IsFalse(objectA.activeInHierarchy);
             Assert.IsFalse(objectB.activeInHierarchy);
-            Assert.IsTrue(objectC.activeInHierarchy);
-
-            subject.SwitchNext();
-
-            Assert.IsTrue(objectA.activeInHierarchy);
-            Assert.IsFalse(objectB.activeInHierarchy);
-            Assert.IsFalse(objectC.activeInHierarchy);
-
-            Object.DestroyImmediate(objectA);
-            Object.DestroyImmediate(objectB);
-            Object.DestroyImmediate(objectC);
-        }
-
-        [Test]
-        public void SwitchNotOnEnableStartAt0()
-        {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
-
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 0;
-
-            subject.ManualOnEnable();
-
-            Assert.IsTrue(objectA.activeInHierarchy);
-            Assert.IsTrue(objectB.activeInHierarchy);
-            Assert.IsTrue(objectC.activeInHierarchy);
-
-            subject.SwitchNext();
-
-            Assert.IsFalse(objectA.activeInHierarchy);
-            Assert.IsTrue(objectB.activeInHierarchy);
-            Assert.IsFalse(objectC.activeInHierarchy);
-
-            Object.DestroyImmediate(objectA);
-            Object.DestroyImmediate(objectB);
-            Object.DestroyImmediate(objectC);
-        }
-
-        [Test]
-        public void SwitchNotOnEnableStartAt1()
-        {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
-
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 1;
-
-            subject.ManualOnEnable();
-
-            Assert.IsTrue(objectA.activeInHierarchy);
-            Assert.IsTrue(objectB.activeInHierarchy);
-            Assert.IsTrue(objectC.activeInHierarchy);
-
-            subject.SwitchNext();
-
-            Assert.IsFalse(objectA.activeInHierarchy);
-            Assert.IsFalse(objectB.activeInHierarchy);
-            Assert.IsTrue(objectC.activeInHierarchy);
-
-            Object.DestroyImmediate(objectA);
-            Object.DestroyImmediate(objectB);
-            Object.DestroyImmediate(objectC);
-        }
-
-        [Test]
-        public void SwitchNotOnEnableStartAt2()
-        {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
-
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 2;
-
-            subject.ManualOnEnable();
-
-            Assert.IsTrue(objectA.activeInHierarchy);
-            Assert.IsTrue(objectB.activeInHierarchy);
             Assert.IsTrue(objectC.activeInHierarchy);
 
             subject.SwitchNext();
@@ -334,17 +285,122 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(objectC);
         }
 
-        [Test]
-        public void SwitchInactiveGameObject()
+        [UnityTest]
+        public IEnumerator SwitchNotOnEnableStartAt0()
         {
             GameObject objectA = new GameObject();
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
+
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 0;
+
+            Assert.IsTrue(objectA.activeInHierarchy);
+            Assert.IsTrue(objectB.activeInHierarchy);
+            Assert.IsTrue(objectC.activeInHierarchy);
+
+            subject.SwitchNext();
+
+            Assert.IsFalse(objectA.activeInHierarchy);
+            Assert.IsTrue(objectB.activeInHierarchy);
+            Assert.IsFalse(objectC.activeInHierarchy);
+
+            Object.DestroyImmediate(objectA);
+            Object.DestroyImmediate(objectB);
+            Object.DestroyImmediate(objectC);
+        }
+
+        [UnityTest]
+        public IEnumerator SwitchNotOnEnableStartAt1()
+        {
+            GameObject objectA = new GameObject();
+            GameObject objectB = new GameObject();
+            GameObject objectC = new GameObject();
+
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
+
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 1;
+
+            Assert.IsTrue(objectA.activeInHierarchy);
+            Assert.IsTrue(objectB.activeInHierarchy);
+            Assert.IsTrue(objectC.activeInHierarchy);
+
+            subject.SwitchNext();
+
+            Assert.IsFalse(objectA.activeInHierarchy);
+            Assert.IsFalse(objectB.activeInHierarchy);
+            Assert.IsTrue(objectC.activeInHierarchy);
+
+            Object.DestroyImmediate(objectA);
+            Object.DestroyImmediate(objectB);
+            Object.DestroyImmediate(objectC);
+        }
+
+        [UnityTest]
+        public IEnumerator SwitchNotOnEnableStartAt2()
+        {
+            GameObject objectA = new GameObject();
+            GameObject objectB = new GameObject();
+            GameObject objectC = new GameObject();
+
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
+
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 2;
+
+            Assert.IsTrue(objectA.activeInHierarchy);
+            Assert.IsTrue(objectB.activeInHierarchy);
+            Assert.IsTrue(objectC.activeInHierarchy);
+
+            subject.SwitchNext();
+
+            Assert.IsTrue(objectA.activeInHierarchy);
+            Assert.IsFalse(objectB.activeInHierarchy);
+            Assert.IsFalse(objectC.activeInHierarchy);
+
+            Object.DestroyImmediate(objectA);
+            Object.DestroyImmediate(objectB);
+            Object.DestroyImmediate(objectC);
+        }
+
+        [UnityTest]
+        public IEnumerator SwitchInactiveGameObject()
+        {
+            GameObject objectA = new GameObject();
+            GameObject objectB = new GameObject();
+            GameObject objectC = new GameObject();
+
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
+
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 0;
 
             subject.gameObject.SetActive(false);
 
@@ -363,17 +419,23 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(objectC);
         }
 
-        [Test]
-        public void SwitchInactiveComponent()
+        [UnityTest]
+        public IEnumerator SwitchInactiveComponent()
         {
             GameObject objectA = new GameObject();
             GameObject objectB = new GameObject();
             GameObject objectC = new GameObject();
 
-            subject.targets = new List<GameObject>() { objectA, objectB, objectC };
-            subject.targetState = true;
-            subject.switchOnEnable = false;
-            subject.startIndex = 0;
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+            subject.Targets = targets;
+
+            targets.Add(objectA);
+            targets.Add(objectB);
+            targets.Add(objectC);
+
+            subject.TargetState = true;
+            subject.CurrentIndex = 0;
 
             subject.enabled = false;
 
@@ -390,14 +452,6 @@ namespace Test.Zinnia.Tracking.Modification
             Object.DestroyImmediate(objectA);
             Object.DestroyImmediate(objectB);
             Object.DestroyImmediate(objectC);
-        }
-    }
-
-    public class GameObjectStateSwitcherMock : GameObjectStateSwitcher
-    {
-        public virtual void ManualOnEnable()
-        {
-            OnEnable();
         }
     }
 }

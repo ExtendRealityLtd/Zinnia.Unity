@@ -1,7 +1,8 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -12,15 +13,23 @@
         /// <summary>
         /// The maximum squared magnitude of angular velocity that can be applied to the source <see cref="Transform"/>.
         /// </summary>
-        [DocumentedByXml]
-        public float angularVelocityLimit = float.PositiveInfinity;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float AngularVelocityLimit { get; set; } = float.PositiveInfinity;
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
-        [DocumentedByXml]
-        public float maxDistanceDelta = 10f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float MaxDistanceDelta { get; set; } = 10f;
 
+        /// <summary>
+        /// A cached version of the target rigidbody.
+        /// </summary>
         protected Rigidbody cachedTargetRigidbody;
+        /// <summary>
+        /// A cached version of the target.
+        /// </summary>
         protected GameObject cachedTarget;
 
         /// <summary>
@@ -31,21 +40,19 @@
         /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
-            cachedTargetRigidbody = (cachedTargetRigidbody == null || target != cachedTarget ? target.TryGetComponent<Rigidbody>(true) : cachedTargetRigidbody);
+            cachedTargetRigidbody = cachedTargetRigidbody == null || target != cachedTarget ? target.TryGetComponent<Rigidbody>(true) : cachedTargetRigidbody;
             cachedTarget = target;
 
-            Quaternion rotationDelta = source.transform.rotation * Quaternion.Inverse((offset != null ? offset.transform.rotation : target.transform.rotation));
-            float angle;
-            Vector3 axis;
+            Quaternion rotationDelta = source.transform.rotation * Quaternion.Inverse(offset != null ? offset.transform.rotation : target.transform.rotation);
 
-            rotationDelta.ToAngleAxis(out angle, out axis);
-            angle = ((angle > 180f) ? angle - 360f : angle);
+            rotationDelta.ToAngleAxis(out float angle, out Vector3 axis);
+            angle = (angle > 180f) ? angle - 360f : angle;
 
             if (!angle.ApproxEquals(0))
             {
                 Vector3 angularTarget = angle * axis;
-                Vector3 calculatedAngularVelocity = Vector3.MoveTowards(cachedTargetRigidbody.angularVelocity, angularTarget, maxDistanceDelta);
-                if (float.IsPositiveInfinity(angularVelocityLimit) || calculatedAngularVelocity.sqrMagnitude < angularVelocityLimit)
+                Vector3 calculatedAngularVelocity = Vector3.MoveTowards(cachedTargetRigidbody.angularVelocity, angularTarget, MaxDistanceDelta);
+                if (float.IsPositiveInfinity(AngularVelocityLimit) || calculatedAngularVelocity.sqrMagnitude < AngularVelocityLimit)
                 {
                     cachedTargetRigidbody.angularVelocity = calculatedAngularVelocity;
                 }

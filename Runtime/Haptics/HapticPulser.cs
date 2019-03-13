@@ -1,10 +1,9 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.MemberChangeMethod;
 
     /// <summary>
     /// Creates a single pulse on a haptic device for a given intensity.
@@ -14,19 +13,20 @@
         /// <summary>
         /// The intensity of the haptic rumble.
         /// </summary>
-        [Serialized, Validated]
-        [field: Range(0f, 1f), DocumentedByXml]
+        [Serialized]
+        [field: DocumentedByXml, Range(0f, 1f)]
         public float Intensity { get; set; } = 1f;
 
         /// <summary>
-        /// Handles changes to <see cref="Intensity"/>.
+        /// Called after <see cref="Intensity"/> has been changed.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Intensity))]
-        protected virtual void OnIntensityChange(float previousValue, ref float newValue)
+        [CalledAfterChangeOf(nameof(Intensity))]
+        protected virtual void OnAfterIntensityChange()
         {
-            newValue = Mathf.Clamp01(newValue);
+            if (Intensity < 0f || Intensity > 1f)
+            {
+                Intensity = Mathf.Clamp01(Intensity);
+            }
         }
     }
 }

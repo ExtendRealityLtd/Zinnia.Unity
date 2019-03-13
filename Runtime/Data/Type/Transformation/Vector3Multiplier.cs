@@ -3,7 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Zinnia.Extension;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Multiplies a collection of <see cref="Vector3"/>s by multiplying each one to the next entry in the collection.
@@ -11,7 +11,7 @@
     /// <example>
     /// (2f,3f,4f) * [3f,4f,5f] = (6f,12f,20f)
     /// </example>
-    public class Vector3Multiplier : CollectionAggregator<Vector3, Vector3, Vector3Multiplier.UnityEvent>
+    public class Vector3Multiplier : CollectionAggregator<Vector3, Vector3, Vector3Multiplier.UnityEvent, Vector3ObservableList, Vector3ObservableList.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the multiplied <see cref="Vector3"/> value.
@@ -22,82 +22,76 @@
         }
 
         /// <summary>
-        /// Sets the x value of the <see cref="CollectionAggregator{TInput,TOutput,TEvent}.CurrentIndex"/> element.
+        /// Sets the x value of the <see cref="Collection.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new x value.</param>
-        public virtual void SetElementX(float value)
+        public virtual void SetComponentX(float value)
         {
-            Vector3 currentValue = collection[CurrentIndex];
+            Vector3 currentValue = Collection.NonSubscribableElements[Collection.CurrentIndex];
             currentValue.x = value;
-            collection[CurrentIndex] = currentValue;
+            Collection.SetAtCurrentIndex(currentValue);
         }
 
         /// <summary>
         /// Sets the x value of the given index element.
         /// </summary>
-        /// <param name="index">The index in the collection to update at.</param>
         /// <param name="value">The new x value.</param>
-        public virtual void SetElementX(int index, float value)
+        /// <param name="index">The index in the collection to update at.</param>
+        public virtual void SetComponentX(float value, int index)
         {
-            index = collection.GetWrappedAndClampedIndex(index);
-            Vector3 currentValue = collection[index];
-            currentValue.x = value;
-            collection[index] = currentValue;
+            Collection.CurrentIndex = index;
+            SetComponentX(value);
         }
 
         /// <summary>
-        /// Sets the y value of the <see cref="CollectionAggregator{TInput,TOutput,TEvent}.CurrentIndex"/> element.
+        /// Sets the y value of the <see cref="Collection.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new y value.</param>
-        public virtual void SetElementY(float value)
+        public virtual void SetComponentY(float value)
         {
-            Vector3 currentValue = collection[CurrentIndex];
+            Vector3 currentValue = Collection.NonSubscribableElements[Collection.CurrentIndex];
             currentValue.y = value;
-            collection[CurrentIndex] = currentValue;
+            Collection.SetAtCurrentIndex(currentValue);
         }
 
         /// <summary>
         /// Sets the y value of the given index element.
         /// </summary>
-        /// <param name="index">The index in the collection to update at.</param>
         /// <param name="value">The new y value.</param>
-        public virtual void SetElementY(int index, float value)
+        /// <param name="index">The index in the collection to update at.</param>
+        public virtual void SetComponentY(float value, int index)
         {
-            index = collection.GetWrappedAndClampedIndex(index);
-            Vector3 currentValue = collection[index];
-            currentValue.y = value;
-            collection[index] = currentValue;
+            Collection.CurrentIndex = index;
+            SetComponentY(value);
         }
 
         /// <summary>
-        /// Sets the z value of the <see cref="CollectionAggregator{TInput,TOutput,TEvent}.CurrentIndex"/> element.
+        /// Sets the z value of the <see cref="Collection.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new z value.</param>
-        public virtual void SetElementZ(float value)
+        public virtual void SetComponentZ(float value)
         {
-            Vector3 currentValue = collection[CurrentIndex];
+            Vector3 currentValue = Collection.NonSubscribableElements[Collection.CurrentIndex];
             currentValue.z = value;
-            collection[CurrentIndex] = currentValue;
+            Collection.SetAtCurrentIndex(currentValue);
         }
 
         /// <summary>
         /// Sets the z value of the given index element.
         /// </summary>
-        /// <param name="index">The index in the collection to update at.</param>
         /// <param name="value">The new z value.</param>
-        public virtual void SetElementZ(int index, float value)
+        /// <param name="index">The index in the collection to update at.</param>
+        public virtual void SetComponentZ(float value, int index)
         {
-            index = collection.GetWrappedAndClampedIndex(index);
-            Vector3 currentValue = collection[index];
-            currentValue.z = value;
-            collection[index] = currentValue;
+            Collection.CurrentIndex = index;
+            SetComponentZ(value);
         }
 
         /// <inheritdoc />
         protected override Vector3 ProcessCollection()
         {
             Vector3 product = Vector3.one;
-            foreach (Vector3 element in collection)
+            foreach (Vector3 element in Collection.NonSubscribableElements)
             {
                 product = Vector3.Scale(product, element);
             }

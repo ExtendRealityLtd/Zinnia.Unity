@@ -1,10 +1,10 @@
 namespace Zinnia.Cast
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.MemberChangeMethod;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Casts a straight line in the direction of the origin for a fixed length.
@@ -14,7 +14,7 @@ namespace Zinnia.Cast
         /// <summary>
         /// The current length of the cast.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public float CurrentLength { get; set; } = 1f;
 
@@ -24,41 +24,47 @@ namespace Zinnia.Cast
         /// <param name="data">The data to extract the new current length from.</param>
         public virtual void SetCurrentLength(EventData data)
         {
-            TargetHit = data?.targetHit;
-            if (data?.points.Count >= 2)
+            TargetHit = data?.TargetHit;
+            if (data?.Points.Count >= 2)
             {
-                CurrentLength = Vector3.Distance(data.points[0], data.points[1]);
+                CurrentLength = Vector3.Distance(data.Points[0], data.Points[1]);
             }
         }
 
         /// <inheritdoc />
         protected override void GeneratePoints()
         {
-            Vector3 originPosition = origin.transform.position;
+            Vector3 originPosition = Origin.transform.position;
             points[0] = originPosition;
-            points[1] = originPosition + origin.transform.forward * CurrentLength;
+            points[1] = originPosition + Origin.transform.forward * CurrentLength;
         }
 
         /// <summary>
-        /// Handles changes to <see cref="StraightLineCast.MaximumLength"/>.
+        /// Retrieves <see cref="CurrentLength"/> clamped between `0f` and <see cref="StraightLineCast.MaximumLength"/>.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(MaximumLength))]
-        protected virtual void OnMaximumLengthChange(float previousValue, ref float newValue)
+        /// <returns>The clamped value.</returns>
+        protected virtual float GetClampedCurrentLength()
         {
-            CurrentLength = Mathf.Clamp(CurrentLength, 0f, newValue);
+            return Mathf.Clamp(CurrentLength, 0f, MaximumLength);
+        }
+
+        /// <inheritdoc />
+        protected override void OnAfterMaximumLengthChange()
+        {
+            CurrentLength = GetClampedCurrentLength();
         }
 
         /// <summary>
-        /// Handles changes to <see cref="CurrentLength"/>.
+        /// Called after <see cref="CurrentLength"/> has been changed.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(CurrentLength))]
-        protected virtual void OnCurrentLengthChange(float previousValue, ref float newValue)
+        [CalledAfterChangeOf(nameof(CurrentLength))]
+        protected virtual void OnAfterCurrentLengthChange()
         {
-            newValue = Mathf.Clamp(newValue, 0f, MaximumLength);
+            float clampedCurrentLength = GetClampedCurrentLength();
+            if (!CurrentLength.ApproxEquals(clampedCurrentLength))
+            {
+                CurrentLength = clampedCurrentLength;
+            }
         }
     }
 }

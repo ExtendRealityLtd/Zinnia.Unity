@@ -1,12 +1,11 @@
 ﻿namespace Zinnia.Association
 {
     using UnityEngine;
-    using System.Collections.Generic;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertySetterMethod;
-    using Malimbe.PropertyValidationMethod;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Process;
+    using Zinnia.Association.Collection;
 
     /// <summary>
     /// (De)activates <see cref="GameObjectsAssociation"/>s.
@@ -16,9 +15,9 @@
         /// <summary>
         /// The associations in order they will be activated if they match the currently expected state.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
-        public List<GameObjectsAssociation> Associations { get; set; } = new List<GameObjectsAssociation>();
+        public GameObjectsAssociationObservableList Associations { get; set; }
 
         /// <summary>
         /// The currently activated association, or <see langword="null"/> if no association is activated.
@@ -31,7 +30,7 @@
         public virtual void Activate()
         {
             GameObjectsAssociation desiredAssociation = null;
-            foreach (GameObjectsAssociation association in Associations)
+            foreach (GameObjectsAssociation association in Associations.NonSubscribableElements)
             {
                 if (association.ShouldBeActive())
                 {
@@ -47,20 +46,20 @@
 
             CurrentAssociation = desiredAssociation;
 
-            foreach (GameObjectsAssociation association in Associations)
+            foreach (GameObjectsAssociation association in Associations.NonSubscribableElements)
             {
                 if (association == desiredAssociation)
                 {
                     continue;
                 }
 
-                foreach (GameObject associatedObject in association.gameObjects)
+                foreach (GameObject associatedObject in association.GameObjects.NonSubscribableElements)
                 {
                     associatedObject.SetActive(false);
                 }
             }
 
-            foreach (GameObject associatedObject in desiredAssociation.gameObjects)
+            foreach (GameObject associatedObject in desiredAssociation.GameObjects.NonSubscribableElements)
             {
                 associatedObject.SetActive(true);
             }
@@ -74,6 +73,9 @@
             Deactivate(Associations);
         }
 
+        /// <summary>
+        /// Calls <see cref="Activate"/> on the specified moment.
+        /// </summary>
         public void Process()
         {
             Activate();
@@ -81,9 +83,9 @@
 
         protected virtual void Awake()
         {
-            foreach (GameObjectsAssociation association in Associations)
+            foreach (GameObjectsAssociation association in Associations.NonSubscribableElements)
             {
-                foreach (GameObject associatedObject in association.gameObjects)
+                foreach (GameObject associatedObject in association.GameObjects.NonSubscribableElements)
                 {
                     if (associatedObject.activeInHierarchy)
                     {
@@ -108,11 +110,11 @@
         /// Deactivates the association that is currently activated and all other known associations.
         /// </summary>
         /// <param name="associations">The associations to deactivate.</param>
-        protected virtual void Deactivate(List<GameObjectsAssociation> associations)
+        protected virtual void Deactivate(GameObjectsAssociationObservableList associations)
         {
-            foreach (GameObjectsAssociation association in associations)
+            foreach (GameObjectsAssociation association in associations.NonSubscribableElements)
             {
-                foreach (GameObject associatedObject in association.gameObjects)
+                foreach (GameObject associatedObject in association.GameObjects.NonSubscribableElements)
                 {
                     associatedObject.SetActive(false);
                 }
@@ -120,7 +122,7 @@
 
             if (CurrentAssociation != null)
             {
-                foreach (GameObject associatedObject in CurrentAssociation.gameObjects)
+                foreach (GameObject associatedObject in CurrentAssociation.GameObjects.NonSubscribableElements)
                 {
                     associatedObject.SetActive(false);
                 }
@@ -130,14 +132,20 @@
         }
 
         /// <summary>
-        /// Handles changes to <see cref="Associations"/>.
+        /// Called before <see cref="Associations"/> has been changed.
         /// </summary>
-        /// <param name="previousValue">The previous value.</param>
-        /// <param name="newValue">The new value.</param>
-        [CalledBySetter(nameof(Associations))]
-        protected virtual void OnAssociationsChange(List<GameObjectsAssociation> previousValue, ref List<GameObjectsAssociation> newValue)
+        [CalledBeforeChangeOf(nameof(Associations))]
+        protected virtual void OnBeforeAssociationsChange()
         {
-            Deactivate(previousValue);
+            Deactivate(Associations);
+        }
+
+        /// <summary>
+        /// Called after <see cref="Associations"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Associations))]
+        protected virtual void OnAfterAssociationsChange()
+        {
             Activate();
         }
     }

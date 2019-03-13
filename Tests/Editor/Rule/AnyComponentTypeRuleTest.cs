@@ -1,9 +1,12 @@
-﻿using Zinnia.Extension;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
+using Zinnia.Extension;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Rule
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
 
     // TODO: Test all SearchOptions
@@ -28,44 +31,67 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void AcceptsMatch()
+        [UnityTest]
+        public IEnumerator AcceptsMatch()
         {
             containingObject.AddComponent<TestScript>();
-            subject.componentTypes.Add(typeof(TestScript));
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
 
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesEmpty()
+        [UnityTest]
+        public IEnumerator RefusesEmpty()
         {
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+            subject.ComponentTypes = componentTypes;
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
         [Test]
-        public void RefusesDifferent()
+        public void RefusesNullComponentTypes()
+        {
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator RefusesDifferent()
         {
             containingObject.AddComponent<Light>();
-            subject.componentTypes.Add(typeof(TestScript));
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesInactiveGameObject()
+        [UnityTest]
+        public IEnumerator RefusesInactiveGameObject()
         {
             containingObject.AddComponent<TestScript>();
-            subject.componentTypes.Add(typeof(TestScript));
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
 
             subject.gameObject.SetActive(false);
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesInactiveComponent()
+        [UnityTest]
+        public IEnumerator RefusesInactiveComponent()
         {
             containingObject.AddComponent<TestScript>();
-            subject.componentTypes.Add(typeof(TestScript));
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
 
             subject.enabled = false;
             Assert.IsFalse(container.Accepts(containingObject));

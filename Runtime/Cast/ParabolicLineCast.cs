@@ -1,7 +1,8 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Utility;
 
     /// <summary>
@@ -12,35 +13,40 @@
         /// <summary>
         /// The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.
         /// </summary>
-        [DocumentedByXml]
-        public Vector2 maximumLength = new Vector2(10f, float.PositiveInfinity);
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector2 MaximumLength { get; set; } = new Vector2(10f, float.PositiveInfinity);
         /// <summary>
         /// The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.
         /// </summary>
-        [Range(1, 100), DocumentedByXml]
-        public float heightLimitAngle = 100f;
+        [Serialized]
+        [field: DocumentedByXml, Range(1f, 100f)]
+        public float HeightLimitAngle { get; set; } = 100f;
         /// <summary>
         /// The number of points to generate on the parabolic line.
         /// </summary>
         /// <remarks>The higher the number, the more CPU intensive the point generation becomes.</remarks>
-        [DocumentedByXml]
-        public int segmentCount = 10;
+        [Serialized]
+        [field: DocumentedByXml]
+        public int SegmentCount { get; set; } = 10;
         /// <summary>
-        /// The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at <see cref="segmentCount" />.
+        /// The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at <see cref="SegmentCount" />.
         /// </summary>
         /// <remarks>The higher the number, the more CPU intensive the checks become.</remarks>
-        [DocumentedByXml]
-        public int collisionCheckFrequency;
+        [Serialized]
+        [field: DocumentedByXml]
+        public int CollisionCheckFrequency { get; set; }
         /// <summary>
         /// The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.
         /// </summary>
-        [DocumentedByXml]
-        public float curveOffset = 1f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float CurveOffset { get; set; } = 1f;
 
         /// <summary>
         /// Used to move the points back and up a bit to prevent the cast clipping at the collision points.
         /// </summary>
-        protected const float ADJUSTMENT_OFFSET = 0.0001f;
+        protected const float AdjustmentOffset = 0.0001f;
 
         /// <inheritdoc />
         protected override void DoCastPoints()
@@ -56,18 +62,17 @@
         /// <returns>The collision point or the point being the furthest away on the cast line if nothing is hit.</returns>
         protected virtual Vector3 ProjectForward()
         {
-            float rotation = Vector3.Dot(Vector3.up, origin.transform.forward.normalized);
-            float length = maximumLength.x;
+            float rotation = Vector3.Dot(Vector3.up, Origin.transform.forward.normalized);
+            float length = MaximumLength.x;
 
-            if ((rotation * 100f) > heightLimitAngle)
+            if ((rotation * 100f) > HeightLimitAngle)
             {
-                float controllerRotationOffset = 1f - (rotation - heightLimitAngle / 100f);
-                length = maximumLength.x * controllerRotationOffset * controllerRotationOffset;
+                float controllerRotationOffset = 1f - (rotation - HeightLimitAngle / 100f);
+                length = MaximumLength.x * controllerRotationOffset * controllerRotationOffset;
             }
 
-            Ray ray = new Ray(origin.transform.position, origin.transform.forward);
-            RaycastHit hitData;
-            bool hasCollided = PhysicsCast.Raycast(physicsCast, ray, out hitData, length, Physics.IgnoreRaycastLayer);
+            Ray ray = new Ray(Origin.transform.position, Origin.transform.forward);
+            bool hasCollided = PhysicsCast.Raycast(PhysicsCast, ray, out RaycastHit hitData, length, Physics.IgnoreRaycastLayer);
 
             // Adjust the cast length if something is blocking it.
             if (hasCollided && hitData.distance < length)
@@ -76,7 +81,7 @@
             }
 
             // Use an offset to move the point back and up a bit to prevent the cast clipping at the collision point.
-            return ray.GetPoint(length - ADJUSTMENT_OFFSET) + (Vector3.up * ADJUSTMENT_OFFSET);
+            return ray.GetPoint(length - AdjustmentOffset) + (Vector3.up * AdjustmentOffset);
         }
 
         /// <summary>
@@ -88,9 +93,8 @@
         {
             Vector3 point = Vector3.zero;
             Ray ray = new Ray(downwardOrigin, Vector3.down);
-            RaycastHit hitData;
 
-            bool downRayHit = PhysicsCast.Raycast(physicsCast, ray, out hitData, maximumLength.y, Physics.IgnoreRaycastLayer);
+            bool downRayHit = PhysicsCast.Raycast(PhysicsCast, ray, out RaycastHit hitData, MaximumLength.y, Physics.IgnoreRaycastLayer);
 
             if (!downRayHit || (TargetHit?.collider != null && TargetHit.Value.collider != hitData.collider))
             {
@@ -116,10 +120,10 @@
         {
             GeneratePoints(forward, down);
 
-            collisionCheckFrequency = Mathf.Clamp(collisionCheckFrequency, 0, segmentCount);
-            int step = segmentCount / (collisionCheckFrequency > 0 ? collisionCheckFrequency : 1);
+            CollisionCheckFrequency = Mathf.Clamp(CollisionCheckFrequency, 0, SegmentCount);
+            int step = SegmentCount / (CollisionCheckFrequency > 0 ? CollisionCheckFrequency : 1);
 
-            for (int index = 0; index < segmentCount - step; index += step)
+            for (int index = 0; index < SegmentCount - step; index += step)
             {
                 Vector3 currentPoint = points[index];
                 Vector3 nextPoint = index + step < points.Count ? points[index + step] : points[points.Count - 1];
@@ -127,19 +131,18 @@
                 float nextPointDistance = Vector3.Distance(currentPoint, nextPoint);
 
                 Ray pointsRay = new Ray(currentPoint, nextPointDirection);
-                RaycastHit pointsHitData;
 
-                if (!PhysicsCast.Raycast(physicsCast, pointsRay, out pointsHitData, nextPointDistance, Physics.IgnoreRaycastLayer))
+                if (!PhysicsCast.Raycast(PhysicsCast, pointsRay, out RaycastHit pointsHitData, nextPointDistance, Physics.IgnoreRaycastLayer))
                 {
                     continue;
                 }
 
                 Vector3 collisionPoint = pointsRay.GetPoint(pointsHitData.distance);
                 Ray downwardRay = new Ray(collisionPoint + Vector3.up * 0.01f, Vector3.down);
-                RaycastHit downwardHitData;
 
-                if (!PhysicsCast.Raycast(physicsCast, downwardRay, out downwardHitData, float.PositiveInfinity, Physics.IgnoreRaycastLayer))
+                if (!PhysicsCast.Raycast(PhysicsCast, downwardRay, out RaycastHit downwardHitData, float.PositiveInfinity, Physics.IgnoreRaycastLayer))
                 {
+                    TargetHit = null;
                     continue;
                 }
 
@@ -165,14 +168,14 @@
         {
             Vector3[] curvePoints =
             {
-                origin.transform.position,
-                forward + new Vector3(0f, curveOffset, 0f),
+                Origin.transform.position,
+                forward + new Vector3(0f, CurveOffset, 0f),
                 down,
                 down
             };
 
             points.Clear();
-            points.AddRange(BezierCurveGenerator.GeneratePoints(segmentCount, curvePoints));
+            points.AddRange(BezierCurveGenerator.GeneratePoints(SegmentCount, curvePoints));
         }
     }
 }

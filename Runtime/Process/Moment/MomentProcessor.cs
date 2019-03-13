@@ -1,11 +1,13 @@
 ﻿namespace Zinnia.Process.Moment
 {
     using UnityEngine;
-    using System.Collections.Generic;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Process.Moment.Collection;
 
     /// <summary>
-    /// Iterates through the given <see cref="MomentProcess"/> array and executes the <see cref="MomentProcess.process"/> method on the given Unity game loop moment.
+    /// Iterates through a given <see cref="MomentProcess"/> collection and executes the <see cref="IProcessable.Process"/> method on the given Unity game loop moment.
     /// </summary>
     public class MomentProcessor : MonoBehaviour
     {
@@ -43,20 +45,19 @@
         /// <summary>
         /// The moment in which to process the given processes.
         /// </summary>
-        [DocumentedByXml]
-        public Moment momentToProcess = Moment.PreRender;
+        [Serialized]
+        [field: DocumentedByXml]
+        public Moment ProcessMoment { get; set; } = Moment.PreRender;
         /// <summary>
         /// A collection of <see cref="MomentProcess"/> to process.
         /// </summary>
-        [DocumentedByXml]
-        public List<MomentProcess> processes = new List<MomentProcess>();
-
-        protected Moment subscribedMoment;
+        [Serialized]
+        [field: DocumentedByXml]
+        public MomentProcessObservableList Processes { get; set; }
 
         protected virtual void OnEnable()
         {
-            subscribedMoment = Moment.None;
-            ManageSubscriptions();
+            SubscribeMoment();
         }
 
         protected virtual void OnDisable()
@@ -66,7 +67,7 @@
 
         protected virtual void FixedUpdate()
         {
-            if (momentToProcess == Moment.FixedUpdate)
+            if (ProcessMoment == Moment.FixedUpdate)
             {
                 Process();
             }
@@ -74,7 +75,7 @@
 
         protected virtual void Update()
         {
-            if (momentToProcess == Moment.Update)
+            if (ProcessMoment == Moment.Update)
             {
                 Process();
             }
@@ -82,11 +83,10 @@
 
         protected virtual void LateUpdate()
         {
-            if (momentToProcess == Moment.LateUpdate)
+            if (ProcessMoment == Moment.LateUpdate)
             {
                 Process();
             }
-            ManageSubscriptions();
         }
 
         protected virtual void OnCameraPreRender(Camera givenCamera)
@@ -100,23 +100,11 @@
         }
 
         /// <summary>
-        /// Handles subscribing and unsubscribing to the relevant camera events.
-        /// </summary>
-        protected virtual void ManageSubscriptions()
-        {
-            if (subscribedMoment != momentToProcess)
-            {
-                UnsubscribeMoment();
-                SubscribeMoment();
-            }
-        }
-
-        /// <summary>
         /// Handles unsubscribing to the chosen subscribed moment event.
         /// </summary>
         protected virtual void UnsubscribeMoment()
         {
-            switch (subscribedMoment)
+            switch (ProcessMoment)
             {
                 case Moment.PreRender:
                     Camera.onPreRender -= OnCameraPreRender;
@@ -125,7 +113,6 @@
                     Camera.onPreCull -= OnCameraPreCull;
                     break;
             }
-            subscribedMoment = Moment.None;
         }
 
         /// <summary>
@@ -133,7 +120,7 @@
         /// </summary>
         protected virtual void SubscribeMoment()
         {
-            switch (momentToProcess)
+            switch (ProcessMoment)
             {
                 case Moment.PreRender:
                     Camera.onPreRender += OnCameraPreRender;
@@ -142,7 +129,6 @@
                     Camera.onPreCull += OnCameraPreCull;
                     break;
             }
-            subscribedMoment = momentToProcess;
         }
 
         /// <summary>
@@ -150,10 +136,33 @@
         /// </summary>
         protected virtual void Process()
         {
-            foreach (MomentProcess currentProcess in processes)
+            if (Processes == null)
+            {
+                return;
+            }
+
+            foreach (MomentProcess currentProcess in Processes.SubscribableElements)
             {
                 currentProcess.Process();
             }
+        }
+
+        /// <summary>
+        /// Called before <see cref="ProcessMoment"/> has been changed.
+        /// </summary>
+        [CalledBeforeChangeOf(nameof(ProcessMoment))]
+        protected virtual void OnBeforeProcessMomentChange()
+        {
+            UnsubscribeMoment();
+        }
+
+        /// <summary>
+        /// Called after <see cref="ProcessMoment"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(ProcessMoment))]
+        protected virtual void OnAfterProcessMomentChange()
+        {
+            SubscribeMoment();
         }
     }
 }

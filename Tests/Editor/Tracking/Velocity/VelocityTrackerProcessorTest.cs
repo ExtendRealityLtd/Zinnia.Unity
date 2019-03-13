@@ -1,8 +1,11 @@
 ﻿using Zinnia.Tracking.Velocity;
+using Zinnia.Tracking.Velocity.Collection;
 
 namespace Test.Zinnia.Tracking.Velocity
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
 
@@ -25,16 +28,20 @@ namespace Test.Zinnia.Tracking.Velocity
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void GetVelocityFromFirstActive()
+        [UnityTest]
+        public IEnumerator GetVelocityFromFirstActive()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(true, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(1f, 1f, 1f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -48,16 +55,20 @@ namespace Test.Zinnia.Tracking.Velocity
             Object.DestroyImmediate(trackerThree.gameObject);
         }
 
-        [Test]
-        public void GetVelocityFromSecondActive()
+        [UnityTest]
+        public IEnumerator GetVelocityFromSecondActive()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(2f, 2f, 2f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -71,16 +82,20 @@ namespace Test.Zinnia.Tracking.Velocity
             Object.DestroyImmediate(trackerThree.gameObject);
         }
 
-        [Test]
-        public void GetVelocityFromThirdActive()
+        [UnityTest]
+        public IEnumerator GetVelocityFromThirdActive()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(3f, 3f, 3f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -94,16 +109,20 @@ namespace Test.Zinnia.Tracking.Velocity
             Object.DestroyImmediate(trackerThree.gameObject);
         }
 
-        [Test]
-        public void GetVelocityFromNoneActive()
+        [UnityTest]
+        public IEnumerator GetVelocityFromNoneActive()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);
@@ -128,16 +147,21 @@ namespace Test.Zinnia.Tracking.Velocity
             Assert.AreNotEqual(unexpectedResult, actualResult);
         }
 
-        [Test]
-        public void GetActiveVelocityTrackerAfterGetVelocity()
+        [UnityTest]
+        public IEnumerator GetActiveVelocityTrackerAfterGetVelocity()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
+
             subject.GetVelocity();
 
             VelocityTrackerMock expectedResult = trackerThree;
@@ -152,16 +176,21 @@ namespace Test.Zinnia.Tracking.Velocity
             Object.DestroyImmediate(trackerThree.gameObject);
         }
 
-        [Test]
-        public void GetActiveVelocityTrackerAfterGetAngularVelocity()
+        [UnityTest]
+        public IEnumerator GetActiveVelocityTrackerAfterGetAngularVelocity()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
+
             subject.GetAngularVelocity();
 
             VelocityTrackerMock expectedResult = trackerTwo;
@@ -176,16 +205,20 @@ namespace Test.Zinnia.Tracking.Velocity
             Object.DestroyImmediate(trackerThree.gameObject);
         }
 
-        [Test]
-        public void GetAngularVelocityFromFirstActive()
+        [UnityTest]
+        public IEnumerator GetAngularVelocityFromFirstActive()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(true, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(1f, 1f, 1f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -199,16 +232,20 @@ namespace Test.Zinnia.Tracking.Velocity
             Object.DestroyImmediate(trackerThree.gameObject);
         }
 
-        [Test]
-        public void GetAngularVelocityFromSecondActive()
+        [UnityTest]
+        public IEnumerator GetAngularVelocityFromSecondActive()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(2f, 2f, 2f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -222,16 +259,20 @@ namespace Test.Zinnia.Tracking.Velocity
             Object.DestroyImmediate(trackerThree.gameObject);
         }
 
-        [Test]
-        public void GetAngularVelocityFromThirdActive()
+        [UnityTest]
+        public IEnumerator GetAngularVelocityFromThirdActive()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(3f, 3f, 3f);
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
@@ -245,16 +286,20 @@ namespace Test.Zinnia.Tracking.Velocity
             Object.DestroyImmediate(trackerThree.gameObject);
         }
 
-        [Test]
-        public void GetAngularVelocityFromNoneActive()
+        [UnityTest]
+        public IEnumerator GetAngularVelocityFromNoneActive()
         {
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
 
-            subject.velocityTrackers.Add(trackerOne);
-            subject.velocityTrackers.Add(trackerTwo);
-            subject.velocityTrackers.Add(trackerThree);
+            VelocityTrackerObservableList velocityTrackers = containingObject.AddComponent<VelocityTrackerObservableList>();
+            yield return null;
+            subject.VelocityTrackers = velocityTrackers;
+
+            velocityTrackers.Add(trackerOne);
+            velocityTrackers.Add(trackerTwo);
+            velocityTrackers.Add(trackerThree);
 
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);

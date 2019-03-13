@@ -30,8 +30,8 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
-            subject.source = containingObject;
-            subject.useLocal = true;
+            subject.Source = containingObject;
+            subject.UseLocal = true;
 
             Vector3 result = subject.Extract();
 
@@ -56,8 +56,8 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
-            subject.source = containingObject;
-            subject.useLocal = true;
+            subject.Source = containingObject;
+            subject.UseLocal = true;
 
             subject.Process();
 
@@ -80,8 +80,8 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
-            subject.source = containingObject;
-            subject.useLocal = true;
+            subject.Source = containingObject;
+            subject.UseLocal = true;
             subject.gameObject.SetActive(false);
 
             Vector3 result = subject.Extract();
@@ -107,8 +107,8 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
-            subject.source = containingObject;
-            subject.useLocal = true;
+            subject.Source = containingObject;
+            subject.UseLocal = true;
             subject.enabled = false;
 
             Vector3 result = subject.Extract();

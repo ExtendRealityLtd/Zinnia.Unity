@@ -3,6 +3,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// An <see cref="IProcessable"/> that runs a set method on each (or the first active) source collection against a collection of targets.
@@ -10,10 +11,11 @@
     public abstract class SourceTargetProcessor<TSource, TTarget> : MonoBehaviour, IProcessable
     {
         /// <summary>
-        /// Ceases the processing of the source collection after the first valid source is processed.
+        /// Whether to cease the processing of the source collection after the first valid source is processed.
         /// </summary>
-        [Header("Process Settings"), DocumentedByXml]
-        public bool ceaseAfterFirstSourceProcessed = true;
+        [Serialized]
+        [field: Header("Process Settings"), DocumentedByXml]
+        public bool CeaseAfterFirstSourceProcessed { get; set; } = true;
 
         /// <summary>
         /// The <see cref="TSource"/> that is currently the active source for the process.
@@ -68,7 +70,7 @@
         /// </summary>
         /// <param name="sources">The sources to apply the data from.</param>
         /// <param name="targets">The targets to apply the data to.</param>
-        protected virtual void ApplySourcesToTargets(List<TSource> sources, List<TTarget> targets)
+        protected virtual void ApplySourcesToTargets(IReadOnlyList<TSource> sources, IReadOnlyList<TTarget> targets)
         {
             for (int sourceIndex = 0; sourceIndex < sources.Count; sourceIndex++)
             {
@@ -91,7 +93,7 @@
                 }
 
                 ActiveSource = currentSource;
-                if (ceaseAfterFirstSourceProcessed)
+                if (CeaseAfterFirstSourceProcessed)
                 {
                     break;
                 }

@@ -1,5 +1,6 @@
-﻿using Zinnia.Event;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
+using Zinnia.Event;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Event
 {
@@ -50,8 +51,11 @@ namespace Test.Zinnia.Event
             GameObject digestInvalid = new GameObject();
 
             ListContainsRule rule = subject.gameObject.AddComponent<ListContainsRule>();
-            rule.objects.Add(digestValid);
-            subject.receiveValidity = new RuleContainer
+            UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            rule.Objects = objects;
+
+            objects.Add(digestValid);
+            subject.ReceiveValidity = new RuleContainer
             {
                 Interface = rule
             };

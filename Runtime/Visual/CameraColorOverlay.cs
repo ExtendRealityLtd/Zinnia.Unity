@@ -5,8 +5,11 @@
     using System;
     using System.Collections;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberChangeMethod;
+    using Zinnia.Rule;
     using Zinnia.Extension;
-    using Zinnia.Data.Type;
 
     /// <summary>
     /// Applies a color over the valid cameras and can be used to fade the screen view.
@@ -22,17 +25,18 @@
             /// <summary>
             /// The <see cref="Color"/> being applied to the camera overlay.
             /// </summary>
-            [DocumentedByXml]
-            public Color color;
+            [Serialized]
+            [field: DocumentedByXml]
+            public Color Color { get; set; }
 
             public EventData Set(EventData source)
             {
-                return Set(source.color);
+                return Set(source.Color);
             }
 
             public EventData Set(Color color)
             {
-                this.color = color;
+                Color = color;
                 return this;
             }
 
@@ -51,35 +55,41 @@
         }
 
         /// <summary>
-        /// A <see cref="Camera"/> collection to apply the color overlay to.
+        /// The rules to determine which scene cameras to apply the overlay to.
         /// </summary>
-        [DocumentedByXml]
-        public CameraList validCameras;
+        [Serialized]
+        [field: DocumentedByXml]
+        public RuleContainer CameraValidity { get; set; }
         /// <summary>
         /// The <see cref="Color"/> of the overlay.
         /// </summary>
-        [DocumentedByXml]
-        public Color overlayColor = Color.black;
+        [Serialized]
+        [field: DocumentedByXml]
+        public Color OverlayColor { get; set; } = Color.black;
         /// <summary>
         /// The <see cref="Material"/> to use for the overlay.
         /// </summary>
-        [DocumentedByXml]
-        public Material overlayMaterial;
+        [Serialized]
+        [field: DocumentedByXml]
+        public Material OverlayMaterial { get; set; }
         /// <summary>
         /// The duration of time to apply the overlay <see cref="Color"/>.
         /// </summary>
-        [DocumentedByXml]
-        public float addDuration;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float AddDuration { get; set; }
         /// <summary>
         /// The duration of time to remove the overlay <see cref="Color"/>.
         /// </summary>
-        [DocumentedByXml]
-        public float removeDuration = 1f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float RemoveDuration { get; set; } = 1f;
         /// <summary>
         /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
         /// </summary>
-        [DocumentedByXml]
-        public float appliedDuration;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float AppliedDuration { get; set; }
 
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> is added.
@@ -97,58 +107,67 @@
         [DocumentedByXml]
         public UnityEvent Changed = new UnityEvent();
 
+        /// <summary>
+        /// The target duration to process the color change for.
+        /// </summary>
         protected float targetDuration;
-        protected Color originalColor;
+        /// <summary>
+        /// A copy of the <see cref="OverlayMaterial"/> to apply the transition overlay color on.
+        /// </summary>
+        protected Material workingMaterial;
+        /// <summary>
+        /// The target color to apply to the camera overlay during the process.
+        /// </summary>
         protected Color targetColor = new Color(0f, 0f, 0f, 0f);
+        /// <summary>
+        /// The current color of the camera overlay during the process.
+        /// </summary>
         protected Color currentColor = new Color(0f, 0f, 0f, 0f);
+        /// <summary>
+        /// The difference in color of the camera overlay during the process.
+        /// </summary>
         protected Color deltaColor = new Color(0f, 0f, 0f, 0f);
+        /// <summary>
+        /// The routine for handling the fade in and out of the camera overlay.
+        /// </summary>
         protected Coroutine blinkRoutine;
+        /// <summary>
+        /// The event data to be emitted throughout the process.
+        /// </summary>
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
         /// Applies the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="addDuration"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void AddColorOverlay()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
-            AddColorOverlay(overlayColor, addDuration);
+            AddColorOverlay(OverlayColor, AddDuration);
         }
 
         /// <summary>
         /// Removes the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="removeDuration"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void RemoveColorOverlay()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
-            AddColorOverlay(Color.clear, removeDuration);
+            AddColorOverlay(Color.clear, RemoveDuration);
             Removed?.Invoke(eventData.Set(Color.clear));
         }
 
         /// <summary>
         /// Applies the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="addDuration"/> then waits for the given <see cref="appliedDuration"/> then removes the <see cref="overlayColor"/> over the given <see cref="removeDuration"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Blink()
         {
-            if (!isActiveAndEnabled)
-            {
-                return;
-            }
-
-            AddColorOverlay(overlayColor, addDuration);
-            blinkRoutine = StartCoroutine(ResetBlink(addDuration + appliedDuration));
+            AddColorOverlay(OverlayColor, AddDuration);
+            blinkRoutine = StartCoroutine(ResetBlink(AddDuration + AppliedDuration));
         }
 
         protected virtual void OnEnable()
         {
-            originalColor = overlayMaterial.color;
+            CopyMaterialOverlayToWorking();
             Camera.onPostRender += PostRender;
         }
 
@@ -156,7 +175,6 @@
         {
             CancelBlinkRoutine();
             Camera.onPostRender -= PostRender;
-            overlayMaterial.color = originalColor;
         }
 
         /// <summary>
@@ -213,10 +231,10 @@
         /// <summary>
         /// The moment before <see cref="Camera"/> render that will apply the <see cref="Color"/> overlay.
         /// </summary>
-        /// <param name="cam">The <see cref="Camera"/> to apply onto.</param>
-        protected virtual void PostRender(Camera cam)
+        /// <param name="sceneCamera">The <see cref="Camera"/> to apply onto.</param>
+        protected virtual void PostRender(Camera sceneCamera)
         {
-            if (validCameras == null || !validCameras.cameras.Contains(cam))
+            if (!CameraValidity.Accepts(sceneCamera))
             {
                 return;
             }
@@ -235,14 +253,14 @@
                 Changed?.Invoke(eventData.Set(currentColor));
             }
 
-            if (currentColor.a > 0f && overlayMaterial != null)
+            if (currentColor.a > 0f && workingMaterial != null)
             {
                 currentColor.a = (targetColor.a > currentColor.a && currentColor.a > 0.98f ? 1f : currentColor.a);
-                overlayMaterial.color = currentColor;
-                overlayMaterial.SetPass(0);
+                workingMaterial.color = currentColor;
+                workingMaterial.SetPass(0);
                 GL.PushMatrix();
                 GL.LoadOrtho();
-                GL.Color(overlayMaterial.color);
+                GL.Color(workingMaterial.color);
                 GL.Begin(GL.QUADS);
                 GL.Vertex3(0f, 0f, 0.9999f);
                 GL.Vertex3(0f, 1f, 0.9999f);
@@ -251,6 +269,27 @@
                 GL.End();
                 GL.PopMatrix();
             }
+        }
+
+        /// <summary>
+        /// Copies the <see cref="OverlayMaterial"/> data to the <see cref="workingMaterial"/> data.
+        /// </summary>
+        protected virtual void CopyMaterialOverlayToWorking()
+        {
+            Destroy(workingMaterial);
+            if (OverlayMaterial != null)
+            {
+                workingMaterial = new Material(OverlayMaterial);
+            }
+        }
+
+        /// <summary>
+        /// Called after <see cref="OverlayMaterial"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(OverlayMaterial))]
+        protected virtual void OnAfterOverlayMaterialChange()
+        {
+            CopyMaterialOverlayToWorking();
         }
     }
 }

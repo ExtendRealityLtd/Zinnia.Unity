@@ -1,11 +1,11 @@
 ﻿using Zinnia.Data.Type.Transformation;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Data.Type.Transformation
 {
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
-    using System.Collections.Generic;
 
     public class Vector3MultiplierTest
     {
@@ -22,7 +22,6 @@ namespace Test.Zinnia.Data.Type.Transformation
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -31,9 +30,14 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<Vector3>(new Vector3[2]);
-            subject.SetElement(0, new Vector3(3f, 4f, 5f));
-            subject.CurrentIndex = 1;
+            Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
+
+            subject.Collection.SetAt(new Vector3(3f, 4f, 5f), 0);
+            subject.Collection.CurrentIndex = 1;
+
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
@@ -51,9 +55,13 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<Vector3>(new Vector3[2]);
-            subject.SetElement(0, new Vector3(3f, 4f, 5f));
-            subject.CurrentIndex = 1;
+            Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
+
+            subject.Collection.SetAt(new Vector3(3f, 4f, 5f), 0);
+            subject.Collection.CurrentIndex = 1;
 
             subject.gameObject.SetActive(false);
 
@@ -73,9 +81,14 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<Vector3>(new Vector3[2]);
-            subject.SetElement(0, new Vector3(3f, 4f, 5f));
-            subject.CurrentIndex = 1;
+            Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
+
+            subject.Collection.SetAt(new Vector3(3f, 4f, 5f), 0);
+            subject.Collection.CurrentIndex = 1;
+
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, subject.Result);

@@ -1,9 +1,10 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
-    using System.Collections.Generic;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Sets the state of the current target to the specified active state.
@@ -13,28 +14,21 @@
         /// <summary>
         /// A collection of targets to set the state on when it is the active index.
         /// </summary>
-        [DocumentedByXml]
-        public List<GameObject> targets = new List<GameObject>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public GameObjectObservableList Targets { get; set; }
         /// <summary>
         /// The state to set the active index target. All other targets will be set to the opposite state.
         /// </summary>
-        [DocumentedByXml]
-        public bool targetState = true;
-        /// <summary>
-        /// Determines if to execute a switch when the component is enabled.
-        /// </summary>
-        [DocumentedByXml]
-        public bool switchOnEnable = true;
-        /// <summary>
-        /// The index in the collection to start at.
-        /// </summary>
-        [DocumentedByXml]
-        public int startIndex;
-
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool TargetState { get; set; } = true;
         /// <summary>
         /// The current active index in the targets collection.
         /// </summary>
-        protected int activeIndex;
+        [Serialized]
+        [field: DocumentedByXml]
+        public int CurrentIndex { get; set; }
 
         /// <summary>
         /// Switches to the next target in the collection and sets to the appropriate state.
@@ -42,10 +36,10 @@
         [RequiresBehaviourState]
         public virtual void SwitchNext()
         {
-            activeIndex++;
-            if (activeIndex >= targets.Count)
+            CurrentIndex++;
+            if (CurrentIndex >= Targets.SubscribableElements.Count)
             {
-                activeIndex = 0;
+                CurrentIndex = 0;
             }
 
             Switch();
@@ -57,10 +51,10 @@
         [RequiresBehaviourState]
         public virtual void SwitchPrevious()
         {
-            activeIndex--;
-            if (activeIndex < 0)
+            CurrentIndex--;
+            if (CurrentIndex < 0)
             {
-                activeIndex = targets.Count - 1;
+                CurrentIndex = Targets.SubscribableElements.Count - 1;
             }
 
             Switch();
@@ -73,28 +67,27 @@
         [RequiresBehaviourState]
         public virtual void SwitchTo(int index)
         {
-            activeIndex = Mathf.Clamp(index, 0, targets.Count - 1);
+            CurrentIndex = Mathf.Clamp(index, 0, Targets.SubscribableElements.Count - 1);
             Switch();
         }
 
-        protected virtual void OnEnable()
+        /// <summary>
+        /// Switches to the target at the <see cref="CurrentIndex"/> in the collection and sets to the appropriate state.
+        /// </summary>
+        [RequiresBehaviourState]
+        public virtual void SwitchToCurrentIndex()
         {
-            activeIndex = startIndex;
-            if (switchOnEnable)
-            {
-                SwitchTo(startIndex);
-            }
+            SwitchTo(CurrentIndex);
         }
 
         /// <summary>
         /// Switches the current active target state.
         /// </summary>
-        [RequiresBehaviourState]
         protected virtual void Switch()
         {
-            for (int index = 0; index < targets.Count; index++)
+            for (int index = 0; index < Targets.SubscribableElements.Count; index++)
             {
-                targets[index].SetActive(index == activeIndex ? targetState : !targetState);
+                Targets.SubscribableElements[index].SetActive(index == CurrentIndex ? TargetState : !TargetState);
             }
         }
     }

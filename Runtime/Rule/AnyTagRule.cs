@@ -1,8 +1,9 @@
 ﻿namespace Zinnia.Rule
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Data.Collection;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/>'s <see cref="GameObject.tag"/> is part of a list.
@@ -12,13 +13,19 @@
         /// <summary>
         /// The tags to check against.
         /// </summary>
-        [DocumentedByXml]
-        public List<string> tags = new List<string>();
+        [Serialized]
+        [field: DocumentedByXml]
+        public StringObservableList Tags { get; set; }
 
         /// <inheritdoc />
         protected override bool Accepts(GameObject targetGameObject)
         {
-            foreach (string testedTag in tags)
+            if (Tags == null)
+            {
+                return false;
+            }
+
+            foreach (string testedTag in Tags.SubscribableElements)
             {
                 if (targetGameObject.CompareTag(testedTag))
                 {

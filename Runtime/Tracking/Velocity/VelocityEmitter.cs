@@ -3,8 +3,10 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
 
     /// <summary>
     /// Emits the velocities of a given <see cref="VelocityTracker"/>.
@@ -22,8 +24,9 @@
         /// <summary>
         /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
         /// </summary>
-        [DocumentedByXml]
-        public VelocityTracker source;
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public VelocityTracker Source { get; set; }
 
         /// <summary>
         /// Emitted when the Tracked Velocity is emitted.
@@ -42,12 +45,12 @@
         [RequiresBehaviourState]
         public virtual void EmitVelocity()
         {
-            if (source == null)
+            if (Source == null)
             {
                 return;
             }
 
-            VelocityEmitted?.Invoke(source.GetVelocity());
+            VelocityEmitted?.Invoke(Source.GetVelocity());
         }
 
         /// <summary>
@@ -56,12 +59,12 @@
         [RequiresBehaviourState]
         public virtual void EmitAngularVelocity()
         {
-            if (source == null)
+            if (Source == null)
             {
                 return;
             }
 
-            AngularVelocityEmitted?.Invoke(source.GetAngularVelocity());
+            AngularVelocityEmitted?.Invoke(Source.GetAngularVelocity());
         }
 
         /// <summary>

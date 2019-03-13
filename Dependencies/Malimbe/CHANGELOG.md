@@ -1,5 +1,76 @@
 # Changelog
 
+## [9.2.2](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.2.1...v9.2.2) (2019-03-12)
+
+
+### Bug Fixes
+
+* **packaging:** use latest Unity version ([e8fa0d5](https://github.com/ExtendRealityLtd/Malimbe/commit/e8fa0d5))
+* **UnityIntegration:** improve performance by deferring lookups ([b83d158](https://github.com/ExtendRealityLtd/Malimbe/commit/b83d158))
+
+# [9.2.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.1.2...v9.2.0) (2019-03-12)
+
+
+### Features
+
+* **UnityIntegration:** allow customizing InspectorEditor ([fc33861](https://github.com/ExtendRealityLtd/Malimbe/commit/fc33861))
+
+## [9.1.2](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.1.1...v9.1.2) (2019-03-09)
+
+
+### Bug Fixes
+
+* **UnityIntegration:** only call change handlers for changed member ([ed3f93f](https://github.com/ExtendRealityLtd/Malimbe/commit/ed3f93f))
+* **XmlToTooltip:** single XML tag in single summary ([b066080](https://github.com/ExtendRealityLtd/Malimbe/commit/b066080))
+
+## [9.1.1](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.1.0...v9.1.1) (2019-03-06)
+
+
+### Bug Fixes
+
+* **MemberChange:** support generic types ([d93148c](https://github.com/ExtendRealityLtd/Malimbe/commit/d93148c))
+
+# [9.1.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.0.0...v9.1.0) (2019-03-04)
+
+
+### Bug Fixes
+
+* **UnityIntegration:** exception when unselecting scripts in project ([dfc8628](https://github.com/ExtendRealityLtd/Malimbe/commit/dfc8628))
+
+
+### Features
+
+* **MemberChange:** only call change methods when isActiveAndEnabled ([d0b0120](https://github.com/ExtendRealityLtd/Malimbe/commit/d0b0120))
+
+# [9.0.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.4...v9.0.0) (2019-03-04)
+
+
+### Bug Fixes
+
+* **PropertySerialization:** fix null reference exception ([97fdf72](https://github.com/ExtendRealityLtd/Malimbe/commit/97fdf72))
+* **UnityIntegration:** remove manual weaving menu item entry ([1404254](https://github.com/ExtendRealityLtd/Malimbe/commit/1404254))
+
+
+### Code Refactoring
+
+* **PropertyValidation:** remove property validation ([1e1c8f7](https://github.com/ExtendRealityLtd/Malimbe/commit/1e1c8f7))
+
+
+### Features
+
+* **MemberChange:** overhaul PropertySetter for Unity usage ([173a358](https://github.com/ExtendRealityLtd/Malimbe/commit/173a358))
+
+
+### BREAKING CHANGES
+
+* **MemberChange:** `CalledBySetterAttribute` has been replaced with
+`CalledBeforeChangeOfAttribute` and `CalledAfterChangeOfAttribute`.
+Please see the latest Readme for more details.
+* **PropertyValidation:** Property validation has been removed from Malimbe.
+For an alternative solution please look out for a future version of
+this project or
+[Zinnia](https://github.com/ExtendRealityLtd/Zinnia.Unity).
+
 ## [8.2.4](https://github.com/ExtendRealityLtd/Malimbe/compare/v8.2.3...v8.2.4) (2019-02-27)
 
 

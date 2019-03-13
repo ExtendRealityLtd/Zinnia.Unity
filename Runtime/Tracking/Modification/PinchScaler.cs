@@ -1,13 +1,12 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
-    using Zinnia.Extension;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Process;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Scales a given target based on the distance between two points.
@@ -17,34 +16,41 @@
         /// <summary>
         /// The target to scale.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject PrimaryPoint { get; set; }
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject SecondaryPoint { get; set; }
         /// <summary>
         /// A scale factor multiplier.
         /// </summary>
-        [DocumentedByXml]
-        public float multiplier = 1f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float Multiplier { get; set; } = 1f;
         /// <summary>
         /// Determines whether to use local or global scale.
         /// </summary>
-        [DocumentedByXml]
-        public bool useLocalScale = true;
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool UseLocalScale { get; set; } = true;
 
-        protected bool initialized;
-        protected float previousDistance;
+        /// <summary>
+        /// The previous distance between <see cref="PrimaryPoint"/> and <see cref="SecondaryPoint"/>.
+        /// </summary>
+        protected float? previousDistance;
+        /// <summary>
+        /// The original scale of <see cref="Target"/>.
+        /// </summary>
         protected Vector3 originalScale;
 
         /// <summary>
@@ -74,7 +80,7 @@
         /// </summary>
         public virtual void RestoreSavedScale()
         {
-            if (useLocalScale)
+            if (UseLocalScale)
             {
                 Target.transform.localScale = originalScale;
             }
@@ -84,9 +90,9 @@
             }
         }
 
-        protected virtual void OnEnable()
+        protected virtual void OnDisable()
         {
-            initialized = false;
+            previousDistance = null;
         }
 
         /// <summary>
@@ -94,21 +100,20 @@
         /// </summary>
         protected virtual void Scale()
         {
-            if (initialized)
+            previousDistance = previousDistance == null ? GetDistance() : previousDistance;
+
+            float distanceDelta = GetDistance() - (float)previousDistance;
+            Vector3 newScale = Vector3.one * distanceDelta * Multiplier;
+            if (UseLocalScale)
             {
-                float distanceDelta = GetDistance() - previousDistance;
-                Vector3 newScale = (Vector3.one * distanceDelta) * multiplier;
-                if (useLocalScale)
-                {
-                    Target.transform.localScale += newScale;
-                }
-                else
-                {
-                    Target.transform.SetGlobalScale(Target.transform.lossyScale + newScale);
-                }
+                Target.transform.localScale += newScale;
             }
+            else
+            {
+                Target.transform.SetGlobalScale(Target.transform.lossyScale + newScale);
+            }
+
             previousDistance = GetDistance();
-            initialized = true;
         }
 
         /// <summary>
@@ -126,7 +131,7 @@
         /// <returns>The scale of the target.</returns>
         protected virtual Vector3 GetTargetScale()
         {
-            return (useLocalScale ? Target.transform.localScale : Target.transform.lossyScale);
+            return UseLocalScale ? Target.transform.localScale : Target.transform.lossyScale;
         }
     }
 }

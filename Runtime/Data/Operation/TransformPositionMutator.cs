@@ -1,10 +1,9 @@
 ﻿namespace Zinnia.Data.Operation
 {
+    using UnityEngine;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
-    using UnityEngine;
 
     /// <summary>
     /// Mutates the position of a transform with an optional rotation offset.
@@ -14,7 +13,7 @@
         /// <summary>
         /// An optional rotation offset.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject RotationOffset { get; set; }
 
@@ -60,7 +59,7 @@
         /// <returns>The rotation offset.</returns>
         protected virtual Quaternion GetRotationOffset()
         {
-            return (RotationOffset == null ? Quaternion.identity : (useLocalValues ? RotationOffset.transform.localRotation : RotationOffset.transform.rotation));
+            return RotationOffset == null ? Quaternion.identity : (UseLocalValues ? RotationOffset.transform.localRotation : RotationOffset.transform.rotation);
         }
     }
 }

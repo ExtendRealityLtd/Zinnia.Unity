@@ -1,9 +1,12 @@
-﻿using Zinnia.Extension;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
+using Zinnia.Rule.Collection;
+using Zinnia.Extension;
 
 namespace Test.Zinnia.Rule
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
 
@@ -28,75 +31,107 @@ namespace Test.Zinnia.Rule
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void AcceptsMatch()
+        [UnityTest]
+        public IEnumerator AcceptsMatch()
         {
-            subject.rules.Add(
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
+            subject.Rules = rules;
+
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
-            subject.rules.Add(
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new FalseRuleStub()
                 });
+
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesEmpty()
+        [UnityTest]
+        public IEnumerator RefusesEmpty()
         {
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
+            subject.Rules = rules;
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
         [Test]
-        public void RefusesNonEmpty()
+        public void RefusesNullRules()
         {
-            subject.rules.Add(
-                new RuleContainer
-                {
-                    Interface = new FalseRuleStub()
-                });
-            subject.rules.Add(
-                new RuleContainer
-                {
-                    Interface = new FalseRuleStub()
-                });
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesInactiveGameObject()
+        [UnityTest]
+        public IEnumerator RefusesNonEmpty()
         {
-            subject.rules.Add(
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
+            subject.Rules = rules;
+
+            rules.Add(
+                new RuleContainer
+                {
+                    Interface = new FalseRuleStub()
+                });
+            rules.Add(
+                new RuleContainer
+                {
+                    Interface = new FalseRuleStub()
+                });
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator RefusesInactiveGameObject()
+        {
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
+            subject.Rules = rules;
+
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
-            subject.rules.Add(
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new FalseRuleStub()
                 });
+
             subject.gameObject.SetActive(false);
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        [Test]
-        public void RefusesInactiveComponent()
+        [UnityTest]
+        public IEnumerator RefusesInactiveComponent()
         {
-            subject.rules.Add(
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
+            subject.Rules = rules;
+
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new TrueRuleStub()
                 });
-            subject.rules.Add(
+            rules.Add(
                 new RuleContainer
                 {
                     Interface = new FalseRuleStub()
                 });
+
             subject.enabled = false;
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
     }

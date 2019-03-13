@@ -1,9 +1,12 @@
-﻿using Zinnia.Process.Component;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
+using Zinnia.Data.Collection;
+using Zinnia.Process.Component;
 
 namespace Test.Zinnia.Process.Component
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
 
@@ -26,146 +29,188 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void AddSource()
+        [UnityTest]
+        public IEnumerator AddSource()
         {
             GameObject source = new GameObject("source");
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            Assert.IsEmpty(subject.sources);
-            subject.AddSource(source);
-            Assert.AreEqual(1, subject.sources.Count);
-            Assert.AreEqual(source, subject.sources[0]);
+            Assert.IsEmpty(subject.Sources.SubscribableElements);
+
+            subject.Sources.Add(source);
+
+            Assert.AreEqual(1, subject.Sources.SubscribableElements.Count);
+            Assert.AreEqual(source, subject.Sources.SubscribableElements[0]);
+
             Object.DestroyImmediate(source);
         }
 
-        [Test]
-        public void RemoveSource()
+        [UnityTest]
+        public IEnumerator RemoveSource()
         {
             GameObject source = new GameObject("source");
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.AddSource(source);
-            Assert.AreEqual(1, subject.sources.Count);
-            Assert.AreEqual(source, subject.sources[0]);
+            subject.Sources.Add(source);
 
-            subject.RemoveSource(source);
-            Assert.IsEmpty(subject.sources);
+            Assert.AreEqual(1, subject.Sources.SubscribableElements.Count);
+            Assert.AreEqual(source, subject.Sources.SubscribableElements[0]);
+
+            subject.Sources.Remove(source);
+
+            Assert.IsEmpty(subject.Sources.SubscribableElements);
+
             Object.DestroyImmediate(source);
         }
 
-        [Test]
-        public void SetSourceAtCurrentIndex()
+        [UnityTest]
+        public IEnumerator SetSourceAtCurrentIndex()
         {
             GameObject source1 = new GameObject("source1");
             GameObject source2 = new GameObject("source2");
             GameObject newSource1 = new GameObject("new source1");
 
-            subject.AddSource(source1);
-            subject.AddSource(source2);
-            Assert.AreEqual(2, subject.sources.Count);
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.CurrentSourcesIndex = 0;
+            subject.Sources.Add(source1);
+            subject.Sources.Add(source2);
 
-            subject.SetSourceAtCurrentIndex(newSource1);
+            Assert.AreEqual(2, subject.Sources.SubscribableElements.Count);
 
-            Assert.AreEqual(2, subject.sources.Count);
-            Assert.AreEqual(newSource1, subject.sources[0]);
-            Assert.AreEqual(source2, subject.sources[1]);
+            subject.Sources.CurrentIndex = 0;
+
+            subject.Sources.SetAtCurrentIndex(newSource1);
+
+            Assert.AreEqual(2, subject.Sources.SubscribableElements.Count);
+            Assert.AreEqual(newSource1, subject.Sources.SubscribableElements[0]);
+            Assert.AreEqual(source2, subject.Sources.SubscribableElements[1]);
 
             Object.DestroyImmediate(source1);
             Object.DestroyImmediate(source2);
             Object.DestroyImmediate(newSource1);
         }
 
-        [Test]
-        public void ClearSources()
+        [UnityTest]
+        public IEnumerator ClearSources()
         {
             GameObject source = new GameObject("source");
 
-            subject.AddSource(source);
-            Assert.AreEqual(1, subject.sources.Count);
-            Assert.AreEqual(source, subject.sources[0]);
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.ClearSources();
-            Assert.IsEmpty(subject.sources);
+            subject.Sources.Add(source);
+
+            Assert.AreEqual(1, subject.Sources.SubscribableElements.Count);
+            Assert.AreEqual(source, subject.Sources.SubscribableElements[0]);
+
+            subject.Sources.Clear(false);
+
+            Assert.IsEmpty(subject.Sources.SubscribableElements);
+
             Object.DestroyImmediate(source);
         }
 
-        [Test]
-        public void AddTarget()
+        [UnityTest]
+        public IEnumerator AddTarget()
         {
             GameObject target = new GameObject("target");
 
-            Assert.IsEmpty(subject.targets);
-            subject.AddTarget(target);
-            Assert.AreEqual(1, subject.targets.Count);
-            Assert.AreEqual(target, subject.targets[0]);
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+
+            Assert.IsEmpty(subject.Targets.SubscribableElements);
+
+            subject.Targets.Add(target);
+
+            Assert.AreEqual(1, subject.Targets.SubscribableElements.Count);
+            Assert.AreEqual(target, subject.Targets.SubscribableElements[0]);
+
             Object.DestroyImmediate(target);
         }
 
-        [Test]
-        public void RemoveTarget()
+        [UnityTest]
+        public IEnumerator RemoveTarget()
         {
             GameObject target = new GameObject("target");
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.AddTarget(target);
-            Assert.AreEqual(1, subject.targets.Count);
-            Assert.AreEqual(target, subject.targets[0]);
+            subject.Targets.Add(target);
 
-            subject.RemoveTarget(target);
-            Assert.IsEmpty(subject.targets);
+            Assert.AreEqual(1, subject.Targets.SubscribableElements.Count);
+            Assert.AreEqual(target, subject.Targets.SubscribableElements[0]);
+
+            subject.Targets.Remove(target);
+
+            Assert.IsEmpty(subject.Targets.SubscribableElements);
+
             Object.DestroyImmediate(target);
         }
 
-        [Test]
-        public void SetTargetAtCurrentIndex()
+        [UnityTest]
+        public IEnumerator SetTargetAtCurrentIndex()
         {
             GameObject target1 = new GameObject("target1");
             GameObject target2 = new GameObject("target2");
             GameObject newTarget1 = new GameObject("new target1");
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            Assert.AreEqual(2, subject.targets.Count);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
 
-            subject.CurrentTargetsIndex = 0;
+            Assert.AreEqual(2, subject.Targets.SubscribableElements.Count);
 
-            subject.SetTargetAtCurrentIndex(newTarget1);
+            subject.Targets.CurrentIndex = 0;
 
-            Assert.AreEqual(2, subject.targets.Count);
-            Assert.AreEqual(newTarget1, subject.targets[0]);
-            Assert.AreEqual(target2, subject.targets[1]);
+            subject.Targets.SetAtCurrentIndex(newTarget1);
+
+            Assert.AreEqual(2, subject.Targets.SubscribableElements.Count);
+            Assert.AreEqual(newTarget1, subject.Targets.SubscribableElements[0]);
+            Assert.AreEqual(target2, subject.Targets.SubscribableElements[1]);
 
             Object.DestroyImmediate(target1);
             Object.DestroyImmediate(target2);
             Object.DestroyImmediate(newTarget1);
         }
 
-        [Test]
-        public void ClearTargets()
+        [UnityTest]
+        public IEnumerator ClearTargets()
         {
             GameObject target = new GameObject("target");
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.AddTarget(target);
-            Assert.AreEqual(1, subject.targets.Count);
-            Assert.AreEqual(target, subject.targets[0]);
+            subject.Targets.Add(target);
 
-            subject.ClearTargets();
-            Assert.IsEmpty(subject.targets);
+            Assert.AreEqual(1, subject.Targets.SubscribableElements.Count);
+            Assert.AreEqual(target, subject.Targets.SubscribableElements[0]);
+
+            subject.Targets.Clear(false);
+
+            Assert.IsEmpty(subject.Targets.SubscribableElements);
+
             Object.DestroyImmediate(target);
         }
 
-        [Test]
-        public void ProcessAllTargetsAgainstSource()
+        [UnityTest]
+        public IEnumerator ProcessAllTargetsAgainstSource()
         {
             GameObject source1 = new GameObject("source1");
             GameObject target1 = new GameObject("target1");
             GameObject target2 = new GameObject("target2");
             GameObject target3 = new GameObject("target3");
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.AddSource(source1);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources.Add(source1);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("target1", target1.name);
@@ -185,27 +230,30 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void ProcessFirstActiveSourceAgainstTargetThenCease()
+        [UnityTest]
+        public IEnumerator ProcessFirstActiveSourceAgainstTargetThenCease()
         {
             GameObject source1 = new GameObject("source1");
             GameObject source2 = new GameObject("source2");
             GameObject source3 = new GameObject("source3");
             GameObject target1 = new GameObject("target1");
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.ceaseAfterFirstSourceProcessed = true;
+            subject.CeaseAfterFirstSourceProcessed = true;
 
             subject.gameObject.AddComponent<RuleStub>();
             ActiveInHierarchyRule activeInHierarchyRule = subject.gameObject.AddComponent<ActiveInHierarchyRule>();
-            subject.sourceValidity = new RuleContainer
+            subject.SourceValidity = new RuleContainer
             {
                 Interface = activeInHierarchyRule
             };
 
-            subject.AddSource(source1);
-            subject.AddSource(source2);
-            subject.AddSource(source3);
-            subject.AddTarget(target1);
+            subject.Sources.Add(source1);
+            subject.Sources.Add(source2);
+            subject.Sources.Add(source3);
+            subject.Targets.Add(target1);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("source2", source2.name);
@@ -251,27 +299,30 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target1);
         }
 
-        [Test]
-        public void ProcessFirstActiveSourceAgainstTargetThenContinue()
+        [UnityTest]
+        public IEnumerator ProcessFirstActiveSourceAgainstTargetThenContinue()
         {
             GameObject source1 = new GameObject("source1");
             GameObject source2 = new GameObject("source2");
             GameObject source3 = new GameObject("source3");
             GameObject target1 = new GameObject("target1");
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.ceaseAfterFirstSourceProcessed = false;
+            subject.CeaseAfterFirstSourceProcessed = false;
 
             subject.gameObject.AddComponent<RuleStub>();
             ActiveInHierarchyRule activeInHierarchyRule = subject.gameObject.AddComponent<ActiveInHierarchyRule>();
-            subject.sourceValidity = new RuleContainer
+            subject.SourceValidity = new RuleContainer
             {
                 Interface = activeInHierarchyRule
             };
 
-            subject.AddSource(source1);
-            subject.AddSource(source2);
-            subject.AddSource(source3);
-            subject.AddTarget(target1);
+            subject.Sources.Add(source1);
+            subject.Sources.Add(source2);
+            subject.Sources.Add(source3);
+            subject.Targets.Add(target1);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("source2", source2.name);
@@ -317,8 +368,8 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target1);
         }
 
-        [Test]
-        public void ProcessFirstActiveSourceAgainstValidTargetThenCease()
+        [UnityTest]
+        public IEnumerator ProcessFirstActiveSourceAgainstValidTargetThenCease()
         {
             GameObject source1 = new GameObject("source1");
             GameObject source2 = new GameObject("source2");
@@ -326,26 +377,29 @@ namespace Test.Zinnia.Process.Component
             GameObject target1 = new GameObject("target1");
             GameObject target2 = new GameObject("target2");
             GameObject target3 = new GameObject("target3");
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.ceaseAfterFirstSourceProcessed = true;
+            subject.CeaseAfterFirstSourceProcessed = true;
 
             subject.gameObject.AddComponent<RuleStub>();
             ActiveInHierarchyRule activeInHierarchyRule = subject.gameObject.AddComponent<ActiveInHierarchyRule>();
-            subject.sourceValidity = new RuleContainer
+            subject.SourceValidity = new RuleContainer
             {
                 Interface = activeInHierarchyRule
             };
-            subject.targetValidity = new RuleContainer
+            subject.TargetValidity = new RuleContainer
             {
                 Interface = activeInHierarchyRule
             };
 
-            subject.AddSource(source1);
-            subject.AddSource(source2);
-            subject.AddSource(source3);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources.Add(source1);
+            subject.Sources.Add(source2);
+            subject.Sources.Add(source3);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("source2", source2.name);
@@ -413,18 +467,21 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void ProcessInactiveGameObject()
+        [UnityTest]
+        public IEnumerator ProcessInactiveGameObject()
         {
             GameObject source1 = new GameObject("source1");
             GameObject target1 = new GameObject("target1");
             GameObject target2 = new GameObject("target2");
             GameObject target3 = new GameObject("target3");
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.AddSource(source1);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources.Add(source1);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("target1", target1.name);
@@ -446,18 +503,21 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void ProcessInactiveComponent()
+        [UnityTest]
+        public IEnumerator ProcessInactiveComponent()
         {
             GameObject source1 = new GameObject("source1");
             GameObject target1 = new GameObject("target1");
             GameObject target2 = new GameObject("target2");
             GameObject target3 = new GameObject("target3");
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
 
-            subject.AddSource(source1);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources.Add(source1);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("target1", target1.name);

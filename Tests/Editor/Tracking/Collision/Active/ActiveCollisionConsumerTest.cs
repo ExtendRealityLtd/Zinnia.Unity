@@ -1,9 +1,12 @@
-﻿using Zinnia.Tracking.Collision.Active;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
+using Zinnia.Data.Collection;
+using Zinnia.Tracking.Collision.Active;
 
 namespace Test.Zinnia.Tracking.Collision.Active
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
@@ -38,7 +41,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
-            publisher.sourceContainer = publisherObject;
+            publisher.SourceContainer = publisherObject;
 
             Assert.IsFalse(consumedMock.Received);
             Assert.IsFalse(clearedMock.Received);
@@ -55,8 +58,8 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Object.DestroyImmediate(publisherObject);
         }
 
-        [Test]
-        public void ConsumeExclusion()
+        [UnityTest]
+        public IEnumerator ConsumeExclusion()
         {
             UnityEventListenerMock consumedMock = new UnityEventListenerMock();
             UnityEventListenerMock clearedMock = new UnityEventListenerMock();
@@ -71,12 +74,17 @@ namespace Test.Zinnia.Tracking.Collision.Active
             publisherObject.AddComponent<RuleStub>();
             NegationRule negationRule = containingObject.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = containingObject.AddComponent<AnyComponentTypeRule>();
-            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
-            negationRule.rule = new RuleContainer
+            SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+
+            anyComponentTypeRule.ComponentTypes = rules;
+            rules.Add(typeof(RuleStub));
+
+            negationRule.Rule = new RuleContainer
             {
                 Interface = anyComponentTypeRule
             };
-            subject.publisherValidity = new RuleContainer
+            subject.PublisherValidity = new RuleContainer
             {
                 Interface = negationRule
             };
@@ -107,7 +115,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
-            publisher.sourceContainer = publisherObject;
+            publisher.SourceContainer = publisherObject;
 
             subject.gameObject.SetActive(false);
             subject.Consume(publisher, null);
@@ -131,7 +139,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject publisherObject = new GameObject();
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
-            publisher.sourceContainer = publisherObject;
+            publisher.SourceContainer = publisherObject;
 
             subject.enabled = false;
             subject.Consume(publisher, null);

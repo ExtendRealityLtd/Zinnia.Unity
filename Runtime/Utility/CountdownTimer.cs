@@ -1,9 +1,10 @@
 ﻿namespace Zinnia.Utility
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Counts down from a given start time until zero and emits appropriate events throughout the process.
@@ -13,8 +14,9 @@
         /// <summary>
         /// The time to start the countdown at.
         /// </summary>
-        [DocumentedByXml]
-        public float startTime = 1f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float StartTime { get; set; } = 1f;
 
         /// <summary>
         /// Emitted when the countdown starts.
@@ -58,7 +60,7 @@
         public virtual void Begin()
         {
             IsRunning = true;
-            Invoke(nameof(Complete), startTime);
+            Invoke(nameof(Complete), StartTime);
             Started?.Invoke();
         }
 
@@ -67,9 +69,12 @@
         /// </summary>
         public virtual void Cancel()
         {
-            IsRunning = false;
             CancelInvoke(nameof(Complete));
-            Cancelled?.Invoke();
+            if (IsRunning)
+            {
+                Cancelled?.Invoke();
+                IsRunning = false;
+            }
         }
 
         /// <summary>

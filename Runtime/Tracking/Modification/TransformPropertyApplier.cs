@@ -4,15 +4,15 @@
     using UnityEngine.Events;
     using System;
     using System.Collections;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
-    using Zinnia.Data.Attribute;
     using Zinnia.Data.Enum;
     using Zinnia.Data.Type;
+    using Zinnia.Data.Attribute;
 
     /// <summary>
     /// Applies the transform properties from a given source <see cref="Transform"/> onto the given target <see cref="Transform"/>.
@@ -28,23 +28,25 @@
             /// <summary>
             /// The source <see cref="TransformData"/> to obtain the transformation properties from.
             /// </summary>
-            [DocumentedByXml]
-            public TransformData source;
+            [Serialized, Cleared]
+            [field: DocumentedByXml]
+            public TransformData EventSource { get; set; }
             /// <summary>
             /// The target <see cref="TransformData"/> to apply transformations to.
             /// </summary>
-            [DocumentedByXml]
-            public TransformData target;
+            [Serialized, Cleared]
+            [field: DocumentedByXml]
+            public TransformData EventTarget { get; set; }
 
             public EventData Set(EventData source)
             {
-                return Set(source.source, source.target);
+                return Set(source.EventSource, source.EventTarget);
             }
 
             public EventData Set(TransformData source, TransformData target)
             {
-                this.source = source;
-                this.target = target;
+                EventSource = source;
+                EventTarget = target;
                 return this;
             }
 
@@ -65,46 +67,51 @@
         /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public TransformData Source { get; set; }
         /// <summary>
         /// The target to apply the transformations to.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// The offset/pivot when applying the transformations.
         /// </summary>
-        [Serialized, Validated, Cleared]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Offset { get; set; }
         /// <summary>
         /// Determines which axes to apply on when utilizing the position offset.
         /// </summary>
-        [DocumentedByXml]
-        public Vector3State applyPositionOffsetOnAxis = new Vector3State(true, true, true);
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3State ApplyPositionOffsetOnAxis { get; set; } = Vector3State.True;
         /// <summary>
         /// Determines which axes to apply on when utilizing the rotation offset.
         /// </summary>
-        [DocumentedByXml]
-        public Vector3State applyRotationOffsetOnAxis = new Vector3State(true, true, true);
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3State ApplyRotationOffsetOnAxis { get; set; } = Vector3State.True;
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
         /// </summary>
-        [UnityFlags, DocumentedByXml]
-        public TransformProperties applyTransformations = (TransformProperties)(-1);
+        [Serialized]
+        [field: DocumentedByXml, UnityFlags]
+        public TransformProperties ApplyTransformations { get; set; } = (TransformProperties)(-1);
         /// <summary>
         /// The amount of time to take when transitioning from the current <see cref="Transform"/> state to the modified <see cref="Transform"/> state.
         /// </summary>
-        [DocumentedByXml]
-        public float transitionDuration;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float TransitionDuration { get; set; }
         /// <summary>
         /// The threshold the current <see cref="Transform"/> properties can be within of the destination properties to be considered equal.
         /// </summary>
-        [DocumentedByXml]
-        public float transitionDestinationThreshold = 0.01f;
+        [Serialized]
+        [field: DocumentedByXml]
+        public float TransitionDestinationThreshold { get; set; } = 0.01f;
 
         /// <summary>
         /// Emitted before the transformation process occurs.
@@ -135,30 +142,27 @@
         protected readonly TransformData targetTransformData = new TransformData();
 
         /// <summary>
-        /// Sets the <see cref="Source"/> parameter.
+        /// Sets the <see cref="Source"/> parameter from <see cref="GameObject"/> data.
         /// </summary>
-        /// <param name="source">The new source value.</param>
+        /// <param name="source">The data to build the new source from.</param>
         public virtual void SetSource(GameObject source)
         {
-            sourceTransformData.transform = source == null ? null : source.transform;
-            sourceTransformData.positionOverride = null;
-            sourceTransformData.rotationOverride = null;
-            sourceTransformData.scaleOverride = null;
+            Source = source != null ? new TransformData(source) : null;
         }
 
         /// <summary>
-        /// Sets the <see cref="Target"/> parameter.
+        /// Sets the <see cref="Target"/> parameter from <see cref="TransformData"/>.
         /// </summary>
-        /// <param name="target">The new target value.</param>
+        /// <param name="target">The data to build the new target from.</param>
         public virtual void SetTarget(TransformData target)
         {
             Target = target.TryGetGameObject();
         }
 
         /// <summary>
-        /// Sets the <see cref="Offset"/> parameter.
+        /// Sets the <see cref="Offset"/> parameter from <see cref="TransformData"/>.
         /// </summary>
-        /// <param name="offset">The new offset value.</param>
+        /// <param name="offset">The data to build the new offset from.</param>
         public virtual void SetOffset(TransformData offset)
         {
             Offset = offset.TryGetGameObject();
@@ -170,12 +174,12 @@
         [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (Target == null || Source?.transform == null)
+            if (Target == null || Source?.Transform == null)
             {
                 return;
             }
 
-            targetTransformData.transform = Target.transform;
+            targetTransformData.Transform = Target.transform;
             BeforeTransformUpdated?.Invoke(eventData.Set(Source, targetTransformData));
             Vector3 finalScale = CalculateScale(Source, targetTransformData);
             Quaternion finalRotation = CalculateRotation(Source, targetTransformData);
@@ -196,7 +200,7 @@
         /// <returns>The calculated scale.</returns>
         protected virtual Vector3 CalculateScale(TransformData source, TransformData target)
         {
-            if ((applyTransformations & TransformProperties.Scale) == 0)
+            if ((ApplyTransformations & TransformProperties.Scale) == 0)
             {
                 return target.Scale;
             }
@@ -212,7 +216,7 @@
         /// <returns>The calculated rotation.</returns>
         protected virtual Quaternion CalculateRotation(TransformData source, TransformData target)
         {
-            if ((applyTransformations & TransformProperties.Rotation) == 0)
+            if ((ApplyTransformations & TransformProperties.Rotation) == 0)
             {
                 return target.Rotation;
             }
@@ -223,7 +227,7 @@
             }
 
             Quaternion rotationAdjustedByOffset = source.Rotation * (target.Rotation * Quaternion.Inverse(Offset.transform.rotation));
-            Vector3 axisAdjustedRotation = GetOffsetData(applyRotationOffsetOnAxis, rotationAdjustedByOffset.eulerAngles, source.Rotation.eulerAngles);
+            Vector3 axisAdjustedRotation = GetOffsetData(ApplyRotationOffsetOnAxis, rotationAdjustedByOffset.eulerAngles, source.Rotation.eulerAngles);
             return Quaternion.Euler(axisAdjustedRotation);
         }
 
@@ -238,14 +242,14 @@
         protected virtual Vector3 CalculatePosition(TransformData source, TransformData target, Vector3 currentScale, Quaternion currentRotation)
         {
             Vector3 currentPosition = source.Position;
-            if ((applyTransformations & TransformProperties.Position) == 0)
+            if ((ApplyTransformations & TransformProperties.Position) == 0)
             {
                 if (Offset == null)
                 {
                     return target.Position;
                 }
 
-                currentPosition = GetOffsetData(applyPositionOffsetOnAxis, Offset.transform.position, target.Position);
+                currentPosition = GetOffsetData(ApplyPositionOffsetOnAxis, Offset.transform.position, target.Position);
             }
 
             if (Offset == null)
@@ -253,7 +257,7 @@
                 return currentPosition;
             }
 
-            if ((applyTransformations & TransformProperties.Rotation) == 0)
+            if ((ApplyTransformations & TransformProperties.Rotation) == 0)
             {
                 return CalculatePositionWithOffset(currentPosition, target.Position, Offset.transform.position);
             }
@@ -276,7 +280,7 @@
         protected virtual Vector3 CalculatePositionWithOffset(Vector3 sourcePosition, Vector3 targetPosition, Vector3 offsetPosition)
         {
             Vector3 positionAdjustedByOffset = sourcePosition - (offsetPosition - targetPosition);
-            return GetOffsetData(applyPositionOffsetOnAxis, positionAdjustedByOffset, sourcePosition);
+            return GetOffsetData(ApplyPositionOffsetOnAxis, positionAdjustedByOffset, sourcePosition);
         }
 
         /// <summary>
@@ -289,11 +293,11 @@
         /// <param name="currentPosition">The current position to apply to the target.</param>
         protected virtual void ProcessTransform(TransformData source, TransformData target, Vector3 currentScale, Quaternion currentRotation, Vector3 currentPosition)
         {
-            if (transitionDuration.ApproxEquals(0f))
+            if (TransitionDuration.ApproxEquals(0f))
             {
-                target.transform.SetGlobalScale(currentScale);
-                target.transform.rotation = currentRotation;
-                target.transform.position = currentPosition;
+                target.Transform.SetGlobalScale(currentScale);
+                target.Transform.rotation = currentRotation;
+                target.Transform.position = currentPosition;
                 AfterTransformUpdated?.Invoke(eventData.Set(source, target));
             }
             else
@@ -346,19 +350,19 @@
         {
             float elapsedTime = 0f;
             WaitForEndOfFrame delayInstruction = new WaitForEndOfFrame();
-            while (elapsedTime < transitionDuration)
+            while (elapsedTime < TransitionDuration)
             {
-                float lerpFrame = elapsedTime / transitionDuration;
-                target.transform.SetGlobalScale(Vector3.Lerp(startScale, destinationScale, lerpFrame));
-                target.transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
-                target.transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
-                elapsedTime += ArePropertiesEqual(startPosition, destinationPosition, startRotation, destinationRotation, startScale, destinationScale) ? transitionDuration : Time.deltaTime;
+                float lerpFrame = elapsedTime / TransitionDuration;
+                target.Transform.SetGlobalScale(Vector3.Lerp(startScale, destinationScale, lerpFrame));
+                target.Transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
+                target.Transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
+                elapsedTime += ArePropertiesEqual(startPosition, destinationPosition, startRotation, destinationRotation, startScale, destinationScale) ? TransitionDuration : Time.deltaTime;
                 yield return delayInstruction;
             }
 
-            target.transform.SetGlobalScale(destinationScale);
-            target.transform.position = destinationPosition;
-            target.transform.rotation = destinationRotation;
+            target.Transform.SetGlobalScale(destinationScale);
+            target.Transform.position = destinationPosition;
+            target.Transform.rotation = destinationRotation;
             AfterTransformUpdated?.Invoke(eventData.Set(source, target));
         }
 
@@ -374,9 +378,21 @@
         /// <returns>Whether the start properties equal the destination properties.</returns>
         protected virtual bool ArePropertiesEqual(Vector3 startPosition, Vector3 destinationPosition, Quaternion startRotation, Quaternion destinationRotation, Vector3 startScale, Vector3 destinationScale)
         {
-            return startPosition.ApproxEquals(destinationPosition, transitionDestinationThreshold)
-                && startRotation.eulerAngles.ApproxEquals(destinationRotation.eulerAngles, transitionDestinationThreshold)
-                && startScale.ApproxEquals(destinationScale, transitionDestinationThreshold);
+            return startPosition.ApproxEquals(destinationPosition, TransitionDestinationThreshold)
+                && startRotation.eulerAngles.ApproxEquals(destinationRotation.eulerAngles, TransitionDestinationThreshold)
+                && startScale.ApproxEquals(destinationScale, TransitionDestinationThreshold);
+        }
+
+        /// <summary>
+        /// Called after <see cref="Source"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Source))]
+        protected virtual void OnAfterSourceChange()
+        {
+            sourceTransformData.Transform = Source != null ? Source.Transform : null;
+            sourceTransformData.PositionOverride = null;
+            sourceTransformData.RotationOverride = null;
+            sourceTransformData.ScaleOverride = null;
         }
     }
 }

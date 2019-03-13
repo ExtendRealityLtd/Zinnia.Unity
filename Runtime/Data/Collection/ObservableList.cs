@@ -2,9 +2,12 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
+    using System;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Allows observing changes to a <see cref="List{T}"/>.
@@ -14,11 +17,15 @@
     public abstract class ObservableList<TElement, TEvent> : MonoBehaviour where TEvent : UnityEvent<TElement>, new()
     {
         /// <summary>
-        /// The collection to observe changes of.
+        /// Emitted when the searched element is found.
         /// </summary>
-        [SerializeField, DocumentedByXml]
-        protected List<TElement> elements = new List<TElement>();
-
+        [Header("List Events"), DocumentedByXml]
+        public TEvent Found = new TEvent();
+        /// <summary>
+        /// Emitted when the searched element is not found.
+        /// </summary>
+        [DocumentedByXml]
+        public TEvent NotFound = new TEvent();
         /// <summary>
         /// Emitted when the first element is added to the collection.
         /// </summary>
@@ -41,19 +48,57 @@
         public TEvent BecameEmpty = new TEvent();
 
         /// <summary>
-        /// The collection to observe changes of.
+        /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will wrap around.
         /// </summary>
-        public IReadOnlyList<TElement> Elements => elements;
+        [Serialized]
+        [field: Header("List Settings"), DocumentedByXml]
+        public int CurrentIndex { get; set; }
 
         /// <summary>
-        /// Adds an element to the start of the collection.
+        /// The elements to observe changes of, accessible from components that *are* keeping in sync with the state of the collection by subscribing to the list mutation events. Alternatively use <see cref="NonSubscribableElements"/> instead.
         /// </summary>
-        /// <param name="element">The element to add.</param>
+        public IReadOnlyList<TElement> SubscribableElements => wasStartCalled ? (IReadOnlyList<TElement>)Elements : Array.Empty<TElement>();
+        /// <summary>
+        /// The elements to observe changes of, accessible from components that are *not* interested in keeping in sync with the state of the collection. Alternatively use <see cref="SubscribableElements"/> instead.
+        /// </summary>
+        public IReadOnlyList<TElement> NonSubscribableElements => Elements;
+
+        /// <summary>
+        /// The collection to observe changes of.
+        /// </summary>
+        protected abstract List<TElement> Elements { get; set; }
+
+        /// <summary>
+        /// Whether <see cref="Start"/> was called.
+        /// </summary>
+        protected bool wasStartCalled;
+
+        /// <summary>
+        /// Checks to see if the collection contains the given element.
+        /// </summary>
+        /// <param name="element">The element to search for.</param>
+        /// <returns>Whether the element is found.</returns>
         [RequiresBehaviourState]
-        public virtual void AddToStart(TElement element)
+        public virtual bool Contains(TElement element)
         {
-            elements.Insert(0, element);
-            EmitAddEvents(element);
+            if (Elements.Contains(element))
+            {
+                Found?.Invoke(element);
+                return true;
+            }
+
+            NotFound?.Invoke(element);
+            return false;
+        }
+
+        /// <summary>
+        /// Checks to see if the collection contains the given element.
+        /// </summary>
+        /// <param name="element">The element to search for.</param>
+        [RequiresBehaviourState]
+        public virtual void DoContains(TElement element)
+        {
+            Contains(element);
         }
 
         /// <summary>
@@ -61,10 +106,153 @@
         /// </summary>
         /// <param name="element">The element to add.</param>
         [RequiresBehaviourState]
-        public virtual void AddToEnd(TElement element)
+        public virtual void Add(TElement element)
         {
-            elements.Add(element);
+            Elements.Add(element);
             EmitAddEvents(element);
+        }
+
+        /// <summary>
+        /// Adds an element to the end of the collection as long as it does not already exist in the collection.
+        /// </summary>
+        /// <param name="element">The unique element to add.</param>
+        [RequiresBehaviourState]
+        public virtual void AddUnique(TElement element)
+        {
+            if (Elements.Contains(element))
+            {
+                return;
+            }
+
+            Add(element);
+        }
+
+        /// <summary>
+        /// Adds an element to the given index of the collection.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="element">The element to add.</param>
+        /// <param name="index">The index to add at. In case this index is out of bounds for the collection it will wrap around.</param>
+        [RequiresBehaviourState]
+        public virtual void AddAt(TElement element, int index)
+        {
+            if (Elements.Count == 0)
+            {
+                Add(element);
+                return;
+            }
+
+            index = Elements.GetWrappedAndClampedIndex(index);
+            Elements.Insert(index, element);
+            EmitAddEvents(element);
+        }
+
+        /// <summary>
+        /// Adds an element to the given index of the collection as long as it does not already exist in the collection.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="element">The unique element to add.</param>
+        /// <param name="index">The index to add at. In case this index is out of bounds for the collection it will wrap around.</param>
+        [RequiresBehaviourState]
+        public virtual void AddUniqueAt(TElement element, int index)
+        {
+            if (Elements.Contains(element))
+            {
+                return;
+            }
+
+            AddAt(element, index);
+        }
+
+        /// <summary>
+        /// Adds an element at the <see cref="CurrentIndex"/>.
+        /// </summary>
+        /// <param name="element">The element to add.</param>
+        [RequiresBehaviourState]
+        public virtual void AddAtCurrentIndex(TElement element)
+        {
+            AddAt(element, CurrentIndex);
+        }
+
+        /// <summary>
+        /// Adds an element at the <see cref="CurrentIndex"/> as long as it does not already exist in the collection.
+        /// </summary>
+        /// <param name="element">The unique element to add.</param>
+        [RequiresBehaviourState]
+        public virtual void AddUniqueAtCurrentIndex(TElement element)
+        {
+            if (Elements.Contains(element))
+            {
+                return;
+            }
+
+            AddAtCurrentIndex(element);
+        }
+
+        /// <summary>
+        /// Sets the given element at the given index.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="element">The element to set.</param>
+        /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will wrap around.</param>
+        [RequiresBehaviourState]
+        public virtual void SetAt(TElement element, int index)
+        {
+            if (Elements.Count == 0)
+            {
+                return;
+            }
+
+            index = Elements.GetWrappedAndClampedIndex(index);
+
+            EmitRemoveEvents(Elements[index]);
+            Elements[index] = element;
+            EmitAddEvents(element);
+        }
+
+        /// <summary>
+        /// Sets the given element at the given index as long as it does not already exist in the collection.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="element">The unique element to set.</param>
+        /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will wrap around.</param>
+        [RequiresBehaviourState]
+        public virtual void SetUniqueAt(TElement element, int index)
+        {
+            if (Elements.Contains(element))
+            {
+                return;
+            }
+
+            SetAt(element, index);
+        }
+
+        /// <summary>
+        /// Sets the given element at the <see cref="CurrentIndex"/>.
+        /// </summary>
+        /// <param name="element">The element to set.</param>
+        [RequiresBehaviourState]
+        public virtual void SetAtCurrentIndex(TElement element)
+        {
+            SetAt(element, CurrentIndex);
+        }
+
+        /// <summary>
+        /// Sets the given element at the <see cref="CurrentIndex"/> as long as it does not already exist in the collection.
+        /// </summary>
+        /// <param name="element">The unique element to set.</param>
+        [RequiresBehaviourState]
+        public virtual void SetUniqueAtCurrentIndex(TElement element)
+        {
+            SetUniqueAt(element, CurrentIndex);
         }
 
         /// <summary>
@@ -72,9 +260,9 @@
         /// </summary>
         /// <param name="element">The element to remove.</param>
         [RequiresBehaviourState]
-        public virtual void RemoveFirst(TElement element)
+        public virtual void Remove(TElement element)
         {
-            if (elements.Remove(element))
+            if (Elements.Remove(element))
             {
                 EmitRemoveEvents(element);
             }
@@ -85,16 +273,45 @@
         /// </summary>
         /// <param name="element">The element to remove.</param>
         [RequiresBehaviourState]
-        public virtual void RemoveLast(TElement element)
+        public virtual void RemoveLastOccurrence(TElement element)
         {
-            int index = elements.LastIndexOf(element);
+            int index = Elements.LastIndexOf(element);
             if (index == -1)
             {
                 return;
             }
 
-            elements.RemoveAt(index);
-            EmitRemoveEvents(element);
+            RemoveAt(index);
+        }
+
+        /// <summary>
+        /// Removes an element at the given index from the collection.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="index">The index to remove at. In case this index is out of bounds for the collection it will wrap around.</param>
+        [RequiresBehaviourState]
+        public virtual void RemoveAt(int index)
+        {
+            if (Elements.Count == 0)
+            {
+                return;
+            }
+
+            index = Elements.GetWrappedAndClampedIndex(index);
+            TElement removedElement = Elements[index];
+            Elements.RemoveAt(index);
+            EmitRemoveEvents(removedElement);
+        }
+
+        /// <summary>
+        /// Removes an element at the <see cref="CurrentIndex"/> from the collection.
+        /// </summary>
+        [RequiresBehaviourState]
+        public virtual void RemoveAtCurrentIndex()
+        {
+            RemoveAt(CurrentIndex);
         }
 
         /// <summary>
@@ -104,30 +321,42 @@
         [RequiresBehaviourState]
         public virtual void Clear(bool removeFromFront)
         {
-            if (elements.Count == 0)
+            if (Elements.Count == 0)
             {
                 return;
             }
 
             if (!removeFromFront)
             {
-                elements.Reverse();
+                Elements.Reverse();
             }
 
-            foreach (TElement element in elements)
+            foreach (TElement element in Elements)
             {
                 ElementRemoved?.Invoke(element);
             }
 
-            elements.Clear();
+            Elements.Clear();
             BecameEmpty?.Invoke(default);
         }
 
         protected virtual void Start()
         {
-            for (int index = 0; index < elements.Count; index++)
+            wasStartCalled = true;
+
+            if (Elements == null)
             {
-                TElement element = elements[index];
+                return;
+            }
+
+            for (int index = 0; index < Elements.Count; index++)
+            {
+                TElement element = Elements[index];
+                if (EqualityComparer<TElement>.Default.Equals(element, default))
+                {
+                    continue;
+                }
+
                 ElementAdded?.Invoke(element);
 
                 if (index == 0)
@@ -145,7 +374,7 @@
         {
             ElementAdded?.Invoke(element);
 
-            if (elements.Count == 1)
+            if (Elements.Count == 1)
             {
                 BecamePopulated?.Invoke(element);
             }
@@ -159,7 +388,7 @@
         {
             ElementRemoved?.Invoke(element);
 
-            if (elements.Count == 0)
+            if (Elements.Count == 0)
             {
                 BecameEmpty?.Invoke(element);
             }

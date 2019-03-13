@@ -2,9 +2,10 @@
 {
     using UnityEngine;
     using System.Collections;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
 
     /// <summary>
@@ -15,49 +16,49 @@
         /// <summary>
         /// The object to apply the artificial velocities to.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
 
         /// <summary>
         /// The velocity to apply.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public Vector3 Velocity { get; set; }
 
         /// <summary>
         /// The angular velocity to apply.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public Vector3 AngularVelocity { get; set; }
 
         /// <summary>
         /// The drag to apply to reduce the directional velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public float Drag { get; set; } = 1f;
 
         /// <summary>
         /// The angular drag to apply to reduce the rotational velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public float AngularDrag { get; set; } = 0.5f;
 
         /// <summary>
         /// The tolerance the velocity can be within zero to be considered nil.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public float NilVelocityTolerance { get; set; } = 0.001f;
 
         /// <summary>
         /// The tolerance the angular velocity can be within zero to be considered nil.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public float NilAngularVelocityTolerance { get; set; } = 0.001f;
 
@@ -69,6 +70,7 @@
         /// <summary>
         /// Applies the velocity data to the <see cref="Target"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Apply()
         {
             CancelDeceleration();
@@ -76,17 +78,17 @@
         }
 
         /// <summary>
-        /// Reset the velocity to zero.
+        /// Reset <see cref="Velocity"/> to <see cref="Vector3.zero"/>.
         /// </summary>
-        public virtual void ResetVelocity()
+        public virtual void ClearVelocity()
         {
             Velocity = Vector3.zero;
         }
 
         /// <summary>
-        /// Reset the angular velocity to zero.
+        /// Reset <see cref="AngularVelocity"/> to <see cref="Vector3.zero"/>.
         /// </summary>
-        public virtual void ResetAngularVelocity()
+        public virtual void ClearAngularVelocity()
         {
             AngularVelocity = Vector3.zero;
         }

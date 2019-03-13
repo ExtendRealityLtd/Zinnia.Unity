@@ -1,9 +1,12 @@
 ﻿using Zinnia.Cast;
 using Zinnia.Rule;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Cast
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
@@ -26,7 +29,6 @@ namespace Test.Zinnia.Cast
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
             Object.DestroyImmediate(validSurface);
             Physics.autoSimulation = true;
@@ -37,7 +39,7 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
 
@@ -59,7 +61,7 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
             subject.MaximumLength = validSurface.transform.position.z / 2f;
@@ -77,23 +79,27 @@ namespace Test.Zinnia.Cast
             Assert.IsTrue(castResultsChangedMock.Received);
         }
 
-        [Test]
-        public void CastPointsInvalidTarget()
+        [UnityTest]
+        public IEnumerator CastPointsInvalidTarget()
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
             validSurface.AddComponent<RuleStub>();
             NegationRule negationRule = validSurface.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
-            anyComponentTypeRule.componentTypes.Add(typeof(RuleStub));
-            negationRule.rule = new RuleContainer
+            SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            anyComponentTypeRule.ComponentTypes = rules;
+            rules.Add(typeof(RuleStub));
+            yield return null;
+
+            negationRule.Rule = new RuleContainer
             {
                 Interface = anyComponentTypeRule
             };
-            subject.targetValidity = new RuleContainer
+            subject.TargetValidity = new RuleContainer
             {
                 Interface = negationRule
             };
@@ -116,7 +122,7 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
 
@@ -136,7 +142,7 @@ namespace Test.Zinnia.Cast
         {
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
-            subject.origin = subject.gameObject;
+            subject.Origin = subject.gameObject;
 
             validSurface.transform.position = Vector3.forward * 5f;
 

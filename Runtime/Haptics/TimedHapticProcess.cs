@@ -2,32 +2,33 @@
 {
     using UnityEngine;
     using System.Collections;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.PropertyValidationMethod;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
-    /// Processes a given <see cref="HapticProcess"/> repeatedly for a given duration and with a pause interval between each process.
+    /// Processes a given <see cref="Haptics.HapticProcess"/> repeatedly for a given duration and with a pause interval between each process.
     /// </summary>
     public class TimedHapticProcess : HapticProcess
     {
         /// <summary>
         /// The process to utilize.
         /// </summary>
-        [DocumentedByXml]
-        public HapticProcess hapticProcess;
+        [Serialized]
+        [field: DocumentedByXml]
+        public HapticProcess HapticProcess { get; set; }
 
         /// <summary>
         /// The amount of time to keep repeating the process for.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public float Duration { get; set; } = 1f;
 
         /// <summary>
         /// The amount of time to pause after each process iteration.
         /// </summary>
-        [Serialized, Validated]
+        [Serialized]
         [field: DocumentedByXml]
         public float Interval { get; set; } = 0.1f;
 
@@ -39,7 +40,7 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return (base.IsActive() && hapticProcess != null && hapticProcess.IsActive());
+            return base.IsActive() && HapticProcess != null && HapticProcess.IsActive();
         }
 
         /// <summary>
@@ -62,11 +63,11 @@
 
             StopCoroutine(hapticRoutine);
             hapticRoutine = null;
-            hapticProcess.Cancel();
+            HapticProcess.Cancel();
         }
 
         /// <summary>
-        /// Enumerates for the specified duration calling the given <see cref="hapticProcess"/> with a specified interval delay between each call.
+        /// Enumerates for the specified duration calling <see cref="HapticProcess"/> with a specified interval delay between each call.
         /// </summary>
         /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
         protected virtual IEnumerator HapticProcessRoutine()
@@ -81,7 +82,7 @@
 
             while (currentDuration > 0)
             {
-                hapticProcess.Begin();
+                HapticProcess.Begin();
                 yield return delay;
                 currentDuration -= Interval;
             }

@@ -1,9 +1,9 @@
 ﻿using Zinnia.Data.Type.Transformation;
+using Zinnia.Data.Collection;
 
 namespace Test.Zinnia.Data.Type.Transformation
 {
     using UnityEngine;
-    using System.Collections.Generic;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
 
@@ -22,7 +22,6 @@ namespace Test.Zinnia.Data.Type.Transformation
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -31,14 +30,18 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<Vector3>(new Vector3[3]);
+            Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.SetElement(0, Vector3.one * 3f);
-            subject.SetElement(1, Vector3.one);
-            subject.CurrentIndex = 2;
+            subject.Collection.SetAt(Vector3.one * 3f, 0);
+            subject.Collection.SetAt(Vector3.one, 1);
+            subject.Collection.CurrentIndex = 2;
             Vector3 result = subject.Transform(Vector3.one);
 
             Assert.AreEqual(Vector3.one, result);
@@ -51,14 +54,18 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<Vector3>(new Vector3[3]);
+            Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.SetElement(0, Vector3.one * 3f);
-            subject.SetElement(1, Vector3.one);
-            Vector3 result = subject.Transform(2, Vector3.one);
+            subject.Collection.SetAt(Vector3.one * 3f, 0);
+            subject.Collection.SetAt(Vector3.one, 1);
+            Vector3 result = subject.Transform(Vector3.one, 2);
 
             Assert.AreEqual(Vector3.one, result);
             Assert.AreEqual(Vector3.one, subject.Result);
@@ -70,7 +77,10 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<Vector3>(new Vector3[2]);
+            Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
@@ -78,9 +88,9 @@ namespace Test.Zinnia.Data.Type.Transformation
             // adds (3f,3f,3f) to index 0 -> adds (1f,1f,1f) to index 1 -> attempts to add (2f,2f,2f) to index 2 but is out of range so sets it at index 1
             // collection result is [(3f,3f,3f), (2f,2f,2f)]
 
-            subject.SetElement(0, Vector3.one * 3f);
-            subject.SetElement(1, Vector3.one);
-            Vector3 result = subject.Transform(2, Vector3.one * 2f);
+            subject.Collection.SetAt(Vector3.one * 3f, 0);
+            subject.Collection.SetAt(Vector3.one, 1);
+            Vector3 result = subject.Transform(Vector3.one * 2f, 2);
 
             Assert.AreEqual(Vector3.one, result);
             Assert.AreEqual(Vector3.one, subject.Result);
@@ -92,14 +102,18 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<Vector3>(new Vector3[2]);
+            Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
+
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.SetElement(0, Vector3.one * 3f);
-            Vector3 result = subject.Transform(1, Vector3.one);
+            subject.Collection.SetAt(Vector3.one * 3f, 0);
+            Vector3 result = subject.Transform(Vector3.one, 1);
 
             Assert.AreEqual(Vector3.zero, result);
             Assert.AreEqual(Vector3.zero, subject.Result);
@@ -111,14 +125,18 @@ namespace Test.Zinnia.Data.Type.Transformation
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.collection = new List<Vector3>(new Vector3[2]);
+            Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(Vector3.zero);
+            subject.Collection.Add(Vector3.zero);
+
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            subject.SetElement(0, Vector3.one * 3f);
-            Vector3 result = subject.Transform(1, Vector3.one);
+            subject.Collection.SetAt(Vector3.one * 3f, 0);
+            Vector3 result = subject.Transform(Vector3.one, 1);
 
             Assert.AreEqual(Vector3.zero, result);
             Assert.AreEqual(Vector3.zero, subject.Result);

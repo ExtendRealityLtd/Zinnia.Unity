@@ -1,8 +1,11 @@
-﻿using Zinnia.Tracking.Modification;
+﻿using Zinnia.Data.Collection;
+using Zinnia.Tracking.Modification;
 
 namespace Test.Zinnia.Tracking.Modification
 {
     using UnityEngine;
+    using UnityEngine.TestTools;
+    using System.Collections;
     using NUnit.Framework;
 
     public class GameObjectStateMirrorTest
@@ -20,22 +23,25 @@ namespace Test.Zinnia.Tracking.Modification
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
-        [Test]
-        public void ActivateTargets()
+        [UnityTest]
+        public IEnumerator ActivateTargets()
         {
             GameObject source = new GameObject();
             GameObject target1 = new GameObject();
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.AddSource(source);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+
+            subject.Sources.Add(source);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             source.gameObject.SetActive(true);
 
@@ -54,20 +60,29 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsTrue(target1.gameObject.activeInHierarchy);
             Assert.IsTrue(target2.gameObject.activeInHierarchy);
             Assert.IsTrue(target3.gameObject.activeInHierarchy);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target1);
+            Object.DestroyImmediate(target2);
+            Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void DeactivateTargets()
+        [UnityTest]
+        public IEnumerator DeactivateTargets()
         {
             GameObject source = new GameObject();
             GameObject target1 = new GameObject();
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.AddSource(source);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+
+            subject.Sources.Add(source);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             source.gameObject.SetActive(false);
 
@@ -86,20 +101,29 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsFalse(target1.gameObject.activeInHierarchy);
             Assert.IsFalse(target2.gameObject.activeInHierarchy);
             Assert.IsFalse(target3.gameObject.activeInHierarchy);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target1);
+            Object.DestroyImmediate(target2);
+            Object.DestroyImmediate(target3);
         }
 
-        [Test]
-        public void ActivateThenDeactivateTargets()
+        [UnityTest]
+        public IEnumerator ActivateThenDeactivateTargets()
         {
             GameObject source = new GameObject();
             GameObject target1 = new GameObject();
             GameObject target2 = new GameObject();
             GameObject target3 = new GameObject();
 
-            subject.AddSource(source);
-            subject.AddTarget(target1);
-            subject.AddTarget(target2);
-            subject.AddTarget(target3);
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            yield return null;
+
+            subject.Sources.Add(source);
+            subject.Targets.Add(target1);
+            subject.Targets.Add(target2);
+            subject.Targets.Add(target3);
 
             source.gameObject.SetActive(true);
 
@@ -127,6 +151,11 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsFalse(target1.gameObject.activeInHierarchy);
             Assert.IsFalse(target2.gameObject.activeInHierarchy);
             Assert.IsFalse(target3.gameObject.activeInHierarchy);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target1);
+            Object.DestroyImmediate(target2);
+            Object.DestroyImmediate(target3);
         }
     }
 }
