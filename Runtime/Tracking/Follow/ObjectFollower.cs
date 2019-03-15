@@ -127,7 +127,7 @@
                 return null;
             }
 
-            int currentIndexTargets = TargetOffsets.SubscribableElements.GetWrappedAndClampedIndex(Targets.CurrentIndex);
+            int currentIndexTargets = TargetOffsets.SubscribableElements.ClampIndex(Targets.CurrentIndex);
             return TargetOffsets.SubscribableElements[currentIndexTargets];
         }
     }

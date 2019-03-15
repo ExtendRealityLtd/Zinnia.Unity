@@ -75,7 +75,7 @@
                 actionSource.Enabled = state;
 
                 RemoveAt(index);
-                AddAt(actionSource, index);
+                InsertAt(actionSource, index);
             }
         }
     }
