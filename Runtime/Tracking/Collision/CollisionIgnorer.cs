@@ -53,8 +53,8 @@
         /// </summary>
         protected virtual void RegisterSourceListeners()
         {
-            Sources.ElementAdded.AddListener(OnSourceAdded);
-            Sources.ElementRemoved.AddListener(OnSourceRemoved);
+            Sources.Added.AddListener(OnSourceAdded);
+            Sources.Removed.AddListener(OnSourceRemoved);
         }
 
         /// <summary>
@@ -62,8 +62,8 @@
         /// </summary>
         protected virtual void UnregisterSourceListeners()
         {
-            Sources.ElementAdded.RemoveListener(OnSourceAdded);
-            Sources.ElementRemoved.RemoveListener(OnSourceRemoved);
+            Sources.Added.RemoveListener(OnSourceAdded);
+            Sources.Removed.RemoveListener(OnSourceRemoved);
         }
 
         /// <summary>
@@ -71,8 +71,8 @@
         /// </summary>
         protected virtual void RegisterTargetListeners()
         {
-            Targets.ElementAdded.AddListener(OnTargetAdded);
-            Targets.ElementRemoved.AddListener(OnTargetRemoved);
+            Targets.Added.AddListener(OnTargetAdded);
+            Targets.Removed.AddListener(OnTargetRemoved);
         }
 
         /// <summary>
@@ -80,8 +80,8 @@
         /// </summary>
         protected virtual void UnregisterTargetListeners()
         {
-            Targets.ElementAdded.RemoveListener(OnTargetAdded);
-            Targets.ElementRemoved.RemoveListener(OnTargetRemoved);
+            Targets.Added.RemoveListener(OnTargetAdded);
+            Targets.Removed.RemoveListener(OnTargetRemoved);
         }
 
         /// <summary>

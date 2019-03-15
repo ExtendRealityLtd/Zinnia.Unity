@@ -75,14 +75,14 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void AddToEnd()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
@@ -92,25 +92,25 @@ namespace Test.Zinnia.Data.Collection
             subject.Add(elementOne);
 
             Assert.AreEqual(1, subject.NonSubscribableElements.Count);
-            Assert.IsTrue(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsTrue(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.Add(elementTwo);
 
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -119,14 +119,14 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void AddUnique()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
@@ -136,40 +136,40 @@ namespace Test.Zinnia.Data.Collection
             subject.AddUnique(elementOne);
 
             Assert.AreEqual(1, subject.NonSubscribableElements.Count);
-            Assert.IsTrue(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsTrue(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
-
-            subject.AddUnique(elementTwo);
-
-            Assert.AreEqual(2, subject.NonSubscribableElements.Count);
-            Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
-
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
-
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.AddUnique(elementTwo);
 
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
+
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
+
+            subject.AddUnique(elementTwo);
+
+            Assert.AreEqual(2, subject.NonSubscribableElements.Count);
+            Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
+
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -178,14 +178,14 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void AddToStart()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
@@ -195,25 +195,25 @@ namespace Test.Zinnia.Data.Collection
             subject.AddAt(elementOne, 0);
 
             Assert.AreEqual(1, subject.NonSubscribableElements.Count);
-            Assert.IsTrue(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsTrue(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.AddAt(elementTwo, 0);
 
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -222,14 +222,14 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void AddUniqueToStart()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
@@ -239,40 +239,40 @@ namespace Test.Zinnia.Data.Collection
             subject.AddUniqueAt(elementOne, 0);
 
             Assert.AreEqual(1, subject.NonSubscribableElements.Count);
-            Assert.IsTrue(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsTrue(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.AddUniqueAt(elementTwo, 0);
 
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.AddUniqueAt(elementOne, 0);
 
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -281,14 +281,14 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void AddAtCurrentIndex()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             subject.CurrentIndex = 0;
 
@@ -300,24 +300,24 @@ namespace Test.Zinnia.Data.Collection
             subject.AddAtCurrentIndex(elementOne);
 
             Assert.AreEqual(1, subject.NonSubscribableElements.Count);
-            Assert.IsTrue(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsTrue(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.AddAtCurrentIndex(elementTwo);
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -326,14 +326,14 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void AddUniqueAtCurrentIndex()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             subject.CurrentIndex = 0;
 
@@ -345,38 +345,38 @@ namespace Test.Zinnia.Data.Collection
             subject.AddUniqueAtCurrentIndex(elementOne);
 
             Assert.AreEqual(1, subject.NonSubscribableElements.Count);
-            Assert.IsTrue(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsTrue(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
-
-            subject.AddUniqueAtCurrentIndex(elementTwo);
-            Assert.AreEqual(2, subject.NonSubscribableElements.Count);
-            Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
-
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
-
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.AddUniqueAtCurrentIndex(elementTwo);
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
+
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
+
+            subject.AddUniqueAtCurrentIndex(elementTwo);
+            Assert.AreEqual(2, subject.NonSubscribableElements.Count);
+            Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
+
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -385,10 +385,10 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void SetAt()
         {
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
@@ -399,8 +399,8 @@ namespace Test.Zinnia.Data.Collection
             subject.Add(elementTwo);
             subject.Add(elementThree);
 
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
 
             Assert.AreEqual(elementOne, subject.NonSubscribableElements[0]);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
@@ -412,8 +412,8 @@ namespace Test.Zinnia.Data.Collection
             Assert.AreEqual(elementFour, subject.NonSubscribableElements[1]);
             Assert.AreEqual(elementThree, subject.NonSubscribableElements[2]);
 
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -424,10 +424,10 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void SetUniqueAt()
         {
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
@@ -437,8 +437,8 @@ namespace Test.Zinnia.Data.Collection
             subject.Add(elementTwo);
             subject.Add(elementThree);
 
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
 
             Assert.AreEqual(elementOne, subject.NonSubscribableElements[0]);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
@@ -450,8 +450,8 @@ namespace Test.Zinnia.Data.Collection
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
             Assert.AreEqual(elementThree, subject.NonSubscribableElements[2]);
 
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -461,10 +461,10 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void SetAtCurrentIndex()
         {
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
 
             subject.CurrentIndex = 1;
 
@@ -477,8 +477,8 @@ namespace Test.Zinnia.Data.Collection
             subject.Add(elementTwo);
             subject.Add(elementThree);
 
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
 
             Assert.AreEqual(elementOne, subject.NonSubscribableElements[0]);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
@@ -490,8 +490,8 @@ namespace Test.Zinnia.Data.Collection
             Assert.AreEqual(elementFour, subject.NonSubscribableElements[1]);
             Assert.AreEqual(elementThree, subject.NonSubscribableElements[2]);
 
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -502,10 +502,10 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void SetUniqueAtCurrentIndex()
         {
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
 
             subject.CurrentIndex = 1;
 
@@ -517,8 +517,8 @@ namespace Test.Zinnia.Data.Collection
             subject.Add(elementTwo);
             subject.Add(elementThree);
 
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
 
             Assert.AreEqual(elementOne, subject.NonSubscribableElements[0]);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
@@ -530,8 +530,8 @@ namespace Test.Zinnia.Data.Collection
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
             Assert.AreEqual(elementThree, subject.NonSubscribableElements[2]);
 
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -541,80 +541,80 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void RemoveFirst()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
             subject.Remove(elementOne);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
             subject.Add(elementOne);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Assert.AreEqual(3, subject.NonSubscribableElements.Count);
 
             subject.Remove(elementOne);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
             Assert.AreEqual(elementOne, subject.NonSubscribableElements[1]);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.Remove(elementOne);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Assert.AreEqual(1, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.Remove(elementTwo);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsTrue(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsTrue(emptiedMock.Received);
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -623,80 +623,80 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void RemoveLast()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
             subject.RemoveLastOccurrence(elementOne);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
             subject.Add(elementOne);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Assert.AreEqual(3, subject.NonSubscribableElements.Count);
 
             subject.RemoveLastOccurrence(elementOne);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementOne, subject.NonSubscribableElements[0]);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[1]);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.RemoveLastOccurrence(elementOne);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Assert.AreEqual(1, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementTwo, subject.NonSubscribableElements[0]);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             subject.RemoveLastOccurrence(elementTwo);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsTrue(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsTrue(emptiedMock.Received);
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -705,14 +705,14 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void RemoveAt()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
@@ -720,37 +720,37 @@ namespace Test.Zinnia.Data.Collection
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
             subject.Add(elementThree);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Assert.AreEqual(3, subject.NonSubscribableElements.Count);
 
             subject.RemoveAt(1);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementOne, subject.NonSubscribableElements[0]);
             Assert.AreEqual(elementThree, subject.NonSubscribableElements[1]);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -760,14 +760,14 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void RemoveAtCurrentIndex()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             subject.CurrentIndex = 1;
 
@@ -777,37 +777,37 @@ namespace Test.Zinnia.Data.Collection
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
             subject.Add(elementThree);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Assert.AreEqual(3, subject.NonSubscribableElements.Count);
 
             subject.RemoveAtCurrentIndex();
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Assert.AreEqual(2, subject.NonSubscribableElements.Count);
             Assert.AreEqual(elementOne, subject.NonSubscribableElements[0]);
             Assert.AreEqual(elementThree, subject.NonSubscribableElements[1]);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);
@@ -817,42 +817,42 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void ClearFromBack()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
             subject.Clear(false);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
             subject.Add(elementOne);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Assert.AreEqual(3, subject.NonSubscribableElements.Count);
 
             subject.Clear(false);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsTrue(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsTrue(emptiedMock.Received);
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -863,42 +863,42 @@ namespace Test.Zinnia.Data.Collection
         [Test]
         public void ClearFromFront()
         {
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            subject.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            subject.ElementAdded.AddListener(elementAddedMock.Listen);
-            subject.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            subject.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            subject.Populated.AddListener(populatedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+            subject.Emptied.AddListener(emptiedMock.Listen);
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
             subject.Clear(true);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
             subject.Add(elementOne);
 
-            becamePopulatedMock.Reset();
-            elementAddedMock.Reset();
-            elementRemovedMock.Reset();
-            becameEmptyMock.Reset();
+            populatedMock.Reset();
+            addedMock.Reset();
+            removedMock.Reset();
+            emptiedMock.Reset();
 
             Assert.AreEqual(3, subject.NonSubscribableElements.Count);
 
             subject.Clear(true);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsTrue(elementRemovedMock.Received);
-            Assert.IsTrue(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsTrue(removedMock.Received);
+            Assert.IsTrue(emptiedMock.Received);
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -915,26 +915,26 @@ namespace Test.Zinnia.Data.Collection
             mock.Add(elementOne);
             mock.Add(elementTwo);
 
-            UnityEventListenerMock becamePopulatedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementAddedMock = new UnityEventListenerMock();
-            UnityEventListenerMock elementRemovedMock = new UnityEventListenerMock();
-            UnityEventListenerMock becameEmptyMock = new UnityEventListenerMock();
-            mock.BecamePopulated.AddListener(becamePopulatedMock.Listen);
-            mock.ElementAdded.AddListener(elementAddedMock.Listen);
-            mock.ElementRemoved.AddListener(elementRemovedMock.Listen);
-            mock.BecameEmpty.AddListener(becameEmptyMock.Listen);
+            UnityEventListenerMock populatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            UnityEventListenerMock emptiedMock = new UnityEventListenerMock();
+            mock.Populated.AddListener(populatedMock.Listen);
+            mock.Added.AddListener(addedMock.Listen);
+            mock.Removed.AddListener(removedMock.Listen);
+            mock.Emptied.AddListener(emptiedMock.Listen);
 
-            Assert.IsFalse(becamePopulatedMock.Received);
-            Assert.IsFalse(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsFalse(populatedMock.Received);
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             mock.ManualStart();
 
-            Assert.IsTrue(becamePopulatedMock.Received);
-            Assert.IsTrue(elementAddedMock.Received);
-            Assert.IsFalse(elementRemovedMock.Received);
-            Assert.IsFalse(becameEmptyMock.Received);
+            Assert.IsTrue(populatedMock.Received);
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+            Assert.IsFalse(emptiedMock.Received);
 
             Object.DestroyImmediate(elementOne);
             Object.DestroyImmediate(elementTwo);

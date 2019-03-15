@@ -131,7 +131,7 @@ This restriction is in place to ensure any subscribed listener to events on this
                     return;
                 }
 
-                Action<int> removedRaiser = CreateElementsEventRaiser(property, nameof(GameObjectObservableList.ElementRemoved));
+                Action<int> removedRaiser = CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Removed));
                 for (int index = previousSize - 1; index >= newSize; index--)
                 {
                     removedRaiser(index);
@@ -139,12 +139,12 @@ This restriction is in place to ensure any subscribed listener to events on this
 
                 if (newSize == 0)
                 {
-                    CreateElementsEventRaiser(property, nameof(GameObjectObservableList.BecameEmpty))(0);
+                    CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Emptied))(0);
                 }
             }
             else if (changedIndex != null)
             {
-                CreateElementsEventRaiser(property, nameof(GameObjectObservableList.ElementRemoved))(changedIndex.Value);
+                CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Removed))(changedIndex.Value);
             }
         }
 
@@ -163,11 +163,11 @@ This restriction is in place to ensure any subscribed listener to events on this
                     return;
                 }
 
-                Action<int> addedRaiser = CreateElementsEventRaiser(property, nameof(GameObjectObservableList.ElementAdded));
+                Action<int> addedRaiser = CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Added));
                 if (previousSize == 0)
                 {
                     addedRaiser(0);
-                    CreateElementsEventRaiser(property, nameof(GameObjectObservableList.BecamePopulated))(0);
+                    CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Populated))(0);
 
                     previousSize++;
                 }
@@ -179,7 +179,7 @@ This restriction is in place to ensure any subscribed listener to events on this
             }
             else if (changedIndex != null)
             {
-                CreateElementsEventRaiser(property, nameof(GameObjectObservableList.ElementAdded))(changedIndex.Value);
+                CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Added))(changedIndex.Value);
             }
         }
 
