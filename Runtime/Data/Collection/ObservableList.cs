@@ -210,10 +210,8 @@
             }
 
             index = Elements.GetWrappedAndClampedIndex(index);
-
-            EmitRemoveEvents(Elements[index]);
-            Elements[index] = element;
-            EmitAddEvents(element);
+            RemoveAt(index);
+            AddAt(element, index);
         }
 
         /// <summary>

@@ -2,9 +2,9 @@
 {
     using UnityEditor;
     using UnityEngine;
-    using UnityEngine.Events;
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Reflection;
     using Malimbe.FodyRunner.UnityIntegration;
     using Zinnia.Data.Collection;
@@ -26,6 +26,10 @@
         protected const string ElementsPropertyName = "Elements";
 
         /// <summary>
+        /// A reused instance to use when remembering removed or added elements.
+        /// </summary>
+        protected readonly List<object> elements = new List<object>();
+        /// <summary>
         /// The previous size of the elements collection in case a size change was done, otherwise <see langword="null"/>.
         /// </summary>
         protected int? sizeBeforeSizeChange;
@@ -33,13 +37,14 @@
         /// The index of the changed element if a change was done, otherwise <see langword="null"/>.
         /// </summary>
         protected int? changedIndex;
+        /// <summary>
+        /// The element that was set before it was changed at index <see cref="changedIndex"/> if a change was done, otherwise <see langword="null"/>.
+        /// </summary>
+        protected object changedElement;
 
         /// <inheritdoc/>
         protected override void DrawProperty(SerializedProperty property)
         {
-            sizeBeforeSizeChange = null;
-            changedIndex = null;
-
             if (property.propertyPath != ElementsFieldName)
             {
                 base.DrawProperty(property);
@@ -105,7 +110,7 @@ This restriction is in place to ensure any subscribed listener to events on this
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         protected override void ApplyModifiedProperty(SerializedProperty property, bool hasChangeHandlers)
         {
             if (property.propertyPath == ElementsFieldName)
@@ -121,6 +126,13 @@ This restriction is in place to ensure any subscribed listener to events on this
         {
             base.BeforeChange(property);
 
+            if (sizeBeforeSizeChange == null && changedIndex == null)
+            {
+                return;
+            }
+
+            IList list = GetElementsList(property, out _, out _);
+
             if (sizeBeforeSizeChange != null)
             {
                 int previousSize = sizeBeforeSizeChange.Value;
@@ -131,82 +143,115 @@ This restriction is in place to ensure any subscribed listener to events on this
                     return;
                 }
 
-                Action<int> removedRaiser = CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Removed));
-                for (int index = previousSize - 1; index >= newSize; index--)
+                // The elements are about to get removed by Unity. To raise the Removed event for them they're cached here.
+                for (int index = newSize; index < previousSize; index++)
                 {
-                    removedRaiser(index);
-                }
-
-                if (newSize == 0)
-                {
-                    CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Emptied))(0);
+                    elements.Add(list[index]);
                 }
             }
             else if (changedIndex != null)
             {
-                CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Removed))(changedIndex.Value);
+                // The element is about to get changed by Unity. To raise the Removed event for it it's cached here.
+                changedElement = list[changedIndex.Value];
             }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         protected override void AfterChange(SerializedProperty property)
         {
             base.AfterChange(property);
+
+            if (sizeBeforeSizeChange == null && changedIndex == null)
+            {
+                return;
+            }
+
+            IList list = GetElementsList(property, out UnityEngine.Object targetObject, out Type type);
+            object[] parameters = new object[1];
 
             if (sizeBeforeSizeChange != null)
             {
                 int previousSize = sizeBeforeSizeChange.Value;
                 int newSize = property.arraySize;
 
-                if (newSize <= previousSize)
+                if (newSize < previousSize)
                 {
-                    return;
+                    // Unity already removed the elements. Add the previously removed elements from the cache...
+                    foreach (object removedElement in elements)
+                    {
+                        list.Add(removedElement);
+                    }
+
+                    // ...and call the Remove API for those elements.
+                    MethodInfo methodInfo = type.GetMethod(nameof(GameObjectObservableList.RemoveAt), BindingFlags.Public | BindingFlags.Instance);
+                    for (int index = previousSize - 1; index >= newSize; index--)
+                    {
+                        parameters[0] = index;
+                        methodInfo.Invoke(targetObject, parameters);
+                    }
+                }
+                else if (newSize > previousSize)
+                {
+                    // Unity already added the elements. Cache those elements first...
+                    for (int index = previousSize; index < newSize; index++)
+                    {
+                        elements.Add(list[index]);
+                    }
+
+                    // ...now remove them from the backing field...
+                    for (int index = newSize - 1; index >= previousSize; index--)
+                    {
+                        list.RemoveAt(index);
+                    }
+
+                    // ...and finally call the Add API for those elements.
+                    MethodInfo methodInfo = type.GetMethod(nameof(GameObjectObservableList.Add), BindingFlags.Public | BindingFlags.Instance);
+                    foreach (object element in elements)
+                    {
+                        parameters[0] = element;
+                        methodInfo.Invoke(targetObject, parameters);
+                    }
                 }
 
-                Action<int> addedRaiser = CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Added));
-                if (previousSize == 0)
-                {
-                    addedRaiser(0);
-                    CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Populated))(0);
-
-                    previousSize++;
-                }
-
-                for (int index = previousSize; index < newSize; index++)
-                {
-                    addedRaiser(index);
-                }
+                elements.Clear();
+                sizeBeforeSizeChange = null;
             }
             else if (changedIndex != null)
             {
-                CreateElementsEventRaiser(property, nameof(GameObjectObservableList.Added))(changedIndex.Value);
+                // Unity already changed the element at the index. Get the new element out of it...
+                object newElement = list[changedIndex.Value];
+
+                // ...change it back to the previous one...
+                list[changedIndex.Value] = changedElement;
+
+                // ...and finally call the SetAt API with the new element.
+                MethodInfo methodInfo = type.GetMethod(nameof(GameObjectObservableList.SetAt), BindingFlags.Public | BindingFlags.Instance);
+                parameters = new[]
+                {
+                    newElement,
+                    changedIndex.Value
+                };
+                methodInfo.Invoke(targetObject, parameters);
+
+                changedIndex = null;
+                changedElement = null;
             }
         }
 
         /// <summary>
-        /// Creates a reusable <see cref="Action"/> to raise an event on the target object with the element at the given index as the event data.
+        /// Returns the <see cref="ObservableList{TElement,TEvent}.Elements"/> list via reflection as well as any objects looked up to do so.
         /// </summary>
-        /// <param name="property">The property that just changed.</param>
-        /// <param name="name">The name of the event to raise.</param>
-        /// <returns>A reusable <see cref="Action"/> that when called raises an event on the target object with the element at the given index as the event data.</returns>
-        protected virtual Action<int> CreateElementsEventRaiser(SerializedProperty property, string name)
+        /// <param name="property">The property that is part of the drawn <see cref="ObservableList{TElement,TEvent}"/>.</param>
+        /// <param name="targetObject">The instance of <see cref="ObservableList{TElement,TEvent}"/> looked up via <paramref name="property"/>.</param>
+        /// <param name="type">The type of <paramref name="targetObject"/>.</param>
+        /// <returns>The <see cref="ObservableList{TElement,TEvent}.Elements"/> list.</returns>
+        protected virtual IList GetElementsList(SerializedProperty property, out UnityEngine.Object targetObject, out Type type)
         {
-            UnityEngine.Object targetObject = property.serializedObject.targetObject;
-            Type type = targetObject.GetType();
-
-            FieldInfo eventFieldInfo = type.GetField(name, BindingFlags.Public | BindingFlags.Instance);
-            object unityEvent = eventFieldInfo.GetValue(targetObject);
-            MethodInfo eventInvokeMethodInfo = eventFieldInfo.FieldType.GetMethod(nameof(UnityEvent.Invoke), BindingFlags.Public | BindingFlags.Instance);
+            targetObject = property.serializedObject.targetObject;
+            type = targetObject.GetType();
 
             PropertyInfo elementsPropertyInfo = type.GetProperty(ElementsPropertyName, BindingFlags.NonPublic | BindingFlags.Instance);
-            IList elements = (IList)elementsPropertyInfo.GetMethod.Invoke(targetObject, null);
-
-            return index => eventInvokeMethodInfo.Invoke(
-                unityEvent,
-                new[]
-                {
-                    elements[index]
-                });
+            return (IList)elementsPropertyInfo.GetMethod.Invoke(targetObject, null);
         }
     }
 }
