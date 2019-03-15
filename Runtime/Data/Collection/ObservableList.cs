@@ -128,17 +128,17 @@
         }
 
         /// <summary>
-        /// Adds an element to the given index of the collection.
+        /// Inserts an element to the given index of the collection.
         /// </summary>
         /// <remarks>
         /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
         /// </remarks>
-        /// <param name="element">The element to add.</param>
-        /// <param name="index">The index to add at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
+        /// <param name="element">The element to insert.</param>
+        /// <param name="index">The index to insert at. If the index is below the lower bounds it will be clamped at the lower bound of the index, if the index is above the upper bounds then a new element will be added to the end of the collection.</param>
         [RequiresBehaviourState]
-        public virtual void AddAt(TElement element, int index)
+        public virtual void InsertAt(TElement element, int index)
         {
-            if (Elements.Count == 0)
+            if (Elements.Count == 0 || index >= Elements.Count)
             {
                 Add(element);
                 return;
@@ -150,32 +150,32 @@
         }
 
         /// <summary>
-        /// Adds an element to the given index of the collection as long as it does not already exist in the collection.
+        /// Inserts an element to the given index of the collection as long as it does not already exist in the collection.
         /// </summary>
         /// <remarks>
         /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
         /// </remarks>
-        /// <param name="element">The unique element to add.</param>
-        /// <param name="index">The index to add at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
+        /// <param name="element">The unique element to insert.</param>
+        /// <param name="index">The index to insert at. If the index is below the lower bounds it will be clamped at the lower bound of the index, if the index is above the upper bounds then a new element will be added to the end of the collection.</param>
         [RequiresBehaviourState]
-        public virtual void AddUniqueAt(TElement element, int index)
+        public virtual void InsertUniqueAt(TElement element, int index)
         {
             if (Elements.Contains(element))
             {
                 return;
             }
 
-            AddAt(element, index);
+            InsertAt(element, index);
         }
 
         /// <summary>
-        /// Adds an element at the <see cref="CurrentIndex"/>.
+        /// Inserts an element at the <see cref="CurrentIndex"/>.
         /// </summary>
-        /// <param name="element">The element to add.</param>
+        /// <param name="element">The element to insert.</param>
         [RequiresBehaviourState]
-        public virtual void AddAtCurrentIndex(TElement element)
+        public virtual void InsertAtCurrentIndex(TElement element)
         {
-            AddAt(element, CurrentIndex);
+            InsertAt(element, CurrentIndex);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@
                 return;
             }
 
-            AddAtCurrentIndex(element);
+            InsertAtCurrentIndex(element);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@
 
             index = Elements.ClampIndex(index);
             RemoveAt(index);
-            AddAt(element, index);
+            InsertAt(element, index);
         }
 
         /// <summary>
