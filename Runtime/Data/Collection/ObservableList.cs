@@ -48,7 +48,7 @@
         public TEvent Emptied = new TEvent();
 
         /// <summary>
-        /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will wrap around.
+        /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will be clamped within the index bounds.
         /// </summary>
         [Serialized]
         [field: Header("List Settings"), DocumentedByXml]
@@ -131,10 +131,10 @@
         /// Adds an element to the given index of the collection.
         /// </summary>
         /// <remarks>
-        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
         /// </remarks>
         /// <param name="element">The element to add.</param>
-        /// <param name="index">The index to add at. In case this index is out of bounds for the collection it will wrap around.</param>
+        /// <param name="index">The index to add at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
         [RequiresBehaviourState]
         public virtual void AddAt(TElement element, int index)
         {
@@ -144,7 +144,7 @@
                 return;
             }
 
-            index = Elements.GetWrappedAndClampedIndex(index);
+            index = Elements.ClampIndex(index);
             Elements.Insert(index, element);
             EmitAddEvents(element);
         }
@@ -153,10 +153,10 @@
         /// Adds an element to the given index of the collection as long as it does not already exist in the collection.
         /// </summary>
         /// <remarks>
-        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
         /// </remarks>
         /// <param name="element">The unique element to add.</param>
-        /// <param name="index">The index to add at. In case this index is out of bounds for the collection it will wrap around.</param>
+        /// <param name="index">The index to add at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
         [RequiresBehaviourState]
         public virtual void AddUniqueAt(TElement element, int index)
         {
@@ -197,10 +197,10 @@
         /// Sets the given element at the given index.
         /// </summary>
         /// <remarks>
-        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
         /// </remarks>
         /// <param name="element">The element to set.</param>
-        /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will wrap around.</param>
+        /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
         [RequiresBehaviourState]
         public virtual void SetAt(TElement element, int index)
         {
@@ -209,7 +209,7 @@
                 return;
             }
 
-            index = Elements.GetWrappedAndClampedIndex(index);
+            index = Elements.ClampIndex(index);
             RemoveAt(index);
             AddAt(element, index);
         }
@@ -218,10 +218,10 @@
         /// Sets the given element at the given index as long as it does not already exist in the collection.
         /// </summary>
         /// <remarks>
-        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
         /// </remarks>
         /// <param name="element">The unique element to set.</param>
-        /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will wrap around.</param>
+        /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
         [RequiresBehaviourState]
         public virtual void SetUniqueAt(TElement element, int index)
         {
@@ -286,9 +286,9 @@
         /// Removes an element at the given index from the collection.
         /// </summary>
         /// <remarks>
-        /// Allows the use of a wrapped and clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
         /// </remarks>
-        /// <param name="index">The index to remove at. In case this index is out of bounds for the collection it will wrap around.</param>
+        /// <param name="index">The index to remove at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
         [RequiresBehaviourState]
         public virtual void RemoveAt(int index)
         {
@@ -297,7 +297,7 @@
                 return;
             }
 
-            index = Elements.GetWrappedAndClampedIndex(index);
+            index = Elements.ClampIndex(index);
             TElement removedElement = Elements[index];
             Elements.RemoveAt(index);
             EmitRemoveEvents(removedElement);
