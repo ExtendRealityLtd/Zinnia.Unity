@@ -30,8 +30,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
 
             Assert.IsFalse(addedMock.Received);
@@ -61,8 +61,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
 
             subject.IncreaseCount(elementOne);
@@ -100,8 +100,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
 
             subject.IncreaseCount(elementOne);
@@ -130,8 +130,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
@@ -167,8 +167,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
 
             subject.gameObject.SetActive(false);
@@ -202,8 +202,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
 
             subject.enabled = false;
@@ -237,8 +237,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
 
             subject.IncreaseCount(elementOne);
@@ -278,8 +278,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
 
             subject.IncreaseCount(elementOne);
@@ -319,8 +319,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
 
             subject.IncreaseCount(elementOne);
@@ -351,8 +351,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
 
             subject.IncreaseCount(elementOne);
@@ -383,8 +383,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
@@ -422,8 +422,8 @@ namespace Test.Zinnia.Data.Collection
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
-            subject.ElementAdded.AddListener(addedMock.Listen);
-            subject.ElementRemoved.AddListener(removedMock.Listen);
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
