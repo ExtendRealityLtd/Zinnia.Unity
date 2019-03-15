@@ -44,8 +44,8 @@
         /// </summary>
         protected virtual void AddActionsListeners()
         {
-            Actions.ElementAdded.AddListener(OnActionAdded);
-            Actions.ElementRemoved.AddListener(OnActionRemoved);
+            Actions.Added.AddListener(OnActionAdded);
+            Actions.Removed.AddListener(OnActionRemoved);
 
             foreach (Action action in Actions.SubscribableElements)
             {
@@ -58,8 +58,8 @@
         /// </summary>
         protected virtual void RemoveActionsListeners()
         {
-            Actions.ElementAdded.RemoveListener(OnActionAdded);
-            Actions.ElementRemoved.RemoveListener(OnActionRemoved);
+            Actions.Added.RemoveListener(OnActionAdded);
+            Actions.Removed.RemoveListener(OnActionRemoved);
 
             foreach (Action action in Actions.SubscribableElements)
             {

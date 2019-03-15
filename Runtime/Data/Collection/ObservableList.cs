@@ -30,22 +30,22 @@
         /// Emitted when the first element is added to the collection.
         /// </summary>
         [DocumentedByXml]
-        public TEvent BecamePopulated = new TEvent();
+        public TEvent Populated = new TEvent();
         /// <summary>
         /// Emitted when an element is added to the collection.
         /// </summary>
         [DocumentedByXml]
-        public TEvent ElementAdded = new TEvent();
+        public TEvent Added = new TEvent();
         /// <summary>
         /// Emitted when an element is removed from the collection.
         /// </summary>
         [DocumentedByXml]
-        public TEvent ElementRemoved = new TEvent();
+        public TEvent Removed = new TEvent();
         /// <summary>
         /// Emitted when the last element is removed from the collection.
         /// </summary>
         [DocumentedByXml]
-        public TEvent BecameEmpty = new TEvent();
+        public TEvent Emptied = new TEvent();
 
         /// <summary>
         /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will wrap around.
@@ -333,11 +333,11 @@
 
             foreach (TElement element in Elements)
             {
-                ElementRemoved?.Invoke(element);
+                Removed?.Invoke(element);
             }
 
             Elements.Clear();
-            BecameEmpty?.Invoke(default);
+            Emptied?.Invoke(default);
         }
 
         protected virtual void Start()
@@ -357,40 +357,40 @@
                     continue;
                 }
 
-                ElementAdded?.Invoke(element);
+                Added?.Invoke(element);
 
                 if (index == 0)
                 {
-                    BecamePopulated?.Invoke(element);
+                    Populated?.Invoke(element);
                 }
             }
         }
 
         /// <summary>
-        /// Always emits <see cref="ElementAdded"/> and additionally <see cref="BecamePopulated"/> if the first element was added to the collection.
+        /// Always emits <see cref="Added"/> and additionally <see cref="Populated"/> if the first element was added to the collection.
         /// </summary>
         /// <param name="element">The element that was added.</param>
         protected virtual void EmitAddEvents(TElement element)
         {
-            ElementAdded?.Invoke(element);
+            Added?.Invoke(element);
 
             if (Elements.Count == 1)
             {
-                BecamePopulated?.Invoke(element);
+                Populated?.Invoke(element);
             }
         }
 
         /// <summary>
-        /// Always emits <see cref="ElementRemoved"/> and additionally <see cref="BecameEmpty"/> if the last element was removed from the collection.
+        /// Always emits <see cref="Removed"/> and additionally <see cref="Emptied"/> if the last element was removed from the collection.
         /// </summary>
         /// <param name="element">The element that was removed.</param>
         protected virtual void EmitRemoveEvents(TElement element)
         {
-            ElementRemoved?.Invoke(element);
+            Removed?.Invoke(element);
 
             if (Elements.Count == 0)
             {
-                BecameEmpty?.Invoke(element);
+                Emptied?.Invoke(element);
             }
         }
     }

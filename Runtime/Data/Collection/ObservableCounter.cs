@@ -17,12 +17,12 @@
         /// Emitted when an element is added for the first time.
         /// </summary>
         [DocumentedByXml]
-        public TEvent ElementAdded = new TEvent();
+        public TEvent Added = new TEvent();
         /// <summary>
         /// Emitted when an element is removed completely.
         /// </summary>
         [DocumentedByXml]
-        public TEvent ElementRemoved = new TEvent();
+        public TEvent Removed = new TEvent();
 
         /// <summary>
         /// The elements being counted.
@@ -48,7 +48,7 @@
             else
             {
                 ElementsCounter.Add(element, 1);
-                ElementAdded?.Invoke(element);
+                Added?.Invoke(element);
             }
         }
 
@@ -78,7 +78,7 @@
             }
 
             ElementsCounter.Remove(element);
-            ElementRemoved?.Invoke(element);
+            Removed?.Invoke(element);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@
                 return;
             }
 
-            ElementRemoved?.Invoke(element);
+            Removed?.Invoke(element);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@
             {
                 if (!EqualityComparer<TElement>.Default.Equals(element, default))
                 {
-                    ElementRemoved?.Invoke(element);
+                    Removed?.Invoke(element);
                 }
             }
 

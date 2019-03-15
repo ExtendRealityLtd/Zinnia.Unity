@@ -83,8 +83,8 @@
                 return;
             }
 
-            Sources.ElementAdded.AddListener(OnSourceAdded);
-            Sources.ElementRemoved.AddListener(OnSourceRemoved);
+            Sources.Added.AddListener(OnSourceAdded);
+            Sources.Removed.AddListener(OnSourceRemoved);
         }
 
         /// <summary>
@@ -97,8 +97,8 @@
                 return;
             }
 
-            Sources.ElementAdded.RemoveListener(OnSourceAdded);
-            Sources.ElementRemoved.RemoveListener(OnSourceRemoved);
+            Sources.Added.RemoveListener(OnSourceAdded);
+            Sources.Removed.RemoveListener(OnSourceRemoved);
         }
 
         /// <summary>
@@ -111,8 +111,8 @@
                 return;
             }
 
-            SourceLimits.ElementAdded.AddListener(OnSourceLimitAdded);
-            SourceLimits.ElementRemoved.AddListener(OnSourceLimitRemoved);
+            SourceLimits.Added.AddListener(OnSourceLimitAdded);
+            SourceLimits.Removed.AddListener(OnSourceLimitRemoved);
         }
 
         /// <summary>
@@ -125,8 +125,8 @@
                 return;
             }
 
-            SourceLimits.ElementAdded.RemoveListener(OnSourceLimitAdded);
-            SourceLimits.ElementRemoved.RemoveListener(OnSourceLimitRemoved);
+            SourceLimits.Added.RemoveListener(OnSourceLimitAdded);
+            SourceLimits.Removed.RemoveListener(OnSourceLimitRemoved);
         }
 
         /// <summary>
