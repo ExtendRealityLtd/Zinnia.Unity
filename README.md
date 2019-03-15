@@ -43,15 +43,23 @@ Zinnia is a collection of design patterns for the [Unity] software that can be b
   * `git clone https://github.com/ExtendRealityLtd/Zinnia.git` - [How To Clone A Repo]
 * Wait for the Unity software to finish importing the cloned files.
 
+### Running the tests
+
+* In the Unity software select `Main Menu -> Window -> Test Runner`.
+* Within the Test Runner window click on the `PlayMode` tab and the click `Run All` button.
+* If all the tests pass then installation was successful.
+
+> Note: The tests are not compatible with the `Run all in player` option.
+
 ## Contributing
 
 We're not currently in a place where accepting contributions would be helpful. But as soon as we're ready we'll let you know!
 
 ## Naming
 
-Inspired by the [Zinnia] genus of plants known for their colourful, long lasting flower heads and their great ease to grow from seeds. This repository, much like the Zinnia flower aims to be easy to use and allow your projects to grow and florish into long lasting, easy to maintain solutions.
+Inspired by the [Zinnia] genus of plants known for their colorful, long lasting flower heads and their great ease to grow from seeds. This repository, much like the Zinnia flower aims to be easy to use and allow your projects to grow and flourish into long lasting, easy to maintain solutions.
 
-  > **Fun Fact:** Zinnias have been grown aboard the [International Space Station] and have demonstrated the capability to blossum in a weightless environment.
+> **Fun Fact:** Zinnias have been grown aboard the [International Space Station] and have demonstrated the capability to blossom in a weightless environment.
 
 ## License
 
