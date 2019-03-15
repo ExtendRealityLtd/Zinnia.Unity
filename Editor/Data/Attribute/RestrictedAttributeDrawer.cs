@@ -10,10 +10,14 @@
         {
             EditorGUI.BeginProperty(position, label, property);
             RestrictedAttribute attrib = (RestrictedAttribute)attribute;
+            Behaviour behaviour = (Behaviour)property.serializedObject.targetObject;
 
-            bool isPlayingAndActiveAndEnabled = Application.isPlaying && property.serializedObject.targetObject is Behaviour behaviour && behaviour.isActiveAndEnabled;
+            bool isPlayingAndActiveAndEnabled = Application.isPlaying && behaviour.isActiveAndEnabled;
+            bool isPlayingAndActiveAndDisabled = Application.isPlaying && !behaviour.isActiveAndEnabled;
             bool makeReadOnly = (attrib.restrictions & RestrictedAttribute.Restrictions.ReadOnlyAlways) != 0 ||
-                ((attrib.restrictions & RestrictedAttribute.Restrictions.ReadOnlyWhenPlayingAndEnabled) != 0 && isPlayingAndActiveAndEnabled);
+                ((attrib.restrictions & RestrictedAttribute.Restrictions.ReadOnlyAtRunTime) != 0 && Application.isPlaying) ||
+                ((attrib.restrictions & RestrictedAttribute.Restrictions.ReadOnlyAtRunTimeAndEnabled) != 0 && isPlayingAndActiveAndEnabled) ||
+                ((attrib.restrictions & RestrictedAttribute.Restrictions.ReadOnlyAtRunTimeAndDisabled) != 0 && isPlayingAndActiveAndDisabled);
 
             bool muteProperty = (attrib.restrictions & RestrictedAttribute.Restrictions.Muted) != 0;
 
