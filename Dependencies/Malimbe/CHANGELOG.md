@@ -1,5 +1,12 @@
 # Changelog
 
+# [9.3.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.2.2...v9.3.0) (2019-03-16)
+
+
+### Features
+
+* **MemberChange:** help preventing infinite loops ([d490ded](https://github.com/ExtendRealityLtd/Malimbe/commit/d490ded))
+
 ## [9.2.2](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.2.1...v9.2.2) (2019-03-12)
 
 
