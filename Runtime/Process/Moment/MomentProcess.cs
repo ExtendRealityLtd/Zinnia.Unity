@@ -76,10 +76,7 @@
         [CalledAfterChangeOf(nameof(Utilization))]
         protected virtual void OnAfterUtilizationChange()
         {
-            if (Utilization < 0f || Utilization > 1f)
-            {
-                Utilization = Mathf.Clamp01(Utilization);
-            }
+            Utilization = Mathf.Clamp01(Utilization);
             UpdateDelay();
         }
     }
