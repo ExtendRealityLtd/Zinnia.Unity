@@ -102,6 +102,7 @@
             Processed?.Invoke();
         }
 
+        /// <summary>
         /// Applies the follow modification of the given source to the given target.
         /// </summary>
         /// <param name="source">The source to take the follow data from.</param>

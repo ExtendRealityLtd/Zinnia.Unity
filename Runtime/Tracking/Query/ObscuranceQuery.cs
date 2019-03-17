@@ -13,7 +13,7 @@
     /// Determines whether any <see cref="Collider"/> obscures a line between two <see cref="GameObject"/>s.
     /// </summary>
     /// <remarks>
-    /// The check is done by utilizing physics and as such a <see cref="Collider"/> is needed on <see cref="target"/>.
+    /// The check is done by utilizing physics and as such a <see cref="Collider"/> is needed on <see cref="Target"/>.
     /// </remarks>
     public class ObscuranceQuery : MonoBehaviour, IProcessable
     {
@@ -56,7 +56,7 @@
         public UnityEvent TargetUnobscured = new UnityEvent();
 
         /// <summary>
-        /// Whether the raycast from <see cref="Source"/> to <see cref="taTargetrget"/> was previously obscured by another <see cref="Collider"/>.
+        /// Whether the raycast from <see cref="Source"/> to <see cref="Target"/> was previously obscured by another <see cref="Collider"/>.
         /// </summary>
         protected bool? wasPreviouslyObscured;
 

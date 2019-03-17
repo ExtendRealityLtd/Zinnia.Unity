@@ -64,7 +64,7 @@ namespace Test.Zinnia.Tracking.Collision
             yield return waitForFixedUpdate;
             Assert.IsFalse(source1Collisions.isColliding);
 
-            ///make source1 touch target2 -> collision
+            //make source1 touch target2 -> collision
             source1.transform.position = target2Origin;
             yield return waitForFixedUpdate;
             Assert.IsTrue(source1Collisions.isColliding);

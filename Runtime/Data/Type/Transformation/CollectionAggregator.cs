@@ -11,6 +11,8 @@
     /// <typeparam name="TInput">The variable type that will be input into transformation.</typeparam>
     /// <typeparam name="TOutput">The variable type that will be output from the result of the transformation.</typeparam>
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type the transformation will emit.</typeparam>
+    /// <typeparam name="TCollection">The <see cref="ObservableList{TElement,TEvent}"/> type that holds the elements.</typeparam>
+    /// <typeparam name="TCollectionEvent">The <see cref="UnityEvent"/> type to use for the events of <typeparamref name="TCollection"/>.</typeparam>
     public abstract class CollectionAggregator<TInput, TOutput, TEvent, TCollection, TCollectionEvent> : Transformer<TInput, TOutput, TEvent>
         where TEvent : UnityEvent<TOutput>, new() where TCollection : ObservableList<TInput, TCollectionEvent> where TCollectionEvent : UnityEvent<TInput>, new()
     {
@@ -50,7 +52,7 @@
         protected abstract TOutput ProcessCollection();
 
         /// <summary>
-        /// Processes the given input by adding it to the collection at the <see cref="CurrentIndex"/>.
+        /// Processes the given input by adding it to the collection at the <see cref="ObservableList{TElement,TEvent}.CurrentIndex"/>.
         /// </summary>
         /// <param name="input">The value to add to the collection.</param>
         /// <returns>The summed value of all values in the collection.</returns>

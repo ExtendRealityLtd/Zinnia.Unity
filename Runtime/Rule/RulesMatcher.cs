@@ -28,7 +28,7 @@
             public RuleContainer Rule { get; set; }
 
             /// <summary>
-            /// Emitted when the <see cref="rule"/> is valid.
+            /// Emitted when the <see cref="Rule"/> is valid.
             /// </summary>
             [DocumentedByXml]
             public UnityEvent Matched = new UnityEvent();
@@ -42,7 +42,7 @@
         public RulesMatcherElementObservableList Elements { get; set; }
 
         /// <summary>
-        /// Attempts to match the given object to the rules within the <see cref="elements"/> collection. If a match occurs then the appropriate event is emitted.
+        /// Attempts to match the given object to the rules within the <see cref="Elements"/> collection. If a match occurs then the appropriate event is emitted.
         /// </summary>
         /// <param name="source">The source to provide to the rule for validity checking.</param>
         [RequiresBehaviourState]

@@ -11,38 +11,38 @@
     public class PointerElement : MonoBehaviour
     {
         /// <summary>
-        /// The visibility of an <see cref="Element"/>.
+        /// The visibility of an <see cref="PointerElement"/>.
         /// </summary>
         public enum Visibility
         {
             /// <summary>
-            /// The <see cref="Element"/> will only be visible when the <see cref="ObjectPointer"/> is activated.
+            /// The <see cref="PointerElement"/> will only be visible when the <see cref="ObjectPointer"/> is activated.
             /// </summary>
             OnWhenPointerActivated,
             /// <summary>
-            /// The <see cref="Element"/> will always be visible regardless of the <see cref="ObjectPointer"/> state.
+            /// The <see cref="PointerElement"/> will always be visible regardless of the <see cref="ObjectPointer"/> state.
             /// </summary>
             AlwaysOn,
             /// <summary>
-            /// The <see cref="Element"/> will never be visible regardless of the <see cref="ObjectPointer"/> state.
+            /// The <see cref="PointerElement"/> will never be visible regardless of the <see cref="ObjectPointer"/> state.
             /// </summary>
             AlwaysOff
         }
 
         /// <summary>
-        /// Represents the <see cref="Element"/> when it's colliding with a valid object.
+        /// Represents the <see cref="PointerElement"/> when it's colliding with a valid object.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject ValidObject { get; set; }
         /// <summary>
-        /// Represents the <see cref="Element"/> when it's colliding with an invalid object or not colliding at all.
+        /// Represents the <see cref="PointerElement"/> when it's colliding with an invalid object or not colliding at all.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject InvalidObject { get; set; }
         /// <summary>
-        /// Determines when the <see cref="Element"/> is visible.
+        /// Determines when the <see cref="PointerElement"/> is visible.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
