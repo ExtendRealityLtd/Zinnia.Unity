@@ -22,7 +22,7 @@
         }
 
         /// <summary>
-        /// Sets the x value of the <see cref="Collection.CurrentIndex"/> element.
+        /// Sets the x value of the <see cref="ObservableList{TElement,TEvent}.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new x value.</param>
         public virtual void SetComponentX(float value)
@@ -44,7 +44,7 @@
         }
 
         /// <summary>
-        /// Sets the y value of the <see cref="Collection.CurrentIndex"/> element.
+        /// Sets the y value of the <see cref="ObservableList{TElement,TEvent}.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new y value.</param>
         public virtual void SetComponentY(float value)
@@ -66,7 +66,7 @@
         }
 
         /// <summary>
-        /// Sets the z value of the <see cref="Collection.CurrentIndex"/> element.
+        /// Sets the z value of the <see cref="ObservableList{TElement,TEvent}.CurrentIndex"/> element.
         /// </summary>
         /// <param name="value">The new z value.</param>
         public virtual void SetComponentZ(float value)

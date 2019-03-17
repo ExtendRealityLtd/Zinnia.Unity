@@ -173,7 +173,7 @@
         public EventData SelectedTarget { get; protected set; }
 
         /// <summary>
-        /// Whether any <see cref="Element"/> of the <see cref="ObjectPointer"/> is currently visible.
+        /// Whether any <see cref="PointerElement"/> of the <see cref="ObjectPointer"/> is currently visible.
         /// </summary>
         public bool IsVisible
         {
@@ -317,7 +317,7 @@
         }
 
         /// <summary>
-        /// Updates the <see cref="Element"/>'s <see cref="GameObject"/>'s visibility and emits the <see cref="RenderDataChanged"/> event with the <see cref="GameObject"/>s used for the <see cref="Element"/>s.
+        /// Updates the <see cref="PointerElement"/>'s <see cref="GameObject"/>'s visibility and emits the <see cref="RenderDataChanged"/> event with the <see cref="GameObject"/>s used for the <see cref="PointerElement"/>s.
         /// </summary>
         protected virtual void UpdateRenderData()
         {
@@ -398,9 +398,9 @@
         }
 
         /// <summary>
-        /// Returns the <see cref="GameObject"/> used for a specific <see cref="Element"/> based on the current <see cref="ObjectPointer"/> state.
+        /// Returns the <see cref="GameObject"/> used for a specific <see cref="PointerElement"/> based on the current <see cref="ObjectPointer"/> state.
         /// </summary>
-        /// <param name="element">The <see cref="Element"/> to return a <see cref="GameObject"/> for.</param>
+        /// <param name="element">The <see cref="PointerElement"/> to return a <see cref="GameObject"/> for.</param>
         /// <returns>A <see cref="GameObject"/> to represent <paramref name="element"/>.</returns>
         protected virtual GameObject GetElementRepresentation(PointerElement element)
         {

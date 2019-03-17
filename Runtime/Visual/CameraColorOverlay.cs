@@ -137,7 +137,7 @@
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
-        /// Applies the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="addDuration"/>.
+        /// Applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/>.
         /// </summary>
         [RequiresBehaviourState]
         public virtual void AddColorOverlay()
@@ -146,7 +146,7 @@
         }
 
         /// <summary>
-        /// Removes the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="removeDuration"/>.
+        /// Removes the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="RemoveDuration"/>.
         /// </summary>
         [RequiresBehaviourState]
         public virtual void RemoveColorOverlay()
@@ -156,7 +156,7 @@
         }
 
         /// <summary>
-        /// Applies the <see cref="overlayColor"/> to the <see cref="validCameras"/> over the given <see cref="addDuration"/> then waits for the given <see cref="appliedDuration"/> then removes the <see cref="overlayColor"/> over the given <see cref="removeDuration"/>.
+        /// Applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/> then waits for the given <see cref="AppliedDuration"/> then removes the <see cref="OverlayColor"/> over the given <see cref="RemoveDuration"/>.
         /// </summary>
         [RequiresBehaviourState]
         public virtual void Blink()
@@ -178,7 +178,7 @@
         }
 
         /// <summary>
-        /// Applies the given <see cref="Color"/> to the <see cref="validCameras"/> over the given duration.
+        /// Applies the given <see cref="Color"/> to the cameras via <see cref="CameraValidity"/> over the given duration.
         /// </summary>
         /// <param name="newColor"><see cref="Color"/> to apply to the overlay.</param>
         /// <param name="duration">The duration over which the <see cref="Color"/> is applied.</param>
