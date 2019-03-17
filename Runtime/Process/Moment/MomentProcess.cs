@@ -35,11 +35,22 @@
         public float NextProcessTime { get; set; }
 
         /// <summary>
-        /// Calls <see cref="IProcessable.Process"/> on <see cref="Source"/> if <see cref="Interval"/> allows.
+        /// Calls <see cref="IProcessable.Process"/> on <see cref="Source"/> if <see cref="NextProcessTime"/> allows.
         /// </summary>
         public virtual void Process()
         {
-            if (Source == null || (OnlyProcessOnActiveAndEnabled && !isActiveAndEnabled) || Time.time < NextProcessTime)
+            if (NextProcessTime <= Time.time)
+            {
+                ProcessNow();
+            }
+        }
+
+        /// <summary>
+        /// Calls <see cref="IProcessable.Process"/> on <see cref="Source"/>, ignoring whether <see cref="NextProcessTime"/> allows.
+        /// </summary>
+        public virtual void ProcessNow()
+        {
+            if (Source == null || (OnlyProcessOnActiveAndEnabled && !isActiveAndEnabled))
             {
                 return;
             }
