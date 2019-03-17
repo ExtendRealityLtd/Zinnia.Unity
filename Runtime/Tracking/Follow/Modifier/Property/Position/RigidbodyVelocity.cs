@@ -44,7 +44,7 @@
             cachedTarget = target;
 
             Vector3 positionDelta = source.transform.position - (offset != null ? offset.transform.position : target.transform.position);
-            Vector3 velocityTarget = positionDelta / Time.fixedDeltaTime;
+            Vector3 velocityTarget = positionDelta / Time.deltaTime;
             Vector3 calculatedVelocity = Vector3.MoveTowards(cachedTargetRigidbody.velocity, velocityTarget, MaxDistanceDelta);
 
             if (calculatedVelocity.sqrMagnitude < VelocityLimit)
