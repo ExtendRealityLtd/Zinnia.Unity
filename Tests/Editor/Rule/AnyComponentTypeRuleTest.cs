@@ -9,7 +9,6 @@ namespace Test.Zinnia.Rule
     using System.Collections;
     using NUnit.Framework;
 
-    // TODO: Test all SearchOptions
     public class AnyComponentTypeRuleTest
     {
         private GameObject containingObject;
