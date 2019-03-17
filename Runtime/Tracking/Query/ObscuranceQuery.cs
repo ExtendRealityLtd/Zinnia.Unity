@@ -3,6 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
@@ -25,6 +26,11 @@
         {
         }
 
+        public class MissingColliderException : Exception
+        {
+            public MissingColliderException(UnityEngine.Object owner, GameObject missingColliderGameObject) : base($"The configured {nameof(Target)} '{missingColliderGameObject}' on '{owner}' needs a {nameof(Rigidbody)} or {nameof(Collider)} on it.") { }
+        }
+
         /// <summary>
         /// Defines the source location that the raycast will originate from towards the <see cref="Target"/> location.
         /// </summary>
@@ -36,7 +42,7 @@
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
-        public Collider Target { get; set; }
+        public GameObject Target { get; set; }
         /// <summary>
         /// Optional settings to use when doing the raycast.
         /// </summary>
@@ -77,7 +83,8 @@
             bool isObscured = false;
             foreach (RaycastHit hit in raycastHits)
             {
-                if (hit.transform.gameObject != Source && hit.collider != Target)
+                GameObject hitGameObject = hit.transform.gameObject;
+                if (hitGameObject != Source && hitGameObject != Target)
                 {
                     isObscured = true;
                     break;
@@ -101,9 +108,34 @@
             }
         }
 
+        protected virtual void OnEnable()
+        {
+            CheckTarget();
+        }
+
         protected virtual void OnDisable()
         {
             wasPreviouslyObscured = null;
+        }
+
+        /// <summary>
+        /// Throws a <see cref="MissingColliderException"/> if <see cref="Target"/> has neither a <see cref="Rigidbody"/> nor a <see cref="Collider"/> on it.
+        /// </summary>
+        protected virtual void CheckTarget()
+        {
+            if (Target != null && Target.GetComponent<Rigidbody>() == null && Target.GetComponent<Collider>() == null)
+            {
+                throw new MissingColliderException(this, Target);
+            }
+        }
+
+        /// <summary>
+        /// Called after <see cref="Target"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Target))]
+        protected virtual void OnAfterTargetChange()
+        {
+            CheckTarget();
         }
     }
 }

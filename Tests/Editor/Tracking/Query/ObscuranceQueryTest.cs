@@ -40,7 +40,7 @@ namespace Test.Zinnia.Tracking.Query
             objectB.transform.position = Vector3.right * 2f;
 
             subject.Source = objectA;
-            subject.Target = objectB.GetComponentInChildren<Collider>();
+            subject.Target = objectB;
 
             Assert.IsFalse(targetObscuredMock.Received);
             Assert.IsFalse(targetUnobscuredMock.Received);
@@ -93,6 +93,14 @@ namespace Test.Zinnia.Tracking.Query
 
             Object.Destroy(objectA);
             Object.Destroy(objectB);
+        }
+
+        [Test]
+        public void TargetWithoutCollider_ThrowsMissingColliderException()
+        {
+            GameObject gameObject = new GameObject();
+            Assert.Throws<ObscuranceQuery.MissingColliderException>(() => subject.Target = gameObject);
+            Object.DestroyImmediate(gameObject);
         }
     }
 }
