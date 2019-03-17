@@ -23,10 +23,7 @@
         [CalledAfterChangeOf(nameof(Intensity))]
         protected virtual void OnAfterIntensityChange()
         {
-            if (Intensity < 0f || Intensity > 1f)
-            {
-                Intensity = Mathf.Clamp01(Intensity);
-            }
+            Intensity = Mathf.Clamp01(Intensity);
         }
     }
 }

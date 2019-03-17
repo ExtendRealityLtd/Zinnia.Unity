@@ -4,7 +4,6 @@ namespace Zinnia.Cast
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.MemberChangeMethod;
-    using Zinnia.Extension;
 
     /// <summary>
     /// Casts a straight line in the direction of the origin for a fixed length.
@@ -60,11 +59,7 @@ namespace Zinnia.Cast
         [CalledAfterChangeOf(nameof(CurrentLength))]
         protected virtual void OnAfterCurrentLengthChange()
         {
-            float clampedCurrentLength = GetClampedCurrentLength();
-            if (!CurrentLength.ApproxEquals(clampedCurrentLength))
-            {
-                CurrentLength = clampedCurrentLength;
-            }
+            CurrentLength = GetClampedCurrentLength();
         }
     }
 }

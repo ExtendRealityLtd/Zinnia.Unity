@@ -86,11 +86,7 @@
         [CalledAfterChangeOf(nameof(Origin))]
         protected virtual void OnAfterOriginChange()
         {
-            Vector2 normalizedOrigin = Origin.normalized;
-            if (!Origin.ApproxEquals(normalizedOrigin))
-            {
-                Origin = normalizedOrigin;
-            }
+            Origin = Origin.normalized;
         }
     }
 }
