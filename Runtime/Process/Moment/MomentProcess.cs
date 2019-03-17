@@ -24,60 +24,74 @@
         [field: DocumentedByXml]
         public bool OnlyProcessOnActiveAndEnabled { get; set; } = true;
         /// <summary>
-        /// A percentage defining how often to process the <see cref="Process"/>.
+        /// The interval in seconds defining how often to process the <see cref="Process"/>. Negative values will be clamped to zero.
         /// </summary>
         [Serialized]
-        [field: DocumentedByXml, Range(0f, 1f)]
-        public float Utilization { get; set; } = 1f;
+        [field: DocumentedByXml]
+        public float Interval { get; set; }
+        /// <summary>
+        /// When to call <see cref="Process"/> the next time. Updated automatically based on <see cref="Interval"/> after <see cref="Process"/> has been called.
+        /// </summary>
+        public float NextProcessTime { get; set; }
 
         /// <summary>
-        /// Keeps track of how often calls to <see cref="Process"/> were ignored because of <see cref="Utilization"/>.
-        /// </summary>
-        protected int counter;
-        /// <summary>
-        /// How many calls to <see cref="Process"/> to ignore because of <see cref="Utilization"/>.
-        /// </summary>
-        protected int delay;
-
-        /// <summary>
-        /// Calls <see cref="IProcessable.Process"/> on <see cref="Source"/> if <see cref="Utilization"/> allows.
+        /// Calls <see cref="IProcessable.Process"/> on <see cref="Source"/> if <see cref="NextProcessTime"/> allows.
         /// </summary>
         public virtual void Process()
         {
-            if (Utilization < float.Epsilon)
+            if (NextProcessTime <= Time.time)
+            {
+                ProcessNow();
+            }
+        }
+
+        /// <summary>
+        /// Calls <see cref="IProcessable.Process"/> on <see cref="Source"/>, ignoring whether <see cref="NextProcessTime"/> allows.
+        /// </summary>
+        public virtual void ProcessNow()
+        {
+            if (Source == null || (OnlyProcessOnActiveAndEnabled && !isActiveAndEnabled))
             {
                 return;
             }
 
-            if (Source != null && (!OnlyProcessOnActiveAndEnabled || isActiveAndEnabled) && counter == delay)
-            {
-                Source.Interface.Process();
-            }
-
-            counter = (counter + 1) % (delay + 1);
+            Source.Interface.Process();
+            UpdateNextProcessTime();
         }
 
         /// <summary>
-        /// This empty implementation tells Unity to draw the enabled checkbox for this component, allowing to disable the component at edit-time.
+        /// Sets <see cref="NextProcessTime"/> to a random time between now and now plus <see cref="Interval"/>.
         /// </summary>
-        protected virtual void OnEnable() { }
-
-        /// <summary>
-        /// Updates <see cref="delay"/> to adjust to the latest <see cref="Utilization"/>.
-        /// </summary>
-        protected virtual void UpdateDelay()
+        public virtual void RandomizeNextProcessTime()
         {
-            delay = (int)(1f / Utilization) - 1;
+            NextProcessTime = Time.time + (Random.value * Interval);
+        }
+
+        protected virtual void Awake()
+        {
+            RandomizeNextProcessTime();
+        }
+
+        protected virtual void OnEnable()
+        {
+            OnAfterIntervalChange();
         }
 
         /// <summary>
-        /// Called after <see cref="Utilization"/> has been changed.
+        /// Updates <see cref="NextProcessTime"/> to adjust to the latest <see cref="Interval"/>.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Utilization))]
-        protected virtual void OnAfterUtilizationChange()
+        protected virtual void UpdateNextProcessTime()
         {
-            Utilization = Mathf.Clamp01(Utilization);
-            UpdateDelay();
+            NextProcessTime = Time.time + Interval;
+        }
+
+        /// <summary>
+        /// Called after <see cref="Interval"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Interval))]
+        protected virtual void OnAfterIntervalChange()
+        {
+            Interval = Mathf.Max(0f, Interval);
         }
     }
 }
