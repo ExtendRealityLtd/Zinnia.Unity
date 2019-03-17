@@ -48,6 +48,19 @@
             UpdateNextProcessTime();
         }
 
+        /// <summary>
+        /// Sets <see cref="NextProcessTime"/> to a random time between now and now plus <see cref="Interval"/>.
+        /// </summary>
+        public virtual void RandomizeNextProcessTime()
+        {
+            NextProcessTime = Time.time + (Random.value * Interval);
+        }
+
+        protected virtual void Awake()
+        {
+            RandomizeNextProcessTime();
+        }
+
         protected virtual void OnEnable()
         {
             OnAfterIntervalChange();
