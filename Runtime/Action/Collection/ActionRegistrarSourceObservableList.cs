@@ -64,9 +64,9 @@
         /// <param name="setAll">Whether to ignore the source and just set all sources to the given state.</param>
         protected virtual void SetSourceEnabledState(GameObject source, bool state, bool setAll)
         {
-            for (int index = 0; index < SubscribableElements.Count; index++)
+            for (int index = 0; index < NonSubscribableElements.Count; index++)
             {
-                ActionRegistrar.ActionSource actionSource = SubscribableElements[index];
+                ActionRegistrar.ActionSource actionSource = NonSubscribableElements[index];
                 if (actionSource.Container != source && !setAll)
                 {
                     continue;

@@ -39,7 +39,7 @@
                 return;
             }
 
-            foreach (SerializableType serializableType in Types.SubscribableElements)
+            foreach (SerializableType serializableType in Types.NonSubscribableElements)
             {
                 foreach (Component targetObject in Target.GetComponentsInChildren(serializableType, true))
                 {

@@ -26,7 +26,7 @@
                 return false;
             }
 
-            foreach (SerializableType serializedType in ComponentTypes.SubscribableElements)
+            foreach (SerializableType serializedType in ComponentTypes.NonSubscribableElements)
             {
                 if (serializedType.ActualType != null && targetGameObject.GetComponent(serializedType) != null)
                 {
