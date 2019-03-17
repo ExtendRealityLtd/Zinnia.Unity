@@ -53,7 +53,7 @@
                 return;
             }
 
-            foreach (Element element in Elements.SubscribableElements)
+            foreach (Element element in Elements.NonSubscribableElements)
             {
                 if (element.Rule.Accepts(source))
                 {

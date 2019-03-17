@@ -25,7 +25,7 @@
                 return false;
             }
 
-            foreach (string testedTag in Tags.SubscribableElements)
+            foreach (string testedTag in Tags.NonSubscribableElements)
             {
                 if (targetGameObject.CompareTag(testedTag))
                 {

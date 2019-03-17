@@ -35,7 +35,7 @@
         protected override void DoBegin()
         {
             HapticProcess firstActiveProcess = null;
-            foreach (HapticProcess process in HapticProcesses.SubscribableElements)
+            foreach (HapticProcess process in HapticProcesses.NonSubscribableElements)
             {
                 if (process.IsActive())
                 {

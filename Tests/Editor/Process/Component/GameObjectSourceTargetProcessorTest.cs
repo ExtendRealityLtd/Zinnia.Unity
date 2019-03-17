@@ -36,12 +36,12 @@ namespace Test.Zinnia.Process.Component
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
 
-            Assert.IsEmpty(subject.Sources.SubscribableElements);
+            Assert.IsEmpty(subject.Sources.NonSubscribableElements);
 
             subject.Sources.Add(source);
 
-            Assert.AreEqual(1, subject.Sources.SubscribableElements.Count);
-            Assert.AreEqual(source, subject.Sources.SubscribableElements[0]);
+            Assert.AreEqual(1, subject.Sources.NonSubscribableElements.Count);
+            Assert.AreEqual(source, subject.Sources.NonSubscribableElements[0]);
 
             Object.DestroyImmediate(source);
         }
@@ -55,12 +55,12 @@ namespace Test.Zinnia.Process.Component
 
             subject.Sources.Add(source);
 
-            Assert.AreEqual(1, subject.Sources.SubscribableElements.Count);
-            Assert.AreEqual(source, subject.Sources.SubscribableElements[0]);
+            Assert.AreEqual(1, subject.Sources.NonSubscribableElements.Count);
+            Assert.AreEqual(source, subject.Sources.NonSubscribableElements[0]);
 
             subject.Sources.Remove(source);
 
-            Assert.IsEmpty(subject.Sources.SubscribableElements);
+            Assert.IsEmpty(subject.Sources.NonSubscribableElements);
 
             Object.DestroyImmediate(source);
         }
@@ -78,15 +78,15 @@ namespace Test.Zinnia.Process.Component
             subject.Sources.Add(source1);
             subject.Sources.Add(source2);
 
-            Assert.AreEqual(2, subject.Sources.SubscribableElements.Count);
+            Assert.AreEqual(2, subject.Sources.NonSubscribableElements.Count);
 
             subject.Sources.CurrentIndex = 0;
 
             subject.Sources.SetAtCurrentIndex(newSource1);
 
-            Assert.AreEqual(2, subject.Sources.SubscribableElements.Count);
-            Assert.AreEqual(newSource1, subject.Sources.SubscribableElements[0]);
-            Assert.AreEqual(source2, subject.Sources.SubscribableElements[1]);
+            Assert.AreEqual(2, subject.Sources.NonSubscribableElements.Count);
+            Assert.AreEqual(newSource1, subject.Sources.NonSubscribableElements[0]);
+            Assert.AreEqual(source2, subject.Sources.NonSubscribableElements[1]);
 
             Object.DestroyImmediate(source1);
             Object.DestroyImmediate(source2);
@@ -103,12 +103,12 @@ namespace Test.Zinnia.Process.Component
 
             subject.Sources.Add(source);
 
-            Assert.AreEqual(1, subject.Sources.SubscribableElements.Count);
-            Assert.AreEqual(source, subject.Sources.SubscribableElements[0]);
+            Assert.AreEqual(1, subject.Sources.NonSubscribableElements.Count);
+            Assert.AreEqual(source, subject.Sources.NonSubscribableElements[0]);
 
             subject.Sources.Clear(false);
 
-            Assert.IsEmpty(subject.Sources.SubscribableElements);
+            Assert.IsEmpty(subject.Sources.NonSubscribableElements);
 
             Object.DestroyImmediate(source);
         }
@@ -121,12 +121,12 @@ namespace Test.Zinnia.Process.Component
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
 
-            Assert.IsEmpty(subject.Targets.SubscribableElements);
+            Assert.IsEmpty(subject.Targets.NonSubscribableElements);
 
             subject.Targets.Add(target);
 
-            Assert.AreEqual(1, subject.Targets.SubscribableElements.Count);
-            Assert.AreEqual(target, subject.Targets.SubscribableElements[0]);
+            Assert.AreEqual(1, subject.Targets.NonSubscribableElements.Count);
+            Assert.AreEqual(target, subject.Targets.NonSubscribableElements[0]);
 
             Object.DestroyImmediate(target);
         }
@@ -140,12 +140,12 @@ namespace Test.Zinnia.Process.Component
 
             subject.Targets.Add(target);
 
-            Assert.AreEqual(1, subject.Targets.SubscribableElements.Count);
-            Assert.AreEqual(target, subject.Targets.SubscribableElements[0]);
+            Assert.AreEqual(1, subject.Targets.NonSubscribableElements.Count);
+            Assert.AreEqual(target, subject.Targets.NonSubscribableElements[0]);
 
             subject.Targets.Remove(target);
 
-            Assert.IsEmpty(subject.Targets.SubscribableElements);
+            Assert.IsEmpty(subject.Targets.NonSubscribableElements);
 
             Object.DestroyImmediate(target);
         }
@@ -162,15 +162,15 @@ namespace Test.Zinnia.Process.Component
             subject.Targets.Add(target1);
             subject.Targets.Add(target2);
 
-            Assert.AreEqual(2, subject.Targets.SubscribableElements.Count);
+            Assert.AreEqual(2, subject.Targets.NonSubscribableElements.Count);
 
             subject.Targets.CurrentIndex = 0;
 
             subject.Targets.SetAtCurrentIndex(newTarget1);
 
-            Assert.AreEqual(2, subject.Targets.SubscribableElements.Count);
-            Assert.AreEqual(newTarget1, subject.Targets.SubscribableElements[0]);
-            Assert.AreEqual(target2, subject.Targets.SubscribableElements[1]);
+            Assert.AreEqual(2, subject.Targets.NonSubscribableElements.Count);
+            Assert.AreEqual(newTarget1, subject.Targets.NonSubscribableElements[0]);
+            Assert.AreEqual(target2, subject.Targets.NonSubscribableElements[1]);
 
             Object.DestroyImmediate(target1);
             Object.DestroyImmediate(target2);
@@ -186,12 +186,12 @@ namespace Test.Zinnia.Process.Component
 
             subject.Targets.Add(target);
 
-            Assert.AreEqual(1, subject.Targets.SubscribableElements.Count);
-            Assert.AreEqual(target, subject.Targets.SubscribableElements[0]);
+            Assert.AreEqual(1, subject.Targets.NonSubscribableElements.Count);
+            Assert.AreEqual(target, subject.Targets.NonSubscribableElements[0]);
 
             subject.Targets.Clear(false);
 
-            Assert.IsEmpty(subject.Targets.SubscribableElements);
+            Assert.IsEmpty(subject.Targets.NonSubscribableElements);
 
             Object.DestroyImmediate(target);
         }

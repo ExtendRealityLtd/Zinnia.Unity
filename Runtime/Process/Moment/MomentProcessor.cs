@@ -141,7 +141,7 @@
                 return;
             }
 
-            foreach (MomentProcess currentProcess in Processes.SubscribableElements)
+            foreach (MomentProcess currentProcess in Processes.NonSubscribableElements)
             {
                 currentProcess.Process();
             }
