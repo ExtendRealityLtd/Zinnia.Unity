@@ -30,7 +30,7 @@ namespace Test.Zinnia.Tracking.Modification
         public IEnumerator SetEnabledStateOfBehaviour()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            subject.Types = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
 
             subject.Types.Add(typeof(Light));
@@ -47,7 +47,7 @@ namespace Test.Zinnia.Tracking.Modification
         public IEnumerator SetEnabledStateOfRenderer()
         {
             MeshRenderer renderer = containingObject.AddComponent<MeshRenderer>();
-            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            subject.Types = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
 
             subject.Types.Add(typeof(MeshRenderer));
@@ -65,7 +65,7 @@ namespace Test.Zinnia.Tracking.Modification
         {
             MeshRenderer renderer = containingObject.AddComponent<MeshRenderer>();
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            subject.Types = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
 
             subject.Types.Add(typeof(Light));
@@ -86,7 +86,7 @@ namespace Test.Zinnia.Tracking.Modification
         public IEnumerator SetEnabledStateOfInvalidType()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            subject.Types = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
 
             subject.Types.Add(typeof(Renderer));
@@ -101,7 +101,7 @@ namespace Test.Zinnia.Tracking.Modification
         public IEnumerator SetEnabledStateInvalidTarget()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            subject.Types = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
 
             subject.Types.Add(typeof(Light));
@@ -115,7 +115,7 @@ namespace Test.Zinnia.Tracking.Modification
         public IEnumerator SetEnabledStateInactiveGameObject()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            subject.Types = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
 
             subject.Types.Add(typeof(Light));
@@ -133,7 +133,7 @@ namespace Test.Zinnia.Tracking.Modification
         public IEnumerator SetEnabledStateInactiveComponent()
         {
             Behaviour behaviour = containingObject.AddComponent<Light>();
-            subject.Types = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            subject.Types = containingObject.AddComponent<SerializableTypeComponentObservableList>();
             yield return null;
 
             subject.Types.Add(typeof(Light));

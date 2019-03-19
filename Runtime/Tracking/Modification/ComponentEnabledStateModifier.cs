@@ -18,7 +18,7 @@
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
-        public SerializableTypeBehaviourObservableList Types { get; set; }
+        public SerializableTypeComponentObservableList Types { get; set; }
 
         /// <summary>
         /// The target to modify the enabled states for the provided <see cref="Types"/>.
