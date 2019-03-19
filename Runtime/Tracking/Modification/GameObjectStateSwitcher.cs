@@ -23,12 +23,6 @@
         [Serialized]
         [field: DocumentedByXml]
         public bool TargetState { get; set; } = true;
-        /// <summary>
-        /// The current active index in the targets collection.
-        /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public int CurrentIndex { get; set; }
 
         /// <summary>
         /// Switches to the next target in the collection and sets to the appropriate state.
@@ -36,10 +30,10 @@
         [RequiresBehaviourState]
         public virtual void SwitchNext()
         {
-            CurrentIndex++;
-            if (CurrentIndex >= Targets.NonSubscribableElements.Count)
+            Targets.CurrentIndex++;
+            if (Targets.CurrentIndex >= Targets.NonSubscribableElements.Count)
             {
-                CurrentIndex = 0;
+                Targets.CurrentIndex = 0;
             }
 
             Switch();
@@ -51,10 +45,10 @@
         [RequiresBehaviourState]
         public virtual void SwitchPrevious()
         {
-            CurrentIndex--;
-            if (CurrentIndex < 0)
+            Targets.CurrentIndex--;
+            if (Targets.CurrentIndex < 0)
             {
-                CurrentIndex = Targets.NonSubscribableElements.Count - 1;
+                Targets.CurrentIndex = Targets.NonSubscribableElements.Count - 1;
             }
 
             Switch();
@@ -67,7 +61,7 @@
         [RequiresBehaviourState]
         public virtual void SwitchTo(int index)
         {
-            CurrentIndex = Mathf.Clamp(index, 0, Targets.NonSubscribableElements.Count - 1);
+            Targets.CurrentIndex = Mathf.Clamp(index, 0, Targets.NonSubscribableElements.Count - 1);
             Switch();
         }
 
@@ -77,7 +71,7 @@
         [RequiresBehaviourState]
         public virtual void SwitchToCurrentIndex()
         {
-            SwitchTo(CurrentIndex);
+            SwitchTo(Targets.CurrentIndex);
         }
 
         /// <summary>
@@ -87,7 +81,7 @@
         {
             for (int index = 0; index < Targets.NonSubscribableElements.Count; index++)
             {
-                Targets.NonSubscribableElements[index].SetActive(index == CurrentIndex ? TargetState : !TargetState);
+                Targets.NonSubscribableElements[index].SetActive(index == Targets.CurrentIndex ? TargetState : !TargetState);
             }
         }
     }

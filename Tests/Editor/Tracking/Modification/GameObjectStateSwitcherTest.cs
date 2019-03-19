@@ -43,7 +43,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 0;
+            subject.Targets.CurrentIndex = 0;
 
             subject.SwitchToCurrentIndex();
 
@@ -90,7 +90,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 0;
+            subject.Targets.CurrentIndex = 0;
 
             subject.SwitchToCurrentIndex();
 
@@ -137,7 +137,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 0;
+            subject.Targets.CurrentIndex = 0;
 
             subject.SwitchToCurrentIndex();
 
@@ -196,7 +196,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = false;
-            subject.CurrentIndex = 0;
+            subject.Targets.CurrentIndex = 0;
 
             subject.SwitchToCurrentIndex();
 
@@ -231,7 +231,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 1;
+            subject.Targets.CurrentIndex = 1;
 
             subject.SwitchToCurrentIndex();
 
@@ -266,7 +266,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 2;
+            subject.Targets.CurrentIndex = 2;
 
             subject.SwitchToCurrentIndex();
 
@@ -301,7 +301,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 0;
+            subject.Targets.CurrentIndex = 0;
 
             Assert.IsTrue(objectA.activeInHierarchy);
             Assert.IsTrue(objectB.activeInHierarchy);
@@ -334,7 +334,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 1;
+            subject.Targets.CurrentIndex = 1;
 
             Assert.IsTrue(objectA.activeInHierarchy);
             Assert.IsTrue(objectB.activeInHierarchy);
@@ -367,7 +367,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 2;
+            subject.Targets.CurrentIndex = 2;
 
             Assert.IsTrue(objectA.activeInHierarchy);
             Assert.IsTrue(objectB.activeInHierarchy);
@@ -400,7 +400,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 0;
+            subject.Targets.CurrentIndex = 0;
 
             subject.gameObject.SetActive(false);
 
@@ -435,7 +435,7 @@ namespace Test.Zinnia.Tracking.Modification
             targets.Add(objectC);
 
             subject.TargetState = true;
-            subject.CurrentIndex = 0;
+            subject.Targets.CurrentIndex = 0;
 
             subject.enabled = false;
 
