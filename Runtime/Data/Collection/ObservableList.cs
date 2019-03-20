@@ -254,16 +254,85 @@
         }
 
         /// <summary>
+        /// Sets the given element at the given index or adds the element if the collection is empty.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="element">The element to set.</param>
+        /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
+        [RequiresBehaviourState]
+        public virtual void SetAtOrAddIfEmpty(TElement element, int index)
+        {
+            if (Elements.Count == 0)
+            {
+                Add(element);
+                return;
+            }
+
+            SetAt(element, index);
+        }
+
+        /// <summary>
+        /// Sets the given element at the given index as long as it does not already exist in the collection or adds the element if the collection is empty.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="element">The unique element to set.</param>
+        /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
+        [RequiresBehaviourState]
+        public virtual void SetUniqueAtOrAddIfEmpty(TElement element, int index)
+        {
+            if (Elements.Contains(element))
+            {
+                return;
+            }
+
+            SetAtOrAddIfEmpty(element, index);
+        }
+
+        /// <summary>
+        /// Sets the given element at the <see cref="CurrentIndex"/> or adds the element if the collection is empty.
+        /// </summary>
+        /// <param name="element">The element to set.</param>
+        [RequiresBehaviourState]
+        public virtual void SetAtCurrentIndexOrAddIfEmpty(TElement element)
+        {
+            SetAtOrAddIfEmpty(element, CurrentIndex);
+        }
+
+        /// <summary>
+        /// Sets the given element at the <see cref="CurrentIndex"/> as long as it does not already exist in the collection or adds the element if the collection is empty.
+        /// </summary>
+        /// <param name="element">The unique element to set.</param>
+        [RequiresBehaviourState]
+        public virtual void SetUniqueAtCurrentIndexOrAddIfEmpty(TElement element)
+        {
+            SetUniqueAtOrAddIfEmpty(element, CurrentIndex);
+        }
+
+        /// <summary>
         /// Removes the first occurrence of an element from the collection.
         /// </summary>
         /// <param name="element">The element to remove.</param>
         [RequiresBehaviourState]
-        public virtual void Remove(TElement element)
+        public virtual bool Remove(TElement element)
         {
             if (Elements.Remove(element))
             {
                 EmitRemoveEvents(element);
+                return true;
             }
+            return false;
+        }
+
+        /// <summary>
+        /// Removes the first occurrence of an element from the collection.
+        /// </summary>
+        public virtual void DoRemove(TElement element)
+        {
+            Remove(element);
         }
 
         /// <summary>

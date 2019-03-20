@@ -472,10 +472,10 @@ namespace Test.Zinnia.Data.Collection
             subject.Added.AddListener(addedMock.Listen);
             subject.Removed.AddListener(removedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
-            GameObject elementThree = new GameObject();
-            GameObject elementFour = new GameObject();
+            GameObject elementOne = new GameObject("One");
+            GameObject elementTwo = new GameObject("Two");
+            GameObject elementThree = new GameObject("Three");
+            GameObject elementFour = new GameObject("Four");
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
@@ -501,6 +501,50 @@ namespace Test.Zinnia.Data.Collection
             Object.DestroyImmediate(elementTwo);
             Object.DestroyImmediate(elementThree);
             Object.DestroyImmediate(elementFour);
+        }
+
+        [Test]
+        public void SetAtEmptyCollection()
+        {
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+
+            GameObject elementOne = new GameObject("One");
+
+            Assert.IsEmpty(subject.NonSubscribableElements);
+
+            subject.SetAt(elementOne, 1);
+
+            Assert.IsEmpty(subject.NonSubscribableElements);
+
+            Assert.IsFalse(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+
+            Object.DestroyImmediate(elementOne);
+        }
+
+        [Test]
+        public void SetAtOrAddIfEmptyCollection()
+        {
+            UnityEventListenerMock addedMock = new UnityEventListenerMock();
+            UnityEventListenerMock removedMock = new UnityEventListenerMock();
+            subject.Added.AddListener(addedMock.Listen);
+            subject.Removed.AddListener(removedMock.Listen);
+
+            GameObject elementOne = new GameObject("One");
+
+            Assert.IsEmpty(subject.NonSubscribableElements);
+
+            subject.SetAtOrAddIfEmpty(elementOne, 1);
+
+            Assert.AreEqual(elementOne, subject.NonSubscribableElements[0]);
+
+            Assert.IsTrue(addedMock.Received);
+            Assert.IsFalse(removedMock.Received);
+
+            Object.DestroyImmediate(elementOne);
         }
 
         [Test]
