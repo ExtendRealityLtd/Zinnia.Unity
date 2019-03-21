@@ -28,11 +28,11 @@
         /// <summary>
         /// A reused instance to store the <see cref="Collider"/> collection belonging to the <see cref="Sources"/>.
         /// </summary>
-        List<Collider> sourceColliders = new List<Collider>();
+        protected List<Collider> sourceColliders = new List<Collider>();
         /// <summary>
         /// A reused instance to store the <see cref="Collider"/> collection belonging to the <see cref="Targets"/>.
         /// </summary>
-        List<Collider> targetColliders = new List<Collider>();
+        protected List<Collider> targetColliders = new List<Collider>();
 
         protected virtual void OnEnable()
         {
