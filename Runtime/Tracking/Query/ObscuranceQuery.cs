@@ -123,7 +123,9 @@
         /// </summary>
         protected virtual void CheckTarget()
         {
-            if (Target != null && Target.GetComponent<Rigidbody>() == null && Target.GetComponent<Collider>() == null)
+            if (Target != null
+                && (Target.GetComponent<Rigidbody>() == null || Target.GetComponentInChildren<Collider>() == null)
+                && Target.GetComponent<Collider>() == null)
             {
                 throw new MissingColliderException(this, Target);
             }
