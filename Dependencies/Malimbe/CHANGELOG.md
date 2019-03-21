@@ -1,5 +1,36 @@
 # Changelog
 
+## [9.4.1](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.4.0...v9.4.1) (2019-03-23)
+
+
+### Bug Fixes
+
+* **MemberChange:** don't reset changes to other fields in handlers ([56e9357](https://github.com/ExtendRealityLtd/Malimbe/commit/56e9357)), closes [#39](https://github.com/ExtendRealityLtd/Malimbe/issues/39)
+* **MemberChange:** fix referencing fields from base types ([91a0355](https://github.com/ExtendRealityLtd/Malimbe/commit/91a0355))
+* **MemberChange:** only look up change handlers once ([beb5507](https://github.com/ExtendRealityLtd/Malimbe/commit/beb5507))
+
+# [9.4.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.3.1...v9.4.0) (2019-03-21)
+
+
+### Bug Fixes
+
+* **MemberChange:** exception thrown when using multiple attributes ([d227180](https://github.com/ExtendRealityLtd/Malimbe/commit/d227180))
+* **MemberChange:** only show undo/redo warning at runtime ([41661a5](https://github.com/ExtendRealityLtd/Malimbe/commit/41661a5))
+
+
+### Features
+
+* **MemberChange:** allow handling changes to superclass member ([33c2c2a](https://github.com/ExtendRealityLtd/Malimbe/commit/33c2c2a))
+
+## [9.3.1](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.3.0...v9.3.1) (2019-03-20)
+
+
+### Bug Fixes
+
+* **MemberChange:** allow undo operations but warn against using them ([b29c017](https://github.com/ExtendRealityLtd/Malimbe/commit/b29c017))
+* **MemberChange:** don't do change handler checks multiple times ([311643d](https://github.com/ExtendRealityLtd/Malimbe/commit/311643d))
+* **MemberChange:** support multiple field store instructions ([7e504ff](https://github.com/ExtendRealityLtd/Malimbe/commit/7e504ff))
+
 # [9.3.0](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.2.2...v9.3.0) (2019-03-16)
 
 
