@@ -106,7 +106,7 @@ namespace Test.Zinnia.Process.Component
             Assert.AreEqual(1, subject.Sources.NonSubscribableElements.Count);
             Assert.AreEqual(source, subject.Sources.NonSubscribableElements[0]);
 
-            subject.Sources.Clear(false);
+            subject.Sources.Clear();
 
             Assert.IsEmpty(subject.Sources.NonSubscribableElements);
 
@@ -189,7 +189,7 @@ namespace Test.Zinnia.Process.Component
             Assert.AreEqual(1, subject.Targets.NonSubscribableElements.Count);
             Assert.AreEqual(target, subject.Targets.NonSubscribableElements[0]);
 
-            subject.Targets.Clear(false);
+            subject.Targets.Clear();
 
             Assert.IsEmpty(subject.Targets.NonSubscribableElements);
 
