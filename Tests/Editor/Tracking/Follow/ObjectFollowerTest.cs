@@ -100,7 +100,7 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.AreEqual(1, subject.TargetOffsets.NonSubscribableElements.Count);
             Assert.AreEqual(offset, subject.TargetOffsets.NonSubscribableElements[0]);
 
-            subject.TargetOffsets.Clear(false);
+            subject.TargetOffsets.Clear();
             Assert.IsEmpty(subject.TargetOffsets.NonSubscribableElements);
             Object.DestroyImmediate(offset);
         }

@@ -384,16 +384,16 @@
         /// <summary>
         /// Removes all elements from the collection.
         /// </summary>
-        /// <param name="removeFromFront">Whether to start the removal from the start or the end of the collection.</param>
+        /// <param name="removeFromEndToStart">Whether to reverse the collection when clearing so the removal goes from end to start.</param>
         [RequiresBehaviourState]
-        public virtual void Clear(bool removeFromFront)
+        public virtual void Clear(bool removeFromEndToStart = false)
         {
             if (Elements.Count == 0)
             {
                 return;
             }
 
-            if (!removeFromFront)
+            if (removeFromEndToStart)
             {
                 Elements.Reverse();
             }

@@ -955,7 +955,7 @@ namespace Test.Zinnia.Data.Collection
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
-            subject.Clear(false);
+            subject.Clear(true);
 
             Assert.IsFalse(populatedMock.Received);
             Assert.IsFalse(addedMock.Received);
@@ -973,7 +973,7 @@ namespace Test.Zinnia.Data.Collection
 
             Assert.AreEqual(3, subject.NonSubscribableElements.Count);
 
-            subject.Clear(false);
+            subject.Clear(true);
 
             Assert.IsFalse(populatedMock.Received);
             Assert.IsFalse(addedMock.Received);
@@ -1001,7 +1001,7 @@ namespace Test.Zinnia.Data.Collection
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
-            subject.Clear(true);
+            subject.Clear();
 
             Assert.IsFalse(populatedMock.Received);
             Assert.IsFalse(addedMock.Received);
@@ -1019,7 +1019,7 @@ namespace Test.Zinnia.Data.Collection
 
             Assert.AreEqual(3, subject.NonSubscribableElements.Count);
 
-            subject.Clear(true);
+            subject.Clear();
 
             Assert.IsFalse(populatedMock.Received);
             Assert.IsFalse(addedMock.Received);
