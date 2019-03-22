@@ -47,11 +47,8 @@ namespace Zinnia.Cast
             return Mathf.Clamp(CurrentLength, 0f, MaximumLength);
         }
 
-        /// <summary>
-        /// Called after <see cref="StraightLineCast.MaximumLength"/> has been changed.
-        /// </summary>
-        [CalledAfterChangeOf(nameof(MaximumLength))]
-        protected virtual void OnAfterMaximumLengthChange()
+        /// <inheritdoc />
+        protected override void OnAfterMaximumLengthChange()
         {
             CurrentLength = GetClampedCurrentLength();
         }
