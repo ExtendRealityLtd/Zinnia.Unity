@@ -165,6 +165,49 @@ namespace Test.Zinnia.Tracking.Collision
             Object.Destroy(target2);
         }
 
+        [UnityTest]
+        public IEnumerator CollisionsResumedOnDisable()
+        {
+            WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+            GameObject source = CreateCollidable("source");
+            GameObject target = CreateCollidable("target");
+            Vector3 sourceOrigin = Vector3.left + Vector3.forward;
+            Vector3 targetOrigin = Vector3.right + Vector3.forward;
+            source.transform.position = sourceOrigin;
+            target.transform.position = targetOrigin;
+
+            CollisionChecker sourceCollisions = source.AddComponent<CollisionChecker>();
+
+            subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
+            subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+
+            containingObject.SetActive(true);
+
+            subject.Sources.Add(source);
+            subject.Targets.Add(target);
+
+            yield return waitForFixedUpdate;
+            Assert.IsFalse(sourceCollisions.isColliding);
+
+            //make source touch target -> no collision
+            source.transform.position = targetOrigin;
+            yield return waitForFixedUpdate;
+            Assert.IsFalse(sourceCollisions.isColliding);
+
+            //move source out
+            source.transform.position = sourceOrigin;
+
+            subject.enabled = false;
+
+            //make source touch target -> collision
+            source.transform.position = targetOrigin;
+            yield return waitForFixedUpdate;
+            Assert.IsTrue(sourceCollisions.isColliding);
+
+            Object.Destroy(source);
+            Object.Destroy(target);
+        }
+
         protected GameObject CreateCollidable(string name)
         {
             GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);

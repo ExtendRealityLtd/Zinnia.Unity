@@ -24,6 +24,12 @@
         [Serialized]
         [field: DocumentedByXml]
         public GameObjectObservableList Targets { get; set; }
+        /// <summary>
+        /// Whether to process inactive <see cref="GameObject"/>s when ignoring or resuming collisions.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool ProcessInactiveGameObjects { get; set; }
 
         /// <summary>
         /// A reused instance to store the <see cref="Collider"/> collection belonging to the <see cref="Sources"/>.
@@ -141,12 +147,12 @@
         /// <param name="state">Whether to ignore collisions or not.</param>
         protected virtual void ToggleCollisions(GameObject source, GameObjectObservableList sources, GameObjectObservableList targets, bool state)
         {
-            if (source == null || (!state && sources.Contains(source)))
+            if (source == null || (!state && isActiveAndEnabled && sources.Contains(source)))
             {
                 return;
             }
 
-            source.GetComponentsInChildren(sourceColliders);
+            source.GetComponentsInChildren(ProcessInactiveGameObjects, sourceColliders);
 
             foreach (GameObject target in targets.SubscribableElements)
             {
@@ -155,7 +161,7 @@
                     continue;
                 }
 
-                target.GetComponentsInChildren(targetColliders);
+                target.GetComponentsInChildren(ProcessInactiveGameObjects, targetColliders);
 
                 foreach (Collider sourceCollider in sourceColliders)
                 {
