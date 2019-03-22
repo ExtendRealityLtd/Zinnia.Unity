@@ -3,7 +3,6 @@
     using UnityEngine;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.MemberChangeMethod;
 
     /// <summary>
     /// Casts a straight line and creates points at the origin and target.
@@ -50,11 +49,5 @@
             points[0] = originPosition;
             points[1] = hasCollided ? hitData.point : originPosition + originForward * MaximumLength;
         }
-
-        /// <summary>
-        /// Called after <see cref="MaximumLength"/> has been changed.
-        /// </summary>
-        [CalledAfterChangeOf(nameof(MaximumLength))]
-        protected virtual void OnAfterMaximumLengthChange() { }
     }
 }
