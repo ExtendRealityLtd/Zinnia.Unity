@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Action
 {
-    using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using System;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
@@ -207,6 +207,11 @@
         /// <param name="source">The source action to subscribe listeners on.</param>
         protected virtual void SubscribeToSource(TSelf source)
         {
+            if (source == null)
+            {
+                return;
+            }
+
             source.ValueChanged.AddListener(Receive);
         }
 
@@ -216,6 +221,11 @@
         /// <param name="source">The source action to unsubscribe listeners on.</param>
         protected virtual void UnsubscribeFromSource(TSelf source)
         {
+            if (source == null)
+            {
+                return;
+            }
+
             source.ValueChanged.RemoveListener(Receive);
         }
 
