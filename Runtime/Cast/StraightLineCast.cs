@@ -16,8 +16,9 @@
         [field: DocumentedByXml]
         public float MaximumLength { get; set; } = 100f;
 
-        protected virtual void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             points.Add(Vector3.zero);
             points.Add(Vector3.zero);
         }
@@ -31,7 +32,7 @@
         protected override void DoCastPoints()
         {
             GeneratePoints();
-            ResultsChanged?.Invoke(eventData.Set(TargetHit, Points));
+            ResultsChanged?.Invoke(eventData.Set(TargetHit, IsTargetHitValid, Points));
         }
 
         /// <summary>

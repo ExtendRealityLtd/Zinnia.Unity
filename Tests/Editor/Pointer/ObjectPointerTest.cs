@@ -152,6 +152,9 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void Select()
         {
+            UnityEventListenerMock enterListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock exitListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock hoverListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock selectListenerMock = new UnityEventListenerMock();
 
             subject.Origin.ValidObject = validOrigin;
@@ -161,19 +164,31 @@ namespace Test.Zinnia.Pointer
             subject.Destination.ValidObject = validDestination;
             subject.Destination.InvalidObject = invalidDestination;
 
+            subject.Entered.AddListener(enterListenerMock.Listen);
+            subject.Exited.AddListener(exitListenerMock.Listen);
+            subject.Hovering.AddListener(hoverListenerMock.Listen);
             subject.Selected.AddListener(selectListenerMock.Listen);
 
             subject.ManualOnEnable();
 
+            Assert.IsFalse(enterListenerMock.Received);
+            Assert.IsFalse(exitListenerMock.Received);
+            Assert.IsFalse(hoverListenerMock.Received);
             Assert.IsFalse(selectListenerMock.Received);
 
             subject.Activate();
             subject.Process();
             subject.Select();
 
+            Assert.IsFalse(enterListenerMock.Received);
+            Assert.IsFalse(exitListenerMock.Received);
+            Assert.IsFalse(hoverListenerMock.Received);
             Assert.IsTrue(selectListenerMock.Received);
             Assert.IsNull(subject.HoverTarget);
 
+            enterListenerMock.Reset();
+            exitListenerMock.Reset();
+            hoverListenerMock.Reset();
             selectListenerMock.Reset();
 
             //Now add a valid target that can be selected
@@ -186,14 +201,86 @@ namespace Test.Zinnia.Pointer
                 blocker.transform.position
             };
 
-            PointsCast.EventData straightCast = CastPoints(castPoints);
+            PointsCast.EventData straightCast = CastPoints(castPoints, true, true, new Ray(Vector3.zero, Vector3.forward));
 
             subject.HandleData(straightCast);
             subject.Process();
             subject.Select();
 
+            Assert.IsTrue(enterListenerMock.Received);
+            Assert.IsFalse(exitListenerMock.Received);
+            Assert.IsTrue(hoverListenerMock.Received);
             Assert.IsTrue(selectListenerMock.Received);
-            Assert.IsNotNull(subject.HoverTarget);
+            Assert.AreEqual(blocker, subject.HoverTarget.CollisionData.transform.gameObject);
+            Assert.AreEqual(blocker, subject.SelectedTarget.CollisionData.transform.gameObject);
+
+            Object.DestroyImmediate(blocker);
+        }
+
+        [Test]
+        public void NoSelectOnInvalidTarget()
+        {
+            UnityEventListenerMock enterListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock exitListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock hoverListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock selectListenerMock = new UnityEventListenerMock();
+
+            subject.Origin.ValidObject = validOrigin;
+            subject.Origin.InvalidObject = invalidOrigin;
+            subject.RepeatedSegment.ValidObject = validSegment;
+            subject.RepeatedSegment.InvalidObject = invalidSegment;
+            subject.Destination.ValidObject = validDestination;
+            subject.Destination.InvalidObject = invalidDestination;
+
+            subject.Entered.AddListener(enterListenerMock.Listen);
+            subject.Exited.AddListener(exitListenerMock.Listen);
+            subject.Hovering.AddListener(hoverListenerMock.Listen);
+            subject.Selected.AddListener(selectListenerMock.Listen);
+
+            subject.ManualOnEnable();
+
+            Assert.IsFalse(enterListenerMock.Received);
+            Assert.IsFalse(exitListenerMock.Received);
+            Assert.IsFalse(hoverListenerMock.Received);
+            Assert.IsFalse(selectListenerMock.Received);
+
+            subject.Activate();
+            subject.Process();
+            subject.Select();
+
+            Assert.IsFalse(enterListenerMock.Received);
+            Assert.IsFalse(exitListenerMock.Received);
+            Assert.IsFalse(hoverListenerMock.Received);
+            Assert.IsTrue(selectListenerMock.Received);
+            Assert.IsNull(subject.HoverTarget);
+
+            enterListenerMock.Reset();
+            exitListenerMock.Reset();
+            hoverListenerMock.Reset();
+            selectListenerMock.Reset();
+
+            //Now add a valid target that can be selected
+            GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            blocker.transform.position = Vector3.forward * 5f;
+
+            Vector3[] castPoints = new Vector3[]
+            {
+                Vector3.zero,
+                blocker.transform.position
+            };
+
+            PointsCast.EventData straightCast = CastPoints(castPoints, true, false, new Ray(Vector3.zero, Vector3.forward));
+
+            subject.HandleData(straightCast);
+            subject.Process();
+            subject.Select();
+
+            Assert.IsTrue(enterListenerMock.Received);
+            Assert.IsFalse(exitListenerMock.Received);
+            Assert.IsTrue(hoverListenerMock.Received);
+            Assert.IsTrue(selectListenerMock.Received);
+            Assert.AreEqual(blocker, subject.HoverTarget.CollisionData.transform.gameObject);
+            Assert.IsNull(subject.SelectedTarget);
 
             Object.DestroyImmediate(blocker);
         }
@@ -776,7 +863,7 @@ namespace Test.Zinnia.Pointer
 
             PointsCast.EventData straightCast;
 
-            straightCast = CastPoints(castPoints, true, new Ray(Vector3.zero, Vector3.forward));
+            straightCast = CastPoints(castPoints, true, true, new Ray(Vector3.zero, Vector3.forward));
 
             subject.HandleData(straightCast);
 
@@ -804,20 +891,24 @@ namespace Test.Zinnia.Pointer
             Object.DestroyImmediate(blocker);
         }
 
-        protected static PointsCast.EventData CastPoints(Vector3[] points, bool validHit = true, Ray? realRay = null)
+        protected static PointsCast.EventData CastPoints(Vector3[] points, bool doesCollisionOccur = true, bool validHit = true, Ray? realRay = null)
         {
-            if (validHit)
+            if (doesCollisionOccur)
             {
                 RaycastHit hit = new RaycastHit();
                 if (realRay != null)
                 {
+                    Physics.autoSimulation = false;
                     Physics.Simulate(Time.fixedDeltaTime);
                     Physics.Raycast((Ray)realRay, out hit);
+                    Physics.autoSimulation = true;
                 }
+
                 return new PointsCast.EventData()
                 {
-                    Points = points,
-                    TargetHit = hit
+                    HitData = hit,
+                    IsValid = validHit,
+                    Points = points
                 };
             }
             else

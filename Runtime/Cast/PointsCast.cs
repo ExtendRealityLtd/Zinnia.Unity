@@ -11,6 +11,7 @@
     using Zinnia.Extension;
     using Zinnia.Process;
     using Zinnia.Rule;
+    using Malimbe.MemberChangeMethod;
 
     /// <summary>
     /// The base of casting components that result in points along the cast.
@@ -28,7 +29,14 @@
             /// </summary>
             [Serialized]
             [field: DocumentedByXml]
-            public RaycastHit? TargetHit { get; set; }
+            public RaycastHit? HitData { get; set; }
+
+            /// <summary>
+            /// The validity of the most recent <see cref="HitData"/> based on the <see cref="TargetValidity"/> rule.
+            /// </summary>
+            [Serialized]
+            [field: DocumentedByXml]
+            public bool IsValid { get; set; }
 
             /// <summary>
             /// The points along the the most recent cast.
@@ -37,19 +45,20 @@
 
             public EventData Set(EventData source)
             {
-                return Set(source.TargetHit, source.Points);
+                return Set(source.HitData, source.IsValid, source.Points);
             }
 
-            public EventData Set(RaycastHit? targetHit, IReadOnlyList<Vector3> points)
+            public EventData Set(RaycastHit? targetHit, bool isValid, IReadOnlyList<Vector3> points)
             {
-                TargetHit = targetHit;
+                HitData = targetHit;
+                IsValid = isValid;
                 Points = points;
                 return this;
             }
 
             public void Clear()
             {
-                Set(default, default);
+                Set(default, default, default);
             }
         }
 
@@ -89,22 +98,11 @@
         /// <summary>
         /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/>.
         /// </summary>
-        public RaycastHit? TargetHit
-        {
-            get
-            {
-                return targetHit;
-            }
-            protected set
-            {
-                targetHit = value != null && TargetValidity.Accepts(value.Value.transform.gameObject) ? value : null;
-            }
-        }
+        public RaycastHit? TargetHit { get; protected set; }
         /// <summary>
-        /// The data held for a valid raycast hit.
+        /// Whether the current <see cref="TargetHit"/> is valid based on the <see cref="TargetValidity"/> rule.
         /// </summary>
-        private RaycastHit? targetHit;
-
+        public bool IsTargetHitValid { get; protected set; }
         /// <summary>
         /// The points along the the most recent cast.
         /// </summary>
@@ -142,5 +140,19 @@
         /// Performs the implemented way of casting points.
         /// </summary>
         protected abstract void DoCastPoints();
+
+        protected virtual void OnEnable()
+        {
+            OnAfterTargetHitChange();
+        }
+
+        /// <summary>
+        /// Called after <see cref="TargetHit"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(TargetHit))]
+        protected virtual void OnAfterTargetHitChange()
+        {
+            IsTargetHitValid = TargetHit != null && TargetValidity.Accepts(TargetHit.Value.transform.gameObject);
+        }
     }
 }
