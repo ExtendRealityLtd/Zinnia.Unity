@@ -253,7 +253,7 @@
         [RequiresBehaviourState]
         public virtual void Select()
         {
-            SelectedTarget = IsActivated ? HoverTarget : null;
+            SelectedTarget = IsActivated && activePointsCastData.IsValid ? HoverTarget : null;
             Selected?.Invoke(SelectedTarget);
         }
 
@@ -267,10 +267,10 @@
             if (IsVisible)
             {
                 previousPointsCastData.Set(activePointsCastData);
-                if (data.TargetHit != null)
+                if (data.HitData != null)
                 {
-                    Transform targetTransform = data.TargetHit.Value.transform;
-                    if (targetTransform != null && targetTransform != activePointsCastData?.TargetHit?.transform)
+                    Transform targetTransform = data.HitData.Value.transform;
+                    if (targetTransform != null && targetTransform != activePointsCastData?.HitData?.transform)
                     {
                         TryEmitExit(previousPointsCastData);
                         Entered?.Invoke(GetEventData(data));
@@ -284,7 +284,6 @@
                 {
                     TryEmitExit(previousPointsCastData);
                 }
-
                 activePointsCastData.Set(data);
             }
             else
@@ -367,7 +366,7 @@
         /// <param name="data">The current points cast data.</param>
         protected virtual void TryEmitExit(PointsCast.EventData data)
         {
-            if (activePointsCastData.TargetHit?.transform != null)
+            if (activePointsCastData.HitData?.transform != null)
             {
                 Exited?.Invoke(GetEventData(data));
                 IsHovering = false;
@@ -404,7 +403,7 @@
         /// <returns>A <see cref="GameObject"/> to represent <paramref name="element"/>.</returns>
         protected virtual GameObject GetElementRepresentation(PointerElement element)
         {
-            bool isValid = activePointsCastData.TargetHit != null;
+            bool isValid = activePointsCastData.HitData != null;
 
             switch (element.ElementVisibility)
             {
@@ -444,12 +443,12 @@
             Transform pointerTransform = transform;
 
             eventData.Transform = pointerTransform;
-            eventData.PositionOverride = validDestinationTransform == null ? data.TargetHit?.point : validDestinationTransform.position;
+            eventData.PositionOverride = validDestinationTransform == null ? data.HitData?.point : validDestinationTransform.position;
             eventData.RotationOverride = validDestinationTransform == null ? Quaternion.identity : validDestinationTransform.localRotation;
             eventData.ScaleOverride = validDestinationTransform == null ? Vector3.one : validDestinationTransform.lossyScale;
             eventData.Origin = pointerTransform.position;
             eventData.Direction = pointerTransform.forward;
-            eventData.CollisionData = data?.TargetHit ?? default;
+            eventData.CollisionData = data?.HitData ?? default;
             return eventData.Set(IsActivated, IsHovering, HoverDuration, data);
         }
     }

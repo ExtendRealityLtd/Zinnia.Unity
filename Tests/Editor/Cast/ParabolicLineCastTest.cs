@@ -64,6 +64,7 @@ namespace Test.Zinnia.Cast
             }
 
             Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
             Assert.IsTrue(castResultsChangedMock.Received);
         }
 
@@ -178,7 +179,8 @@ namespace Test.Zinnia.Cast
                 Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
             }
 
-            Assert.IsNull(subject.TargetHit);
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsFalse(subject.IsTargetHitValid);
             Assert.IsTrue(castResultsChangedMock.Received);
         }
 

@@ -23,7 +23,7 @@ namespace Zinnia.Cast
         /// <param name="data">The data to extract the new current length from.</param>
         public virtual void SetCurrentLength(EventData data)
         {
-            TargetHit = data?.TargetHit;
+            TargetHit = data?.HitData;
             if (data?.Points.Count >= 2)
             {
                 CurrentLength = Vector3.Distance(data.Points[0], data.Points[1]);

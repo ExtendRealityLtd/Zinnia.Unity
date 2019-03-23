@@ -155,7 +155,7 @@
                 break;
             }
 
-            ResultsChanged?.Invoke(eventData.Set(TargetHit, Points));
+            ResultsChanged?.Invoke(eventData.Set(TargetHit, IsTargetHitValid, Points));
         }
 
         /// <summary>

@@ -26,12 +26,12 @@
         [RequiresBehaviourState]
         public virtual void HandleData(PointsCast.EventData data)
         {
-            if (Target == null || data.TargetHit == null)
+            if (Target == null || data.HitData == null)
             {
                 return;
             }
 
-            Target.transform.rotation = Quaternion.FromToRotation(Vector3.up, data.TargetHit.Value.normal);
+            Target.transform.rotation = Quaternion.FromToRotation(Vector3.up, data.HitData.Value.normal);
         }
     }
 }
