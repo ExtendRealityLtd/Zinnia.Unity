@@ -22,12 +22,6 @@
             get => field;
             set => field = value;
         }
-
-        /// <summary>
-        /// Called after <see cref="Field"/> has been changed.
-        /// </summary>
-        [CalledAfterChangeOf(nameof(Field))]
-        protected virtual void OnAfterFieldChange() { }
     }
 
     /// <summary>
@@ -80,14 +74,17 @@
             }
         }
 
-        /// <inheritdoc />
-        protected override void OnAfterFieldChange()
+        /// <summary>
+        /// Called after <see cref="InterfaceContainer.Field"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Field))]
+        protected virtual void OnAfterFieldChange()
         {
             if (Field is TInterface @interface)
             {
                 _interface = @interface;
             }
-            else if (Field != null)
+            else
             {
                 Field = null;
             }
