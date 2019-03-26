@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.4.2](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.4.1...v9.4.2) (2019-03-25)
+
+
+### Bug Fixes
+
+* **MemberChange:** only show undo/redo warning for change handlers ([e4cbe10](https://github.com/ExtendRealityLtd/Malimbe/commit/e4cbe10))
+
 ## [9.4.1](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.4.0...v9.4.1) (2019-03-23)
 
 
