@@ -2,11 +2,11 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
     using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Data.Type;
     using Zinnia.Extension;
 
     /// <summary>
@@ -57,11 +57,11 @@
         /// <summary>
         /// The elements to observe changes of, accessible from components that *are* keeping in sync with the state of the collection by subscribing to the list mutation events. Alternatively use <see cref="NonSubscribableElements"/> instead.
         /// </summary>
-        public IReadOnlyList<TElement> SubscribableElements => wasStartCalled ? (IReadOnlyList<TElement>)Elements : Array.Empty<TElement>();
+        public AllocationFreeReadOnlyList<TElement> SubscribableElements => wasStartCalled ? Elements : ListExtensions.Empty<TElement>();
         /// <summary>
         /// The elements to observe changes of, accessible from components that are *not* interested in keeping in sync with the state of the collection. Alternatively use <see cref="SubscribableElements"/> instead.
         /// </summary>
-        public IReadOnlyList<TElement> NonSubscribableElements => Elements;
+        public AllocationFreeReadOnlyList<TElement> NonSubscribableElements => Elements;
 
         /// <summary>
         /// The collection to observe changes of.

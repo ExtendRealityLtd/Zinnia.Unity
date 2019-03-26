@@ -320,7 +320,7 @@
         /// </summary>
         protected virtual void UpdateRenderData()
         {
-            pointsData.Points = activePointsCastData.Points ?? Array.Empty<Vector3>();
+            pointsData.Points = activePointsCastData.Points ?? ListExtensions.Empty<Vector3>();
             pointsData.StartPoint = GetElementRepresentation(Origin);
             pointsData.RepeatedSegmentPoint = GetElementRepresentation(RepeatedSegment);
             pointsData.EndPoint = GetElementRepresentation(Destination);

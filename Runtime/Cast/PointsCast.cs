@@ -4,14 +4,15 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Zinnia.Data.Type;
     using Zinnia.Extension;
     using Zinnia.Process;
     using Zinnia.Rule;
-    using Malimbe.MemberChangeMethod;
 
     /// <summary>
     /// The base of casting components that result in points along the cast.
@@ -41,14 +42,14 @@
             /// <summary>
             /// The points along the the most recent cast.
             /// </summary>
-            public IReadOnlyList<Vector3> Points { get; set; }
+            public AllocationFreeReadOnlyList<Vector3> Points { get; set; }
 
             public EventData Set(EventData source)
             {
                 return Set(source.HitData, source.IsValid, source.Points);
             }
 
-            public EventData Set(RaycastHit? targetHit, bool isValid, IReadOnlyList<Vector3> points)
+            public EventData Set(RaycastHit? targetHit, bool isValid, AllocationFreeReadOnlyList<Vector3> points)
             {
                 HitData = targetHit;
                 IsValid = isValid;
@@ -106,7 +107,7 @@
         /// <summary>
         /// The points along the the most recent cast.
         /// </summary>
-        public IReadOnlyList<Vector3> Points => points;
+        public AllocationFreeReadOnlyList<Vector3> Points => points;
 
         /// <summary>
         /// The points along the the most recent cast.
