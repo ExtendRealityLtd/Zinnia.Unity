@@ -8,12 +8,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
 
-    // We actually still need to make this able to pick components:
-    // * RuleContainerDrawer
-    // * MomentProcesses?
-
-    // We need to perf test the VRTK farm scene!
-    // Package manager: VRTK package + Malimbe as dependency, then test overriding with local "package" for dev'ing
     public class PickerWindow<TElement, TSelf> : EditorWindow where TSelf : PickerWindow<TElement, TSelf>
     {
         protected static readonly string SearchTextSessionStateKey = typeof(PickerWindow<,>).FullName + nameof(SearchTextSessionStateKey);
