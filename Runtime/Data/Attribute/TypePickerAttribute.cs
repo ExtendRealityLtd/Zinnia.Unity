@@ -9,11 +9,11 @@
     /// <remarks>This attribute is only valid on fields that use <see cref="Data.Type.SerializableType"/>.</remarks>
     public class TypePickerAttribute : PropertyAttribute
     {
-        public readonly Type superType;
+        public readonly Type baseType;
 
-        public TypePickerAttribute(Type superType)
+        public TypePickerAttribute(Type baseType)
         {
-            this.superType = superType;
+            this.baseType = baseType;
         }
     }
 }

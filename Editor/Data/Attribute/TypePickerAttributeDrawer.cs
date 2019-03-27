@@ -3,12 +3,16 @@
     using UnityEditor;
     using UnityEngine;
     using System;
+    using System.Linq;
+    using System.Reflection;
     using Zinnia.Utility;
 
     [CustomPropertyDrawer(typeof(TypePickerAttribute))]
     public class TypePickerAttributeDrawer : PropertyDrawer
     {
-        private Type type;
+        public class PickerWindow : PickerWindow<Type, PickerWindow> { }
+
+        protected Type type;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -37,15 +41,34 @@
                     max = GUIUtility.GUIToScreenPoint(position.max)
                 };
 
-                Type superType = ((TypePickerAttribute)attribute).superType;
-                TypePickerWindow.Show(
+                Type baseType = ((TypePickerAttribute)attribute).baseType;
+                PickerWindow.Show(
                     creatorRect,
-                    superType,
+                    AppDomain.CurrentDomain.GetAssemblies()
+                        .SelectMany(assembly => assembly.GetTypes())
+                        .Where(
+                            possibleComponentType =>
+                            {
+                                AddComponentMenu addComponentMenuAttribute = possibleComponentType
+                                    .GetCustomAttributes<AddComponentMenu>(true)
+                                    .FirstOrDefault();
+                                return baseType.IsAssignableFrom(possibleComponentType)
+                                    && !possibleComponentType.IsAbstract
+                                    && !possibleComponentType.IsNestedPrivate
+                                    && (addComponentMenuAttribute == null
+                                        || !string.IsNullOrWhiteSpace(addComponentMenuAttribute.componentMenu));
+                            })
+                        .OrderBy(componentType => componentType.Name),
                     selectedType =>
                     {
                         assemblyQualifiedTypeNameProperty.stringValue = selectedType.AssemblyQualifiedName;
                         property.serializedObject.ApplyModifiedProperties();
-                    });
+                    },
+                    searchedType => searchedType.Name,
+                    drawnType => new GUIContent(
+                        ObjectNames.NicifyVariableName(drawnType.Name),
+                        AssetPreview.GetMiniTypeThumbnail(drawnType),
+                        drawnType.FullName));
             }
         }
     }
