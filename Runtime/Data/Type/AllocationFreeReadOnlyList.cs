@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using System.Collections.Generic;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Represents a read-only collection of elements that can be accessed by index. Accessing it will not create any heap allocations.
@@ -12,9 +13,9 @@
         private readonly List<T> actualList;
 
         /// <inheritdoc/>
-        public int Count => actualList.Count;
+        public int Count => actualList?.Count ?? 0;
         /// <inheritdoc/>
-        public T this[int index] => actualList[index];
+        public T this[int index] => (actualList ?? ListExtensions.Empty<T>())[index];
 
         private AllocationFreeReadOnlyList(List<T> actualList)
         {
@@ -30,25 +31,25 @@
             return new AllocationFreeReadOnlyList<T>(list);
         }
 
-        /// <inheritdoc/>
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return actualList.GetEnumerator();
-        }
-
         /// <summary>
         /// Returns an enumerator that iterates through the elements.
         /// </summary>
         /// <returns>An enumerator to iterate through the elements.</returns>
         public List<T>.Enumerator GetEnumerator()
         {
-            return actualList.GetEnumerator();
+            return (actualList ?? ListExtensions.Empty<T>()).GetEnumerator();
+        }
+
+        /// <inheritdoc/>
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)actualList).GetEnumerator();
+            return GetEnumerator();
         }
     }
 }
