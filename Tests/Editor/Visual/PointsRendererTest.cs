@@ -43,7 +43,7 @@ namespace Test.Zinnia.Visual
         [Test]
         public void RenderData()
         {
-            Vector3[] points = new Vector3[]
+            List<Vector3> points = new List<Vector3>
             {
                 new Vector3(0f, 0f, 0f),
                 new Vector3(0f, 0f, 1f),
@@ -52,7 +52,7 @@ namespace Test.Zinnia.Visual
                 new Vector3(0f, 5f, 5f)
             };
 
-            PointsRenderer.PointsData data = new PointsRenderer.PointsData()
+            PointsRenderer.PointsData data = new PointsRenderer.PointsData
             {
                 StartPoint = start,
                 RepeatedSegmentPoint = segment,
@@ -97,16 +97,16 @@ namespace Test.Zinnia.Visual
         [Test]
         public void NoRenderDataOnDisabledComponent()
         {
-            Vector3[] points = new Vector3[]
-           {
+            List<Vector3> points = new List<Vector3>
+            {
                 new Vector3(0f, 0f, 0f),
                 new Vector3(0f, 0f, 1f),
                 new Vector3(0f, 1f, 2f),
                 new Vector3(0f, 2f, 3f),
                 new Vector3(0f, 5f, 5f)
-           };
+            };
 
-            PointsRenderer.PointsData data = new PointsRenderer.PointsData()
+            PointsRenderer.PointsData data = new PointsRenderer.PointsData
             {
                 StartPoint = start,
                 RepeatedSegmentPoint = segment,
