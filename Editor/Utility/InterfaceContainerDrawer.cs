@@ -49,11 +49,15 @@
         protected virtual void DrawPicker(SerializedProperty property, Type type, Rect rect, GUIContent label)
         {
             Event currentEvent = Event.current;
+            bool isMouseDragging = currentEvent.type == EventType.DragUpdated || currentEvent.type == EventType.DragPerform;
+            bool isMouseHovering = rect.Contains(currentEvent.mousePosition);
+
             bool drawAsComponent;
-            if (currentEvent.type == EventType.DragUpdated || currentEvent.type == EventType.DragPerform)
+            if (isMouseDragging)
             {
                 // Only allow dropping dragged objects if they have at least one component of the correct type.
-                drawAsComponent = DragAndDrop.objectReferences.Where(draggedObject => !EditorUtility.IsPersistent(draggedObject))
+                drawAsComponent = DragAndDrop.objectReferences
+                    .Where(draggedObject => !EditorUtility.IsPersistent(draggedObject))
                     .Select(
                         draggedObject =>
                         {
@@ -74,32 +78,29 @@
             else
             {
                 // Regular object picks should just lookup all components.
-                drawAsComponent = currentEvent.type == EventType.MouseDown && rect.Contains(currentEvent.mousePosition);
+                drawAsComponent = currentEvent.type == EventType.MouseDown && isMouseHovering;
             }
 
             string controlName = $"{nameof(InterfaceContainerDrawer)}_{nameof(EditorGUI.ObjectField)}_{property.propertyPath}";
             GUI.SetNextControlName(controlName);
-
-            bool wasObjectPickerOpen = EditorGUIUtility.GetObjectPickerControlID() != 0;
             UnityEngine.Object pickedObject = EditorGUI.ObjectField(
                 rect,
                 label,
                 property.objectReferenceValue,
                 drawAsComponent ? typeof(Component) : type,
                 true);
-            bool isObjectPickerOpen = EditorGUIUtility.GetObjectPickerControlID() != 0;
 
-            if (!wasObjectPickerOpen && !isObjectPickerOpen && pickedObject != property.objectReferenceValue)
+            if (pickedObject != property.objectReferenceValue && isMouseDragging && isMouseHovering)
             {
                 // The object has been changed by dropping a dragged object.
                 HandlePickedObject(property, type, rect, pickedObject);
                 return;
             }
 
-            if (GUI.GetNameOfFocusedControl() == controlName
-                && GUIUtility.keyboardControl == EditorGUIUtility.GetObjectPickerControlID()
-                && currentEvent.type == EventType.ExecuteCommand
-                && currentEvent.commandName == "ObjectSelectorClosed")
+            if (currentEvent.type == EventType.ExecuteCommand
+                && currentEvent.commandName == "ObjectSelectorClosed"
+                && GUI.GetNameOfFocusedControl() == controlName
+                && GUIUtility.keyboardControl == EditorGUIUtility.GetObjectPickerControlID())
             {
                 // The picker window we opened was closed.
                 pickedObject = EditorGUIUtility.GetObjectPickerObject();
