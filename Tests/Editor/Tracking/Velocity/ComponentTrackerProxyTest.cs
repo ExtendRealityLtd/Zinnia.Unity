@@ -58,7 +58,7 @@ namespace Test.Zinnia.Tracking.Velocity
 
             subject.ProxySource = sourceObject;
             Assert.AreEqual(sourceObject, subject.ProxySource);
-            subject.ClearProxySource();
+            subject.ProxySource = null;
             Assert.IsNull(subject.ProxySource);
             Object.DestroyImmediate(sourceObject);
         }
