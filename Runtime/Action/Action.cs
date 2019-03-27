@@ -8,6 +8,7 @@
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// The basis for all action types.
@@ -118,7 +119,7 @@
         /// <summary>
         /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public IReadOnlyList<TSelf> ReadOnlySources => Sources;
+        public AllocationFreeReadOnlyList<TSelf> ReadOnlySources => Sources;
 
         /// <inheritdoc />
         [RequiresBehaviourState]

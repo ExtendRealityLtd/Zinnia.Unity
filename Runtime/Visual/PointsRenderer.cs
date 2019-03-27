@@ -6,6 +6,7 @@
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using Zinnia.Data.Type;
     using Zinnia.Extension;
 
     /// <summary>
@@ -42,7 +43,7 @@
             /// </summary>
             [Serialized]
             [field: DocumentedByXml]
-            public IReadOnlyList<Vector3> Points { get; set; }
+            public AllocationFreeReadOnlyList<Vector3> Points { get; set; }
         }
 
         /// <summary>
