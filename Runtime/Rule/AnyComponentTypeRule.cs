@@ -5,6 +5,7 @@
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Data.Type;
     using Zinnia.Data.Collection;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/> has any component found in a list.
@@ -28,7 +29,7 @@
 
             foreach (SerializableType serializedType in ComponentTypes.NonSubscribableElements)
             {
-                if (serializedType.ActualType != null && targetGameObject.GetComponent(serializedType) != null)
+                if (serializedType.ActualType != null && targetGameObject.TryGetComponent(serializedType) != null)
                 {
                     return true;
                 }

@@ -8,6 +8,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Cast;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -124,8 +125,8 @@
         protected virtual void CheckTarget()
         {
             if (Target != null
-                && (Target.GetComponent<Rigidbody>() == null || Target.GetComponentInChildren<Collider>() == null)
-                && Target.GetComponent<Collider>() == null)
+                && (Target.TryGetComponent<Rigidbody>() == null || Target.TryGetComponent<Collider>(true) == null)
+                && Target.TryGetComponent<Collider>() == null)
             {
                 throw new MissingColliderException(this, Target);
             }
