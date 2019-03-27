@@ -4,7 +4,6 @@ namespace Test.Zinnia.Data.Collection
 {
     using UnityEngine;
     using NUnit.Framework;
-    using System.Collections.Generic;
     using Test.Zinnia.Utility.Mock;
 
     public class GameObjectRelationsTest
