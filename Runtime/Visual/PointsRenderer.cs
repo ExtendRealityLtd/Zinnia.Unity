@@ -101,10 +101,11 @@
 
             UpdateElement(data.Points, 0, false, Start);
             UpdateElement(data.Points, data.Points.Count - 1, false, End);
+            UpdateElement(data.Points, 0, true, RepeatedSegment);
 
-            for (int index = 0; index < segmentClones.Count; index++)
+            for (int index = 1; index <= segmentClones.Count; index++)
             {
-                UpdateElement(data.Points, index, true, segmentClones[index]);
+                UpdateElement(data.Points, index, true, segmentClones[index - 1]);
             }
         }
 
@@ -150,7 +151,7 @@
                 segmentClones.RemoveAt(index);
             }
 
-            for (int index = segmentClones.Count; index < targetCount; index++)
+            for (int index = segmentClones.Count; index < targetCount - 1; index++)
             {
                 segmentClones.Add(Instantiate(RepeatedSegment, RepeatedSegment.transform.parent));
             }
@@ -171,7 +172,7 @@
             }
 
             Vector3 targetPoint = points[pointsIndex];
-            Vector3 otherPoint = (pointsIndex + 1 < points.Count ? points[pointsIndex + 1] : points[pointsIndex - 1]);
+            Vector3 otherPoint = pointsIndex + 1 < points.Count ? points[pointsIndex + 1] : points[pointsIndex - 1];
             Vector3 forward = otherPoint - targetPoint;
             Vector3 position = isPartOfLine ? targetPoint + 0.5f * forward : targetPoint;
             float scaleTarget = Mathf.Abs(Vector3.Distance(targetPoint, otherPoint));

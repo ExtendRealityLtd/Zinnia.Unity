@@ -403,7 +403,7 @@
         /// <returns>A <see cref="GameObject"/> to represent <paramref name="element"/>.</returns>
         protected virtual GameObject GetElementRepresentation(PointerElement element)
         {
-            bool isValid = activePointsCastData.HitData != null;
+            bool isValid = activePointsCastData.HitData != null && activePointsCastData.IsValid;
 
             switch (element.ElementVisibility)
             {
