@@ -1,5 +1,4 @@
 ﻿using Zinnia.Tracking.Velocity;
-using Zinnia.Extension;
 
 namespace Test.Zinnia.Tracking.Velocity
 {

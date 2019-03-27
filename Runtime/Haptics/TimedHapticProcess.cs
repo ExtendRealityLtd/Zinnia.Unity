@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using System.Collections;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
 
