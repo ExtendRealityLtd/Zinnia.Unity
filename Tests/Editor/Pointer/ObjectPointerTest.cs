@@ -5,6 +5,7 @@ namespace Test.Zinnia.Pointer
 {
     using UnityEngine;
     using NUnit.Framework;
+    using System.Collections.Generic;
     using Test.Zinnia.Utility.Mock;
 
     public class PointerTest
@@ -113,7 +114,7 @@ namespace Test.Zinnia.Pointer
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blocker.transform.position = Vector3.forward * 5f;
 
-            Vector3[] castPoints = new Vector3[]
+            List<Vector3> castPoints = new List<Vector3>
             {
                 Vector3.zero,
                 blocker.transform.position
@@ -195,7 +196,7 @@ namespace Test.Zinnia.Pointer
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blocker.transform.position = Vector3.forward * 5f;
 
-            Vector3[] castPoints = new Vector3[]
+            List<Vector3> castPoints = new List<Vector3>
             {
                 Vector3.zero,
                 blocker.transform.position
@@ -263,7 +264,7 @@ namespace Test.Zinnia.Pointer
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blocker.transform.position = Vector3.forward * 5f;
 
-            Vector3[] castPoints = new Vector3[]
+            List<Vector3> castPoints = new List<Vector3>
             {
                 Vector3.zero,
                 blocker.transform.position
@@ -855,7 +856,7 @@ namespace Test.Zinnia.Pointer
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blocker.transform.position = Vector3.forward * 5f;
 
-            Vector3[] castPoints = new Vector3[]
+            List<Vector3> castPoints = new List<Vector3>
             {
                 Vector3.zero,
                 blocker.transform.position
@@ -891,7 +892,7 @@ namespace Test.Zinnia.Pointer
             Object.DestroyImmediate(blocker);
         }
 
-        protected static PointsCast.EventData CastPoints(Vector3[] points, bool doesCollisionOccur = true, bool validHit = true, Ray? realRay = null)
+        protected static PointsCast.EventData CastPoints(List<Vector3> points, bool doesCollisionOccur = true, bool validHit = true, Ray? realRay = null)
         {
             if (doesCollisionOccur)
             {
@@ -904,7 +905,7 @@ namespace Test.Zinnia.Pointer
                     Physics.autoSimulation = true;
                 }
 
-                return new PointsCast.EventData()
+                return new PointsCast.EventData
                 {
                     HitData = hit,
                     IsValid = validHit,
@@ -913,7 +914,7 @@ namespace Test.Zinnia.Pointer
             }
             else
             {
-                return new PointsCast.EventData()
+                return new PointsCast.EventData
                 {
                     Points = points
                 };
