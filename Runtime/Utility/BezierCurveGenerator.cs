@@ -2,26 +2,29 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// A collection of helper methods generating points on a bezier curve.
     /// </summary>
     public static class BezierCurveGenerator
     {
+        private static readonly List<Vector3> calculatedPoints = new List<Vector3>();
+
         /// <summary>
         /// Generates points on a bezier curve.
         /// </summary>
         /// <param name="pointsCount">The number of points to generate.</param>
         /// <param name="controlPoints">Points defining the bezier curve.</param>
         /// <returns>The generated points.</returns>
-        public static Vector3[] GeneratePoints(int pointsCount, Vector3[] controlPoints)
+        public static HeapAllocationFreeReadOnlyList<Vector3> GeneratePoints(int pointsCount, IReadOnlyList<Vector3> controlPoints)
         {
-            Vector3[] calculatedPoints = new Vector3[pointsCount];
+            calculatedPoints.Clear();
             float stepSize = pointsCount != 1 ? 1f / (pointsCount - 1) : pointsCount;
 
             for (int index = 0; index < pointsCount; index++)
             {
-                calculatedPoints[index] = GeneratePoint(controlPoints, index * stepSize);
+                calculatedPoints.Add(GeneratePoint(controlPoints, index * stepSize));
             }
 
             return calculatedPoints;

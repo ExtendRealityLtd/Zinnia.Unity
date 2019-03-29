@@ -36,11 +36,17 @@
         public float CurrentY { get; set; }
 
         /// <summary>
+        /// A reusable array of two <see cref="float"/>s.
+        /// </summary>
+        protected readonly float[] input = new float[2];
+
+        /// <summary>
         /// Builds a float array from the current set x and y values and transforms it into a Vector2.
         /// </summary>
         public virtual Vector2 Transform()
         {
-            float[] input = new float[] { CurrentX, CurrentY };
+            input[0] = CurrentX;
+            input[1] = CurrentY;
             return Transform(input);
         }
 

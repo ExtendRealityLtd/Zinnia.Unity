@@ -1,8 +1,9 @@
 ﻿namespace Zinnia.Cast
 {
     using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
+    using System.Collections.Generic;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Utility;
 
     /// <summary>
@@ -47,6 +48,10 @@
         /// Used to move the points back and up a bit to prevent the cast clipping at the collision points.
         /// </summary>
         protected const float AdjustmentOffset = 0.0001f;
+        /// <summary>
+        /// A reusable collection of <see cref="Vector3"/>s.
+        /// </summary>
+        protected readonly Vector3[] curvePoints = new Vector3[4];
 
         /// <inheritdoc />
         protected override void DoCastPoints()
@@ -166,16 +171,16 @@
         /// <returns>The generated points on the parabolic line.</returns>
         protected virtual void GeneratePoints(Vector3 forward, Vector3 down)
         {
-            Vector3[] curvePoints =
-            {
-                Origin.transform.position,
-                forward + new Vector3(0f, CurveOffset, 0f),
-                down,
-                down
-            };
+            curvePoints[0] = Origin.transform.position;
+            curvePoints[1] = forward + new Vector3(0f, CurveOffset, 0f);
+            curvePoints[2] = down;
+            curvePoints[3] = down;
 
             points.Clear();
-            points.AddRange(BezierCurveGenerator.GeneratePoints(SegmentCount, curvePoints));
+            foreach (Vector3 generatedPoint in BezierCurveGenerator.GeneratePoints(SegmentCount, curvePoints))
+            {
+                points.Add(generatedPoint);
+            }
         }
     }
 }

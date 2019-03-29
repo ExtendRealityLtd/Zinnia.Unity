@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
 
@@ -35,11 +36,20 @@
         /// A reference to the started routine.
         /// </summary>
         protected Coroutine hapticRoutine;
+        /// <summary>
+        /// Delays the <see cref="hapticRoutine"/> by <see cref="Interval"/> seconds.
+        /// </summary>
+        protected WaitForSeconds delayYieldInstruction;
 
         /// <inheritdoc />
         public override bool IsActive()
         {
             return base.IsActive() && HapticProcess != null && HapticProcess.IsActive();
+        }
+
+        protected virtual void OnEnable()
+        {
+            OnAfterCheckDelayChange();
         }
 
         /// <summary>
@@ -77,14 +87,22 @@
             }
 
             float currentDuration = Duration;
-            WaitForSeconds delay = new WaitForSeconds(Interval);
 
             while (currentDuration > 0)
             {
                 HapticProcess.Begin();
-                yield return delay;
+                yield return delayYieldInstruction;
                 currentDuration -= Interval;
             }
+        }
+
+        /// <summary>
+        /// Called after <see cref="Interval"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Interval))]
+        protected virtual void OnAfterCheckDelayChange()
+        {
+            delayYieldInstruction = new WaitForSeconds(Interval);
         }
     }
 }

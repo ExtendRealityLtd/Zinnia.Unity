@@ -79,6 +79,8 @@
 
         protected virtual void OnEnable()
         {
+            OnAfterCheckDelayChange();
+            OnAfterMaximumRunTimeChange();
             BeginCheck();
         }
 
@@ -93,7 +95,6 @@
         /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
         protected virtual IEnumerator Check()
         {
-            checkDelayYieldInstruction = new WaitForSeconds(CheckDelay);
             timeUntilCheckIsCancelled = Time.time + MaximumRunTime;
             while (Time.time < timeUntilCheckIsCancelled)
             {

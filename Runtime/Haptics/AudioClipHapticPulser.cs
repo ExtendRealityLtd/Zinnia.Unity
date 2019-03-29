@@ -30,6 +30,10 @@
         public float IntensityMultiplier { get; set; } = 1f;
 
         /// <summary>
+        /// The size of the audio buffer.
+        /// </summary>
+        protected const int BufferSize = 8192;
+        /// <summary>
         /// A reference to the started routine.
         /// </summary>
         protected Coroutine hapticRoutine;
@@ -38,9 +42,9 @@
         /// </summary>
         protected float cachedIntensity;
         /// <summary>
-        /// The size of the audio buffer.
+        /// The audio data buffer.
         /// </summary>
-        protected const int BufferSize = 8192;
+        protected readonly float[] audioData = new float[BufferSize];
 
         /// <inheritdoc />
         public override bool IsActive()
@@ -83,7 +87,6 @@
         /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
         protected virtual IEnumerator HapticProcessRoutine()
         {
-            float[] audioData = new float[BufferSize];
             int sampleOffset = -BufferSize;
             float startTime = Time.time;
             float length = AudioClip.length;

@@ -65,6 +65,11 @@
         }
 
         /// <summary>
+        /// A reusable instance of <see cref="WaitForEndOfFrame"/>.
+        /// </summary>
+        protected static readonly WaitForEndOfFrame DelayInstruction = new WaitForEndOfFrame();
+
+        /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
         [Serialized, Cleared]
@@ -349,7 +354,6 @@
         protected virtual IEnumerator TransitionTransform(TransformData source, TransformData target, Vector3 startScale, Vector3 destinationScale, Quaternion startRotation, Quaternion destinationRotation, Vector3 startPosition, Vector3 destinationPosition)
         {
             float elapsedTime = 0f;
-            WaitForEndOfFrame delayInstruction = new WaitForEndOfFrame();
             while (elapsedTime < TransitionDuration)
             {
                 float lerpFrame = elapsedTime / TransitionDuration;
@@ -357,7 +361,7 @@
                 target.Transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
                 target.Transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
                 elapsedTime += ArePropertiesEqual(startPosition, destinationPosition, startRotation, destinationRotation, startScale, destinationScale) ? TransitionDuration : Time.deltaTime;
-                yield return delayInstruction;
+                yield return DelayInstruction;
             }
 
             target.Transform.SetGlobalScale(destinationScale);
