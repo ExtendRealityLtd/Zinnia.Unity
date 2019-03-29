@@ -8,6 +8,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Cast;
+    using Zinnia.Data.Type;
     using Zinnia.Extension;
     using Zinnia.Process;
 
@@ -20,10 +21,10 @@
     public class ObscuranceQuery : MonoBehaviour, IProcessable
     {
         /// <summary>
-        /// Defines the event with the <see cref="T:RaycastHit[]"/>.
+        /// Defines the event with the <see cref="HeapAllocationFreeReadOnlyList{T}"/> of <see cref="RaycastHit"/>s.
         /// </summary>
         [Serializable]
-        public class HitEvent : UnityEvent<RaycastHit[]>
+        public class HitEvent : UnityEvent<HeapAllocationFreeReadOnlyList<RaycastHit>>
         {
         }
 
@@ -75,7 +76,7 @@
             Vector3 sourcePosition = Source.transform.position;
             Vector3 difference = Target.transform.position - sourcePosition;
             Ray ray = new Ray(sourcePosition, difference);
-            RaycastHit[] raycastHits = PhysicsCast.RaycastAll(
+            HeapAllocationFreeReadOnlyList<RaycastHit> raycastHits = PhysicsCast.RaycastAll(
                 PhysicsCast,
                 ray,
                 difference.magnitude,
