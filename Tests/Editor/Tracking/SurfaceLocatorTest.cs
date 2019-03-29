@@ -17,15 +17,16 @@ namespace Test.Zinnia.Tracking
         private SurfaceLocator subject;
         private GameObject validSurface;
         private GameObject searchOrigin;
+        private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
         [SetUp]
         public void SetUp()
         {
             Physics.autoSimulation = false;
-            containingObject = new GameObject();
+            containingObject = new GameObject("ContainingObject");
             subject = containingObject.AddComponent<SurfaceLocator>();
             validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            searchOrigin = new GameObject();
+            searchOrigin = new GameObject("SearchOrigin");
         }
 
         [TearDown]
@@ -77,6 +78,7 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator InvalidSurfaceDueToPolicy()
         {
+            Physics.autoSimulation = true;
             UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
             subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
 
@@ -102,9 +104,40 @@ namespace Test.Zinnia.Tracking
             subject.SearchOrigin = searchOrigin;
             subject.SearchDirection = Vector3.forward;
 
-            Physics.Simulate(Time.fixedDeltaTime);
+            yield return waitForFixedUpdate;
             subject.Locate();
+            yield return waitForFixedUpdate;
             Assert.IsFalse(surfaceLocatedMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator ValidSurfaceDueToPolicy()
+        {
+            Physics.autoSimulation = true;
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+            validSurface.AddComponent<RuleStub>();
+            AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
+            SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+
+            anyComponentTypeRule.ComponentTypes = rules;
+            rules.Add(typeof(RuleStub));
+
+            subject.TargetValidity = new RuleContainer
+            {
+                Interface = anyComponentTypeRule
+            };
+
+            subject.SearchOrigin = searchOrigin;
+            subject.SearchDirection = Vector3.forward;
+
+            yield return waitForFixedUpdate;
+            subject.Locate();
+            yield return waitForFixedUpdate;
+            Assert.IsTrue(surfaceLocatedMock.Received);
         }
 
         [Test]

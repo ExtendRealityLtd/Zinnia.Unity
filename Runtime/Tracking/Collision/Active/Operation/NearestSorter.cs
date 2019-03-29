@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
+    using System;
     using UnityEngine;
     using System.Collections.Generic;
     using Malimbe.MemberClearanceMethod;
@@ -59,6 +60,10 @@
         /// Compares two <see cref="CollisionNotifier.EventData"/>.
         /// </summary>
         protected static readonly EventDataComparer Comparer = new EventDataComparer();
+        /// <summary>
+        /// The comparison <see cref="Comparer"/> does.
+        /// </summary>
+        protected static readonly Comparison<CollisionNotifier.EventData> Comparison = Comparer.Compare;
 
         /// <summary>
         /// Sorts the given collision collection by the collisions that are nearest to the source <see cref="Transform"/>.
@@ -83,7 +88,7 @@
 
             SortedList.Set(originalList);
             Comparer.SourcePosition = Source.transform.position;
-            SortedList.ActiveCollisions.Sort(Comparer);
+            SortedList.ActiveCollisions.Sort(Comparison);
 
             Sorted?.Invoke(SortedList);
             return SortedList;
