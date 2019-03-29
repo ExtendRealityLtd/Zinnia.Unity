@@ -185,7 +185,6 @@
             }
 
             targetTransformData.Transform = Target.transform;
-            BeforeTransformUpdated?.Invoke(eventData.Set(Source, targetTransformData));
             Vector3 finalScale = CalculateScale(Source, targetTransformData);
             Quaternion finalRotation = CalculateRotation(Source, targetTransformData);
             Vector3 finalPosition = CalculatePosition(Source, targetTransformData, finalScale, finalRotation);
@@ -298,6 +297,13 @@
         /// <param name="currentPosition">The current position to apply to the target.</param>
         protected virtual void ProcessTransform(TransformData source, TransformData target, Vector3 currentScale, Quaternion currentRotation, Vector3 currentPosition)
         {
+            if (ArePropertiesEqual(currentPosition, target.Position, currentRotation, target.Rotation, currentScale, target.Scale))
+            {
+                return;
+            }
+
+            BeforeTransformUpdated?.Invoke(eventData.Set(source, target));
+
             if (TransitionDuration.ApproxEquals(0f))
             {
                 target.Transform.SetGlobalScale(currentScale);
