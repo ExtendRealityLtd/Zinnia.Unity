@@ -43,7 +43,7 @@
             /// </summary>
             [Serialized]
             [field: DocumentedByXml]
-            public AllocationFreeReadOnlyList<Vector3> Points { get; set; }
+            public HeapAllocationFreeReadOnlyList<Vector3> Points { get; set; }
         }
 
         /// <summary>
