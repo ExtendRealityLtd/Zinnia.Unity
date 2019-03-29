@@ -284,9 +284,25 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
+            sourceTransformData.Transform.position = Vector3.one;
             subject.Apply();
             Assert.IsTrue(beforeTransformUpdatedMock.Received);
             Assert.IsTrue(afterTransformUpdatedMock.Received);
+        }
+
+        [Test]
+        public void NoEventsWhenNoChange()
+        {
+            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
+            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
+            subject.Apply();
+            Assert.IsFalse(beforeTransformUpdatedMock.Received);
+            Assert.IsFalse(afterTransformUpdatedMock.Received);
         }
 
         [Test]
@@ -299,6 +315,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
+            sourceTransformData.Transform.position = Vector3.one;
             subject.gameObject.SetActive(false);
 
             subject.Apply();
@@ -317,6 +334,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
+            sourceTransformData.Transform.position = Vector3.one;
             subject.enabled = false;
 
             subject.Apply();
@@ -333,6 +351,7 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.ApplyTransformations = TransformProperties.Position;
+            sourceTransformData.Transform.position = Vector3.one;
             subject.gameObject.SetActive(false);
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
@@ -348,6 +367,7 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.ApplyTransformations = TransformProperties.Position;
+            sourceTransformData.Transform.position = Vector3.one;
             subject.enabled = false;
 
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
