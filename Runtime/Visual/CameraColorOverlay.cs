@@ -132,6 +132,10 @@
         /// </summary>
         protected Coroutine blinkRoutine;
         /// <summary>
+        /// Delays the reset of <see cref="blinkRoutine"/> by <see cref="AddDuration"/> plus <see cref="AppliedDuration"/> seconds.
+        /// </summary>
+        protected WaitForSeconds resetDelayYieldInstruction;
+        /// <summary>
         /// The event data to be emitted throughout the process.
         /// </summary>
         protected readonly EventData eventData = new EventData();
@@ -162,12 +166,13 @@
         public virtual void Blink()
         {
             AddColorOverlay(OverlayColor, AddDuration);
-            blinkRoutine = StartCoroutine(ResetBlink(AddDuration + AppliedDuration));
+            blinkRoutine = StartCoroutine(ResetBlink());
         }
 
         protected virtual void OnEnable()
         {
             CopyMaterialOverlayToWorking();
+            OnAfterCheckDelayChange();
             Camera.onPostRender += PostRender;
         }
 
@@ -209,11 +214,10 @@
         /// <summary>
         /// Waits for the given wait duration and then removes the <see cref="Color"/> overlay over the remove duration.
         /// </summary>
-        /// <param name="givenWaitDuration">The duration in which to wait before removing the <see cref="Color"/> overlay.</param>
         /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
-        protected virtual IEnumerator ResetBlink(float givenWaitDuration)
+        protected virtual IEnumerator ResetBlink()
         {
-            yield return new WaitForSeconds(givenWaitDuration);
+            yield return resetDelayYieldInstruction;
             RemoveColorOverlay();
         }
 
@@ -290,6 +294,15 @@
         protected virtual void OnAfterOverlayMaterialChange()
         {
             CopyMaterialOverlayToWorking();
+        }
+
+        /// <summary>
+        /// Called after <see cref="AddDuration"/> or <see cref="AppliedDuration"/> have been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(AddDuration)), CalledAfterChangeOf(nameof(AppliedDuration))]
+        protected virtual void OnAfterCheckDelayChange()
+        {
+            resetDelayYieldInstruction = new WaitForSeconds(AddDuration + AppliedDuration);
         }
     }
 }
