@@ -75,5 +75,16 @@
         /// </summary>
         /// <param name="gameObject">The <see cref="GameObject"/> to create the <see cref="TransformData"/> from.</param>
         public TransformData(GameObject gameObject) : this(gameObject != null ? gameObject.transform : null) { }
+
+        /// <summary>
+        /// Clears the state back to <see langword="null"/>.
+        /// </summary>
+        public virtual void Clear()
+        {
+            Transform = null;
+            PositionOverride = null;
+            RotationOverride = null;
+            ScaleOverride = null;
+        }
     }
 }

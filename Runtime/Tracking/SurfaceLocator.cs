@@ -3,22 +3,35 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
+    using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Cast;
-    using Zinnia.Rule;
+    using Zinnia.Data.Type;
+    using Zinnia.Extension;
     using Zinnia.Process;
     using Zinnia.Process.Moment;
-    using Zinnia.Extension;
-    using Zinnia.Data.Type;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Casts a <see cref="Ray"/> in a given direction and looks for the nearest valid surface.
     /// </summary>
     public class SurfaceLocator : MonoBehaviour, IProcessable
     {
+        /// <summary>
+        /// Compares two instances of <see cref="RaycastHit"/>.
+        /// </summary>
+        protected class RayCastHitComparer : IComparer<RaycastHit>
+        {
+            /// <inheritdoc />
+            public virtual int Compare(RaycastHit x, RaycastHit y)
+            {
+                return (int)(x.distance - y.distance);
+            }
+        }
+
         /// <summary>
         /// Defines the event with the <see cref="SurfaceData"/>.
         /// </summary>
@@ -79,6 +92,14 @@
         /// The distance to consider a position change.
         /// </summary>
         protected const float DISTANCE_VARIANCE = 0.0001f;
+        /// <summary>
+        /// A reused comparer instance.
+        /// </summary>
+        protected static readonly RayCastHitComparer Comparer = new RayCastHitComparer();
+        /// <summary>
+        /// The comparison <see cref="Comparer"/> does.
+        /// </summary>
+        protected static readonly Comparison<RaycastHit> Comparison = Comparer.Compare;
         /// <summary>
         /// A reused data instance.
         /// </summary>
@@ -168,13 +189,14 @@
         /// <returns><see langword="true"/> if a valid surface is located.</returns>
         protected virtual bool FindAllCollisions(Ray tracerRaycast)
         {
-            RaycastHit[] raycastHits = PhysicsCast.RaycastAll(
+            ArraySegment<RaycastHit> raycastHits = PhysicsCast.RaycastAll(
                 PhysicsCast,
                 tracerRaycast,
                 MaximumDistance,
                 Physics.IgnoreRaycastLayer);
-            Array.Sort(raycastHits, (x, y) => (int)(x.distance - y.distance));
-            foreach (RaycastHit collision in raycastHits)
+            ArraySortExtensions<RaycastHit>.Sort(raycastHits.Array, raycastHits.Offset, raycastHits.Count, Comparer, Comparison);
+
+            foreach (RaycastHit collision in (HeapAllocationFreeReadOnlyList<RaycastHit>)raycastHits)
             {
                 if (ValidSurface(collision))
                 {
@@ -203,11 +225,7 @@
         /// <returns><see langword="true"/> if the <see cref="RaycastHit"/> data contains a valid surface.</returns>
         protected virtual bool ValidSurface(RaycastHit collisionData)
         {
-            if (TargetValidity != null && collisionData.transform != null)
-            {
-                return TargetValidity.Accepts(collisionData.transform.gameObject);
-            }
-            return true;
+            return collisionData.transform != null && TargetValidity.Accepts(collisionData.transform.gameObject);
         }
     }
 }

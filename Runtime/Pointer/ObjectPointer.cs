@@ -63,8 +63,9 @@
                 return this;
             }
 
-            public void Clear()
+            public override void Clear()
             {
+                base.Clear();
                 Set(default, default, default, default);
             }
         }

@@ -65,6 +65,11 @@
         }
 
         /// <summary>
+        /// A reusable instance of <see cref="WaitForEndOfFrame"/>.
+        /// </summary>
+        protected static readonly WaitForEndOfFrame DelayInstruction = new WaitForEndOfFrame();
+
+        /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
         [Serialized, Cleared]
@@ -147,7 +152,8 @@
         /// <param name="source">The data to build the new source from.</param>
         public virtual void SetSource(GameObject source)
         {
-            Source = source != null ? new TransformData(source) : null;
+            sourceTransformData.Clear();
+            sourceTransformData.Transform = source != null ? source.transform : null;
         }
 
         /// <summary>
@@ -174,17 +180,22 @@
         [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (Target == null || Source?.Transform == null)
+            if (Target == null || sourceTransformData.Transform == null)
             {
                 return;
             }
 
+            targetTransformData.Clear();
             targetTransformData.Transform = Target.transform;
-            BeforeTransformUpdated?.Invoke(eventData.Set(Source, targetTransformData));
-            Vector3 finalScale = CalculateScale(Source, targetTransformData);
-            Quaternion finalRotation = CalculateRotation(Source, targetTransformData);
-            Vector3 finalPosition = CalculatePosition(Source, targetTransformData, finalScale, finalRotation);
-            ProcessTransform(Source, targetTransformData, finalScale, finalRotation, finalPosition);
+            Vector3 finalScale = CalculateScale(sourceTransformData, targetTransformData);
+            Quaternion finalRotation = CalculateRotation(sourceTransformData, targetTransformData);
+            Vector3 finalPosition = CalculatePosition(sourceTransformData, targetTransformData, finalScale, finalRotation);
+            ProcessTransform(sourceTransformData, targetTransformData, finalScale, finalRotation, finalPosition);
+        }
+
+        protected virtual void OnEnable()
+        {
+            OnAfterSourceChange();
         }
 
         protected virtual void OnDisable()
@@ -293,6 +304,13 @@
         /// <param name="currentPosition">The current position to apply to the target.</param>
         protected virtual void ProcessTransform(TransformData source, TransformData target, Vector3 currentScale, Quaternion currentRotation, Vector3 currentPosition)
         {
+            if (ArePropertiesEqual(currentPosition, target.Position, currentRotation, target.Rotation, currentScale, target.Scale))
+            {
+                return;
+            }
+
+            BeforeTransformUpdated?.Invoke(eventData.Set(source, target));
+
             if (TransitionDuration.ApproxEquals(0f))
             {
                 target.Transform.SetGlobalScale(currentScale);
@@ -349,7 +367,6 @@
         protected virtual IEnumerator TransitionTransform(TransformData source, TransformData target, Vector3 startScale, Vector3 destinationScale, Quaternion startRotation, Quaternion destinationRotation, Vector3 startPosition, Vector3 destinationPosition)
         {
             float elapsedTime = 0f;
-            WaitForEndOfFrame delayInstruction = new WaitForEndOfFrame();
             while (elapsedTime < TransitionDuration)
             {
                 float lerpFrame = elapsedTime / TransitionDuration;
@@ -357,7 +374,7 @@
                 target.Transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
                 target.Transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
                 elapsedTime += ArePropertiesEqual(startPosition, destinationPosition, startRotation, destinationRotation, startScale, destinationScale) ? TransitionDuration : Time.deltaTime;
-                yield return delayInstruction;
+                yield return DelayInstruction;
             }
 
             target.Transform.SetGlobalScale(destinationScale);
@@ -389,10 +406,17 @@
         [CalledAfterChangeOf(nameof(Source))]
         protected virtual void OnAfterSourceChange()
         {
-            sourceTransformData.Transform = Source != null ? Source.Transform : null;
-            sourceTransformData.PositionOverride = null;
-            sourceTransformData.RotationOverride = null;
-            sourceTransformData.ScaleOverride = null;
+            sourceTransformData.Clear();
+
+            if (Source == null)
+            {
+                return;
+            }
+
+            sourceTransformData.Transform = Source.Transform;
+            sourceTransformData.PositionOverride = Source.PositionOverride;
+            sourceTransformData.RotationOverride = Source.RotationOverride;
+            sourceTransformData.ScaleOverride = Source.ScaleOverride;
         }
     }
 }

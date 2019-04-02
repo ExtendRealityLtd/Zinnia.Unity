@@ -42,14 +42,14 @@
             /// <summary>
             /// The points along the the most recent cast.
             /// </summary>
-            public AllocationFreeReadOnlyList<Vector3> Points { get; set; }
+            public HeapAllocationFreeReadOnlyList<Vector3> Points { get; set; }
 
             public EventData Set(EventData source)
             {
                 return Set(source.HitData, source.IsValid, source.Points);
             }
 
-            public EventData Set(RaycastHit? targetHit, bool isValid, AllocationFreeReadOnlyList<Vector3> points)
+            public EventData Set(RaycastHit? targetHit, bool isValid, HeapAllocationFreeReadOnlyList<Vector3> points)
             {
                 HitData = targetHit;
                 IsValid = isValid;
@@ -107,7 +107,7 @@
         /// <summary>
         /// The points along the the most recent cast.
         /// </summary>
-        public AllocationFreeReadOnlyList<Vector3> Points => points;
+        public HeapAllocationFreeReadOnlyList<Vector3> Points => points;
 
         /// <summary>
         /// The points along the the most recent cast.

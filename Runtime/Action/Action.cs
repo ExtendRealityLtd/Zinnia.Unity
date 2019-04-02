@@ -119,7 +119,7 @@
         /// <summary>
         /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public AllocationFreeReadOnlyList<TSelf> ReadOnlySources => Sources;
+        public HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => Sources;
 
         /// <inheritdoc />
         [RequiresBehaviourState]

@@ -1,4 +1,5 @@
-﻿using Zinnia.Utility;
+﻿using Zinnia.Data.Type;
+using Zinnia.Utility;
 
 namespace Test.Zinnia.Utility
 {
@@ -36,9 +37,9 @@ namespace Test.Zinnia.Utility
                 new Vector3(0f, -2f, 4f),
             };
 
-            Vector3[] actualResults = BezierCurveGenerator.GeneratePoints(curvePoints, controlPoints);
+            HeapAllocationFreeReadOnlyList<Vector3> actualResults = BezierCurveGenerator.GeneratePoints(curvePoints, controlPoints);
 
-            for (int index = 0; index < actualResults.Length; index++)
+            for (int index = 0; index < actualResults.Count; index++)
             {
                 Assert.AreEqual(expectedResults[index].ToString(), actualResults[index].ToString(), "index " + index);
             }

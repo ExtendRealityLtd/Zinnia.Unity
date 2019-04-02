@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// An <see cref="IProcessable"/> that runs a set method on each (or the first active) source collection against a collection of targets.
@@ -70,7 +71,7 @@
         /// </summary>
         /// <param name="sources">The sources to apply the data from.</param>
         /// <param name="targets">The targets to apply the data to.</param>
-        protected virtual void ApplySourcesToTargets(IReadOnlyList<TSource> sources, IReadOnlyList<TTarget> targets)
+        protected virtual void ApplySourcesToTargets(HeapAllocationFreeReadOnlyList<TSource> sources, HeapAllocationFreeReadOnlyList<TTarget> targets)
         {
             for (int sourceIndex = 0; sourceIndex < sources.Count; sourceIndex++)
             {
