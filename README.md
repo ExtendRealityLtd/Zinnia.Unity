@@ -12,13 +12,13 @@
 
 Zinnia is a collection of design patterns for the [Unity] software that can be beneficial in (but not limited to) spatial computing development.
 
-  > **Requires** the Unity software version 2018.3 (or above).
+  > **Requires** the Unity software version 2018.3.10f1 (or above).
 
 ## Getting Started
 
 ### Setting up a project
 
-* Using the Unity software version 2018.3 (or above), create a new project using the 3D Template or open an existing project.
+* Using the Unity software version 2018.3.10f1 (or above), create a new project using the 3D Template or open an existing project.
 * If the project requires Virtual Reality support:
   * Ensure `Virtual Reality Supported` is checked.
     * In the Unity software select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` window.
