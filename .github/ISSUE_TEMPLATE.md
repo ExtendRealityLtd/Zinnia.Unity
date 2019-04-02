@@ -9,8 +9,8 @@
 
 ### Environment
 
- * Version of Zinnia (Github release number) (Github branch and commit hash)
- * Version of the Unity software (e.g. Unity 2018.3)
+ * Version of Zinnia (GitHub release number) (GitHub branch and commit hash)
+ * Version of the Unity software (e.g. Unity 2018.3.10f1)
 
 ### Steps to reproduce
 
