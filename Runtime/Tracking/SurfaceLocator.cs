@@ -168,13 +168,13 @@
         /// <returns><see langword="true"/> if a valid surface is located.</returns>
         protected virtual bool FindAllCollisions(Ray tracerRaycast)
         {
-            RaycastHit[] raycastHits = PhysicsCast.RaycastAll(
+            ArraySegment<RaycastHit> raycastHits = PhysicsCast.RaycastAll(
                 PhysicsCast,
                 tracerRaycast,
                 MaximumDistance,
                 Physics.IgnoreRaycastLayer);
             Array.Sort(raycastHits, (x, y) => (int)(x.distance - y.distance));
-            foreach (RaycastHit collision in raycastHits)
+            foreach (RaycastHit collision in (HeapAllocationFreeReadOnlyList<RaycastHit>)raycastHits)
             {
                 if (ValidSurface(collision))
                 {

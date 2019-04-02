@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Cast
 {
     using UnityEngine;
+    using System;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
 
@@ -9,6 +10,15 @@
     /// </summary>
     public class PhysicsCast : MonoBehaviour
     {
+        /// <summary>
+        /// A reusable array of <see cref="RaycastHit"/>s to use with non-allocating <see cref="Physics"/> API.
+        /// </summary>
+        protected static readonly RaycastHit[] Hits = new RaycastHit[1000];
+        /// <summary>
+        /// A reusable array of <see cref="Collider"/>s to use with non-allocating <see cref="Physics"/> API.
+        /// </summary>
+        protected static readonly Collider[] Colliders = new Collider[1000];
+
         /// <summary>
         /// The layers to ignore when casting.
         /// </summary>
@@ -53,7 +63,7 @@
         /// <param name="ignoreLayers">A <see cref="LayerMask"/> of layers to ignore from the <see cref="Ray"/>.</param>
         /// <param name="affectTriggers">Determines the trigger interaction level of the <see cref="Ray"/>.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public static RaycastHit[] RaycastAll(PhysicsCast customCast, Ray ray, float length, LayerMask ignoreLayers, QueryTriggerInteraction affectTriggers = QueryTriggerInteraction.UseGlobal)
+        public static ArraySegment<RaycastHit> RaycastAll(PhysicsCast customCast, Ray ray, float length, LayerMask ignoreLayers, QueryTriggerInteraction affectTriggers = QueryTriggerInteraction.UseGlobal)
         {
             if (customCast != null)
             {
@@ -61,7 +71,8 @@
             }
             else
             {
-                return Physics.RaycastAll(ray, length, ~ignoreLayers, affectTriggers);
+                int count = Physics.RaycastNonAlloc(ray, Hits, length, ~ignoreLayers, affectTriggers);
+                return new ArraySegment<RaycastHit>(Hits, 0, count);
             }
         }
 
@@ -122,7 +133,7 @@
         /// <param name="ignoreLayers">A <see cref="LayerMask"/> of layers to ignore from the SphereCast.</param>
         /// <param name="affectTriggers">Determines the trigger interaction level of the cast.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public static RaycastHit[] SphereCastAll(PhysicsCast customCast, Vector3 origin, float radius, Vector3 direction, float maxDistance, LayerMask ignoreLayers, QueryTriggerInteraction affectTriggers = QueryTriggerInteraction.UseGlobal)
+        public static ArraySegment<RaycastHit> SphereCastAll(PhysicsCast customCast, Vector3 origin, float radius, Vector3 direction, float maxDistance, LayerMask ignoreLayers, QueryTriggerInteraction affectTriggers = QueryTriggerInteraction.UseGlobal)
         {
             if (customCast != null)
             {
@@ -130,7 +141,30 @@
             }
             else
             {
-                return Physics.SphereCastAll(origin, radius, direction, maxDistance, ~ignoreLayers, affectTriggers);
+                int count = Physics.SphereCastNonAlloc(origin, radius, direction, Hits, maxDistance, ~ignoreLayers, affectTriggers);
+                return new ArraySegment<RaycastHit>(Hits, 0, count);
+            }
+        }
+
+        /// <summary>
+        /// Returns an array segment with all colliders touching or inside a sphere with an optional from the given <see cref="PhysicsCast"/> object to override some parameters.
+        /// </summary>
+        /// <param name="customCast">The optional <see cref="PhysicsCast"/> with customized cast parameters.</param>
+        /// <param name="center">The center of the sphere.</param>
+        /// <param name="radius">The radius of the sphere.</param>
+        /// <param name="ignoreLayers">The layers to ignore..</param>
+        /// <param name="affectTriggers">The trigger interaction to use.</param>
+        /// <returns>The colliders touching or inside the sphere.</returns>
+        public static ArraySegment<Collider> OverlapSphereAll(PhysicsCast customCast, Vector3 center, float radius, LayerMask ignoreLayers, QueryTriggerInteraction affectTriggers = QueryTriggerInteraction.UseGlobal)
+        {
+            if (customCast != null)
+            {
+                return customCast.CustomOverlapSphereAll(center, radius);
+            }
+            else
+            {
+                int count = Physics.OverlapSphereNonAlloc(center, radius, Colliders, ~ignoreLayers, affectTriggers);
+                return new ArraySegment<Collider>(Colliders, 0, count);
             }
         }
 
@@ -171,7 +205,7 @@
         /// <param name="ignoreLayers">A <see cref="LayerMask"/> of layers to ignore from the CapsuleCast.</param>
         /// <param name="affectTriggers">Determines the trigger interaction level of the cast.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public static RaycastHit[] CapsuleCastAll(PhysicsCast customCast, Vector3 point1, Vector3 point2, float radius, Vector3 direction, float maxDistance, LayerMask ignoreLayers, QueryTriggerInteraction affectTriggers = QueryTriggerInteraction.UseGlobal)
+        public static ArraySegment<RaycastHit> CapsuleCastAll(PhysicsCast customCast, Vector3 point1, Vector3 point2, float radius, Vector3 direction, float maxDistance, LayerMask ignoreLayers, QueryTriggerInteraction affectTriggers = QueryTriggerInteraction.UseGlobal)
         {
             if (customCast != null)
             {
@@ -179,7 +213,8 @@
             }
             else
             {
-                return Physics.CapsuleCastAll(point1, point2, radius, direction, maxDistance, ~ignoreLayers, affectTriggers);
+                int count = Physics.CapsuleCastNonAlloc(point1, point2, radius, direction, Hits, maxDistance, ~ignoreLayers, affectTriggers);
+                return new ArraySegment<RaycastHit>(Hits, 0, count);
             }
         }
 
@@ -220,7 +255,7 @@
         /// <param name="ignoreLayers">A <see cref="LayerMask"/> of layers to ignore from the BoxCast.</param>
         /// <param name="affectTriggers">Determines the trigger interaction level of the cast.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public static RaycastHit[] BoxCastAll(PhysicsCast customCast, Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance, LayerMask ignoreLayers, QueryTriggerInteraction affectTriggers = QueryTriggerInteraction.UseGlobal)
+        public static ArraySegment<RaycastHit> BoxCastAll(PhysicsCast customCast, Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance, LayerMask ignoreLayers, QueryTriggerInteraction affectTriggers = QueryTriggerInteraction.UseGlobal)
         {
             if (customCast != null)
             {
@@ -228,7 +263,8 @@
             }
             else
             {
-                return Physics.BoxCastAll(center, halfExtents, direction, orientation, maxDistance, ~ignoreLayers, affectTriggers);
+                int count = Physics.BoxCastNonAlloc(center, halfExtents, direction, Hits, orientation, maxDistance, ~ignoreLayers, affectTriggers);
+                return new ArraySegment<RaycastHit>(Hits, 0, count);
             }
         }
 
@@ -250,9 +286,10 @@
         /// <param name="ray">The <see cref="Ray"/> to cast with.</param>
         /// <param name="length">The maximum length of the <see cref="Ray"/>.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public virtual RaycastHit[] CustomRaycastAll(Ray ray, float length)
+        public virtual ArraySegment<RaycastHit> CustomRaycastAll(Ray ray, float length)
         {
-            return Physics.RaycastAll(ray, length, ~LayersToIgnore, TriggerInteraction);
+            int count = Physics.RaycastNonAlloc(ray, Hits, length, ~LayersToIgnore, TriggerInteraction);
+            return new ArraySegment<RaycastHit>(Hits, 0, count);
         }
 
         /// <summary>
@@ -289,9 +326,22 @@
         /// <param name="direction">The direction into which to sweep the spherecast.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public virtual RaycastHit[] CustomSphereCastAll(Vector3 origin, float radius, Vector3 direction, float maxDistance)
+        public virtual ArraySegment<RaycastHit> CustomSphereCastAll(Vector3 origin, float radius, Vector3 direction, float maxDistance)
         {
-            return Physics.SphereCastAll(origin, radius, direction, maxDistance, ~LayersToIgnore, TriggerInteraction);
+            int count = Physics.SphereCastNonAlloc(origin, radius, direction, Hits, maxDistance, ~LayersToIgnore, TriggerInteraction);
+            return new ArraySegment<RaycastHit>(Hits, 0, count);
+        }
+
+        /// <summary>
+        /// Returns an array segment with all colliders touching or inside a sphere based on the options defined in the <see cref="PhysicsCast"/> object.
+        /// </summary>
+        /// <param name="center">The center of the sphere.</param>
+        /// <param name="radius">The radius of the sphere.</param>
+        /// <returns>The colliders touching or inside the sphere.</returns>
+        public virtual ArraySegment<Collider> CustomOverlapSphereAll(Vector3 center, float radius)
+        {
+            int count = Physics.OverlapSphereNonAlloc(center, radius, Colliders, ~LayersToIgnore, TriggerInteraction);
+            return new ArraySegment<Collider>(Colliders, 0, count);
         }
 
         /// <summary>
@@ -318,9 +368,10 @@
         /// <param name="direction">The direction into which to sweep the capsulecast.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public virtual RaycastHit[] CustomCapsuleCastAll(Vector3 point1, Vector3 point2, float radius, Vector3 direction, float maxDistance)
+        public virtual ArraySegment<RaycastHit> CustomCapsuleCastAll(Vector3 point1, Vector3 point2, float radius, Vector3 direction, float maxDistance)
         {
-            return Physics.CapsuleCastAll(point1, point2, radius, direction, maxDistance, ~LayersToIgnore, TriggerInteraction);
+            int count = Physics.CapsuleCastNonAlloc(point1, point2, radius, direction, Hits, maxDistance, ~LayersToIgnore, TriggerInteraction);
+            return new ArraySegment<RaycastHit>(Hits, 0, count);
         }
 
         /// <summary>
@@ -347,9 +398,10 @@
         /// <param name="orientation">The rotation of the boxcast.</param>
         /// <param name="maxDistance">The max length of the boxcast.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public virtual RaycastHit[] CustomBoxCastAll(Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance)
+        public virtual ArraySegment<RaycastHit> CustomBoxCastAll(Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance)
         {
-            return Physics.BoxCastAll(center, halfExtents, direction, orientation, maxDistance, ~LayersToIgnore, TriggerInteraction);
+            int count = Physics.BoxCastNonAlloc(center, halfExtents, direction, Hits, orientation, maxDistance, ~LayersToIgnore, TriggerInteraction);
+            return new ArraySegment<RaycastHit>(Hits, 0, count);
         }
     }
 }
