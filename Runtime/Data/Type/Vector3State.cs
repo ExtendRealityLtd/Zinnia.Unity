@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Type
 {
+    using UnityEngine;
     using System;
     using Malimbe.XmlDocumentationAttribute;
 
@@ -61,6 +62,15 @@
             xState = x;
             yState = y;
             zState = z;
+        }
+
+        /// <summary>
+        /// Returns the current state as a <see cref="Vector3"/> representation.
+        /// </summary>
+        /// <returns>The representation of the current state.</returns>
+        public Vector3 ToVector3()
+        {
+            return new Vector3(xState ? 1f : 0f, yState ? 1f : 0f, zState ? 1f : 0f);
         }
     }
 }
