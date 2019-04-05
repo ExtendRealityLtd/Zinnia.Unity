@@ -70,7 +70,7 @@
         }
 
         /// <summary>
-        /// A <see cref="GameObject"/> collection of target offsets to offset the target against the source whilst following.
+        /// A <see cref="GameObject"/> collection of target offsets to offset the <see cref="GameObjectSourceTargetProcessor.Targets"/> against the source whilst following. The <see cref="GameObject"/> for the target offset must be a child of the corresponding target.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
@@ -112,7 +112,7 @@
             GameObject followOffset = GetFollowOffset();
             if (followOffset != null && !followOffset.transform.IsChildOf(Targets.NonSubscribableElements[Targets.CurrentIndex].transform))
             {
-                throw new ArgumentException($"The `targetOffsets` at index [{Targets.CurrentIndex}] must be a child of the GameObject at `targets` index [{Targets.CurrentIndex}].");
+                throw new ArgumentException($"The `TargetOffsets` at index [{Targets.CurrentIndex}] must be a child of the GameObject at `Targets` index [{Targets.CurrentIndex}].");
             }
             FollowModifier.Modify(source, target, followOffset);
         }
