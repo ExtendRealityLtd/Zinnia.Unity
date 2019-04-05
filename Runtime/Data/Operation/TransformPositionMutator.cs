@@ -2,20 +2,20 @@
 {
     using UnityEngine;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
-    /// Mutates the position of a transform with an optional rotation offset.
+    /// Mutates the position of a transform with an optional facing direction.
     /// </summary>
     public class TransformPositionMutator : TransformPropertyMutator
     {
         /// <summary>
-        /// An optional rotation offset.
+        /// Determines the facing direction when mutating the position.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
-        public GameObject RotationOffset { get; set; }
+        public GameObject FacingDirection { get; set; }
 
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)
@@ -32,34 +32,34 @@
         /// <inheritdoc/>
         protected override Vector3 IncrementGlobal(Vector3 input)
         {
-            return Target.transform.position += LockIncrementInput(GetRotationOffset() * input);
+            return Target.transform.position += LockIncrementInput(GetFacingDirection() * input);
         }
 
         /// <inheritdoc/>
         protected override Vector3 IncrementLocal(Vector3 input)
         {
-            return Target.transform.localPosition += LockIncrementInput(GetRotationOffset() * input);
+            return Target.transform.localPosition += LockIncrementInput(GetFacingDirection() * input);
         }
 
         /// <inheritdoc/>
         protected override Vector3 SetGlobal(Vector3 input)
         {
-            return Target.transform.position = LockSetInput(GetRotationOffset() * input);
+            return Target.transform.position = LockSetInput(GetFacingDirection() * input);
         }
 
         /// <inheritdoc/>
         protected override Vector3 SetLocal(Vector3 input)
         {
-            return Target.transform.localPosition = LockSetInput(GetRotationOffset() * input);
+            return Target.transform.localPosition = LockSetInput(GetFacingDirection() * input);
         }
 
         /// <summary>
-        /// Determines the value to use for the rotation offset.
+        /// Determines the value to use for the facing direction.
         /// </summary>
-        /// <returns>The rotation offset.</returns>
-        protected virtual Quaternion GetRotationOffset()
+        /// <returns>The facing direction.</returns>
+        protected virtual Quaternion GetFacingDirection()
         {
-            return RotationOffset == null ? Quaternion.identity : (UseLocalValues ? RotationOffset.transform.localRotation : RotationOffset.transform.rotation);
+            return FacingDirection == null ? Quaternion.identity : (UseLocalValues ? FacingDirection.transform.localRotation : FacingDirection.transform.rotation);
         }
     }
 }

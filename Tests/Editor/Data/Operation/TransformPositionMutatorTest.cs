@@ -211,7 +211,7 @@ namespace Test.Zinnia.Data.Operation
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
-            subject.RotationOffset = offset;
+            subject.FacingDirection = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -235,7 +235,7 @@ namespace Test.Zinnia.Data.Operation
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = Vector3State.True;
-            subject.RotationOffset = offset;
+            subject.FacingDirection = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -259,7 +259,7 @@ namespace Test.Zinnia.Data.Operation
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = new Vector3State(true, false, true);
-            subject.RotationOffset = offset;
+            subject.FacingDirection = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -284,7 +284,7 @@ namespace Test.Zinnia.Data.Operation
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = new Vector3State(false, true, false);
-            subject.RotationOffset = offset;
+            subject.FacingDirection = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -309,7 +309,7 @@ namespace Test.Zinnia.Data.Operation
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
-            subject.RotationOffset = offset;
+            subject.FacingDirection = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -340,7 +340,7 @@ namespace Test.Zinnia.Data.Operation
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = Vector3State.True;
-            subject.RotationOffset = offset;
+            subject.FacingDirection = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
@@ -370,7 +370,7 @@ namespace Test.Zinnia.Data.Operation
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = new Vector3State(true, false, true);
-            subject.RotationOffset = offset;
+            subject.FacingDirection = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.localPosition);
 
@@ -401,7 +401,7 @@ namespace Test.Zinnia.Data.Operation
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = new Vector3State(false, true, false);
-            subject.RotationOffset = offset;
+            subject.FacingDirection = offset;
 
             Assert.AreEqual(Vector3.zero, target.transform.position);
 
