@@ -24,11 +24,28 @@
         public TCollection Collection { get; set; }
 
         /// <summary>
-        /// Processes the given input by adding it to the collection at the given index and sums the collection total.
+        /// Processes the current collection and aggregates the collection total.
+        /// </summary>
+        /// <returns>The aggregated value of all values in the collection.</returns>
+        public virtual TOutput Transform()
+        {
+            return Transform(Collection.NonSubscribableElements[Collection.CurrentIndex]);
+        }
+
+        /// <summary>
+        /// Processes the current collection and aggregates the collection total.
+        /// </summary>
+        public virtual void DoTransform()
+        {
+            Transform();
+        }
+
+        /// <summary>
+        /// Processes the given input by adding it to the collection at the given index and aggregates the collection total.
         /// </summary>
         /// <param name="input">The value to add to the collection.</param>
         /// <param name="index">The index of the collection to set the value at.</param>
-        /// <returns>The summed value of all values in the collection.</returns>
+        /// <returns>The aggregated value of all values in the collection.</returns>
         public virtual TOutput Transform(TInput input, int index)
         {
             Collection.CurrentIndex = index;
@@ -36,7 +53,7 @@
         }
 
         /// <summary>
-        /// Processes the given input by adding it to the collection at the given index and sums the collection total.
+        /// Processes the given input by adding it to the collection at the given index and aggregates the collection total.
         /// </summary>
         /// <param name="input">The value to add to the collection.</param>
         /// <param name="index">The index of the collection to set the value at.</param>

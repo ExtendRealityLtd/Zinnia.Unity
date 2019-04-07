@@ -51,6 +51,27 @@ namespace Test.Zinnia.Data.Type.Transformation
         }
 
         [Test]
+        public void TransformPredefinedCollection()
+        {
+            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            subject.Transformed.AddListener(transformedListenerMock.Listen);
+            Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(new Vector3(3f, 4f, 5f));
+            subject.Collection.Add(new Vector3(2f, 3f, 4f));
+
+            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.IsFalse(transformedListenerMock.Received);
+
+            Vector3 result = subject.Transform();
+            Vector3 expectedResult = new Vector3(6f, 12f, 20f);
+
+            Assert.AreEqual(expectedResult, result);
+            Assert.AreEqual(expectedResult, subject.Result);
+            Assert.IsTrue(transformedListenerMock.Received);
+        }
+
+        [Test]
         public void TransformInactiveGameObject()
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();

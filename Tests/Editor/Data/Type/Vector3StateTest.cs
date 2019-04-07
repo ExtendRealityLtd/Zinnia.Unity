@@ -2,6 +2,7 @@
 
 namespace Test.Zinnia.Data.Type
 {
+    using UnityEngine;
     using NUnit.Framework;
 
     public class Vector3StateTest
@@ -58,6 +59,15 @@ namespace Test.Zinnia.Data.Type
             Assert.IsFalse(actualResult.xState);
             Assert.IsTrue(actualResult.yState);
             Assert.IsFalse(actualResult.zState);
+        }
+
+        [Test]
+        public void ToVector3()
+        {
+            Assert.AreEqual(new Vector3(0f, 0f, 0f), new Vector3State(false, false, false).ToVector3());
+            Assert.AreEqual(new Vector3(1f, 1f, 1f), new Vector3State(true, true, true).ToVector3());
+            Assert.AreEqual(new Vector3(1f, 0f, 1f), new Vector3State(true, false, true).ToVector3());
+            Assert.AreEqual(new Vector3(0f, 1f, 0f), new Vector3State(false, true, false).ToVector3());
         }
     }
 }

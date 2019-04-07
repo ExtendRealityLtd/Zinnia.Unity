@@ -106,6 +106,33 @@ namespace Test.Zinnia.Data.Operation
         }
 
         [Test]
+        public void SetPropertyWithOrigin()
+        {
+            GameObject target = new GameObject();
+            GameObject origin = new GameObject();
+            origin.transform.SetParent(target.transform);
+
+            subject.Target = target;
+            subject.Origin = origin;
+            subject.MutateOnAxis = new Vector3State(false, true, false);
+
+            origin.transform.position = new Vector3(1f, 0f, 1f);
+
+            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+
+            Vector3 inputRotation = new Vector3(10f, 20f, 30f);
+            Vector3 expectedRotation = new Vector3(0f, 20f, 0f);
+            Vector3 expectedPosition = new Vector3(-0.3f, 0f, 0.4f);
+
+            subject.SetProperty(inputRotation);
+
+            Assert.AreEqual(expectedRotation.ToString(), target.transform.eulerAngles.ToString());
+            Assert.AreEqual(expectedPosition.ToString(), target.transform.position.ToString());
+
+            Object.DestroyImmediate(target);
+        }
+
+        [Test]
         public void IncrementPropertyLocal()
         {
             GameObject target = new GameObject();
@@ -199,6 +226,46 @@ namespace Test.Zinnia.Data.Operation
             Assert.AreEqual((expected * 2f).ToString(), target.transform.eulerAngles.ToString());
 
             Object.DestroyImmediate(target);
+        }
+
+        [Test]
+        public void IncrementPropertyWithOrigin()
+        {
+            GameObject target = new GameObject();
+            GameObject origin = new GameObject();
+            origin.transform.SetParent(target.transform);
+
+            subject.Target = target;
+            subject.Origin = origin;
+            subject.MutateOnAxis = new Vector3State(false, true, false);
+
+            origin.transform.position = new Vector3(1f, 0f, 1f);
+
+            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+
+            Vector3 inputRotation = new Vector3(10f, 20f, 30f);
+            Vector3 expectedRotation = new Vector3(0f, 20f, 0f);
+            Vector3 expectedPosition = new Vector3(-0.3f, 0f, 0.4f);
+
+            subject.IncrementProperty(inputRotation);
+
+            Assert.AreEqual(expectedRotation.ToString(), target.transform.eulerAngles.ToString());
+            Assert.AreEqual(expectedPosition.ToString(), target.transform.position.ToString());
+
+            Object.DestroyImmediate(target);
+        }
+
+        [Test]
+        public void OriginNotChildException()
+        {
+            GameObject target = new GameObject();
+            GameObject origin = new GameObject();
+            subject.Target = target;
+
+            Assert.Throws<System.ArgumentException>(() => subject.Origin = origin);
+
+            Object.DestroyImmediate(target);
+            Object.DestroyImmediate(origin);
         }
 
         [Test]
