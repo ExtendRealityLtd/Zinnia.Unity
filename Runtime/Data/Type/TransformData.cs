@@ -18,6 +18,12 @@
         [field: DocumentedByXml]
         public Transform Transform { get; set; }
         /// <summary>
+        /// Determines whether to operate on the local or global values.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool UseLocalValues { get; set; }
+        /// <summary>
         /// Position override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
         [Serialized]
@@ -39,17 +45,17 @@
         /// <summary>
         /// The position of the <see cref="UnityEngine.Transform"/> or the <see cref="PositionOverride"/> if it is set.
         /// </summary>
-        public Vector3 Position => PositionOverride ?? Transform.position;
+        public Vector3 Position => PositionOverride ?? (UseLocalValues ? Transform.localPosition : Transform.position);
 
         /// <summary>
         /// The rotation of the <see cref="UnityEngine.Transform"/> or the <see cref="RotationOverride"/> if it is set.
         /// </summary>
-        public Quaternion Rotation => RotationOverride ?? Transform.rotation;
+        public Quaternion Rotation => RotationOverride ?? (UseLocalValues ? Transform.localRotation : Transform.rotation);
 
         /// <summary>
         /// The scale of the <see cref="UnityEngine.Transform"/> or the <see cref="ScaleOverride"/> if it is set.
         /// </summary>
-        public Vector3 Scale => ScaleOverride ?? Transform.lossyScale;
+        public Vector3 Scale => ScaleOverride ?? (UseLocalValues ? Transform.localScale : Transform.lossyScale);
 
         /// <summary>
         /// The state of whether the <see cref="TransformData"/> is valid.
@@ -82,6 +88,7 @@
         public virtual void Clear()
         {
             Transform = null;
+            UseLocalValues = false;
             PositionOverride = null;
             RotationOverride = null;
             ScaleOverride = null;

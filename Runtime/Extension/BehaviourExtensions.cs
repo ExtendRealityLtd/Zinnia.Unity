@@ -17,6 +17,12 @@
         {
             void OnBeforeRender()
             {
+                if (behaviour == null)
+                {
+                    Application.onBeforeRender -= OnBeforeRender;
+                    return;
+                }
+
                 if (!behaviour.isActiveAndEnabled)
                 {
                     return;

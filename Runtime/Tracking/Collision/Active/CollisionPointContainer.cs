@@ -102,8 +102,13 @@
                 return;
             }
 
+
+            if (Container.activeInHierarchy && gameObject.activeInHierarchy)
+            {
+                Container.transform.parent = transform;
+            }
+
             Container.SetActive(false);
-            Container.transform.parent = transform;
             IsSet = false;
             PointUnset?.Invoke(Container);
         }

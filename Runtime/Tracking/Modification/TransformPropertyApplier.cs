@@ -187,6 +187,7 @@
 
             targetTransformData.Clear();
             targetTransformData.Transform = Target.transform;
+            targetTransformData.UseLocalValues = sourceTransformData.UseLocalValues;
             Vector3 finalScale = CalculateScale(sourceTransformData, targetTransformData);
             Quaternion finalRotation = CalculateRotation(sourceTransformData, targetTransformData);
             Vector3 finalPosition = CalculatePosition(sourceTransformData, targetTransformData, finalScale, finalRotation);
@@ -299,12 +300,12 @@
         /// </summary>
         /// <param name="source">The source <see cref="TransformData"/> to obtain the transformation properties from.</param>
         /// <param name="target">The target <see cref="TransformData"/> to apply transformations to.</param>
-        /// <param name="currentScale">The current scale to apply to the target.</param>
-        /// <param name="currentRotation">The current rotation to apply to the target.</param>
-        /// <param name="currentPosition">The current position to apply to the target.</param>
-        protected virtual void ProcessTransform(TransformData source, TransformData target, Vector3 currentScale, Quaternion currentRotation, Vector3 currentPosition)
+        /// <param name="targetScale">The scale to apply to the target.</param>
+        /// <param name="targetRotation">The rotation to apply to the target.</param>
+        /// <param name="targetPosition">The position to apply to the target.</param>
+        protected virtual void ProcessTransform(TransformData source, TransformData target, Vector3 targetScale, Quaternion targetRotation, Vector3 targetPosition)
         {
-            if (ArePropertiesEqual(currentPosition, target.Position, currentRotation, target.Rotation, currentScale, target.Scale))
+            if (ArePropertiesEqual(targetPosition, target.Position, targetRotation, target.Rotation, targetScale, target.Scale))
             {
                 return;
             }
@@ -313,15 +314,13 @@
 
             if (TransitionDuration.ApproxEquals(0f))
             {
-                target.Transform.SetGlobalScale(currentScale);
-                target.Transform.rotation = currentRotation;
-                target.Transform.position = currentPosition;
+                UpdateTransformProperties(target.Transform, targetScale, targetRotation, targetPosition, target.UseLocalValues);
                 AfterTransformUpdated?.Invoke(eventData.Set(source, target));
             }
             else
             {
                 CancelTransition();
-                transitionRoutine = StartCoroutine(TransitionTransform(source, target, target.Scale, currentScale, target.Rotation, currentRotation, target.Position, currentPosition));
+                transitionRoutine = StartCoroutine(TransitionTransform(source, target, target.Scale, targetScale, target.Rotation, targetRotation, target.Position, targetPosition));
             }
         }
 
@@ -369,17 +368,23 @@
             float elapsedTime = 0f;
             while (elapsedTime < TransitionDuration)
             {
+                if (ArePropertiesEqual(startPosition, destinationPosition, startRotation, destinationRotation, startScale, destinationScale))
+                {
+                    break;
+                }
+
                 float lerpFrame = elapsedTime / TransitionDuration;
-                target.Transform.SetGlobalScale(Vector3.Lerp(startScale, destinationScale, lerpFrame));
-                target.Transform.position = Vector3.Lerp(startPosition, destinationPosition, lerpFrame);
-                target.Transform.rotation = Quaternion.Lerp(startRotation, destinationRotation, lerpFrame);
-                elapsedTime += ArePropertiesEqual(startPosition, destinationPosition, startRotation, destinationRotation, startScale, destinationScale) ? TransitionDuration : Time.deltaTime;
+                UpdateTransformProperties(target.Transform,
+                    Vector3.Lerp(startScale, destinationScale, lerpFrame),
+                    Quaternion.Lerp(startRotation, destinationRotation, lerpFrame),
+                    Vector3.Lerp(startPosition, destinationPosition, lerpFrame),
+                    target.UseLocalValues);
+
+                elapsedTime += Time.deltaTime;
                 yield return DelayInstruction;
             }
 
-            target.Transform.SetGlobalScale(destinationScale);
-            target.Transform.position = destinationPosition;
-            target.Transform.rotation = destinationRotation;
+            UpdateTransformProperties(target.Transform, destinationScale, destinationRotation, destinationPosition, target.UseLocalValues);
             AfterTransformUpdated?.Invoke(eventData.Set(source, target));
         }
 
@@ -400,6 +405,31 @@
                 && startScale.ApproxEquals(destinationScale, TransitionDestinationThreshold);
         }
 
+
+        /// <summary>
+        /// Updates the <see cref="Transform"/> properties on the given <see cref="target"/>.
+        /// </summary>
+        /// <param name="target">The <see cref="Transform"/> to update the properties on.</param>
+        /// <param name="scale">The scale to set to.</param>
+        /// <param name="rotation">The rotation to set to.</param>
+        /// <param name="position">The position to set to.</param>
+        /// <param name="setLocalValues">Whether to set the local or world properties.</param>
+        protected virtual void UpdateTransformProperties(Transform target, Vector3 scale, Quaternion rotation, Vector3 position, bool setLocalValues)
+        {
+            if (setLocalValues)
+            {
+                target.localScale = scale;
+                target.localRotation = rotation;
+                target.localPosition = position;
+            }
+            else
+            {
+                target.SetGlobalScale(scale);
+                target.rotation = rotation;
+                target.position = position;
+            }
+        }
+
         /// <summary>
         /// Called after <see cref="Source"/> has been changed.
         /// </summary>
@@ -414,6 +444,7 @@
             }
 
             sourceTransformData.Transform = Source.Transform;
+            sourceTransformData.UseLocalValues = Source.UseLocalValues;
             sourceTransformData.PositionOverride = Source.PositionOverride;
             sourceTransformData.RotationOverride = Source.RotationOverride;
             sourceTransformData.ScaleOverride = Source.ScaleOverride;
