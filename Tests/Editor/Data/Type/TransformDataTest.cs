@@ -24,6 +24,19 @@ namespace Test.Zinnia.Data.Type
         }
 
         [Test]
+        public void Clear()
+        {
+            Transform defaultTransform = new GameObject().transform;
+            TransformData transformData = new TransformData(defaultTransform);
+
+            transformData.Clear();
+
+            Assert.IsNull(transformData.Transform);
+
+            Object.DestroyImmediate(defaultTransform.gameObject);
+        }
+
+        [Test]
         public void OverridePosition()
         {
             Transform defaultTransform = new GameObject().transform;
@@ -55,6 +68,27 @@ namespace Test.Zinnia.Data.Type
             transformData.ScaleOverride = Vector3.zero;
             Assert.AreEqual(Vector3.zero, transformData.Scale);
             Object.DestroyImmediate(defaultTransform.gameObject);
+        }
+
+        [Test]
+        public void UseLocalValues()
+        {
+            Transform parent = new GameObject().transform;
+            Transform child = new GameObject().transform;
+
+            child.SetParent(parent);
+            parent.localPosition = Vector3.one;
+            child.localPosition = Vector3.one * 2f;
+
+            TransformData transformData = new TransformData(child);
+
+            Assert.AreEqual(Vector3.one * 3f, transformData.Position);
+
+            transformData.UseLocalValues = true;
+
+            Assert.AreEqual(Vector3.one * 2f, transformData.Position);
+
+            Object.DestroyImmediate(parent.gameObject);
         }
     }
 }
