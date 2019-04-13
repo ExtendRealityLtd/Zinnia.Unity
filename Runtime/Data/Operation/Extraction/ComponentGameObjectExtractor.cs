@@ -1,4 +1,4 @@
-﻿namespace Zinnia.Event.Emission
+﻿namespace Zinnia.Data.Operation.Extraction
 {
     using UnityEngine;
     using Malimbe.MemberClearanceMethod;
@@ -6,9 +6,9 @@
     using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
-    /// Extracts the <see cref="GameObject"/> from the <see cref="Source"/> and emits an event containing the result.
+    /// Extracts and emits the <see cref="Source"/> residing <see cref="GameObject"/>.
     /// </summary>
-    public class ComponentGameObjectEmitter : GameObjectEmitter
+    public class ComponentGameObjectExtractor : GameObjectExtractor
     {
         /// <summary>
         /// The source to extract from.

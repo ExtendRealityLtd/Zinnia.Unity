@@ -1,6 +1,6 @@
-﻿using Zinnia.Event.Emission;
+﻿using Zinnia.Data.Operation.Extraction;
 
-namespace Test.Zinnia.Event.Emission
+namespace Test.Zinnia.Data.Operation.Extraction
 {
     using UnityEngine;
     using NUnit.Framework;
@@ -9,13 +9,13 @@ namespace Test.Zinnia.Event.Emission
     public class ComponentGameObjectEmitterTest
     {
         private GameObject containingObject;
-        private ComponentGameObjectEmitter subject;
+        private ComponentGameObjectExtractor subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<ComponentGameObjectEmitter>();
+            subject = containingObject.AddComponent<ComponentGameObjectExtractor>();
         }
 
         [TearDown]

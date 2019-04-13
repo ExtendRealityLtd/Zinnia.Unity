@@ -1,4 +1,4 @@
-﻿namespace Zinnia.Event.Emission
+﻿namespace Zinnia.Data.Operation.Extraction
 {
     using UnityEngine;
     using UnityEngine.Events;
@@ -6,9 +6,9 @@
     using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
-    /// Provides the basis for allowing a <see cref="GameObject"/> to be extracted and emitted in an event.
+    /// Provides the basis for emitting the <see cref="GameObject"/> that any concrete implementation is residing on.
     /// </summary>
-    public abstract class GameObjectEmitter : MonoBehaviour
+    public abstract class GameObjectExtractor : MonoBehaviour
     {
         /// <summary>
         /// Defines the event with the specified <see cref="GameObject"/>.

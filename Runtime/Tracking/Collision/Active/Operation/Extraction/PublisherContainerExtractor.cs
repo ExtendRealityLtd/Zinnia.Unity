@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation.Extraction
 {
     using UnityEngine;
-    using Zinnia.Event.Emission;
+    using Zinnia.Data.Operation.Extraction;
 
     /// <summary>
     /// Extracts the source container from a given <see cref="ActiveCollisionPublisher.PayloadData"/>.
     /// </summary>
-    public class PublisherContainerExtractor : GameObjectEmitter
+    public class PublisherContainerExtractor : GameObjectExtractor
     {
         /// <summary>
         /// Extracts the source container from the given publisher payload data.

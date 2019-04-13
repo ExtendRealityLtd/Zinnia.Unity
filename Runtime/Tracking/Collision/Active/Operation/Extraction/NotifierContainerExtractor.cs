@@ -1,37 +1,37 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation.Extraction
 {
     using UnityEngine;
-    using Zinnia.Event.Emission;
+    using Zinnia.Data.Operation.Extraction;
 
     /// <summary>
     /// Extracts the forward source container from a given <see cref="CollisionNotifier.EventData"/>.
     /// </summary>
-    public class NotifierContainerExtractor : GameObjectEmitter
+    public class NotifierContainerExtractor : GameObjectExtractor
     {
         /// <summary>
         /// Extracts the forward source container from the given notifier event data.
         /// </summary>
-        /// <param name="notifier">The notifier event data to extract from.</param>
+        /// <param name="eventData">The notifier event data to extract from.</param>
         /// <returns>The forward source container within the notifier.</returns>
-        public virtual GameObject Extract(CollisionNotifier.EventData notifier)
+        public virtual GameObject Extract(CollisionNotifier.EventData eventData)
         {
-            if (notifier == null || notifier.ForwardSource == null)
+            if (eventData == null || eventData.ForwardSource == null)
             {
                 Result = null;
                 return null;
             }
 
-            Result = notifier.ForwardSource.gameObject;
+            Result = eventData.ForwardSource.gameObject;
             return base.Extract();
         }
 
         /// <summary>
         /// Extracts the forward source container from the given notifier event data.
         /// </summary>
-        /// <param name="notifier">The notifier event data to extract from.</param>
-        public virtual void DoExtract(CollisionNotifier.EventData notifier)
+        /// <param name="eventData">The notifier event data to extract from.</param>
+        public virtual void DoExtract(CollisionNotifier.EventData eventData)
         {
-            Extract(notifier);
+            Extract(eventData);
         }
     }
 }
