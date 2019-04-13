@@ -1,6 +1,6 @@
-﻿using Zinnia.Data.Type.Transformation;
+﻿using Zinnia.Data.Type.Transformation.Conversion;
 
-namespace Test.Zinnia.Data.Type.Transformation
+namespace Test.Zinnia.Data.Type.Transformation.Conversion
 {
     using UnityEngine;
     using NUnit.Framework;

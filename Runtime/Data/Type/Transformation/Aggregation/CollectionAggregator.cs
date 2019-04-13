@@ -1,4 +1,4 @@
-﻿namespace Zinnia.Data.Type.Transformation
+﻿namespace Zinnia.Data.Type.Transformation.Aggregation
 {
     using UnityEngine.Events;
     using Malimbe.XmlDocumentationAttribute;

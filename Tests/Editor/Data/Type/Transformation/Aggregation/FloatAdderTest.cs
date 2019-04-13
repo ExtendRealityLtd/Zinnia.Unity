@@ -1,7 +1,7 @@
-﻿using Zinnia.Data.Type.Transformation;
+﻿using Zinnia.Data.Type.Transformation.Aggregation;
 using Zinnia.Data.Collection.List;
 
-namespace Test.Zinnia.Data.Type.Transformation
+namespace Test.Zinnia.Data.Type.Transformation.Aggregation
 {
     using UnityEngine;
     using NUnit.Framework;
