@@ -1,4 +1,4 @@
-﻿namespace Zinnia.Event
+﻿namespace Zinnia.Event.Proxy
 {
     using UnityEngine.Events;
     using System;

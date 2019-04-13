@@ -1,6 +1,6 @@
-﻿using Zinnia.Event;
+﻿using Zinnia.Event.Emission;
 
-namespace Test.Zinnia.Event
+namespace Test.Zinnia.Event.Emission
 {
     using UnityEngine;
     using NUnit.Framework;

@@ -1,4 +1,4 @@
-﻿namespace Zinnia.Event
+﻿namespace Zinnia.Event.Emission
 {
     using UnityEngine;
     using UnityEngine.Events;

@@ -1,7 +1,8 @@
-﻿namespace Zinnia.Event
+﻿namespace Zinnia.Tracking.Collision.Active.Event.Proxy
 {
     using UnityEngine.Events;
     using System;
+    using Zinnia.Event.Proxy;
     using Zinnia.Tracking.Collision.Active;
 
     /// <summary>

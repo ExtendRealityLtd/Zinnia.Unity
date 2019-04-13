@@ -1,22 +1,21 @@
-﻿using Zinnia.Event;
-using Zinnia.Tracking.Collision.Active;
+﻿using Zinnia.Event.Proxy;
 
-namespace Test.Zinnia.Event
+namespace Test.Zinnia.Event.Proxy
 {
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
 
-    public class ActiveCollisionsContainerEventProxyEmitterTest
+    public class EmptyEventProxyEmitterTest
     {
         private GameObject containingObject;
-        private ActiveCollisionsContainerEventProxyEmitter subject;
+        private EmptyEventProxyEmitter subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<ActiveCollisionsContainerEventProxyEmitter>();
+            subject = containingObject.AddComponent<EmptyEventProxyEmitter>();
         }
 
         [TearDown]
@@ -31,11 +30,9 @@ namespace Test.Zinnia.Event
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            ActiveCollisionsContainer.EventData digest = new ActiveCollisionsContainer.EventData();
 
             Assert.IsFalse(emittedMock.Received);
-            subject.Receive(digest);
-            Assert.AreEqual(digest, subject.Payload);
+            subject.Receive();
             Assert.IsTrue(emittedMock.Received);
         }
 
@@ -44,13 +41,10 @@ namespace Test.Zinnia.Event
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            ActiveCollisionsContainer.EventData digest = new ActiveCollisionsContainer.EventData();
-
             subject.gameObject.SetActive(false);
 
             Assert.IsFalse(emittedMock.Received);
-            subject.Receive(digest);
-            Assert.AreEqual(digest, subject.Payload);
+            subject.Receive();
             Assert.IsFalse(emittedMock.Received);
         }
 
@@ -59,13 +53,10 @@ namespace Test.Zinnia.Event
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            ActiveCollisionsContainer.EventData digest = new ActiveCollisionsContainer.EventData();
-
             subject.enabled = false;
 
             Assert.IsFalse(emittedMock.Received);
-            subject.Receive(digest);
-            Assert.AreEqual(digest, subject.Payload);
+            subject.Receive();
             Assert.IsFalse(emittedMock.Received);
         }
     }

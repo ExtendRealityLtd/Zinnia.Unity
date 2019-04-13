@@ -1,6 +1,6 @@
-﻿using Zinnia.Event;
+﻿using Zinnia.Event.Proxy;
 
-namespace Test.Zinnia.Event
+namespace Test.Zinnia.Event.Proxy
 {
     using UnityEngine;
     using NUnit.Framework;
