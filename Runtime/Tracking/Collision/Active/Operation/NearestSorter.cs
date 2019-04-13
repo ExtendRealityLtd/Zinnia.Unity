@@ -54,7 +54,7 @@
         /// Emitted when the collection is sorted.
         /// </summary>
         [DocumentedByXml]
-        public ActiveCollisionsContainer.UnityEvent Sorted = new ActiveCollisionsContainer.UnityEvent();
+        public ActiveCollisionsContainer.ActiveCollisionUnityEvent Sorted = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
 
         /// <summary>
         /// Compares two <see cref="CollisionNotifier.EventData"/>.

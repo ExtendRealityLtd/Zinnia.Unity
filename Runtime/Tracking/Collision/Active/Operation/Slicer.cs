@@ -43,12 +43,12 @@
         /// Emitted when the sliced elements are taken from the collection.
         /// </summary>
         [DocumentedByXml]
-        public ActiveCollisionsContainer.UnityEvent Sliced = new ActiveCollisionsContainer.UnityEvent();
+        public ActiveCollisionsContainer.ActiveCollisionUnityEvent Sliced = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
         /// <summary>
         /// Emitted when the remaining elements are left after slicing.
         /// </summary>
         [DocumentedByXml]
-        public ActiveCollisionsContainer.UnityEvent Remained = new ActiveCollisionsContainer.UnityEvent();
+        public ActiveCollisionsContainer.ActiveCollisionUnityEvent Remained = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
 
         /// <summary>
         /// Slices the collision collection.
