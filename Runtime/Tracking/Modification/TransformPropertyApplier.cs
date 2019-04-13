@@ -193,6 +193,17 @@
             ProcessTransform(sourceTransformData, targetTransformData, finalScale, finalRotation, finalPosition);
         }
 
+        /// <summary>
+        /// Cancels the transition of the transformation.
+        /// </summary>
+        public virtual void CancelTransition()
+        {
+            if (transitionRoutine != null)
+            {
+                StopCoroutine(transitionRoutine);
+            }
+        }
+
         protected virtual void OnEnable()
         {
             OnAfterSourceChange();
@@ -337,17 +348,6 @@
                 applyStates.yState ? offsetValue.y : originalValue.y,
                 applyStates.zState ? offsetValue.z : originalValue.z
                 );
-        }
-
-        /// <summary>
-        /// Cancels the transition of the transformation.
-        /// </summary>
-        protected virtual void CancelTransition()
-        {
-            if (transitionRoutine != null)
-            {
-                StopCoroutine(transitionRoutine);
-            }
         }
 
         /// <summary>
