@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation.Extraction
 {
     using UnityEngine;
+    using Zinnia.Extension;
     using Zinnia.Data.Operation.Extraction;
 
     /// <summary>
@@ -21,7 +22,8 @@
                 return null;
             }
 
-            Result = eventData.ColliderData.gameObject;
+            Transform containingTransform = eventData.ColliderData.GetContainingTransform();
+            Result = containingTransform != null ? containingTransform.gameObject : null;
             return base.Extract();
         }
 
