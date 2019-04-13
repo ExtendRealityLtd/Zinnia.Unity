@@ -152,8 +152,7 @@
         /// <param name="source">The data to build the new source from.</param>
         public virtual void SetSource(GameObject source)
         {
-            sourceTransformData.Clear();
-            sourceTransformData.Transform = source != null ? source.transform : null;
+            Source = source != null ? new TransformData(source) : null;
         }
 
         /// <summary>
