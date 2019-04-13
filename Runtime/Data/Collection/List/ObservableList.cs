@@ -4,11 +4,11 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Data.Type;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// Allows observing changes to a <see cref="List{T}"/>.
@@ -17,10 +17,11 @@
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type to use.</typeparam>
     public abstract class ObservableList<TElement, TEvent> : MonoBehaviour where TEvent : UnityEvent<TElement>, new()
     {
+        #region List Contents Events
         /// <summary>
         /// Emitted when the searched element is found.
         /// </summary>
-        [Header("List Events"), DocumentedByXml]
+        [Header("List Contents Events"), DocumentedByXml]
         public TEvent Found = new TEvent();
         /// <summary>
         /// Emitted when the searched element is not found.
@@ -28,9 +29,22 @@
         [DocumentedByXml]
         public TEvent NotFound = new TEvent();
         /// <summary>
-        /// Emitted when the first element is added to the collection.
+        /// Emitted when the collection contents is checked but is empty.
         /// </summary>
         [DocumentedByXml]
+        public UnityEvent IsEmpty = new UnityEvent();
+        /// <summary>
+        /// Emitted when the collection contents is checked and is populated.
+        /// </summary>
+        [DocumentedByXml]
+        public UnityEvent IsPopulated = new UnityEvent();
+        #endregion
+
+        #region List Mutation Events
+        /// <summary>
+        /// Emitted when the first element is added to the collection.
+        /// </summary>
+        [Header("List Mutation Events"), DocumentedByXml]
         public TEvent Populated = new TEvent();
         /// <summary>
         /// Emitted when an element is added to the collection.
@@ -47,6 +61,7 @@
         /// </summary>
         [DocumentedByXml]
         public TEvent Emptied = new TEvent();
+        #endregion
 
         /// <summary>
         /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will be clamped within the index bounds.
@@ -100,6 +115,33 @@
         public virtual void DoContains(TElement element)
         {
             Contains(element);
+        }
+
+        /// <summary>
+        /// Checks to see if the collection is currently empty.
+        /// </summary>
+        /// <returns>Whether the collection is empty.</returns>
+        [RequiresBehaviourState]
+        public virtual bool IsListEmpty()
+        {
+            if (Elements.Count == 0)
+            {
+                IsEmpty?.Invoke();
+                return true;
+            }
+            else
+            {
+                IsPopulated?.Invoke();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the collection is currently empty.
+        /// </summary>
+        public virtual void DoIsListEmpty()
+        {
+            IsListEmpty();
         }
 
         /// <summary>

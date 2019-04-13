@@ -73,6 +73,46 @@ namespace Test.Zinnia.Data.Collection.List
         }
 
         [Test]
+        public void IsListEmptyIsEmpty()
+        {
+            UnityEventListenerMock listIsEmpty = new UnityEventListenerMock();
+            UnityEventListenerMock listIsPopulated = new UnityEventListenerMock();
+            subject.IsEmpty.AddListener(listIsEmpty.Listen);
+            subject.IsPopulated.AddListener(listIsPopulated.Listen);
+
+            Assert.IsFalse(listIsEmpty.Received);
+            Assert.IsFalse(listIsPopulated.Received);
+
+            subject.IsListEmpty();
+
+            Assert.IsTrue(listIsEmpty.Received);
+            Assert.IsFalse(listIsPopulated.Received);
+        }
+
+        [Test]
+        public void IsListEmptyIsPopulated()
+        {
+            UnityEventListenerMock listIsEmpty = new UnityEventListenerMock();
+            UnityEventListenerMock listIsPopulated = new UnityEventListenerMock();
+            subject.IsEmpty.AddListener(listIsEmpty.Listen);
+            subject.IsPopulated.AddListener(listIsPopulated.Listen);
+
+            GameObject elementOne = new GameObject();
+
+            subject.Add(elementOne);
+
+            Assert.IsFalse(listIsEmpty.Received);
+            Assert.IsFalse(listIsPopulated.Received);
+
+            subject.IsListEmpty();
+
+            Assert.IsFalse(listIsEmpty.Received);
+            Assert.IsTrue(listIsPopulated.Received);
+
+            Object.DestroyImmediate(elementOne);
+        }
+
+        [Test]
         public void AddToEnd()
         {
             UnityEventListenerMock populatedMock = new UnityEventListenerMock();
