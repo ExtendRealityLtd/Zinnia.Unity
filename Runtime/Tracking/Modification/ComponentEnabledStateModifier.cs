@@ -6,7 +6,7 @@
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Data.Type;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Provides the ability to modify the enabled state of a <see cref="Behaviour"/> or <see cref="Renderer"/> component.

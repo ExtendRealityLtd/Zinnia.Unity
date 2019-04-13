@@ -1,4 +1,4 @@
-﻿namespace Zinnia.Data.Collection
+﻿namespace Zinnia.Data.Collection.List
 {
     using UnityEngine.Events;
     using System;

@@ -3,7 +3,7 @@
     using UnityEngine.Events;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Aggregates the values in a collection based on a specified operation.

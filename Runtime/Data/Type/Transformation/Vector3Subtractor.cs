@@ -3,7 +3,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Subtracts a collection of <see cref="Vector3"/>s by subtracting each one from the first entry in the collection.

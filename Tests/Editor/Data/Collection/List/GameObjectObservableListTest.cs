@@ -1,6 +1,6 @@
-﻿using Zinnia.Data.Collection;
+﻿using Zinnia.Data.Collection.List;
 
-namespace Test.Zinnia.Data.Collection
+namespace Test.Zinnia.Data.Collection.List
 {
     using UnityEngine;
     using NUnit.Framework;

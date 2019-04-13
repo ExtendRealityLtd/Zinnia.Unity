@@ -3,7 +3,7 @@
     using UnityEngine;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/>'s <see cref="GameObject.tag"/> is part of a list.

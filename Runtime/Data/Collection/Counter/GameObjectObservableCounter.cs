@@ -1,4 +1,4 @@
-﻿namespace Zinnia.Data.Collection
+﻿namespace Zinnia.Data.Collection.Counter
 {
     using UnityEngine;
     using UnityEngine.Events;

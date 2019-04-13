@@ -1,6 +1,6 @@
-﻿using Zinnia.Data.Collection;
+﻿using Zinnia.Data.Collection.Counter;
 
-namespace Test.Zinnia.Data.Collection
+namespace Test.Zinnia.Data.Collection.Counter
 {
     using UnityEngine;
     using NUnit.Framework;

@@ -1,5 +1,5 @@
 ﻿using Zinnia.Data.Type.Transformation;
-using Zinnia.Data.Collection;
+using Zinnia.Data.Collection.List;
 
 namespace Test.Zinnia.Data.Type.Transformation
 {

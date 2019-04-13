@@ -7,7 +7,7 @@
     using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Rule;
     using Zinnia.Extension;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     public abstract class GameObjectSourceTargetProcessor : SourceTargetProcessor<GameObject, GameObject>
     {

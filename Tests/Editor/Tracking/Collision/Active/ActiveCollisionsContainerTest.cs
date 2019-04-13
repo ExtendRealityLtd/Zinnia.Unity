@@ -1,7 +1,7 @@
-﻿using Zinnia.Rule;
-using Zinnia.Data.Collection;
+﻿using Zinnia.Tracking.Collision.Active;
+using Zinnia.Rule;
+using Zinnia.Data.Collection.List;
 using Zinnia.Tracking.Collision;
-using Zinnia.Tracking.Collision.Active;
 
 namespace Test.Zinnia.Tracking.Collision.Active
 {

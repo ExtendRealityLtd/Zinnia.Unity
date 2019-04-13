@@ -4,7 +4,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Determines whether an object is part of a list.

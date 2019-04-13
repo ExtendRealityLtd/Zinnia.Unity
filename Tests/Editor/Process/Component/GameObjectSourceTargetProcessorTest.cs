@@ -1,5 +1,5 @@
 ﻿using Zinnia.Rule;
-using Zinnia.Data.Collection;
+using Zinnia.Data.Collection.List;
 using Zinnia.Process.Component;
 
 namespace Test.Zinnia.Process.Component

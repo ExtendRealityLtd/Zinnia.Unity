@@ -1,6 +1,6 @@
-﻿using Zinnia.Data.Collection;
+﻿using Zinnia.Data.Collection.Stack;
 
-namespace Test.Zinnia.Data.Collection
+namespace Test.Zinnia.Data.Collection.Stack
 {
     using UnityEngine;
     using NUnit.Framework;

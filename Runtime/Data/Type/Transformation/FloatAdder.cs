@@ -2,7 +2,7 @@
 {
     using UnityEngine.Events;
     using System;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Sums up a collection of <see cref="float"/>s.

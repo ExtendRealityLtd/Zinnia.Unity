@@ -3,9 +3,10 @@
     using UnityEngine;
     using UnityEngine.Events;
     using System;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Holds a collection of key/value relations between GameObjects and allows searching for a given key in the collection to emit the linked value.

@@ -1,7 +1,7 @@
 ﻿using Zinnia.Rule;
 using Zinnia.Utility;
 using Zinnia.Extension;
-using Zinnia.Data.Collection;
+using Zinnia.Data.Collection.List;
 
 namespace Test.Zinnia.Rule
 {

@@ -2,7 +2,7 @@
 {
     using UnityEngine.Events;
     using System;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Multiplies a collection of <see cref="float"/>s by multiplying each one to the next entry in the collection.
