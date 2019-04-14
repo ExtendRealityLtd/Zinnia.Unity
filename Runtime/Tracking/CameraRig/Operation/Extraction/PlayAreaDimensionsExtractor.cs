@@ -46,8 +46,7 @@
                 return Result;
             }
 
-            Vector3 dimensions;
-            if (Boundary.TryGetDimensions(out dimensions))
+            if (Boundary.TryGetDimensions(out Vector3 dimensions))
             {
                 Result = dimensions;
                 Extracted?.Invoke(Result);
