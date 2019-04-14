@@ -21,7 +21,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -36,7 +35,10 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Source = source.transform;
 
             Assert.IsFalse(extractedMock.Received);
+            Assert.IsNull(subject.Result);
+
             subject.Extract();
+
             Assert.IsTrue(extractedMock.Received);
             Assert.AreEqual(subject.Result, source);
 
@@ -52,7 +54,54 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Extracted.AddListener(extractedMock.Listen);
 
             Assert.IsFalse(extractedMock.Received);
+            Assert.IsNull(subject.Result);
+
             subject.Extract();
+
+            Assert.IsFalse(extractedMock.Received);
+            Assert.IsNull(subject.Result);
+
+            Object.DestroyImmediate(source);
+        }
+
+        [Test]
+        public void ExtractInactiveGameObject()
+        {
+            GameObject source = new GameObject();
+
+            UnityEventListenerMock extractedMock = new UnityEventListenerMock();
+            subject.Extracted.AddListener(extractedMock.Listen);
+
+            subject.Source = source.transform;
+            subject.gameObject.SetActive(false);
+
+            Assert.IsFalse(extractedMock.Received);
+            Assert.IsNull(subject.Result);
+
+            subject.Extract();
+
+            Assert.IsFalse(extractedMock.Received);
+            Assert.IsNull(subject.Result);
+
+            Object.DestroyImmediate(source);
+        }
+
+        [Test]
+        public void ExtractInactiveComponent()
+        {
+            GameObject source = new GameObject();
+
+            UnityEventListenerMock extractedMock = new UnityEventListenerMock();
+            subject.Extracted.AddListener(extractedMock.Listen);
+
+            subject.Source = source.transform;
+            subject.enabled = false;
+
+            Assert.IsFalse(extractedMock.Received);
+            Assert.IsNull(subject.Result);
+
+            subject.Extract();
+
             Assert.IsFalse(extractedMock.Received);
             Assert.IsNull(subject.Result);
 

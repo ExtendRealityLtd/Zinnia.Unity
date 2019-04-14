@@ -21,7 +21,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
