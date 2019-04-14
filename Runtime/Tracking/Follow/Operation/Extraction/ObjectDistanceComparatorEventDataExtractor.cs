@@ -39,14 +39,30 @@
         public FloatUnityEvent DistanceExtracted = new FloatUnityEvent();
 
         /// <summary>
+        /// The extracted <see cref="Vector3"/> difference.
+        /// </summary>
+        public Vector3 DifferenceResult { get; protected set; }
+        /// <summary>
+        /// The extracted <see cref="float"/> distance.
+        /// </summary>
+        public float DistanceResult { get; protected set; }
+
+        /// <summary>
         /// Extracts the parts of the event data.
         /// </summary>
         /// <param name="eventData">The event data to extract from.</param>
         [RequiresBehaviourState]
         public virtual void Extract(ObjectDistanceComparator.EventData eventData)
         {
-            DifferenceExtracted?.Invoke(eventData.CurrentDifference);
-            DistanceExtracted?.Invoke(eventData.CurrentDistance);
+            if (eventData == null)
+            {
+                return;
+            }
+
+            DifferenceResult = eventData.CurrentDifference;
+            DifferenceExtracted?.Invoke(DifferenceResult);
+            DistanceResult = eventData.CurrentDistance;
+            DistanceExtracted?.Invoke(DistanceResult);
         }
     }
 }
