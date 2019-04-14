@@ -60,16 +60,21 @@ namespace Test.Zinnia.Event.Proxy
                 Interface = rule
             };
 
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
+
             subject.Receive(digestValid);
+
             Assert.AreEqual(digestValid, subject.Payload);
             Assert.IsTrue(emittedMock.Received);
 
             emittedMock.Reset();
 
             Assert.IsFalse(emittedMock.Received);
+
             subject.Receive(digestInvalid);
-            Assert.AreEqual(digestInvalid, subject.Payload);
+
+            Assert.AreEqual(digestValid, subject.Payload);
             Assert.IsFalse(emittedMock.Received);
 
             Object.DestroyImmediate(digestValid);
@@ -85,9 +90,12 @@ namespace Test.Zinnia.Event.Proxy
 
             subject.gameObject.SetActive(false);
 
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
+
             subject.Receive(digest);
-            Assert.AreEqual(digest, subject.Payload);
+
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
 
             Object.DestroyImmediate(digest);
@@ -102,9 +110,12 @@ namespace Test.Zinnia.Event.Proxy
 
             subject.enabled = false;
 
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
+
             subject.Receive(digest);
-            Assert.AreEqual(digest, subject.Payload);
+
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
 
             Object.DestroyImmediate(digest);

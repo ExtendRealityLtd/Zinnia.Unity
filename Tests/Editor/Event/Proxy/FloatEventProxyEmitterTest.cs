@@ -32,8 +32,11 @@ namespace Test.Zinnia.Event.Proxy
             subject.Emitted.AddListener(emittedMock.Listen);
             const float payload = 10f;
 
+            Assert.AreEqual(0f, subject.Payload);
             Assert.IsFalse(emittedMock.Received);
+
             subject.Receive(payload);
+
             Assert.AreEqual(payload, subject.Payload);
             Assert.IsTrue(emittedMock.Received);
         }
@@ -47,9 +50,12 @@ namespace Test.Zinnia.Event.Proxy
 
             const float payload = 10f;
 
+            Assert.AreEqual(0f, subject.Payload);
             Assert.IsFalse(emittedMock.Received);
+
             subject.Receive(payload);
-            Assert.AreEqual(payload, subject.Payload);
+
+            Assert.AreEqual(0f, subject.Payload);
             Assert.IsFalse(emittedMock.Received);
         }
 
@@ -62,9 +68,12 @@ namespace Test.Zinnia.Event.Proxy
 
             const float payload = 10f;
 
+            Assert.AreEqual(0f, subject.Payload);
             Assert.IsFalse(emittedMock.Received);
+
             subject.Receive(payload);
-            Assert.AreEqual(payload, subject.Payload);
+
+            Assert.AreEqual(0f, subject.Payload);
             Assert.IsFalse(emittedMock.Received);
         }
     }

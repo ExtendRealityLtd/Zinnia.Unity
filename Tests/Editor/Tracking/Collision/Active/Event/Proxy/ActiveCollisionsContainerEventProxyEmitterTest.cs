@@ -48,9 +48,12 @@ namespace Test.Zinnia.Tracking.Collision.Active.Event.Proxy
 
             subject.gameObject.SetActive(false);
 
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
+
             subject.Receive(digest);
-            Assert.AreEqual(digest, subject.Payload);
+
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
         }
 
@@ -63,9 +66,12 @@ namespace Test.Zinnia.Tracking.Collision.Active.Event.Proxy
 
             subject.enabled = false;
 
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
+
             subject.Receive(digest);
-            Assert.AreEqual(digest, subject.Payload);
+
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
         }
     }

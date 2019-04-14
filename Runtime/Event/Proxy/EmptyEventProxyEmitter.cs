@@ -1,7 +1,8 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.Events;
+    using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
 
     /// <summary>
     /// Emits a UnityEvent with a no payload whenever the Receive method is called.
@@ -17,12 +18,14 @@
         /// <summary>
         /// Attempts to emit the Emitted event.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void Receive()
         {
             if (!IsValid())
             {
                 return;
             }
+
             Emitted?.Invoke();
         }
     }

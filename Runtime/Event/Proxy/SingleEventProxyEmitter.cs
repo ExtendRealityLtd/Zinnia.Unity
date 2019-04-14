@@ -2,6 +2,7 @@
 {
     using UnityEngine.Events;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
 
     /// <summary>
     /// Emits a UnityEvent with a single payload whenever the Receive method is called.
@@ -25,21 +26,32 @@
         /// Attempts to emit the Emitted event with the given payload.
         /// </summary>
         /// <param name="payload"></param>
+        [RequiresBehaviourState]
         public virtual void Receive(TValue payload)
         {
+            TValue previousPayloadValue = Payload;
             Payload = payload;
+
+            if (!IsValid())
+            {
+                Payload = previousPayloadValue;
+                return;
+            }
+
             EmitPayload();
         }
 
         /// <summary>
         /// Emits the last received payload.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void EmitPayload()
         {
             if (!IsValid())
             {
                 return;
             }
+
             Emitted?.Invoke(Payload);
         }
     }
