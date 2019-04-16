@@ -4,7 +4,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Sets the state of the current target to the specified active state.

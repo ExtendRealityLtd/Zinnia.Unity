@@ -51,37 +51,54 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<EventData>
+        public class ActiveCollisionUnityEvent : UnityEvent<EventData>
         {
         }
 
+        #region Validity Settings
         /// <summary>
         /// Determines whether the collision is valid and to add it to the active collision collection.
         /// </summary>
         [Serialized, Cleared]
-        [field: DocumentedByXml]
+        [field: Header("Validity Settings"), DocumentedByXml]
         public RuleContainer CollisionValidity { get; set; }
+        #endregion
 
-        /// <summary>
-        /// Emitted when the first collision occurs.
-        /// </summary>
-        [DocumentedByXml]
-        public UnityEvent FirstStarted = new UnityEvent();
+        #region Collection Events
         /// <summary>
         /// Emitted when the collision count has changed.
         /// </summary>
-        [DocumentedByXml]
-        public UnityEvent CountChanged = new UnityEvent();
+        [Header("Collection Events"), DocumentedByXml]
+        public ActiveCollisionUnityEvent CountChanged = new ActiveCollisionUnityEvent();
         /// <summary>
         /// Emitted when the collision contents have changed.
         /// </summary>
         [DocumentedByXml]
-        public UnityEvent ContentsChanged = new UnityEvent();
+        public ActiveCollisionUnityEvent ContentsChanged = new ActiveCollisionUnityEvent();
+        #endregion
+
+        #region Collision Events
+        /// <summary>
+        /// Emitted when the first collision occurs.
+        /// </summary>
+        [Header("Collision Events"), DocumentedByXml]
+        public CollisionNotifier.UnityEvent FirstStarted = new CollisionNotifier.UnityEvent();
+        /// <summary>
+        /// Emitted when a collision is added.
+        /// </summary>
+        [DocumentedByXml]
+        public CollisionNotifier.UnityEvent Added = new CollisionNotifier.UnityEvent();
+        /// <summary>
+        /// Emitted when a collision is removed.
+        /// </summary>
+        [DocumentedByXml]
+        public CollisionNotifier.UnityEvent Removed = new CollisionNotifier.UnityEvent();
         /// <summary>
         /// Emitted when there are no more collisions occuring.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent AllStopped = new UnityEvent();
+        #endregion
 
         /// <summary>
         /// The current active collisions.
@@ -106,9 +123,10 @@
             }
 
             Elements.Add(CloneEventData(collisionData));
+            Added?.Invoke(collisionData);
             if (Elements.Count == 1)
             {
-                FirstStarted?.Invoke(eventData.Set(Elements));
+                FirstStarted?.Invoke(collisionData);
             }
             CountChanged?.Invoke(eventData.Set(Elements));
             ProcessContentsChanged();
@@ -123,6 +141,7 @@
         {
             if (Elements.Remove(collisionData))
             {
+                Removed?.Invoke(collisionData);
                 EmitEmptyEvents();
             }
         }
@@ -143,6 +162,11 @@
                 return;
             }
 
+            foreach (CollisionNotifier.EventData element in Elements)
+            {
+                Removed?.Invoke(element);
+            }
+
             Elements.Clear();
             EmitEmptyEvents();
         }
@@ -154,7 +178,7 @@
         {
             if (Elements.Count == 0)
             {
-                AllStopped?.Invoke(eventData.Set(Elements));
+                AllStopped?.Invoke();
             }
 
             CountChanged?.Invoke(eventData.Set(Elements));
@@ -178,7 +202,8 @@
         /// <returns>The validity result of the collision.</returns>
         protected virtual bool IsValidCollision(CollisionNotifier.EventData collisionData)
         {
-            return collisionData.ColliderData != null && CollisionValidity.Accepts(collisionData.ColliderData.gameObject);
+            Transform containingTransform = collisionData.ColliderData.GetContainingTransform();
+            return containingTransform != null && CollisionValidity.Accepts(containingTransform.gameObject);
         }
 
     }

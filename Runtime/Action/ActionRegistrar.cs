@@ -7,7 +7,7 @@
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Action.Collection;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Allows actions to dynamically register listeners to other actions.

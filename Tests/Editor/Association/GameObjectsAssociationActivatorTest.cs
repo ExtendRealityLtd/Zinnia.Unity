@@ -1,6 +1,6 @@
 ﻿using Zinnia.Association;
 using Zinnia.Association.Collection;
-using Zinnia.Data.Collection;
+using Zinnia.Data.Collection.List;
 
 namespace Test.Zinnia.Association
 {

@@ -3,12 +3,12 @@
     using UnityEditor;
     using UnityEngine;
     using System;
+    using System.Reflection;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Reflection;
     using Malimbe.FodyRunner.UnityIntegration;
-    using Zinnia.Data.Collection;
     using Zinnia.Utility;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// A custom inspector editor for <see cref="ObservableList{TElement,TEvent}"/> and subclasses of it.

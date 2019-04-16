@@ -1,5 +1,5 @@
 ﻿using Zinnia.Tracking.Modification;
-using Zinnia.Data.Collection;
+using Zinnia.Data.Collection.List;
 
 namespace Test.Zinnia.Tracking.Modification
 {

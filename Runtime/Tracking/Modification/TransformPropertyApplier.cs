@@ -69,11 +69,12 @@
         /// </summary>
         protected static readonly WaitForEndOfFrame DelayInstruction = new WaitForEndOfFrame();
 
+        #region Reference Settings
         /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
         [Serialized, Cleared]
-        [field: DocumentedByXml]
+        [field: Header("Reference Settings"), DocumentedByXml]
         public TransformData Source { get; set; }
         /// <summary>
         /// The target to apply the transformations to.
@@ -87,11 +88,14 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Offset { get; set; }
+        #endregion
+
+        #region Apply Settings
         /// <summary>
         /// Determines which axes to apply on when utilizing the position offset.
         /// </summary>
         [Serialized]
-        [field: DocumentedByXml]
+        [field: Header("Apply Settings"), DocumentedByXml]
         public Vector3State ApplyPositionOffsetOnAxis { get; set; } = Vector3State.True;
         /// <summary>
         /// Determines which axes to apply on when utilizing the rotation offset.
@@ -105,11 +109,14 @@
         [Serialized]
         [field: DocumentedByXml, UnityFlags]
         public TransformProperties ApplyTransformations { get; set; } = (TransformProperties)(-1);
+        #endregion
+
+        #region Transition Settings
         /// <summary>
         /// The amount of time to take when transitioning from the current <see cref="Transform"/> state to the modified <see cref="Transform"/> state.
         /// </summary>
         [Serialized]
-        [field: DocumentedByXml]
+        [field: Header("Transition Settings"), DocumentedByXml]
         public float TransitionDuration { get; set; }
         /// <summary>
         /// The threshold the current <see cref="Transform"/> properties can be within of the destination properties to be considered equal.
@@ -117,17 +124,26 @@
         [Serialized]
         [field: DocumentedByXml]
         public float TransitionDestinationThreshold { get; set; } = 0.01f;
+        /// <summary>
+        /// Whether to treat the transformation destination properties as dynamic when transitioning the <see cref="Target"/>.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool IsTransitionDestinationDynamic { get; set; }
+        #endregion
 
+        #region Applier Events
         /// <summary>
         /// Emitted before the transformation process occurs.
         /// </summary>
-        [DocumentedByXml]
+        [Header("Applier Events"), DocumentedByXml]
         public UnityEvent BeforeTransformUpdated = new UnityEvent();
         /// <summary>
         /// Emitted after the transformation process has occured.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent AfterTransformUpdated = new UnityEvent();
+        #endregion
 
         /// <summary>
         /// The routine for managing the transition of the transform.
@@ -153,7 +169,14 @@
         public virtual void SetSource(GameObject source)
         {
             sourceTransformData.Clear();
-            sourceTransformData.Transform = source != null ? source.transform : null;
+
+            if (source == null)
+            {
+                return;
+            }
+
+            sourceTransformData.Transform = source.transform;
+            Source = sourceTransformData;
         }
 
         /// <summary>
@@ -180,23 +203,29 @@
         [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (Target == null || sourceTransformData.Transform == null)
+            if (Target == null || Source == null || Source.Transform == null)
             {
                 return;
             }
 
             targetTransformData.Clear();
             targetTransformData.Transform = Target.transform;
-            targetTransformData.UseLocalValues = sourceTransformData.UseLocalValues;
-            Vector3 finalScale = CalculateScale(sourceTransformData, targetTransformData);
-            Quaternion finalRotation = CalculateRotation(sourceTransformData, targetTransformData);
-            Vector3 finalPosition = CalculatePosition(sourceTransformData, targetTransformData, finalScale, finalRotation);
-            ProcessTransform(sourceTransformData, targetTransformData, finalScale, finalRotation, finalPosition);
+            targetTransformData.UseLocalValues = Source.UseLocalValues;
+            Vector3 destinationScale = CalculateScale(Source, targetTransformData);
+            Quaternion destinationRotation = CalculateRotation(Source, targetTransformData);
+            Vector3 destinationPosition = CalculatePosition(Source, targetTransformData, destinationScale, destinationRotation);
+            ProcessTransform(Source, targetTransformData, destinationScale, destinationRotation, destinationPosition);
         }
 
-        protected virtual void OnEnable()
+        /// <summary>
+        /// Cancels the transition of the transformation.
+        /// </summary>
+        public virtual void CancelTransition()
         {
-            OnAfterSourceChange();
+            if (transitionRoutine != null)
+            {
+                StopCoroutine(transitionRoutine);
+            }
         }
 
         protected virtual void OnDisable()
@@ -300,12 +329,12 @@
         /// </summary>
         /// <param name="source">The source <see cref="TransformData"/> to obtain the transformation properties from.</param>
         /// <param name="target">The target <see cref="TransformData"/> to apply transformations to.</param>
-        /// <param name="targetScale">The scale to apply to the target.</param>
-        /// <param name="targetRotation">The rotation to apply to the target.</param>
-        /// <param name="targetPosition">The position to apply to the target.</param>
-        protected virtual void ProcessTransform(TransformData source, TransformData target, Vector3 targetScale, Quaternion targetRotation, Vector3 targetPosition)
+        /// <param name="destinationScale">The scale to apply to the target.</param>
+        /// <param name="destinationRotation">The rotation to apply to the target.</param>
+        /// <param name="destinationPosition">The position to apply to the target.</param>
+        protected virtual void ProcessTransform(TransformData source, TransformData target, Vector3 destinationScale, Quaternion destinationRotation, Vector3 destinationPosition)
         {
-            if (ArePropertiesEqual(targetPosition, target.Position, targetRotation, target.Rotation, targetScale, target.Scale))
+            if (ArePropertiesEqual(destinationPosition, target.Position, destinationRotation, target.Rotation, destinationScale, target.Scale))
             {
                 return;
             }
@@ -314,13 +343,13 @@
 
             if (TransitionDuration.ApproxEquals(0f))
             {
-                UpdateTransformProperties(target.Transform, targetScale, targetRotation, targetPosition, target.UseLocalValues);
+                UpdateTransformProperties(target.Transform, destinationScale, destinationRotation, destinationPosition, target.UseLocalValues);
                 AfterTransformUpdated?.Invoke(eventData.Set(source, target));
             }
             else
             {
                 CancelTransition();
-                transitionRoutine = StartCoroutine(TransitionTransform(source, target, target.Scale, targetScale, target.Rotation, targetRotation, target.Position, targetPosition));
+                transitionRoutine = StartCoroutine(TransitionTransform(source, target, IsTransitionDestinationDynamic, destinationScale, destinationRotation, destinationPosition));
             }
         }
 
@@ -341,43 +370,45 @@
         }
 
         /// <summary>
-        /// Cancels the transition of the transformation.
+        /// Applies the transformation to the <see cref="target"/> over the <see cref="TransitionDuration"/>.
         /// </summary>
-        protected virtual void CancelTransition()
-        {
-            if (transitionRoutine != null)
-            {
-                StopCoroutine(transitionRoutine);
-            }
-        }
-
-        /// <summary>
-        /// Applies the relevant transformation to the affected <see cref="TransformData"/> over a given duration.
-        /// </summary>
-        /// <param name="source">The target <see cref="TransformData"/> to obtain the transformation properties from.</param>
+        /// <param name="source">The <see cref="TransformData"/> to obtain the transformation properties from.</param>
         /// <param name="target">The <see cref="TransformData"/> to apply the transformations to.</param>
-        /// <param name="startScale">The initial scale of the <see cref="Transform"/>.</param>
+        /// <param name="dynamicDestination">Whether the transformation destination is statically set to the initial <see cref="source"/> properties at the start of the routine or whether the destination is dynamically updated to match the current <see cref="source"/> properties.</param>
         /// <param name="destinationScale">The final scale of the <see cref="Transform"/>.</param>
-        /// <param name="startRotation">The initial rotation of the <see cref="Transform"/>.</param>
         /// <param name="destinationRotation">The final rotation of the <see cref="Transform"/>.</param>
-        /// <param name="startPosition">The initial position of the <see cref="Transform"/>.</param>
         /// <param name="destinationPosition">The final position for the <see cref="Transform"/>.</param>
         /// <returns>Coroutine enumerator.</returns>
-        protected virtual IEnumerator TransitionTransform(TransformData source, TransformData target, Vector3 startScale, Vector3 destinationScale, Quaternion startRotation, Quaternion destinationRotation, Vector3 startPosition, Vector3 destinationPosition)
+        protected virtual IEnumerator TransitionTransform(TransformData source, TransformData target, bool dynamicDestination, Vector3 destinationScale, Quaternion destinationRotation, Vector3 destinationPosition)
         {
+            Vector3 initialScale = target.Scale;
+            Quaternion initialRotation = target.Rotation;
+            Vector3 initalPosition = target.Position;
+
             float elapsedTime = 0f;
             while (elapsedTime < TransitionDuration)
             {
-                if (ArePropertiesEqual(startPosition, destinationPosition, startRotation, destinationRotation, startScale, destinationScale))
+                bool equalityCheck = dynamicDestination ?
+                    ArePropertiesEqual(source.Position, target.Position, source.Rotation, target.Rotation, source.Scale, target.Scale) :
+                    ArePropertiesEqual(initalPosition, destinationPosition, initialRotation, destinationRotation, initialScale, destinationScale);
+
+                if (equalityCheck)
                 {
                     break;
                 }
 
+                if (dynamicDestination)
+                {
+                    destinationScale = Source.Scale;
+                    destinationRotation = Source.Rotation;
+                    destinationPosition = Source.Position;
+                }
+
                 float lerpFrame = elapsedTime / TransitionDuration;
                 UpdateTransformProperties(target.Transform,
-                    Vector3.Lerp(startScale, destinationScale, lerpFrame),
-                    Quaternion.Lerp(startRotation, destinationRotation, lerpFrame),
-                    Vector3.Lerp(startPosition, destinationPosition, lerpFrame),
+                    Vector3.Lerp(initialScale, destinationScale, lerpFrame),
+                    Quaternion.Lerp(initialRotation, destinationRotation, lerpFrame),
+                    Vector3.Lerp(initalPosition, destinationPosition, lerpFrame),
                     target.UseLocalValues);
 
                 elapsedTime += Time.deltaTime;
@@ -428,26 +459,6 @@
                 target.rotation = rotation;
                 target.position = position;
             }
-        }
-
-        /// <summary>
-        /// Called after <see cref="Source"/> has been changed.
-        /// </summary>
-        [CalledAfterChangeOf(nameof(Source))]
-        protected virtual void OnAfterSourceChange()
-        {
-            sourceTransformData.Clear();
-
-            if (Source == null)
-            {
-                return;
-            }
-
-            sourceTransformData.Transform = Source.Transform;
-            sourceTransformData.UseLocalValues = Source.UseLocalValues;
-            sourceTransformData.PositionOverride = Source.PositionOverride;
-            sourceTransformData.RotationOverride = Source.RotationOverride;
-            sourceTransformData.ScaleOverride = Source.ScaleOverride;
         }
     }
 }

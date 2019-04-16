@@ -3,9 +3,9 @@
     using UnityEngine;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Data.Type;
-    using Zinnia.Data.Collection;
     using Zinnia.Extension;
+    using Zinnia.Data.Type;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/> has any component found in a list.

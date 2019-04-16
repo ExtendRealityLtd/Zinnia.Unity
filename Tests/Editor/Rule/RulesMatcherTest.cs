@@ -1,6 +1,6 @@
 ﻿using Zinnia.Rule;
 using Zinnia.Rule.Collection;
-using Zinnia.Data.Collection;
+using Zinnia.Data.Collection.List;
 
 namespace Test.Zinnia.Rule
 {

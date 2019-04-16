@@ -8,8 +8,8 @@
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Extension;
-    using Zinnia.Data.Collection;
     using Zinnia.Process.Component;
+    using Zinnia.Data.Collection.List;
     using Zinnia.Tracking.Follow.Modifier;
 
     /// <summary>

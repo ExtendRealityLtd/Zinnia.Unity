@@ -12,7 +12,7 @@
         /// Emitted when the collection is reversed.
         /// </summary>
         [DocumentedByXml]
-        public ActiveCollisionsContainer.UnityEvent Reversed = new ActiveCollisionsContainer.UnityEvent();
+        public ActiveCollisionsContainer.ActiveCollisionUnityEvent Reversed = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
 
         protected readonly ActiveCollisionsContainer.EventData reversedList = new ActiveCollisionsContainer.EventData();
 

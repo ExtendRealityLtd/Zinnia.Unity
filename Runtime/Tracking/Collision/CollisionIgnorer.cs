@@ -5,7 +5,7 @@
     using Malimbe.MemberChangeMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Data.Collection;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Ignores the collisions between the source <see cref="GameObject"/> colliders and the target <see cref="GameObject"/> colliders.

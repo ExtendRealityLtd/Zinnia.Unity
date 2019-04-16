@@ -1,5 +1,5 @@
 ﻿using Zinnia.Tracking.Collision;
-using Zinnia.Data.Collection;
+using Zinnia.Data.Collection.List;
 
 namespace Test.Zinnia.Tracking.Collision
 {

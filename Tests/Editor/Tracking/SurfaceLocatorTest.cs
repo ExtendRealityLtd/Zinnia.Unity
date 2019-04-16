@@ -1,6 +1,6 @@
-﻿using Zinnia.Rule;
-using Zinnia.Tracking;
-using Zinnia.Data.Collection;
+﻿using Zinnia.Tracking;
+using Zinnia.Rule;
+using Zinnia.Data.Collection.List;
 
 namespace Test.Zinnia.Tracking
 {
