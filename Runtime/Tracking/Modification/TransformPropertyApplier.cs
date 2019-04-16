@@ -168,7 +168,15 @@
         /// <param name="source">The data to build the new source from.</param>
         public virtual void SetSource(GameObject source)
         {
-            Source = source != null ? new TransformData(source) : null;
+            sourceTransformData.Clear();
+
+            if (source == null)
+            {
+                return;
+            }
+
+            sourceTransformData.Transform = source.transform;
+            Source = sourceTransformData;
         }
 
         /// <summary>
@@ -195,18 +203,18 @@
         [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (Target == null || sourceTransformData.Transform == null)
+            if (Target == null || Source == null || Source.Transform == null)
             {
                 return;
             }
 
             targetTransformData.Clear();
             targetTransformData.Transform = Target.transform;
-            targetTransformData.UseLocalValues = sourceTransformData.UseLocalValues;
-            Vector3 destinationScale = CalculateScale(sourceTransformData, targetTransformData);
-            Quaternion destinationRotation = CalculateRotation(sourceTransformData, targetTransformData);
-            Vector3 destinationPosition = CalculatePosition(sourceTransformData, targetTransformData, destinationScale, destinationRotation);
-            ProcessTransform(sourceTransformData, targetTransformData, destinationScale, destinationRotation, destinationPosition);
+            targetTransformData.UseLocalValues = Source.UseLocalValues;
+            Vector3 destinationScale = CalculateScale(Source, targetTransformData);
+            Quaternion destinationRotation = CalculateRotation(Source, targetTransformData);
+            Vector3 destinationPosition = CalculatePosition(Source, targetTransformData, destinationScale, destinationRotation);
+            ProcessTransform(Source, targetTransformData, destinationScale, destinationRotation, destinationPosition);
         }
 
         /// <summary>
@@ -218,11 +226,6 @@
             {
                 StopCoroutine(transitionRoutine);
             }
-        }
-
-        protected virtual void OnEnable()
-        {
-            OnAfterSourceChange();
         }
 
         protected virtual void OnDisable()
@@ -456,26 +459,6 @@
                 target.rotation = rotation;
                 target.position = position;
             }
-        }
-
-        /// <summary>
-        /// Called after <see cref="Source"/> has been changed.
-        /// </summary>
-        [CalledAfterChangeOf(nameof(Source))]
-        protected virtual void OnAfterSourceChange()
-        {
-            sourceTransformData.Clear();
-
-            if (Source == null)
-            {
-                return;
-            }
-
-            sourceTransformData.Transform = Source.Transform;
-            sourceTransformData.UseLocalValues = Source.UseLocalValues;
-            sourceTransformData.PositionOverride = Source.PositionOverride;
-            sourceTransformData.RotationOverride = Source.RotationOverride;
-            sourceTransformData.ScaleOverride = Source.ScaleOverride;
         }
     }
 }
