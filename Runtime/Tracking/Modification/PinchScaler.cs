@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
@@ -132,6 +133,24 @@
         protected virtual Vector3 GetTargetScale()
         {
             return UseLocalScale ? Target.transform.localScale : Target.transform.lossyScale;
+        }
+
+        /// <summary>
+        /// Called after <see cref="PrimaryPoint"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(PrimaryPoint))]
+        protected virtual void OnAfterPrimaryPointChange()
+        {
+            previousDistance = null;
+        }
+
+        /// <summary>
+        /// Called after <see cref="SecondaryPoint"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(SecondaryPoint))]
+        protected virtual void OnAfterSecondaryPointChange()
+        {
+            previousDistance = null;
         }
     }
 }
