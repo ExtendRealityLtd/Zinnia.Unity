@@ -23,16 +23,16 @@
             points.Add(Vector3.zero);
         }
 
-        protected virtual void OnDisable()
-        {
-            points.Clear();
-        }
-
         /// <inheritdoc />
         protected override void DoCastPoints()
         {
             GeneratePoints();
             ResultsChanged?.Invoke(eventData.Set(TargetHit, IsTargetHitValid, Points));
+        }
+
+        protected virtual void OnDisable()
+        {
+            points.Clear();
         }
 
         /// <summary>
