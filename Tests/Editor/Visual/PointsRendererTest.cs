@@ -55,8 +55,11 @@ namespace Test.Zinnia.Visual
             PointsRenderer.PointsData data = new PointsRenderer.PointsData
             {
                 StartPoint = start,
+                IsStartPointVisible = true,
                 RepeatedSegmentPoint = segment,
+                IsRepeatedSegmentPointVisible = true,
                 EndPoint = end,
+                IsEndPointVisible = true,
                 Points = points
             };
 
