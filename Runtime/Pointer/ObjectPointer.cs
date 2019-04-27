@@ -322,16 +322,20 @@
         protected virtual void UpdateRenderData()
         {
             pointsData.Points = activePointsCastData.Points;
-            pointsData.StartPoint = GetElementRepresentation(Origin);
-            pointsData.RepeatedSegmentPoint = GetElementRepresentation(RepeatedSegment);
-            pointsData.EndPoint = GetElementRepresentation(Destination);
 
-            TryDeactivateElementObject(Origin.ValidObject);
-            TryDeactivateElementObject(Origin.InvalidObject);
-            TryDeactivateElementObject(RepeatedSegment.ValidObject);
-            TryDeactivateElementObject(RepeatedSegment.InvalidObject);
-            TryDeactivateElementObject(Destination.ValidObject);
-            TryDeactivateElementObject(Destination.InvalidObject);
+            pointsData.StartPoint = GetElementRepresentation(Origin);
+            pointsData.IsStartPointVisible = Origin.IsVisible;
+            pointsData.RepeatedSegmentPoint = GetElementRepresentation(RepeatedSegment);
+            pointsData.IsRepeatedSegmentPointVisible = RepeatedSegment.IsVisible;
+            pointsData.EndPoint = GetElementRepresentation(Destination);
+            pointsData.IsEndPointVisible = Destination.IsVisible;
+
+            TryDeactivateElementObject(Origin.ValidElementContainer);
+            TryDeactivateElementObject(Origin.InvalidElementContainer);
+            TryDeactivateElementObject(RepeatedSegment.ValidElementContainer);
+            TryDeactivateElementObject(RepeatedSegment.InvalidElementContainer);
+            TryDeactivateElementObject(Destination.ValidElementContainer);
+            TryDeactivateElementObject(Destination.InvalidElementContainer);
 
             pointsData.StartPoint.TrySetActive(true);
             pointsData.RepeatedSegmentPoint.TrySetActive(true);
@@ -405,18 +409,35 @@
         protected virtual GameObject GetElementRepresentation(PointerElement element)
         {
             bool isValid = activePointsCastData.HitData != null && activePointsCastData.IsValid;
+            bool showValidMesh = false;
+            bool showInvalidMesh = false;
 
             switch (element.ElementVisibility)
             {
                 case PointerElement.Visibility.OnWhenPointerActivated:
-                    return IsActivated ? (isValid ? element.ValidObject : element.InvalidObject) : null;
+                    if (!IsActivated)
+                    {
+                        break;
+                    }
+                    showValidMesh = isValid;
+                    showInvalidMesh = !isValid;
+                    break;
                 case PointerElement.Visibility.AlwaysOn:
-                    return isValid ? element.ValidObject : element.InvalidObject;
+                    showValidMesh = true;
+                    showInvalidMesh = true;
+                    break;
                 case PointerElement.Visibility.AlwaysOff:
-                    return null;
+                    showValidMesh = false;
+                    showInvalidMesh = false;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(element.ElementVisibility), element.ElementVisibility, null);
             }
+
+            element.ValidMeshContainer.SetActive(showValidMesh);
+            element.InvalidMeshContainer.SetActive(showInvalidMesh);
+            element.IsVisible = showValidMesh || showInvalidMesh;
+            return isValid ? element.ValidElementContainer : element.InvalidElementContainer;
         }
 
         /// <summary>
@@ -440,7 +461,7 @@
         /// <returns>A <see cref="EventData"/> object of the <see cref="ObjectPointer"/>'s current state.</returns>
         protected virtual EventData GetEventData(PointsCast.EventData data)
         {
-            Transform validDestinationTransform = Destination == null || Destination.ValidObject == null ? null : Destination.ValidObject.transform;
+            Transform validDestinationTransform = Destination == null || Destination.ValidElementContainer == null ? null : Destination.ValidElementContainer.transform;
             Transform pointerTransform = transform;
 
             eventData.Transform = pointerTransform;

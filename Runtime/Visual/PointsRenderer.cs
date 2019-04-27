@@ -27,17 +27,35 @@
             [field: DocumentedByXml]
             public GameObject StartPoint { get; set; }
             /// <summary>
+            /// Whether the first point should be visible.
+            /// </summary>
+            [Serialized]
+            [field: DocumentedByXml]
+            public bool IsStartPointVisible { get; set; }
+            /// <summary>
             /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
             /// </summary>
             [Serialized]
             [field: DocumentedByXml]
             public GameObject RepeatedSegmentPoint { get; set; }
             /// <summary>
+            /// Whether the repeated segment point(s) should be visible.
+            /// </summary>
+            [Serialized]
+            [field: DocumentedByXml]
+            public bool IsRepeatedSegmentPointVisible { get; set; }
+            /// <summary>
             /// Represents the end, i.e. the last rendered point.
             /// </summary>
             [Serialized]
             [field: DocumentedByXml]
             public GameObject EndPoint { get; set; }
+            /// <summary>
+            /// Whether the end point should be visible.
+            /// </summary>
+            [Serialized]
+            [field: DocumentedByXml]
+            public bool IsEndPointVisible { get; set; }
             /// <summary>
             /// The points along the the most recent cast.
             /// </summary>
@@ -97,7 +115,7 @@
                 RepeatedSegment = data.RepeatedSegmentPoint;
             }
 
-            UpdateNumberOfClones(data.Points);
+            UpdateNumberOfClones(data.Points, data.IsRepeatedSegmentPointVisible);
 
             UpdateElement(data.Points, 0, false, Start);
             UpdateElement(data.Points, data.Points.Count - 1, false, End);
@@ -137,7 +155,8 @@
         /// Ensures the number of cloned elements matches the provided number of points.
         /// </summary>
         /// <param name="points">The points to create cloned elements for.</param>
-        protected virtual void UpdateNumberOfClones(IReadOnlyList<Vector3> points)
+        /// <param name="isVisible" >Whether the points should be visible.</param>
+        protected virtual void UpdateNumberOfClones(IReadOnlyList<Vector3> points, bool isVisible)
         {
             if (RepeatedSegment == null)
             {
@@ -149,6 +168,11 @@
             {
                 Destroy(segmentClones[index]);
                 segmentClones.RemoveAt(index);
+            }
+
+            if (!isVisible)
+            {
+                return;
             }
 
             for (int index = segmentClones.Count; index < targetCount - 1; index++)

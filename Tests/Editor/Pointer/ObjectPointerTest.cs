@@ -8,20 +8,22 @@ namespace Test.Zinnia.Pointer
     using System.Collections.Generic;
     using Test.Zinnia.Utility.Mock;
 
-    public class PointerTest
+    public class ObjectPointerTest
     {
         private GameObject containingObject;
+        private GameObject validOriginContainer;
+        private GameObject validOriginMesh;
+        private GameObject invalidOriginContainer;
+        private GameObject invalidOriginMesh;
+        private GameObject validSegmentContainer;
+        private GameObject validSegmentMesh;
+        private GameObject invalidSegmentContainer;
+        private GameObject invalidSegmentMesh;
+        private GameObject validDestinationContainer;
+        private GameObject validDestinationMesh;
+        private GameObject invalidDestinationContainer;
+        private GameObject invalidDestinationMesh;
         private ObjectPointerMock subject;
-        private PointerElement origin;
-        private PointerElement segment;
-        private PointerElement destination;
-
-        private GameObject validOrigin;
-        private GameObject invalidOrigin;
-        private GameObject validSegment;
-        private GameObject invalidSegment;
-        private GameObject validDestination;
-        private GameObject invalidDestination;
 
         [SetUp]
         public void SetUp()
@@ -30,58 +32,79 @@ namespace Test.Zinnia.Pointer
             containingObject = new GameObject();
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<ObjectPointerMock>();
-
-            validOrigin = new GameObject();
-            invalidOrigin = new GameObject();
-            validSegment = new GameObject();
-            invalidSegment = new GameObject();
-            validDestination = new GameObject();
-            invalidDestination = new GameObject();
-
-            origin = containingObject.AddComponent<PointerElement>();
-            segment = containingObject.AddComponent<PointerElement>();
-            destination = containingObject.AddComponent<PointerElement>();
-
-            origin.ValidObject = validOrigin;
-            origin.InvalidObject = invalidOrigin;
-            subject.Origin = origin;
-
-            segment.ValidObject = validSegment;
-            segment.InvalidObject = invalidSegment;
-            subject.RepeatedSegment = segment;
-
-            segment.ValidObject = validDestination;
-            segment.InvalidObject = invalidDestination;
-            subject.Destination = destination;
-            containingObject.SetActive(true);
         }
 
         [TearDown]
         public void TearDown()
         {
             Object.DestroyImmediate(containingObject);
-
-            Object.DestroyImmediate(validOrigin);
-            Object.DestroyImmediate(invalidOrigin);
-            Object.DestroyImmediate(validSegment);
-            Object.DestroyImmediate(invalidSegment);
-            Object.DestroyImmediate(validDestination);
-            Object.DestroyImmediate(invalidDestination);
+            Object.DestroyImmediate(validOriginContainer);
+            Object.DestroyImmediate(invalidOriginContainer);
+            Object.DestroyImmediate(validSegmentContainer);
+            Object.DestroyImmediate(invalidSegmentContainer);
+            Object.DestroyImmediate(validDestinationContainer);
+            Object.DestroyImmediate(invalidDestinationContainer);
             Physics.autoSimulation = true;
+        }
+
+        protected virtual void SetUpElements()
+        {
+            validOriginContainer = new GameObject();
+            validOriginMesh = new GameObject();
+            validOriginMesh.transform.SetParent(validOriginContainer.transform);
+
+            invalidOriginContainer = new GameObject();
+            invalidOriginMesh = new GameObject();
+            invalidOriginMesh.transform.SetParent(invalidOriginContainer.transform);
+
+            validSegmentContainer = new GameObject();
+            validSegmentMesh = new GameObject();
+            validSegmentMesh.transform.SetParent(validSegmentContainer.transform);
+
+            invalidSegmentContainer = new GameObject();
+            invalidSegmentMesh = new GameObject();
+            invalidSegmentMesh.transform.SetParent(invalidSegmentContainer.transform);
+
+            validDestinationContainer = new GameObject();
+            validDestinationMesh = new GameObject();
+            validDestinationMesh.transform.SetParent(validDestinationContainer.transform);
+
+            invalidDestinationContainer = new GameObject();
+            invalidDestinationMesh = new GameObject();
+            invalidDestinationMesh.transform.SetParent(invalidDestinationContainer.transform);
+
+            PointerElement origin = containingObject.AddComponent<PointerElement>();
+            PointerElement segment = containingObject.AddComponent<PointerElement>();
+            PointerElement destination = containingObject.AddComponent<PointerElement>();
+
+            origin.ValidElementContainer = validOriginContainer;
+            origin.ValidMeshContainer = validOriginMesh;
+            origin.InvalidMeshContainer = invalidOriginContainer;
+            origin.InvalidElementContainer = invalidOriginMesh;
+
+            segment.ValidElementContainer = validSegmentContainer;
+            segment.ValidMeshContainer = validSegmentMesh;
+            segment.InvalidMeshContainer = invalidSegmentContainer;
+            segment.InvalidElementContainer = invalidSegmentMesh;
+
+            destination.ValidElementContainer = validDestinationContainer;
+            destination.ValidMeshContainer = validDestinationMesh;
+            destination.InvalidMeshContainer = invalidDestinationContainer;
+            destination.InvalidElementContainer = invalidDestinationMesh;
+
+            subject.Origin = origin;
+            subject.RepeatedSegment = segment;
+            subject.Destination = destination;
+            containingObject.SetActive(true);
         }
 
         [Test]
         public void ActivateAndDeactivate()
         {
+            SetUpElements();
+
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
-
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
@@ -91,12 +114,12 @@ namespace Test.Zinnia.Pointer
 
             subject.ManualOnEnable();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
@@ -104,12 +127,12 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blocker.transform.position = Vector3.forward * 5f;
@@ -125,12 +148,12 @@ namespace Test.Zinnia.Pointer
             subject.HandleData(straightCast);
             subject.Process();
 
-            Assert.IsTrue(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsTrue(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsTrue(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsTrue(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsTrue(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             activatedListenerMock.Reset();
             deactivatedListenerMock.Reset();
@@ -140,30 +163,26 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsTrue(deactivatedListenerMock.Received);
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             Object.DestroyImmediate(blocker);
         }
 
+
         [Test]
         public void Select()
         {
+            SetUpElements();
+
             UnityEventListenerMock enterListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock exitListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock hoverListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock selectListenerMock = new UnityEventListenerMock();
-
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Entered.AddListener(enterListenerMock.Listen);
             subject.Exited.AddListener(exitListenerMock.Listen);
@@ -221,17 +240,12 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void NoSelectOnInvalidTarget()
         {
+            SetUpElements();
+
             UnityEventListenerMock enterListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock exitListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock hoverListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock selectListenerMock = new UnityEventListenerMock();
-
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Entered.AddListener(enterListenerMock.Listen);
             subject.Exited.AddListener(exitListenerMock.Listen);
@@ -264,12 +278,7 @@ namespace Test.Zinnia.Pointer
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blocker.transform.position = Vector3.forward * 5f;
 
-            List<Vector3> castPoints = new List<Vector3>
-            {
-                Vector3.zero,
-                blocker.transform.position
-            };
-
+            List<Vector3> castPoints = new List<Vector3> { Vector3.zero, blocker.transform.position };
             PointsCast.EventData straightCast = CastPoints(castPoints, true, false, new Ray(Vector3.zero, Vector3.forward));
 
             subject.HandleData(straightCast);
@@ -289,6 +298,8 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void NoActivateOnDisabledComponent()
         {
+            SetUpElements();
+
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.ManualOnEnable();
@@ -301,15 +312,10 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void DeactivateOnDisableComponent()
         {
+            SetUpElements();
+
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
-
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Activated.AddListener(activatedListenerMock.Listen);
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
@@ -319,12 +325,12 @@ namespace Test.Zinnia.Pointer
 
             subject.ManualOnEnable();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
@@ -332,12 +338,12 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             activatedListenerMock.Reset();
             deactivatedListenerMock.Reset();
@@ -346,152 +352,133 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsTrue(deactivatedListenerMock.Received);
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void OriginAlwaysVisible()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOn;
 
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
         }
+
 
         [Test]
         public void SegmentAlwaysVisible()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOn;
 
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void DestinationAlwaysVisible()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOn;
 
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void SegmentAndDestinationAlwaysVisible()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOn;
             subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOn;
@@ -499,43 +486,38 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void ElementsAlwaysVisible()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOn;
             subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOn;
@@ -544,172 +526,152 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void OriginAlwaysHidden()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOff;
 
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void SegmentAlwaysHidden()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOff;
 
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void DestinationAlwaysHidden()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOff;
 
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void SegmentAndDestinationAlwaysHidden()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOff;
             subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOff;
@@ -717,43 +679,38 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void ElementsAlwaysHidden()
         {
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
+            SetUpElements();
 
             subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOff;
             subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOff;
@@ -762,46 +719,40 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsFalse(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsFalse(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsFalse(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void ActiveOnEnable()
         {
+            SetUpElements();
+
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
-
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
-
             subject.Activated.AddListener(activatedListenerMock.Listen);
 
             Assert.IsFalse(activatedListenerMock.Received);
@@ -811,27 +762,22 @@ namespace Test.Zinnia.Pointer
 
             Assert.IsTrue(activatedListenerMock.Received);
 
-            Assert.IsFalse(validOrigin.activeInHierarchy);
-            Assert.IsTrue(invalidOrigin.activeInHierarchy);
-            Assert.IsFalse(validSegment.activeInHierarchy);
-            Assert.IsTrue(invalidSegment.activeInHierarchy);
-            Assert.IsFalse(validDestination.activeInHierarchy);
-            Assert.IsTrue(invalidDestination.activeInHierarchy);
+            Assert.IsFalse(validOriginContainer.activeInHierarchy);
+            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
+            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
+            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
         }
 
         [Test]
         public void EnterExitHover()
         {
+            SetUpElements();
+
             UnityEventListenerMock enterListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock exitListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock hoverListenerMock = new UnityEventListenerMock();
-
-            subject.Origin.ValidObject = validOrigin;
-            subject.Origin.InvalidObject = invalidOrigin;
-            subject.RepeatedSegment.ValidObject = validSegment;
-            subject.RepeatedSegment.InvalidObject = invalidSegment;
-            subject.Destination.ValidObject = validDestination;
-            subject.Destination.InvalidObject = invalidDestination;
 
             subject.Entered.AddListener(enterListenerMock.Listen);
             subject.Exited.AddListener(exitListenerMock.Listen);
@@ -856,11 +802,7 @@ namespace Test.Zinnia.Pointer
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blocker.transform.position = Vector3.forward * 5f;
 
-            List<Vector3> castPoints = new List<Vector3>
-            {
-                Vector3.zero,
-                blocker.transform.position
-            };
+            List<Vector3> castPoints = new List<Vector3> { Vector3.zero, blocker.transform.position };
 
             PointsCast.EventData straightCast;
 

@@ -172,7 +172,7 @@
         protected virtual void GeneratePoints(Vector3 forward, Vector3 down)
         {
             curvePoints[0] = Origin.transform.position;
-            curvePoints[1] = forward + new Vector3(0f, CurveOffset, 0f);
+            curvePoints[1] = forward + (Vector3.up * CurveOffset);
             curvePoints[2] = down;
             curvePoints[3] = down;
 
