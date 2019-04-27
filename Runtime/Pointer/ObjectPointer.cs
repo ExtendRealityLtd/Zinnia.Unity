@@ -297,6 +297,15 @@
         }
 
         /// <summary>
+        /// Handles the previous provided <see cref="PointsCast.EventData"/> once more.
+        /// </summary>
+        [RequiresBehaviourState]
+        public virtual void RehandleData()
+        {
+            HandleData(activePointsCastData);
+        }
+
+        /// <summary>
         /// Processes the appearance of the pointer.
         /// </summary>
         [RequiresBehaviourState]
