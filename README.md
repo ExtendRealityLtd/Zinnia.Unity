@@ -5,8 +5,8 @@
 >
 > `[zin-ee-uh]`
 
-[![License][License-Badge]][MIT License]
-[![Waffle][Waffle-Badge]][Waffle]
+[![License][License-Badge]][License]
+[![Backlog][Backlog-Badge]][Backlog]
 
 ## Introduction
 
@@ -63,7 +63,7 @@ Inspired by the [Zinnia] genus of plants known for their colorful, long lasting 
 
 ## License
 
-Code released under the [MIT License].
+Code released under the [MIT License][License].
 
 ## Disclaimer
 
@@ -71,9 +71,9 @@ These materials are not sponsored by or affiliated with Unity Technologies or it
 
 [Zinnia-Image]: https://user-images.githubusercontent.com/1029673/51488711-2ab42c80-1d9e-11e9-94c9-767e804157e7.png
 [License-Badge]: https://img.shields.io/github/license/ExtendRealityLtd/Zinnia.Unity.svg
-[Waffle-Badge]: https://badge.waffle.io/ExtendRealityLtd/Zinnia.Unity.svg?columns=Bug%20Backlog,Feature%20Backlog,In%20Progress,In%20Review
-[MIT License]: LICENSE.md
-[Waffle]: https://waffle.io/ExtendRealityLtd/Zinnia.Unity
+[Backlog-Badge]: https://img.shields.io/badge/project-backlog-78bdf2.svg
+[License]: LICENSE.md
+[Backlog]: http://tracker.vrtk.io
 [How To Clone A Repo]: https://help.github.com/articles/cloning-a-repository/
 [Unity]: https://unity3d.com/
 [Zinnia]: https://en.wikipedia.org/wiki/Zinnia
