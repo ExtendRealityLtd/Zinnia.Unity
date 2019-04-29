@@ -21,15 +21,13 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             containingObject = new GameObject();
             subject = containingObject.AddComponent<RigidbodyAngularVelocity>();
             subjectRigidbody = containingObject.AddComponent<Rigidbody>();
+            subjectRigidbody.useGravity = false;
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subjectRigidbody);
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
-
             timeOverride.ResetTime();
         }
 
