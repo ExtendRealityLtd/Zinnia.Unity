@@ -23,16 +23,17 @@
             points.Add(Vector3.zero);
         }
 
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            points.Clear();
+        }
+
         /// <inheritdoc />
         protected override void DoCastPoints()
         {
             GeneratePoints();
             ResultsChanged?.Invoke(eventData.Set(TargetHit, IsTargetHitValid, Points));
-        }
-
-        protected virtual void OnDisable()
-        {
-            points.Clear();
         }
 
         /// <summary>
@@ -47,8 +48,10 @@
             bool hasCollided = PhysicsCast.Raycast(PhysicsCast, ray, out RaycastHit hitData, MaximumLength, Physics.IgnoreRaycastLayer);
             TargetHit = hasCollided ? hitData : (RaycastHit?)null;
 
+            Vector3 destinationPosition = hasCollided ? hitData.point : originPosition + originForward * MaximumLength;
+
             points[0] = originPosition;
-            points[1] = hasCollided ? hitData.point : originPosition + originForward * MaximumLength;
+            points[1] = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : destinationPosition;
         }
     }
 }

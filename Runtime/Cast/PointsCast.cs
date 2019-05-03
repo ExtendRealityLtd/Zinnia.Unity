@@ -9,10 +9,10 @@
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Zinnia.Rule;
+    using Zinnia.Process;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
-    using Zinnia.Process;
-    using Zinnia.Rule;
 
     /// <summary>
     /// The base of casting components that result in points along the cast.
@@ -67,9 +67,7 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<EventData>
-        {
-        }
+        public class UnityEvent : UnityEvent<EventData> { }
 
         /// <summary>
         /// The origin point for the cast.
@@ -89,6 +87,11 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public RuleContainer TargetValidity { get; set; }
+
+        /// <summary>
+        /// An override for the destination location point in world space.
+        /// </summary>
+        public Vector3? DestinationPointOverride { get; set; }
 
         /// <summary>
         /// Emitted whenever the cast result changes.
@@ -138,6 +141,14 @@
         }
 
         /// <summary>
+        /// Clears the <see cref="DestinationPointOverride"/>.
+        /// </summary>
+        public virtual void ClearDestinationPointOverride()
+        {
+            DestinationPointOverride = null;
+        }
+
+        /// <summary>
         /// Performs the implemented way of casting points.
         /// </summary>
         protected abstract void DoCastPoints();
@@ -145,6 +156,11 @@
         protected virtual void OnEnable()
         {
             OnAfterTargetHitChange();
+        }
+
+        protected virtual void OnDisable()
+        {
+            ClearDestinationPointOverride();
         }
 
         /// <summary>

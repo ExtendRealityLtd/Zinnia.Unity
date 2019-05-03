@@ -34,8 +34,10 @@ namespace Zinnia.Cast
         protected override void GeneratePoints()
         {
             Vector3 originPosition = Origin.transform.position;
+            Vector3 destinationPosition = originPosition + Origin.transform.forward * CurrentLength;
+
             points[0] = originPosition;
-            points[1] = originPosition + Origin.transform.forward * CurrentLength;
+            points[1] = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : destinationPosition;
         }
 
         /// <summary>
