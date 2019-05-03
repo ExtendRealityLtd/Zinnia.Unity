@@ -7,44 +7,48 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
 
-    public class TransformDataGameObjectExtractorTest
+    public class SurfaceDataCollisionPointExtractorTest
     {
         private GameObject containingObject;
-        private TransformDataGameObjectExtractor subject;
-        private GameObject transformData;
+        private SurfaceDataCollisionPointExtractor subject;
+        private GameObject blocker;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<TransformDataGameObjectExtractor>();
-            transformData = new GameObject();
+            subject = containingObject.AddComponent<SurfaceDataCollisionPointExtractor>();
         }
 
         [TearDown]
         public void TearDown()
         {
             Object.DestroyImmediate(containingObject);
-            Object.DestroyImmediate(transformData);
+            Object.DestroyImmediate(blocker);
         }
 
         [Test]
         public void Extract()
         {
-            TransformData source = new TransformData(transformData);
-
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
+            SurfaceData surfaceData = new SurfaceData();
 
-            subject.Source = source;
+            subject.Source = surfaceData;
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsNull(subject.Result);
 
+            RaycastHit hitData = GetRayCastData();
+            hitData.point = Vector3.one;
+            surfaceData.CollisionData = hitData;
+
             subject.Extract();
 
             Assert.IsTrue(extractedMock.Received);
-            Assert.AreEqual(transformData, subject.Result);
+            Assert.AreEqual(Vector3.one, subject.Result);
+
+            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
@@ -63,14 +67,13 @@ namespace Test.Zinnia.Data.Operation.Extraction
         }
 
         [Test]
-        public void ExtractSourceNotSet()
+        public void ExtractNoCollisionData()
         {
-            TransformData source = new TransformData();
-
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
+            SurfaceData surfaceData = new SurfaceData();
 
-            subject.Source = source;
+            subject.Source = surfaceData;
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsNull(subject.Result);
@@ -84,17 +87,19 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractInactiveGameObject()
         {
-            TransformData source = new TransformData(transformData);
-
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
+            SurfaceData surfaceData = new SurfaceData();
 
-            subject.Source = source;
-
+            subject.Source = surfaceData;
             subject.gameObject.SetActive(false);
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsNull(subject.Result);
+
+            RaycastHit hitData = GetRayCastData();
+            hitData.point = Vector3.one;
+            surfaceData.CollisionData = hitData;
 
             subject.Extract();
 
@@ -105,22 +110,36 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractInactiveComponent()
         {
-            TransformData source = new TransformData(transformData);
-
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
+            SurfaceData surfaceData = new SurfaceData();
 
-            subject.Source = source;
-
+            subject.Source = surfaceData;
             subject.enabled = false;
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsNull(subject.Result);
 
+            RaycastHit hitData = GetRayCastData();
+            hitData.point = Vector3.one;
+            surfaceData.CollisionData = hitData;
+
             subject.Extract();
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsNull(subject.Result);
+        }
+
+        /// <summary>
+        /// Generates <see cref="RaycastHit"/> data to ensure the dataset is valid.
+        /// </summary>
+        /// <returns>The valid data.</returns>
+        protected virtual RaycastHit GetRayCastData()
+        {
+            blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            blocker.transform.position = Vector3.forward * 2f;
+            Physics.Raycast(Vector3.zero, Vector3.forward, out RaycastHit hitData);
+            return hitData;
         }
     }
 }

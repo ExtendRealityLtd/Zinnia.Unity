@@ -60,6 +60,11 @@
         [RequiresBehaviourState]
         public virtual void SetTarget(GameObject target)
         {
+            if (target == null)
+            {
+                return;
+            }
+
             Target = target.TryGetComponent<Rigidbody>(true, true);
         }
 
@@ -87,6 +92,11 @@
         [CalledAfterChangeOf(nameof(Mass))]
         protected virtual void OnAfterMassChange()
         {
+            if (Target == null)
+            {
+                return;
+            }
+
             Target.mass = Mass;
         }
 
@@ -96,6 +106,11 @@
         [CalledAfterChangeOf(nameof(Drag))]
         protected virtual void OnAfterDragChange()
         {
+            if (Target == null)
+            {
+                return;
+            }
+
             Target.drag = Drag;
         }
 
@@ -105,6 +120,11 @@
         [CalledAfterChangeOf(nameof(AngularDrag))]
         protected virtual void OnAfterAngularDragChange()
         {
+            if (Target == null)
+            {
+                return;
+            }
+
             Target.angularDrag = AngularDrag;
         }
 
@@ -114,6 +134,11 @@
         [CalledAfterChangeOf(nameof(UseGravity))]
         protected virtual void OnAfterUseGravityChange()
         {
+            if (Target == null)
+            {
+                return;
+            }
+
             Target.useGravity = UseGravity;
         }
 
@@ -123,6 +148,11 @@
         [CalledAfterChangeOf(nameof(IsKinematic))]
         protected virtual void OnAfterIsKinematicChange()
         {
+            if (Target == null)
+            {
+                return;
+            }
+
             Target.isKinematic = IsKinematic;
         }
 
@@ -132,6 +162,11 @@
         [CalledAfterChangeOf(nameof(Velocity))]
         protected virtual void OnAfterVelocityChange()
         {
+            if (Target == null)
+            {
+                return;
+            }
+
             Target.velocity = Velocity;
         }
 
@@ -141,6 +176,11 @@
         [CalledAfterChangeOf(nameof(AngularVelocity))]
         protected virtual void OnAfterAngularVelocityChange()
         {
+            if (Target == null)
+            {
+                return;
+            }
+
             Target.angularVelocity = AngularVelocity;
         }
 
@@ -150,6 +190,11 @@
         [CalledAfterChangeOf(nameof(MaxAngularVelocity))]
         protected virtual void OnAfterMaxAngularVelocityChange()
         {
+            if (Target == null)
+            {
+                return;
+            }
+
             Target.maxAngularVelocity = MaxAngularVelocity;
         }
     }

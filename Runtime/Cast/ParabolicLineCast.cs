@@ -51,7 +51,22 @@
         /// <summary>
         /// A reusable collection of <see cref="Vector3"/>s.
         /// </summary>
-        protected readonly Vector3[] curvePoints = new Vector3[4];
+        protected readonly List<Vector3> curvePoints = new List<Vector3>();
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            curvePoints.Add(default);
+            curvePoints.Add(default);
+            curvePoints.Add(default);
+            curvePoints.Add(default);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            curvePoints.Clear();
+        }
 
         /// <inheritdoc />
         protected override void DoCastPoints()
@@ -171,6 +186,9 @@
         /// <returns>The generated points on the parabolic line.</returns>
         protected virtual void GeneratePoints(Vector3 forward, Vector3 down)
         {
+            forward = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : forward;
+            down = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : down;
+
             curvePoints[0] = Origin.transform.position;
             curvePoints[1] = forward + (Vector3.up * CurveOffset);
             curvePoints[2] = down;
