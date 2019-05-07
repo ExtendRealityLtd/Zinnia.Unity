@@ -15,10 +15,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject
-            {
-                layer = LayerMask.NameToLayer("UI")
-            };
+            containingObject = new GameObject();
             container = new RuleContainer();
             subject = containingObject.AddComponent<AnyLayerRule>();
             container.Interface = subject;
@@ -33,27 +30,63 @@ namespace Test.Zinnia.Rule
         [Test]
         public void AcceptsMatch()
         {
-            subject.LayerMask = LayerMask.NameToLayer("UI");
+            containingObject.layer = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.GetMask("UI");
+            Assert.IsTrue(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void AcceptsMatchMultipleLayers()
+        {
+            containingObject.layer = LayerMask.NameToLayer("UI") | LayerMask.NameToLayer("Water");
+            subject.LayerMask = LayerMask.GetMask("UI");
+            Assert.IsTrue(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void AcceptsMatchMultipleLayerMask()
+        {
+            containingObject.layer = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.GetMask("UI") | LayerMask.GetMask("Water");
             Assert.IsTrue(container.Accepts(containingObject));
         }
 
         [Test]
         public void RefusesEmpty()
         {
+            containingObject.layer = LayerMask.NameToLayer("UI");
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
         [Test]
         public void RefusesDifferent()
         {
-            subject.LayerMask = LayerMask.NameToLayer("Ignore Raycast");
+            containingObject.layer = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.GetMask("Ignore Raycast");
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesDifferentMultipleLayers()
+        {
+            containingObject.layer = LayerMask.NameToLayer("UI") | LayerMask.NameToLayer("Water");
+            subject.LayerMask = LayerMask.GetMask("Ignore Raycast");
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void RefusesDifferentMultipleLayerMask()
+        {
+            containingObject.layer = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.GetMask("Ignore Raycast") | LayerMask.GetMask("Water");
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
         [Test]
         public void RefusesInactiveGameObject()
         {
-            subject.LayerMask = LayerMask.NameToLayer("UI");
+            containingObject.layer = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.GetMask("UI");
             subject.gameObject.SetActive(false);
             Assert.IsFalse(container.Accepts(containingObject));
         }
@@ -61,7 +94,8 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesInactiveComponent()
         {
-            subject.LayerMask = LayerMask.NameToLayer("UI");
+            containingObject.layer = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.GetMask("UI");
             subject.enabled = false;
             Assert.IsFalse(container.Accepts(containingObject));
         }

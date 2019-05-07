@@ -19,7 +19,7 @@
         /// <inheritdoc />
         protected override bool Accepts(GameObject targetGameObject)
         {
-            return (targetGameObject.layer & LayerMask.value) != 0;
+            return (LayerMask & (1 << targetGameObject.layer)) != 0;
         }
     }
 }
