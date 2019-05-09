@@ -4,16 +4,16 @@
     using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Cast;
-    using Zinnia.Data.Type;
-    using Zinnia.Extension;
+    using Zinnia.Rule;
     using Zinnia.Process;
     using Zinnia.Process.Moment;
-    using Zinnia.Rule;
+    using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Casts a <see cref="Ray"/> in a given direction and looks for the nearest valid surface.
@@ -36,15 +36,14 @@
         /// Defines the event with the <see cref="SurfaceData"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<SurfaceData>
-        {
-        }
+        public class UnityEvent : UnityEvent<SurfaceData> { }
 
+        #region Search Settings
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
         [Serialized, Cleared]
-        [field: DocumentedByXml]
+        [field: Header("Search Settings"), DocumentedByXml]
         public GameObject SearchOrigin { get; set; }
         /// <summary>
         /// The direction in which to cast to locate the nearest surface.
@@ -65,10 +64,19 @@
         [field: DocumentedByXml]
         public float MaximumDistance { get; set; } = 50f;
         /// <summary>
+        /// The amount to offset the position of the destination point found on the located surface.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3 DestinationOffset { get; set; } = Vector3.zero;
+        #endregion
+
+        #region Restriction Settings
+        /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
         /// </summary>
         [Serialized, Cleared]
-        [field: DocumentedByXml]
+        [field: Header("Restriction Settings"), DocumentedByXml]
         public RuleContainer TargetValidity { get; set; }
         /// <summary>
         /// An optional custom <see cref="Cast.PhysicsCast"/> object to affect the <see cref="Ray"/>.
@@ -76,12 +84,15 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public PhysicsCast PhysicsCast { get; set; }
+        #endregion
 
+        #region Location Events
         /// <summary>
         /// Emitted when a new surface is located.
         /// </summary>
-        [DocumentedByXml]
+        [Header("Location Events"), DocumentedByXml]
         public UnityEvent SurfaceLocated = new UnityEvent();
+        #endregion
 
         /// <summary>
         /// The located surface.
@@ -137,6 +148,7 @@
             if (CastRay(givenOrigin.Position, SearchDirection) && PositionChanged(DISTANCE_VARIANCE))
             {
                 surfaceData.RotationOverride = givenOrigin.Rotation;
+                surfaceData.ScaleOverride = givenOrigin.Scale;
                 SurfaceLocated?.Invoke(surfaceData);
             }
         }
@@ -215,7 +227,7 @@
         {
             surfaceData.CollisionData = collision;
             surfaceData.Transform = surfaceData.CollisionData.transform;
-            surfaceData.PositionOverride = surfaceData.CollisionData.point;
+            surfaceData.PositionOverride = surfaceData.CollisionData.point + DestinationOffset;
         }
 
         /// <summary>
