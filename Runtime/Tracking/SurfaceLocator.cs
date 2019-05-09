@@ -63,6 +63,12 @@
         [Serialized]
         [field: DocumentedByXml]
         public float MaximumDistance { get; set; } = 50f;
+        /// <summary>
+        /// The amount to offset the position of the destination point found on the located surface.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3 DestinationOffset { get; set; } = Vector3.zero;
         #endregion
 
         #region Restriction Settings
@@ -221,7 +227,7 @@
         {
             surfaceData.CollisionData = collision;
             surfaceData.Transform = surfaceData.CollisionData.transform;
-            surfaceData.PositionOverride = surfaceData.CollisionData.point;
+            surfaceData.PositionOverride = surfaceData.CollisionData.point + DestinationOffset;
         }
 
         /// <summary>
