@@ -137,6 +137,7 @@
             if (CastRay(givenOrigin.Position, SearchDirection) && PositionChanged(DISTANCE_VARIANCE))
             {
                 surfaceData.RotationOverride = givenOrigin.Rotation;
+                surfaceData.ScaleOverride = givenOrigin.Scale;
                 SurfaceLocated?.Invoke(surfaceData);
             }
         }
