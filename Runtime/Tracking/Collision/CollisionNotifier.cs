@@ -137,11 +137,37 @@
         }
 
         /// <summary>
+        /// The states of a tracked collision.
+        /// </summary>
+        [Flags]
+        public enum CollisionStates
+        {
+            /// <summary>
+            /// When a new collision occurs.
+            /// </summary>
+            Enter = 1 << 0,
+            /// <summary>
+            /// When an existing collision continues to exist.
+            /// </summary>
+            Stay = 1 << 1,
+            /// <summary>
+            /// When an existing collision ends.
+            /// </summary>
+            Exit = 1 << 2
+        }
+
+        /// <summary>
         /// The types of collisions that events will be emitted for.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml, UnityFlags]
         public CollisionTypes EmittedTypes { get; set; } = (CollisionTypes)(-1);
+        /// <summary>
+        /// The <see cref="CollisionStates"/> to process.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml, UnityFlags]
+        public CollisionStates StatesToProcess { get; set; } = (CollisionStates)(-1);
         /// <summary>
         /// Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.
         /// </summary>
@@ -214,7 +240,7 @@
         /// <param name="data">The collision data.</param>
         protected virtual void OnCollisionStarted(EventData data)
         {
-            if (!CanEmit(data))
+            if ((StatesToProcess & CollisionStates.Enter) == 0 || !CanEmit(data))
             {
                 return;
             }
@@ -233,7 +259,7 @@
         /// <param name="data">The collision data.</param>
         protected virtual void OnCollisionChanged(EventData data)
         {
-            if (!CanEmit(data))
+            if ((StatesToProcess & CollisionStates.Stay) == 0 || !CanEmit(data))
             {
                 return;
             }
@@ -252,7 +278,7 @@
         /// <param name="data">The collision data.</param>
         protected virtual void OnCollisionStopped(EventData data)
         {
-            if (!CanEmit(data))
+            if ((StatesToProcess & CollisionStates.Exit) == 0 || !CanEmit(data))
             {
                 return;
             }
