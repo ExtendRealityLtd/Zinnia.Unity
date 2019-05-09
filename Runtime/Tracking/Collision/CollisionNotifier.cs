@@ -80,7 +80,7 @@
                     return true;
                 }
 
-                return Equals(ColliderData.GetContainingTransform(), other.ColliderData.GetContainingTransform());
+                return Equals(ColliderData.GetContainingTransform(), other.ColliderData.GetContainingTransform()) && ((ForwardSource == null && other.ForwardSource == null) || Equals(ForwardSource, other.ForwardSource));
             }
 
             /// <inheritdoc />
@@ -118,9 +118,7 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<EventData>
-        {
-        }
+        public class UnityEvent : UnityEvent<EventData> { }
 
         /// <summary>
         /// The types of collisions that events will be emitted for.
@@ -210,6 +208,10 @@
             return collisionNotifiers;
         }
 
+        /// <summary>
+        /// Processes any collision start events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
+        /// </summary>
+        /// <param name="data">The collision data.</param>
         protected virtual void OnCollisionStarted(EventData data)
         {
             if (!CanEmit(data))
@@ -225,6 +227,10 @@
             }
         }
 
+        /// <summary>
+        /// Processes any collision change events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
+        /// </summary>
+        /// <param name="data">The collision data.</param>
         protected virtual void OnCollisionChanged(EventData data)
         {
             if (!CanEmit(data))
@@ -240,6 +246,10 @@
             }
         }
 
+        /// <summary>
+        /// Processes any collision stop events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
+        /// </summary>
+        /// <param name="data">The collision data.</param>
         protected virtual void OnCollisionStopped(EventData data)
         {
             if (!CanEmit(data))
