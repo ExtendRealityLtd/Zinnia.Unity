@@ -117,7 +117,7 @@
         [RequiresBehaviourState]
         public virtual void Add(CollisionNotifier.EventData collisionData)
         {
-            if (!IsValidCollision(collisionData))
+            if (Elements.Contains(collisionData) || !IsValidCollision(collisionData))
             {
                 return;
             }
