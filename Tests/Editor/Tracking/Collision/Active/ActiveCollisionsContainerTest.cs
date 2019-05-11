@@ -79,6 +79,20 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Assert.IsTrue(contentsChangedMock.Received);
             Assert.IsFalse(allStoppedMock.Received);
 
+            firstStartedMock.Reset();
+            countChangedMock.Reset();
+            contentsChangedMock.Reset();
+            allStoppedMock.Reset();
+
+            subject.Add(twoData);
+
+            Assert.AreEqual(2, subject.Elements.Count);
+
+            Assert.IsFalse(firstStartedMock.Received);
+            Assert.IsFalse(countChangedMock.Received);
+            Assert.IsFalse(contentsChangedMock.Received);
+            Assert.IsFalse(allStoppedMock.Received);
+
             Object.DestroyImmediate(oneContainer);
             Object.DestroyImmediate(twoContainer);
         }
