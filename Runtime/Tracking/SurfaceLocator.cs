@@ -79,6 +79,12 @@
         [field: Header("Restriction Settings"), DocumentedByXml]
         public RuleContainer TargetValidity { get; set; }
         /// <summary>
+        /// An optional <see cref="RuleContainer"/> to determine if the search for a valid surface should be terminated if the current found target matches the rule.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer LocatorTermination { get; set; }
+        /// <summary>
         /// An optional custom <see cref="Cast.PhysicsCast"/> object to affect the <see cref="Ray"/>.
         /// </summary>
         [Serialized, Cleared]
@@ -185,8 +191,7 @@
         /// <returns><see langword="true"/> if a valid surface is located.</returns>
         protected virtual bool FindFirstCollision(Ray tracerRaycast)
         {
-            RaycastHit collision;
-            if (PhysicsCast.Raycast(PhysicsCast, tracerRaycast, out collision, MaximumDistance, Physics.IgnoreRaycastLayer))
+            if (PhysicsCast.Raycast(PhysicsCast, tracerRaycast, out RaycastHit collision, MaximumDistance, Physics.IgnoreRaycastLayer) && (LocatorTermination?.Interface == null || !CollisionMatchesRule(collision, LocatorTermination)))
             {
                 SetSurfaceData(collision);
                 return true;
@@ -210,7 +215,12 @@
 
             foreach (RaycastHit collision in (HeapAllocationFreeReadOnlyList<RaycastHit>)raycastHits)
             {
-                if (ValidSurface(collision))
+                if (LocatorTermination?.Interface != null && CollisionMatchesRule(collision, LocatorTermination))
+                {
+                    break;
+                }
+
+                if (CollisionMatchesRule(collision, TargetValidity))
                 {
                     SetSurfaceData(collision);
                     return true;
@@ -231,13 +241,14 @@
         }
 
         /// <summary>
-        /// Determines whether the <see cref="RaycastHit"/> data contains a valid surface.
+        /// Determines whether the <see cref="RaycastHit"/> data contains a valid collision against the given rule.
         /// </summary>
         /// <param name="collisionData">The <see cref="RaycastHit"/> data to check for validity on.</param>
-        /// <returns><see langword="true"/> if the <see cref="RaycastHit"/> data contains a valid surface.</returns>
-        protected virtual bool ValidSurface(RaycastHit collisionData)
+        /// <param name="rule">The <see cref="RuleContainer"/> to check the validity against.</param>
+        /// <returns>Whether the <see cref="RaycastHit"/> data contains a valid collision.</returns>
+        protected virtual bool CollisionMatchesRule(RaycastHit collisionData, RuleContainer rule)
         {
-            return collisionData.transform != null && TargetValidity.Accepts(collisionData.transform.gameObject);
+            return collisionData.transform != null && rule.Accepts(collisionData.transform.gameObject);
         }
     }
 }
