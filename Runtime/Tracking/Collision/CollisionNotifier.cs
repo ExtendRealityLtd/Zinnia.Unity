@@ -80,7 +80,7 @@
                     return true;
                 }
 
-                return Equals(ColliderData.GetContainingTransform(), other.ColliderData.GetContainingTransform()) && ((ForwardSource == null && other.ForwardSource == null) || Equals(ForwardSource, other.ForwardSource));
+                return Equals(ForwardSource, other.ForwardSource) && Equals(ColliderData, other.ColliderData);
             }
 
             /// <inheritdoc />
@@ -96,18 +96,13 @@
                     return true;
                 }
 
-                if (obj.GetType() != GetType())
-                {
-                    return false;
-                }
-
-                return Equals((EventData)obj);
+                return obj is EventData other && Equals(other);
             }
 
             /// <inheritdoc />
             public override int GetHashCode()
             {
-                return ColliderData.GetContainingTransform().GetHashCode();
+                return ((ForwardSource != null ? ForwardSource.GetHashCode() : 0) * 397) ^ (ColliderData != null ? ColliderData.GetHashCode() : 0);
             }
 
             public static bool operator ==(EventData left, EventData right) => Equals(left, right);
