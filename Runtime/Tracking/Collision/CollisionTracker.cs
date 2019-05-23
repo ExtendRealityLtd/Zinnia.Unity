@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
     using UnityEngine;
-    using System.Linq;
     using System.Collections.Generic;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
