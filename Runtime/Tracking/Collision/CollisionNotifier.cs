@@ -191,9 +191,30 @@
         /// </summary>
         protected readonly EventData eventData = new EventData();
         /// <summary>
-        /// A reused instance to use when looking up <see cref="CollisionNotifier"/> components.
+        /// A reused instance to use when looking up <see cref="CollisionNotifier"/> components on start.
         /// </summary>
-        protected readonly List<CollisionNotifier> collisionNotifiers = new List<CollisionNotifier>();
+        protected readonly List<CollisionNotifier> startCollisionNotifiers = new List<CollisionNotifier>();
+        /// <summary>
+        /// A reused instance to use when looking up <see cref="CollisionNotifier"/> components on change.
+        /// </summary>
+        protected readonly List<CollisionNotifier> changeCollisionNotifiers = new List<CollisionNotifier>();
+        /// <summary>
+        /// A reused instance to use when looking up <see cref="CollisionNotifier"/> components on stop.
+        /// </summary>
+        protected readonly List<CollisionNotifier> stopCollisionNotifiers = new List<CollisionNotifier>();
+
+        /// <summary>
+        /// Whether the <see cref="collisionNotifiers"/> collection is being processed on start.
+        /// </summary>
+        protected bool isProcessingStartNotifierCollection;
+        /// <summary>
+        /// Whether the <see cref="collisionNotifiers"/> collection is being processed on change.
+        /// </summary>
+        protected bool isProcessingChangeNotifierCollection;
+        /// <summary>
+        /// Whether the <see cref="collisionNotifiers"/> collection is being processed on stop.
+        /// </summary>
+        protected bool isProcessingStopNotifierCollection;
 
         /// <summary>
         /// Determines whether events should be emitted.
@@ -209,11 +230,11 @@
         }
 
         /// <summary>
-        /// Returns a <see cref="CollisionNotifier"/> collection for the given <see cref="EventData"/> containing <see cref="Transform"/>
+        /// Returns a <see cref="CollisionNotifier"/> collection for the given <see cref="EventData"/> containing <see cref="Transform"/>.
         /// </summary>
         /// <param name="data">The <see cref="EventData"/> that holds the containing <see cref="Transform"/></param>
         /// <returns>A <see cref="CollisionNotifier"/> collection for items found on the containing <see cref="Transform"/> component.</returns>
-        protected virtual List<CollisionNotifier> GetNotifiers(EventData data)
+        protected virtual List<CollisionNotifier> GetNotifiers(EventData data, List<CollisionNotifier> collisionNotifiers)
         {
             Transform reference = data.ColliderData.GetContainingTransform();
 
@@ -242,10 +263,17 @@
 
             CollisionStarted?.Invoke(data);
 
-            foreach (CollisionNotifier notifier in GetNotifiers(data))
+            if (isProcessingStartNotifierCollection)
+            {
+                return;
+            }
+
+            isProcessingStartNotifierCollection = true;
+            foreach (CollisionNotifier notifier in GetNotifiers(data, startCollisionNotifiers))
             {
                 notifier.OnCollisionStarted(data);
             }
+            isProcessingStartNotifierCollection = false;
         }
 
         /// <summary>
@@ -261,10 +289,17 @@
 
             CollisionChanged?.Invoke(data);
 
-            foreach (CollisionNotifier notifier in GetNotifiers(data))
+            if (isProcessingChangeNotifierCollection)
+            {
+                return;
+            }
+
+            isProcessingChangeNotifierCollection = true;
+            foreach (CollisionNotifier notifier in GetNotifiers(data, changeCollisionNotifiers))
             {
                 notifier.OnCollisionChanged(data);
             }
+            isProcessingChangeNotifierCollection = false;
         }
 
         /// <summary>
@@ -280,10 +315,17 @@
 
             CollisionStopped?.Invoke(data);
 
-            foreach (CollisionNotifier notifier in GetNotifiers(data))
+            if (isProcessingStopNotifierCollection)
+            {
+                return;
+            }
+
+            isProcessingStopNotifierCollection = true;
+            foreach (CollisionNotifier notifier in GetNotifiers(data, stopCollisionNotifiers))
             {
                 notifier.OnCollisionStopped(data);
             }
+            isProcessingStopNotifierCollection = false;
         }
     }
 }
