@@ -106,6 +106,10 @@
         public List<CollisionNotifier.EventData> Elements { get; protected set; } = new List<CollisionNotifier.EventData>();
 
         /// <summary>
+        /// A containing <see cref="Transform"/> collection with a nested collection of each collision occuring.
+        /// </summary>
+        protected Dictionary<Transform, List<CollisionNotifier.EventData>> containingTransformCollisions = new Dictionary<Transform, List<CollisionNotifier.EventData>>();
+        /// <summary>
         /// The event data emitted on active collision events.
         /// </summary>
         protected readonly EventData eventData = new EventData();
@@ -117,19 +121,32 @@
         [RequiresBehaviourState]
         public virtual void Add(CollisionNotifier.EventData collisionData)
         {
-            if (Elements.Contains(collisionData) || !IsValidCollision(collisionData))
+            Transform currentCollisionContainingTransform = collisionData.ColliderData.GetContainingTransform();
+            if (!IsValidCollision(currentCollisionContainingTransform))
             {
                 return;
             }
 
-            Elements.Add(CloneEventData(collisionData));
-            Added?.Invoke(collisionData);
-            if (Elements.Count == 1)
+            if (!AreExistingCollisions(collisionData, currentCollisionContainingTransform))
             {
-                FirstStarted?.Invoke(collisionData);
+                CollisionNotifier.EventData clonedCollisionData = CloneEventData(collisionData);
+                AddUniqueElement(clonedCollisionData);
+
+                if (!containingTransformCollisions.TryGetValue(currentCollisionContainingTransform, out List<CollisionNotifier.EventData> existingTransformCollisions))
+                {
+                    existingTransformCollisions = new List<CollisionNotifier.EventData>();
+                    containingTransformCollisions[currentCollisionContainingTransform] = existingTransformCollisions;
+                }
+                existingTransformCollisions.Add(clonedCollisionData);
+
+                Added?.Invoke(collisionData);
+                if (Elements.Count == 1)
+                {
+                    FirstStarted?.Invoke(collisionData);
+                }
+                CountChanged?.Invoke(eventData.Set(Elements));
+                ProcessContentsChanged();
             }
-            CountChanged?.Invoke(eventData.Set(Elements));
-            ProcessContentsChanged();
         }
 
         /// <summary>
@@ -139,8 +156,18 @@
         [RequiresBehaviourState]
         public virtual void Remove(CollisionNotifier.EventData collisionData)
         {
-            if (Elements.Remove(collisionData))
+            Transform currentCollisionContainingTransform = collisionData.ColliderData.GetContainingTransform();
+            if (!containingTransformCollisions.TryGetValue(currentCollisionContainingTransform, out List<CollisionNotifier.EventData> foundCollisionElements))
             {
+                return;
+            }
+
+            foundCollisionElements.Remove(collisionData);
+            Elements.Remove(collisionData);
+
+            if (!HasRemainingCollisions(foundCollisionElements))
+            {
+                containingTransformCollisions.Remove(currentCollisionContainingTransform);
                 Removed?.Invoke(collisionData);
                 EmitEmptyEvents();
             }
@@ -168,6 +195,7 @@
             }
 
             Elements.Clear();
+            containingTransformCollisions.Clear();
             EmitEmptyEvents();
         }
 
@@ -196,15 +224,82 @@
         }
 
         /// <summary>
-        /// Determines if the current collision is valid.
+        /// Determines if the current containing <see cref="Transform"/> in the collision is valid.
         /// </summary>
-        /// <param name="collisionData">The collision to check.</param>
+        /// <param name="containingTransform">The <see cref="Transform"/> to check.</param>
         /// <returns>The validity result of the collision.</returns>
-        protected virtual bool IsValidCollision(CollisionNotifier.EventData collisionData)
+        protected virtual bool IsValidCollision(Transform containingTransform)
         {
-            Transform containingTransform = collisionData.ColliderData.GetContainingTransform();
             return containingTransform != null && CollisionValidity.Accepts(containingTransform.gameObject);
         }
 
+        /// <summary>
+        /// Adds the given data to the <see cref="Elements"/> collection if it is not already present.
+        /// </summary>
+        /// <param name="data">The data to add.</param>
+        protected virtual void AddUniqueElement(CollisionNotifier.EventData data)
+        {
+            if (!Elements.Contains(data))
+            {
+                Elements.Add(data);
+            }
+        }
+
+        /// <summary>
+        /// Updates current containing <see cref="Transform"/> collision occurring by removing any existing nested collisions and adding the current collision in the given collision data.
+        /// </summary>
+        /// <param name="collisionData">The collision data to add.</param>
+        /// <param name="existingCollisionData">The existing collision data to remove from <see cref="Elements"/>.</param>
+        protected virtual void UpdateContainingTransformCollisions(CollisionNotifier.EventData collisionData, List<CollisionNotifier.EventData> existingCollisionData)
+        {
+            foreach (CollisionNotifier.EventData data in existingCollisionData)
+            {
+                Elements.Remove(data);
+            }
+
+            CollisionNotifier.EventData clonedCollisionData = CloneEventData(collisionData);
+            existingCollisionData.Add(clonedCollisionData);
+            AddUniqueElement(clonedCollisionData);
+        }
+
+        /// <summary>
+        /// Determines if the containing <see cref="Transform"/> is already being collided with by a different nested <see cref="Collider"/>.
+        /// </summary>
+        /// <remarks>
+        /// Updates the <see cref="Elements"/> collection with the latest collision data for an existing containing <see cref="Transform"/> that is being collided with.
+        /// </remarks>
+        /// <param name="collisionData">The collision data containing the <see cref="Collider"/> to check.</param>
+        /// <param name="currentCollisionContainingTransform">The containing <see cref="Transform"/> for the current collider.</param>
+        /// <returns>Whether there are any existing collisions occuring with the containing <see cref="Transform"/>.</returns>
+        protected virtual bool AreExistingCollisions(CollisionNotifier.EventData collisionData, Transform currentCollisionContainingTransform)
+        {
+            if (!containingTransformCollisions.TryGetValue(currentCollisionContainingTransform, out List<CollisionNotifier.EventData> foundCollisionElements))
+            {
+                return false;
+            }
+
+            if (foundCollisionElements.Contains(collisionData))
+            {
+                return true;
+            }
+
+            UpdateContainingTransformCollisions(collisionData, foundCollisionElements);
+            return true;
+        }
+
+        /// <summary>
+        /// Determines if the collisions collection still contains any valid collisions and updates the <see cref="Elements"/> collection with the next available collision data.
+        /// </summary>
+        /// <param name="foundCollisionElements">The collection to check.</param>
+        /// <returns>Whether the collection has remaining collisions.</returns>
+        protected virtual bool HasRemainingCollisions(List<CollisionNotifier.EventData> foundCollisionElements)
+        {
+            if (foundCollisionElements.Count > 0)
+            {
+                AddUniqueElement(foundCollisionElements[foundCollisionElements.Count - 1]);
+                return true;
+            }
+            return false;
+        }
     }
 }
