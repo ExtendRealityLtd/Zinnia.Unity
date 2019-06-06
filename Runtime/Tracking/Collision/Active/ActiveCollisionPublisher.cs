@@ -68,6 +68,10 @@
         /// A reused instance to use when looking up <see cref="ActiveCollisionConsumer"/> components.
         /// </summary>
         protected readonly List<ActiveCollisionConsumer> activeCollisionConsumers = new List<ActiveCollisionConsumer>();
+        /// <summary>
+        /// A reused instance to use when looking up the Active Collisions in a Payload.
+        /// </summary>
+        protected List<CollisionNotifier.EventData> activeCollisions = new List<CollisionNotifier.EventData>();
 
         /// <summary>
         /// Sets the active collisions by copying it from given <see cref="ActiveCollisionsContainer.EventData"/>.
@@ -111,6 +115,14 @@
         }
 
         /// <summary>
+        /// Clears the existing active collision data.
+        /// </summary>
+        public virtual void ClearActiveCollisions()
+        {
+            Payload.ActiveCollisions.Clear();
+        }
+
+        /// <summary>
         /// Publishes itself and the current collision to all <see cref="ActiveCollisionConsumer"/> components found on any of the active collisions as long as the component is active and enabled.
         /// </summary>
         [RequiresBehaviourState]
@@ -125,7 +137,9 @@
         public virtual void ForcePublish()
         {
             Payload.PublisherContainer = gameObject;
-            foreach (CollisionNotifier.EventData currentCollision in Payload.ActiveCollisions)
+            activeCollisions.Clear();
+            activeCollisions.AddRange(Payload.ActiveCollisions);
+            foreach (CollisionNotifier.EventData currentCollision in activeCollisions)
             {
                 Transform reference = currentCollision.ColliderData.GetContainingTransform();
                 foreach (ActiveCollisionConsumer consumer in GetConsumers(reference))
