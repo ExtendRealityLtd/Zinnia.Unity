@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.4.3](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.4.2...v9.4.3) (2019-06-16)
+
+
+### Bug Fixes
+
+* **MemberChange:** allow subclasses to handle property changes ([40baf00](https://github.com/ExtendRealityLtd/Malimbe/commit/40baf00))
+
 ## [9.4.2](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.4.1...v9.4.2) (2019-03-25)
 
 
