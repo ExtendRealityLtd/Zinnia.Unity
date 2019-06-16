@@ -59,6 +59,11 @@
         /// </summary>
         protected virtual void RegisterSourceListeners()
         {
+            if (Sources == null)
+            {
+                return;
+            }
+
             Sources.Added.AddListener(OnSourceAdded);
             Sources.Removed.AddListener(OnSourceRemoved);
         }
@@ -68,6 +73,11 @@
         /// </summary>
         protected virtual void UnregisterSourceListeners()
         {
+            if (Sources == null)
+            {
+                return;
+            }
+
             Sources.Added.RemoveListener(OnSourceAdded);
             Sources.Removed.RemoveListener(OnSourceRemoved);
         }
@@ -77,6 +87,11 @@
         /// </summary>
         protected virtual void RegisterTargetListeners()
         {
+            if (Targets == null)
+            {
+                return;
+            }
+
             Targets.Added.AddListener(OnTargetAdded);
             Targets.Removed.AddListener(OnTargetRemoved);
         }
@@ -86,6 +101,11 @@
         /// </summary>
         protected virtual void UnregisterTargetListeners()
         {
+            if (Targets == null)
+            {
+                return;
+            }
+
             Targets.Added.RemoveListener(OnTargetAdded);
             Targets.Removed.RemoveListener(OnTargetRemoved);
         }
