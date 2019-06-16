@@ -12,6 +12,7 @@
         protected const string collectionLabel = "Elements";
         protected const string collectionElementLabel = "Element {0}";
         protected const string collectionEmptyLabel = "List is Empty";
+        protected const string invalidElementTypeMessage = "Element of Type `{0}` is not supported. Click the reference field `{1}` above and edit the `Elements` collection directly on the source component.";
         protected const float footerSpacing = 2f;
         protected const float objectPickerPadding = 4f;
         protected const int indentResetLevel = -2;
@@ -24,6 +25,7 @@
         {
             label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;
             EditorGUILayout.PropertyField(property, label, true);
+            string fieldLabel = label.text;
             object propertyObject = fieldInfo.GetValue(property.serializedObject.targetObject);
             if (propertyObject == null)
             {
@@ -45,9 +47,16 @@
                 using (new EditorGUI.IndentLevelScope())
                 {
                     dynamic list = propertyObject;
-                    bool listIsEmpty = list.NonSubscribableElements.Count == 0;
+                    dynamic elements = list.NonSubscribableElements;
+                    bool isListEmpty = elements.Count == 0;
 
-                    if (listIsEmpty)
+                    if (!isListEmpty && !IsSupportedElement(elements[0]))
+                    {
+                        EditorGUILayout.HelpBox(string.Format(invalidElementTypeMessage, elements[0].GetType(), fieldLabel), MessageType.Warning);
+                        return;
+                    }
+
+                    if (isListEmpty)
                     {
                         using (new EditorGUI.IndentLevelScope(indentResetLevel))
                         using (new EditorGUILayout.HorizontalScope())
@@ -59,9 +68,9 @@
                     }
                     else
                     {
-                        for (int index = 0; index < list.NonSubscribableElements.Count; index++)
+                        for (int index = 0; index < elements.Count; index++)
                         {
-                            dynamic currentElement = list.NonSubscribableElements[index];
+                            dynamic currentElement = elements[index];
                             Type elementType = currentElement == null ? GetElementType() : currentElement.GetType();
                             using (new EditorGUILayout.HorizontalScope())
                             {
@@ -87,7 +96,7 @@
                             list.Add(null);
                         }
 
-                        using (new EditorGUI.DisabledScope(listIsEmpty))
+                        using (new EditorGUI.DisabledScope(isListEmpty))
                         {
                             if (GUILayout.Button(buttonIconRemove, buttonStyle))
                             {
@@ -101,6 +110,16 @@
                     GUILayout.Space(footerSpacing);
                 }
             }
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return base.GetPropertyHeight(property, label) - EditorGUIUtility.singleLineHeight;
+        }
+
+        protected virtual bool IsSupportedElement(dynamic element)
+        {
+            return element == null || typeof(UnityEngine.Object).IsAssignableFrom(element.GetType());
         }
 
         protected virtual Type GetElementType()
