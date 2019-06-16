@@ -2,7 +2,7 @@
     "name": "io.extendreality.malimbe",
     "displayName": "Malimbe",
     "description": "A collection of tools to simplify writing public API components in Unity.",
-    "version": "9.4.2",
+    "version": "9.4.3",
     "unity": "2018.1",
     "keywords": [
         "editor",
