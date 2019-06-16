@@ -11,11 +11,16 @@
     using Zinnia.Data.Type;
 
     /// <summary>
+    /// The basis for all Observable List types.
+    /// </summary>
+    public abstract class ObservableList : MonoBehaviour { }
+
+    /// <summary>
     /// Allows observing changes to a <see cref="List{T}"/>.
     /// </summary>
     /// <typeparam name="TElement">The type of the elements in the <see cref="List{T}"/>.</typeparam>
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type to use.</typeparam>
-    public abstract class ObservableList<TElement, TEvent> : MonoBehaviour where TEvent : UnityEvent<TElement>, new()
+    public abstract class ObservableList<TElement, TEvent> : ObservableList where TEvent : UnityEvent<TElement>, new()
     {
         #region List Contents Events
         /// <summary>
