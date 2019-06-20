@@ -138,7 +138,10 @@ namespace Test.Zinnia.Data.Operation.Extraction
         {
             blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blocker.transform.position = Vector3.forward * 2f;
+            Physics.autoSimulation = false;
+            Physics.Simulate(Time.fixedDeltaTime);
             Physics.Raycast(Vector3.zero, Vector3.forward, out RaycastHit hitData);
+            Physics.autoSimulation = true;
             return hitData;
         }
     }
