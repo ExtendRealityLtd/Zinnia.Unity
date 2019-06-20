@@ -92,20 +92,39 @@
         public float AppliedDuration { get; set; }
 
         /// <summary>
-        /// Emitted when an overlay <see cref="Color"/> is added.
+        /// Emitted when the <see cref="AddColorOverlay"/> method is called.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent Added = new UnityEvent();
         /// <summary>
-        /// Emitted when an overlay <see cref="Color"/> is removed.
+        /// Emitted when the <see cref="AddColorOverlay"/> target overlay <see cref="Color"/> is reached.
+        /// </summary>
+        [DocumentedByXml]
+        public UnityEvent AddTransitioned = new UnityEvent();
+        /// <summary>
+        /// Emitted when the <see cref="RemoveColorOverlay"/> method is called.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent Removed = new UnityEvent();
+        /// <summary>
+        /// Emitted when the <see cref="RemoveColorOverlay"/> target overlay <see cref="Color"/> is reached.
+        /// </summary>
+        [DocumentedByXml]
+        public UnityEvent RemoveTransitioned = new UnityEvent();
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> has changed from the previous render frame.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent Changed = new UnityEvent();
+
+        /// <summary>
+        /// Whether an overlay add transition is in progress.
+        /// </summary>
+        public bool IsAddTransitioning { get; protected set; }
+        /// <summary>
+        /// Whether an overlay remove transition is in progress.
+        /// </summary>
+        public bool IsRemoveTransitioning { get; protected set; }
 
         /// <summary>
         /// The target duration to process the color change for.
@@ -141,12 +160,25 @@
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
+        /// Sets the current <see cref="OverlayColor"/> and <see cref="AddDuration"/> with the given parameters and applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/>.
+        /// </summary>
+        /// <param name="overlayColor">The <see cref="Color"/> to apply to the overlay.</param>
+        /// <param name="addDuration">The duration of time to apply the overlay <see cref="Color"/>.</param>
+        [RequiresBehaviourState]
+        public virtual void AddColorOverlay(Color overlayColor, float addDuration)
+        {
+            OverlayColor = overlayColor;
+            AddDuration = addDuration;
+            AddColorOverlay();
+        }
+
+        /// <summary>
         /// Applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/>.
         /// </summary>
         [RequiresBehaviourState]
         public virtual void AddColorOverlay()
         {
-            AddColorOverlay(OverlayColor, AddDuration);
+            ApplyColorOverlay(OverlayColor, AddDuration);
         }
 
         /// <summary>
@@ -155,7 +187,7 @@
         [RequiresBehaviourState]
         public virtual void RemoveColorOverlay()
         {
-            AddColorOverlay(Color.clear, RemoveDuration);
+            ApplyColorOverlay(Color.clear, RemoveDuration);
             Removed?.Invoke(eventData.Set(Color.clear));
         }
 
@@ -165,7 +197,7 @@
         [RequiresBehaviourState]
         public virtual void Blink()
         {
-            AddColorOverlay(OverlayColor, AddDuration);
+            ApplyColorOverlay(OverlayColor, AddDuration);
             blinkRoutine = StartCoroutine(ResetBlink());
         }
 
@@ -187,7 +219,7 @@
         /// </summary>
         /// <param name="newColor"><see cref="Color"/> to apply to the overlay.</param>
         /// <param name="duration">The duration over which the <see cref="Color"/> is applied.</param>
-        protected virtual void AddColorOverlay(Color newColor, float duration)
+        protected virtual void ApplyColorOverlay(Color newColor, float duration)
         {
             CancelBlinkRoutine();
 
@@ -204,9 +236,16 @@
                     currentColor = newColor;
                 }
 
+                IsAddTransitioning = false;
+                IsRemoveTransitioning = false;
                 if (newColor != Color.clear)
                 {
+                    IsAddTransitioning = true;
                     Added?.Invoke(eventData.Set(newColor));
+                }
+                else
+                {
+                    IsRemoveTransitioning = true;
                 }
             }
         }
@@ -256,6 +295,16 @@
                 }
                 Changed?.Invoke(eventData.Set(currentColor));
             }
+            else if (IsAddTransitioning)
+            {
+                AddTransitioned?.Invoke(eventData.Set(currentColor));
+                IsAddTransitioning = false;
+            }
+            else if (IsRemoveTransitioning)
+            {
+                RemoveTransitioned?.Invoke(eventData.Set(currentColor));
+                IsRemoveTransitioning = false;
+            }
 
             if (currentColor.a > 0f && workingMaterial != null)
             {
@@ -280,7 +329,15 @@
         /// </summary>
         protected virtual void CopyMaterialOverlayToWorking()
         {
-            Destroy(workingMaterial);
+            if (Application.isPlaying)
+            {
+                Destroy(workingMaterial);
+            }
+            else
+            {
+                DestroyImmediate(workingMaterial);
+            }
+
             if (OverlayMaterial != null)
             {
                 workingMaterial = new Material(OverlayMaterial);
