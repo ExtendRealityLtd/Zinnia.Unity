@@ -395,5 +395,52 @@ namespace Test.Zinnia.Tracking
             Object.DestroyImmediate(validSurface);
             Object.DestroyImmediate(searchOrigin);
         }
+
+        [UnityTest]
+        public IEnumerator NearestSurface()
+        {
+            Physics.autoSimulation = true;
+
+            GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject validSurface2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject searchOrigin = new GameObject("SearchOrigin");
+            validSurface.name = "validSurface";
+            validSurface2.name = "validSurface2";
+
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            validSurface.AddComponent<RuleStub>();
+            AnyComponentTypeRule anyComponentTypeRule = validSurface.AddComponent<AnyComponentTypeRule>();
+            validSurface2.AddComponent<RuleStub>();
+
+            SerializableTypeComponentObservableList rules = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+
+            anyComponentTypeRule.ComponentTypes = rules;
+            rules.Add(typeof(RuleStub));
+
+            subject.TargetValidity = new RuleContainer
+            {
+                Interface = anyComponentTypeRule
+            };
+
+            subject.SearchOrigin = searchOrigin;
+            subject.SearchDirection = Vector3.forward;
+
+            validSurface.transform.position = Vector3.forward * 5f;
+            validSurface2.transform.position = Vector3.forward * 4.9f;
+            GameObject nearestSurface = validSurface2;
+
+            yield return waitForFixedUpdate;
+            subject.Locate();
+            yield return waitForFixedUpdate;
+            Assert.IsTrue(surfaceLocatedMock.Received);
+            Assert.IsTrue(nearestSurface.transform == subject.surfaceData.Transform, "The returned surfaceData.Transform is not the nearest");
+
+            Object.DestroyImmediate(validSurface);
+            Object.DestroyImmediate(validSurface2);
+            Object.DestroyImmediate(searchOrigin);
+        }
     }
 }

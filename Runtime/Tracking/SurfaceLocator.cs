@@ -28,7 +28,7 @@
             /// <inheritdoc />
             public virtual int Compare(RaycastHit x, RaycastHit y)
             {
-                return (int)(x.distance - y.distance);
+                return x.distance.CompareTo(y.distance);
             }
         }
 
