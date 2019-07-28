@@ -4,6 +4,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
     using UnityEngine;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformPositionDifferenceRotationTest
     {

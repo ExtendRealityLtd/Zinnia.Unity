@@ -4,6 +4,7 @@ namespace Test.Zinnia.Data.Type
 {
     using UnityEngine;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformDataTest
     {

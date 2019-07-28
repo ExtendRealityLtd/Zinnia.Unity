@@ -5,6 +5,7 @@ namespace Test.Zinnia.Data.Operation.Mutation
 {
     using UnityEngine;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformEulerRotationMutatorTest
     {
@@ -262,7 +263,7 @@ namespace Test.Zinnia.Data.Operation.Mutation
             GameObject origin = new GameObject();
             subject.Target = target;
 
-            Assert.Throws<System.ArgumentException>(() => subject.Origin = origin);
+            NUnit.Framework.Assert.Throws<System.ArgumentException>(() => subject.Origin = origin);
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(origin);

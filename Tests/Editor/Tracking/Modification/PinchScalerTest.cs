@@ -4,6 +4,7 @@ namespace Test.Zinnia.Tracking.Modification
 {
     using UnityEngine;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class PinchScalerTest
     {

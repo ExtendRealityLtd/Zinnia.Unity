@@ -6,6 +6,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class SurfaceDataCollisionPointExtractorTest
     {
@@ -37,7 +38,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Source = surfaceData;
 
             Assert.IsFalse(extractedMock.Received);
-            Assert.IsNull(subject.Result);
+            Assert.IsFalse(subject.Result.HasValue);
 
             RaycastHit hitData = GetRayCastData();
             hitData.point = Vector3.one;
@@ -58,12 +59,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Extracted.AddListener(extractedMock.Listen);
 
             Assert.IsFalse(extractedMock.Received);
-            Assert.IsNull(subject.Result);
+            Assert.IsFalse(subject.Result.HasValue);
 
             subject.Extract();
 
             Assert.IsFalse(extractedMock.Received);
-            Assert.IsNull(subject.Result);
+            Assert.IsFalse(subject.Result.HasValue);
         }
 
         [Test]
@@ -76,12 +77,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Source = surfaceData;
 
             Assert.IsFalse(extractedMock.Received);
-            Assert.IsNull(subject.Result);
+            Assert.IsFalse(subject.Result.HasValue);
 
             subject.Extract();
 
             Assert.IsFalse(extractedMock.Received);
-            Assert.IsNull(subject.Result);
+            Assert.IsFalse(subject.Result.HasValue);
         }
 
         [Test]
@@ -95,7 +96,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.gameObject.SetActive(false);
 
             Assert.IsFalse(extractedMock.Received);
-            Assert.IsNull(subject.Result);
+            Assert.IsFalse(subject.Result.HasValue);
 
             RaycastHit hitData = GetRayCastData();
             hitData.point = Vector3.one;
@@ -104,7 +105,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Extract();
 
             Assert.IsFalse(extractedMock.Received);
-            Assert.IsNull(subject.Result);
+            Assert.IsFalse(subject.Result.HasValue);
         }
 
         [Test]
@@ -118,7 +119,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.enabled = false;
 
             Assert.IsFalse(extractedMock.Received);
-            Assert.IsNull(subject.Result);
+            Assert.IsFalse(subject.Result.HasValue);
 
             RaycastHit hitData = GetRayCastData();
             hitData.point = Vector3.one;
@@ -127,7 +128,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Extract();
 
             Assert.IsFalse(extractedMock.Received);
-            Assert.IsNull(subject.Result);
+            Assert.IsFalse(subject.Result.HasValue);
         }
 
         /// <summary>

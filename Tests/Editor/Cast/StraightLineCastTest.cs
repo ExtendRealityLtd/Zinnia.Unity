@@ -10,6 +10,7 @@ namespace Test.Zinnia.Cast
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class StraightLineCastTest
     {
@@ -76,7 +77,7 @@ namespace Test.Zinnia.Cast
 
             Assert.AreEqual(expectedStart, subject.Points[0]);
             Assert.AreEqual(expectedEnd, subject.Points[1]);
-            Assert.IsNull(subject.TargetHit);
+            Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsTrue(castResultsChangedMock.Received);
         }
 
@@ -135,7 +136,7 @@ namespace Test.Zinnia.Cast
             subject.Process();
 
             Assert.AreEqual(0, subject.Points.Count);
-            Assert.IsNull(subject.TargetHit);
+            Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsFalse(castResultsChangedMock.Received);
         }
 
@@ -155,7 +156,7 @@ namespace Test.Zinnia.Cast
             subject.Process();
 
             Assert.AreEqual(0, subject.Points.Count);
-            Assert.IsNull(subject.TargetHit);
+            Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsFalse(castResultsChangedMock.Received);
         }
     }

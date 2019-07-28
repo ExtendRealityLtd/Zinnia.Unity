@@ -4,6 +4,7 @@ namespace Test.Zinnia.Extension
 {
     using UnityEngine;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectExtensionsTest
     {

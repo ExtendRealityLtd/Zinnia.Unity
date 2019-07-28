@@ -6,6 +6,7 @@ namespace Test.Zinnia.Rule
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class NegationRuleTest
     {

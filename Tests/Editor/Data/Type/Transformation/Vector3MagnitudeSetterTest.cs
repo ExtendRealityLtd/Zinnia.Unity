@@ -5,6 +5,7 @@ namespace Test.Zinnia.Data.Type.Transformation
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class Vector3MagnitudeSetterTest
     {

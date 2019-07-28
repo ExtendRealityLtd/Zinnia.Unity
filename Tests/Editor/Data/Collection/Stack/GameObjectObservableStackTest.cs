@@ -5,6 +5,7 @@ namespace Test.Zinnia.Data.Collection.Stack
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectEventObservableTest
     {

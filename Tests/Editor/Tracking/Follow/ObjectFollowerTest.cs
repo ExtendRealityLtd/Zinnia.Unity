@@ -11,6 +11,7 @@ namespace Test.Zinnia.Tracking.Follow
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class ObjectFollowerTest
     {
@@ -38,7 +39,7 @@ namespace Test.Zinnia.Tracking.Follow
             subject.TargetOffsets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
 
-            Assert.IsEmpty(subject.TargetOffsets.NonSubscribableElements);
+            Assert.AreEqual(0, subject.TargetOffsets.NonSubscribableElements.Count);
             subject.TargetOffsets.Add(offset);
             Assert.AreEqual(1, subject.TargetOffsets.NonSubscribableElements.Count);
             Assert.AreEqual(offset, subject.TargetOffsets.NonSubscribableElements[0]);
@@ -57,7 +58,7 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.AreEqual(offset, subject.TargetOffsets.NonSubscribableElements[0]);
 
             subject.TargetOffsets.Remove(offset);
-            Assert.IsEmpty(subject.TargetOffsets.NonSubscribableElements);
+            Assert.AreEqual(0, subject.TargetOffsets.NonSubscribableElements.Count);
             Object.DestroyImmediate(offset);
         }
 
@@ -101,7 +102,7 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.AreEqual(offset, subject.TargetOffsets.NonSubscribableElements[0]);
 
             subject.TargetOffsets.Clear();
-            Assert.IsEmpty(subject.TargetOffsets.NonSubscribableElements);
+            Assert.AreEqual(0, subject.TargetOffsets.NonSubscribableElements.Count);
             Object.DestroyImmediate(offset);
         }
 
@@ -372,7 +373,7 @@ namespace Test.Zinnia.Tracking.Follow
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             subject.FollowModifier = followModifierMock;
 
-            Assert.Throws<System.ArgumentException>(() => subject.Process());
+            NUnit.Framework.Assert.Throws<System.ArgumentException>(() => subject.Process());
 
             Assert.IsTrue(preprocessedMock.Received);
             Assert.IsFalse(processedMock.Received);
@@ -384,7 +385,7 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(targetOffset1);
             Object.DestroyImmediate(targetOffset2);
             Object.DestroyImmediate(targetOffset3);
-        }
+            }
 
         public class FollowModifierMock : FollowModifier
         {

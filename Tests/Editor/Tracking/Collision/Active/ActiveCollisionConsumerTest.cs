@@ -10,6 +10,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveCollisionConsumerTest
     {
