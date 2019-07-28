@@ -814,7 +814,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(enterListenerMock.Received);
             Assert.IsFalse(exitListenerMock.Received);
             Assert.IsTrue(hoverListenerMock.Received);
-            Assert.AreEqual(blocker.transform, subject.HoverTarget.Transform);
+            Assert.AreEqual(blocker, subject.HoverTarget.CollisionData.transform.gameObject);
 
             enterListenerMock.Reset();
             hoverListenerMock.Reset();
