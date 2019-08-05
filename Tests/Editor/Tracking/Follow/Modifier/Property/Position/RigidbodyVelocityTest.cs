@@ -5,6 +5,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class RigidbodyVelocityTest
     {

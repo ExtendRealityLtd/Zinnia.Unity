@@ -7,6 +7,7 @@ namespace Test.Zinnia.Tracking.Modification
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformPropertyApplierTest
     {

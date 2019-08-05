@@ -5,6 +5,7 @@ namespace Test.Zinnia.Process.Moment
 {
     using UnityEngine;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class MomentProcessTest
     {
@@ -87,8 +88,8 @@ namespace Test.Zinnia.Process.Moment
 
             subject.RandomizeNextProcessTime();
 
-            Assert.GreaterOrEqual(subject.NextProcessTime, Time.time);
-            Assert.LessOrEqual(subject.NextProcessTime, Time.time + interval);
+            Assert.IsTrue(subject.NextProcessTime >= Time.time);
+            Assert.IsTrue(subject.NextProcessTime <= Time.time + interval);
         }
 
         [Test]
@@ -97,11 +98,11 @@ namespace Test.Zinnia.Process.Moment
             const float interval = 123.456f;
             subject.Interval = interval;
 
-            Assert.Zero(subject.NextProcessTime);
+            Assert.AreEqual(0, subject.NextProcessTime);
             containingObject.SetActive(true);
 
-            Assert.GreaterOrEqual(subject.NextProcessTime, Time.time);
-            Assert.LessOrEqual(subject.NextProcessTime, Time.time + interval);
+            Assert.IsTrue(subject.NextProcessTime >= Time.time);
+            Assert.IsTrue(subject.NextProcessTime <= Time.time + interval);
         }
 
         private sealed class MockProcessable : IProcessable

@@ -9,6 +9,7 @@ namespace Test.Zinnia.Rule
     using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyRuleTest
     {

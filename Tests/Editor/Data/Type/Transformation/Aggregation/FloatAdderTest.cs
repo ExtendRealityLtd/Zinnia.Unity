@@ -6,6 +6,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class FloatAdderTest
     {

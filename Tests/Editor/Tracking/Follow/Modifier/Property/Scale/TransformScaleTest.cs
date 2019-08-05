@@ -4,6 +4,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
 {
     using UnityEngine;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformScaleTest
     {

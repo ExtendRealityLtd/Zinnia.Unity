@@ -7,6 +7,7 @@ namespace Test.Zinnia.Utility
     using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class CountdownTimerTest
     {

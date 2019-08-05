@@ -5,6 +5,7 @@ namespace Test.Zinnia.Utility
 {
     using UnityEngine;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class BezierCurveGeneratorTest
     {

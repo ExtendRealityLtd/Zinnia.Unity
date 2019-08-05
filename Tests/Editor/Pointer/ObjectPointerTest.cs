@@ -7,6 +7,7 @@ namespace Test.Zinnia.Pointer
     using NUnit.Framework;
     using System.Collections.Generic;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class ObjectPointerTest
     {
@@ -29,7 +30,7 @@ namespace Test.Zinnia.Pointer
         public void SetUp()
         {
             Physics.autoSimulation = false;
-            containingObject = new GameObject();
+            containingObject = new GameObject("containingObject");
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<ObjectPointerMock>();
         }
@@ -49,28 +50,28 @@ namespace Test.Zinnia.Pointer
 
         protected virtual void SetUpElements()
         {
-            validOriginContainer = new GameObject();
-            validOriginMesh = new GameObject();
+            validOriginContainer = new GameObject("validOriginContainer");
+            validOriginMesh = new GameObject("validOriginMesh");
             validOriginMesh.transform.SetParent(validOriginContainer.transform);
 
-            invalidOriginContainer = new GameObject();
-            invalidOriginMesh = new GameObject();
+            invalidOriginContainer = new GameObject("invalidOriginContainer");
+            invalidOriginMesh = new GameObject("invalidOriginMesh");
             invalidOriginMesh.transform.SetParent(invalidOriginContainer.transform);
 
-            validSegmentContainer = new GameObject();
-            validSegmentMesh = new GameObject();
+            validSegmentContainer = new GameObject("validSegmentContainer");
+            validSegmentMesh = new GameObject("validSegmentMesh");
             validSegmentMesh.transform.SetParent(validSegmentContainer.transform);
 
-            invalidSegmentContainer = new GameObject();
-            invalidSegmentMesh = new GameObject();
+            invalidSegmentContainer = new GameObject("invalidSegmentContainer");
+            invalidSegmentMesh = new GameObject("invalidSegmentMesh");
             invalidSegmentMesh.transform.SetParent(invalidSegmentContainer.transform);
 
-            validDestinationContainer = new GameObject();
-            validDestinationMesh = new GameObject();
+            validDestinationContainer = new GameObject("validDestinationContainer");
+            validDestinationMesh = new GameObject("validDestinationMesh");
             validDestinationMesh.transform.SetParent(validDestinationContainer.transform);
 
-            invalidDestinationContainer = new GameObject();
-            invalidDestinationMesh = new GameObject();
+            invalidDestinationContainer = new GameObject("invalidDestinationContainer");
+            invalidDestinationMesh = new GameObject("invalidDestinationMesh");
             invalidDestinationMesh.transform.SetParent(invalidDestinationContainer.transform);
 
             PointerElement origin = containingObject.AddComponent<PointerElement>();
@@ -800,6 +801,7 @@ namespace Test.Zinnia.Pointer
 
             //Place an object in the way to make a valid target
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            blocker.name = "blocker";
             blocker.transform.position = Vector3.forward * 5f;
 
             List<Vector3> castPoints = new List<Vector3> { Vector3.zero, blocker.transform.position };

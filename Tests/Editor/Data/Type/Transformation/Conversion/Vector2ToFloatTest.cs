@@ -5,6 +5,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class Vector2ToFloatTest : MonoBehaviour
     {

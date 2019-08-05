@@ -10,6 +10,7 @@ namespace Test.Zinnia.Rule
     using System.Collections;
     using System.Collections.Generic;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyTagRuleTest
     {

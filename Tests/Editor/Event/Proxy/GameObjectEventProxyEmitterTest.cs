@@ -7,6 +7,7 @@ namespace Test.Zinnia.Event.Proxy
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectEventProxyEmitterTest
     {

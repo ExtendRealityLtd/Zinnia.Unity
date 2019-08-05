@@ -8,6 +8,7 @@ namespace Test.Zinnia.Rule
     using UnityEngine.TestTools;
     using System.Collections;
     using NUnit.Framework;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class ListContainsRuleTest
     {

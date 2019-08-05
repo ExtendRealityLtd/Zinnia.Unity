@@ -10,6 +10,7 @@ namespace Test.Zinnia.Cast
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class ParabolicLineCastTest
     {
@@ -97,7 +98,7 @@ namespace Test.Zinnia.Cast
                 Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
             }
 
-            Assert.IsNull(subject.TargetHit);
+            Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsTrue(castResultsChangedMock.Received);
         }
 
@@ -130,7 +131,7 @@ namespace Test.Zinnia.Cast
                 Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
             }
 
-            Assert.IsNull(subject.TargetHit);
+            Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsTrue(castResultsChangedMock.Received);
         }
 
@@ -201,7 +202,7 @@ namespace Test.Zinnia.Cast
             subject.Process();
 
             Assert.AreEqual(0, subject.Points.Count);
-            Assert.IsNull(subject.TargetHit);
+            Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsFalse(castResultsChangedMock.Received);
         }
 
@@ -222,7 +223,7 @@ namespace Test.Zinnia.Cast
             subject.Process();
 
             Assert.AreEqual(0, subject.Points.Count);
-            Assert.IsNull(subject.TargetHit);
+            Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsFalse(castResultsChangedMock.Received);
         }
     }

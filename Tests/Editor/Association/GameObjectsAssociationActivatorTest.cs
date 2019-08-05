@@ -8,6 +8,7 @@ namespace Test.Zinnia.Association
     using UnityEngine.TestTools;
     using NUnit.Framework;
     using System.Text.RegularExpressions;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectsAssociationActivatorTest
     {

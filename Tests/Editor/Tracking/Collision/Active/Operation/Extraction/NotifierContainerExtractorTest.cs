@@ -6,6 +6,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class NotifierContainerExtractorTest
     {

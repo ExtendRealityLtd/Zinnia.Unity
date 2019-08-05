@@ -4,7 +4,7 @@ namespace Test.Zinnia.Data.Operation.Mutation
 {
     using UnityEngine;
     using NUnit.Framework;
-
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class RigidbodyPropertyMutatorTest
     {

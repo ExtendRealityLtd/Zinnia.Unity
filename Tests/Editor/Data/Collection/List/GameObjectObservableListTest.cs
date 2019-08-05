@@ -5,6 +5,7 @@ namespace Test.Zinnia.Data.Collection.List
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectObservableListTest
     {
@@ -127,7 +128,7 @@ namespace Test.Zinnia.Data.Collection.List
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
-            Assert.IsEmpty(subject.NonSubscribableElements);
+            Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
             subject.Add(elementOne);
 
@@ -171,7 +172,7 @@ namespace Test.Zinnia.Data.Collection.List
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
-            Assert.IsEmpty(subject.NonSubscribableElements);
+            Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
             subject.AddUnique(elementOne);
 
@@ -230,7 +231,7 @@ namespace Test.Zinnia.Data.Collection.List
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
-            Assert.IsEmpty(subject.NonSubscribableElements);
+            Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
             subject.InsertAt(elementOne, 0);
 
@@ -356,7 +357,7 @@ namespace Test.Zinnia.Data.Collection.List
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
-            Assert.IsEmpty(subject.NonSubscribableElements);
+            Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
             subject.InsertUniqueAt(elementOne, 0);
 
@@ -417,7 +418,7 @@ namespace Test.Zinnia.Data.Collection.List
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
-            Assert.IsEmpty(subject.NonSubscribableElements);
+            Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
             subject.InsertAtCurrentIndex(elementOne);
 
@@ -462,7 +463,7 @@ namespace Test.Zinnia.Data.Collection.List
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
 
-            Assert.IsEmpty(subject.NonSubscribableElements);
+            Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
             subject.AddUniqueAtCurrentIndex(elementOne);
 
@@ -553,11 +554,11 @@ namespace Test.Zinnia.Data.Collection.List
 
             GameObject elementOne = new GameObject("One");
 
-            Assert.IsEmpty(subject.NonSubscribableElements);
+            Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
             subject.SetAt(elementOne, 1);
 
-            Assert.IsEmpty(subject.NonSubscribableElements);
+            Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
             Assert.IsFalse(addedMock.Received);
             Assert.IsFalse(removedMock.Received);
@@ -575,7 +576,7 @@ namespace Test.Zinnia.Data.Collection.List
 
             GameObject elementOne = new GameObject("One");
 
-            Assert.IsEmpty(subject.NonSubscribableElements);
+            Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
             subject.SetAtOrAddIfEmpty(elementOne, 1);
 

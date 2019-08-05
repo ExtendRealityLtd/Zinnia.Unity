@@ -9,6 +9,7 @@ namespace Test.Zinnia.Process.Component
     using System.Collections;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectSourceTargetProcessorTest
     {
@@ -36,7 +37,7 @@ namespace Test.Zinnia.Process.Component
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
 
-            Assert.IsEmpty(subject.Sources.NonSubscribableElements);
+            Assert.AreEqual(0, subject.Sources.NonSubscribableElements.Count);
 
             subject.Sources.Add(source);
 
@@ -60,7 +61,7 @@ namespace Test.Zinnia.Process.Component
 
             subject.Sources.Remove(source);
 
-            Assert.IsEmpty(subject.Sources.NonSubscribableElements);
+            Assert.AreEqual(0, subject.Sources.NonSubscribableElements.Count);
 
             Object.DestroyImmediate(source);
         }
@@ -108,7 +109,7 @@ namespace Test.Zinnia.Process.Component
 
             subject.Sources.Clear();
 
-            Assert.IsEmpty(subject.Sources.NonSubscribableElements);
+            Assert.AreEqual(0, subject.Sources.NonSubscribableElements.Count);
 
             Object.DestroyImmediate(source);
         }
@@ -121,7 +122,7 @@ namespace Test.Zinnia.Process.Component
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
 
-            Assert.IsEmpty(subject.Targets.NonSubscribableElements);
+            Assert.AreEqual(0, subject.Targets.NonSubscribableElements.Count);
 
             subject.Targets.Add(target);
 
@@ -145,7 +146,7 @@ namespace Test.Zinnia.Process.Component
 
             subject.Targets.Remove(target);
 
-            Assert.IsEmpty(subject.Targets.NonSubscribableElements);
+            Assert.AreEqual(0, subject.Targets.NonSubscribableElements.Count);
 
             Object.DestroyImmediate(target);
         }
@@ -191,7 +192,7 @@ namespace Test.Zinnia.Process.Component
 
             subject.Targets.Clear();
 
-            Assert.IsEmpty(subject.Targets.NonSubscribableElements);
+            Assert.AreEqual(0, subject.Targets.NonSubscribableElements.Count);
 
             Object.DestroyImmediate(target);
         }

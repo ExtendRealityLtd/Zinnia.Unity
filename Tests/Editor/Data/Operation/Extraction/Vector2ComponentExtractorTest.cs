@@ -5,6 +5,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using Assert = UnityEngine.Assertions.Assert;
 
     public class Vector2ComponentExtractorTest
     {
@@ -63,7 +64,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             float? result = subject.Extract();
 
-            Assert.IsNull(result);
+            Assert.IsFalse(result.HasValue);
             Assert.IsFalse(extractedListenerMock.Received);
 
             extractedListenerMock.Reset();
@@ -73,7 +74,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             result = subject.Extract();
 
-            Assert.IsNull(result);
+            Assert.IsFalse(result.HasValue);
             Assert.IsFalse(extractedListenerMock.Received);
         }
 
@@ -90,7 +91,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             float? result = subject.Extract();
 
-            Assert.IsNull(result);
+            Assert.IsFalse(result.HasValue);
             Assert.IsFalse(extractedListenerMock.Received);
 
             extractedListenerMock.Reset();
@@ -100,7 +101,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             result = subject.Extract();
 
-            Assert.IsNull(result);
+            Assert.IsFalse(result.HasValue);
             Assert.IsFalse(extractedListenerMock.Received);
         }
     }
