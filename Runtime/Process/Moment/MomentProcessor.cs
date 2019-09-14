@@ -5,6 +5,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Process.Moment.Collection;
+    using UnityEngine.Rendering;
 
     /// <summary>
     /// Iterates through a given <see cref="MomentProcess"/> collection and executes the <see cref="IProcessable.Process"/> method on the given Unity game loop moment.
@@ -89,6 +90,11 @@
             }
         }
 
+        protected virtual void OnSrpCameraPreRender(ScriptableRenderContext context, Camera givenCamera)
+        {
+            Process();
+        }
+
         protected virtual void OnCameraPreRender(Camera givenCamera)
         {
             Process();
@@ -107,7 +113,14 @@
             switch (ProcessMoment)
             {
                 case Moment.PreRender:
-                    Camera.onPreRender -= OnCameraPreRender;
+                    if (GraphicsSettings.renderPipelineAsset != null)
+                    {
+                        RenderPipelineManager.beginCameraRendering -= OnSrpCameraPreRender;
+                    }
+                    else
+                    {
+                        Camera.onPreRender -= OnCameraPreRender;
+                    }
                     break;
                 case Moment.PreCull:
                     Camera.onPreCull -= OnCameraPreCull;
@@ -123,7 +136,14 @@
             switch (ProcessMoment)
             {
                 case Moment.PreRender:
-                    Camera.onPreRender += OnCameraPreRender;
+                    if (GraphicsSettings.renderPipelineAsset != null)
+                    {
+                        RenderPipelineManager.beginCameraRendering += OnSrpCameraPreRender;
+                    }
+                    else
+                    {
+                        Camera.onPreRender += OnCameraPreRender;
+                    }
                     break;
                 case Moment.PreCull:
                     Camera.onPreCull += OnCameraPreCull;
