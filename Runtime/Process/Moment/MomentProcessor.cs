@@ -90,10 +90,12 @@
             }
         }
 
+#if UNITY_2019_1_OR_NEWER
         protected virtual void OnSrpCameraPreRender(ScriptableRenderContext context, Camera givenCamera)
         {
             Process();
         }
+#endif
 
         protected virtual void OnCameraPreRender(Camera givenCamera)
         {
@@ -115,7 +117,9 @@
                 case Moment.PreRender:
                     if (GraphicsSettings.renderPipelineAsset != null)
                     {
+#if UNITY_2019_1_OR_NEWER
                         RenderPipelineManager.beginCameraRendering -= OnSrpCameraPreRender;
+#endif
                     }
                     else
                     {
@@ -138,7 +142,11 @@
                 case Moment.PreRender:
                     if (GraphicsSettings.renderPipelineAsset != null)
                     {
+#if UNITY_2019_1_OR_NEWER
                         RenderPipelineManager.beginCameraRendering += OnSrpCameraPreRender;
+#else
+                        Debug.LogWarning("SRP is only supported on Unity 2019.1 or above");
+#endif
                     }
                     else
                     {
