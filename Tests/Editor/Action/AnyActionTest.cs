@@ -245,6 +245,28 @@ namespace Test.Zinnia.Action
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
         }
+
+        [Test]
+        public void RemoveActionListenersCorrectly()
+        {
+            subject.enabled = false;
+
+            GameObject otherObject = new GameObject();
+            MockAction actionA = otherObject.AddComponent<MockAction>();
+            MockAction actionB = otherObject.AddComponent<MockAction>();
+
+            actionA.SetIsActivated(false);
+            actionB.SetIsActivated(false);
+
+            subject.Actions.Add(actionA);
+            subject.Actions.Add(actionB);
+
+            subject.enabled = true;
+
+            Object.DestroyImmediate(otherObject);
+
+            subject.enabled = false;
+        }
     }
 
     public class AnyActionMock : AnyAction
