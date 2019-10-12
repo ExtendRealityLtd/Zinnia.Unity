@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
     using UnityEngine;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
@@ -24,6 +25,13 @@
         [Serialized]
         [field: DocumentedByXml]
         public Vector3State FollowOnAxis { get; set; } = Vector3State.True;
+
+        /// <summary>
+        /// An optional <see cref="GameObject"/> that is negated from the calculation if both the source and target are descendants of it.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject Ancestor { get; set; }
 
         /// <summary>
         /// The current angular velocity the rotation is applying to the target.
@@ -68,8 +76,9 @@
         /// <returns>The angular velocity to project onto the target.</returns>
         protected virtual Vector3 CalculateAngularVelocity(GameObject source, GameObject target)
         {
-            Vector3 sourcePosition = source.transform.position;
-            Vector3 targetPosition = target.transform.position;
+            Vector3 negatePosition = Ancestor != null ? Ancestor.transform.position : Vector3.zero;
+            Vector3 sourcePosition = source.transform.position - negatePosition;
+            Vector3 targetPosition = target.transform.position - negatePosition;
 
             if (previousSourcePosition == null)
             {
