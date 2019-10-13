@@ -21,13 +21,13 @@
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
-        public float VelocityMultiplierFactor { get; set; } = 1f;
+        public Vector3 VelocityMultiplierFactor { get; set; } = Vector3.one;
         /// <summary>
         /// The amount to multiply the source angular velocity by.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
-        public float AngularVelocityMultiplierFactor { get; set; } = 1f;
+        public Vector3 AngularVelocityMultiplierFactor { get; set; } = Vector3.one;
 
         /// <inheritdoc />
         public override bool IsActive()
@@ -36,15 +36,9 @@
         }
 
         /// <inheritdoc />
-        protected override Vector3 DoGetVelocity()
-        {
-            return Source.GetVelocity() * VelocityMultiplierFactor;
-        }
+        protected override Vector3 DoGetVelocity() => Vector3.Scale(Source.GetVelocity(), VelocityMultiplierFactor);
 
         /// <inheritdoc />
-        protected override Vector3 DoGetAngularVelocity()
-        {
-            return Source.GetAngularVelocity() * AngularVelocityMultiplierFactor;
-        }
+        protected override Vector3 DoGetAngularVelocity() => Vector3.Scale(Source.GetAngularVelocity(), AngularVelocityMultiplierFactor);
     }
 }
