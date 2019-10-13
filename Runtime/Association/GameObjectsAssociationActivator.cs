@@ -29,9 +29,19 @@
         /// </summary>
         public virtual void Activate()
         {
+            if (Associations == null)
+            {
+                return;
+            }
+
             GameObjectsAssociation desiredAssociation = null;
             foreach (GameObjectsAssociation association in Associations.NonSubscribableElements)
             {
+                if (association == null)
+                {
+                    continue;
+                }
+
                 if (association.ShouldBeActive())
                 {
                     desiredAssociation = association;
@@ -83,8 +93,18 @@
 
         protected virtual void Awake()
         {
+            if (Associations == null)
+            {
+                return;
+            }
+
             foreach (GameObjectsAssociation association in Associations.NonSubscribableElements)
             {
+                if (association == null)
+                {
+                    continue;
+                }
+
                 foreach (GameObject associatedObject in association.GameObjects.NonSubscribableElements)
                 {
                     if (associatedObject.activeInHierarchy)
@@ -112,8 +132,18 @@
         /// <param name="associations">The associations to deactivate.</param>
         protected virtual void Deactivate(GameObjectsAssociationObservableList associations)
         {
+            if (associations == null)
+            {
+                return;
+            }
+
             foreach (GameObjectsAssociation association in associations.NonSubscribableElements)
             {
+                if (association == null)
+                {
+                    continue;
+                }
+
                 foreach (GameObject associatedObject in association.GameObjects.NonSubscribableElements)
                 {
                     associatedObject.SetActive(false);
