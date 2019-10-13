@@ -48,6 +48,37 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         }
 
         [Test]
+        public void ModifyWithAncestor()
+        {
+            GameObject ancestor = new GameObject();
+            GameObject source = new GameObject();
+            GameObject target = new GameObject();
+
+            ancestor.transform.position = new Vector3(0f, 0f, 0f);
+            source.transform.SetParent(ancestor.transform);
+            target.transform.SetParent(ancestor.transform);
+            subject.Ancestor = ancestor;
+
+            target.transform.position = new Vector3(0f, 0f, 0f);
+            target.transform.localRotation = Quaternion.identity;
+
+            source.transform.position = new Vector3(0.5f, 0f, -0.5f);
+            subject.Modify(source, target);
+            ancestor.transform.position += Vector3.left;
+            source.transform.position = new Vector3(0.5f, 0.5f, -0.5f);
+            subject.Modify(source, target);
+            ancestor.transform.position += Vector3.left;
+            source.transform.position = new Vector3(0.5f, 1f, -0.5f);
+            subject.Modify(source, target);
+
+            Assert.AreEqual(new Quaternion(0.1f, -0.3f, 0.2f, 0.9f).ToString(), target.transform.localRotation.ToString());
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
+            Object.DestroyImmediate(ancestor);
+        }
+
+        [Test]
         public void ModifyInactiveGameObject()
         {
             GameObject source = new GameObject();
