@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.0.0...v1.0.1) (2019-10-14)
+
+#### Bug Fixes
+
+* **ci:** back to npmjs.com ([d2a8cfb](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d2a8cfbaf2a8b14d3fbe16d4dea0bbe8394b45dc))
+  > GitHub's npm feeds only allow publishing scoped packages, but UPM doesn't support those.
+
 ## [1.0.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v0.0.0...v1.0.0) (2019-10-14)
 
 #### :warning: BREAKING CHANGES :warning:
