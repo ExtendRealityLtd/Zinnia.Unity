@@ -40,24 +40,24 @@ Zinnia is a collection of design patterns for the [Unity] software that can be b
 
 * Navigate to the `Packages` directory of your project.
 * Adjust the [project manifest file][Project-Manifest] `manifest.json` in a text editor.
-  * Ensure `https://npm.pkg.github.com/ExtendRealityLtd` is part of `scopedRegistries`.
-    * Ensure `@extendrealityltd` is part of `scopes`.
-  * Add `@extendrealityltd/zinnia.unity` to `dependencies`, stating the latest version.
+  * Ensure `https://registry.npmjs.org/` is part of `scopedRegistries`.
+    * Ensure `io.extendreality` is part of `scopes`.
+  * Add `io.extendreality.zinnia.unity` to `dependencies`, stating the latest version.
 
   A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version][Latest-Release].
   ```json
   {
     "scopedRegistries": [
       {
-        "name": "ExtendRealityLtd",
-        "url": "https://npm.pkg.github.com/ExtendRealityLtd",
+        "name": "npmjs",
+        "url": "https://registry.npmjs.org/",
         "scopes": [
-          "@extendrealityltd"
+          "io.extendreality"
         ]
       }
     ],
     "dependencies": {
-      "@extendrealityltd/zinnia.unity": "X.Y.Z",
+      "io.extendreality.zinnia.unity": "X.Y.Z",
       ...
     }
   }
@@ -72,7 +72,7 @@ Because Zinnia is a package tests have to be explicitly enabled for this package
 
 * Navigate to the `Packages` directory of your project.
 * Adjust the [project manifest file][Project-Manifest] `manifest.json` in a text editor.
-  * Ensure `@extendrealityltd/zinnia.unity` is part of `testables`.
+  * Ensure `io.extendreality.zinnia.unity` is part of `testables`.
 
   A minimal example ends up looking like this.
   ```json
@@ -81,7 +81,7 @@ Because Zinnia is a package tests have to be explicitly enabled for this package
       ...
     ],
     "testables": [
-      "@extendrealityltd/zinnia.unity"
+      "io.extendreality.zinnia.unity"
     ],
     "dependencies": {
       ...

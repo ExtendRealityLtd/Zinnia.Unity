@@ -1,5 +1,5 @@
 {
-    "name": "@extendrealityltd/zinnia.unity",
+    "name": "io.extendreality.zinnia.unity",
     "displayName": "Zinnia.Unity",
     "description": "A collection of design patterns for the Unity software that can be beneficial in (but not limited to) spatial computing development.",
     "version": "1.0.0",
@@ -17,7 +17,10 @@
     "bugs": {
         "url": "https://github.com/ExtendRealityLtd/Zinnia.Unity/issues"
     },
-    "repository": "github:ExtendRealityLtd/Zinnia.Unity",
+    "repository": {
+        "type": "git",
+        "url": "ssh://git@github.com/ExtendRealityLtd/Zinnia.Unity.git"
+    },
     "license": "MIT",
     "author": {
         "name": "Extend Reality Ltd",
@@ -25,7 +28,7 @@
         "url": "https://github.com/ExtendRealityLtd"
     },
     "dependencies": {
-        "@extendrealityltd/malimbe": "9.5.0"
+        "io.extendreality.malimbe": "9.5.1"
     },
     "files": [
         "*.md",
