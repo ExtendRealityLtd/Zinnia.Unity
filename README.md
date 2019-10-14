@@ -36,18 +36,66 @@ Zinnia is a collection of design patterns for the [Unity] software that can be b
   * In the `Player` settings panel expand `Other Settings`.
   * Ensure the `Scripting Runtime Version` is set to `.NET 4.x Equivalent`.
 
-### Cloning the Zinnia repo into a project
+### Adding Zinnia to a project
 
-* Navigate to the `Assets/` directory of your project.
-* Git clone this repo into the `Assets/` directory:
-  * `git clone https://github.com/ExtendRealityLtd/Zinnia.git` - [How To Clone A Repo]
-* Wait for the Unity software to finish importing the cloned files.
+* Navigate to the `Packages` directory of your project.
+* Adjust the [project manifest file][Project-Manifest] `manifest.json` in a text editor.
+  * Ensure `https://npm.pkg.github.com/ExtendRealityLtd` is part of `scopedRegistries`.
+    * Ensure `@extendrealityltd` is part of `scopes`.
+  * Add `@extendrealityltd/zinnia.unity` to `dependencies`, stating the latest version.
+
+  A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version][Latest-Release].
+  ```json
+  {
+    "scopedRegistries": [
+      {
+        "name": "ExtendRealityLtd",
+        "url": "https://npm.pkg.github.com/ExtendRealityLtd",
+        "scopes": [
+          "@extendrealityltd"
+        ]
+      }
+    ],
+    "dependencies": {
+      "@extendrealityltd/zinnia.unity": "X.Y.Z",
+      ...
+    }
+  }
+  ```
+* Switch back to the Unity software and wait for it to finish importing the added package.
 
 ### Running the tests
 
+If you want to run the tests that come with Zinnia please follow these steps.
+
+Because Zinnia is a package tests have to be explicitly enabled for this package, before the Test Runner can pick them up.
+
+* Navigate to the `Packages` directory of your project.
+* Adjust the [project manifest file][Project-Manifest] `manifest.json` in a text editor.
+  * Ensure `@extendrealityltd/zinnia.unity` is part of `testables`.
+
+  A minimal example ends up looking like this.
+  ```json
+  {
+    "scopedRegistries": [
+      ...
+    ],
+    "testables": [
+      "@extendrealityltd/zinnia.unity"
+    ],
+    "dependencies": {
+      ...
+    }
+  }
+  ```
+* As noted in the [official documentation][Enable-Tests]:
+  > **NOTE**: You may need to re-import the package, because the test framework doesn't always immediately pick up changes to the `testables` attribute.
+  * Within the Unity software's `Project` window expand the `Packages` node.
+  * Right-click on the `Zinnia.Unity` child node and choose `Reimport`.
+  * Wait for the Unity software to finish re-importing the package.
 * In the Unity software select `Main Menu -> Window -> Test Runner`.
 * Within the Test Runner window click on the `PlayMode` tab and the click `Run All` button.
-* If all the tests pass then installation was successful.
+* If all the tests pass then the installation was successful.
 
 > Note: The tests are not compatible with the `Run all in player` option.
 
@@ -74,7 +122,9 @@ These materials are not sponsored by or affiliated with Unity Technologies or it
 [Backlog-Badge]: https://img.shields.io/badge/project-backlog-78bdf2.svg
 [License]: LICENSE.md
 [Backlog]: http://tracker.vrtk.io
-[How To Clone A Repo]: https://help.github.com/articles/cloning-a-repository/
 [Unity]: https://unity3d.com/
+[Project-Manifest]: https://docs.unity3d.com/Manual/upm-manifestPrj.html
+[Enable-Tests]: https://docs.unity3d.com/Manual/cus-tests.html
+[Latest-Release]: https://github.com/ExtendRealityLtd/Zinnia.Unity/releases/latest
 [Zinnia]: https://en.wikipedia.org/wiki/Zinnia
 [International Space Station]: https://www.nasa.gov/image-feature/first-flower-grown-in-space-stations-veggie-facility
