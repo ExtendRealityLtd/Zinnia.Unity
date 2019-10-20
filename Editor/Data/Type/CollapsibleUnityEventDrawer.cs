@@ -63,7 +63,6 @@
             {
                 base.OnGUI(position, property, label);
                 wasBaseOnGuiCalled = true;
-                EditorUtility.SetDirty(property.serializedObject.targetObject);
                 return;
             }
 
