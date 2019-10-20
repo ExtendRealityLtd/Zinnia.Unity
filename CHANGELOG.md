@@ -1,5 +1,18 @@
 # Changelog
 
+### [1.0.6](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.0.5...v1.0.6) (2019-10-20)
+
+#### Build System
+
+* **deps:** bump io.extendreality.malimbe from 9.5.2 to 9.5.3 ([b5dfbb0](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b5dfbb058ae7664b9438e1cc6d5b6f7c173e4cdb))
+  > Bumps [io.extendreality.malimbe](https://github.com/ExtendRealityLtd/Malimbe) from 9.5.2 to 9.5.3. - [Release notes](https://github.com/ExtendRealityLtd/Malimbe/releases) - [Changelog](https://github.com/ExtendRealityLtd/Malimbe/blob/master/CHANGELOG.md) - [Commits](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.5.2...v9.5.3)
+  > 
+  > Signed-off-by: dependabot-preview[bot] <support@dependabot.com>
+
+#### Miscellaneous Chores
+
+* **deps:** add dependabot configuration ([2611d88](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/2611d885a072579d91a559165ed7015524c0348f))
+
 ### [1.0.5](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.0.4...v1.0.5) (2019-10-20)
 
 #### Bug Fixes
