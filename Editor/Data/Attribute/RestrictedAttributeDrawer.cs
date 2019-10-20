@@ -27,7 +27,7 @@
                 GUI.enabled = false;
             }
 
-            Color controlColor = Color.grey;
+            Color controlColor = new Color(0.75f, 0.75f, 0.75f);
 
             Color originalGuiColor = GUI.color;
             FontStyle originalFontStyle = EditorStyles.label.fontStyle;
