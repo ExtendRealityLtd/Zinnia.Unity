@@ -45,6 +45,39 @@ namespace Test.Zinnia.Extension
 
             Object.DestroyImmediate(container);
         }
+
+        [Test]
+        public void IsValidState()
+        {
+            GameObject parent = new GameObject();
+            GameObject container = new GameObject();
+            container.transform.SetParent(parent.transform);
+            MockBehaviour mockBehaviour = container.AddComponent<MockBehaviour>();
+
+            Assert.IsTrue(mockBehaviour.IsValidState());
+
+            mockBehaviour.enabled = false;
+
+            Assert.IsFalse(mockBehaviour.IsValidState());
+            Assert.IsTrue(mockBehaviour.IsValidState(BehaviourExtensions.GameObjectActivity.InHierarchy, false));
+
+            mockBehaviour.enabled = true;
+
+            Assert.IsTrue(mockBehaviour.IsValidState());
+
+            parent.SetActive(false);
+
+            Assert.IsFalse(mockBehaviour.IsValidState(BehaviourExtensions.GameObjectActivity.InHierarchy));
+            Assert.IsTrue(mockBehaviour.IsValidState(BehaviourExtensions.GameObjectActivity.Self));
+
+            parent.SetActive(true);
+            container.SetActive(false);
+
+            Assert.IsFalse(mockBehaviour.IsValidState(BehaviourExtensions.GameObjectActivity.InHierarchy));
+            Assert.IsFalse(mockBehaviour.IsValidState(BehaviourExtensions.GameObjectActivity.Self));
+
+            Object.DestroyImmediate(parent);
+        }
     }
 
     public class MockBehaviour : MonoBehaviour
