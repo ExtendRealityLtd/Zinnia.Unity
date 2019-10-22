@@ -1,17 +1,20 @@
 ﻿namespace Zinnia.Rule
 {
     using UnityEngine;
-    using Malimbe.BehaviourStateRequirementMethod;
 
     /// <summary>
     /// Simplifies implementing <see cref="IRule"/>s that only accept <see cref="GameObject"/>s.
     /// </summary>
-    public abstract class GameObjectRule : MonoBehaviour, IRule
+    public abstract class GameObjectRule : Rule
     {
         /// <inheritdoc />
-        [RequiresBehaviourState]
-        public bool Accepts(object target)
+        public override bool Accepts(object target)
         {
+            if (ShouldAutoRejectDueToState())
+            {
+                return false;
+            }
+
             GameObject targetGameObject = target as GameObject;
             if (targetGameObject == null)
             {

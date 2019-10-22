@@ -1,6 +1,7 @@
 ﻿using Zinnia.Rule;
 using Zinnia.Extension;
 using Zinnia.Data.Collection.List;
+using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
@@ -98,6 +99,41 @@ namespace Test.Zinnia.Rule
             objects.Add(containingObject);
 
             subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator AcceptsInactiveGameObject()
+        {
+            UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
+            subject.Objects = objects;
+            objects.Add(containingObject);
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleComponentIsDisabled;
+
+            subject.gameObject.SetActive(false);
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator AcceptsInactiveComponent()
+        {
+            UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            yield return null;
+
+            subject.Objects = objects;
+            objects.Add(containingObject);
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleGameObjectIsNotActiveInHierarchy;
+
+            subject.enabled = false;
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.gameObject.SetActive(false);
             Assert.IsFalse(container.Accepts(containingObject));
         }
     }

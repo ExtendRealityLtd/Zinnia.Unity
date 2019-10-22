@@ -1,5 +1,6 @@
-﻿using Zinnia.Extension;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
+using Zinnia.Extension;
+using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
@@ -74,6 +75,42 @@ namespace Test.Zinnia.Rule
                 Interface = new FalseRuleStub()
             };
             subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void AcceptInactiveGameObject()
+        {
+            subject.Rule = new RuleContainer
+            {
+                Interface = new FalseRuleStub()
+            };
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleComponentIsDisabled;
+            subject.gameObject.SetActive(false);
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.enabled = false;
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void AcceptInactiveComponent()
+        {
+            subject.Rule = new RuleContainer
+            {
+                Interface = new FalseRuleStub()
+            };
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleGameObjectIsNotActiveInHierarchy;
+            subject.enabled = false;
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.gameObject.SetActive(false);
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
     }
