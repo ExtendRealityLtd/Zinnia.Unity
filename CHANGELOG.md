@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.1.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.0.6...v1.1.0) (2019-10-22)
+
+#### Features
+
+* **Collection:** allow query operations on list to run when inactive ([95950d7](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/95950d76a1e9318c908d348e86c691ff9901e1ee))
+  > The query operations on the ObservableList such as Contains and IsListEmpty were previously encapsulated by the `[RequiresBehaviourState]` tag meaning a list contents check could only be performed if the list component was active in the scene.
+  > 
+  > This blanket denial of operation is too heavy handed as just because a list object is inactive it shouldn't mean a contains check returns false because the list, even though inactive, still can contain the object to check for.
+  > 
+  > It is still correct that components shouldn't perform an action when they are disabled, so if a list is queried then it should return the correct result but shouldn't perform any action, such as emitting any appropriate events.
+  > 
+  > This solution uses the new Behaviour extension `IsValidState` to replicate the `[RequiresBehaviourState]` functionality within the method body to allow the correct return value but to prevent the event actions from occurring.
+* **Extension:** determine if Behaviour is in a valid active state ([de34e2f](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/de34e2f4098549b5c0b4179fc07016924b72b375))
+  > The IsValidState extension method can be used to determine if a Behaviour is in the appropriate valid active state depending on whether the component is enabled and/or whether the GameObject the component resides on is active within itself or within the scene hierarchy.
+  > 
+  > This mechanism is a copy of the Malimbe `[RequiresBehaviourState]` tag but can be used inline in methods rather than just a blanket early return from the entire method.
+* **Rule:** determine if the rule component state can auto reject ([32238fd](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/32238fd6ca93e9c0f97f87fddcba07a2a53e9133))
+  > A new base abstract Rule class has been added that all existing MonoBehaviour rules now extend from. And on this new base Rule is the concept of being able to set whether the rule can automatically reject any request based on the state of the Rule component.
+  > 
+  > Previously, if a Rule component was disabled or on an inactive GameObject then it would always reject the `Accepts` request, but this isn't always the requirement when using a Rule. The new `AutoRejectStates` enum flag allows a Rule to specify what states the rule can be in to automatically reject any request.
+  > 
+  > All of the tests have been updated to show this new state selection option in practice.
+
 ### [1.0.6](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.0.5...v1.0.6) (2019-10-20)
 
 #### Build System
