@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Rule
 {
-    using UnityEngine;
     using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
     using Zinnia.Rule.Collection;
@@ -10,7 +8,7 @@
     /// <summary>
     /// Determines whether any <see cref="IRule"/> in a list is accepting an object.
     /// </summary>
-    public class AnyRule : MonoBehaviour, IRule
+    public class AnyRule : Rule
     {
         /// <summary>
         /// The <see cref="IRule"/>s to check against.
@@ -20,10 +18,9 @@
         public RuleContainerObservableList Rules { get; set; }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
-        public bool Accepts(object target)
+        public override bool Accepts(object target)
         {
-            if (Rules == null)
+            if (ShouldAutoRejectDueToState() || Rules == null)
             {
                 return false;
             }

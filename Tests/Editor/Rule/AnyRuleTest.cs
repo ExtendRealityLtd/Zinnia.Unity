@@ -1,6 +1,7 @@
 ﻿using Zinnia.Rule;
 using Zinnia.Rule.Collection;
 using Zinnia.Extension;
+using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
@@ -132,6 +133,62 @@ namespace Test.Zinnia.Rule
                 });
 
             subject.enabled = false;
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator AcceptInactiveGameObject()
+        {
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
+            subject.Rules = rules;
+
+            rules.Add(
+                new RuleContainer
+                {
+                    Interface = new TrueRuleStub()
+                });
+            rules.Add(
+                new RuleContainer
+                {
+                    Interface = new FalseRuleStub()
+                });
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleComponentIsDisabled;
+            subject.gameObject.SetActive(false);
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.enabled = false;
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator AcceptInactiveComponent()
+        {
+            RuleContainerObservableList rules = containingObject.AddComponent<RuleContainerObservableList>();
+            yield return null;
+            subject.Rules = rules;
+
+            rules.Add(
+                new RuleContainer
+                {
+                    Interface = new TrueRuleStub()
+                });
+            rules.Add(
+                new RuleContainer
+                {
+                    Interface = new FalseRuleStub()
+                });
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleGameObjectIsNotActiveInHierarchy;
+            subject.enabled = false;
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.gameObject.SetActive(false);
 
             Assert.IsFalse(container.Accepts(containingObject));
         }

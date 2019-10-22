@@ -99,16 +99,21 @@
         /// </summary>
         /// <param name="element">The element to search for.</param>
         /// <returns>Whether the element is found.</returns>
-        [RequiresBehaviourState]
         public virtual bool Contains(TElement element)
         {
             if (Elements.Contains(element))
             {
-                Found?.Invoke(element);
+                if (this.IsValidState())
+                {
+                    Found?.Invoke(element);
+                }
                 return true;
             }
 
-            NotFound?.Invoke(element);
+            if (this.IsValidState())
+            {
+                NotFound?.Invoke(element);
+            }
             return false;
         }
 
@@ -116,7 +121,6 @@
         /// Checks to see if the collection contains the given element.
         /// </summary>
         /// <param name="element">The element to search for.</param>
-        [RequiresBehaviourState]
         public virtual void DoContains(TElement element)
         {
             Contains(element);
@@ -126,17 +130,22 @@
         /// Checks to see if the collection is currently empty.
         /// </summary>
         /// <returns>Whether the collection is empty.</returns>
-        [RequiresBehaviourState]
         public virtual bool IsListEmpty()
         {
             if (Elements.Count == 0)
             {
-                IsEmpty?.Invoke();
+                if (this.IsValidState())
+                {
+                    IsEmpty?.Invoke();
+                }
                 return true;
             }
             else
             {
-                IsPopulated?.Invoke();
+                if (this.IsValidState())
+                {
+                    IsPopulated?.Invoke();
+                }
                 return false;
             }
         }

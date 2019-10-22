@@ -2,6 +2,7 @@
 using Zinnia.Utility;
 using Zinnia.Extension;
 using Zinnia.Data.Collection.List;
+using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
@@ -92,6 +93,68 @@ namespace Test.Zinnia.Rule
             yield return null;
             subject.Tags = tags;
             tags.Add(invalidTag);
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator RefusesInactiveGameObject()
+        {
+            StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            yield return null;
+            subject.Tags = tags;
+            tags.Add(validTag);
+
+            subject.gameObject.SetActive(false);
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator RefusesInactiveComponent()
+        {
+            StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            yield return null;
+            subject.Tags = tags;
+            tags.Add(validTag);
+
+            subject.enabled = false;
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator AcceptInactiveGameObject()
+        {
+            StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            yield return null;
+            subject.Tags = tags;
+            tags.Add(validTag);
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleComponentIsDisabled;
+            subject.gameObject.SetActive(false);
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.enabled = false;
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator AcceptInactiveComponent()
+        {
+            StringObservableList tags = containingObject.AddComponent<StringObservableList>();
+            yield return null;
+            subject.Tags = tags;
+            tags.Add(validTag);
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleGameObjectIsNotActiveInHierarchy;
+            subject.enabled = false;
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.gameObject.SetActive(false);
 
             Assert.IsFalse(container.Accepts(containingObject));
         }

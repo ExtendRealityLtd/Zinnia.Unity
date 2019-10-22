@@ -1,5 +1,5 @@
-﻿using Zinnia.Extension;
-using Zinnia.Rule;
+﻿using Zinnia.Rule;
+using Zinnia.Extension;
 
 namespace Test.Zinnia.Rule
 {

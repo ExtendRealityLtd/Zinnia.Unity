@@ -1,6 +1,7 @@
 ﻿using Zinnia.Rule;
 using Zinnia.Extension;
 using Zinnia.Data.Collection.List;
+using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
@@ -94,6 +95,43 @@ namespace Test.Zinnia.Rule
             componentTypes.Add(typeof(TestScript));
 
             subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator AcceptsInactiveGameObject()
+        {
+            containingObject.AddComponent<TestScript>();
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleComponentIsDisabled;
+            subject.gameObject.SetActive(false);
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [UnityTest]
+        public IEnumerator AcceptsInactiveComponent()
+        {
+            containingObject.AddComponent<TestScript>();
+            SerializableTypeComponentObservableList componentTypes = containingObject.AddComponent<SerializableTypeComponentObservableList>();
+            yield return null;
+            subject.ComponentTypes = componentTypes;
+            componentTypes.Add(typeof(TestScript));
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleGameObjectIsNotActiveInHierarchy;
+            subject.enabled = false;
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.gameObject.SetActive(false);
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
