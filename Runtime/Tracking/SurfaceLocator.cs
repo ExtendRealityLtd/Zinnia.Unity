@@ -181,7 +181,7 @@
             surfaceData.Origin = givenOrigin;
             surfaceData.Direction = givenDirection;
             Ray tracerRaycast = new Ray(givenOrigin, givenDirection);
-            return TargetValidity == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast);
+            return TargetValidity?.Interface == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast);
         }
 
         /// <summary>
