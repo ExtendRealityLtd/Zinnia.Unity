@@ -1,5 +1,16 @@
 # Changelog
 
+### [1.1.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.1.0...v1.1.1) (2019-10-24)
+
+#### Bug Fixes
+
+* **Data:** stop Vector2ToFloatTest extending MonoBehaviour ([0f0ed28](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/0f0ed28368d37a764e439ee9ef5fc1fc4d3f7737))
+  > Tests should not need to extend MonoBehaviour and this was causing a warning to be displayed due to this test extending it. The fix is to simply prevent the test class from extending MonoBehaviour.
+* **Tracking:** update exception message in ObscuranceQuery ([fa000c5](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/fa000c5ff90ab5926e2f3fb27d5c952e9b79a00a))
+  > The ObscuranceQuery logic was changed so the Target requires either a Collider or if it has a Rigidbody then there must be at least 1 child Collider.
+  > 
+  > The Exception messages we never updated so it provided inaccurate information if the usage criteria was incorrect.
+
 ## [1.1.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.0.6...v1.1.0) (2019-10-22)
 
 #### Features
