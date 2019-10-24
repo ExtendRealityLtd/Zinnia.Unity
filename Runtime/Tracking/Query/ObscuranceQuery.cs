@@ -8,9 +8,9 @@
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Cast;
-    using Zinnia.Data.Type;
-    using Zinnia.Extension;
     using Zinnia.Process;
+    using Zinnia.Extension;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// Determines whether any <see cref="Collider"/> obscures a line between two <see cref="GameObject"/>s.
@@ -30,7 +30,7 @@
 
         public class MissingColliderException : Exception
         {
-            public MissingColliderException(UnityEngine.Object owner, GameObject missingColliderGameObject) : base($"The configured {nameof(Target)} '{missingColliderGameObject}' on '{owner}' needs a {nameof(Rigidbody)} or {nameof(Collider)} on it.") { }
+            public MissingColliderException(UnityEngine.Object owner, GameObject missingColliderGameObject) : base($"The configured {nameof(Target)} '{missingColliderGameObject}' on '{owner}' needs a {nameof(Collider)} on it or if it has a {nameof(Rigidbody)} on it then a child {nameof(Collider)} is required.") { }
         }
 
         /// <summary>
@@ -121,7 +121,7 @@
         }
 
         /// <summary>
-        /// Throws a <see cref="MissingColliderException"/> if <see cref="Target"/> has neither a <see cref="Rigidbody"/> nor a <see cref="Collider"/> on it.
+        /// Throws a <see cref="MissingColliderException"/> if <see cref="Target"/> is missing a <see cref="Collider"/> or if the <see cref="Target"/> has a <see cref="Rigidbody"/> and is missing a child <see cref="Collider"/>.
         /// </summary>
         protected virtual void CheckTarget()
         {
