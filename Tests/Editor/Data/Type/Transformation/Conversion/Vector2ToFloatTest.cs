@@ -7,7 +7,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
     using Test.Zinnia.Utility.Mock;
     using Assert = UnityEngine.Assertions.Assert;
 
-    public class Vector2ToFloatTest : MonoBehaviour
+    public class Vector2ToFloatTest
     {
         private GameObject containingObject;
         private Vector2ToFloat subject;
@@ -22,8 +22,8 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
         [TearDown]
         public void TearDown()
         {
-            DestroyImmediate(subject);
-            DestroyImmediate(containingObject);
+            Object.DestroyImmediate(subject);
+            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
