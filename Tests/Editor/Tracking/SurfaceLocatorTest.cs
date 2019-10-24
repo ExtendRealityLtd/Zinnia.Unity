@@ -55,6 +55,11 @@ namespace Test.Zinnia.Tracking
             Assert.IsTrue(surfaceLocatedMock.Received);
             Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
 
+            subject.gameObject.SetActive(false);
+            subject.gameObject.SetActive(true);
+
+            Assert.AreEqual(null, subject.surfaceData.Transform);
+
             Object.DestroyImmediate(validSurface);
             Object.DestroyImmediate(searchOrigin);
         }

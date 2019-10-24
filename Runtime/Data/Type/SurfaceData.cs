@@ -2,9 +2,9 @@
 {
     using UnityEngine;
     using System;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.MemberChangeMethod;
 
     /// <summary>
     /// Holds information about the located surface.
@@ -49,6 +49,16 @@
         {
             Origin = origin;
             Direction = direction;
+        }
+
+        /// <inheritdoc />
+        public override void Clear()
+        {
+            base.Clear();
+            Origin = new Vector3();
+            Direction = new Vector3();
+            CollisionData = new RaycastHit();
+            PreviousCollisionData = new RaycastHit();
         }
 
         /// <summary>

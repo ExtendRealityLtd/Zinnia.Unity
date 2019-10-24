@@ -159,6 +159,11 @@
             }
         }
 
+        protected virtual void OnEnable()
+        {
+            surfaceData.Clear();
+        }
+
         /// <summary>
         /// Checks to see if the surface position has changed between frames.
         /// </summary>
