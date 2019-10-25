@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.1.1...v1.2.0) (2019-10-25)
+
+#### Features
+
+* **Haptics:** option to allow all haptic processes in list to process ([779103b](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/779103bfa9c3fa636359eb9bb3f18e5a9e92c2d4))
+  > The HapticProcessor now has a `CeaseAfterFirstSourceProcessed` option which is defaulted to true to ensure existing default behaviour does not change, which is when the first active Haptic Process is processed then the HapticProcessor would cease to process any further Haptic Processes.
+  > 
+  > With this new option, this default behaviour can be turned off and all Haptic Processes listed in the HapticProcessor can be processed if they are active in the scene.
+
+#### Bug Fixes
+
+* **Velocity:** provide more appropriate tooltip documentation ([c509ce6](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c509ce68de8972d5fa1dd82052fda8796256248e))
+  > The VelocityTrackerProcessor has had the tooltip documentation updated to make it more appropriate and the code has been tidied up a bit so it is more succinct.
+
 ### [1.1.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.1.0...v1.1.1) (2019-10-24)
 
 #### Bug Fixes
