@@ -6,21 +6,17 @@
     using Zinnia.Tracking.Velocity.Collection;
 
     /// <summary>
-    /// A proxy for reporting on velocity data on the first active <see cref="VelocityTracker"/> that is provided in the collection.
+    /// Processes the first active <see cref="VelocityTracker"/> found in the given <see cref="VelocityTrackerProcessor"/>.
     /// </summary>
     public class VelocityTrackerProcessor : VelocityTracker
     {
         /// <summary>
-        /// Process the first active <see cref="VelocityTracker"/> found in the collection.
+        /// The <see cref="VelocityTracker"/> collection to attempt to process.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public VelocityTrackerObservableList VelocityTrackers { get; set; }
 
-        /// <summary>
-        /// The backing field for holding the value of <see cref="ActiveVelocityTracker"/>.
-        /// </summary>
-        private VelocityTracker activeVelocityTracker;
         /// <summary>
         /// The current active <see cref="VelocityTracker"/> that is reporting velocities.
         /// </summary>
@@ -32,6 +28,10 @@
                 activeVelocityTracker = value;
             }
         }
+        /// <summary>
+        /// The backing field for holding the value of <see cref="ActiveVelocityTracker"/>.
+        /// </summary>
+        private VelocityTracker activeVelocityTracker;
 
         /// <summary>
         /// The reported velocity on the first active <see cref="VelocityTracker"/>.
@@ -58,23 +58,20 @@
         /// </summary>
         protected virtual void SetActiveVelocityTracker()
         {
+            ActiveVelocityTracker = null;
             if (VelocityTrackers == null)
             {
-                ActiveVelocityTracker = null;
                 return;
             }
 
-            VelocityTracker firstActiveTracker = null;
             foreach (VelocityTracker tracker in VelocityTrackers.NonSubscribableElements)
             {
                 if (tracker.IsActive())
                 {
-                    firstActiveTracker = tracker;
+                    ActiveVelocityTracker = tracker;
                     break;
                 }
             }
-
-            ActiveVelocityTracker = firstActiveTracker;
         }
     }
 }
