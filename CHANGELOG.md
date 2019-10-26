@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.2.0...v1.3.0) (2019-10-26)
+
+#### Features
+
+* **.github:** use organization .github repository ([9921b22](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/9921b22fa74544308fa1c21d3490748d0c960607))
+  > GitHub provides a mechanism where a global organization .github repo can be used as a fallback to provide default community health files instead of repeating the same files across multiple repos.
+  > 
+  > ExtendRealityLtd now has a `.github` repo which should be used as it provides the correct details for this repo.
+  > 
+  > The README.md has been updated to provide definitive links to the relevant files.
+
 ## [1.2.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.1.1...v1.2.0) (2019-10-25)
 
 #### Features
