@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.3.1...v1.4.0) (2019-10-27)
+
+#### Features
+
+* **Process:** a IProcessable that emits event when processed. ([8c9985c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/8c9985cd649e3610bee2b25cdad9601eae860bef))
+  > Allows to call any no argument methods for a given moment.
+
 ### [1.3.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.3.0...v1.3.1) (2019-10-26)
 
 #### Miscellaneous Chores
