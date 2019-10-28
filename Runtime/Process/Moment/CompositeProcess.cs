@@ -8,7 +8,7 @@
     /// <summary>
     /// Processes a list of <see cref="MomentProcess"/> as if it's a single <see cref="IProcessable"/> process.
     /// </summary>
-    public class CompositeProcess : MonoBehaviour, IProcessable
+    public class CompositeProcess : MomentProcess
     {
         /// <summary>
         /// A collection of <see cref="MomentProcess"/> to process.
