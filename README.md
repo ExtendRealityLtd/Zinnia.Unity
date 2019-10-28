@@ -5,6 +5,7 @@
 >
 > `[zin-ee-uh]`
 
+[![Release][Version-Release]][Releases]
 [![License][License-Badge]][License]
 [![Backlog][Backlog-Badge]][Backlog]
 
@@ -12,16 +13,7 @@
 
 Zinnia is a collection of design patterns for the [Unity] software that can be beneficial in (but not limited to) spatial computing development.
 
-  > **Requires** the Unity software version `2018.3.10f1` (or above).
-
-## Releases
-
-| Branch  | Version                                          | Explanation                        |
-|---------|--------------------------------------------------|------------------------------------|
-| release | [![Release][Version-Release]][Releases]          | Stable, production-ready           |
-| preview | [![(Pre-)Release][Version-Prerelease]][Releases] | Experimental, not production-ready |
-
-Releases follow the [Semantic Versioning (SemVer) system][SemVer].
+> **Requires** the Unity software version `2018.3.10f1` (or above).
 
 ## Getting Started
 
@@ -34,7 +26,7 @@ Releases follow the [Semantic Versioning (SemVer) system][SemVer].
   * In the `Player` settings panel expand `Other Settings`.
   * Ensure the `Scripting Runtime Version` is set to `.NET 4.x Equivalent`.
 
-### Adding Zinnia to a project
+### Adding the package to the Unity project manifest
 
 * Navigate to the `Packages` directory of your project.
 * Adjust the [project manifest file][Project-Manifest] `manifest.json` in a text editor.
@@ -97,6 +89,10 @@ Because Zinnia is a package tests have to be explicitly enabled for this package
 
 > Note: The tests are not compatible with the `Run all in player` option.
 
+### Updating to the latest version
+
+The package will show up in the Unity Package Manager UI once the above steps have been carried out. From then on the package can be updated by selecting the package in the Unity Package Manager and clicking on the `Update` button or using the version selection UI.
+
 ## Naming
 
 Inspired by the [Zinnia] genus of plants known for their colorful, long lasting flower heads and their great ease to grow from seeds. This repository, much like the Zinnia flower aims to be easy to use and allow your projects to grow and flourish into long lasting, easy to maintain solutions.
@@ -120,20 +116,22 @@ Code released under the [MIT License][License].
 These materials are not sponsored by or affiliated with Unity Technologies or its affiliates. "Unity" is a trademark or registered trademark of Unity Technologies or its affiliates in the U.S. and elsewhere.
 
 [Zinnia-Image]: https://user-images.githubusercontent.com/1029673/51488711-2ab42c80-1d9e-11e9-94c9-767e804157e7.png
+[Version-Release]: https://img.shields.io/github/release/ExtendRealityLtd/Zinnia.Unity.svg
 [License-Badge]: https://img.shields.io/github/license/ExtendRealityLtd/Zinnia.Unity.svg
 [Backlog-Badge]: https://img.shields.io/badge/project-backlog-78bdf2.svg
+
+[Releases]: ../../releases
 [License]: LICENSE.md
 [Backlog]: http://tracker.vrtk.io
+
 [Unity]: https://unity3d.com/
+[Latest-Release]: ../../releases/latest
 [Project-Manifest]: https://docs.unity3d.com/Manual/upm-manifestPrj.html
 [Enable-Tests]: https://docs.unity3d.com/Manual/cus-tests.html
-[Latest-Release]: https://github.com/ExtendRealityLtd/Zinnia.Unity/releases/latest
+
 [Zinnia]: https://en.wikipedia.org/wiki/Zinnia
 [International Space Station]: https://www.nasa.gov/image-feature/first-flower-grown-in-space-stations-veggie-facility
-[Releases]: ../../releases
-[SemVer]: https://semver.org/
-[Version-Release]: https://img.shields.io/github/release/ExtendRealityLtd/Zinnia.Unity.svg
-[Version-Prerelease]: https://img.shields.io/github/release-pre/ExtendRealityLtd/Zinnia.Unity.svg?label=pre-release&colorB=orange
+
 [Contributing guidelines]: https://github.com/ExtendRealityLtd/.github/blob/master/CONTRIBUTING.md
 [Unity project coding conventions]: https://github.com/ExtendRealityLtd/.github/blob/master/CONVENTIONS/UNITY3D.md
 [Code of Conduct]: https://github.com/ExtendRealityLtd/.github/blob/master/CODE_OF_CONDUCT.md
