@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.5.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.4.1...v1.5.0) (2019-10-28)
+
+#### Features
+
+* **Tracking:** clear stored SurfaceData when SurfaceLocator enabled ([3b4b95c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/3b4b95c18b806379a10188036132d55ba2ccf681))
+  > The SurfaceData type now has a Clear method which clears down the saved data within the datatype, which is called from within the OnEnable method of the SurfaceLocator to ensure the SurfaceData is clean from any previous state if the component is disabled.
+
+#### Bug Fixes
+
+* **Tracking:** provide correct null check on TargetValidity Rule ([c1ca943](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c1ca943d4e5769dc9a924bb693815126dd875904))
+  > The TargetValiduty null check within the SurfaceLocator would never have been null because the Rule always contains the RuleContainer.
+  > 
+  > The fix is to ensure the null check is done against the Rule.Interface which can be null if no Rule is provided.
+
+#### Miscellaneous Chores
+
+* **deps:** bump io.extendreality.malimbe from 9.6.0 to 9.6.1 ([ef66393](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/ef663938433d6c142fc9643891805195ebacedd4))
+  > Bumps [io.extendreality.malimbe](https://github.com/ExtendRealityLtd/Malimbe) from 9.6.0 to 9.6.1. - [Release notes](https://github.com/ExtendRealityLtd/Malimbe/releases) - [Changelog](https://github.com/ExtendRealityLtd/Malimbe/blob/master/CHANGELOG.md) - [Commits](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.6.0...v9.6.1)
+  > 
+  > Signed-off-by: dependabot-preview[bot] <support@dependabot.com>
+
 ### [1.4.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.4.0...v1.4.1) (2019-10-28)
 
 #### Bug Fixes
