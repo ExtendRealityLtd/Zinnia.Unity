@@ -1,5 +1,14 @@
 # Changelog
 
+### [1.4.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.4.0...v1.4.1) (2019-10-28)
+
+#### Bug Fixes
+
+* **README.md:** provide more concise release data and update info ([083c14c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/083c14ca7d0da52227e39f19f5c033623cd725c0))
+  > The Releases section has been removed and is now just a simple badge at the top of the README. There has been an additional section in `Getting Started` on how to update the package via the Unity Package Manager.
+  > 
+  > The links have also been ordered in the order of appearance in the document.
+
 ## [1.4.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.3.1...v1.4.0) (2019-10-27)
 
 #### Features
