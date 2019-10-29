@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.5.0...v1.6.0) (2019-10-29)
+
+#### Features
+
+* **Haptics:** create haptic pattern based on AudioSource ([a5dfce7](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/a5dfce74b3e98297826b201e4b3e71946fe00225))
+  > This haptic generated reflects the current playing audio even if the audio is looping, delayed, volume/pitch modulated. Since this new implementation shares the same core logic as the existing AudioClipHapticPulser the shared logic has been extracted into an abstract superclass.
+
 ## [1.5.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.4.1...v1.5.0) (2019-10-28)
 
 #### Features
