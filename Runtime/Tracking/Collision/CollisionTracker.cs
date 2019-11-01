@@ -30,12 +30,13 @@
         /// <param name="collider">The collider to stop the collision with.</param>
         public virtual void StopCollision(Collider collider)
         {
+            RemoveDisabledObserver(collider);
+
             if ((StatesToProcess & CollisionStates.Exit) == 0)
             {
                 return;
             }
 
-            RemoveDisabledObserver(collider);
             OnCollisionStopped(eventData.Set(this, collider.isTrigger, null, collider));
         }
 
@@ -54,12 +55,13 @@
 
         protected virtual void OnCollisionEnter(Collision collision)
         {
+            AddDisabledObserver(collision.collider);
+
             if ((StatesToProcess & CollisionStates.Enter) == 0)
             {
                 return;
             }
 
-            AddDisabledObserver(collision.collider);
             OnCollisionStarted(eventData.Set(this, false, collision, collision.collider));
         }
 
@@ -75,23 +77,25 @@
 
         protected virtual void OnCollisionExit(Collision collision)
         {
+            RemoveDisabledObserver(collision.collider);
+
             if ((StatesToProcess & CollisionStates.Exit) == 0)
             {
                 return;
             }
 
-            RemoveDisabledObserver(collision.collider);
             OnCollisionStopped(eventData.Set(this, false, collision, collision.collider));
         }
 
         protected virtual void OnTriggerEnter(Collider collider)
         {
+            AddDisabledObserver(collider);
+
             if ((StatesToProcess & CollisionStates.Enter) == 0)
             {
                 return;
             }
 
-            AddDisabledObserver(collider);
             OnCollisionStarted(eventData.Set(this, true, null, collider));
         }
 
@@ -107,12 +111,13 @@
 
         protected virtual void OnTriggerExit(Collider collider)
         {
+            RemoveDisabledObserver(collider);
+
             if ((StatesToProcess & CollisionStates.Exit) == 0)
             {
                 return;
             }
 
-            RemoveDisabledObserver(collider);
             OnCollisionStopped(eventData.Set(this, true, null, collider));
         }
 
