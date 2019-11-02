@@ -1,5 +1,14 @@
 # Changelog
 
+### [1.6.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.6.0...v1.6.1) (2019-11-02)
+
+#### Bug Fixes
+
+* **Collision:** always add/remove the CollisionTrackerDisabledObserver ([6056f14](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/6056f14ddd304a93d4c6a4bf729d2c16bc0de670))
+  > The CollisionTrackerDisabledObserver is now always added and removed when a collision occurs rather than before where it was only added or removed if that collision state was being listened to.
+  > 
+  > The previous way would cause the CollisionTrackerDisabledObserver to either not be added at all or be added multiple times because it was never being removed.
+
 ## [1.6.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.5.0...v1.6.0) (2019-10-29)
 
 #### Features
