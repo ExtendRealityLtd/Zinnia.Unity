@@ -20,9 +20,16 @@
         public class UnityEvent : UnityEvent<Vector3>
         {
         }
+        /// <summary>
+        /// Defines the event with the <see cref="float"/>.
+        /// </summary>
+        [Serializable]
+        public class FloatUnityEvent : UnityEvent<float>
+        {
+        }
 
         /// <summary>
-        /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
+        /// The source <see cref="VelocityTracker"/> to receive the velocity data from.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
@@ -34,10 +41,20 @@
         [DocumentedByXml]
         public UnityEvent VelocityEmitted = new UnityEvent();
         /// <summary>
+        /// Emitted when the Tracked Speed is emitted.
+        /// </summary>
+        [DocumentedByXml]
+        public FloatUnityEvent SpeedEmitted = new FloatUnityEvent();
+        /// <summary>
         /// Emitted when the Tracked Angular Velocity is emitted.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent AngularVelocityEmitted = new UnityEvent();
+        /// <summary>
+        /// Emitted when the Tracked Angular Speed is emitted.
+        /// </summary>
+        [DocumentedByXml]
+        public FloatUnityEvent AngularSpeedEmitted = new FloatUnityEvent();
 
         /// <summary>
         /// Emits the Velocity of the Tracked Velocity.
@@ -51,6 +68,20 @@
             }
 
             VelocityEmitted?.Invoke(Source.GetVelocity());
+        }
+
+        /// <summary>
+        /// Emits the Speed of the Tracked Velocity.
+        /// </summary>
+        [RequiresBehaviourState]
+        public virtual void EmitSpeed()
+        {
+            if (Source == null)
+            {
+                return;
+            }
+
+            SpeedEmitted?.Invoke(Source.GetVelocity().magnitude);
         }
 
         /// <summary>
@@ -68,12 +99,28 @@
         }
 
         /// <summary>
-        /// Emits the Velocity and Angular Velocity of the Tracked Velocity.
+        /// Emits the Angular Velocity of the Tracked Velocity.
+        /// </summary>
+        [RequiresBehaviourState]
+        public virtual void EmitAngularSpeed()
+        {
+            if (Source == null)
+            {
+                return;
+            }
+
+            AngularSpeedEmitted?.Invoke(Source.GetAngularVelocity().magnitude);
+        }
+
+        /// <summary>
+        /// Emits the Velocity, Speed, Angular Velocity and Angular Speed of the Tracked Velocity.
         /// </summary>
         public virtual void EmitAll()
         {
             EmitVelocity();
+            EmitSpeed();
             EmitAngularVelocity();
+            EmitAngularSpeed();
         }
     }
 }
