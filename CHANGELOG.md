@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.6.1...v1.7.0) (2019-11-05)
+
+#### Features
+
+* **Utility:** provide remaining and elapsed time when requested ([e4be751](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/e4be751fc6764aa38be63fcf9f37c97a50a7cade))
+  > The CountdownTimer now has EmitElapsedTime and EmitRemainingTime methods which emit the ElapsedTime and RemainingTime of the timer.
+
 ### [1.6.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.6.0...v1.6.1) (2019-11-02)
 
 #### Bug Fixes
