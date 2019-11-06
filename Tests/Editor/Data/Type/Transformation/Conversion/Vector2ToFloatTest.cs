@@ -36,9 +36,9 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            Vector2 input = new Vector3(1f, 2f);
+            Vector2 input = new Vector2(3f, 4f);
             float result = subject.Transform(input);
-            float expectedResult = 1f;
+            float expectedResult = 3f;
 
             Assert.AreEqual(expectedResult, result);
             Assert.AreEqual(expectedResult, subject.Result);
@@ -55,9 +55,47 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            Vector2 input = new Vector3(1f, 2f);
+            Vector2 input = new Vector2(3f, 4f);
             float result = subject.Transform(input);
-            float expectedResult = 2f;
+            float expectedResult = 4f;
+
+            Assert.AreEqual(expectedResult, result);
+            Assert.AreEqual(expectedResult, subject.Result);
+            Assert.IsTrue(transformedListenerMock.Received);
+        }
+
+        [Test]
+        public void TransformExtractMagnitude()
+        {
+            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            subject.Transformed.AddListener(transformedListenerMock.Listen);
+            subject.CoordinateToExtract = Vector2ToFloat.ExtractionCoordinate.ExtractMagnitude;
+
+            Assert.AreEqual(0f, subject.Result);
+            Assert.IsFalse(transformedListenerMock.Received);
+
+            Vector2 input = new Vector2(3f, 4f);
+            float result = subject.Transform(input);
+            float expectedResult = 5f;
+
+            Assert.AreEqual(expectedResult, result);
+            Assert.AreEqual(expectedResult, subject.Result);
+            Assert.IsTrue(transformedListenerMock.Received);
+        }
+
+        [Test]
+        public void TransformExtractSqrMagnitude()
+        {
+            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            subject.Transformed.AddListener(transformedListenerMock.Listen);
+            subject.CoordinateToExtract = Vector2ToFloat.ExtractionCoordinate.ExtractSqrMagnitude;
+
+            Assert.AreEqual(0f, subject.Result);
+            Assert.IsFalse(transformedListenerMock.Received);
+
+            Vector2 input = new Vector2(3f, 4f);
+            float result = subject.Transform(input);
+            float expectedResult = 25f;
 
             Assert.AreEqual(expectedResult, result);
             Assert.AreEqual(expectedResult, subject.Result);

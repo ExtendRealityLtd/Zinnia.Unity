@@ -10,8 +10,10 @@
     /// Transforms a <see cref="Vector2"/> to a <see cref="float"/> and allows mapping of the relevant coordinates.
     /// </summary>
     /// <example>
-    /// Vector2(1f, 2f) -> ExtractX -> 1f
-    /// Vector2(1f, 2f) -> ExtractY -> 2f
+    /// Vector2(3f, 4f) -> ExtractX -> 3f
+    /// Vector2(3f, 4f) -> ExtractY -> 4f
+    /// Vector2(3f, 4f) -> ExtractMagnitude -> 5f
+    /// Vector2(3f, 4f) -> ExtractSqrMagnitude -> 25f
     /// </example>
     public class Vector2ToFloat : Transformer<Vector2, float, Vector2ToFloat.UnityEvent>
     {
@@ -33,7 +35,15 @@
             /// <summary>
             /// Extracts the Y value.
             /// </summary>
-            ExtractY
+            ExtractY,
+            /// <summary>
+            /// Extracts the magnitude.
+            /// </summary>
+            ExtractMagnitude,
+            /// <summary>
+            /// Extracts the squared magnitude.
+            /// </summary>
+            ExtractSqrMagnitude
         }
 
         /// <summary>
@@ -56,6 +66,10 @@
                     return input.x;
                 case ExtractionCoordinate.ExtractY:
                     return input.y;
+                case ExtractionCoordinate.ExtractMagnitude:
+                    return input.magnitude;
+                case ExtractionCoordinate.ExtractSqrMagnitude:
+                    return input.sqrMagnitude;
             }
             return 0f;
         }
