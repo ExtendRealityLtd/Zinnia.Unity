@@ -30,10 +30,14 @@ namespace Test.Zinnia.Tracking.Velocity
         public void EmitAll()
         {
             UnityEventListenerMock velocityEmittedMock = new UnityEventListenerMock();
+            UnityEventListenerMock speedEmittedMock = new UnityEventListenerMock();
             UnityEventListenerMock angularVelocityEmittedMock = new UnityEventListenerMock();
+            UnityEventListenerMock angularSpeedEmittedMock = new UnityEventListenerMock();
 
             subject.VelocityEmitted.AddListener(velocityEmittedMock.Listen);
+            subject.SpeedEmitted.AddListener(speedEmittedMock.Listen);
             subject.AngularVelocityEmitted.AddListener(angularVelocityEmittedMock.Listen);
+            subject.AngularSpeedEmitted.AddListener(angularSpeedEmittedMock.Listen);
 
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
             subject.Source = tracker;
@@ -41,7 +45,9 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.EmitAll();
 
             Assert.IsTrue(velocityEmittedMock.Received);
+            Assert.IsTrue(speedEmittedMock.Received);
             Assert.IsTrue(angularVelocityEmittedMock.Received);
+            Assert.IsTrue(angularSpeedEmittedMock.Received);
 
             Object.DestroyImmediate(tracker.gameObject);
         }
@@ -50,10 +56,14 @@ namespace Test.Zinnia.Tracking.Velocity
         public void EmitAllInactiveGameObject()
         {
             UnityEventListenerMock velocityEmittedMock = new UnityEventListenerMock();
+            UnityEventListenerMock speedEmittedMock = new UnityEventListenerMock();
             UnityEventListenerMock angularVelocityEmittedMock = new UnityEventListenerMock();
+            UnityEventListenerMock angularSpeedEmittedMock = new UnityEventListenerMock();
 
             subject.VelocityEmitted.AddListener(velocityEmittedMock.Listen);
+            subject.SpeedEmitted.AddListener(speedEmittedMock.Listen);
             subject.AngularVelocityEmitted.AddListener(angularVelocityEmittedMock.Listen);
+            subject.AngularSpeedEmitted.AddListener(angularSpeedEmittedMock.Listen);
 
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
             subject.Source = tracker;
@@ -62,7 +72,9 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.EmitAll();
 
             Assert.IsFalse(velocityEmittedMock.Received);
+            Assert.IsFalse(speedEmittedMock.Received);
             Assert.IsFalse(angularVelocityEmittedMock.Received);
+            Assert.IsFalse(angularSpeedEmittedMock.Received);
 
             Object.DestroyImmediate(tracker.gameObject);
         }
@@ -71,10 +83,14 @@ namespace Test.Zinnia.Tracking.Velocity
         public void EmitAllInactiveComponent()
         {
             UnityEventListenerMock velocityEmittedMock = new UnityEventListenerMock();
+            UnityEventListenerMock speedEmittedMock = new UnityEventListenerMock();
             UnityEventListenerMock angularVelocityEmittedMock = new UnityEventListenerMock();
+            UnityEventListenerMock angularSpeedEmittedMock = new UnityEventListenerMock();
 
             subject.VelocityEmitted.AddListener(velocityEmittedMock.Listen);
+            subject.SpeedEmitted.AddListener(speedEmittedMock.Listen);
             subject.AngularVelocityEmitted.AddListener(angularVelocityEmittedMock.Listen);
+            subject.AngularSpeedEmitted.AddListener(angularSpeedEmittedMock.Listen);
 
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
             subject.Source = tracker;
@@ -83,7 +99,9 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.EmitAll();
 
             Assert.IsFalse(velocityEmittedMock.Received);
+            Assert.IsFalse(speedEmittedMock.Received);
             Assert.IsFalse(angularVelocityEmittedMock.Received);
+            Assert.IsFalse(angularSpeedEmittedMock.Received);
 
             Object.DestroyImmediate(tracker.gameObject);
         }
