@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.8.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.7.0...v1.8.0) (2019-11-07)
+
+#### Features
+
+* **Data:** add properties to extract float from Vector2 ([1afa98b](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/1afa98b3367b17293c6ffe2a34f78e76e6ff4477))
+  > Added extraction of magnitude and sqrMagnitude from Vector2.
+* **Data:** add properties to extract float from Vector3 ([0fba595](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/0fba5952001a313792125faa0f394e072349dfac))
+  > Added Vector3ToFloat to extract x, y, z, magnitude and sqrMagnitude from Vector3.
+* **Tracking:** emit speed and angular speed from VelocityEmitter ([d28c5c7](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d28c5c76ad283899c4535110becaa60fe181296c))
+  > Added the EmitSpeed and EmitAngularSpeed methods to VelocityEmitter.
+
 ## [1.7.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.6.1...v1.7.0) (2019-11-05)
 
 #### Features
