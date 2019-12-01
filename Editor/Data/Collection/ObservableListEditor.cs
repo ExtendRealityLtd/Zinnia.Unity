@@ -238,6 +238,17 @@ This restriction is in place to ensure any subscribed listener to events on this
             }
         }
 
+        /// <inheritdoc />
+        protected override void FindChangeHandlerMethods(SerializedProperty property)
+        {
+            base.FindChangeHandlerMethods(property);
+            if (property.propertyPath == ElementsFieldName)
+            {
+                ChangeHandlerMethodInfos.AddRange(property.serializedObject.targetObject.GetType()
+                    .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy));
+            }
+        }
+
         /// <summary>
         /// Returns the <see cref="ObservableList{TElement,TEvent}.Elements"/> list via reflection as well as any objects looked up to do so.
         /// </summary>
