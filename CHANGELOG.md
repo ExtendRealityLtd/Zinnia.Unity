@@ -1,5 +1,14 @@
 # Changelog
 
+### [1.8.2](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.8.1...v1.8.2) (2019-12-02)
+
+#### Miscellaneous Chores
+
+* **deps:** bump io.extendreality.malimbe from 9.6.2 to 9.6.3 ([b9a3195](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b9a3195c22a90510ab86ede88c461811fb6543a0))
+  > Bumps [io.extendreality.malimbe](https://github.com/ExtendRealityLtd/Malimbe) from 9.6.2 to 9.6.3. - [Release notes](https://github.com/ExtendRealityLtd/Malimbe/releases) - [Changelog](https://github.com/ExtendRealityLtd/Malimbe/blob/master/CHANGELOG.md) - [Commits](https://github.com/ExtendRealityLtd/Malimbe/compare/v9.6.2...v9.6.3)
+  > 
+  > Signed-off-by: dependabot-preview[bot] <support@dependabot.com>
+
 ### [1.8.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.8.0...v1.8.1) (2019-11-27)
 
 #### Miscellaneous Chores
