@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.9.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.8.2...v1.9.0) (2019-12-02)
+
+#### Features
+
+* **ObjectPointer:** option to disable destination on no collision ([0eec665](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/0eec66507fe50698ab576cc9360981353899df7d))
+  > The ObjectPointer can now disable the destination pointer element if there is no collision data from the RayCast.
+  > 
+  > Also, the ObjectPointer test was incorrect as the pointer elements were set up incorrectly where the container was assigned to the mesh and vice versa. This has now been corrected and the tests updated to reflect this change.
+
 ### [1.8.2](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.8.1...v1.8.2) (2019-12-02)
 
 #### Miscellaneous Chores
