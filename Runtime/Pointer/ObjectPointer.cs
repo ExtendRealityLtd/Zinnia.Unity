@@ -105,6 +105,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public PointerElement Destination { get; set; }
+        /// <summary>
+        /// Whether the <see cref="Destination"/> will be enabled if the raycast does not collide with anything and contains no <see cref="PointsCast.EventData.HitData"/>.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool EnableDestinationOnNoCollision { get; set; } = true;
 
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> becomes active.
@@ -348,7 +354,7 @@
 
             pointsData.StartPoint.TrySetActive(true);
             pointsData.RepeatedSegmentPoint.TrySetActive(true);
-            pointsData.EndPoint.TrySetActive(true);
+            pointsData.EndPoint.TrySetActive(activePointsCastData.HitData != null || EnableDestinationOnNoCollision);
 
             RenderDataChanged?.Invoke(pointsData);
             TryEmitVisibilityEvent();
@@ -460,7 +466,7 @@
                 && elementObject != pointsData.RepeatedSegmentPoint
                 && elementObject != pointsData.EndPoint)
             {
-                elementObject.gameObject.SetActive(false);
+                elementObject.SetActive(false);
             }
         }
 

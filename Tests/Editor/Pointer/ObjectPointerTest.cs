@@ -80,18 +80,18 @@ namespace Test.Zinnia.Pointer
 
             origin.ValidElementContainer = validOriginContainer;
             origin.ValidMeshContainer = validOriginMesh;
-            origin.InvalidMeshContainer = invalidOriginContainer;
-            origin.InvalidElementContainer = invalidOriginMesh;
+            origin.InvalidElementContainer = invalidOriginContainer;
+            origin.InvalidMeshContainer = invalidOriginMesh;
 
             segment.ValidElementContainer = validSegmentContainer;
             segment.ValidMeshContainer = validSegmentMesh;
-            segment.InvalidMeshContainer = invalidSegmentContainer;
-            segment.InvalidElementContainer = invalidSegmentMesh;
+            segment.InvalidElementContainer = invalidSegmentContainer;
+            segment.InvalidMeshContainer = invalidSegmentMesh;
 
             destination.ValidElementContainer = validDestinationContainer;
             destination.ValidMeshContainer = validDestinationMesh;
-            destination.InvalidMeshContainer = invalidDestinationContainer;
-            destination.InvalidElementContainer = invalidDestinationMesh;
+            destination.InvalidElementContainer = invalidDestinationContainer;
+            destination.InvalidMeshContainer = invalidDestinationMesh;
 
             subject.Origin = origin;
             subject.RepeatedSegment = segment;
@@ -115,12 +115,12 @@ namespace Test.Zinnia.Pointer
 
             subject.ManualOnEnable();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
@@ -128,12 +128,12 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blocker.transform.position = Vector3.forward * 5f;
@@ -149,12 +149,12 @@ namespace Test.Zinnia.Pointer
             subject.HandleData(straightCast);
             subject.Process();
 
-            Assert.IsTrue(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsTrue(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsTrue(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsTrue(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             activatedListenerMock.Reset();
             deactivatedListenerMock.Reset();
@@ -164,12 +164,12 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsTrue(deactivatedListenerMock.Received);
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             Object.DestroyImmediate(blocker);
         }
@@ -326,12 +326,12 @@ namespace Test.Zinnia.Pointer
 
             subject.ManualOnEnable();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
@@ -339,12 +339,12 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             activatedListenerMock.Reset();
             deactivatedListenerMock.Reset();
@@ -353,12 +353,12 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsTrue(deactivatedListenerMock.Received);
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -371,32 +371,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
         }
 
 
@@ -410,32 +410,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -448,32 +448,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -487,32 +487,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -527,32 +527,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -565,32 +565,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -603,32 +603,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -641,32 +641,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -680,32 +680,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -720,32 +720,32 @@ namespace Test.Zinnia.Pointer
             subject.ManualOnEnable();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Activate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
 
             subject.Deactivate();
             subject.Process();
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsFalse(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsFalse(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsFalse(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -763,12 +763,12 @@ namespace Test.Zinnia.Pointer
 
             Assert.IsTrue(activatedListenerMock.Received);
 
-            Assert.IsFalse(validOriginContainer.activeInHierarchy);
-            Assert.IsTrue(invalidOriginContainer.activeInHierarchy);
-            Assert.IsFalse(validSegmentContainer.activeInHierarchy);
-            Assert.IsTrue(invalidSegmentContainer.activeInHierarchy);
-            Assert.IsFalse(validDestinationContainer.activeInHierarchy);
-            Assert.IsTrue(invalidDestinationContainer.activeInHierarchy);
+            Assert.IsFalse(validOriginMesh.activeInHierarchy);
+            Assert.IsTrue(invalidOriginMesh.activeInHierarchy);
+            Assert.IsFalse(validSegmentMesh.activeInHierarchy);
+            Assert.IsTrue(invalidSegmentMesh.activeInHierarchy);
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
         }
 
         [Test]
@@ -832,6 +832,52 @@ namespace Test.Zinnia.Pointer
             Assert.IsTrue(exitListenerMock.Received);
             Assert.IsFalse(hoverListenerMock.Received);
             Assert.IsNull(subject.HoverTarget);
+
+            Object.DestroyImmediate(blocker);
+        }
+
+        [Test]
+        public void HideDestinationOnNoCollision()
+        {
+            SetUpElements();
+
+            List<Vector3> castPoints = new List<Vector3>();
+            PointsCast.EventData straightCast = CastPoints(castPoints, false);
+
+            subject.EnableDestinationOnNoCollision = false;
+            subject.ManualOnEnable();
+            subject.Activate();
+            subject.HandleData(new PointsCast.EventData());
+            subject.Process();
+
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
+
+            //Now add a valid target
+            GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            blocker.transform.position = Vector3.forward * 5f;
+            castPoints = new List<Vector3>()
+            {
+                Vector3.zero,
+                blocker.transform.position
+            };
+
+            straightCast = CastPoints(castPoints, true, true, new Ray(Vector3.zero, Vector3.forward));
+
+            subject.HandleData(straightCast);
+            subject.Process();
+
+            Assert.IsTrue(validDestinationMesh.activeInHierarchy);
+            Assert.IsFalse(invalidDestinationMesh.activeInHierarchy);
+
+            //Now make it so the target is invalid
+            straightCast = CastPoints(castPoints, true, false, new Ray(Vector3.zero, Vector3.forward));
+
+            subject.HandleData(straightCast);
+            subject.Process();
+
+            Assert.IsFalse(validDestinationMesh.activeInHierarchy);
+            Assert.IsTrue(invalidDestinationMesh.activeInHierarchy);
 
             Object.DestroyImmediate(blocker);
         }
