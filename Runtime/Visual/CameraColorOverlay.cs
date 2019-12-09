@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using UnityEngine.Events;
+    using UnityEngine.Rendering;
     using System;
     using System.Collections;
     using Malimbe.XmlDocumentationAttribute;
@@ -205,13 +206,37 @@
         {
             CopyMaterialOverlayToWorking();
             OnAfterCheckDelayChange();
-            Camera.onPostRender += PostRender;
+            
+            if (GraphicsSettings.renderPipelineAsset != null)
+            {
+#if UNITY_2019_1_OR_NEWER
+                RenderPipelineManager.endCameraRendering += PostRender;
+#else
+                Debug.LogWarning("SRP is only supported on Unity 2019.1 or above");
+#endif
+            }
+            else
+            {
+                Camera.onPostRender += PostRender;
+            }
         }
 
         protected virtual void OnDisable()
         {
             CancelBlinkRoutine();
-            Camera.onPostRender -= PostRender;
+            
+            if (GraphicsSettings.renderPipelineAsset != null)
+            {
+#if UNITY_2019_1_OR_NEWER
+                RenderPipelineManager.endCameraRendering -= PostRender;
+#else
+                Debug.LogWarning("SRP is only supported on Unity 2019.1 or above");
+#endif
+            }
+            else
+            {
+                Camera.onPostRender -= PostRender;
+            }
         }
 
         /// <summary>
@@ -269,6 +294,16 @@
             {
                 StopCoroutine(blinkRoutine);
             }
+        }
+
+        /// <summary>
+        /// The moment before <see cref="Camera"/> render that will apply the <see cref="Color"/> overlay.
+        /// </summary>
+        /// <param name="context">Ignored. Only used to match the method signature of <see cref="RenderPipelineManager.endCameraRendering"/>.</param>
+        /// <param name="sceneCamera">The <see cref="Camera"/> to apply onto.</param>
+        private void PostRender(ScriptableRenderContext context, Camera sceneCamera)
+        {
+            PostRender(sceneCamera);
         }
 
         /// <summary>
