@@ -4,6 +4,7 @@
     using System.Text.RegularExpressions;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Extension;
     using Zinnia.Data.Collection.List;
 
     /// <summary>
@@ -21,7 +22,8 @@
         /// <inheritdoc/>
         protected override bool Accepts(GameObject targetGameObject)
         {
-            if (targetGameObject.TryGetComponent(out StringObservableList list))
+            StringObservableList list = targetGameObject.TryGetComponent<StringObservableList>();
+            if (list != null)
             {
                 foreach (string element in list.NonSubscribableElements)
                 {
