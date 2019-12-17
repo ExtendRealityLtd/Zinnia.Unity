@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.10.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.9.0...v1.10.0) (2019-12-17)
+
+#### Features
+
+* **Rule:** add rule to check if a string pattern is in a string list ([802e0be](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/802e0bef0f4abb002a1b6a7294b98ec139c84ef9))
+  > The StringInListRule allows a string pattern to be specified to match against any string found in an associated String Observable List that is a component on the given GameObject.
+  > 
+  > This can replace the need to use the AnyComponentTypeRule and creating dummy scripts for tags as the string list can be used as the tag name that is then picked up by the rule.
+
+#### Bug Fixes
+
+* **Process:** delete GameObject containter from composite process test ([fcc2c7d](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/fcc2c7dabea374d24e9f10d9aebb67d06eea5ef8))
+  > The CompositeProcessTest was creating a GameObject contianier in one of the tests but not deleting it at the end of the test so it was present until all of the tests had run.
+  > 
+  > This can cause tests to behave incorrectly, so it has been removed.
+
 ## [1.9.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.8.2...v1.9.0) (2019-12-02)
 
 #### Features
