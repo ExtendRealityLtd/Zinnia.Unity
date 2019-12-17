@@ -1,5 +1,14 @@
 # Changelog
 
+### [1.10.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.10.0...v1.10.1) (2019-12-17)
+
+#### Bug Fixes
+
+* **Rule:** allow StringInListRule to work in Unity 2018.3 ([2d3c71b](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/2d3c71ba00a0365f8004549c8aec2fbce9354da2))
+  > The TryGetComponent method being used was not valid in 2018.3 and must have been introduced in 2019.1.
+  > 
+  > The fix is to fallback to using the Zinnia.Extension version of the TryGetComponent method.
+
 ## [1.10.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.9.0...v1.10.0) (2019-12-17)
 
 #### Features
