@@ -73,6 +73,31 @@ namespace Test.Zinnia.Action
         }
 
         [Test]
+        public void DeactivatedEmittedFromReceivingDefaultValue()
+        {
+            subject.SetIsActivated(true);
+            subject.SetValue(true);
+
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+
+            subject.Activated.AddListener(activatedListenerMock.Listen);
+            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+
+            subject.ReceiveDefaultValue();
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsTrue(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+        }
+
+        [Test]
         public void ChangedEmitted()
         {
             UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
