@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.11.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.10.4...v1.11.0) (2019-12-31)
+
+#### Features
+
+* **Action:** add method for action to receive its own default value ([4d7a4ba](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/4d7a4ba2552cec9a7493f6d2a7ec3aebe65a541f))
+  > The new `ReceiveDefaultValue` method is a shortcut for the `Receive` method but it simply makes the Action receive its own default value.
+  > 
+  > This can be used to programmatically get an Action to call its own deactivation event if the Action is already activated without needing to know the type of the concrete action. This is useful when dealing with Actions in their generic abstract form but wanting them to emit their deactivated state for whatever reason, such as a linked GameObject becoming disabled.
+
 ### [1.10.4](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.10.3...v1.10.4) (2019-12-21)
 
 #### Miscellaneous Chores
