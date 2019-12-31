@@ -64,6 +64,10 @@
         /// Emits the appropriate event for when the activation state changes from Activated or Deactivated.
         /// </summary>
         public abstract void EmitActivationState();
+        /// <summary>
+        /// Makes the action receive its own default value.
+        /// </summary>
+        public abstract void ReceiveDefaultValue();
 
         /// <summary>
         /// Whether the event should be emitted.
@@ -169,6 +173,13 @@
                 ValueChanged?.Invoke(Value);
                 Deactivated?.Invoke(Value);
             }
+        }
+
+        /// <inheritdoc />
+        [RequiresBehaviourState]
+        public override void ReceiveDefaultValue()
+        {
+            Receive(DefaultValue);
         }
 
         /// <summary>

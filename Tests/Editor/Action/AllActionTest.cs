@@ -292,6 +292,8 @@ namespace Test.Zinnia.Action
 
         public override void EmitActivationState() { }
 
+        public override void ReceiveDefaultValue() { }
+
         public virtual void SetIsActivated(bool value)
         {
             IsActivated = value;
