@@ -5,6 +5,7 @@
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Attempts to utilize the first <see cref="VelocityTracker"/> found on the given proxy <see cref="Component"/>.
@@ -22,6 +23,11 @@
         /// The cached <see cref="VelocityTracker"/> found on the proxy <see cref="Component"/>.
         /// </summary>
         protected VelocityTracker cachedVelocityTracker;
+
+        protected virtual void OnEnable()
+        {
+            SetCachedVelocityTracker();
+        }
 
         /// <inheritdoc />
         public override bool IsActive()
@@ -47,7 +53,15 @@
         [CalledAfterChangeOf(nameof(ProxySource))]
         protected virtual void OnAfterProxySourceChange()
         {
-            cachedVelocityTracker = ProxySource == null ? null : ProxySource.GetComponentInChildren<VelocityTracker>();
+            SetCachedVelocityTracker();
+        }
+
+        /// <summary>
+        /// Sets <see cref="cachedVelocityTracker"/> to the first found <see cref="VelocityTracker"> on the <see cref="ProxySource"> or any of its descendants.
+        /// </summary>
+        protected virtual void SetCachedVelocityTracker()
+        {
+            cachedVelocityTracker = ProxySource.TryGetComponent<VelocityTracker>(true);
         }
     }
 }
