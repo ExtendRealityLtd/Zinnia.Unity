@@ -17,7 +17,7 @@
         /// Defines the event for the output <see cref="GameObject"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
+        public class GameObjectUnityEvent : UnityEvent<GameObject>
         {
         }
 
@@ -29,10 +29,15 @@
         public GameObjectRelationObservableList Relations { get; set; }
 
         /// <summary>
-        /// Emitted when a value is retrieved for a given key.
+        /// Emitted when a value is retrieved for a given key or relation index.
         /// </summary>
         [DocumentedByXml]
-        public UnityEvent ValueRetrieved = new UnityEvent();
+        public GameObjectUnityEvent ValueRetrieved = new GameObjectUnityEvent();
+        /// <summary>
+        /// Emitted when a no key can be found the given key or relation index.
+        /// </summary>
+        [DocumentedByXml]
+        public UnityEvent KeyNotFound = new UnityEvent();
 
         /// <summary>
         /// Attempts to get the value in the list of relations for the given key.
@@ -50,6 +55,7 @@
                     return relation.Value;
                 }
             }
+            KeyNotFound?.Invoke();
             return null;
         }
 
@@ -70,6 +76,7 @@
                     return foundValue;
                 }
             }
+            KeyNotFound?.Invoke();
             return null;
         }
 
