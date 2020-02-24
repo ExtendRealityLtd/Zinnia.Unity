@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.12.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.11.0...v1.12.0) (2020-02-24)
+
+#### Features
+
+* **Data:** add KeyNotFound event to GameObjectRelations ([b75f607](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b75f607c461bd04189b24c5c981e11d880efcfab))
+  > The KeyNotFound event is raised whenever the GetValue method on the GameObjectRelations component is called but no key can be matched because either the key is not in the dictionary or the index given is out of bounds of the collection.
+
+#### Bug Fixes
+
+* **Tracking:** cache tracker source when OnEnable ([bc6cd5f](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/bc6cd5f64ae3648cee0588f0e6cbaab1bba8c314))
+  > This fix will cache velocity tracker for this component to work when the ProxySource is set up in editor time.
+
 ## [1.11.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.10.4...v1.11.0) (2019-12-31)
 
 #### Features
