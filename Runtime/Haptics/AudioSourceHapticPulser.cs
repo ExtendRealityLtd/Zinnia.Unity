@@ -2,8 +2,11 @@
 {
     using UnityEngine;
     using System.Collections;
+    using Malimbe.MemberChangeMethod;
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using Zinnia.Audio;
 
     /// <summary>
     /// Creates a haptic pattern based on the waveform of an <see cref="UnityEngine.AudioSource"/> and utilizes a <see cref="Haptics.HapticPulser"/> to create the effect.
@@ -11,29 +14,47 @@
     public class AudioSourceHapticPulser : RoutineHapticPulser
     {
         /// <summary>
-        /// The waveform to represent the haptic pattern.
+        /// Observer that provides audio data from a <see cref="AudioSource"/>.
         /// </summary>
-        [Serialized]
+        [Serialized, Cleared]
         [field: DocumentedByXml]
-        public AudioSource AudioSource { get; set; }
+        public AudioSourceDataObserver Observer { get; set; }
 
         /// <summary>
-        /// <see cref="AudioSettings.dspTime"/> of the last <see cref="OnAudioFilterRead"/>.
+        /// A reused data instance.
         /// </summary>
-        protected double filterReadDspTime;
+        protected readonly AudioSourceDataObserver.EventData audioData = new AudioSourceDataObserver.EventData();
+
         /// <summary>
-        /// Audio data array of the last <see cref="OnAudioFilterRead"/>.
+        /// Subscribes as a listener to the <see cref="Observer"/>.
         /// </summary>
-        protected float[] filterReadData;
+        protected virtual void SubscribeToObserver()
+        {
+            if (Observer == null)
+            {
+                return;
+            }
+
+            Observer.DataObserved.AddListener(Receive);
+        }
+
         /// <summary>
-        /// Number of channels of the last <see cref="OnAudioFilterRead"/>.
+        /// Unsubscribes from listening to the <see cref="Observer"/>.
         /// </summary>
-        protected int filterReadChannels;
+        protected virtual void UnsubscribeFromObserver()
+        {
+            if (Observer == null)
+            {
+                return;
+            }
+
+            Observer.DataObserved.RemoveListener(Receive);
+        }
 
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return base.IsActive() && AudioSource != null;
+            return base.IsActive() && Observer != null;
         }
 
         /// <summary>
@@ -42,36 +63,63 @@
         /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
         protected override IEnumerator HapticProcessRoutine()
         {
+            SubscribeToObserver();
             int outputSampleRate = AudioSettings.outputSampleRate;
-            while (AudioSource.isPlaying)
+            while (Observer != null && Observer.IsAudioSourcePlaying())
             {
-                int sampleIndex = (int)((AudioSettings.dspTime - filterReadDspTime) * outputSampleRate);
                 float currentSample = 0;
-                if (filterReadData != null && sampleIndex * filterReadChannels < filterReadData.Length)
+                if (audioData.Data != null)
                 {
-                    for (int i = 0; i < filterReadChannels; ++i)
+                    int sampleIndex = (int)((AudioSettings.dspTime - audioData.DspTime) * outputSampleRate) * audioData.Channels;
+                    sampleIndex = Mathf.Min(sampleIndex, audioData.Data.Length - audioData.Channels);
+                    for (int i = 0; i < audioData.Channels; ++i)
                     {
-                        currentSample += filterReadData[sampleIndex + i];
+                        currentSample += Mathf.Abs(audioData.Data[sampleIndex + i]);
                     }
-                    currentSample /= filterReadChannels;
+                    currentSample /= audioData.Channels;
                 }
                 HapticPulser.Intensity = currentSample * IntensityMultiplier;
                 HapticPulser.Begin();
                 yield return null;
             }
+            UnsubscribeFromObserver();
             ResetIntensity();
         }
 
         /// <summary>
-        /// Store currently playing audio data and additional data.
+        /// Receive audio data from <see cref="AudioSourceDataObserver"/>.
         /// </summary>
-        /// <param name="data">An array of floats comprising the audio data.</param>
-        /// <param name="channels">An int that stores the number of channels of audio data passed to this delegate.</param>
-        protected virtual void OnAudioFilterRead(float[] data, int channels)
+        protected virtual void Receive(AudioSourceDataObserver.EventData eventData)
         {
-            filterReadDspTime = AudioSettings.dspTime;
-            filterReadData = data;
-            filterReadChannels = channels;
+            audioData.Set(eventData);
+        }
+
+        /// <summary>
+        /// Called before <see cref="Observer"/> has been changed.
+        /// </summary>
+        [CalledBeforeChangeOf(nameof(Observer))]
+        protected virtual void OnBeforeObserverChange()
+        {
+            if (hapticRoutine == null)
+            {
+                return;
+            }
+
+            UnsubscribeFromObserver();
+        }
+
+        /// <summary>
+        /// Called after <see cref="Observer"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(Observer))]
+        protected virtual void OnAfterObserverChange()
+        {
+            if (hapticRoutine == null)
+            {
+                return;
+            }
+
+            SubscribeToObserver();
         }
     }
 }
