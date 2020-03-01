@@ -111,6 +111,11 @@
         [DocumentedByXml]
         public TEvent ValueChanged = new TEvent();
         /// <summary>
+        /// Emitted when the <see cref="Value"/> of the action remains unchanged.
+        /// </summary>
+        [DocumentedByXml]
+        public TEvent ValueUnchanged = new TEvent();
+        /// <summary>
         /// Emitted when the action becomes deactivated.
         /// </summary>
         [DocumentedByXml]
@@ -191,6 +196,7 @@
         {
             if (IsValueEqual(value))
             {
+                ValueUnchanged?.Invoke(Value);
                 return;
             }
 
@@ -225,6 +231,7 @@
             }
 
             source.ValueChanged.AddListener(Receive);
+            source.ValueUnchanged.AddListener(Receive);
         }
 
         /// <summary>
@@ -239,6 +246,7 @@
             }
 
             source.ValueChanged.RemoveListener(Receive);
+            source.ValueUnchanged.RemoveListener(Receive);
         }
 
         /// <summary>
