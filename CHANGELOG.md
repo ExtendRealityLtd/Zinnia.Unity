@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.13.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.12.0...v1.13.0) (2020-03-02)
+
+#### Features
+
+* **Action:** add ValueUnchanged event to Action ([8c704be](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/8c704be072ce56167dd275e38099f536ce7c40ac))
+  > A ValueUnchanged event has been added to compliment the ValueChanged Action. The new ValueUnchanged event will raise when the Action receives the same value as it is currently holding.
+  > 
+  > This event can then be used to call EmitActivationState to re-raise the relevant events.
+* **Action:** add Vector3 action ([ff534bf](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/ff534bf90046f133b265cd418c7832f182648672))
+  > The Vector3 Action raises a Vector3 value in the same way as the Vector2 Action.
+* **Extraction:** add Unity Time component extractor ([85941f8](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/85941f8892bd76edb8ffe21c7a479da3396fbde0))
+  > The TimeComponentExtractor will extract a specified value from the UnityEngine.Time object and emit the result.
+* **Proxy:** add event proxies for Vector2 and Vector3 events ([af49ebd](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/af49ebd967b31391a1eb9f4eba000e925a541ac9))
+  > The Vector2 and Vector3 events can now be proxied via the new EventProxyEmitters.
+
 ## [1.12.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.11.0...v1.12.0) (2020-02-24)
 
 #### Features
