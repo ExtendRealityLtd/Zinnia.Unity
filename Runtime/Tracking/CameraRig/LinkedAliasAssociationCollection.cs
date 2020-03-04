@@ -4,6 +4,7 @@
     using Malimbe.MemberClearanceMethod;
     using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Haptics;
     using Zinnia.Tracking.Velocity;
 
     /// <summary>
@@ -54,6 +55,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public VelocityTracker LeftControllerVelocityTracker { get; set; }
+        /// <summary>
+        /// The associated Left Controller Haptic Process.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public HapticProcess LeftControllerHapticProcess { get; set; }
         #endregion
 
         #region Right Controller Settings
@@ -69,6 +76,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public VelocityTracker RightControllerVelocityTracker { get; set; }
+        /// <summary>
+        /// The associated Right Controller Haptic Process.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public HapticProcess RightControllerHapticProcess { get; set; }
         #endregion
     }
 }
