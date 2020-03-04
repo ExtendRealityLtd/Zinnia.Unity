@@ -6,6 +6,7 @@
     using Malimbe.PropertySerializationAttribute;
     using Zinnia.Haptics;
     using Zinnia.Tracking.Velocity;
+    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Provides the basis for describing a CameraRig Alias Association by providing the linked elements of the CameraRig.
@@ -40,6 +41,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public VelocityTracker HeadsetVelocityTracker { get; set; }
+        /// <summary>
+        /// A list of any additional cameras associated with the headset.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public CameraObservableList SupplementHeadsetCameras { get; set; }
         #endregion
 
         #region Left Controller Settings
