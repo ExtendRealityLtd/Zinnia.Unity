@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.14.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.13.0...v1.14.0) (2020-03-04)
+
+#### Features
+
+* **Tracking:** link supplement headset cameras to an alias association ([364023b](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/364023b3945d5b2de94caf1fc58884b619c5dfcc))
+  > The LinkedAliasAssociationCollection now has an additional parameter that can store a list of other cameras that may have relevance to the tracked alias.
+  > 
+  > This aids when a HMD is using multiple cameras per eye for example.
+* **Tracking:** provide haptic process references for controllers ([e96e439](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/e96e439e5db86fef8ff3faaff76ad1d12fe812ea))
+  > The LinkedAliasAssociationCollection now has a reference for the left and right controller haptic processes so any CameraRig configuration can provide the default haptic process required for the appropriate SDK.
+
 ## [1.13.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.12.0...v1.13.0) (2020-03-02)
 
 #### Features
