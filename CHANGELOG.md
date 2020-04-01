@@ -1,5 +1,22 @@
 # Changelog
 
+### [1.14.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.14.0...v1.14.1) (2020-04-01)
+
+#### Bug Fixes
+
+* **Action:** remove unchanged event from being chained in sources ([d17a0c5](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d17a0c591a42f29fb59646679e65a38790731a6a))
+  > Having the ValueUnchanged event in the Sources chain does not make sense as it causes the `any` concept of the Sources to fail because the logic goes:
+  > 
+  > Has SourceA changed? no, then don't call Target.Receive   but SourceA is unchanged so call Target.Receive Has SourceB changed? no, then don't call Target.Receive   but SourceB is unchanged so call Target.Receive
+  > 
+  > The above scenario would mean Target is still false, however:
+  > 
+  > Has SourceA changed? Yes, then call Target.Receive(true)   SourceA is changed so the second receive won't be called Has SourceB changed? No, then don't call Target.Receive   SourceB is unchanged so call Target.Receive(false)
+  > 
+  > Now Target has gone from true to false causing it to reset its own state.
+  > 
+  > Really, the Sources should only be used for actual change proxying and not try to do an `any` on unchanged values.
+
 ## [1.14.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.13.0...v1.14.0) (2020-03-04)
 
 #### Features
