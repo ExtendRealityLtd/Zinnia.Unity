@@ -231,7 +231,6 @@
             }
 
             source.ValueChanged.AddListener(Receive);
-            source.ValueUnchanged.AddListener(Receive);
         }
 
         /// <summary>
@@ -246,7 +245,6 @@
             }
 
             source.ValueChanged.RemoveListener(Receive);
-            source.ValueUnchanged.RemoveListener(Receive);
         }
 
         /// <summary>
