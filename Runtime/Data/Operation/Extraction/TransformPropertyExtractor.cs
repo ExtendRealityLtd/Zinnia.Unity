@@ -55,7 +55,14 @@
         [RequiresBehaviourState]
         public virtual TElement Extract()
         {
-            DoExtract();
+            if (!isActiveAndEnabled || Source == null)
+            {
+                LastExtractedValue = default;
+                return default;
+            }
+
+            LastExtractedValue = ExtractValue();
+            Extracted?.Invoke(LastExtractedValue);
             return LastExtractedValue;
         }
 
@@ -65,13 +72,7 @@
         [RequiresBehaviourState]
         public virtual void DoExtract()
         {
-            if (Source == null)
-            {
-                return;
-            }
-
-            LastExtractedValue = ExtractValue();
-            Extracted?.Invoke(LastExtractedValue);
+            Extract();
         }
 
         /// <summary>
