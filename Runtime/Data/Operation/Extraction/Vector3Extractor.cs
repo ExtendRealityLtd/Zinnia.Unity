@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
@@ -46,6 +47,7 @@
         /// <summary>
         /// Extracts the <see cref="Vector3"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void DoExtract()
         {
             Extract();

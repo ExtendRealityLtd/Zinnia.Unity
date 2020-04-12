@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -212,9 +213,32 @@
         /// <summary>
         /// Extracts the <see cref="float"/> component from <see cref="Time"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void DoExtract()
         {
             Extract();
+        }
+
+        /// <summary>
+        /// Extracts the <see cref="float"/> component from <see cref="Time"/>.
+        /// </summary>
+        /// <param name="data">The data to extract from.</param>
+        /// <returns>The extracted <see cref="float"/>.</returns>
+        [RequiresBehaviourState]
+        public virtual float? Extract(TimeComponent data)
+        {
+            ComponentToExtract = data;
+            return Extract();
+        }
+
+        /// <summary>
+        /// Extracts the <see cref="float"/> component from <see cref="Time"/>.
+        /// </summary>
+        /// <param name="data">The data to extract from.</param>
+        [RequiresBehaviourState]
+        public virtual void DoExtract(TimeComponent data)
+        {
+            Extract(data);
         }
     }
 }

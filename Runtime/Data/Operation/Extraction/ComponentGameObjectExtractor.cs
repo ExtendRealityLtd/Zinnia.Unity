@@ -20,7 +20,7 @@
         /// <inheritdoc />
         public override GameObject Extract()
         {
-            if (Source == null)
+            if (!isActiveAndEnabled || Source == null)
             {
                 Result = null;
                 return null;

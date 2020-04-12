@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -21,7 +22,7 @@
         /// <inheritdoc />
         public override Vector3? Extract()
         {
-            if (Source == null || Source.CollisionData.transform == null)
+            if (!isActiveAndEnabled || Source == null || Source.CollisionData.transform == null)
             {
                 Result = null;
                 return null;
@@ -36,6 +37,7 @@
         /// </summary>
         /// <param name="data">The data to extract from.</param>
         /// <returns>The extracted collision point.</returns>
+        [RequiresBehaviourState]
         public virtual Vector3? Extract(SurfaceData data)
         {
             Source = data;
@@ -46,6 +48,7 @@
         /// Extracts the <see cref="Vector3"/> from the given <see cref="SurfaceData"/>.
         /// </summary>
         /// <param name="data">The data to extract from.</param>
+        [RequiresBehaviourState]
         public virtual void DoExtract(SurfaceData data)
         {
             Extract(data);
