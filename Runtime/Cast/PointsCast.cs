@@ -1,18 +1,18 @@
 ﻿namespace Zinnia.Cast
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
-    using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Rule;
-    using Zinnia.Process;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
+    using Zinnia.Process;
+    using Zinnia.Rule;
 
     /// <summary>
     /// The base of casting components that result in points along the cast.

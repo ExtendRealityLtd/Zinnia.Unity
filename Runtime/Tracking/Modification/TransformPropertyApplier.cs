@@ -1,18 +1,17 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using UnityEngine;
-    using UnityEngine.Events;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Extension;
+    using UnityEngine;
+    using UnityEngine.Events;
+    using Zinnia.Data.Attribute;
     using Zinnia.Data.Enum;
     using Zinnia.Data.Type;
-    using Zinnia.Data.Attribute;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Applies the transform properties from a given source <see cref="Transform"/> onto the given target <see cref="Transform"/>.

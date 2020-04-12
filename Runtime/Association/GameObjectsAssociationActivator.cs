@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Association
 {
-    using UnityEngine;
     using Malimbe.MemberChangeMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Process;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Association.Collection;
+    using Zinnia.Process;
 
     /// <summary>
     /// (De)activates <see cref="GameObjectsAssociation"/>s.

@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
-    using UnityEngine;
-    using System;
-    using System.Collections.Generic;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using System.Collections.Generic;
+    using UnityEngine;
     using Zinnia.Extension;
 
     /// <summary>

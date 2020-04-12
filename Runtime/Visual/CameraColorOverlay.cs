@@ -1,15 +1,15 @@
 ﻿namespace Zinnia.Visual
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
-    using System.Collections;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
-    using Zinnia.Rule;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using System.Collections;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Extension;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Applies a color over the valid cameras and can be used to fade the screen view.

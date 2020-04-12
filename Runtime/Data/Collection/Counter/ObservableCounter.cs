@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Collection.Counter
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Allows counting the amount of attempts an element is added or removed from a <see cref="Dictionary{TKey, TValue}"/>.

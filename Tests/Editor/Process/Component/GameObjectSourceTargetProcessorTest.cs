@@ -1,14 +1,14 @@
-﻿using Zinnia.Rule;
-using Zinnia.Data.Collection.List;
+﻿using Zinnia.Data.Collection.List;
 using Zinnia.Process.Component;
+using Zinnia.Rule;
 
 namespace Test.Zinnia.Process.Component
 {
+    using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
-    using Test.Zinnia.Utility.Stub;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectSourceTargetProcessorTest

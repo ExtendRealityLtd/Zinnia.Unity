@@ -2,8 +2,8 @@
 
 namespace Test.Zinnia.Data.Type
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class SurfaceDataTest

@@ -1,10 +1,10 @@
-﻿using Zinnia.Extension;
-using Zinnia.Data.Type;
+﻿using Zinnia.Data.Type;
+using Zinnia.Extension;
 
 namespace Test.Zinnia.Extension
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformDataExtensionsTest

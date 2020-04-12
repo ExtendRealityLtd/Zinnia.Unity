@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Transforms a <see cref="Vector3"/> by changing its magnitude.

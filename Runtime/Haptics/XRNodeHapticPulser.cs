@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Haptics
 {
-    using UnityEngine.XR;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine.XR;
 
     /// <summary>
     /// Creates a timed haptic pulse on an <see cref="XRNode"/>.

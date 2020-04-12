@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Pointer
 {
-    using UnityEngine;
-    using UnityEngine.Events;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Describes an element of the rendered <see cref="ObjectPointer"/>.

@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Haptics
 {
-    using UnityEngine;
-    using System.Collections;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System.Collections;
+    using UnityEngine;
 
     /// <summary>
     /// Creates a haptic pattern based on a custom routine and utilizes a <see cref="Haptics.HapticPulser"/> to create the effect.

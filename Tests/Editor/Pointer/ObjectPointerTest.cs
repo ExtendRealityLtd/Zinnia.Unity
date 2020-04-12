@@ -1,12 +1,12 @@
-﻿using Zinnia.Pointer;
-using Zinnia.Cast;
+﻿using Zinnia.Cast;
+using Zinnia.Pointer;
 
 namespace Test.Zinnia.Pointer
 {
-    using UnityEngine;
     using NUnit.Framework;
     using System.Collections.Generic;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class ObjectPointerTest

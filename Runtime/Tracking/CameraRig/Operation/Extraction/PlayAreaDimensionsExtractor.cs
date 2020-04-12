@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.CameraRig.Operation.Extraction
 {
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
     using UnityEngine.Experimental.XR;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Extracts play area dimensions as a <see cref="Vector3"/>.

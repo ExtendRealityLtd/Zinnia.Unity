@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using UnityEngine;
-    using System;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
 
     /// <summary>
     /// Allows a boolean to be set per <see cref="UnityEngine.Vector3"/> element to provide a state reference.

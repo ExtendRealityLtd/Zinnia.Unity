@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Follow.Operation.Extraction
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
 
     /// <summary>
     /// Extracts the parts of <see cref="ObjectDistanceComparator.EventData"/> and emits them in separate events.

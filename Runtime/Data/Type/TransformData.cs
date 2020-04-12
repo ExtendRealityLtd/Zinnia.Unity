@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using UnityEngine;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
 
     /// <summary>
     /// Holds <see cref="UnityEngine.Transform"/> information with the ability to override properties without affecting the scene <see cref="UnityEngine.Transform"/>.

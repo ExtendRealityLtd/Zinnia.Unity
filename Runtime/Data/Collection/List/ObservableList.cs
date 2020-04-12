@@ -1,14 +1,14 @@
 ﻿namespace Zinnia.Data.Collection.List
 {
-    using UnityEngine;
-    using UnityEngine.Events;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Extension;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// The basis for all Observable List types.

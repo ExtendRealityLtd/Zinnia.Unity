@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Process.Moment
 {
-    using UnityEngine;
     using Malimbe.MemberChangeMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Process.Moment.Collection;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using UnityEngine.Rendering;
+    using Zinnia.Process.Moment.Collection;
 
     /// <summary>
     /// Iterates through a given <see cref="MomentProcess"/> collection and executes the <see cref="IProcessable.Process"/> method on the given Unity game loop moment.

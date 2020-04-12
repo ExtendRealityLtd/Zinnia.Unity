@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Rule
 {
-    using UnityEngine;
-    using System.Text.RegularExpressions;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Extension;
+    using Malimbe.XmlDocumentationAttribute;
+    using System.Text.RegularExpressions;
+    using UnityEngine;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/> with a <see cref="StringObservableList"/> component contains a string that matches a specified pattern.

@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using UnityEngine.Events;
     using System;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
 
     /// <summary>

@@ -2,8 +2,8 @@
 
 namespace Test.Zinnia.Utility
 {
-    using System.Collections;
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;

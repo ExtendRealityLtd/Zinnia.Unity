@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Extracts and emits the <see cref="float"/> components of a <see cref="Vector2"/>.

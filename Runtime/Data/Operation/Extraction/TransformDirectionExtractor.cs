@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
 
     /// <summary>
     /// Extracts a chosen axis of a <see cref="Transform"/>.

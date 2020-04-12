@@ -1,15 +1,15 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
-    using UnityEngine;
-    using UnityEngine.Events;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Rule;
-    using Zinnia.Extension;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Attribute;
+    using Zinnia.Extension;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Allows emitting collision data via events.

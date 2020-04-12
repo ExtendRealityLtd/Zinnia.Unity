@@ -1,12 +1,16 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using UnityEngine;
     using UnityEditor;
+    using UnityEngine;
     using Zinnia.Utility;
 
+    /// <summary>
+    /// Displays a custom inspector showing three checkboxes for each state determined for a Vector3.
+    /// </summary>
     [CustomPropertyDrawer(typeof(Vector3State))]
     public class Vector3StateDrawer : PropertyDrawer
     {
+        /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;

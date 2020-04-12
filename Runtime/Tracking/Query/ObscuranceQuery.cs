@@ -1,16 +1,16 @@
 ﻿namespace Zinnia.Tracking.Query
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Cast;
-    using Zinnia.Process;
-    using Zinnia.Extension;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
+    using Zinnia.Process;
 
     /// <summary>
     /// Determines whether any <see cref="Collider"/> obscures a line between two <see cref="GameObject"/>s.

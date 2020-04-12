@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using UnityEngine.Events;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Emits a UnityEvent with a no payload whenever the Receive method is called.

@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Transforms a float array to a Vector3.

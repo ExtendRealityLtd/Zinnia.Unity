@@ -3,8 +3,8 @@ using Zinnia.Utility;
 
 namespace Test.Zinnia.Utility
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class BezierCurveGeneratorTest

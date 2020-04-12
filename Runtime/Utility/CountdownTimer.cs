@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Utility
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Counts down from a given start time until zero and emits appropriate events throughout the process.

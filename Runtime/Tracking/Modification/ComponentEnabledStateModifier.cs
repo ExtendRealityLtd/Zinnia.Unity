@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using UnityEngine;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Data.Type;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Data.Type;
 
     /// <summary>
     /// Provides the ability to modify the enabled state of a <see cref="Behaviour"/> or <see cref="Renderer"/> component.

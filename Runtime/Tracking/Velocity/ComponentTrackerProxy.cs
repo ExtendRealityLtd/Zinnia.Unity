@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using UnityEngine;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Extension;
 
     /// <summary>

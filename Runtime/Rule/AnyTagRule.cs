@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Rule
 {
-    using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Collection.List;
 
     /// <summary>

@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation.Extraction
 {
     using UnityEngine;
-    using Zinnia.Extension;
     using Zinnia.Data.Operation.Extraction;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Extracts the <see cref="GameObject"/> of the <see cref="Collider"/> from a given <see cref="CollisionNotifier.EventData"/>.

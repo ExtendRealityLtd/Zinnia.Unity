@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Aggregation
 {
-    using UnityEngine.Events;
     using System;
+    using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
 
     /// <summary>

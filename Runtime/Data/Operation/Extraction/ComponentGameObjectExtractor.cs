@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using UnityEngine;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
 
     /// <summary>
     /// Extracts and emits the <see cref="Source"/> residing <see cref="GameObject"/>.

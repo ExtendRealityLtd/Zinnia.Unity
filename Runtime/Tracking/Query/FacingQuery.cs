@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Query
 {
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Process;
 
     /// <summary>

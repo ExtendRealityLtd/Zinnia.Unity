@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using UnityEngine;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Extension;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Updates the transform rotation of the target to match the difference in position of the source.

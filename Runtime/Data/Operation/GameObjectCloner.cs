@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Data.Operation
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Duplicates a <see cref="GameObject"/> by cloning it.

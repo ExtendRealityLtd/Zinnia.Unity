@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using UnityEngine;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Type;
 
     /// <summary>

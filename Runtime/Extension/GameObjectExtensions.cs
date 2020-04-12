@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Extension
 {
-    using UnityEngine;
     using System;
     using System.Collections.Generic;
+    using UnityEngine;
 
     /// <summary>
     /// Extended methods for the <see cref="GameObject"/> Type.

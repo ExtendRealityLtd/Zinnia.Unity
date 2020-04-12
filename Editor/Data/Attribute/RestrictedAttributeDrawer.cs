@@ -1,11 +1,15 @@
 ﻿namespace Zinnia.Data.Attribute
 {
-    using UnityEngine;
     using UnityEditor;
+    using UnityEngine;
 
+    /// <summary>
+    /// Displays an inspector property drawer with restricted styles.
+    /// </summary>
     [CustomPropertyDrawer(typeof(RestrictedAttribute))]
     public class RestrictedAttributeDrawer : PropertyDrawer
     {
+        /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
@@ -60,6 +64,7 @@
             EditorGUI.EndProperty();
         }
 
+        /// <inheritdoc/>
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             return EditorGUI.GetPropertyHeight(property);

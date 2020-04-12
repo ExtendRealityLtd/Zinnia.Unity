@@ -1,12 +1,17 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using UnityEngine.Events;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Rule;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine.Events;
     using Zinnia.Extension;
+    using Zinnia.Rule;
 
+    /// <summary>
+    /// An Event Proxy Emitter that can be restricted by a <see cref="Rule"/>.
+    /// </summary>
+    /// <typeparam name="TValue">The type of data for the event.</typeparam>
+    /// <typeparam name="TEvent">The event that is emitted.</typeparam>
     public abstract class RestrictableSingleEventProxyEmitter<TValue, TEvent> : SingleEventProxyEmitter<TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
     {
         /// <summary>

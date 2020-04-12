@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Provides the basis for emitting the <see cref="GameObject"/> that any concrete implementation is residing on.

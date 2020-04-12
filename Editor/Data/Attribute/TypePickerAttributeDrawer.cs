@@ -1,19 +1,29 @@
 ﻿namespace Zinnia.Data.Attribute
 {
-    using UnityEditor;
-    using UnityEngine;
     using System;
     using System.Linq;
     using System.Reflection;
+    using UnityEditor;
+    using UnityEngine;
     using Zinnia.Utility;
 
+    /// <summary>
+    /// Displays a custom inspector type picker dropdown.
+    /// </summary>
     [CustomPropertyDrawer(typeof(TypePickerAttribute))]
     public class TypePickerAttributeDrawer : PropertyDrawer
     {
+        /// <summary>
+        /// A PickerWindow for a specified type.
+        /// </summary>
         public class PickerWindow : PickerWindow<Type, PickerWindow> { }
 
+        /// <summary>
+        /// The type for the picker inspector.
+        /// </summary>
         protected Type type;
 
+        /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;

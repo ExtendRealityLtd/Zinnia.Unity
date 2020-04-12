@@ -1,14 +1,17 @@
 ﻿namespace Zinnia.Process.Component
 {
-    using UnityEngine;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Rule;
-    using Zinnia.Extension;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
+    using Zinnia.Rule;
 
+    /// <summary>
+    /// A <see cref="SourceTargetProcessor{TSource, TTarget}"/> that specifically processes a <see cref="GameObject"/>.
+    /// </summary>
     public abstract class GameObjectSourceTargetProcessor : SourceTargetProcessor<GameObject, GameObject>
     {
         #region Processor Settings

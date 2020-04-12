@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Data.Collection.Stack
 {
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
 
     /// <summary>
     /// Emits the events at the current stack index every time a new <see cref="GameObject"/> is added to or removed from the stack.
