@@ -32,6 +32,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
+            subject.UseLocal = true;
             subject.Direction = TransformDirectionExtractor.AxisDirection.Right;
 
             containingObject.transform.eulerAngles = Vector3.up * 45f;
@@ -51,6 +52,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
+            subject.UseLocal = true;
             subject.Direction = TransformDirectionExtractor.AxisDirection.Up;
 
             containingObject.transform.eulerAngles = Vector3.forward * 45f;
@@ -70,6 +72,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
+            subject.UseLocal = true;
             subject.Direction = TransformDirectionExtractor.AxisDirection.Forward;
 
             containingObject.transform.eulerAngles = Vector3.up * 45f;
@@ -89,6 +92,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
+            subject.UseLocal = true;
             subject.gameObject.SetActive(false);
 
             Vector3? result = subject.Extract();
@@ -119,6 +123,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
+            subject.UseLocal = true;
             subject.enabled = false;
 
             Vector3? result = subject.Extract();
