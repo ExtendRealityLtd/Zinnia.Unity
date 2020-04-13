@@ -10,6 +10,7 @@
     /// <summary>
     /// Extracts and emits the <see cref="float"/> components of a <see cref="Vector2"/>.
     /// </summary>
+    [Obsolete("Use `Zinnia.Data.Type.Transformation.Conversion.Vector2ToFloat` instead.")]
     public class Vector2ComponentExtractor : MonoBehaviour
     {
         /// <summary>
