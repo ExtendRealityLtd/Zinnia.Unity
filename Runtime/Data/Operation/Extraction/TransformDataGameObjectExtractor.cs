@@ -1,57 +1,27 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
 
     /// <summary>
     /// Extracts and emits the <see cref="Source"/> residing <see cref="GameObject"/>.
     /// </summary>
-    public class TransformDataGameObjectExtractor : GameObjectExtractor
+    public class TransformDataGameObjectExtractor : GameObjectExtractor<TransformData, TransformDataGameObjectExtractor.UnityEvent>
     {
         /// <summary>
-        /// The source to extract from.
+        /// Defines the event with the specified <see cref="GameObject"/>.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public TransformData Source { get; set; }
+        [Serializable]
+        public class UnityEvent : UnityEvent<GameObject>
+        {
+        }
 
         /// <inheritdoc />
-        public override GameObject Extract()
+        protected override GameObject ExtractValue()
         {
-            if (!isActiveAndEnabled || Source == null || Source.Transform == null)
-            {
-                Result = null;
-                return null;
-            }
-
-            Result = Source.Transform.gameObject;
-            return base.Extract();
-        }
-
-        /// <summary>
-        /// Extracts the <see cref="GameObject"/> from the given <see cref="TransformData"/>.
-        /// </summary>
-        /// <param name="data">The data to extract from.</param>
-        /// <returns>The extracted <see cref="GameObject"/> from the given <see cref="TransformData"/>.</returns>
-        [RequiresBehaviourState]
-        public virtual GameObject Extract(TransformData data)
-        {
-            Source = data;
-            return Extract();
-        }
-
-        /// <summary>
-        /// Extracts the <see cref="GameObject"/> from the given <see cref="TransformData"/>.
-        /// </summary>
-        /// <param name="data">The data to extract from.</param>
-        [RequiresBehaviourState]
-        public virtual void DoExtract(TransformData data)
-        {
-            Extract(data);
+            return Source != null && Source.Transform != null ? Source.Transform.gameObject : null;
         }
     }
 }

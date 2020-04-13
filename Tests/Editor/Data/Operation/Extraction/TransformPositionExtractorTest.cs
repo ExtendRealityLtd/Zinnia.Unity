@@ -33,10 +33,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
 
-            Vector3 result = subject.Extract();
+            Vector3? result = subject.Extract();
 
             Assert.AreEqual(Vector3.zero, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
 
             containingObject.transform.position = Vector3.one;
@@ -47,7 +49,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
             result = subject.Extract();
 
             Assert.AreEqual(Vector3.one, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.one, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
         }
 
@@ -60,7 +64,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             subject.Process();
 
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
 
             containingObject.transform.position = Vector3.one;
@@ -70,7 +76,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             subject.Process();
 
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.one, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
         }
 
@@ -82,10 +90,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Source = containingObject;
             subject.gameObject.SetActive(false);
 
-            Vector3 result = subject.Extract();
+            Vector3? result = subject.Extract();
 
-            Assert.AreEqual(Vector3.zero, result);
+            Assert.AreEqual(null, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
 
             containingObject.transform.position = Vector3.one;
@@ -95,8 +105,10 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             result = subject.Extract();
 
-            Assert.AreEqual(Vector3.zero, result);
+            Assert.AreEqual(null, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
         }
 
@@ -108,10 +120,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Source = containingObject;
             subject.enabled = false;
 
-            Vector3 result = subject.Extract();
+            Vector3? result = subject.Extract();
 
-            Assert.AreEqual(Vector3.zero, result);
+            Assert.AreEqual(null, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
 
             containingObject.transform.position = Vector3.one;
@@ -121,8 +135,10 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             result = subject.Extract();
 
-            Assert.AreEqual(Vector3.zero, result);
+            Assert.AreEqual(null, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
         }
     }

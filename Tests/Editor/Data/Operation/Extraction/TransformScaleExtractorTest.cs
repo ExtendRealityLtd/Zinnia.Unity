@@ -34,10 +34,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Source = containingObject;
             subject.UseLocal = true;
 
-            Vector3 result = subject.Extract();
+            Vector3? result = subject.Extract();
 
             Assert.AreEqual(Vector3.one, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.one, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
 
             containingObject.transform.localScale = Vector3.one * 2f;
@@ -48,7 +50,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
             result = subject.Extract();
 
             Assert.AreEqual(Vector3.one * 2f, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.one * 2f, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
         }
 
@@ -62,7 +66,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             subject.Process();
 
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.one, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
 
             containingObject.transform.localScale = Vector3.one * 2f;
@@ -72,7 +78,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             subject.Process();
 
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.one * 2f, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
         }
 
@@ -85,10 +93,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.UseLocal = true;
             subject.gameObject.SetActive(false);
 
-            Vector3 result = subject.Extract();
+            Vector3? result = subject.Extract();
 
-            Assert.AreEqual(Vector3.zero, result);
+            Assert.AreEqual(null, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
 
             containingObject.transform.localScale = Vector3.one * 2f;
@@ -98,8 +108,10 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             result = subject.Extract();
 
-            Assert.AreEqual(Vector3.zero, result);
+            Assert.AreEqual(null, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
         }
 
@@ -112,10 +124,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.UseLocal = true;
             subject.enabled = false;
 
-            Vector3 result = subject.Extract();
+            Vector3? result = subject.Extract();
 
-            Assert.AreEqual(Vector3.zero, result);
+            Assert.AreEqual(null, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
 
             containingObject.transform.localScale = Vector3.one * 2f;
@@ -125,8 +139,10 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             result = subject.Extract();
 
-            Assert.AreEqual(Vector3.zero, result);
+            Assert.AreEqual(null, result);
+#pragma warning disable 0618
             Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+#pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
         }
     }

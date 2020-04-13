@@ -1,39 +1,29 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation.Extraction
 {
+    using System;
     using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Operation.Extraction;
     using Zinnia.Extension;
 
     /// <summary>
     /// Extracts the <see cref="GameObject"/> of the <see cref="Collider"/> from a given <see cref="CollisionNotifier.EventData"/>.
     /// </summary>
-    public class NotifierTargetExtractor : GameObjectExtractor
+    public class NotifierTargetExtractor : GameObjectExtractor<CollisionNotifier.EventData, NotifierTargetExtractor.UnityEvent>
     {
         /// <summary>
-        /// Extracts the <see cref="GameObject"/> of the <see cref="Collider"/> from the given <see cref="CollisionNotifier.EventData"/>.
+        /// Defines the event with the specified <see cref="GameObject"/>.
         /// </summary>
-        /// <param name="eventData">The notifier event data to extract from.</param>
-        /// <returns>The <see cref="GameObject"/> of the <see cref="Collider"/> within the event data.</returns>
-        public virtual GameObject Extract(CollisionNotifier.EventData eventData)
+        [Serializable]
+        public class UnityEvent : UnityEvent<GameObject>
         {
-            if (eventData == null || eventData.ColliderData == null)
-            {
-                Result = null;
-                return null;
-            }
-
-            Transform containingTransform = eventData.ColliderData.GetContainingTransform();
-            Result = containingTransform != null ? containingTransform.gameObject : null;
-            return base.Extract();
         }
 
-        /// <summary>
-        /// Extracts the <see cref="GameObject"/> of the <see cref="Collider"/> from the given <see cref="CollisionNotifier.EventData"/>.
-        /// </summary>
-        /// <param name="notifier">The notifier event data to extract from.</param>
-        public virtual void DoExtract(CollisionNotifier.EventData notifier)
+        /// <inheritdoc />
+        protected override GameObject ExtractValue()
         {
-            Extract(notifier);
+            Transform containingTransform = Source != null ? Source.ColliderData.GetContainingTransform() : null;
+            return containingTransform != null ? containingTransform.gameObject : null;
         }
     }
 }

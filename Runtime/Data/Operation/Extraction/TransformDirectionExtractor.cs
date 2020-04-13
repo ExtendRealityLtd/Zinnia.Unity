@@ -36,8 +36,13 @@
         public AxisDirection Direction { get; set; }
 
         /// <inheritdoc />
-        protected override Vector3 ExtractValue()
+        protected override Vector3? ExtractValue()
         {
+            if (Source == null)
+            {
+                return null;
+            }
+
             switch (Direction)
             {
                 case AxisDirection.Right:

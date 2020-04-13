@@ -1,56 +1,25 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.XmlDocumentationAttribute;
-    using System;
     using UnityEngine;
     using UnityEngine.Events;
 
     /// <summary>
     /// Provides the basis for emitting the <see cref="GameObject"/> that any concrete implementation is residing on.
     /// </summary>
-    public abstract class GameObjectExtractor : MonoBehaviour
+    /// <typeparam name="TSource">The source to retrieve the <see cref="GameObject"/> from.</typeparam>
+    /// <typeparam name="TEvent">The event to invoke.</typeparam>
+    public abstract class GameObjectExtractor<TSource, TEvent> : ValueExtractor<GameObject, TSource, TEvent, GameObject> where TEvent : UnityEvent<GameObject>, new()
     {
-        /// <summary>
-        /// Defines the event with the specified <see cref="GameObject"/>.
-        /// </summary>
-        [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
+        /// <inheritdoc/>
+        protected override bool InvokeResult(GameObject data)
         {
-        }
-
-        /// <summary>
-        /// Emitted when the <see cref="GameObject"/> is extracted.
-        /// </summary>
-        [DocumentedByXml]
-        public UnityEvent Extracted = new UnityEvent();
-
-        /// <summary>
-        /// The extracted <see cref="GameObject"/>.
-        /// </summary>
-        public GameObject Result { get; protected set; }
-
-        /// <summary>
-        /// Extracts the <see cref="GameObject"/>/
-        /// </summary>
-        /// <returns>The extracted <see cref="GameObject"/>.</returns>
-        public virtual GameObject Extract()
-        {
-            if (!isActiveAndEnabled || Result == null)
+            if (Result == null)
             {
-                Result = null;
-                return null;
+                return false;
             }
 
-            Extracted?.Invoke(Result);
-            return Result;
-        }
-
-        /// <summary>
-        /// Extracts the <see cref="GameObject"/>.
-        /// </summary>
-        public virtual void DoExtract()
-        {
-            Extract();
+            Extracted?.Invoke(data);
+            return true;
         }
     }
 }
