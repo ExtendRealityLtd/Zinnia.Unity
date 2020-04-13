@@ -109,5 +109,21 @@
         {
             Result = default;
         }
+
+        /// <summary>
+        /// Attempts to invoke the <see cref="Extracted"/> event if the <see cref="Result"/> is not null.
+        /// </summary>
+        /// <param name="data">The data to emit.</param>
+        /// <returns>Whether the event was invoked.</returns>
+        protected virtual bool InvokeEvent(TEventElement data)
+        {
+            if (Result == null)
+            {
+                return false;
+            }
+
+            Extracted?.Invoke(data);
+            return true;
+        }
     }
 }

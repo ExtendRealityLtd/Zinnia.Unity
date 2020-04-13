@@ -12,13 +12,7 @@
         /// <inheritdoc/>
         protected override bool InvokeResult(float? data)
         {
-            if (Result == null)
-            {
-                return false;
-            }
-
-            Extracted?.Invoke(data.GetValueOrDefault());
-            return true;
+            return InvokeEvent(data.GetValueOrDefault());
         }
     }
 }

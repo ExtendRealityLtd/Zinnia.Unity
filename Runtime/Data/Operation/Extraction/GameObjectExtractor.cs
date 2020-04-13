@@ -13,13 +13,7 @@
         /// <inheritdoc/>
         protected override bool InvokeResult(GameObject data)
         {
-            if (Result == null)
-            {
-                return false;
-            }
-
-            Extracted?.Invoke(data);
-            return true;
+            return InvokeEvent(data);
         }
     }
 }

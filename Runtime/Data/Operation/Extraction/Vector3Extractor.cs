@@ -13,13 +13,7 @@
         /// <inheritdoc/>
         protected override bool InvokeResult(Vector3? data)
         {
-            if (Result == null)
-            {
-                return false;
-            }
-
-            Extracted?.Invoke(data.GetValueOrDefault());
-            return true;
+            return InvokeEvent(data.GetValueOrDefault());
         }
     }
 }
