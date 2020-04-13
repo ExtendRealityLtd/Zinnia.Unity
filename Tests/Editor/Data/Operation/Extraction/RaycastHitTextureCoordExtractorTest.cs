@@ -1,35 +1,29 @@
 ﻿using Zinnia.Data.Operation.Extraction;
-using Zinnia.Data.Type;
 
 namespace Test.Zinnia.Data.Operation.Extraction
 {
     using NUnit.Framework;
+    using Test.Zinnia.Utility.Helper;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
-    public class SurfaceDataCollisionPointExtractorTest
+    public class RaycastHitTextureCoordExtractorTest
     {
         private GameObject containingObject;
-#pragma warning disable 0618
-        private SurfaceDataCollisionPointExtractor subject;
-#pragma warning restore 0618
-        private GameObject blocker;
+        private RaycastHitTextureCoordExtractor subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-#pragma warning disable 0618
-            subject = containingObject.AddComponent<SurfaceDataCollisionPointExtractor>();
-#pragma warning restore 0618
+            subject = containingObject.AddComponent<RaycastHitTextureCoordExtractor>();
         }
 
         [TearDown]
         public void TearDown()
         {
             Object.DestroyImmediate(containingObject);
-            Object.DestroyImmediate(blocker);
         }
 
         [Test]
@@ -37,21 +31,16 @@ namespace Test.Zinnia.Data.Operation.Extraction
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
-            SurfaceData surfaceData = new SurfaceData();
-
-            subject.Source = surfaceData;
+            RaycastHit hitData = RaycastHitHelper.GetRaycastHit();
+            subject.Source = hitData;
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsFalse(subject.Result.HasValue);
 
-            RaycastHit hitData = GetRayCastData();
-            hitData.point = Vector3.one;
-            surfaceData.CollisionData = hitData;
-
             subject.Extract();
 
             Assert.IsTrue(extractedMock.Received);
-            Assert.AreEqual(Vector3.one, subject.Result);
+            Assert.AreEqual(Vector3.zero, subject.Result);
 
             Object.DestroyImmediate(containingObject);
         }
@@ -76,9 +65,11 @@ namespace Test.Zinnia.Data.Operation.Extraction
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
-            SurfaceData surfaceData = new SurfaceData();
+            GameObject blocker = RaycastHitHelper.CreateBlocker();
+            blocker.SetActive(false);
+            RaycastHit hitData = RaycastHitHelper.GetRaycastHit(blocker);
 
-            subject.Source = surfaceData;
+            subject.Source = hitData;
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsFalse(subject.Result.HasValue);
@@ -94,17 +85,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
-            SurfaceData surfaceData = new SurfaceData();
-
-            subject.Source = surfaceData;
+            RaycastHit hitData = RaycastHitHelper.GetRaycastHit();
+            subject.Source = hitData;
             subject.gameObject.SetActive(false);
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsFalse(subject.Result.HasValue);
-
-            RaycastHit hitData = GetRayCastData();
-            hitData.point = Vector3.one;
-            surfaceData.CollisionData = hitData;
 
             subject.Extract();
 
@@ -117,37 +103,18 @@ namespace Test.Zinnia.Data.Operation.Extraction
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
-            SurfaceData surfaceData = new SurfaceData();
+            RaycastHit hitData = RaycastHitHelper.GetRaycastHit();
 
-            subject.Source = surfaceData;
+            subject.Source = hitData;
             subject.enabled = false;
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsFalse(subject.Result.HasValue);
 
-            RaycastHit hitData = GetRayCastData();
-            hitData.point = Vector3.one;
-            surfaceData.CollisionData = hitData;
-
             subject.Extract();
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsFalse(subject.Result.HasValue);
-        }
-
-        /// <summary>
-        /// Generates <see cref="RaycastHit"/> data to ensure the dataset is valid.
-        /// </summary>
-        /// <returns>The valid data.</returns>
-        protected virtual RaycastHit GetRayCastData()
-        {
-            blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            blocker.transform.position = Vector3.forward * 2f;
-            Physics.autoSimulation = false;
-            Physics.Simulate(Time.fixedDeltaTime);
-            Physics.Raycast(Vector3.zero, Vector3.forward, out RaycastHit hitData);
-            Physics.autoSimulation = true;
-            return hitData;
         }
     }
 }

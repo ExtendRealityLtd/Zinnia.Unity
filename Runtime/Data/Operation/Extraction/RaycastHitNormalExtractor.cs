@@ -3,13 +3,11 @@
     using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using Zinnia.Data.Type;
 
     /// <summary>
-    /// Extracts and emits the point of collision from <see cref="SurfaceData"/>.
+    /// Extracts and emits the normal at the collision from <see cref="RaycastHit"/>.
     /// </summary>
-    [Obsolete("Use `SurfaceDataCollisionDataExtractor -> RaycastHitPointExtractor` combination instead.")]
-    public class SurfaceDataCollisionPointExtractor : Vector3Extractor<SurfaceData, SurfaceDataCollisionPointExtractor.UnityEvent>
+    public class RaycastHitNormalExtractor : Vector3Extractor<RaycastHit, RaycastHitNormalExtractor.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the specified <see cref="Vector3"/>.
@@ -22,12 +20,12 @@
         /// <inheritdoc />
         protected override Vector3? ExtractValue()
         {
-            if (Source == null || Source.CollisionData.transform == null)
+            if (Source.transform == null)
             {
                 return null;
             }
 
-            return Source.CollisionData.point;
+            return Source.normal;
         }
     }
 }
