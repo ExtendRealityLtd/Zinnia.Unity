@@ -1,21 +1,21 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Extracts and emits the elements from <see cref="Time"/>.
     /// </summary>
-    public class TimeComponentExtractor : MonoBehaviour
+    public class TimeComponentExtractor : FloatExtractor<TimeComponentExtractor.TimeComponent, TimeComponentExtractor.UnityEvent>
     {
         /// <summary>
-        /// Defines an event with a <see cref="float"/> value.
+        /// Defines the event with the specified <see cref="float"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float> { }
+        public class UnityEvent : UnityEvent<float>
+        {
+        }
 
         /// <summary>
         /// The components of <see cref="Time"/>
@@ -108,113 +108,56 @@
             TimeSinceLevelLoad
         }
 
-        /// <summary>
-        /// The component to extract from <see cref="Time"/>.
-        /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public TimeComponent ComponentToExtract { get; set; } = TimeComponent.Time;
-
-        /// <summary>
-        /// Emitted when the <see cref="float"/> component from <see cref="Time"/> is extracted.
-        /// </summary>
-        [DocumentedByXml]
-        public UnityEvent Extracted = new UnityEvent();
-
-        /// <summary>
-        /// The extracted <see cref="float"/> component.
-        /// </summary>
-        public float? Result { get; protected set; }
-
-        /// <summary>
-        /// Extracts the <see cref="float"/> component from <see cref="Time"/>.
-        /// </summary>
-        /// <returns>The extracted <see cref="float"/>.</returns>
-        public virtual float? Extract()
+        /// <inheritdoc />
+        protected override float? ExtractValue()
         {
-            if (!isActiveAndEnabled)
-            {
-                Result = null;
-                return null;
-            }
-
-            switch (ComponentToExtract)
+            switch (Source)
             {
                 case TimeComponent.Time:
-                    Result = Time.time;
-                    break;
+                    return Time.time;
                 case TimeComponent.FixedTime:
-                    Result = Time.fixedTime;
-                    break;
+                    return Time.fixedTime;
                 case TimeComponent.TimeStepTypeTime:
-                    Result = Time.inFixedTimeStep ? Time.fixedTime : Time.time;
-                    break;
+                    return Time.inFixedTimeStep ? Time.fixedTime : Time.time;
                 case TimeComponent.DeltaTime:
-                    Result = Time.deltaTime;
-                    break;
+                    return Time.deltaTime;
                 case TimeComponent.FixedDeltaTime:
-                    Result = Time.fixedDeltaTime;
-                    break;
+                    return Time.fixedDeltaTime;
                 case TimeComponent.TimeStepTypeDeltaTime:
-                    Result = Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
-                    break;
+                    return Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
                 case TimeComponent.UnscaledTime:
-                    Result = Time.unscaledTime;
-                    break;
+                    return Time.unscaledTime;
                 case TimeComponent.FixedUnscaledTime:
-                    Result = Time.fixedUnscaledTime;
-                    break;
+                    return Time.fixedUnscaledTime;
                 case TimeComponent.TimeStepTypeUnscaledTime:
-                    Result = Time.inFixedTimeStep ? Time.fixedUnscaledTime : Time.unscaledTime;
-                    break;
+                    return Time.inFixedTimeStep ? Time.fixedUnscaledTime : Time.unscaledTime;
                 case TimeComponent.UnscaledDeltaTime:
-                    Result = Time.unscaledDeltaTime;
-                    break;
+                    return Time.unscaledDeltaTime;
                 case TimeComponent.FixedUnscaledDeltaTime:
-                    Result = Time.fixedUnscaledDeltaTime;
-                    break;
+                    return Time.fixedUnscaledDeltaTime;
                 case TimeComponent.TimeStepTypeUnscaledDeltaTime:
-                    Result = Time.inFixedTimeStep ? Time.fixedUnscaledDeltaTime : Time.unscaledDeltaTime;
-                    break;
+                    return Time.inFixedTimeStep ? Time.fixedUnscaledDeltaTime : Time.unscaledDeltaTime;
                 case TimeComponent.CaptureFrameRate:
-                    Result = Time.captureFramerate;
-                    break;
+                    return Time.captureFramerate;
                 case TimeComponent.FrameCount:
-                    Result = Time.frameCount;
-                    break;
+                    return Time.frameCount;
                 case TimeComponent.MaximumDeltaTime:
-                    Result = Time.maximumDeltaTime;
-                    break;
+                    return Time.maximumDeltaTime;
                 case TimeComponent.MaximumParticleDeltaTime:
-                    Result = Time.maximumParticleDeltaTime;
-                    break;
+                    return Time.maximumParticleDeltaTime;
                 case TimeComponent.RealTimeSinceStartUp:
-                    Result = Time.realtimeSinceStartup;
-                    break;
+                    return Time.realtimeSinceStartup;
                 case TimeComponent.RenderedFrameCount:
-                    Result = Time.renderedFrameCount;
-                    break;
+                    return Time.renderedFrameCount;
                 case TimeComponent.SmoothDeltaTime:
-                    Result = Time.smoothDeltaTime;
-                    break;
+                    return Time.smoothDeltaTime;
                 case TimeComponent.TimeScale:
-                    Result = Time.timeScale;
-                    break;
+                    return Time.timeScale;
                 case TimeComponent.TimeSinceLevelLoad:
-                    Result = Time.timeSinceLevelLoad;
-                    break;
+                    return Time.timeSinceLevelLoad;
+                default:
+                    return null;
             }
-
-            Extracted?.Invoke(Result.Value);
-            return Result;
-        }
-
-        /// <summary>
-        /// Extracts the <see cref="float"/> component from <see cref="Time"/>.
-        /// </summary>
-        public virtual void DoExtract()
-        {
-            Extract();
         }
     }
 }

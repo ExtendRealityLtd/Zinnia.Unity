@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Utility
 {
-    using UnityEngine;
-    using UnityEditor;
     using System;
     using System.Collections.Generic;
     using System.Reflection;
+    using UnityEditor;
+    using UnityEngine;
 
     /// <summary>
     /// The EditorHelper provides a collection of common static methods for use within Editor scripts.

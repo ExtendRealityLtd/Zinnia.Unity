@@ -1,14 +1,14 @@
-﻿using Zinnia.Rule;
+﻿using Zinnia.Data.Collection.List;
 using Zinnia.Extension;
-using Zinnia.Data.Collection.List;
+using Zinnia.Rule;
 using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
+    using NUnit.Framework;
+    using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyComponentTypeRuleTest

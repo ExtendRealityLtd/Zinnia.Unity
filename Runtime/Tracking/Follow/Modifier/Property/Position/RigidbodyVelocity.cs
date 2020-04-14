@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Position
 {
-    using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Extension;
 
     /// <summary>

@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.XR;
-    using System.Collections.Generic;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Retrieves the velocity estimations for an <see cref="XRNode"/>.

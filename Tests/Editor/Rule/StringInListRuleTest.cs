@@ -1,12 +1,12 @@
-﻿using Zinnia.Rule;
+﻿using Zinnia.Data.Collection.List;
 using Zinnia.Extension;
-using Zinnia.Data.Collection.List;
+using Zinnia.Rule;
 using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class StringInListRuleTest

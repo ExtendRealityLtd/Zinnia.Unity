@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
+    using Malimbe.MemberChangeMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Extension;
 
     /// <summary>

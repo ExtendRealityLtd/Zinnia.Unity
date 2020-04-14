@@ -2,8 +2,8 @@
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformPositionTest

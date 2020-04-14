@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Haptics.Collection;
 
     /// <summary>

@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Action
 {
-    using UnityEngine.Events;
     using System;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value.

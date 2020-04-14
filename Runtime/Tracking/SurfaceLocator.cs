@@ -1,19 +1,19 @@
 ﻿namespace Zinnia.Tracking
 {
-    using UnityEngine;
-    using UnityEngine.Events;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Cast;
-    using Zinnia.Rule;
-    using Zinnia.Process;
-    using Zinnia.Process.Moment;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
+    using Zinnia.Process;
+    using Zinnia.Process.Moment;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Casts a <see cref="Ray"/> in a given direction and looks for the nearest valid surface.

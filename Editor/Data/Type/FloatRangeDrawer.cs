@@ -1,12 +1,16 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using UnityEngine;
     using UnityEditor;
+    using UnityEngine;
     using Zinnia.Utility;
 
+    /// <summary>
+    /// Displays a custom inspector for a range between two floats.
+    /// </summary>
     [CustomPropertyDrawer(typeof(FloatRange))]
     public class Limits2DDrawer : PropertyDrawer
     {
+        /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;

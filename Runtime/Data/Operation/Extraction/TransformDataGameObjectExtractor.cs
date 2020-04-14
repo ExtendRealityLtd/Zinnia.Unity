@@ -1,34 +1,27 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
+    using System;
     using UnityEngine;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
 
     /// <summary>
     /// Extracts and emits the <see cref="Source"/> residing <see cref="GameObject"/>.
     /// </summary>
-    public class TransformDataGameObjectExtractor : GameObjectExtractor
+    public class TransformDataGameObjectExtractor : GameObjectExtractor<TransformData, TransformDataGameObjectExtractor.UnityEvent>
     {
         /// <summary>
-        /// The source to extract from.
+        /// Defines the event with the specified <see cref="GameObject"/>.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public TransformData Source { get; set; }
+        [Serializable]
+        public class UnityEvent : UnityEvent<GameObject>
+        {
+        }
 
         /// <inheritdoc />
-        public override GameObject Extract()
+        protected override GameObject ExtractValue()
         {
-            if (Source == null || Source.Transform == null)
-            {
-                Result = null;
-                return null;
-            }
-
-            Result = Source.Transform.gameObject;
-            return base.Extract();
+            return Source != null && Source.Transform != null ? Source.Transform.gameObject : null;
         }
     }
 }

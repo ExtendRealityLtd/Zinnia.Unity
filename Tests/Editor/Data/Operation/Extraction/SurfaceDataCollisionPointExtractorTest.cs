@@ -3,22 +3,26 @@ using Zinnia.Data.Type;
 
 namespace Test.Zinnia.Data.Operation.Extraction
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class SurfaceDataCollisionPointExtractorTest
     {
         private GameObject containingObject;
+#pragma warning disable 0618
         private SurfaceDataCollisionPointExtractor subject;
+#pragma warning restore 0618
         private GameObject blocker;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
+#pragma warning disable 0618
             subject = containingObject.AddComponent<SurfaceDataCollisionPointExtractor>();
+#pragma warning restore 0618
         }
 
         [TearDown]

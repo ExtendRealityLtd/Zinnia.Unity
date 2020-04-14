@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Visual
 {
-    using UnityEngine;
-    using System;
-    using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using System.Collections.Generic;
+    using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
 

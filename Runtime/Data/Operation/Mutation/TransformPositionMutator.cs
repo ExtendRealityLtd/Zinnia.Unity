@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using UnityEngine;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
 
     /// <summary>
     /// Mutates the position of a transform with an optional facing direction.

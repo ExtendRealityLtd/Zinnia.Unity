@@ -1,14 +1,16 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Extracts and emits the <see cref="float"/> components of a <see cref="Vector2"/>.
     /// </summary>
+    [Obsolete("Use `Zinnia.Data.Type.Transformation.Conversion.Vector2ToFloat` instead.")]
     public class Vector2ComponentExtractor : MonoBehaviour
     {
         /// <summary>
@@ -85,6 +87,7 @@
         /// <summary>
         /// Extracts the <see cref="float"/> component from the <see cref="Vector2"/>.
         /// </summary>
+        [RequiresBehaviourState]
         public virtual void DoExtract()
         {
             Extract();
@@ -95,6 +98,7 @@
         /// </summary>
         /// <param name="source">The source to extract from.</param>
         /// <returns>The extracted <see cref="float"/>.</returns>
+        [RequiresBehaviourState]
         public virtual float? Extract(Vector2 source)
         {
             Source = source;
@@ -105,6 +109,7 @@
         /// Extracts the <see cref="float"/> component from the <see cref="Vector2"/>.
         /// </summary>
         /// <param name="source">The source to extract from.</param>
+        [RequiresBehaviourState]
         public virtual void DoExtract(Vector2 source)
         {
             Extract(source);

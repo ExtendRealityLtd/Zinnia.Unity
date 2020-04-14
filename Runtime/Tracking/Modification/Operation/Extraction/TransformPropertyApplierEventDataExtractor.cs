@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Modification.Operation.Extraction
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Data.Type;
 
     /// <summary>

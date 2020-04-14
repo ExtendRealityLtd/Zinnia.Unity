@@ -1,13 +1,13 @@
 ﻿namespace Zinnia.Action
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
-    using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
 
     /// <summary>

@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Association
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System.Text.RegularExpressions;
     using UnityEngine;
     using UnityEngine.XR;
-    using System.Text.RegularExpressions;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Holds <see cref="GameObject"/>s to (de)activate based on the loaded XR device's name.

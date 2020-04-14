@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Tracking.CameraRig
 {
-    using UnityEngine;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
+    using Zinnia.Data.Collection.List;
     using Zinnia.Haptics;
     using Zinnia.Tracking.Velocity;
-    using Zinnia.Data.Collection.List;
 
     /// <summary>
     /// Provides the basis for describing a CameraRig Alias Association by providing the linked elements of the CameraRig.

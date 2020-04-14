@@ -1,16 +1,16 @@
-﻿using Zinnia.Rule;
-using Zinnia.Utility;
+﻿using Zinnia.Data.Collection.List;
 using Zinnia.Extension;
-using Zinnia.Data.Collection.List;
+using Zinnia.Rule;
+using Zinnia.Utility;
 using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
-    using UnityEngine;
-    using UnityEngine.TestTools;
+    using NUnit.Framework;
     using System.Collections;
     using System.Collections.Generic;
-    using NUnit.Framework;
+    using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyTagRuleTest

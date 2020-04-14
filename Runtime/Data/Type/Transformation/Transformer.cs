@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using UnityEngine;
-    using UnityEngine.Events;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// The basis for all type transformations.

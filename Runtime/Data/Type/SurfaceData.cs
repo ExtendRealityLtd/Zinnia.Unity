@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using UnityEngine;
-    using System;
     using Malimbe.MemberChangeMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
 
     /// <summary>
     /// Holds information about the located surface.

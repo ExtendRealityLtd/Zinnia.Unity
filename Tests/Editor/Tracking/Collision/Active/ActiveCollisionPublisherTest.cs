@@ -3,9 +3,9 @@ using Zinnia.Tracking.Collision.Active;
 
 namespace Test.Zinnia.Tracking.Collision.Active
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Helper;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveCollisionPublisherTest

@@ -2,10 +2,13 @@
 
 namespace Test.Zinnia.Data.Operation.Extraction
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using System;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Assert = UnityEngine.Assertions.Assert;
+    using Object = UnityEngine.Object;
 
     public class GameObjectEmitterTest
     {
@@ -98,11 +101,24 @@ namespace Test.Zinnia.Data.Operation.Extraction
         }
     }
 
-    public class GameObjectExtractorImplementation : GameObjectExtractor
+    public class GameObjectExtractorImplementation : GameObjectExtractor<GameObject, GameObjectExtractorImplementation.UnityEvent>
     {
+        /// <summary>
+        /// Defines the event with the specified <see cref="GameObject"/>.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<GameObject>
+        {
+        }
+
         public void SetResult(GameObject result)
         {
             Result = result;
+        }
+
+        protected override GameObject ExtractValue()
+        {
+            return Result;
         }
     }
 }

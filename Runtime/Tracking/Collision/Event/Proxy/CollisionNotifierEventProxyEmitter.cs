@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Tracking.Collision.Event.Proxy
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Extension;
     using Zinnia.Event.Proxy;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a UnityEvent with a <see cref="ActiveCollisionsContainer.EventData"/> payload whenever <see cref="SingleEventProxyEmitter{TValue,TEvent}.Receive"/> is called.

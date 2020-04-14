@@ -1,11 +1,11 @@
-﻿using Zinnia.Rule;
-using Zinnia.Extension;
+﻿using Zinnia.Extension;
+using Zinnia.Rule;
 using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyLayerRuleTest

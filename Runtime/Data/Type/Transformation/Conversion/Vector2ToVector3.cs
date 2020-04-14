@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Transforms a <see cref="Vector2"/> to a <see cref="Vector3"/> and allows mapping of the relevant coordinates.

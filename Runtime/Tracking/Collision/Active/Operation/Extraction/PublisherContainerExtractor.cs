@@ -1,28 +1,21 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation.Extraction
 {
+    using System;
     using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Operation.Extraction;
 
     /// <summary>
     /// Extracts the source container from a given <see cref="ActiveCollisionPublisher.PayloadData"/>.
     /// </summary>
-    public class PublisherContainerExtractor : GameObjectExtractor
+    public class PublisherContainerExtractor : GameObjectExtractor<ActiveCollisionPublisher.PayloadData, PublisherContainerExtractor.UnityEvent>
     {
         /// <summary>
-        /// Extracts the source container from the given publisher payload data.
+        /// Defines the event with the specified <see cref="GameObject"/>.
         /// </summary>
-        /// <param name="publisher">The publisher payload data to extract from.</param>
-        /// <returns>The source container within the publisher.</returns>
-        public virtual GameObject Extract(ActiveCollisionPublisher.PayloadData publisher)
+        [Serializable]
+        public class UnityEvent : UnityEvent<GameObject>
         {
-            if (publisher == null || publisher.SourceContainer == null)
-            {
-                Result = null;
-                return null;
-            }
-
-            Result = publisher.SourceContainer;
-            return base.Extract();
         }
 
         /// <summary>
@@ -36,15 +29,6 @@
         }
 
         /// <summary>
-        /// Extracts the source container from the given publisher payload data.
-        /// </summary>
-        /// <param name="publisher">The publisher payload data to extract from.</param>
-        public virtual void DoExtract(ActiveCollisionPublisher.PayloadData publisher)
-        {
-            Extract(publisher);
-        }
-
-        /// <summary>
         /// Extracts the source container from the given publisher contained within the <see cref="ActiveCollisionConsumer.EventData"/>.
         /// </summary>
         /// <param name="eventData">The event data to extract the source container from.</param>
@@ -52,5 +36,12 @@
         {
             Extract(eventData?.Publisher);
         }
+
+        /// <inheritdoc />
+        protected override GameObject ExtractValue()
+        {
+            return Source != null ? Source.SourceContainer : null;
+        }
+
     }
 }

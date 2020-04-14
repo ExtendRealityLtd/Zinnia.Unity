@@ -1,15 +1,19 @@
 ﻿namespace Zinnia.Data.Attribute
 {
-    using UnityEngine;
-    using UnityEditor;
-    using System.Globalization;
     using Supyrb;
+    using System.Globalization;
+    using UnityEditor;
+    using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Utility;
 
+    /// <summary>
+    /// Displays a range control for a minimum number and a maximum number in the Unity inspector.
+    /// </summary>
     [CustomPropertyDrawer(typeof(MinMaxRangeAttribute))]
     class MinMaxRangeAttributeDrawer : PropertyDrawer
     {
+        /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             label.tooltip = EditorHelper.GetTooltipAttribute(fieldInfo)?.tooltip ?? string.Empty;
@@ -56,6 +60,14 @@
             }
         }
 
+        /// <summary>
+        /// Builds the range slider.
+        /// </summary>
+        /// <param name="position">The position to draw the slider control.</param>
+        /// <param name="label">The label for the control.</param>
+        /// <param name="range">The range of min/max for the label.</param>
+        /// <param name="valid">Whether the given data is valid.</param>
+        /// <returns>The range that has been built.</returns>
         private Vector2 BuildSlider(Rect position, GUIContent label, Vector2 range, out bool valid)
         {
             float fieldWidth = GUI.skin.textField.CalcSize(new GUIContent(1.23456f.ToString(CultureInfo.InvariantCulture))).x;
@@ -81,6 +93,11 @@
             return Vector2.zero;
         }
 
+        /// <summary>
+        /// Displays an error in the inspector.
+        /// </summary>
+        /// <param name="position">The position to draw the error.</param>
+        /// <param name="label">The label to use to prefix the error.</param>
         private static void Error(Rect position, GUIContent label)
         {
             EditorGUI.LabelField(position, label, new GUIContent("Use only with Vector2 or FloatRange"));

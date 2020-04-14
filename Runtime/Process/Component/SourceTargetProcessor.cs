@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Process.Component
 {
-    using UnityEngine;
-    using System.Collections.Generic;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System.Collections.Generic;
+    using UnityEngine;
     using Zinnia.Data.Type;
 
     /// <summary>

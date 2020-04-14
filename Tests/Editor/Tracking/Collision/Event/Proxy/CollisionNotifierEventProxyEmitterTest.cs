@@ -1,13 +1,13 @@
-﻿using Zinnia.Tracking.Collision.Event.Proxy;
+﻿using Zinnia.Data.Collection.List;
 using Zinnia.Rule;
 using Zinnia.Tracking.Collision;
-using Zinnia.Data.Collection.List;
+using Zinnia.Tracking.Collision.Event.Proxy;
 
 namespace Test.Zinnia.Tracking.Collision.Event.Proxy
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class CollisionNotifierEventProxyEmitterTest

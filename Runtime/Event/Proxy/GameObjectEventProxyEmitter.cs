@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Event.Proxy
 {
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
 
     /// <summary>
     /// Emits a UnityEvent with a GameObject payload whenever the Receive method is called.

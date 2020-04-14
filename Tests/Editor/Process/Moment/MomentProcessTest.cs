@@ -3,8 +3,8 @@ using Zinnia.Process.Moment;
 
 namespace Test.Zinnia.Process.Moment
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class MomentProcessTest

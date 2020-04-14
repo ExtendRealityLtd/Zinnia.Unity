@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using UnityEngine;
     using System;
+    using UnityEngine;
 
     /// <summary>
     /// Specifies a serializable data type.

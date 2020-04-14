@@ -1,15 +1,15 @@
-﻿using Zinnia.Rule;
+﻿using Zinnia.Extension;
+using Zinnia.Rule;
 using Zinnia.Rule.Collection;
-using Zinnia.Extension;
 using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
+    using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
-    using Test.Zinnia.Utility.Stub;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class AllRuleTest

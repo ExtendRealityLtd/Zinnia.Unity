@@ -1,14 +1,14 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Rule;
     using Zinnia.Extension;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Consumes a published <see cref="ActiveCollisionPublisher"/>.

@@ -1,11 +1,11 @@
-﻿using Zinnia.Data.Type;
-using Zinnia.Action;
+﻿using Zinnia.Action;
+using Zinnia.Data.Type;
 
 namespace Test.Zinnia.Action
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class SurfaceChangeActionTest

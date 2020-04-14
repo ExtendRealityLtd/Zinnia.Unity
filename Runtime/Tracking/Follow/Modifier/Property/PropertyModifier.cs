@@ -1,11 +1,14 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
-    using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Tracking.Follow;
 
+    /// <summary>
+    /// Modifies a specific property.
+    /// </summary>
     public abstract class PropertyModifier : MonoBehaviour
     {
         /// <summary>

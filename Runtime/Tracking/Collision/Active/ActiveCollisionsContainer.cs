@@ -1,15 +1,15 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using UnityEngine;
-    using UnityEngine.Events;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Rule;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Extension;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Holds a collection of the current collisions raised by a <see cref="CollisionNotifier"/>.

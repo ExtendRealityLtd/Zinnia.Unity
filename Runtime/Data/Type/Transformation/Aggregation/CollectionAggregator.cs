@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Aggregation
 {
-    using UnityEngine.Events;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
 
     /// <summary>

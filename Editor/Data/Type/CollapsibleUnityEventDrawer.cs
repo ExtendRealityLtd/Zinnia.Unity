@@ -9,18 +9,39 @@
     using System.Reflection;
     using System.Collections;
 
+    /// <summary>
+    /// Displays a custom inspector collection in a collapsible drawer.
+    /// </summary>
     [CustomPropertyDrawer(typeof(UnityEventBase), true)]
     [CustomPropertyDrawer(typeof(UnityEvent), true)]
     [CustomPropertyDrawer(typeof(UnityEvent<>), true)]
     [CustomPropertyDrawer(typeof(UnityEvent<BaseEventData>), true)]
     public class CollapsibleUnityEventDrawer : UnityEventDrawer
     {
+        /// <summary>
+        /// The height of the header.
+        /// </summary>
         protected const float headerHeight = 20f;
+        /// <summary>
+        /// The padding for the drawer.
+        /// </summary>
         protected const float padding = 6f;
+        /// <summary>
+        /// The offset of the drawer height.
+        /// </summary>
         protected const float heightOffset = 2f;
+        /// <summary>
+        /// The header background style.
+        /// </summary>
         protected readonly GUIStyle headerBackground = new GUIStyle("RL Header");
+        /// <summary>
+        /// Whether the `base.OnGUI` was called.
+        /// </summary>
         protected bool wasBaseOnGuiCalled = false;
 
+        /// <summary>
+        /// Replaces the default inspector drawer with this custom drawer.
+        /// </summary>
         [InitializeOnLoadMethod]
         public static void ReplaceDefaultDrawer()
         {
@@ -57,6 +78,7 @@
             }
         }
 
+        /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             if (!wasBaseOnGuiCalled)
@@ -79,11 +101,16 @@
             }
         }
 
+        /// <inheritdoc/>
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) =>
             property.isExpanded
                 ? base.GetPropertyHeight(property, label)
                 : EditorGUIUtility.singleLineHeight + heightOffset * 2f;
 
+        /// <summary>
+        /// Draws the drawer header.
+        /// </summary>
+        /// <param name="position">The position to draw at.</param>
         protected virtual void DrawHeader(Rect position)
         {
             if (Event.current.type == EventType.Repaint)

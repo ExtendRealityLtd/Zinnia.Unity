@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Cast
 {
-    using UnityEngine;
-    using System.Collections.Generic;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System.Collections.Generic;
+    using UnityEngine;
     using Zinnia.Utility;
 
     /// <summary>

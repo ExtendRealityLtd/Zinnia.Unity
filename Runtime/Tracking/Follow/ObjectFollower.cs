@@ -1,15 +1,15 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Zinnia.Data.Collection.List;
     using Zinnia.Extension;
     using Zinnia.Process.Component;
-    using Zinnia.Data.Collection.List;
     using Zinnia.Tracking.Follow.Modifier;
 
     /// <summary>

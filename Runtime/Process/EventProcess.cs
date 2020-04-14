@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Process
 {
+    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
-    using Malimbe.XmlDocumentationAttribute;
 
     /// <summary>
     /// Raises a <see cref="UnityEvent"/> when processed.

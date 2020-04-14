@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Transforms a <see cref="float"/> by remapping from a range to a new range.
@@ -70,8 +70,8 @@
         protected override float Process(float input)
         {
             float t = Mathf.InverseLerp(From.minimum, From.maximum, input);
-            return Mode == OutputMode.Lerp? 
-                Mathf.Lerp(To.minimum, To.maximum, t) : 
+            return Mode == OutputMode.Lerp ?
+                Mathf.Lerp(To.minimum, To.maximum, t) :
                 Mathf.SmoothStep(To.minimum, To.maximum, t);
         }
     }

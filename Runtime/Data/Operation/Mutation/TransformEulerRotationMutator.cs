@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using UnityEngine;
-    using System;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
 
     /// <summary>
     /// Mutates the euler rotation of a transform with an optional custom rotation origin.

@@ -2,8 +2,8 @@
 
 namespace Test.Zinnia.Extension
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class Vector2ExtensionsTest

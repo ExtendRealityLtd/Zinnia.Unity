@@ -1,17 +1,17 @@
 ﻿namespace Zinnia.Pointer
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
-    using Zinnia.Visual;
     using Zinnia.Process;
+    using Zinnia.Visual;
 
     /// <summary>
     /// Allows pointing at objects and notifies when a target is hit, continues to be hit or stops being hit by listening to a <see cref="PointsCast"/>.

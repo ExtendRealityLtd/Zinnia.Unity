@@ -1,36 +1,89 @@
 ﻿namespace Zinnia.Utility
 {
-    using UnityEditor;
-    using UnityEditor.IMGUI.Controls;
-    using UnityEngine;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using UnityEditor;
+    using UnityEditor.IMGUI.Controls;
+    using UnityEngine;
 
+    /// <summary>
+    /// An editor window that shows a selection of elements that can be chosen as a desired value.
+    /// </summary>
+    /// <typeparam name="TElement">The element type to show.</typeparam>
+    /// <typeparam name="TSelf">The <see cref="PickerWindow{TElement, TSelf}"/></typeparam>
     public class PickerWindow<TElement, TSelf> : EditorWindow where TSelf : PickerWindow<TElement, TSelf>
     {
+        /// <summary>
+        /// State key text to search the session state for.
+        /// </summary>
         protected static readonly string SearchTextSessionStateKey = typeof(PickerWindow<,>).FullName + nameof(SearchTextSessionStateKey);
 
+        /// <summary>
+        /// A collection of elements to pick from.
+        /// </summary>
         protected readonly List<TElement> elements = new List<TElement>();
+        /// <summary>
+        /// A collection of results from an executed search.
+        /// </summary>
         protected readonly List<TElement> searchResults = new List<TElement>();
 
+        /// <summary>
+        /// The selected element action.
+        /// </summary>
         protected Action<TElement> elementSelector;
+        /// <summary>
+        /// The function to perform when extracting the search term.
+        /// </summary>
         protected Func<TElement, string> searchTermExtractor;
+        /// <summary>
+        /// The function for drawing the element drawer.
+        /// </summary>
         protected Func<TElement, GUIContent> elementDrawer;
 
+        /// <summary>
+        /// The component for searching the elements.
+        /// </summary>
         protected SearchField searchField;
+        /// <summary>
+        /// The style for the search label.
+        /// </summary>
         protected GUIStyle searchLabelPrefixStyle;
+        /// <summary>
+        /// The content for the search label.
+        /// </summary>
         protected GUIContent searchLabelPrefixContent;
 
+        /// <summary>
+        /// The style for the element.
+        /// </summary>
         protected GUIStyle elementStyle;
+        /// <summary>
+        /// The height of the element.
+        /// </summary>
         protected float elementHeight;
 
+        /// <summary>
+        /// The text that is being searched for.
+        /// </summary>
         protected string searchText = string.Empty;
+        /// <summary>
+        /// The current component scroll position.
+        /// </summary>
         protected Vector2 scrollPosition = Vector2.zero;
 
+        /// <summary>
+        /// The count of how many results are visible.
+        /// </summary>
         protected int? visibleCount;
+        /// <summary>
+        /// Whether to scroll to the currently selected index.
+        /// </summary>
         protected bool scrollToSelectedIndex;
+        /// <summary>
+        /// The current selected index.
+        /// </summary>
         protected int selectedIndex;
 
         public static TSelf Show(
@@ -101,6 +154,9 @@
             }
         }
 
+        /// <summary>
+        /// Handles the keyboard events.
+        /// </summary>
         protected virtual void HandleKeyboard()
         {
             Event currentEvent = Event.current;
@@ -136,6 +192,9 @@
             }
         }
 
+        /// <summary>
+        /// Draws the search component.
+        /// </summary>
         protected virtual void DrawSearch()
         {
             GUILayout.Space(5f);
@@ -174,6 +233,9 @@
             }
         }
 
+        /// <summary>
+        /// Draws the list component.
+        /// </summary>
         protected virtual void DrawList()
         {
             Event currentEvent = Event.current;
@@ -226,6 +288,12 @@
             }
         }
 
+        /// <summary>
+        /// Draws the elements.
+        /// </summary>
+        /// <param name="startIndex">The index to display the results from.</param>
+        /// <param name="count">The total number of results to display.</param>
+        /// <returns>The position in where to draw the component.</returns>
         protected virtual Rect? DrawElements(int startIndex, int count)
         {
             Color previousBackgroundColor = GUI.backgroundColor;
@@ -278,6 +346,10 @@
             return selectedRect;
         }
 
+        /// <summary>
+        /// Finds the elements that match the given string.
+        /// </summary>
+        /// <param name="searchText">The text to search for.</param>
         protected virtual void FindElements(string searchText)
         {
             searchText = searchText ?? string.Empty;

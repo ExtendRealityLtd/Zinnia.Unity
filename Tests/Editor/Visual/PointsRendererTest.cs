@@ -2,9 +2,9 @@
 
 namespace Test.Zinnia.Visual
 {
+    using NUnit.Framework;
     using System.Collections.Generic;
     using UnityEngine;
-    using NUnit.Framework;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class PointsRendererTest

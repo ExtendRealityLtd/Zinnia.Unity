@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using UnityEngine.Events;
     using System;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Transforms a boolean value to the equivalent float value.

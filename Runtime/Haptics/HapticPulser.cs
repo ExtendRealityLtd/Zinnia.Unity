@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Haptics
 {
-    using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.MemberChangeMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
 
     /// <summary>
     /// Creates a single pulse on a haptic device for a given intensity.
