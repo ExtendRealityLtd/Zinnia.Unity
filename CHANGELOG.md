@@ -1,5 +1,62 @@
 # Changelog
 
+## [1.15.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.14.1...v1.15.0) (2020-04-14)
+
+#### Features
+
+* **Cache:** provide cache operations for common data types ([f1ef2f0](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/f1ef2f06c4087f4df30dd7b3eda307c3774c47b8))
+  > The Cache operation allows a data type value to be stored in a cache and then an appropriate event is raised when the value is updated.
+  > 
+  > If the value is considered equal then the Unmodified event is emitted. However, if the values are not equal then the Modified event is emitted.
+* **Extraction:** add extractors for SurfaceData and RaycastHit ([dcab0ef](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/dcab0ef42464e7ac1523fad9ec339ec63319d4ce))
+  > A collection of extractors that firstly extract the RaycastHit data from a SurfaceData and then a collection of extractors that can extract specific data from the RaycastHit.
+  > 
+  > This new collection means the existing SurfaceDataCollisionPointExtractor becomes obsolete as it is too specific for the extractor pattern and can be achieved by first extracting the RaycastHit from the SurfaceData and then extracting the RaycastHit.point from the RaycastHit output.
+* **Extraction:** consolidate all extractors into 1 base class ([77e6f97](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/77e6f979b6f4e20b9d662257fae5abe4bf573817))
+  > (Nearly) all of the extractors now all inherit from a single ValueExtractor class which contains most of the logic ensuring extractors all have a standard API.
+  > 
+  > There are a couple of extractors that have multiple events for extraction and these don't fit into this model yet so have been left out. These are:
+  > 
+  > * ObjectDistanceComparatorEventDataExtractor * TransformPropertyApplierEventDataExtractor
+  > 
+  > These will be updated in the future to provide individual extrators that can then follow the standard Extractor pattern.
+  > 
+  > All Extractors now also implement `iProcessable` so can all be used with a `MomentProcessor`.
+  > 
+  > All Extractors also invoke a `Failed` event which is raised when the extractor has failed to extract the value. This is to ensure the `PlayAreaDimensionExtractor` still has the relevant events required and can fit in the standard Extractor pattern. Plus, having a `Failed` event is useful to know when an Extractor has failed.
+  > 
+  > The `TransformPropertyExtractor` has been renamed to `TransformVector3PropertyExtractor` which originally existed within the same file but now it can simply extend the `Vector3Extrator` but the old extractor had a separate property for storing the result of the extraction called `LastExtractedValue`. This property is still available but it has been deprecated and the `Result` field should now be used to get the extracted value.
+* **Extraction:** deprecate Vector2ComponentExtractor ([4103c15](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/4103c15e62ec36e68bc14caa26f4e47298bfdebe))
+  > The `Zinnia.Data.Type.Transformation.Conversion.Vector2ToFloat` component does the same job as the `Vector2ComponentExtractor` so there is no need to have both.
+
+#### Bug Fixes
+
+* **Extraction:** ensure extraction cannot be mutated if disabled ([bf6ceef](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/bf6ceef3439a87f296cb797af426f10a7e455735))
+  > The main `Extract()` method should do a check to see if the component is active and enabled and if its not then it should force set the `Result` to `null` across all Extractors.
+  > 
+  > Also, the `RequiresBehaviourState` attribute has been added to the `Extract` methods that allow the data to be passed in via a parameter as they were allowing mutation to the source even when the component was inactive.
+  > 
+  > Finally, any extractors that didn't have the `Extract` methods that allowed a parameter have been updated to include these methods too.
+* **Extraction:** ensure extraction logic order is consistent ([4f77a78](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/4f77a78178cc049320f1eb798154cf599598c906))
+  > The TransformPropertyExtractor worked in the opposite way from other extrators where the `Extract` method does all the work and the `DoExtract` method just calls the `Extract` method without any return.
+  > 
+  > This has now been updated so it follows this standard logic.
+* **Extraction:** flip extraction logic for local direction ([2cb589c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/2cb589c85031bf4993cc62d6680efbb7783c920b))
+  > The TransformDirectionExtractor had the `UseLocal` logic the wrong way round. It was returning the global `Vector3.<direction>` if `UseLocal` was true and returning the direction of the `Source` if `UseLocal` was false.
+  > 
+  > This doesn't make sense because `Vector3.<direction>` _is_ the global direction whereas the direction of the `Source` is technically local to the `Source`.
+  > 
+  > This is also technically a change that can cause breaks because the logic is now flipped. But rather than do a clever deprecation or anything, it's probably just better to handle complaints as its just fixed by checking (or unchecking) the `UseLocal` property.
+* **structure:** apply coding conventions ([008723a](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/008723ac96df09a1f5051fa9293b12b7b2cdee48))
+  > The coding conventions in regards to namespace order has now been applied so the default VisualStudio namespace order is applied to all scripts.
+  > 
+  > Any missing code comments have also been added to any non-test related script.
+
+#### Code Refactoring
+
+* **Extraction:** simplify the InvokeResult method ([441b7c9](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/441b7c93bc41e72c97a87775ced2235ffdeedd46))
+  > The ValueExtractor now has a way of dealing with the differences between the TResultElement and TEventElement when the InvokeResult method is called by piping the actual logic into a generic InvokeEvent method meaning each of the concrete classes don't have to repeat the logic.
+
 ### [1.14.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.14.0...v1.14.1) (2020-04-01)
 
 #### Bug Fixes
