@@ -64,6 +64,18 @@
         [field: DocumentedByXml]
         public float MaximumDistance { get; set; } = 50f;
         /// <summary>
+        /// The surface will only be located if the previous position has changed from the current position.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool MustChangePosition { get; set; } = true;
+        /// <summary>
+        /// The threshold difference between the previous point value and the current point value to be considered equal.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public float PositionChangedEqualityThreshold { get; set; } = 0.0001f;
+        /// <summary>
         /// The amount to offset the position of the destination point found on the located surface.
         /// </summary>
         [Serialized]
@@ -106,10 +118,6 @@
         public readonly SurfaceData surfaceData = new SurfaceData();
 
         /// <summary>
-        /// The distance to consider a position change.
-        /// </summary>
-        protected const float DISTANCE_VARIANCE = 0.0001f;
-        /// <summary>
         /// A reused comparer instance.
         /// </summary>
         protected static readonly RayCastHitComparer Comparer = new RayCastHitComparer();
@@ -151,7 +159,7 @@
                 return;
             }
 
-            if (CastRay(givenOrigin.Position, SearchDirection) && PositionChanged(DISTANCE_VARIANCE))
+            if (CastRay(givenOrigin.Position, SearchDirection) && (!MustChangePosition || PositionChanged(PositionChangedEqualityThreshold)))
             {
                 surfaceData.RotationOverride = givenOrigin.Rotation;
                 surfaceData.ScaleOverride = givenOrigin.Scale;
@@ -182,7 +190,7 @@
         /// <returns><see langword="true"/> if a valid surface is located.</returns>
         protected virtual bool CastRay(Vector3 givenOrigin, Vector3 givenDirection)
         {
-            givenOrigin = givenOrigin + (givenDirection.normalized * OriginOffset);
+            givenOrigin += givenDirection.normalized * OriginOffset;
             surfaceData.Origin = givenOrigin;
             surfaceData.Direction = givenDirection;
             Ray tracerRaycast = new Ray(givenOrigin, givenDirection);

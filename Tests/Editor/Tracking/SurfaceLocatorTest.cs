@@ -83,6 +83,71 @@ namespace Test.Zinnia.Tracking
             Object.DestroyImmediate(searchOrigin);
         }
 
+        [Test]
+        public void InvalidLocateSameSurface()
+        {
+            GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject searchOrigin = new GameObject("SearchOrigin");
+
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.SearchOrigin = searchOrigin;
+            subject.SearchDirection = Vector3.forward;
+
+            //Process just calls Locate() so may as well just test the first point
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Assert.IsTrue(surfaceLocatedMock.Received);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
+
+            surfaceLocatedMock.Reset();
+
+            subject.Process();
+
+            Assert.IsFalse(surfaceLocatedMock.Received);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
+
+            Object.DestroyImmediate(validSurface);
+            Object.DestroyImmediate(searchOrigin);
+        }
+
+        [Test]
+        public void ValidLocateSameSurfaceIgnoreEquality()
+        {
+            GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject searchOrigin = new GameObject("SearchOrigin");
+
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.MustChangePosition = false;
+            subject.SearchOrigin = searchOrigin;
+            subject.SearchDirection = Vector3.forward;
+
+            //Process just calls Locate() so may as well just test the first point
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Assert.IsTrue(surfaceLocatedMock.Received);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
+
+            surfaceLocatedMock.Reset();
+
+            subject.Process();
+
+            Assert.IsTrue(surfaceLocatedMock.Received);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
+
+            Object.DestroyImmediate(validSurface);
+            Object.DestroyImmediate(searchOrigin);
+        }
+
         [UnityTest]
         public IEnumerator InvalidSurfaceDueToTargetValidity()
         {
