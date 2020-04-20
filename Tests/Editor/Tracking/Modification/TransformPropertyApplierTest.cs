@@ -352,6 +352,22 @@ namespace Test.Zinnia.Tracking.Modification
         }
 
         [Test]
+        public void EventsWhenNoChangeWhenApplyingOnEqualProperties()
+        {
+            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
+            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
+            subject.ShouldApplyToEqualProperties = true;
+            subject.Apply();
+            Assert.IsTrue(beforeTransformUpdatedMock.Received);
+            Assert.IsTrue(afterTransformUpdatedMock.Received);
+        }
+
+        [Test]
         public void EventsNotEmittedOnInactiveGameObject()
         {
             UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
