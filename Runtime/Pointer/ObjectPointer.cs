@@ -111,6 +111,12 @@
         [Serialized]
         [field: DocumentedByXml]
         public bool EnableDestinationOnNoCollision { get; set; } = true;
+        /// <summary>
+        /// Provides an alternative as the pointer origin in the events.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject EventDataOriginTransformOverride { get; set; }
 
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> becomes active.
@@ -477,7 +483,7 @@
         protected virtual EventData GetEventData(PointsCast.EventData data)
         {
             Transform validDestinationTransform = Destination == null || Destination.ValidElementContainer == null ? null : Destination.ValidElementContainer.transform;
-            Transform pointerTransform = transform;
+            Transform pointerTransform = EventDataOriginTransformOverride != null ? EventDataOriginTransformOverride.transform : transform;
 
             eventData.Transform = pointerTransform;
             eventData.PositionOverride = validDestinationTransform == null ? data.HitData?.point : validDestinationTransform.position;
