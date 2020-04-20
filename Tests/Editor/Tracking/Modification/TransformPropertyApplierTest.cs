@@ -5,8 +5,10 @@ using Zinnia.Tracking.Modification;
 namespace Test.Zinnia.Tracking.Modification
 {
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformPropertyApplierTest
@@ -153,6 +155,49 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
             Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
             Assert.AreEqual(finalScale, targetObject.transform.localScale);
+        }
+
+        [UnityTest]
+        public IEnumerator ModifyPositionNoOffsetOneSecondTransition()
+        {
+            subject.TransitionDuration = 1f;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
+            subject.ApplyTransformations = TransformProperties.Position;
+
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+
+            Vector3 finalPosition = Vector3.one + Vector3.forward;
+            sourceTransformData.Transform.position = finalPosition;
+            sourceTransformData.Transform.eulerAngles = Vector3.up * 45f;
+
+            subject.Apply();
+            yield return new WaitForSeconds(1f);
+
+            Assert.AreEqual(finalPosition, targetObject.transform.position);
+            Assert.AreEqual(Vector3.zero, targetObject.transform.eulerAngles);
+        }
+
+        [UnityTest]
+        public IEnumerator ModifyPositionNoOffsetOneSecondDynamicTransition()
+        {
+            subject.TransitionDuration = 1f;
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
+            subject.ApplyTransformations = TransformProperties.Position;
+            subject.IsTransitionDestinationDynamic = true;
+
+            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+
+            Vector3 finalPosition = Vector3.one + Vector3.forward;
+            sourceTransformData.Transform.position = finalPosition;
+            sourceTransformData.Transform.eulerAngles = Vector3.up * 45f;
+
+            subject.Apply();
+            yield return new WaitForSeconds(1f);
+
+            Assert.AreEqual(finalPosition, targetObject.transform.position);
+            Assert.AreEqual(Vector3.zero, targetObject.transform.eulerAngles);
         }
 
         [Test]

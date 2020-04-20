@@ -398,9 +398,9 @@
 
                 if (dynamicDestination)
                 {
-                    destinationScale = Source.Scale;
-                    destinationRotation = Source.Rotation;
-                    destinationPosition = Source.Position;
+                    destinationScale = CalculateScale(source, target);
+                    destinationRotation = CalculateRotation(source, target);
+                    destinationPosition = CalculatePosition(source, target, destinationScale, destinationRotation);
                 }
 
                 float lerpFrame = elapsedTime / TransitionDuration;
