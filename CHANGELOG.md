@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.16.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.15.0...v1.16.0) (2020-04-21)
+
+#### Features
+
+* **Pointer:** allow origin transform of event data to be overriden ([74c8d80](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/74c8d802b022ee15c70d0462156870277d0bff35))
+  > The Pointer origin was previously always the Transform that the ObjectPointer component was on, but this new field allows an alternative origin to be provided if required.
+* **Tracking:** allow previous position to be valid located surface ([6592687](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/6592687e83153ab40d127a80dc47777c2dd7c442))
+  > The SurfaceLocator would always not consider a valid location if the previous location was the same as the current location. This new option allows that equality check to be ignored.
+  > 
+  > Also, the equality threshold is no longer a constant and instead a value that can be changed via the public property.
+* **Tracking:** allow properties to be applied even if they are equal ([b636bca](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b636bca076ca92a719a2638aa8af5e0abb0a961a))
+  > The TransformPropertyApplier now has an option to still apply properties even if the properties are equal.
+
+#### Bug Fixes
+
+* **Tracking:** calculate properties correctly if dynamic destination ([f1191e9](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/f1191e9c96999dc89f4bfbaeb26e0ae297b6c93b))
+  > This fix will calculate properties correctly if IsTransitionDestinationDynamic is true. Before the fix, it does not honor the ApplyTransformations settings.
+  > 
+  > This fix is by Ethan Cheung <ethan@fight4dream.com>
+  > 
+  > Co-authored-by: Ethan Cheung <ethan@fight4dream.com>
+
 ## [1.15.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.14.1...v1.15.0) (2020-04-14)
 
 #### Features
