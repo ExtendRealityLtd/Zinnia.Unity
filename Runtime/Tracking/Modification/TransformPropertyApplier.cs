@@ -118,6 +118,12 @@
         [field: Header("Transition Settings"), DocumentedByXml]
         public float TransitionDuration { get; set; }
         /// <summary>
+        /// Whether to still apply the transformation properties even if the new properties are equal to the existing properties.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool ShouldApplyToEqualProperties { get; set; }
+        /// <summary>
         /// The threshold the current <see cref="Transform"/> properties can be within of the destination properties to be considered equal.
         /// </summary>
         [Serialized]
@@ -398,9 +404,9 @@
 
                 if (dynamicDestination)
                 {
-                    destinationScale = Source.Scale;
-                    destinationRotation = Source.Rotation;
-                    destinationPosition = Source.Position;
+                    destinationScale = CalculateScale(source, target);
+                    destinationRotation = CalculateRotation(source, target);
+                    destinationPosition = CalculatePosition(source, target, destinationScale, destinationRotation);
                 }
 
                 float lerpFrame = elapsedTime / TransitionDuration;
@@ -430,7 +436,8 @@
         /// <returns>Whether the start properties equal the destination properties.</returns>
         protected virtual bool ArePropertiesEqual(Vector3 startPosition, Vector3 destinationPosition, Quaternion startRotation, Quaternion destinationRotation, Vector3 startScale, Vector3 destinationScale)
         {
-            return startPosition.ApproxEquals(destinationPosition, TransitionDestinationThreshold)
+            return !ShouldApplyToEqualProperties
+                && startPosition.ApproxEquals(destinationPosition, TransitionDestinationThreshold)
                 && startRotation.eulerAngles.ApproxEquals(destinationRotation.eulerAngles, TransitionDestinationThreshold)
                 && startScale.ApproxEquals(destinationScale, TransitionDestinationThreshold);
         }

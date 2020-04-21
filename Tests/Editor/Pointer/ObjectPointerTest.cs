@@ -174,7 +174,6 @@ namespace Test.Zinnia.Pointer
             Object.DestroyImmediate(blocker);
         }
 
-
         [Test]
         public void Select()
         {
@@ -232,10 +231,79 @@ namespace Test.Zinnia.Pointer
             Assert.IsFalse(exitListenerMock.Received);
             Assert.IsTrue(hoverListenerMock.Received);
             Assert.IsTrue(selectListenerMock.Received);
+            Assert.AreEqual(subject.transform, subject.HoverTarget.Transform);
             Assert.AreEqual(blocker, subject.HoverTarget.CollisionData.transform.gameObject);
             Assert.AreEqual(blocker, subject.SelectedTarget.CollisionData.transform.gameObject);
 
             Object.DestroyImmediate(blocker);
+        }
+
+        [Test]
+        public void SelectOriginTransformOverride()
+        {
+            SetUpElements();
+
+            GameObject originTransformOverride = new GameObject();
+            subject.EventDataOriginTransformOverride = originTransformOverride;
+
+            UnityEventListenerMock enterListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock exitListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock hoverListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock selectListenerMock = new UnityEventListenerMock();
+
+            subject.Entered.AddListener(enterListenerMock.Listen);
+            subject.Exited.AddListener(exitListenerMock.Listen);
+            subject.Hovering.AddListener(hoverListenerMock.Listen);
+            subject.Selected.AddListener(selectListenerMock.Listen);
+
+            subject.ManualOnEnable();
+
+            Assert.IsFalse(enterListenerMock.Received);
+            Assert.IsFalse(exitListenerMock.Received);
+            Assert.IsFalse(hoverListenerMock.Received);
+            Assert.IsFalse(selectListenerMock.Received);
+
+            subject.Activate();
+            subject.Process();
+            subject.Select();
+
+            Assert.IsFalse(enterListenerMock.Received);
+            Assert.IsFalse(exitListenerMock.Received);
+            Assert.IsFalse(hoverListenerMock.Received);
+            Assert.IsTrue(selectListenerMock.Received);
+            Assert.IsNull(subject.HoverTarget);
+
+            enterListenerMock.Reset();
+            exitListenerMock.Reset();
+            hoverListenerMock.Reset();
+            selectListenerMock.Reset();
+
+            //Now add a valid target that can be selected
+            GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            blocker.transform.position = Vector3.forward * 5f;
+
+            List<Vector3> castPoints = new List<Vector3>
+            {
+                Vector3.zero,
+                blocker.transform.position
+            };
+
+            PointsCast.EventData straightCast = CastPoints(castPoints, true, true, new Ray(Vector3.zero, Vector3.forward));
+
+            subject.HandleData(straightCast);
+            subject.Process();
+            subject.Select();
+
+            Assert.IsTrue(enterListenerMock.Received);
+            Assert.IsFalse(exitListenerMock.Received);
+            Assert.IsTrue(hoverListenerMock.Received);
+            Assert.IsTrue(selectListenerMock.Received);
+            Assert.AreEqual(originTransformOverride.transform, subject.HoverTarget.Transform);
+            Assert.AreEqual(blocker, subject.HoverTarget.CollisionData.transform.gameObject);
+            Assert.AreEqual(blocker, subject.SelectedTarget.CollisionData.transform.gameObject);
+
+            Object.DestroyImmediate(blocker);
+            Object.DestroyImmediate(originTransformOverride);
         }
 
         [Test]
