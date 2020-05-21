@@ -41,7 +41,15 @@
             /// <summary>
             /// Measurement in radians. A full rotation is 2 * PI radians.
             /// </summary>
-            Radians
+            Radians,
+            /// <summary>
+            /// Measurement in degrees where anti-clockwise is considered negative (min: -180 degrees) and clockwise is considered positive (max: 180 degrees).
+            /// </summary>
+            SignedDegrees,
+            /// <summary>
+            /// Measurement in radians where anti-clockwise is considered negative (min: -PI radians) and clockwise is considered positive (max: PI radians).
+            /// </summary>
+            SignedRadians
         }
 
         /// <summary>
@@ -61,7 +69,11 @@
         /// <summary>
         /// The full circle in radians.
         /// </summary>
-        protected const double fullCircle = 2f * Math.PI;
+        protected const double fullCircleRadians = 2f * Math.PI;
+        /// <summary>
+        /// The full circle in degrees.
+        /// </summary>
+        protected const float fullCircleDegrees = 360f;
 
         /// <summary>
         /// Transforms the given input <see cref="Vector2"/> to the angle.
@@ -75,9 +87,40 @@
                 return 0f;
             }
 
-            return (float)
-                ((Math.Atan2(Origin.y, Origin.x) - Math.Atan2(input.y, input.x) + fullCircle) % fullCircle
-                    * (Unit == AngleUnit.Degrees ? 180f / Math.PI : 1f));
+            float result = (float)((Math.Atan2(Origin.y, Origin.x) - Math.Atan2(input.y, input.x) + fullCircleRadians) % fullCircleRadians * CalculateMultiplier());
+            return ProcessSigned(result);
+        }
+
+        /// <summary>
+        /// Calculates the multiplier to used based on the <see cref="Unit"/>.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual float CalculateMultiplier()
+        {
+            return (float)(Unit == AngleUnit.Degrees || Unit == AngleUnit.SignedDegrees ? (fullCircleDegrees * 0.5f) / Math.PI : 1f);
+        }
+
+        /// <summary>
+        /// Processes the given value if the <see cref="Unit"/> is a signed type.
+        /// </summary>
+        /// <param name="value">The value to process.</param>
+        /// <returns>The processed value.</returns>
+        protected virtual float ProcessSigned(float value)
+        {
+            float fullCircle;
+            switch (Unit)
+            {
+                case AngleUnit.SignedDegrees:
+                    fullCircle = fullCircleDegrees;
+                    break;
+                case AngleUnit.SignedRadians:
+                    fullCircle = (float)fullCircleRadians;
+                    break;
+                default:
+                    return value;
+            }
+
+            return value > (fullCircle * 0.5f) ? value - fullCircle : value;
         }
 
         /// <summary>
