@@ -20,7 +20,7 @@
         /// <summary>
         /// The source to extract from.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public TSourceElement Source { get; set; }
 
