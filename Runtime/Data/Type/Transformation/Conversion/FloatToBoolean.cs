@@ -5,15 +5,14 @@
     using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using Zinnia.Data.Attribute;
 
     /// <summary>
     /// Transforms a float value to a boolean based on a defined threshold.
     /// </summary>
     /// <example>
-    /// threshold[0.3, 0.8] -> 0f = false
-    /// threshold[0.3, 0.8] -> 1f = false
-    /// threshold[0.3, 0.8] -> 0.5f = true
+    /// PositiveBounds[0.3, 0.8] -> 0f = false
+    /// PositiveBounds[0.3, 0.8] -> 1f = false
+    /// PositiveBounds[0.3, 0.8] -> 0.5f = true
     /// </example>
     public class FloatToBoolean : Transformer<float, bool, FloatToBoolean.UnityEvent>
     {
@@ -29,7 +28,7 @@
         /// The bounds in which the float must be to be considered a positive boolean.
         /// </summary>
         [Serialized]
-        [field: DocumentedByXml, MinMaxRange(-1f, 1f)]
+        [field: DocumentedByXml]
         protected FloatRange PositiveBounds { get; set; } = new FloatRange(0f, 1f);
 
         /// <summary>

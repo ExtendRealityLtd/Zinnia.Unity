@@ -41,6 +41,14 @@
         public UnityEvent Failed = new UnityEvent();
 
         /// <summary>
+        /// Clears the <see cref="Source"/> to the default value of the <see cref="TSourceElement"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            Source = default;
+        }
+
+        /// <summary>
         /// Extracts each time the process is run in a moment.
         /// </summary>
         public virtual void Process()
