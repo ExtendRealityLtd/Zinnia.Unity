@@ -1,5 +1,14 @@
 # Changelog
 
+### [1.17.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.17.0...v1.17.1) (2020-05-22)
+
+#### Bug Fixes
+
+* **Extraction:** remove Cleared attribute from ValueExtractor.Source ([adff3f2](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/adff3f2bf0c1d618b610eed2e6fc9677c09dcab1))
+  > The Source property from the ValueExtractor is of a generic type and if the Cleared attribute is used then Malimbe will always weave an auto generated Clear method that attempts to set the property to null and this will cause issues in IL2CPP when attempting to clear non nullable types such as RaycastHit.
+  > 
+  > As there is a manual ClearSource method already that sets Source to `default` then this `Cleared` attribute can simply be removed.
+
 ## [1.17.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.16.0...v1.17.0) (2020-05-22)
 
 #### Features
