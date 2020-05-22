@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.17.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.16.0...v1.17.0) (2020-05-22)
+
+#### Features
+
+* **Association:** determine association by platform, sdk and model ([1680f63](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/1680f6345635b9c76971c70247dabe12dbb339f8))
+  > The PlatformDeviceAssociation component allows the determining of the hardware based on matching patterns of the current platform, the SDK loaded by Unity and the model type.
+  > 
+  > As all of these are patterns, then they can be used to search for anything or specific types of setup.
+  > 
+  > The LoadedXrDeviceAssociation has now been deprecated as it offers a subset of this new functionality but isn't as powerful.
+* **Conversion:** ability to convert between float and normalized float ([b65cd03](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b65cd031ba829243d3c3800474f36635e0f5c667))
+  > The FloatToNormalizedFloat allows a float value to be converted into a normalized float (between 0f and 1f) and the NormalizedFloatToFloat allows for a normalized float to be converted to a float value based within the range provided.
+  > 
+  > The FloatToBoolean has also had the min/max limit removed so any float value can be used to check to see if it should be within the positive bounds.
+* **Conversion:** option to convert vector2 to signed angle ([fd1084d](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/fd1084d3c5590e0f49c3fe9ed8540af9a8184cbe))
+  > The Vector2ToAngle component now has the option of converting to a signed angle in either degrees or radians.
+  > 
+  > This allows an angle range of -180 degrees to 180 degrees instead of 0 to 360 degrees and this will feed in better to the FloatToBoolean when wanting to know if the angle is between a given range as it is possible to do -20/20 as a range whereas it's not possible to do 340/20 as a range.
+
+#### Bug Fixes
+
+* **Extraction:** override ClearSource method for generics ([6ca9cfb](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/6ca9cfbc275e135489bcac6b681e251a708b0c50))
+  > There is an issue with using the Malimbe generated ClearSource method when using it with a generic type property as the actual type may not be a nullable type and the MemberCleared weaved code always tries to set it to `null`.
+  > 
+  > In this regard, it is better to simply override the method and set the property to `default`. This is not done in Malimbe as providing default as the weaved code is extremely tricky.
+
 ## [1.16.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.15.0...v1.16.0) (2020-04-21)
 
 #### Features
