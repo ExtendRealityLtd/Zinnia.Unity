@@ -1,7 +1,9 @@
 ﻿namespace Zinnia.Event.Proxy
 {
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using UnityEditor;
     using UnityEngine.Events;
 
     /// <summary>
@@ -12,9 +14,11 @@
     public abstract class SingleEventProxyEmitter<TValue, TEvent> : EventProxyEmitter where TEvent : UnityEvent<TValue>, new()
     {
         /// <summary>
-        /// The most recent received payload.
+        /// The payload data to emit.
         /// </summary>
-        public TValue Payload { get; protected set; }
+        [Serialized]
+        [field: DocumentedByXml]
+        public TValue Payload { get; set; }
 
         /// <summary>
         /// Is emitted when Receive is called.
@@ -53,6 +57,14 @@
             }
 
             Emitted?.Invoke(Payload);
+        }
+
+        /// <summary>
+        /// Clears the <see cref="Payload"/> to the default value.
+        /// </summary>
+        public virtual void ClearPayload()
+        {
+            Payload = default;
         }
     }
 }
