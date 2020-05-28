@@ -6,6 +6,7 @@
     using UnityEngine.Events;
     using Zinnia.Extension;
 
+    [Obsolete("Use `Zinnia.Data.Type.Observer.FloatObservableProperty` instead.")]
     public class FloatCache : ValueCache<float, FloatCache.UnityEvent>
     {
         /// <summary>

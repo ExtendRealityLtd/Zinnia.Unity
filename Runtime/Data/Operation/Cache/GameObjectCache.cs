@@ -4,6 +4,7 @@
     using UnityEngine;
     using UnityEngine.Events;
 
+    [Obsolete("Use `Zinnia.Data.Type.Observer.GameObjectObservableProperty` instead.")]
     public class GameObjectCache : ValueCache<GameObject, GameObjectCache.UnityEvent>
     {
         /// <summary>

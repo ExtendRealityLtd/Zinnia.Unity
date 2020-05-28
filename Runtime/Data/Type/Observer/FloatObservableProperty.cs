@@ -1,22 +1,21 @@
-﻿namespace Zinnia.Data.Operation.Cache
+﻿namespace Zinnia.Data.Type.Observer
 {
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
-    using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
 
-    [Obsolete("Use `Zinnia.Data.Type.Observer.Vector3ObservableProperty` instead.")]
-    public class Vector3Cache : ValueCache<Vector3, Vector3Cache.UnityEvent>
+    /// <summary>
+    /// Allows observing changes of a <see cref="float"/>.
+    /// </summary>
+    public class FloatObservableProperty : ObservableProperty<float, FloatObservableProperty.UnityEvent>
     {
         /// <summary>
-        /// Defines the event with the specified <see cref="Vector3"/>.
+        /// Defines the event with the <see cref="float"/> state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The tolerance to consider the current value and the cached value equal.
@@ -26,7 +25,7 @@
         public float EqualityTolerance { get; set; } = float.Epsilon;
 
         /// <inheritdoc/>
-        protected override bool AreEqual(Vector3 a, Vector3 b)
+        protected override bool Equals(float a, float b)
         {
             return a.ApproxEquals(b, EqualityTolerance);
         }

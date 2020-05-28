@@ -3,6 +3,7 @@
     using System;
     using UnityEngine.Events;
 
+    [Obsolete("Use `Zinnia.Data.Type.Observer.StringObservableProperty` instead.")]
     public class StringCache : ValueCache<string, StringCache.UnityEvent>
     {
         /// <summary>

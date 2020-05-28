@@ -3,6 +3,7 @@
     using System;
     using UnityEngine.Events;
 
+    [Obsolete("Use `Zinnia.Data.Type.Observer.IntObservableProperty` instead.")]
     public class IntCache : ValueCache<int, IntCache.UnityEvent>
     {
         /// <summary>
