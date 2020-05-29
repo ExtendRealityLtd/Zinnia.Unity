@@ -18,27 +18,27 @@
     public abstract class ValueExtractor<TResultElement, TSourceElement, TEvent, TEventElement> : MonoBehaviour, IProcessable where TEvent : UnityEvent<TEventElement>, new()
     {
         /// <summary>
-        /// The source to extract from.
-        /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public TSourceElement Source { get; set; }
-
-        /// <summary>
-        /// The extracted <see cref="TResultElement"/>.
-        /// </summary>
-        public TResultElement Result { get; protected set; }
-
-        /// <summary>
         /// Emitted when the <see cref="TResultElement"/> is extracted.
         /// </summary>
-        [DocumentedByXml]
+        [Header("Extractor Events"), DocumentedByXml]
         public TEvent Extracted = new TEvent();
         /// <summary>
         /// Emitted when the data can't be extracted.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent Failed = new UnityEvent();
+
+        /// <summary>
+        /// The source to extract from.
+        /// </summary>
+        [Serialized]
+        [field: Header("Extractor Settings"), DocumentedByXml]
+        public TSourceElement Source { get; set; }
+
+        /// <summary>
+        /// The extracted <see cref="TResultElement"/>.
+        /// </summary>
+        public TResultElement Result { get; protected set; }
 
         /// <summary>
         /// Clears the <see cref="Source"/> to the default value of the <see cref="TSourceElement"/>.
