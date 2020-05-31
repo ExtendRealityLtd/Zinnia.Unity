@@ -7,6 +7,7 @@
     using UnityEngine.Events;
     using Zinnia.Extension;
 
+    [Obsolete("Use `Zinnia.Data.Type.Observer.Vector2ObservableProperty` instead.")]
     public class Vector2Cache : ValueCache<Vector2, Vector2Cache.UnityEvent>
     {
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Data.Operation.Cache
 {
     using Malimbe.BehaviourStateRequirementMethod;
+    using System;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
@@ -10,6 +11,7 @@
     /// </summary>
     /// <typeparam name="TValue">The type of data to cache.</typeparam>
     /// <typeparam name="TEvent">The event to invoke.</typeparam>
+    [Obsolete("Use `Zinnia.Data.Type.Observer.ObservableProperty` instead.")]
     public abstract class ValueCache<TValue, TEvent> : MonoBehaviour where TEvent : UnityEvent<TValue>, new()
     {
         /// <summary>
