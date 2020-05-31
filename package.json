@@ -2,7 +2,7 @@
     "name": "io.extendreality.zinnia.unity",
     "displayName": "Zinnia.Unity",
     "description": "A collection of design patterns for the Unity software that can be beneficial in (but not limited to) spatial computing development.",
-    "version": "1.17.1",
+    "version": "1.18.0",
     "unity": "2018.3",
     "unityRelease": "10f1",
     "keywords": [

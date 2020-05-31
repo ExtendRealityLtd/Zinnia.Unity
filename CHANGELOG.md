@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.18.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.17.1...v1.18.0) (2020-05-31)
+
+#### Features
+
+* **Observer:** add observable property data types ([2c0ee57](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/2c0ee576cee43e408e79c1fd02c69a03a0dfe6eb))
+  > The new ObservableProperty types allow a data type property to be set in the inspector but any change to that property is observed and an appropriate event is raised for the state of the property.
+  > 
+  > This is a better implementation of the ValueCache components which didn't really offer much other than storing a value via code and raising events when that value was modified. The ValueCache components have now been deprecated with the new ObservableProperty counterparts being a much better choice.
+* **Proxy:** expose payload as public property ([e2912f4](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/e2912f4aa26f5419bae11fc856637635b75546d0))
+  > The Payload property on the Event Proxy has now been exposed as a serialized public property so it can be set via the inspector or via external code or Unity event. This payload can then be emitted at a later stage by calling the existing `EmitPayload` method.
+  > 
+  > There is also a `ClearPayload` method for setting the Payload property back to the `default` value.
+* **Tracking:** apply rotation property based on angular velocity ([d312e36](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d312e369e849d0b0bafa40dedf6be0f0c775c91d))
+  > The new RotateAroundAngularVelocity component will modify a target's rotation property by rotating around the offset using the angular velocity of the given VelocityTracker as the angles in which to rotate per frame.
+  > 
+  > This can be used to simulate turning something with the rotation of the controller, such as screwing in a screw.
+
+#### Code Refactoring
+
+* **Extraction:** rearrange property order and add headers ([bb3e92a](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/bb3e92a63f2a51f65bc29b782ec831ac452964a0))
+  > The property order has been re-arranged so the properties are not split by the events when the concrete classes add more properties and headers have been added to make the split clearer.
+
 ### [1.17.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.17.0...v1.17.1) (2020-05-22)
 
 #### Bug Fixes
