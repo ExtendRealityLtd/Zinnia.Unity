@@ -10,13 +10,17 @@ namespace Test.Zinnia.Data.Operation.Cache
     public class GameObjectCacheTest
     {
         private GameObject containingObject;
+#pragma warning disable 0618
         private GameObjectCache subject;
+#pragma warning restore 0618
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
+#pragma warning disable 0618
             subject = containingObject.AddComponent<GameObjectCache>();
+#pragma warning restore 0618
         }
 
         [TearDown]
