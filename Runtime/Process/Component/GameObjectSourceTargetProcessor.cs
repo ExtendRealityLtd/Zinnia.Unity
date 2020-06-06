@@ -4,7 +4,9 @@
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
     using Zinnia.Extension;
     using Zinnia.Rule;
@@ -12,8 +14,14 @@
     /// <summary>
     /// A <see cref="SourceTargetProcessor{TSource, TTarget}"/> that specifically processes a <see cref="GameObject"/>.
     /// </summary>
-    public abstract class GameObjectSourceTargetProcessor : SourceTargetProcessor<GameObject, GameObject>
+    public abstract class GameObjectSourceTargetProcessor : SourceTargetProcessor<GameObject, GameObject, GameObjectSourceTargetProcessor.GameObjectUnityEvent>
     {
+        /// <summary>
+        /// Defines the event with the <see cref="GameObject"/>.
+        /// </summary>
+        [Serializable]
+        public class GameObjectUnityEvent : UnityEvent<GameObject> { }
+
         #region Processor Settings
         /// <summary>
         /// A <see cref="GameObject"/> collection of sources to apply data from.

@@ -4,13 +4,20 @@
     using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
 
     /// <summary>
     /// An <see cref="IProcessable"/> that runs a set method on each (or the first active) source collection against a collection of targets.
     /// </summary>
-    public abstract class SourceTargetProcessor<TSource, TTarget> : MonoBehaviour, IProcessable
+    public abstract class SourceTargetProcessor<TSource, TTarget, TEvent> : MonoBehaviour, IProcessable where TEvent : UnityEvent<TSource>, new()
     {
+        /// <summary>
+        /// Emitted if the <see cref="ActiveSource"/> value is going to change with the new value as the payload.
+        /// </summary>
+        [DocumentedByXml]
+        public TEvent ActiveSourceChanging = new TEvent();
+
         /// <summary>
         /// Whether to cease the processing of the source collection after the first valid source is processed.
         /// </summary>
@@ -73,6 +80,7 @@
         /// <param name="targets">The targets to apply the data to.</param>
         protected virtual void ApplySourcesToTargets(HeapAllocationFreeReadOnlyList<TSource> sources, HeapAllocationFreeReadOnlyList<TTarget> targets)
         {
+            bool foundValidSource = false;
             for (int sourceIndex = 0; sourceIndex < sources.Count; sourceIndex++)
             {
                 TSource currentSource = sources[sourceIndex];
@@ -93,11 +101,23 @@
                     ApplySourceToTarget(currentSource, currentTarget);
                 }
 
+                if (!EqualityComparer<TSource>.Default.Equals(ActiveSource, currentSource))
+                {
+                    ActiveSourceChanging?.Invoke(currentSource);
+                }
                 ActiveSource = currentSource;
+                foundValidSource = true;
+
                 if (CeaseAfterFirstSourceProcessed)
                 {
                     break;
                 }
+            }
+
+            if (!foundValidSource && !EqualityComparer<TSource>.Default.Equals(ActiveSource, default))
+            {
+                ActiveSource = default;
+                ActiveSourceChanging?.Invoke(default);
             }
         }
     }

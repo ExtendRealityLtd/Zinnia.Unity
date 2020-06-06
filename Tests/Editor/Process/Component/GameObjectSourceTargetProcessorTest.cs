@@ -6,6 +6,7 @@ namespace Test.Zinnia.Process.Component
 {
     using NUnit.Framework;
     using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
@@ -206,6 +207,8 @@ namespace Test.Zinnia.Process.Component
             GameObject target3 = new GameObject("target3");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            UnityEventListenerMock activeSourceChangedListenerMock = new UnityEventListenerMock();
+            subject.ActiveSourceChanging.AddListener(activeSourceChangedListenerMock.Listen);
             yield return null;
 
             subject.Sources.Add(source1);
@@ -218,7 +221,11 @@ namespace Test.Zinnia.Process.Component
             Assert.AreEqual("target2", target2.name);
             Assert.AreEqual("target3", target3.name);
 
+            Assert.IsNull(subject.ActiveSource);
+            Assert.IsFalse(activeSourceChangedListenerMock.Received);
             subject.Process();
+            Assert.IsTrue(activeSourceChangedListenerMock.Received);
+            Assert.AreEqual("source1", subject.ActiveSource.name);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("source1", target1.name);
@@ -240,6 +247,8 @@ namespace Test.Zinnia.Process.Component
             GameObject target1 = new GameObject("target1");
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
+            UnityEventListenerMock activeSourceChangedListenerMock = new UnityEventListenerMock();
+            subject.ActiveSourceChanging.AddListener(activeSourceChangedListenerMock.Listen);
             yield return null;
 
             subject.CeaseAfterFirstSourceProcessed = true;
@@ -265,7 +274,11 @@ namespace Test.Zinnia.Process.Component
             source2.SetActive(true);
             source3.SetActive(true);
 
+            Assert.IsNull(subject.ActiveSource);
+            Assert.IsFalse(activeSourceChangedListenerMock.Received);
             subject.Process();
+            Assert.IsTrue(activeSourceChangedListenerMock.Received);
+            Assert.AreEqual("source2", subject.ActiveSource.name);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("source2", source2.name);
@@ -276,7 +289,10 @@ namespace Test.Zinnia.Process.Component
             source2.SetActive(false);
             source3.SetActive(true);
 
+            activeSourceChangedListenerMock.Reset();
             subject.Process();
+            Assert.IsTrue(activeSourceChangedListenerMock.Received);
+            Assert.AreEqual("source3", subject.ActiveSource.name);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("source2", source2.name);
@@ -287,12 +303,20 @@ namespace Test.Zinnia.Process.Component
             source2.SetActive(true);
             source3.SetActive(true);
 
+            activeSourceChangedListenerMock.Reset();
             subject.Process();
+            Assert.IsTrue(activeSourceChangedListenerMock.Received);
+            Assert.AreEqual("source1", subject.ActiveSource.name);
 
             Assert.AreEqual("source1", source1.name);
             Assert.AreEqual("source2", source2.name);
             Assert.AreEqual("source3", source3.name);
             Assert.AreEqual("source1", target1.name);
+
+            activeSourceChangedListenerMock.Reset();
+            subject.Process();
+            Assert.IsFalse(activeSourceChangedListenerMock.Received);
+            Assert.AreEqual("source1", subject.ActiveSource.name);
 
             Object.DestroyImmediate(source1);
             Object.DestroyImmediate(source2);
