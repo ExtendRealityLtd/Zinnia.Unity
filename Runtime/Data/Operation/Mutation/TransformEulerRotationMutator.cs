@@ -6,18 +6,28 @@
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
+    using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Mutates the euler rotation of a transform with an optional custom rotation origin.
     /// </summary>
     public class TransformEulerRotationMutator : TransformPropertyMutator
     {
+        #region Rotation Settings
         /// <summary>
         /// An optional rotation origin to perform the rotation around. The origin must be a child of the <see cref="TransformPropertyMutator.Target"/>.
         /// </summary>
         [Serialized, Cleared]
-        [field: DocumentedByXml]
+        [field: Header("Rotation Settings"), DocumentedByXml]
         public GameObject Origin { get; set; }
+        /// <summary>
+        /// Determines which axes to consider from the <see cref="Origin"/>.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public Vector3State ApplyOriginOnAxis { get; set; } = Vector3State.True;
+        #endregion
 
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)
@@ -82,7 +92,29 @@
         /// <returns>The origin position.</returns>
         protected virtual Vector3 GetOriginPosition()
         {
-            return Origin != null ? Origin.transform.position : Vector3.zero;
+            if (Origin == null)
+            {
+                return Vector3.zero;
+            }
+
+            Vector3 originAxesToApply = ApplyOriginOnAxis.ToVector3();
+            Vector3? cachedOriginLocalPosition = null;
+
+            if (!originAxesToApply.ApproxEquals(Vector3.one))
+            {
+                cachedOriginLocalPosition = Origin.transform.localPosition;
+                originAxesToApply.Scale(Origin.transform.localPosition);
+                Origin.transform.localPosition = originAxesToApply;
+            }
+
+            Vector3 returnValue = Origin.transform.position;
+
+            if (cachedOriginLocalPosition != null)
+            {
+                Origin.transform.localPosition = cachedOriginLocalPosition.GetValueOrDefault();
+            }
+
+            return returnValue;
         }
 
         /// <summary>
@@ -96,7 +128,7 @@
                 return;
             }
 
-            originPosition -= Origin.transform.position;
+            originPosition -= GetOriginPosition();
             Target.transform.position += originPosition;
         }
 

@@ -12,11 +12,12 @@
     /// </summary>
     public abstract class TransformPropertyMutator : MonoBehaviour
     {
+        #region Target Settings
         /// <summary>
         /// The target to mutate.
         /// </summary>
         [Serialized, Cleared]
-        [field: DocumentedByXml]
+        [field: Header("Target Settings"), DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// Determines whether to mutate the local or global values.
@@ -30,6 +31,7 @@
         [Serialized]
         [field: DocumentedByXml]
         public Vector3State MutateOnAxis { get; set; } = Vector3State.True;
+        #endregion
 
         /// <summary>
         /// Sets the property to the new value.
