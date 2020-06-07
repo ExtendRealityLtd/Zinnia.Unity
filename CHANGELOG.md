@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.19.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.18.0...v1.19.0) (2020-06-07)
+
+#### Features
+
+* **Mutation:** allow limiting axes on mutator offsets ([6f62f49](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/6f62f49d4fb81cd2bacbe35979e30496c0ea3022))
+  > The TransformPositionMutator has a Facing Direction offset that can be provided which is used to offset the forward direction based on the rotation of this optional offset GameObject. It is now possible to determine which axes of that offset should be used when utilizing the rotation data as there are occurrences where not all of the offset rotations are wanted.
+  > 
+  > The TransformEulerRotationMutator has an Origin offset that can be used to rotate around a different pivot point position. It is now possible to determine which axes of direction should be used from the optional pivot point as sometimes not all axes may be required.
+* **Process:** emit event when SourceTragetProcessor source changes ([05c5e21](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/05c5e21c74d045b249a664144c2967c3c87e6e06))
+  > The SourceTargetProcessor now emits an event when the ActiveSource being used for the process changes. It also emits the initial value as ActiveSource starts as `null` and when it is first enabled and called then ActiveSource will be changed from `null` and therefore it will emit the event.
+
+#### Bug Fixes
+
+* **Operation:** suppress obsolete warning messages in cache tests ([ee03c55](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/ee03c55a80dd0541d1302a768e7379cb30672f82))
+  > The Cache operations have been deprecated but the tests still actively use the components to test them and therefore throws warning messages about the use of deprecated components.
+  > 
+  > It's right to keep the tests but just suppress the warnings.
+
 ## [1.18.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.17.1...v1.18.0) (2020-05-31)
 
 #### Features
