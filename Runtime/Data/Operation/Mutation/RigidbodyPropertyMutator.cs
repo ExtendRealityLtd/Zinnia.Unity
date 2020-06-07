@@ -14,7 +14,7 @@
     public class RigidbodyPropertyMutator : MonoBehaviour
     {
         /// <summary>
-        /// The rigidbody to mutate.
+        /// The <see cref="Rigidbody"/> to mutate.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]

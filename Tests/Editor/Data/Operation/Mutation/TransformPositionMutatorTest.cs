@@ -424,6 +424,31 @@ namespace Test.Zinnia.Data.Operation.Mutation
         }
 
         [Test]
+        public void SetPropertyLocalWithOffsetIgnoreY()
+        {
+            GameObject target = new GameObject();
+            GameObject offset = new GameObject();
+            offset.transform.eulerAngles = new Vector3(10f, 20f, 30f);
+
+            subject.Target = target;
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = Vector3State.True;
+            subject.FacingDirection = offset;
+            subject.ApplyFacingDirectionOnAxis = new Vector3State(true, false, true);
+
+            Assert.AreEqual(Vector3.zero, target.transform.localPosition);
+
+            Vector3 input = new Vector3(10f, 20f, 30f);
+            Vector3 expected = new Vector3(-1.3f, 16.8f, 33.4f);
+            subject.SetProperty(input);
+
+            Assert.AreEqual(expected.ToString(), target.transform.localPosition.ToString());
+
+            Object.DestroyImmediate(target);
+            Object.DestroyImmediate(offset);
+        }
+
+        [Test]
         public void SetPropertyInactiveGameObject()
         {
             GameObject target = new GameObject();

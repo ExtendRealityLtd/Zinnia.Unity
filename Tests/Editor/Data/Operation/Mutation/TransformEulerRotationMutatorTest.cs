@@ -4,6 +4,7 @@ using Zinnia.Data.Type;
 namespace Test.Zinnia.Data.Operation.Mutation
 {
     using NUnit.Framework;
+    using NUnit.Framework.Constraints;
     using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
@@ -124,6 +125,34 @@ namespace Test.Zinnia.Data.Operation.Mutation
             Vector3 inputRotation = new Vector3(10f, 20f, 30f);
             Vector3 expectedRotation = new Vector3(0f, 20f, 0f);
             Vector3 expectedPosition = new Vector3(-0.3f, 0f, 0.4f);
+
+            subject.SetProperty(inputRotation);
+
+            Assert.AreEqual(expectedRotation.ToString(), target.transform.eulerAngles.ToString());
+            Assert.AreEqual(expectedPosition.ToString(), target.transform.position.ToString());
+
+            Object.DestroyImmediate(target);
+        }
+
+        [Test]
+        public void SetPropertyWithOriginIgnoreZ()
+        {
+            GameObject target = new GameObject();
+            GameObject origin = new GameObject();
+            origin.transform.SetParent(target.transform);
+
+            subject.Target = target;
+            subject.Origin = origin;
+            subject.MutateOnAxis = new Vector3State(false, true, false);
+            subject.ApplyOriginOnAxis = new Vector3State(true, true, false);
+
+            origin.transform.position = new Vector3(1f, 0f, 1f);
+
+            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+
+            Vector3 inputRotation = new Vector3(10f, 20f, 30f);
+            Vector3 expectedRotation = new Vector3(0f, 20f, 0f);
+            Vector3 expectedPosition = new Vector3(0.1f, 0f, 0.3f);
 
             subject.SetProperty(inputRotation);
 
