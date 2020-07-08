@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
 
     /// <summary>
@@ -65,7 +66,11 @@
         /// </summary>
         public abstract void EmitActivationState();
         /// <summary>
-        /// Makes the action receive its own default value.
+        /// Makes the action receive its own initial value to reset it back to when it was first created.
+        /// </summary>
+        public abstract void ReceiveInitialValue();
+        /// <summary>
+        /// Makes the action receive its own default value to set it back to inactive.
         /// </summary>
         public abstract void ReceiveDefaultValue();
 
@@ -88,7 +93,13 @@
     public abstract class Action<TSelf, TValue, TEvent> : Action where TSelf : Action<TSelf, TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
     {
         /// <summary>
-        /// The initial value of the action.
+        /// The initial value upon creation of the component.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml, Restricted(RestrictedAttribute.Restrictions.ReadOnlyAtRunTime)]
+        public TValue InitialValue { get; protected set; }
+        /// <summary>
+        /// The value that is considered the inactive value.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
@@ -182,6 +193,13 @@
 
         /// <inheritdoc />
         [RequiresBehaviourState]
+        public override void ReceiveInitialValue()
+        {
+            Receive(InitialValue);
+        }
+
+        /// <inheritdoc />
+        [RequiresBehaviourState]
         public override void ReceiveDefaultValue()
         {
             Receive(DefaultValue);
@@ -211,6 +229,14 @@
         protected virtual void OnEnable()
         {
             SubscribeToSources();
+        }
+
+        protected virtual void Start()
+        {
+            if (!IsValueEqual(InitialValue))
+            {
+                ProcessValue(InitialValue);
+            }
         }
 
         protected virtual void OnDisable()
