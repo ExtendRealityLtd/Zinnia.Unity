@@ -39,6 +39,16 @@
         protected readonly ObjectFollower.EventData eventData = new ObjectFollower.EventData();
 
         /// <summary>
+        /// Attempts to modify the target.
+        /// </summary>
+        /// <param name="data">Event data that contains the required modifier properties.</param>
+        [RequiresBehaviourState]
+        public virtual void Modifiy(ObjectFollower.EventData data)
+        {
+            Modify(data.EventSource, data.EventTarget, data.EventTargetOffset);
+        }
+
+        /// <summary>
         /// Attempts modify the target.
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
