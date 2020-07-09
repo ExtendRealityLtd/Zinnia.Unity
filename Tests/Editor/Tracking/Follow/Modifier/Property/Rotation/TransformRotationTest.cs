@@ -52,6 +52,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             GameObject target = new GameObject();
             GameObject offset = new GameObject();
 
+            offset.transform.SetParent(target.transform);
+
             Quaternion sourceRotation = new Quaternion(1f, 0f, 0f, 0f);
             source.transform.rotation = sourceRotation;
             target.transform.rotation = Quaternion.identity;

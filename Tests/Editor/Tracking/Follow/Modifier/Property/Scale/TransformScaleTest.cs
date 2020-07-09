@@ -49,6 +49,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
             GameObject target = new GameObject();
             GameObject offset = new GameObject();
 
+            offset.transform.SetParent(target.transform);
+
             source.transform.localScale = Vector3.one * 4f;
             target.transform.localScale = Vector3.one;
             offset.transform.localScale = Vector3.one * 2f;

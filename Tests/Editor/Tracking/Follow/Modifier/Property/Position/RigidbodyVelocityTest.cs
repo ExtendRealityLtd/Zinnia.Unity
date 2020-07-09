@@ -3,8 +3,11 @@
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
 {
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class RigidbodyVelocityTest
@@ -56,12 +59,61 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             Object.DestroyImmediate(target);
         }
 
+        [UnityTest]
+        public IEnumerator ModifyAndDiverge()
+        {
+            subject.TrackDivergence = true;
+            GameObject source = new GameObject();
+            GameObject target = subject.gameObject;
+
+            UnityEventListenerMock convergedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock divergedListenerMock = new UnityEventListenerMock();
+            subject.Converged.AddListener(convergedListenerMock.Listen);
+            subject.Diverged.AddListener(divergedListenerMock.Listen);
+
+            source.transform.position = Vector3.zero;
+            target.transform.position = Vector3.zero;
+
+            Assert.IsFalse(convergedListenerMock.Received);
+            Assert.IsFalse(divergedListenerMock.Received);
+            convergedListenerMock.Reset();
+            divergedListenerMock.Reset();
+
+            Assert.IsFalse(subject.AreDiverged(source, target));
+
+            source.transform.position = Vector3.one * 10f;
+
+            subject.Modify(source, target);
+
+            Assert.IsFalse(convergedListenerMock.Received);
+            Assert.IsTrue(divergedListenerMock.Received);
+            convergedListenerMock.Reset();
+            divergedListenerMock.Reset();
+
+            Assert.IsTrue(subject.AreDiverged(source, target));
+
+            while (subject.AreDiverged(source, target))
+            {
+                subject.Modify(source, target);
+                yield return null;
+            }
+
+            Assert.IsTrue(convergedListenerMock.Received);
+            Assert.IsFalse(divergedListenerMock.Received);
+            Assert.IsFalse(subject.AreDiverged(source, target));
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
+        }
+
         [Test]
         public void ModifyWithOffset()
         {
             GameObject source = new GameObject();
             GameObject target = subject.gameObject;
             GameObject offset = new GameObject();
+
+            offset.transform.SetParent(target.transform);
 
             source.transform.position = Vector3.one;
             target.transform.position = Vector3.zero;
@@ -81,6 +133,57 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(offset);
+        }
+
+        [UnityTest]
+        public IEnumerator ModifyWithOffsetAndDiverge()
+        {
+            subject.TrackDivergence = true;
+            GameObject source = new GameObject();
+            GameObject target = subject.gameObject;
+            GameObject offset = new GameObject();
+
+            UnityEventListenerMock convergedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock divergedListenerMock = new UnityEventListenerMock();
+            subject.Converged.AddListener(convergedListenerMock.Listen);
+            subject.Diverged.AddListener(divergedListenerMock.Listen);
+
+            offset.transform.SetParent(target.transform);
+
+            source.transform.position = Vector3.zero;
+            target.transform.position = Vector3.zero;
+            offset.transform.position = Vector3.one * 2f;
+
+            Assert.IsFalse(convergedListenerMock.Received);
+            Assert.IsFalse(divergedListenerMock.Received);
+            convergedListenerMock.Reset();
+            divergedListenerMock.Reset();
+
+            Assert.IsFalse(subject.AreDiverged(source, target));
+
+            source.transform.position = Vector3.one * 10f;
+
+            subject.Modify(source, target, offset);
+
+            Assert.IsFalse(convergedListenerMock.Received);
+            Assert.IsTrue(divergedListenerMock.Received);
+            convergedListenerMock.Reset();
+            divergedListenerMock.Reset();
+
+            Assert.IsTrue(subject.AreDiverged(source, target));
+
+            while (subject.AreDiverged(source, target))
+            {
+                subject.Modify(source, target);
+                yield return null;
+            }
+
+            Assert.IsTrue(convergedListenerMock.Received);
+            Assert.IsFalse(divergedListenerMock.Received);
+            Assert.IsFalse(subject.AreDiverged(source, target));
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
 
         [Test]

@@ -11,23 +11,27 @@
     /// </summary>
     public abstract class PropertyModifier : MonoBehaviour
     {
-        /// <summary>
-        /// Determines whether the offset will be applied on the modification.
-        /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool ApplyOffset { get; set; } = true;
-
+        #region Modifier Events
         /// <summary>
         /// Emitted before the property is modified.
         /// </summary>
-        [DocumentedByXml]
+        [Header("Modifier Events"), DocumentedByXml]
         public ObjectFollower.FollowEvent Premodified = new ObjectFollower.FollowEvent();
         /// <summary>
         /// Emitted after the property is modified.
         /// </summary>
         [DocumentedByXml]
         public ObjectFollower.FollowEvent Modified = new ObjectFollower.FollowEvent();
+        #endregion
+
+        #region Modifier Settings
+        /// <summary>
+        /// Determines whether the offset will be applied on the modification.
+        /// </summary>
+        [Serialized]
+        [field: Header("Modifier Settings"), DocumentedByXml]
+        public bool ApplyOffset { get; set; } = true;
+        #endregion
 
         /// <summary>
         /// The event data to emit before and after the property has been modified.
