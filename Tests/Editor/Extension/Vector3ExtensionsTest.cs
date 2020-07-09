@@ -49,5 +49,45 @@ namespace Test.Zinnia.Extension
             Vector3 b = Vector3.one * 2f;
             Assert.AreEqual(Vector3.one * 5f, a.Divide(b));
         }
+
+        [Test]
+        public void WithinDistance()
+        {
+            Vector3 a = new Vector3(0f, 0f, 0f);
+            Vector3 b = new Vector3(0f, 0f, 0f);
+            Vector3 tolerance = new Vector3(0.2f, 0.3f, 0.4f);
+
+            Assert.IsTrue(a.WithinDistance(b, tolerance));
+
+            b = new Vector3(0.1f, 0.1f, 0.1f);
+            Assert.IsTrue(a.WithinDistance(b, tolerance));
+
+            b = new Vector3(0.2f, 0.2f, 0.2f);
+            Assert.IsTrue(a.WithinDistance(b, tolerance));
+
+            b = new Vector3(0.2f, 0.3f, 0.3f);
+            Assert.IsTrue(a.WithinDistance(b, tolerance));
+
+            b = new Vector3(0.3f, 0.3f, 0.3f);
+            Assert.IsFalse(a.WithinDistance(b, tolerance));
+
+            b = new Vector3(0.3f, 0.4f, 0.4f);
+            Assert.IsFalse(a.WithinDistance(b, tolerance));
+
+            b = new Vector3(0.3f, 0.4f, 0.5f);
+            Assert.IsFalse(a.WithinDistance(b, tolerance));
+        }
+
+        [Test]
+        public void UnsignedEulerToSignedEuler()
+        {
+            Assert.AreEqual(new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector3(90f, 90f, 90f), new Vector3(90f, 90f, 90f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector3(179f, 179f, 179f), new Vector3(179f, 179f, 179f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector3(180f, 180f, 180f), new Vector3(180f, 180f, 180f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector3(-179f, -179f, -179f), new Vector3(181f, 181f, 181f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector3(-90f, -90f, -90f), new Vector3(270f, 270f, 270f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector3(0f, 0f, 0f), new Vector3(360f, 360f, 360f).UnsignedEulerToSignedEuler());
+        }
     }
 }

@@ -22,5 +22,25 @@
             transform.localScale = Vector3.one;
             transform.localScale = globalScale.Divide(transform.lossyScale);
         }
+
+        /// <summary>
+        /// Gets the signed Euler angle of the <see cref="Transform"/>.
+        /// </summary>
+        /// <param name="transform">The reference to the <see cref="Transform"/> to get the rotation from.</param>
+        /// <returns>The signed rotation Euler angles.</returns>
+        public static Vector3 SignedEulerAngles(this Transform transform)
+        {
+            return transform.eulerAngles.UnsignedEulerToSignedEuler();
+        }
+
+        /// <summary>
+        /// Gets the signed local Euler angle of the <see cref="Transform"/>.
+        /// </summary>
+        /// <param name="transform">The reference to the <see cref="Transform"/> to get the local rotation from.</param>
+        /// <returns>The local signed rotation Euler angles.</returns>
+        public static Vector3 SignedLocalEulerAngles(this Transform transform)
+        {
+            return transform.localEulerAngles.UnsignedEulerToSignedEuler();
+        }
     }
 }
