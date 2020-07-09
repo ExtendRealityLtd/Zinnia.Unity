@@ -17,9 +17,7 @@
         /// Defines the event with the specified <see cref="float"/>.
         /// </summary>
         [Serializable]
-        public class FloatUnityEvent : UnityEvent<float>
-        {
-        }
+        public class FloatUnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The time to start the countdown at.

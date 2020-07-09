@@ -13,8 +13,6 @@
         /// Defines the event with the <see cref="string"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<string>
-        {
-        }
+        public class UnityEvent : UnityEvent<string> { }
     }
 }

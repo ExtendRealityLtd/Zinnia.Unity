@@ -16,12 +16,10 @@
         /// Defines the event with the transformed <see cref="float"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
-        /// Transforms the given input bool to the float equivalent value.
+        /// Transforms the given input <see cref="bool"/> to the float equivalent value.
         /// </summary>
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value.</returns>

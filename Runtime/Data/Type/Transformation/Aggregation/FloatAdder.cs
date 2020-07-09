@@ -16,9 +16,7 @@
         /// Defines the event with the aggregated <see cref="float"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <inheritdoc />
         protected override float ProcessCollection()

@@ -65,9 +65,7 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class FollowEvent : UnityEvent<EventData>
-        {
-        }
+        public class FollowEvent : UnityEvent<EventData> { }
 
         /// <summary>
         /// A <see cref="GameObject"/> collection of target offsets to offset the <see cref="GameObjectSourceTargetProcessor.Targets"/> against the source whilst following. The <see cref="GameObject"/> for the target offset must be a child of the corresponding target.

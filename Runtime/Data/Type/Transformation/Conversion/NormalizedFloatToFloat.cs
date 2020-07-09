@@ -20,9 +20,7 @@
         /// Defines the event with the transformed <see cref="float"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The range in which to consider the minimum and maximum value for de-normalizing.

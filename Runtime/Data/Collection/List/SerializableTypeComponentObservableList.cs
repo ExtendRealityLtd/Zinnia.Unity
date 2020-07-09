@@ -25,8 +25,6 @@
         /// Defines the event with the <see cref="SerializableType"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<SerializableType>
-        {
-        }
+        public class UnityEvent : UnityEvent<SerializableType> { }
     }
 }

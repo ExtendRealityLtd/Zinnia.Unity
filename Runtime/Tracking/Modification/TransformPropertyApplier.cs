@@ -59,9 +59,7 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<EventData>
-        {
-        }
+        public class UnityEvent : UnityEvent<EventData> { }
 
         /// <summary>
         /// A reusable instance of <see cref="WaitForEndOfFrame"/>.

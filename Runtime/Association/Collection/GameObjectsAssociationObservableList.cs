@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="GameObjectsAssociation"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<GameObjectsAssociation>
-        {
-        }
+        public class UnityEvent : UnityEvent<GameObjectsAssociation> { }
     }
 }

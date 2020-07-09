@@ -5,7 +5,5 @@
     /// <summary>
     /// Defines the <c>[UnityFlags]</c> attribute.
     /// </summary>
-    public class UnityFlagsAttribute : PropertyAttribute
-    {
-    }
+    public class UnityFlagsAttribute : PropertyAttribute { }
 }

@@ -22,9 +22,7 @@
         /// Defines the event with the remapped <see cref="float"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The range of the value from.

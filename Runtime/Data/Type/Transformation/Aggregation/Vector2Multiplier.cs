@@ -17,9 +17,7 @@
         /// Defines the event with the multiplied <see cref="Vector2"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector2>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector2> { }
 
         /// <summary>
         /// Sets the x value of the <see cref="ObservableList{TElement,TEvent}.CurrentIndex"/> element.

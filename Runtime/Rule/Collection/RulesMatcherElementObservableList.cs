@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="RulesMatcher.Element"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<RulesMatcher.Element>
-        {
-        }
+        public class UnityEvent : UnityEvent<RulesMatcher.Element> { }
     }
 }

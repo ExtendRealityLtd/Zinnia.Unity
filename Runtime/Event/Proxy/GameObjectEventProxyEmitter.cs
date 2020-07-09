@@ -13,9 +13,7 @@
         /// Defines the event with the specified state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
-        {
-        }
+        public class UnityEvent : UnityEvent<GameObject> { }
 
         /// <inheritdoc />
         protected override object GetTargetToCheck()

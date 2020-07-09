@@ -13,8 +13,6 @@
         /// Defines the event with the <see cref="float"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
     }
 }

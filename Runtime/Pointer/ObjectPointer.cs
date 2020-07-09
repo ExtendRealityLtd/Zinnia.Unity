@@ -75,17 +75,13 @@
         /// </summary>
         /// <remarks>The <see cref="ObjectPointer"/> data is <see langword="null"/> in case the <see cref="ObjectPointer"/> isn't hitting any target.</remarks>
         [Serializable]
-        public class UnityEvent : UnityEvent<EventData>
-        {
-        }
+        public class UnityEvent : UnityEvent<EventData> { }
 
         /// <summary>
         /// Defines the event with the <see cref="PointsRenderer.PointsData"/> state.
         /// </summary>
         [Serializable]
-        public class PointsRendererUnityEvent : UnityEvent<PointsRenderer.PointsData>
-        {
-        }
+        public class PointsRendererUnityEvent : UnityEvent<PointsRenderer.PointsData> { }
 
         /// <summary>
         /// Represents the origin, i.e. the first rendered point.

@@ -39,9 +39,7 @@
         /// Defines the event with the specified state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<CollisionNotifier.EventData>
-        {
-        }
+        public class UnityEvent : UnityEvent<CollisionNotifier.EventData> { }
 
         /// <inheritdoc />
         protected override object GetTargetToCheck()

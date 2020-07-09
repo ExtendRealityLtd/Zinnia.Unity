@@ -15,9 +15,7 @@
         /// Defines an event with a <see cref="Vector3"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector3> { }
 
         /// <inheritdoc />
         protected override Vector3? ExtractValue()

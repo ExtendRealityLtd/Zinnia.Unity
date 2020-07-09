@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="RuleContainer"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<RuleContainer>
-        {
-        }
+        public class UnityEvent : UnityEvent<RuleContainer> { }
     }
 }

@@ -57,9 +57,7 @@
         private TInterface _interface;
 
         /// <inheritdoc />
-        public void OnBeforeSerialize()
-        {
-        }
+        public void OnBeforeSerialize() { }
 
         /// <inheritdoc />
         public void OnAfterDeserialize()

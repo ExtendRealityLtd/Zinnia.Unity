@@ -56,9 +56,7 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<EventData>
-        {
-        }
+        public class UnityEvent : UnityEvent<EventData> { }
 
         /// <summary>
         /// The highest level container of the consumer to allow for nested consumers.

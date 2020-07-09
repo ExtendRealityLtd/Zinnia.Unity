@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="LinkedAliasAssociationCollection"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<LinkedAliasAssociationCollection>
-        {
-        }
+        public class UnityEvent : UnityEvent<LinkedAliasAssociationCollection> { }
     }
 }

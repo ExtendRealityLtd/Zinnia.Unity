@@ -20,9 +20,7 @@
         /// Defines the event with the transformed <see cref="bool"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<bool>
-        {
-        }
+        public class UnityEvent : UnityEvent<bool> { }
 
         /// <summary>
         /// The bounds in which the float must be to be considered a positive boolean.

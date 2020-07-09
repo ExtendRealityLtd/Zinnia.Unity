@@ -17,9 +17,7 @@
         /// Defines the event with the aggregated <see cref="Vector3"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector3> { }
 
         /// <inheritdoc />
         protected override Vector3 ProcessCollection()

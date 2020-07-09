@@ -17,17 +17,13 @@
         /// Defines the event with the <see cref="Vector3"/>.
         /// </summary>
         [Serializable]
-        public class Vector3UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class Vector3UnityEvent : UnityEvent<Vector3> { }
 
         /// <summary>
         /// Defines the event with the <see cref="float"/>.
         /// </summary>
         [Serializable]
-        public class FloatUnityEvent : UnityEvent<float>
-        {
-        }
+        public class FloatUnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The source <see cref="VelocityTracker"/> to receive the velocity data from.

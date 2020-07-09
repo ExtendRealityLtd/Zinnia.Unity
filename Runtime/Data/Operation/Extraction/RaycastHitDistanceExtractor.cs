@@ -13,9 +13,7 @@
         /// Defines the event with the specified <see cref="float"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <inheritdoc />
         protected override float? ExtractValue()

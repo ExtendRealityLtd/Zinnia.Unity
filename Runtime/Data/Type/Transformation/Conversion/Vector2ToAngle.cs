@@ -25,9 +25,7 @@
         /// Defines the event with the transformed <see cref="float"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The unit to calculate the angle in.

@@ -17,9 +17,7 @@
         /// Defines the event for the generated collision point <see cref="GameObject"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
-        {
-        }
+        public class UnityEvent : UnityEvent<GameObject> { }
 
         /// <summary>
         /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or to just search for the containing <see cref="Transform"/>.

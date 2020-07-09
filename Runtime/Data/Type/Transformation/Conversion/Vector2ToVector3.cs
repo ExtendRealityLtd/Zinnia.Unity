@@ -20,9 +20,7 @@
         /// Defines the event with the transformed <see cref="Vector3"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector3> { }
 
         /// <summary>
         /// The mapping of <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.

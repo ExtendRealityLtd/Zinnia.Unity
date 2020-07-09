@@ -18,9 +18,7 @@
         /// Defines the event with the transformed <see cref="Vector2"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector2>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector2> { }
 
         /// <summary>
         /// A float to use as the current x value of the Vector2.

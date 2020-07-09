@@ -12,8 +12,6 @@
         /// Defines the event with the <see cref="bool"/> state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<bool>
-        {
-        }
+        public class UnityEvent : UnityEvent<bool> { }
     }
 }

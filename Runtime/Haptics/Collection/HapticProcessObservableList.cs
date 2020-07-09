@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="HapticProcess"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<HapticProcess>
-        {
-        }
+        public class UnityEvent : UnityEvent<HapticProcess> { }
     }
 }

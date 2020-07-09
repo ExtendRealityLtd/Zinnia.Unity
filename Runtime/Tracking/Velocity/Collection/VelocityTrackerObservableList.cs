@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="VelocityTracker"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<VelocityTracker>
-        {
-        }
+        public class UnityEvent : UnityEvent<VelocityTracker> { }
     }
 }

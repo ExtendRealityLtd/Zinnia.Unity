@@ -154,8 +154,6 @@ namespace Test.Zinnia.Rule
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        private class TestScript : MonoBehaviour
-        {
-        }
+        private class TestScript : MonoBehaviour { }
     }
 }
