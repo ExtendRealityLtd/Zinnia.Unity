@@ -29,6 +29,10 @@
                     {
                         Undo.RecordObject(property.serializedObject.targetObject, property.displayName);
                         property.SetValue(new FloatRange(output));
+                        if (property.isInstantiatedPrefab)
+                        {
+                            PrefabUtility.RecordPrefabInstancePropertyModifications(property.serializedObject.targetObject);
+                        }
                     }
 
                     foundGeneric = true;
