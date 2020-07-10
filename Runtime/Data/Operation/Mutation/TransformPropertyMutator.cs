@@ -34,6 +34,33 @@
         #endregion
 
         /// <summary>
+        /// Sets the <see cref="MutateOnAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetMutateOnAxisX(bool value)
+        {
+            MutateOnAxis = new Vector3State(value, MutateOnAxis.yState, MutateOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MutateOnAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetMutateOnAxisY(bool value)
+        {
+            MutateOnAxis = new Vector3State(MutateOnAxis.xState, value, MutateOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MutateOnAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetMutateOnAxisZ(bool value)
+        {
+            MutateOnAxis = new Vector3State(MutateOnAxis.xState, MutateOnAxis.yState, value);
+        }
+
+        /// <summary>
         /// Sets the property to the new value.
         /// </summary>
         /// <param name="input">The value to set it to.</param>

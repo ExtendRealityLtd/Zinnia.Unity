@@ -6,6 +6,7 @@
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Event.Proxy;
+    using Zinnia.Extension;
 
     public class ObjectFollowerEventProxyEmitter : RestrictableSingleEventProxyEmitter<ObjectFollower.EventData, ObjectFollowerEventProxyEmitter.UnityEvent>
     {
@@ -40,6 +41,15 @@
         [Serialized]
         [field: DocumentedByXml]
         public RuleSourceType RuleSource { get; set; }
+
+        /// <summary>
+        /// Sets the <see cref="RuleSource"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="RuleSourceType"/>.</param>
+        public virtual void SetRuleSource(int index)
+        {
+            RuleSource = EnumExtensions.GetByIndex<RuleSourceType>(index);
+        }
 
         /// <inheritdoc />
         protected override object GetTargetToCheck()

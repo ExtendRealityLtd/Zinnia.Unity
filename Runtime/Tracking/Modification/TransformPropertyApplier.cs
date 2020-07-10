@@ -201,6 +201,33 @@
         }
 
         /// <summary>
+        /// Sets the <see cref="ApplyRotationOffsetOnAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyRotationOffsetOnAxisX(bool value)
+        {
+            ApplyRotationOffsetOnAxis = new Vector3State(value, ApplyRotationOffsetOnAxis.yState, ApplyRotationOffsetOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyRotationOffsetOnAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyRotationOffsetOnAxisY(bool value)
+        {
+            ApplyRotationOffsetOnAxis = new Vector3State(ApplyRotationOffsetOnAxis.xState, value, ApplyRotationOffsetOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyRotationOffsetOnAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyRotationOffsetOnAxisZ(bool value)
+        {
+            ApplyRotationOffsetOnAxis = new Vector3State(ApplyRotationOffsetOnAxis.xState, ApplyRotationOffsetOnAxis.yState, value);
+        }
+
+        /// <summary>
         /// Applies the properties of the <see cref="Source"/> parameter to the target.
         /// </summary>
         [RequiresBehaviourState]

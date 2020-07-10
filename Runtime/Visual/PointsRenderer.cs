@@ -57,7 +57,7 @@
             [field: DocumentedByXml]
             public bool IsEndPointVisible { get; set; }
             /// <summary>
-            /// The points along the the most recent cast.
+            /// The points along the most recent cast.
             /// </summary>
             [Serialized]
             [field: DocumentedByXml]
@@ -93,6 +93,33 @@
         /// A collection of segment clones.
         /// </summary>
         protected readonly List<GameObject> segmentClones = new List<GameObject>();
+
+        /// <summary>
+        /// Sets the <see cref="SegmentScaleDirection"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSegmentScaleDirectionX(float value)
+        {
+            SegmentScaleDirection = new Vector3(value, SegmentScaleDirection.y, SegmentScaleDirection.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="SegmentScaleDirection"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSegmentScaleDirectionY(float value)
+        {
+            SegmentScaleDirection = new Vector3(SegmentScaleDirection.x, value, SegmentScaleDirection.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="SegmentScaleDirection"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSegmentScaleDirectionZ(float value)
+        {
+            SegmentScaleDirection = new Vector3(SegmentScaleDirection.x, SegmentScaleDirection.y, value);
+        }
 
         /// <summary>
         /// Renders the given points.

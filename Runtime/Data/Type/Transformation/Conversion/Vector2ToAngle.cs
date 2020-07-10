@@ -65,6 +65,33 @@
         public Vector2 Origin { get; set; } = new Vector2(0f, 1f);
 
         /// <summary>
+        /// Sets the <see cref="Unit"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="AngleUnit"/>.</param>
+        public virtual void SetUnit(int index)
+        {
+            Unit = EnumExtensions.GetByIndex<AngleUnit>(index);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Origin"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetOriginX(float value)
+        {
+            Origin = new Vector2(value, Origin.y);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Origin"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetOriginY(float value)
+        {
+            Origin = new Vector2(Origin.x, value);
+        }
+
+        /// <summary>
         /// The full circle in radians.
         /// </summary>
         protected const double fullCircleRadians = 2f * Math.PI;

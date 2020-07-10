@@ -6,6 +6,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Describes an element of the rendered <see cref="ObjectPointer"/>.
@@ -82,6 +83,15 @@
         /// Whether the element is currently visible.
         /// </summary>
         public bool IsVisible { get; set; }
+
+        /// <summary>
+        /// Sets the <see cref="ElementVisibility"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="Visibility"/>.</param>
+        public virtual void SetElementVisibilityt(int index)
+        {
+            ElementVisibility = EnumExtensions.GetByIndex<Visibility>(index);
+        }
 
         /// <summary>
         /// Called after <see cref="ElementVisibility"/> has been changed.

@@ -44,6 +44,33 @@
         protected Vector3? previousSourcePosition;
 
         /// <summary>
+        /// Sets the <see cref="FollowOnAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetFollowOnAxisX(bool value)
+        {
+            FollowOnAxis = new Vector3State(value, FollowOnAxis.yState, FollowOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="FollowOnAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetFollowOnAxisY(bool value)
+        {
+            FollowOnAxis = new Vector3State(FollowOnAxis.xState, value, FollowOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="FollowOnAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetFollowOnAxisZ(bool value)
+        {
+            FollowOnAxis = new Vector3State(FollowOnAxis.xState, FollowOnAxis.yState, value);
+        }
+
+        /// <summary>
         /// Resets the state of the source previous position.
         /// </summary>
         public virtual void ResetPreviousState()

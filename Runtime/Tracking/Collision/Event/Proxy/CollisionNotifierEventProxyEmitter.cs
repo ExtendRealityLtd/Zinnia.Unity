@@ -41,6 +41,15 @@
         [Serializable]
         public class UnityEvent : UnityEvent<CollisionNotifier.EventData> { }
 
+        /// <summary>
+        /// Sets the <see cref="RuleSource"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="RuleSourceType"/>.</param>
+        public virtual void SetRuleSource(int index)
+        {
+            RuleSource = EnumExtensions.GetByIndex<RuleSourceType>(index);
+        }
+
         /// <inheritdoc />
         protected override object GetTargetToCheck()
         {
