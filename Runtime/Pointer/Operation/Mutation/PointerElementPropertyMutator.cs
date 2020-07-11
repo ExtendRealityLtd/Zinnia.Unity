@@ -66,7 +66,7 @@
         /// <param name="elementVisibilityIndex">The index of the <see cref="PointerElement.Visibility"/>.</param>
         public virtual void SetElementVisibility(int elementVisibilityIndex)
         {
-            ElementVisibility = (PointerElement.Visibility)Mathf.Clamp(elementVisibilityIndex, 0, System.Enum.GetValues(typeof(PointerElement.Visibility)).Length);
+            ElementVisibility = EnumExtensions.GetByIndex<PointerElement.Visibility>(elementVisibilityIndex);
         }
 
         /// <summary>

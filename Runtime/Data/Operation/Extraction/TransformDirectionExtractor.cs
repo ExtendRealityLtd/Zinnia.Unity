@@ -3,6 +3,7 @@
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Extracts a chosen axis of a <see cref="Transform"/>.
@@ -34,6 +35,15 @@
         [Serialized]
         [field: DocumentedByXml]
         public AxisDirection Direction { get; set; }
+
+        /// <summary>
+        /// Sets the <see cref="Direction"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="AxisDirection"/>.</param>
+        public virtual void SetDirection(int index)
+        {
+            Direction = EnumExtensions.GetByIndex<AxisDirection>(index);
+        }
 
         /// <inheritdoc />
         protected override Vector3? ExtractValue()

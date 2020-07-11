@@ -14,9 +14,7 @@
         /// Defines the event with the specified <see cref="GameObject"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
-        {
-        }
+        public class UnityEvent : UnityEvent<GameObject> { }
 
         /// <summary>
         /// Extracts the source container from the given publisher contained within the <see cref="ActiveCollisionConsumer.EventData"/>.

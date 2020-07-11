@@ -17,9 +17,7 @@
         /// Defines the event for the output <see cref="GameObject"/>.
         /// </summary>
         [Serializable]
-        public class GameObjectUnityEvent : UnityEvent<GameObject>
-        {
-        }
+        public class GameObjectUnityEvent : UnityEvent<GameObject> { }
 
         /// <summary>
         /// The collection of relations.

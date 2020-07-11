@@ -51,9 +51,7 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class ActiveCollisionUnityEvent : UnityEvent<EventData>
-        {
-        }
+        public class ActiveCollisionUnityEvent : UnityEvent<EventData> { }
 
         #region Validity Settings
         /// <summary>

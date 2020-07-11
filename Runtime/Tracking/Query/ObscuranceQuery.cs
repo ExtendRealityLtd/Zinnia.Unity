@@ -24,9 +24,7 @@
         /// Defines the event with the <see cref="HeapAllocationFreeReadOnlyList{T}"/> of <see cref="RaycastHit"/>s.
         /// </summary>
         [Serializable]
-        public class HitEvent : UnityEvent<HeapAllocationFreeReadOnlyList<RaycastHit>>
-        {
-        }
+        public class HitEvent : UnityEvent<HeapAllocationFreeReadOnlyList<RaycastHit>> { }
 
         public class MissingColliderException : Exception
         {

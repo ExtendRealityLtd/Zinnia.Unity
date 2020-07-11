@@ -37,8 +37,6 @@
         /// Defines the event with the <see cref="Relation"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Relation>
-        {
-        }
+        public class UnityEvent : UnityEvent<Relation> { }
     }
 }

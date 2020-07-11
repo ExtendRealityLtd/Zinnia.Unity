@@ -14,9 +14,7 @@
         /// Defines the event with the specified <see cref="Rigidbody"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Rigidbody>
-        {
-        }
+        public class UnityEvent : UnityEvent<Rigidbody> { }
 
         /// <inheritdoc />
         protected override Rigidbody ExtractValue()

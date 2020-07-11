@@ -47,9 +47,7 @@
         /// Defines the event for the output <see cref="PayloadData"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<PayloadData>
-        {
-        }
+        public class UnityEvent : UnityEvent<PayloadData> { }
 
         /// <summary>
         /// The data to publish to any available consumers.

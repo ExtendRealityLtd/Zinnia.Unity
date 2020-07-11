@@ -39,5 +39,17 @@
         {
             return Vector2.Scale(dividend, Divide(1, divisor));
         }
+
+        /// <summary>
+        /// Check whether the source and target points are within a given tolerance distance of each other.
+        /// </summary>
+        /// <param name="a">The source point.</param>
+        /// <param name="b">The target point.</param>
+        /// <param name="tolerance">The tolerance of distance equality.</param>
+        /// <returns>Whether the source and target are within the distance equality tolerance.</returns>
+        public static bool WithinDistance(this Vector2 a, Vector2 b, Vector2 tolerance)
+        {
+            return a.x.ApproxEquals(b.x, tolerance.x) && a.y.ApproxEquals(b.y, tolerance.y);
+        }
     }
 }

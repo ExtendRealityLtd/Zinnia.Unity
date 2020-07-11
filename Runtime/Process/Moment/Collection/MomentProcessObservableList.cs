@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="MomentProcess"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<MomentProcess>
-        {
-        }
+        public class UnityEvent : UnityEvent<MomentProcess> { }
     }
 }

@@ -3,6 +3,7 @@
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Extracts and emits the elements from <see cref="Time"/>.
@@ -13,9 +14,7 @@
         /// Defines the event with the specified <see cref="float"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The components of <see cref="Time"/>
@@ -47,11 +46,11 @@
             /// </summary>
             TimeStepTypeDeltaTime,
             /// <summary>
-            /// The timeScale-independant time for this frame. This is the time in seconds since the start of the game.
+            /// The timeScale-independent time for this frame. This is the time in seconds since the start of the game.
             /// </summary>
             UnscaledTime,
             /// <summary>
-            /// The TimeScale-independant time the latest MonoBehaviour.FixedUpdate has started. This is the time in seconds since the start of the game.
+            /// The TimeScale-independent time the latest MonoBehaviour.FixedUpdate has started. This is the time in seconds since the start of the game.
             /// </summary>
             FixedUnscaledTime,
             /// <summary>
@@ -71,7 +70,7 @@
             /// </summary>
             TimeStepTypeUnscaledDeltaTime,
             /// <summary>
-            /// Slows game playback time to allow screenshots to be saved between frames.
+            /// Slows game playback time to allow screen shots to be saved between frames.
             /// </summary>
             CaptureFrameRate,
             /// <summary>
@@ -106,6 +105,15 @@
             /// The time in seconds since the last level has been loaded.
             /// </summary>
             TimeSinceLevelLoad
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Source"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="TimeComponent"/>.</param>
+        public virtual void SetSource(int index)
+        {
+            Source = EnumExtensions.GetByIndex<TimeComponent>(index);
         }
 
         /// <inheritdoc />

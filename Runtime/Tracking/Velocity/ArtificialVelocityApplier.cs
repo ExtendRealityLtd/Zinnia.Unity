@@ -78,11 +78,65 @@
         }
 
         /// <summary>
+        /// Sets the <see cref="Velocity"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetVelocityX(float value)
+        {
+            Velocity = new Vector3(value, Velocity.y, Velocity.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Velocity"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetVelocityY(float value)
+        {
+            Velocity = new Vector3(Velocity.x, value, Velocity.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Velocity"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetVelocityZ(float value)
+        {
+            Velocity = new Vector3(Velocity.x, Velocity.y, value);
+        }
+
+        /// <summary>
         /// Reset <see cref="Velocity"/> to <see cref="Vector3.zero"/>.
         /// </summary>
         public virtual void ClearVelocity()
         {
             Velocity = Vector3.zero;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="AngularVelocity"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetAngularVelocityX(float value)
+        {
+            AngularVelocity = new Vector3(value, AngularVelocity.y, AngularVelocity.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="AngularVelocity"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetAngularVelocityY(float value)
+        {
+            AngularVelocity = new Vector3(AngularVelocity.x, value, AngularVelocity.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="AngularVelocity"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetAngularVelocityZ(float value)
+        {
+            AngularVelocity = new Vector3(AngularVelocity.x, AngularVelocity.y, value);
         }
 
         /// <summary>

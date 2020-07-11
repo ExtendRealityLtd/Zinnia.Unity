@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="Camera"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Camera>
-        {
-        }
+        public class UnityEvent : UnityEvent<Camera> { }
     }
 }

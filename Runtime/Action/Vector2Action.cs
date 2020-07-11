@@ -17,9 +17,7 @@
         /// Defines the event with the <see cref="Vector2"/> state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector2>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector2> { }
 
         /// <summary>
         /// The tolerance of equality between two <see cref="Vector2"/> values.

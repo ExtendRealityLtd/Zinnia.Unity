@@ -40,7 +40,7 @@
             public bool IsValid { get; set; }
 
             /// <summary>
-            /// The points along the the most recent cast.
+            /// The points along the most recent cast.
             /// </summary>
             public HeapAllocationFreeReadOnlyList<Vector3> Points { get; set; }
 
@@ -108,12 +108,12 @@
         /// </summary>
         public bool IsTargetHitValid { get; protected set; }
         /// <summary>
-        /// The points along the the most recent cast.
+        /// The points along the most recent cast.
         /// </summary>
         public HeapAllocationFreeReadOnlyList<Vector3> Points => points;
 
         /// <summary>
-        /// The points along the the most recent cast.
+        /// The points along the most recent cast.
         /// </summary>
         protected readonly List<Vector3> points = new List<Vector3>();
         /// <summary>

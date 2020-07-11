@@ -13,9 +13,7 @@
         /// Defines the event with the specified <see cref="float"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The tolerance to consider the current value and the cached value equal.

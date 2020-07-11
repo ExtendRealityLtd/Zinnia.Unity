@@ -27,6 +27,33 @@
         public Vector3State ApplyFacingDirectionOnAxis { get; set; } = Vector3State.True;
         #endregion
 
+        /// <summary>
+        /// Sets the <see cref="ApplyFacingDirectionOnAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyFacingDirectionOnAxisX(bool value)
+        {
+            ApplyFacingDirectionOnAxis = new Vector3State(value, ApplyFacingDirectionOnAxis.yState, ApplyFacingDirectionOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyFacingDirectionOnAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyFacingDirectionOnAxisY(bool value)
+        {
+            ApplyFacingDirectionOnAxis = new Vector3State(ApplyFacingDirectionOnAxis.xState, value, ApplyFacingDirectionOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyFacingDirectionOnAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyFacingDirectionOnAxisZ(bool value)
+        {
+            ApplyFacingDirectionOnAxis = new Vector3State(ApplyFacingDirectionOnAxis.xState, ApplyFacingDirectionOnAxis.yState, value);
+        }
+
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)
         {

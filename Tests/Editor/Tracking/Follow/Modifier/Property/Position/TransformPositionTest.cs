@@ -50,6 +50,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             GameObject target = new GameObject();
             GameObject offset = new GameObject();
 
+            offset.transform.SetParent(target.transform);
+
             source.transform.position = Vector3.one * 2f;
             target.transform.position = Vector3.zero;
             offset.transform.position = Vector3.one * 0.5f;

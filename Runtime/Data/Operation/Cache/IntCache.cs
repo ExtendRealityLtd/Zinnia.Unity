@@ -10,8 +10,6 @@
         /// Defines the event with the specified <see cref="int"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<int>
-        {
-        }
+        public class UnityEvent : UnityEvent<int> { }
     }
 }

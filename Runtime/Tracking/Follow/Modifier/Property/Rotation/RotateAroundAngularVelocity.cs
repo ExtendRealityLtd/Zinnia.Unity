@@ -32,6 +32,60 @@
         public Vector3State ApplyToAxis { get; set; }
 
         /// <summary>
+        /// Sets the <see cref="SourceMultiplier"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSourceMultiplierX(float value)
+        {
+            SourceMultiplier = new Vector3(value, SourceMultiplier.y, SourceMultiplier.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="SourceMultiplier"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSourceMultiplierY(float value)
+        {
+            SourceMultiplier = new Vector3(SourceMultiplier.x, value, SourceMultiplier.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="SourceMultiplier"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSourceMultiplierZ(float value)
+        {
+            SourceMultiplier = new Vector3(SourceMultiplier.x, SourceMultiplier.y, value);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyToAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyToAxisX(bool value)
+        {
+            ApplyToAxis = new Vector3State(value, ApplyToAxis.yState, ApplyToAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyToAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyToAxisY(bool value)
+        {
+            ApplyToAxis = new Vector3State(ApplyToAxis.xState, value, ApplyToAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyToAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyToAxisZ(bool value)
+        {
+            ApplyToAxis = new Vector3State(ApplyToAxis.xState, ApplyToAxis.yState, value);
+        }
+
+        /// <summary>
         /// Modifies the target rotation to match the given source rotation.
         /// </summary>
         /// <param name="source">The source is unused in this implementation.</param>

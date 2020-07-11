@@ -3,8 +3,10 @@
 namespace Test.Zinnia.Action
 {
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class BooleanActionTest
@@ -483,6 +485,188 @@ namespace Test.Zinnia.Action
 
             Object.DestroyImmediate(sourceObject);
         }
+
+        [UnityTest]
+        public IEnumerator DefaultValueFalseAndInitialValueTrue()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock unchangedListenerMock = new UnityEventListenerMock();
+
+            BooleanActionLiveMock liveSubject = containingObject.AddComponent<BooleanActionLiveMock>();
+            liveSubject.SetInitialValue(true);
+
+            liveSubject.Activated.AddListener(activatedListenerMock.Listen);
+            liveSubject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            liveSubject.ValueChanged.AddListener(changedListenerMock.Listen);
+            liveSubject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            yield return null;
+
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator DefaultValueTrueAndInitialValueTrue()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock unchangedListenerMock = new UnityEventListenerMock();
+
+            BooleanActionLiveMock liveSubject = containingObject.AddComponent<BooleanActionLiveMock>();
+
+            liveSubject.DefaultValue = true;
+            liveSubject.SetInitialValue(true);
+
+            liveSubject.ForceAwake();
+
+            liveSubject.Activated.AddListener(activatedListenerMock.Listen);
+            liveSubject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            liveSubject.ValueChanged.AddListener(changedListenerMock.Listen);
+            liveSubject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            yield return null;
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            liveSubject.Receive(false);
+
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator DefaultValueTrueAndInitialValueFalse()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock unchangedListenerMock = new UnityEventListenerMock();
+
+            BooleanActionLiveMock liveSubject = containingObject.AddComponent<BooleanActionLiveMock>();
+
+            liveSubject.DefaultValue = true;
+            liveSubject.SetInitialValue(false);
+
+            liveSubject.ForceAwake();
+
+            liveSubject.Activated.AddListener(activatedListenerMock.Listen);
+            liveSubject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            liveSubject.ValueChanged.AddListener(changedListenerMock.Listen);
+            liveSubject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            yield return null;
+
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            liveSubject.Receive(true);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsTrue(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator ResetToInitialValue()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock unchangedListenerMock = new UnityEventListenerMock();
+
+            BooleanActionLiveMock liveSubject = containingObject.AddComponent<BooleanActionLiveMock>();
+            liveSubject.SetInitialValue(true);
+
+            liveSubject.Activated.AddListener(activatedListenerMock.Listen);
+            liveSubject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            liveSubject.ValueChanged.AddListener(changedListenerMock.Listen);
+            liveSubject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            yield return null;
+
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            liveSubject.Receive(false);
+
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsTrue(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            liveSubject.ReceiveInitialValue();
+
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+        }
     }
 
     public class BooleanActionMock : BooleanAction
@@ -495,6 +679,20 @@ namespace Test.Zinnia.Action
         public virtual void SetValue(bool value)
         {
             Value = value;
+        }
+    }
+
+    public class BooleanActionLiveMock : BooleanAction
+    {
+        public virtual void ForceAwake()
+        {
+            IsActivated = false;
+            Awake();
+        }
+
+        public virtual void SetInitialValue(bool value)
+        {
+            InitialValue = value;
         }
     }
 }

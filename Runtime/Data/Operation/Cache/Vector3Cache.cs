@@ -14,9 +14,7 @@
         /// Defines the event with the specified <see cref="Vector3"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector3> { }
 
         /// <summary>
         /// The tolerance to consider the current value and the cached value equal.

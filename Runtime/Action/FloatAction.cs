@@ -16,9 +16,7 @@
         /// Defines the event with the <see cref="float"/> state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The tolerance of equality between two <see cref="float"/> values.

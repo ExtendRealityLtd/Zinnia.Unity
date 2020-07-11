@@ -5,6 +5,7 @@
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Transforms a <see cref="float"/> by remapping from a range to a new range.
@@ -22,9 +23,7 @@
         /// Defines the event with the remapped <see cref="float"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The range of the value from.
@@ -61,6 +60,15 @@
         [Serialized]
         [field: DocumentedByXml]
         public OutputMode Mode { get; set; } = OutputMode.Lerp;
+
+        /// <summary>
+        /// Sets the <see cref="Mode"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="OutputMode"/>.</param>
+        public virtual void SetMode(int index)
+        {
+            Mode = EnumExtensions.GetByIndex<OutputMode>(index);
+        }
 
         /// <summary>
         /// Transforms the given <see cref="float"/> by remapping to a new range.

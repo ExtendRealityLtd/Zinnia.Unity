@@ -10,7 +10,7 @@
     using Zinnia.Extension;
 
     /// <summary>
-    /// Mutates the euler rotation of a transform with an optional custom rotation origin.
+    /// Mutates the Euler rotation of a transform with an optional custom rotation origin.
     /// </summary>
     public class TransformEulerRotationMutator : TransformPropertyMutator
     {
@@ -28,6 +28,33 @@
         [field: DocumentedByXml]
         public Vector3State ApplyOriginOnAxis { get; set; } = Vector3State.True;
         #endregion
+
+        /// <summary>
+        /// Sets the <see cref="ApplyOriginOnAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyOriginOnAxisX(bool value)
+        {
+            ApplyOriginOnAxis = new Vector3State(value, ApplyOriginOnAxis.yState, ApplyOriginOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyOriginOnAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyOriginOnAxisY(bool value)
+        {
+            ApplyOriginOnAxis = new Vector3State(ApplyOriginOnAxis.xState, value, ApplyOriginOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyOriginOnAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyOriginOnAxisZ(bool value)
+        {
+            ApplyOriginOnAxis = new Vector3State(ApplyOriginOnAxis.xState, ApplyOriginOnAxis.yState, value);
+        }
 
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)

@@ -15,17 +15,13 @@
         /// Defines the event with the specified <see cref="Vector3"/>.
         /// </summary>
         [Serializable]
-        public class Vector3UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class Vector3UnityEvent : UnityEvent<Vector3> { }
 
         /// <summary>
         /// Defines the event with the specified <see cref="float"/>.
         /// </summary>
         [Serializable]
-        public class FloatUnityEvent : UnityEvent<float>
-        {
-        }
+        public class FloatUnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// Emitted when the <see cref="Vector3"/> is extracted.

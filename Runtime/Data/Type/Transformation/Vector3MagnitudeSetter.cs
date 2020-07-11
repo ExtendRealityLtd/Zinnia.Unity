@@ -15,9 +15,7 @@
         /// Defines the event with the <see cref="Vector3"/> with the changed magnitude.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector3> { }
 
         /// <summary>
         /// The magnitude to use when transforming values.

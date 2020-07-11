@@ -13,9 +13,7 @@
         /// Defines the event with the specified <see cref="Collider"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Collider>
-        {
-        }
+        public class UnityEvent : UnityEvent<Collider> { }
 
         /// <inheritdoc />
         protected override Collider ExtractValue()

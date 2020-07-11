@@ -19,9 +19,7 @@
         /// Defines the event with the transformed <see cref="Vector3"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector3> { }
 
         /// <summary>
         /// The minimum and maximum values that the x coordinate can be.

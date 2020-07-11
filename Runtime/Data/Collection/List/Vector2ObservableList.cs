@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="Vector2"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector2>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector2> { }
     }
 }

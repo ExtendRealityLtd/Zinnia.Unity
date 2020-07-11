@@ -131,6 +131,33 @@
         protected readonly TransformData transformData = new TransformData();
 
         /// <summary>
+        /// Sets the <see cref="SearchDirection"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSearchDirectionX(float value)
+        {
+            SearchDirection = new Vector3(value, SearchDirection.y, SearchDirection.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="SearchDirection"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSearchDirectionY(float value)
+        {
+            SearchDirection = new Vector3(SearchDirection.x, value, SearchDirection.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="SearchDirection"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSearchDirectionZ(float value)
+        {
+            SearchDirection = new Vector3(SearchDirection.x, SearchDirection.y, value);
+        }
+
+        /// <summary>
         /// Locates the nearest available surface upon a <see cref="MomentProcess"/>.
         /// </summary>
         public virtual void Process()

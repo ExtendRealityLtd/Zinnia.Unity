@@ -5,6 +5,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Rendering;
+    using Zinnia.Extension;
     using Zinnia.Process.Moment.Collection;
 
     /// <summary>
@@ -55,6 +56,15 @@
         [Serialized]
         [field: DocumentedByXml]
         public MomentProcessObservableList Processes { get; set; }
+
+        /// <summary>
+        /// Sets the <see cref="ProcessMoment"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="Moment"/>.</param>
+        public virtual void SetProcessMoment(int index)
+        {
+            ProcessMoment = EnumExtensions.GetByIndex<Moment>(index);
+        }
 
         protected virtual void OnEnable()
         {

@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="Behaviour"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Behaviour>
-        {
-        }
+        public class UnityEvent : UnityEvent<Behaviour> { }
     }
 }

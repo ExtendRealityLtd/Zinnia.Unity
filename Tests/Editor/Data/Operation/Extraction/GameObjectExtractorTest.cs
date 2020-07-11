@@ -107,9 +107,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         /// Defines the event with the specified <see cref="GameObject"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
-        {
-        }
+        public class UnityEvent : UnityEvent<GameObject> { }
 
         public void SetResult(GameObject result)
         {

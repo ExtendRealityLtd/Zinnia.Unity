@@ -5,6 +5,7 @@
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Transforms a <see cref="Vector3"/> to a <see cref="float"/> and allows mapping of the relevant coordinates.
@@ -57,6 +58,15 @@
         [Serialized]
         [field: DocumentedByXml]
         public ExtractionCoordinate CoordinateToExtract { get; set; } = ExtractionCoordinate.ExtractX;
+
+        /// <summary>
+        /// Sets the <see cref="CoordinateToExtract"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="ExtractionCoordinate"/>.</param>
+        public virtual void SetCoordinateToExtract(int index)
+        {
+            CoordinateToExtract = EnumExtensions.GetByIndex<ExtractionCoordinate>(index);
+        }
 
         /// <summary>
         /// Transforms the given <see cref="Vector3"/> into a <see cref="float"/>.
