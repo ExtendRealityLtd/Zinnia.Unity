@@ -1,5 +1,78 @@
 # Changelog
 
+## [1.20.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.19.0...v1.20.0) (2020-07-11)
+
+#### Features
+
+* **Action:** add ability to set initial value of an Action ([bbc8ee0](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/bbc8ee0bec3f1e8f00d759b065481dbf223db89c))
+  > The new InitialValue property allows an Action to have the starting value set in the Unity Editor at edit time. Once the script is started then the InitialValue will be used to set the default state of the Action (but no events will be emitted to denote an action change as technically the state hasn't changed if it is moving to the initial state).
+  > 
+  > This new InitialValue property is only for use in the UnityEditor at Edit time and cannot be changed at runtime nor can it be set via script. If an initial value is required via creation of an Action by script then simply just need to create the Action and call `Receive(<your-initial-value>)` prior to any event listeners being hooked up. This will simply call the `Receive` method and will emit the relevant events, but as no event listeners should have been registered then this won't make any difference.
+  > 
+  > An extra method of `ReceiveInitialValue` has also been added that will allow the `Receive` method to be called with the initial set value. Again, this is only useful for when creating the Action via the Unity Inspector as the InitialValue cannot be changed via script.
+  > 
+  > The `DefaultValue` help text has also been updated to make it more clearer what this property is for as it's not the starting value of the Action, but the value the Action needs to be at to be considered disabled.
+* **Extension:** add enum extension/helper methods ([33463ce](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/33463ce4ce4fcccf8578472295774c69e73ae98b))
+  > A couple of new Enum helper methods have been added that make getting an enum easier by either being able to provide the index of the enum to return or by getting the enum by string name.
+  > 
+  > The PointerElementPropertyMutator has been updated to take advantage of this new method.
+* **Extension:** add new data type extensions for common calculations ([816dc97](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/816dc972979193fd701f1788af28c0753b33f5b8))
+  > A common calculation is finding a fine grain distance between two points (either Vector2 or Vector3) where the tolerance is also given in the same type as opposed to just a simple `float`.
+  > 
+  > The new Vector2.WithinDistance and Vector3.WithinDistance offer this via the relevant extensions.
+  > 
+  > Another common calculation is converting euler degrees to signed degrees, such as 270' is actually equivalent to -90'. This helps when doing greater than or less than comparisons as a negative rotation of -90' is less than a rotation of 0' whereas 270' as a number would be greater than 0'.
+  > 
+  > The `Vector3.UnsignedEulerToSignedEuler` will convert the current Vector3 of euler angles into a Signed Euler (-180' to 180f) using the new `float.GetSignedDegree` which simply converts a Euler angle into the -180' to 180' range.
+  > 
+  > These are then used to provide new Transform extensions for:
+  > 
+  > * `Transform.SignedEulerAngles` * `Transform.SignedLocalEulerAngles`
+  > 
+  > Which simply return the respective Euler or Local Euler angle for the Transform but in this signed format.
+* **structure:** provide mechanism to change properties via UnityEvents ([98ae181](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/98ae181d6909a95f38c5266c7555c447b013df7b))
+  > Some property types cannot be changed via UnityEvents as they are not supported in the UnityEvent inspector, such as Enums, Vectors and Vector3State.
+  > 
+  > This has been fixed by adding custom setter methods that can be called via the UnityEvent inspector using primitive types that are supported to allow this data to still be set.
+* **Tracking:** add divergable property modifier types ([8538d3f](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/8538d3f435738ec8e5254dc3b18a4efd81978e4a))
+  > A new Property Modifier type known as a Divergable Property Modifier has been added that allows a property modifier to know when the target has become diverged from the source in whatever property it is tracking.
+  > 
+  > Only certain types of modifier can actually ever cause a divergence, such as the RigidbodyVelocity and RigidbodyAngularVelocity because they can make it so the target is not keeping exactly up to date with the source and become diverged somewhat.
+  > 
+  > So now both RigidbodyVelocity and RigidbodyAngularVelocity have become extensions of the DivergablePropertyModifier and now emit events when the source/target diverge and converge again.
+  > 
+  > It is also possible to turn off this divergence tracking and it is turned off by default as it adds an additional overhead, which should not be automatically implemented unless the overhead is warranted for the benefits of using the functionality.
+* **Tracking:** add proxy emitter for ObjectFollower.EventData ([0da6d51](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/0da6d51802e0ef5975df5620770ea437e516621b))
+  > The ObjectFollower.EventData can now be proxied via the new ObjectFollowerEventProxyEmitter and this data can also now be used as an input to the PropertyModifier `Modify` method as this makes it easy to chain Property Modifiers together to have one modifier use its data to call another Property Modifier.
+* **Yield:** add ability to emit an event after a yield instruction ([f1e70c8](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/f1e70c8ffad0795ac3d30a47b642071a481e8b10))
+  > The new Yield events provide the ability to trigger some action after a yield instruction has completed such as seconds passed or at end of frame.
+  > 
+  > This can be used in conjunction with the Proxy events to first store the payload in the Proxy then trigger the emit after the yield instruction has completed.
+
+#### Bug Fixes
+
+* **Attribute:** record MinMaxRange value changes on prefab instance ([4617d6c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/4617d6c0868e319e2edaa8860f556465f3bffe2c))
+  > There is an issue where the MinMaxRange control will reset the value back to the previous value when it is used within a prefab.
+  > 
+  > The solution seems to be to record the prefab instance property modification after the custom FloatRange value has been set through the Supyrb `SetValue` extension, which doesn't set the value via the SerializedProperty because that is not supported in Unity on custom data types.
+  > 
+  > The issue only seems to present itself when changing the value between varying negative values:
+  > 
+  > * -0.5 * -0.2 * -0.5 (reverts to 0)
+
+#### Code Refactoring
+
+* **guidelines:** apply coding guidelines to empty classes ([fea537b](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/fea537b56976f1d9f2aa9944c116d2d3fc07d9a4))
+  > The coding guidelines state that empty classes should have the brackets on the same line as such:
+  > 
+  > `class { }`
+  > 
+  > and not
+  > 
+  > ``` class { } ```
+  > 
+  > This has now been applied to the relevant offending files.
+
 ## [1.19.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.18.0...v1.19.0) (2020-06-07)
 
 #### Features
