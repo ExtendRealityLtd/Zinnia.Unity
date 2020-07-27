@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
@@ -19,6 +20,13 @@
         public XRNode Node { get; set; } = XRNode.LeftHand;
 
         /// <summary>
+        /// An optional object to consider the source relative to when estimating the velocities.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject RelativeTo { get; set; }
+
+        /// <summary>
         /// A collection of node states.
         /// </summary>
         protected readonly List<XRNodeState> nodesStates = new List<XRNodeState>();
@@ -27,6 +35,7 @@
         protected override Vector3 DoGetVelocity()
         {
             GetNodeState().TryGetVelocity(out Vector3 result);
+            result = (RelativeTo != null ? RelativeTo.transform.rotation : Quaternion.identity) * result;
             return result;
         }
 
@@ -34,6 +43,8 @@
         protected override Vector3 DoGetAngularVelocity()
         {
             GetNodeState().TryGetAngularVelocity(out Vector3 result);
+            GetNodeState().TryGetRotation(out Quaternion rotation);
+            result = (RelativeTo != null ? RelativeTo.transform.rotation : Quaternion.identity) * rotation * result;
             return result;
         }
 
