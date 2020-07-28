@@ -72,6 +72,24 @@
         }
 
         /// <summary>
+        /// Manually remove a source and target from the diverged state.
+        /// </summary>
+        /// <param name="source">The source to diverge from.</param>
+        /// <param name="target">The target that has diverged.</param>
+        public virtual void RemoveFromDiverged(GameObject source, GameObject target)
+        {
+            divergedStates.Remove(GenerateIdentifier(source, target));
+        }
+
+        /// <summary>
+        /// Clears the diverged states of all diverging source/targets.
+        /// </summary>
+        public virtual void ClearDiverged()
+        {
+            divergedStates.Clear();
+        }
+
+        /// <summary>
         /// Whether the given source and target are diverged.
         /// </summary>
         /// <param name="source">The source to check against.</param>

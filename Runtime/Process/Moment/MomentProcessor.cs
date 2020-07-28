@@ -41,7 +41,11 @@
             /// <summary>
             /// Executes the processes in the camera PreRender scene rendering part of the Unity game loop.
             /// </summary>
-            PreRender
+            PreRender,
+            /// <summary>
+            /// Executes the processes in the Application BeforeRender scene rendering part of the Unity game loop.
+            /// </summary>
+            BeforeRender
         }
 
         /// <summary>
@@ -117,6 +121,11 @@
             Process();
         }
 
+        protected virtual void OnApplicationBeforeRender()
+        {
+            Process();
+        }
+
         /// <summary>
         /// Handles unsubscribing to the chosen subscribed moment event.
         /// </summary>
@@ -138,6 +147,9 @@
                     break;
                 case Moment.PreCull:
                     Camera.onPreCull -= OnCameraPreCull;
+                    break;
+                case Moment.BeforeRender:
+                    Application.onBeforeRender -= OnApplicationBeforeRender;
                     break;
             }
         }
@@ -165,6 +177,9 @@
                     break;
                 case Moment.PreCull:
                     Camera.onPreCull += OnCameraPreCull;
+                    break;
+                case Moment.BeforeRender:
+                    Application.onBeforeRender += OnApplicationBeforeRender;
                     break;
             }
         }
