@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.21.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.20.0...v1.21.0) (2020-07-28)
+
+#### Features
+
+* **Extraction:** add extractors for ObjectFollower.EventData ([2426446](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/24264463278c516b5e81f8e87a95008094056506))
+  > A collection of extractors that can extract specific data from the ObjectFollower.EventData.
+  > 
+  > For example, an Interactable is using Follow Rigidbody. When it is diverged, the event data can be feed into the ObjectFollowerEventDataSourceExtractor to get the grabbing interactor.
+* **Process:** add Application.onBeforeRender moment ([5ad7da4](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/5ad7da40a160cc5d151aa0a896f77daf101764e4))
+  > The MomentProcessor can now process moments in the Unity `BeforeRender` game loop moment.
+
+#### Bug Fixes
+
+* **Property:** add ability to remove diverged state(s) ([f1f139e](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/f1f139e7fe3b946fb944daeed8d2a12822fcb6ac))
+  > There is an issue when an object is released on its diverged state, the state is not removed when it converges. The leftover state causes the object not be able to converge and diverge again.
+* **Velocity:** add RelativeTo for velocity offsets ([8c10705](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/8c107054d16bd51188107d412acc2adb5cdf2176))
+  > There is an issue when using XRNodeVelocityEstimator on controllers, if the play area is rotated 180 degrees, throwing an interactable forward will cause it to be thrown backward.
+  > 
+  > The solution is to also consider the velocities relative to the play area.
+
 ## [1.20.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.19.0...v1.20.0) (2020-07-11)
 
 #### Features
