@@ -157,6 +157,45 @@ namespace Test.Zinnia.Tracking.Collision.Active
         }
 
         [Test]
+        public void PublishWithRegisteredConsumerContainer()
+        {
+            ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
+            GameObject oneContainer;
+            CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            ActiveCollisionConsumerMock oneConsumer = oneContainer.AddComponent<ActiveCollisionConsumerMock>();
+            GameObject twoContainer;
+            CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            ActiveCollisionConsumerMock twoConsumer = twoContainer.AddComponent<ActiveCollisionConsumerMock>();
+            eventData.ActiveCollisions.Add(oneData);
+            eventData.ActiveCollisions.Add(twoData);
+            subject.SetActiveCollisions(eventData);
+
+            ActiveCollisionRegisteredConsumerContainerMock reigsteredConsumerContainer = containingObject.AddComponent<ActiveCollisionRegisteredConsumerContainerMock>();
+            subject.RegisteredConsumerContainer = reigsteredConsumerContainer;
+
+            Assert.AreEqual(0, reigsteredConsumerContainer.ConsumerCount);
+            Assert.AreEqual(0, reigsteredConsumerContainer.IgnoredConsumerCount);
+
+            subject.Publish();
+
+            Assert.AreEqual(2, reigsteredConsumerContainer.ConsumerCount);
+            Assert.AreEqual(2, reigsteredConsumerContainer.IgnoredConsumerCount);
+
+            subject.UnregisterRegisteredConsumer(twoConsumer);
+
+            Assert.AreEqual(1, reigsteredConsumerContainer.ConsumerCount);
+            Assert.AreEqual(1, reigsteredConsumerContainer.IgnoredConsumerCount);
+
+            subject.UnregisterRegisteredConsumer(oneConsumer);
+
+            Assert.AreEqual(0, reigsteredConsumerContainer.ConsumerCount);
+            Assert.AreEqual(0, reigsteredConsumerContainer.IgnoredConsumerCount);
+
+            Object.DestroyImmediate(oneContainer);
+            Object.DestroyImmediate(twoContainer);
+        }
+
+        [Test]
         public void PublishInactiveGameObject()
         {
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
@@ -265,16 +304,20 @@ namespace Test.Zinnia.Tracking.Collision.Active
         }
     }
 
-    public class ActiveCollisionConsumerMock : ActiveCollisionConsumer
+    public class ActiveCollisionRegisteredConsumerContainerMock : ActiveCollisionRegisteredConsumerContainer
     {
-        public bool received;
+        public int ConsumerCount { get; set; }
+        public int IgnoredConsumerCount => IgnoredRegisteredConsumers.Count;
 
-        public override void Consume(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
+        public override void Register(ActiveCollisionConsumer consumer, ActiveCollisionPublisher.PayloadData payload)
         {
-            if (isActiveAndEnabled)
-            {
-                received = true;
-            }
+            ConsumerCount++;
+        }
+
+        public override void Unregister(ActiveCollisionConsumer consumer)
+        {
+            ConsumerCount--;
+            base.Unregister(consumer);
         }
     }
 }
