@@ -40,7 +40,15 @@
             /// <summary>
             /// The <see cref="GameObject"/> that this is residing on.
             /// </summary>
+            /// <remarks>
+            /// This is a legacy reference as this can be obtained via <see cref="Publisher.gameObject"/>.
+            /// </remarks>
             public GameObject PublisherContainer { get; set; }
+
+            /// <summary>
+            /// The <see cref="ActiveCollisionPublisher"/> that is doing the publishing.
+            /// </summary>
+            public ActiveCollisionPublisher Publisher { get; set; }
         }
 
         /// <summary>
@@ -55,9 +63,15 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public PayloadData Payload { get; set; } = new PayloadData();
+        /// <summary>
+        /// A collection of <see cref="ActiveCollisionConsumer"/> components that has been successfully published to.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public ActiveCollisionRegisteredConsumerContainer RegisteredConsumerContainer { get; set; }
 
         /// <summary>
-        /// Emitted the collision data is published.
+        /// Emitted when the payload data is published.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent Published = new UnityEvent();
@@ -135,8 +149,14 @@
         public virtual void ForcePublish()
         {
             Payload.PublisherContainer = gameObject;
+            Payload.Publisher = this;
             activeCollisions.Clear();
             activeCollisions.AddRange(Payload.ActiveCollisions);
+            if (RegisteredConsumerContainer != null)
+            {
+                RegisteredConsumerContainer.ClearIgnoredRegisteredConsumers();
+            }
+
             foreach (CollisionNotifier.EventData currentCollision in activeCollisions)
             {
                 Transform reference = currentCollision.ColliderData.GetContainingTransform();
@@ -144,11 +164,29 @@
                 {
                     if (consumer.Container == null || consumer.Container == reference.gameObject)
                     {
-                        consumer.Consume(Payload, currentCollision);
+                        if (consumer.Consume(Payload, currentCollision) && RegisteredConsumerContainer != null)
+                        {
+                            RegisteredConsumerContainer.IgnoredRegisteredConsumers.Add(consumer);
+                            RegisteredConsumerContainer.Register(consumer, Payload);
+                        }
                     }
                 }
             }
             Published?.Invoke(Payload);
+        }
+
+        /// <summary>
+        /// Unregisters a registered <see cref="ActiveCollisionConsumer"/> from this <see cref="ActiveCollisionPublisher"/>.
+        /// </summary>
+        /// <param name="consumer">The consumer being unregistered.</param>
+        public virtual void UnregisterRegisteredConsumer(ActiveCollisionConsumer consumer)
+        {
+            if (RegisteredConsumerContainer == null)
+            {
+                return;
+            }
+
+            RegisteredConsumerContainer.Unregister(consumer);
         }
 
         /// <summary>

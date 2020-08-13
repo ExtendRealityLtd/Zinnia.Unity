@@ -81,6 +81,10 @@
         /// The current active collision data from the broadcaster.
         /// </summary>
         public CollisionNotifier.EventData ActiveCollision { get; protected set; }
+        /// <summary>
+        /// The current highest level container of the consumer to allow for nested consumers.
+        /// </summary>
+        public GameObject ConsumerContainer { get; protected set; }
 
         /// <summary>
         /// Emitted when the publisher call has been consumed.
@@ -101,19 +105,22 @@
         /// <summary>
         /// Consumes data from a from a <see cref="ActiveCollisionPublisher"/>.
         /// </summary>
-        /// <param name="publisher">The publisher payload data.</param>
+        /// <param name="publisherPayload">The publisher payload data.</param>
         /// <param name="currentCollision">The current collision within published data.</param>
+        /// <returns>Whether the consumption was allowed and successful.</returns>
         [RequiresBehaviourState]
-        public virtual void Consume(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
+        public virtual bool Consume(ActiveCollisionPublisher.PayloadData publisherPayload, CollisionNotifier.EventData currentCollision)
         {
-            if (!PublisherValidity.Accepts(publisher.PublisherContainer))
+            if (!PublisherValidity.Accepts(publisherPayload.PublisherContainer))
             {
-                return;
+                return false;
             }
 
-            PublisherSource = publisher;
+            PublisherSource = publisherPayload;
             ActiveCollision = currentCollision;
+            ConsumerContainer = currentCollision != null ? currentCollision.ColliderData.GetContainingTransform().TryGetGameObject() : null;
             Consumed?.Invoke(eventData.Set(PublisherSource, currentCollision));
+            return true;
         }
 
         /// <summary>
@@ -122,6 +129,10 @@
         [RequiresBehaviourState]
         public virtual void Clear()
         {
+            if (PublisherSource != null && PublisherSource.Publisher != null)
+            {
+                PublisherSource.Publisher.UnregisterRegisteredConsumer(this);
+            }
             Cleared?.Invoke(eventData.Set(PublisherSource, ActiveCollision));
             PublisherSource = null;
             ActiveCollision = null;
