@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.22.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.21.0...v1.22.0) (2020-08-13)
+
+#### Features
+
+* **Tracking:** add container for successful published consumers ([b8fd689](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b8fd689ba1c76fe3de93bacecf3d56343b0b92a7))
+  > The ActiveCollisionRegisteredConsumerContainer is linked to a ActiveCollisionPublisher and its job is to store a collection of consumers that the publisher has successfully published to.
+  > 
+  > This means the publisher still doesn't know directly who it is publishing to, but holds an audit log of which consumers have successfully received the payload in the past.
+  > 
+  > The ActiveCollisionConsumer now also holds a reference to the top level container (i.e. the colliding rigidbody/collider GameObject) that the component is residing under.
+
 ## [1.21.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.20.0...v1.21.0) (2020-07-28)
 
 #### Features
