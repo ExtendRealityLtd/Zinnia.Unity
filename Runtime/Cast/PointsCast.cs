@@ -87,6 +87,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public RuleContainer TargetValidity { get; set; }
+        /// <summary>
+        /// Allows to optionally determine specific target point based on the set rules.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer TargetPointValidity { get; set; }
 
         /// <summary>
         /// An override for the destination location point in world space.
@@ -100,11 +106,11 @@
         public UnityEvent ResultsChanged = new UnityEvent();
 
         /// <summary>
-        /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/>.
+        /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/> or <see cref="TargetPointValidity"/> rules.
         /// </summary>
         public RaycastHit? TargetHit { get; protected set; }
         /// <summary>
-        /// Whether the current <see cref="TargetHit"/> is valid based on the <see cref="TargetValidity"/> rule.
+        /// Whether the current <see cref="TargetHit"/> is valid based on the <see cref="TargetValidity"/> and <see cref="TargetPointValidity"/> rules.
         /// </summary>
         public bool IsTargetHitValid { get; protected set; }
         /// <summary>
@@ -169,7 +175,7 @@
         [CalledAfterChangeOf(nameof(TargetHit))]
         protected virtual void OnAfterTargetHitChange()
         {
-            IsTargetHitValid = TargetHit != null && TargetValidity.Accepts(TargetHit.Value.transform.gameObject);
+            IsTargetHitValid = TargetHit != null && TargetValidity.Accepts(TargetHit.Value.transform.gameObject) && TargetPointValidity.Accepts(TargetHit.Value.point);
         }
     }
 }
