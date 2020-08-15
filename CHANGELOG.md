@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.23.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.22.0...v1.23.0) (2020-08-15)
+
+#### Features
+
+* **Cast:** provide ability to determine validity by target point ([67a103a](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/67a103acbd78489158a40c9c456c0ef559231ab1))
+  > The new TargetPointValidity rule allows a type of Vector3Rule to be used to determine if the PointsCast target point should be considered as a valid target.
+  > 
+  > This can be used with the new NavMeshRule to determine if a target point from the points cast is within the NavMesh boundaries.
+* **Rule:** add rule to determine if Vector3 point is within NavMesh ([b4ff0a1](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b4ff0a1d0f312be8a97135ea824f5129c6ccc4e3))
+  > The NavMeshRule extends the new Vector3Rule which determines if a given Vector3 point is within the limits of a NavMesh.
+
 ## [1.22.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.21.0...v1.22.0) (2020-08-13)
 
 #### Features
