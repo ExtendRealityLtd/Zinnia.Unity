@@ -17,6 +17,12 @@
         where TEvent : UnityEvent<TOutput>, new() where TCollection : ObservableList<TInput, TCollectionEvent> where TCollectionEvent : UnityEvent<TInput>, new()
     {
         /// <summary>
+        /// Emitted when the aggregation operation has failed.
+        /// </summary>
+        [DocumentedByXml]
+        public UnityEvent Failed = new UnityEvent();
+
+        /// <summary>
         /// The collection to aggregate.
         /// </summary>
         [Serialized]
@@ -29,6 +35,12 @@
         /// <returns>The aggregated value of all values in the collection.</returns>
         public virtual TOutput Transform()
         {
+            if (Collection.NonSubscribableElements.Count == 0)
+            {
+                Failed?.Invoke();
+                return default;
+            }
+
             return Transform(Collection.NonSubscribableElements[Collection.CurrentIndex]);
         }
 
@@ -77,6 +89,7 @@
         {
             if (Collection.NonSubscribableElements.Count == 0)
             {
+                Failed?.Invoke();
                 return default;
             }
 

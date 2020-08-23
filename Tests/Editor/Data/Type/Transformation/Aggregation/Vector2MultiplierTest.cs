@@ -30,7 +30,9 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         public void Transform()
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
+            subject.Failed.AddListener(failedListenerMock.Listen);
             Vector2ObservableList collection = containingObject.AddComponent<Vector2ObservableList>();
             subject.Collection = collection;
             subject.Collection.Add(Vector2.zero);
@@ -42,6 +44,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
 
             Assert.AreEqual(Vector2.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
 
             Vector2 input = new Vector2(2f, 3f);
             Vector2 result = subject.Transform(input);
@@ -50,13 +53,38 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             Assert.AreEqual(expectedResult, result);
             Assert.AreEqual(expectedResult, subject.Result);
             Assert.IsTrue(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
+        }
+
+        [Test]
+        public void TransformEmptyCollection()
+        {
+            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
+            subject.Transformed.AddListener(transformedListenerMock.Listen);
+            subject.Failed.AddListener(failedListenerMock.Listen);
+            Vector2ObservableList collection = containingObject.AddComponent<Vector2ObservableList>();
+            subject.Collection = collection;
+
+            Assert.AreEqual(Vector2.zero, subject.Result);
+            Assert.IsFalse(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
+
+            Vector2 result = subject.Transform();
+
+            Assert.AreEqual(Vector2.zero, result);
+            Assert.AreEqual(Vector2.zero, subject.Result);
+            Assert.IsFalse(transformedListenerMock.Received);
+            Assert.IsTrue(failedListenerMock.Received);
         }
 
         [Test]
         public void TransformInactiveGameObject()
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
+            subject.Failed.AddListener(failedListenerMock.Listen);
             Vector2ObservableList collection = containingObject.AddComponent<Vector2ObservableList>();
             subject.Collection = collection;
             subject.Collection.Add(Vector2.zero);
@@ -70,6 +98,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
 
             Assert.AreEqual(Vector2.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
 
             Vector2 input = new Vector2(2f, 3f);
             Vector2 result = subject.Transform(input);
@@ -77,13 +106,16 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             Assert.AreEqual(Vector2.zero, result);
             Assert.AreEqual(Vector2.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
         }
 
         [Test]
         public void TransformInactiveComponent()
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
+            subject.Failed.AddListener(failedListenerMock.Listen);
             Vector2ObservableList collection = containingObject.AddComponent<Vector2ObservableList>();
             subject.Collection = collection;
             subject.Collection.Add(Vector2.zero);
@@ -97,6 +129,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
 
             Assert.AreEqual(Vector2.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
 
             Vector2 input = new Vector2(2f, 3f);
             Vector2 result = subject.Transform(input);
@@ -104,6 +137,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             Assert.AreEqual(Vector2.zero, result);
             Assert.AreEqual(Vector2.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
         }
     }
 }

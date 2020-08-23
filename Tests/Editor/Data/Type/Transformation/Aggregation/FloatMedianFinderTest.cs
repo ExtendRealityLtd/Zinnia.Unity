@@ -8,16 +8,16 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
     using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
-    public class FloatAdderTest
+    public class FloatMedianFinderTest
     {
         private GameObject containingObject;
-        private FloatAdder subject;
+        private FloatMedianFinder subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<FloatAdder>();
+            subject = containingObject.AddComponent<FloatMedianFinder>();
         }
 
         [TearDown]
@@ -27,7 +27,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         }
 
         [Test]
-        public void Transform()
+        public void TransformOdd()
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
@@ -35,22 +35,81 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.Failed.AddListener(failedListenerMock.Listen);
             FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
             subject.Collection = collection;
-            subject.Collection.Add(0f);
-            subject.Collection.Add(0f);
-            subject.Collection.Add(0f);
+            subject.Collection.Add(2f);
+            subject.Collection.Add(2f);
+            subject.Collection.Add(3f);
+            subject.Collection.Add(5f);
+            subject.Collection.Add(5f);
+            subject.Collection.Add(7f);
+            subject.Collection.Add(8f);
 
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
-            subject.Collection.SetAt(1f, 0);
-            subject.Collection.SetAt(2f, 1);
-            subject.Collection.CurrentIndex = 2;
+            float result = subject.Transform();
 
-            float result = subject.Transform(3f);
+            Assert.AreEqual(5f, result);
+            Assert.AreEqual(5f, subject.Result);
+            Assert.IsTrue(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
+        }
 
-            Assert.AreEqual(6f, result);
-            Assert.AreEqual(6f, subject.Result);
+        [Test]
+        public void TransformOddUnordered()
+        {
+            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
+            subject.Transformed.AddListener(transformedListenerMock.Listen);
+            subject.Failed.AddListener(failedListenerMock.Listen);
+            FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(3f);
+            subject.Collection.Add(2f);
+            subject.Collection.Add(5f);
+            subject.Collection.Add(2f);
+            subject.Collection.Add(8f);
+            subject.Collection.Add(7f);
+            subject.Collection.Add(5f);
+
+            Assert.AreEqual(0f, subject.Result);
+            Assert.IsFalse(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
+
+            float result = subject.Transform();
+
+            Assert.AreEqual(5f, result);
+            Assert.AreEqual(5f, subject.Result);
+            Assert.IsTrue(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
+        }
+
+        [Test]
+        public void TransformEven()
+        {
+            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
+            subject.Transformed.AddListener(transformedListenerMock.Listen);
+            subject.Failed.AddListener(failedListenerMock.Listen);
+            FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
+            subject.Collection = collection;
+            subject.Collection.Add(2f);
+            subject.Collection.Add(2f);
+            subject.Collection.Add(3f);
+            subject.Collection.Add(4f);
+            subject.Collection.Add(5f);
+            subject.Collection.Add(7f);
+            subject.Collection.Add(8f);
+            subject.Collection.Add(9f);
+
+            Assert.AreEqual(0f, subject.Result);
+            Assert.IsFalse(transformedListenerMock.Received);
+            Assert.IsFalse(failedListenerMock.Received);
+
+            float result = subject.Transform();
+
+            Assert.AreEqual(4.5f, result);
+            Assert.AreEqual(4.5f, subject.Result);
             Assert.IsTrue(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
         }
@@ -78,62 +137,6 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         }
 
         [Test]
-        public void TransformWithIndex()
-        {
-            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
-            UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
-            subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.Failed.AddListener(failedListenerMock.Listen);
-            FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
-            subject.Collection = collection;
-            subject.Collection.Add(0f);
-            subject.Collection.Add(0f);
-            subject.Collection.Add(0f);
-
-            Assert.AreEqual(0f, subject.Result);
-            Assert.IsFalse(transformedListenerMock.Received);
-            Assert.IsFalse(failedListenerMock.Received);
-
-            subject.Collection.SetAt(1f, 0);
-            subject.Collection.SetAt(2f, 1);
-            float result = subject.Transform(3f, 2);
-
-            Assert.AreEqual(6f, result);
-            Assert.AreEqual(6f, subject.Result);
-            Assert.IsTrue(transformedListenerMock.Received);
-            Assert.IsFalse(failedListenerMock.Received);
-        }
-
-        [Test]
-        public void TransformExceedingIndex()
-        {
-            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
-            UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
-            subject.Transformed.AddListener(transformedListenerMock.Listen);
-            subject.Failed.AddListener(failedListenerMock.Listen);
-            FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
-            subject.Collection = collection;
-            subject.Collection.Add(0f);
-            subject.Collection.Add(0f);
-
-            Assert.AreEqual(0f, subject.Result);
-            Assert.IsFalse(transformedListenerMock.Received);
-            Assert.IsFalse(failedListenerMock.Received);
-
-            // adds 1 to index 0 -> adds 2 to index 1 -> attempts to add 3 to index 2 but is out of range so sets it at index 1
-            // collection result is [1f, 3f]
-
-            subject.Collection.SetAt(1f, 0);
-            subject.Collection.SetAt(2f, 1);
-            float result = subject.Transform(3f, 2);
-
-            Assert.AreEqual(4f, result);
-            Assert.AreEqual(4f, subject.Result);
-            Assert.IsTrue(transformedListenerMock.Received);
-            Assert.IsFalse(failedListenerMock.Received);
-        }
-
-        [Test]
         public void TransformInactiveGameObject()
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
@@ -142,8 +145,13 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.Failed.AddListener(failedListenerMock.Listen);
             FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
             subject.Collection = collection;
-            subject.Collection.Add(0f);
-            subject.Collection.Add(0f);
+            subject.Collection.Add(2f);
+            subject.Collection.Add(2f);
+            subject.Collection.Add(3f);
+            subject.Collection.Add(5f);
+            subject.Collection.Add(5f);
+            subject.Collection.Add(7f);
+            subject.Collection.Add(8f);
 
             subject.gameObject.SetActive(false);
 
@@ -151,8 +159,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
-            subject.Collection.SetAt(1f, 0);
-            float result = subject.Transform(3f, 1);
+            float result = subject.Transform();
 
             Assert.AreEqual(0f, result);
             Assert.AreEqual(0f, subject.Result);
@@ -169,8 +176,13 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.Failed.AddListener(failedListenerMock.Listen);
             FloatObservableList collection = containingObject.AddComponent<FloatObservableList>();
             subject.Collection = collection;
-            subject.Collection.Add(0f);
-            subject.Collection.Add(0f);
+            subject.Collection.Add(2f);
+            subject.Collection.Add(2f);
+            subject.Collection.Add(3f);
+            subject.Collection.Add(5f);
+            subject.Collection.Add(5f);
+            subject.Collection.Add(7f);
+            subject.Collection.Add(8f);
 
             subject.enabled = false;
 
@@ -178,8 +190,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
-            subject.Collection.SetAt(1f, 0);
-            float result = subject.Transform(3f, 1);
+            float result = subject.Transform();
 
             Assert.AreEqual(0f, result);
             Assert.AreEqual(0f, subject.Result);
