@@ -56,11 +56,11 @@
             switch (Direction)
             {
                 case AxisDirection.Right:
-                    return UseLocal ? Source.transform.right : Vector3.right;
+                    return UseLocal ? Source.transform.localRotation * Vector3.right : Source.transform.right;
                 case AxisDirection.Up:
-                    return UseLocal ? Source.transform.up : Vector3.up;
+                    return UseLocal ? Source.transform.localRotation * Vector3.up : Source.transform.up;
                 case AxisDirection.Forward:
-                    return UseLocal ? Source.transform.forward : Vector3.forward;
+                    return UseLocal ? Source.transform.localRotation * Vector3.forward : Source.transform.forward;
             }
 
             return Vector3.zero;

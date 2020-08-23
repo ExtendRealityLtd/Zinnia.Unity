@@ -32,7 +32,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
-            subject.UseLocal = true;
+            subject.UseLocal = false;
             subject.Direction = TransformDirectionExtractor.AxisDirection.Right;
 
             containingObject.transform.eulerAngles = Vector3.up * 45f;
@@ -52,7 +52,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
-            subject.UseLocal = true;
+            subject.UseLocal = false;
             subject.Direction = TransformDirectionExtractor.AxisDirection.Up;
 
             containingObject.transform.eulerAngles = Vector3.forward * 45f;
@@ -72,7 +72,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
-            subject.UseLocal = true;
+            subject.UseLocal = false;
             subject.Direction = TransformDirectionExtractor.AxisDirection.Forward;
 
             containingObject.transform.eulerAngles = Vector3.up * 45f;
@@ -87,12 +87,64 @@ namespace Test.Zinnia.Data.Operation.Extraction
         }
 
         [Test]
+        public void ExtractForwardGlobalAsChild()
+        {
+            GameObject parent = new GameObject("parent");
+            GameObject child = new GameObject("child");
+
+            child.transform.SetParent(parent.transform);
+
+            parent.transform.localEulerAngles = Vector3.up * 180f;
+            child.transform.localEulerAngles = Vector3.up * 180f;
+
+            UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
+            subject.Extracted.AddListener(extractedListenerMock.Listen);
+            subject.Source = child;
+            subject.UseLocal = false;
+            subject.Direction = TransformDirectionExtractor.AxisDirection.Forward;
+            Vector3? result = subject.Extract();
+
+            Vector3 expectedResult = Vector3.forward;
+            Assert.AreEqual(expectedResult.ToString(), result.ToString());
+            Assert.IsTrue(extractedListenerMock.Received);
+
+            Object.DestroyImmediate(child);
+            Object.DestroyImmediate(parent);
+        }
+
+        [Test]
+        public void ExtractForwardLocalAsChild()
+        {
+            GameObject parent = new GameObject("parent");
+            GameObject child = new GameObject("child");
+
+            child.transform.SetParent(parent.transform);
+
+            parent.transform.localEulerAngles = Vector3.up * 180f;
+            child.transform.localEulerAngles = Vector3.up * 180f;
+
+            UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
+            subject.Extracted.AddListener(extractedListenerMock.Listen);
+            subject.Source = child;
+            subject.UseLocal = true;
+            subject.Direction = TransformDirectionExtractor.AxisDirection.Forward;
+            Vector3? result = subject.Extract();
+
+            Vector3 expectedResult = Vector3.back;
+            Assert.AreEqual(expectedResult.ToString(), result.ToString());
+            Assert.IsTrue(extractedListenerMock.Received);
+
+            Object.DestroyImmediate(child);
+            Object.DestroyImmediate(parent);
+        }
+
+        [Test]
         public void ExtractInactiveGameObject()
         {
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
-            subject.UseLocal = true;
+            subject.UseLocal = false;
             subject.gameObject.SetActive(false);
 
             Vector3? result = subject.Extract();
@@ -123,7 +175,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
-            subject.UseLocal = true;
+            subject.UseLocal = false;
             subject.enabled = false;
 
             Vector3? result = subject.Extract();
