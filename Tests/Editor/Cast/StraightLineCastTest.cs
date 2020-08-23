@@ -131,7 +131,7 @@ namespace Test.Zinnia.Cast
             validSurface.transform.position = Vector3.forward * 5f;
             validSurface.AddComponent<RuleStub>();
             NegationRule negationRule = validSurface.AddComponent<NegationRule>();
-            Vector3PointRule pointRule = validSurface.AddComponent<Vector3PointRule>();
+            Vector3RuleStub pointRule = validSurface.AddComponent<Vector3RuleStub>();
 
             yield return null;
 
@@ -210,16 +210,6 @@ namespace Test.Zinnia.Cast
         public void ManualOnDisable()
         {
             OnDisable();
-        }
-    }
-
-    public class Vector3PointRule : Vector3Rule
-    {
-        public Vector3 toMatch;
-
-        protected override bool Accepts(Vector3 targetVector3)
-        {
-            return toMatch.ApproxEquals(targetVector3);
         }
     }
 }

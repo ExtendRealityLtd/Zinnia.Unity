@@ -91,6 +91,12 @@
         [field: Header("Restriction Settings"), DocumentedByXml]
         public RuleContainer TargetValidity { get; set; }
         /// <summary>
+        /// An optional <see cref="RuleContainer"/> to determine specific target point based on the set rules.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer TargetPointValidity { get; set; }
+        /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine if the search for a valid surface should be terminated if the current found target matches the rule.
         /// </summary>
         [Serialized, Cleared]
@@ -221,7 +227,9 @@
             surfaceData.Origin = givenOrigin;
             surfaceData.Direction = givenDirection;
             Ray tracerRaycast = new Ray(givenOrigin, givenDirection);
-            return TargetValidity?.Interface == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast);
+            return TargetValidity?.Interface == null && TargetPointValidity?.Interface == null ?
+                FindFirstCollision(tracerRaycast) :
+                FindAllCollisions(tracerRaycast);
         }
 
         /// <summary>
@@ -231,7 +239,8 @@
         /// <returns><see langword="true"/> if a valid surface is located.</returns>
         protected virtual bool FindFirstCollision(Ray tracerRaycast)
         {
-            if (PhysicsCast.Raycast(PhysicsCast, tracerRaycast, out RaycastHit collision, MaximumDistance, Physics.IgnoreRaycastLayer) && (LocatorTermination?.Interface == null || !CollisionMatchesRule(collision, LocatorTermination)))
+            if (PhysicsCast.Raycast(PhysicsCast, tracerRaycast, out RaycastHit collision, MaximumDistance, Physics.IgnoreRaycastLayer) &&
+                (LocatorTermination?.Interface == null || !CollisionMatchesRule(collision, LocatorTermination)))
             {
                 SetSurfaceData(collision);
                 return true;
@@ -255,12 +264,13 @@
 
             foreach (RaycastHit collision in (HeapAllocationFreeReadOnlyList<RaycastHit>)raycastHits)
             {
-                if (LocatorTermination?.Interface != null && CollisionMatchesRule(collision, LocatorTermination))
+                if (LocatorTermination?.Interface != null &&
+                    CollisionMatchesRule(collision, LocatorTermination))
                 {
                     break;
                 }
 
-                if (CollisionMatchesRule(collision, TargetValidity))
+                if (CollisionMatchesRule(collision, TargetValidity) && TargetPointValidity.Accepts(collision.point))
                 {
                     SetSurfaceData(collision);
                     return true;

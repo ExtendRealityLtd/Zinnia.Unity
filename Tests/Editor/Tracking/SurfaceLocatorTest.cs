@@ -276,6 +276,82 @@ namespace Test.Zinnia.Tracking
         }
 
         [UnityTest]
+        public IEnumerator InvalidSurfaceDueToTargetPointValidity()
+        {
+            Physics.autoSimulation = true;
+
+            GameObject invalidSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject searchOrigin = new GameObject("SearchOrigin");
+
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            invalidSurface.transform.position = Vector3.forward * 5f;
+            invalidSurface.AddComponent<RuleStub>();
+            NegationRule negationRule = invalidSurface.AddComponent<NegationRule>();
+            Vector3RuleStub vector3Point = invalidSurface.AddComponent<Vector3RuleStub>();
+            vector3Point.toMatch = invalidSurface.transform.position - (Vector3.forward * invalidSurface.transform.localScale.z * 0.5f);
+            yield return null;
+
+            negationRule.Rule = new RuleContainer
+            {
+                Interface = vector3Point
+            };
+            subject.TargetPointValidity = new RuleContainer
+            {
+                Interface = negationRule
+            };
+
+            subject.SearchOrigin = searchOrigin;
+            subject.SearchDirection = Vector3.forward;
+
+            yield return waitForFixedUpdate;
+            subject.Locate();
+
+            yield return waitForFixedUpdate;
+            Assert.IsFalse(surfaceLocatedMock.Received);
+            Assert.IsNull(subject.surfaceData.Transform);
+
+            Object.DestroyImmediate(invalidSurface);
+            Object.DestroyImmediate(searchOrigin);
+        }
+
+
+        [UnityTest]
+        public IEnumerator ValidSurfaceDueToTargetPointValidity()
+        {
+            Physics.autoSimulation = true;
+
+            GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject searchOrigin = new GameObject("SearchOrigin");
+
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+            Vector3RuleStub vector3Point = validSurface.AddComponent<Vector3RuleStub>();
+            vector3Point.toMatch = validSurface.transform.position - (Vector3.forward * validSurface.transform.localScale.z * 0.5f);
+            yield return null;
+
+            subject.TargetPointValidity = new RuleContainer
+            {
+                Interface = vector3Point
+            };
+
+            subject.SearchOrigin = searchOrigin;
+            subject.SearchDirection = Vector3.forward;
+
+            yield return waitForFixedUpdate;
+            subject.Locate();
+            yield return waitForFixedUpdate;
+            Assert.IsTrue(surfaceLocatedMock.Received);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
+
+            Object.DestroyImmediate(validSurface);
+            Object.DestroyImmediate(searchOrigin);
+        }
+
+        [UnityTest]
         public IEnumerator MissingSurfaceDueToLocatorTermination()
         {
             Physics.autoSimulation = true;
