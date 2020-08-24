@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Data.Type
 {
+    using System;
     using UnityEngine;
     using UnityEditor;
     using UnityEditorInternal;
@@ -12,10 +13,11 @@
     /// <summary>
     /// Displays a custom inspector collection in a collapsible drawer.
     /// </summary>
-    [CustomPropertyDrawer(typeof(UnityEventBase), true)]
-    [CustomPropertyDrawer(typeof(UnityEvent), true)]
-    [CustomPropertyDrawer(typeof(UnityEvent<>), true)]
-    [CustomPropertyDrawer(typeof(UnityEvent<BaseEventData>), true)]
+    // [CustomPropertyDrawer(typeof(UnityEventBase), true)]
+    // [CustomPropertyDrawer(typeof(UnityEvent), true)]
+    // [CustomPropertyDrawer(typeof(UnityEvent<>), true)]
+    // [CustomPropertyDrawer(typeof(UnityEvent<BaseEventData>), true)]
+    [Obsolete("Replaced with ReorderableEventDrawer. Collapsing functionality is also moved there.")]
     public class CollapsibleUnityEventDrawer : UnityEventDrawer
     {
         /// <summary>
