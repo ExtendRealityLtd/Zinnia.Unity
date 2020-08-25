@@ -1,13 +1,13 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using UnityEngine;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Process;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Extension;
+    using Zinnia.Process;
 
     /// <summary>
     /// Scales a given target based on the distance between two points.

@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Cast
 {
-    using UnityEngine;
-    using System.Collections.Generic;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System.Collections.Generic;
+    using UnityEngine;
     using Zinnia.Utility;
 
     /// <summary>
@@ -52,6 +52,24 @@
         /// A reusable collection of <see cref="Vector3"/>s.
         /// </summary>
         protected readonly List<Vector3> curvePoints = new List<Vector3>();
+
+        /// <summary>
+        /// Sets the <see cref="MaximumLength"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetMaximumLengthX(float value)
+        {
+            MaximumLength = new Vector2(value, MaximumLength.y);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MaximumLength"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetMaximumLengthY(float value)
+        {
+            MaximumLength = new Vector2(MaximumLength.x, value);
+        }
 
         protected override void OnEnable()
         {

@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Data.Collection.Stack
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
-    using System.Collections.Generic;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// A collection of events to emit when a new <see cref="TElement"/> is added or removed from the stack.

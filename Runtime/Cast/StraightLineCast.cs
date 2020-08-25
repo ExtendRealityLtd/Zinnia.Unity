@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Cast
 {
-    using UnityEngine;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
 
     /// <summary>
     /// Casts a straight line and creates points at the origin and target.

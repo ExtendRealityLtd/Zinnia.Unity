@@ -1,13 +1,13 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Process;
 
     /// <summary>
@@ -59,9 +59,7 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<EventData>
-        {
-        }
+        public class UnityEvent : UnityEvent<EventData> { }
 
         /// <summary>
         /// The source of the distance measurement.

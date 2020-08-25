@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Action
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Extension;
 
     /// <summary>
@@ -17,9 +17,7 @@
         /// Defines the event with the <see cref="Vector2"/> state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector2>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector2> { }
 
         /// <summary>
         /// The tolerance of equality between two <see cref="Vector2"/> values.

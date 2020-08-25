@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Data.Collection.List
 {
-    using UnityEngine;
-    using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Allows observing changes to a <see cref="List{T}"/> of <see cref="Vector3"/>s.
@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="Vector3"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector3> { }
     }
 }

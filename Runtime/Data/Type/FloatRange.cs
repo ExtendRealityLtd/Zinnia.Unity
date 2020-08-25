@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using UnityEngine;
-    using System;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
 
     /// <summary>
     /// Specifies a valid range between a lower and upper float value limit.

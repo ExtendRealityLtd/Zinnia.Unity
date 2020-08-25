@@ -4,9 +4,9 @@ using Zinnia.Data.Collection.List;
 
 namespace Test.Zinnia.Action
 {
-    using UnityEngine;
-    using System.Collections;
     using NUnit.Framework;
+    using System.Collections;
+    using UnityEngine;
     using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 

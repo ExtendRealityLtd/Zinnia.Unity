@@ -2,8 +2,8 @@
 
 namespace Test.Zinnia.Tracking.Velocity
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class AverageVelocityEstimatorTest

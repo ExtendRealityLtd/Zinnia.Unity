@@ -1,11 +1,11 @@
-﻿using Zinnia.Tracking.Collision.Active.Event.Proxy;
-using Zinnia.Tracking.Collision.Active;
+﻿using Zinnia.Tracking.Collision.Active;
+using Zinnia.Tracking.Collision.Active.Event.Proxy;
 
 namespace Test.Zinnia.Tracking.Collision.Active.Event.Proxy
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveCollisionConsumerEventProxyEmitterTest

@@ -1,15 +1,22 @@
 ﻿namespace Zinnia.Utility
 {
-    using UnityEditor;
-    using UnityEngine;
     using System;
     using System.Linq;
+    using UnityEditor;
+    using UnityEngine;
 
+    /// <summary>
+    /// Displays an InterfaceContainer property in the Unity inspector.
+    /// </summary>
     [CustomPropertyDrawer(typeof(InterfaceContainer), true)]
     public class InterfaceContainerDrawer : PropertyDrawer
     {
+        /// <summary>
+        /// The PickedWindow to display to show the available <see cref="InterfaceContainer"/> choices.
+        /// </summary>
         public class PickerWindow : PickerWindow<Component, PickerWindow> { }
 
+        /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             using (new EditorGUI.PropertyScope(position, label, property))
@@ -19,6 +26,10 @@
             }
         }
 
+        /// <summary>
+        /// Gets the Target <see cref="Type"/>  of the current field info.
+        /// </summary>
+        /// <returns>The type associated with the field info.</returns>
         protected virtual Type GetTargetType()
         {
             Type type = fieldInfo.FieldType;
@@ -46,6 +57,13 @@
             return type;
         }
 
+        /// <summary>
+        /// Draws the Picker window.
+        /// </summary>
+        /// <param name="property">The property to draw for.</param>
+        /// <param name="type">The data type.</param>
+        /// <param name="rect">The default drawing location for the control.</param>
+        /// <param name="label">The default label for the control.</param>
         protected virtual void DrawPicker(SerializedProperty property, Type type, Rect rect, GUIContent label)
         {
             Event currentEvent = Event.current;
@@ -108,6 +126,13 @@
             }
         }
 
+        /// <summary>
+        /// Determines what to do with the picked object from the ObjectPicker.
+        /// </summary>
+        /// <param name="property">The property to handle.</param>
+        /// <param name="type">The data type.</param>
+        /// <param name="rect">The default drawing location for the control.</param>
+        /// <param name="pickedObject">The picked object.</param>
         protected virtual void HandlePickedObject(SerializedProperty property, Type type, Rect rect, UnityEngine.Object pickedObject)
         {
             if (pickedObject == property.objectReferenceValue)

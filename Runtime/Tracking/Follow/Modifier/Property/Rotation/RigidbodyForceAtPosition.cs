@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using UnityEngine;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Extension;
 
     /// <summary>

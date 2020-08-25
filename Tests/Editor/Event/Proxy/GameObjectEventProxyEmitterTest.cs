@@ -1,12 +1,12 @@
-﻿using Zinnia.Event.Proxy;
+﻿using Zinnia.Data.Collection.List;
+using Zinnia.Event.Proxy;
 using Zinnia.Rule;
-using Zinnia.Data.Collection.List;
 
 namespace Test.Zinnia.Event.Proxy
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectEventProxyEmitterTest

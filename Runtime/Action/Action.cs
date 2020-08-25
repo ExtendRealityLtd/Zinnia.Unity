@@ -1,13 +1,14 @@
 ﻿namespace Zinnia.Action
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
-    using System.Collections.Generic;
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.Events;
+    using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
 
     /// <summary>
@@ -64,6 +65,14 @@
         /// Emits the appropriate event for when the activation state changes from Activated or Deactivated.
         /// </summary>
         public abstract void EmitActivationState();
+        /// <summary>
+        /// Makes the action receive its own initial value to reset it back to when it was first created.
+        /// </summary>
+        public abstract void ReceiveInitialValue();
+        /// <summary>
+        /// Makes the action receive its own default value to set it back to inactive.
+        /// </summary>
+        public abstract void ReceiveDefaultValue();
 
         /// <summary>
         /// Whether the event should be emitted.
@@ -84,7 +93,13 @@
     public abstract class Action<TSelf, TValue, TEvent> : Action where TSelf : Action<TSelf, TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
     {
         /// <summary>
-        /// The initial value of the action.
+        /// The initial value upon creation of the component.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml, Restricted(RestrictedAttribute.Restrictions.ReadOnlyAtRunTime)]
+        public TValue InitialValue { get; protected set; }
+        /// <summary>
+        /// The value that is considered the inactive value.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
@@ -106,6 +121,11 @@
         /// </summary>
         [DocumentedByXml]
         public TEvent ValueChanged = new TEvent();
+        /// <summary>
+        /// Emitted when the <see cref="Value"/> of the action remains unchanged.
+        /// </summary>
+        [DocumentedByXml]
+        public TEvent ValueUnchanged = new TEvent();
         /// <summary>
         /// Emitted when the action becomes deactivated.
         /// </summary>
@@ -171,6 +191,20 @@
             }
         }
 
+        /// <inheritdoc />
+        [RequiresBehaviourState]
+        public override void ReceiveInitialValue()
+        {
+            Receive(InitialValue);
+        }
+
+        /// <inheritdoc />
+        [RequiresBehaviourState]
+        public override void ReceiveDefaultValue()
+        {
+            Receive(DefaultValue);
+        }
+
         /// <summary>
         /// Acts on the value.
         /// </summary>
@@ -180,6 +214,7 @@
         {
             if (IsValueEqual(value))
             {
+                ValueUnchanged?.Invoke(Value);
                 return;
             }
 
@@ -194,6 +229,14 @@
         protected virtual void OnEnable()
         {
             SubscribeToSources();
+        }
+
+        protected virtual void Start()
+        {
+            if (!IsValueEqual(InitialValue))
+            {
+                ProcessValue(InitialValue);
+            }
         }
 
         protected virtual void OnDisable()

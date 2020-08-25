@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Event.Proxy
 {
-    using UnityEngine.Events;
     using System;
+    using UnityEngine.Events;
     using Zinnia.Event.Proxy;
     using Zinnia.Tracking.Collision.Active;
 
@@ -14,8 +14,6 @@
         /// Defines the event with the specified state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<ActiveCollisionsContainer.EventData>
-        {
-        }
+        public class UnityEvent : UnityEvent<ActiveCollisionsContainer.EventData> { }
     }
 }

@@ -1,13 +1,14 @@
-﻿using Zinnia.Rule;
+﻿using Zinnia.Data.Collection.List;
 using Zinnia.Extension;
-using Zinnia.Data.Collection.List;
+using Zinnia.Rule;
+using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
+    using NUnit.Framework;
+    using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyBehaviourEnabledRuleTest
@@ -113,8 +114,46 @@ namespace Test.Zinnia.Rule
             Assert.IsFalse(container.Accepts(containingObject));
         }
 
-        private class TestScript : MonoBehaviour
+        [UnityTest]
+        public IEnumerator AcceptsInactiveGameObject()
         {
+            TestScript testScript = containingObject.AddComponent<TestScript>();
+            SerializableTypeBehaviourObservableList behaviourTypes = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            yield return null;
+            subject.BehaviourTypes = behaviourTypes;
+            behaviourTypes.Add(typeof(TestScript));
+            testScript.enabled = true;
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleComponentIsDisabled;
+            subject.gameObject.SetActive(false);
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.enabled = false;
+
+            Assert.IsFalse(container.Accepts(containingObject));
         }
+
+        [UnityTest]
+        public IEnumerator AcceptsInactiveComponent()
+        {
+            TestScript testScript = containingObject.AddComponent<TestScript>();
+            SerializableTypeBehaviourObservableList behaviourTypes = containingObject.AddComponent<SerializableTypeBehaviourObservableList>();
+            yield return null;
+            subject.BehaviourTypes = behaviourTypes;
+            behaviourTypes.Add(typeof(TestScript));
+            testScript.enabled = true;
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleGameObjectIsNotActiveInHierarchy;
+            subject.enabled = false;
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.gameObject.SetActive(false);
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        private class TestScript : MonoBehaviour { }
     }
 }

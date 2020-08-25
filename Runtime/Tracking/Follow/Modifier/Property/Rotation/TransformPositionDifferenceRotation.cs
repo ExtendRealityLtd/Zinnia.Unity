@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using UnityEngine;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Extension;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Updates the transform rotation of the target to match the difference in position of the source.
@@ -42,6 +42,33 @@
         /// The previous source world position.
         /// </summary>
         protected Vector3? previousSourcePosition;
+
+        /// <summary>
+        /// Sets the <see cref="FollowOnAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetFollowOnAxisX(bool value)
+        {
+            FollowOnAxis = new Vector3State(value, FollowOnAxis.yState, FollowOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="FollowOnAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetFollowOnAxisY(bool value)
+        {
+            FollowOnAxis = new Vector3State(FollowOnAxis.xState, value, FollowOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="FollowOnAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetFollowOnAxisZ(bool value)
+        {
+            FollowOnAxis = new Vector3State(FollowOnAxis.xState, FollowOnAxis.yState, value);
+        }
 
         /// <summary>
         /// Resets the state of the source previous position.

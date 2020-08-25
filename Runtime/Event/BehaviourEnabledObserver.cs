@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Event
 {
+    using Malimbe.MemberChangeMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
-    using System.Collections;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Zinnia.Data.Collection.List;
 
     /// <summary>

@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
-    using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
 
     /// <summary>
     /// Slices a selection of the collection from the given <see cref="StartIndex"/> for the given <see cref="Length"/> and provides the sliced collection and the remaining collection separately.

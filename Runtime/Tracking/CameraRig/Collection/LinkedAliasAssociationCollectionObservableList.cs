@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Tracking.CameraRig.Collection
 {
-    using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
 
     /// <summary>
@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="LinkedAliasAssociationCollection"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<LinkedAliasAssociationCollection>
-        {
-        }
+        public class UnityEvent : UnityEvent<LinkedAliasAssociationCollection> { }
     }
 }

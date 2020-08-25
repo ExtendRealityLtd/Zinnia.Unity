@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Action
 {
-    using UnityEngine.Events;
     using System;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value.
@@ -12,8 +12,6 @@
         /// Defines the event with the <see cref="bool"/> state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<bool>
-        {
-        }
+        public class UnityEvent : UnityEvent<bool> { }
     }
 }

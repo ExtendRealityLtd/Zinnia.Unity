@@ -1,14 +1,14 @@
 ﻿namespace Zinnia.Unity.Editor.Data.Collection
 {
-    using UnityEditor;
-    using UnityEngine;
+    using Malimbe.FodyRunner.UnityIntegration;
     using System;
-    using System.Reflection;
     using System.Collections;
     using System.Collections.Generic;
-    using Malimbe.FodyRunner.UnityIntegration;
-    using Zinnia.Utility;
+    using System.Reflection;
+    using UnityEditor;
+    using UnityEngine;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Utility;
 
     /// <summary>
     /// A custom inspector editor for <see cref="ObservableList{TElement,TEvent}"/> and subclasses of it.

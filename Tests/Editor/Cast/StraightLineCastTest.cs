@@ -1,15 +1,16 @@
 ﻿using Zinnia.Cast;
-using Zinnia.Rule;
 using Zinnia.Data.Collection.List;
+using Zinnia.Extension;
+using Zinnia.Rule;
 
 namespace Test.Zinnia.Cast
 {
-    using UnityEngine;
-    using UnityEngine.TestTools;
-    using System.Collections;
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
+    using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class StraightLineCastTest
@@ -120,6 +121,44 @@ namespace Test.Zinnia.Cast
             Assert.IsTrue(castResultsChangedMock.Received);
         }
 
+        [UnityTest]
+        public IEnumerator CastPointsInvalidTargetPoint()
+        {
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.Origin = subject.gameObject;
+
+            validSurface.transform.position = Vector3.forward * 5f;
+            validSurface.AddComponent<RuleStub>();
+            NegationRule negationRule = validSurface.AddComponent<NegationRule>();
+            Vector3PointRule pointRule = validSurface.AddComponent<Vector3PointRule>();
+
+            yield return null;
+
+            negationRule.Rule = new RuleContainer
+            {
+                Interface = pointRule
+            };
+            subject.TargetPointValidity = new RuleContainer
+            {
+                Interface = negationRule
+            };
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
+            pointRule.toMatch = expectedEnd;
+
+            subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Assert.AreEqual(expectedStart, subject.Points[0]);
+            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsFalse(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+        }
+
         [Test]
         public void EventsNotEmittedOnInactiveGameObject()
         {
@@ -171,6 +210,16 @@ namespace Test.Zinnia.Cast
         public void ManualOnDisable()
         {
             OnDisable();
+        }
+    }
+
+    public class Vector3PointRule : Vector3Rule
+    {
+        public Vector3 toMatch;
+
+        protected override bool Accepts(Vector3 targetVector3)
+        {
+            return toMatch.ApproxEquals(targetVector3);
         }
     }
 }

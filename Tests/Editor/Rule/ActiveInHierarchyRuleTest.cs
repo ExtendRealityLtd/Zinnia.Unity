@@ -3,8 +3,8 @@ using Zinnia.Rule;
 
 namespace Test.Zinnia.Rule
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveInHierarchyRuleTest

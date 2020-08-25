@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Data.Collection.List
 {
-    using UnityEngine.Events;
-    using System.Collections.Generic;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System.Collections.Generic;
+    using UnityEngine.Events;
 
     /// <summary>
     /// An intermediate that defines the <see cref="Elements"/> collection to prevent needing to redefine in every concrete class.

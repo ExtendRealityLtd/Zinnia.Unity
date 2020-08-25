@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Tracking.Collision.Event.Proxy
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Extension;
     using Zinnia.Event.Proxy;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a UnityEvent with a <see cref="ActiveCollisionsContainer.EventData"/> payload whenever <see cref="SingleEventProxyEmitter{TValue,TEvent}.Receive"/> is called.
@@ -39,8 +39,15 @@
         /// Defines the event with the specified state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<CollisionNotifier.EventData>
+        public class UnityEvent : UnityEvent<CollisionNotifier.EventData> { }
+
+        /// <summary>
+        /// Sets the <see cref="RuleSource"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="RuleSourceType"/>.</param>
+        public virtual void SetRuleSource(int index)
         {
+            RuleSource = EnumExtensions.GetByIndex<RuleSourceType>(index);
         }
 
         /// <inheritdoc />

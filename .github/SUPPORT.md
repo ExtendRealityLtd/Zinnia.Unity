@@ -1,1 +1,0 @@
-Only submit an issue if you have a known bug or are requesting a new feature.

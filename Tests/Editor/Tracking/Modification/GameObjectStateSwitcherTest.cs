@@ -1,12 +1,12 @@
-﻿using Zinnia.Tracking.Modification;
-using Zinnia.Data.Collection.List;
+﻿using Zinnia.Data.Collection.List;
+using Zinnia.Tracking.Modification;
 
 namespace Test.Zinnia.Tracking.Modification
 {
+    using NUnit.Framework;
+    using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectStateSwitcherTest

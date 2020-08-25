@@ -3,10 +3,10 @@ using Zinnia.Action.Collection;
 
 namespace Test.Zinnia.Action.Collection
 {
+    using NUnit.Framework;
+    using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class ActionRegistrarSourceObservableListTest

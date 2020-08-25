@@ -2,8 +2,8 @@
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformScaleTest
@@ -48,6 +48,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
             GameObject source = new GameObject();
             GameObject target = new GameObject();
             GameObject offset = new GameObject();
+
+            offset.transform.SetParent(target.transform);
 
             source.transform.localScale = Vector3.one * 4f;
             target.transform.localScale = Vector3.one;

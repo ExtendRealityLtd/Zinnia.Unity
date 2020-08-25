@@ -1,10 +1,11 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
+    using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Transforms a <see cref="float"/> by remapping from a range to a new range.
@@ -22,9 +23,7 @@
         /// Defines the event with the remapped <see cref="float"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<float>
-        {
-        }
+        public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// The range of the value from.
@@ -63,6 +62,15 @@
         public OutputMode Mode { get; set; } = OutputMode.Lerp;
 
         /// <summary>
+        /// Sets the <see cref="Mode"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="OutputMode"/>.</param>
+        public virtual void SetMode(int index)
+        {
+            Mode = EnumExtensions.GetByIndex<OutputMode>(index);
+        }
+
+        /// <summary>
         /// Transforms the given <see cref="float"/> by remapping to a new range.
         /// </summary>
         /// <param name="input">The value to remap.</param>
@@ -70,8 +78,8 @@
         protected override float Process(float input)
         {
             float t = Mathf.InverseLerp(From.minimum, From.maximum, input);
-            return Mode == OutputMode.Lerp? 
-                Mathf.Lerp(To.minimum, To.maximum, t) : 
+            return Mode == OutputMode.Lerp ?
+                Mathf.Lerp(To.minimum, To.maximum, t) :
                 Mathf.SmoothStep(To.minimum, To.maximum, t);
         }
     }

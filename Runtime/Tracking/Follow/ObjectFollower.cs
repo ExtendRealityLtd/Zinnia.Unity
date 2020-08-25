@@ -1,15 +1,15 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Zinnia.Data.Collection.List;
     using Zinnia.Extension;
     using Zinnia.Process.Component;
-    using Zinnia.Data.Collection.List;
     using Zinnia.Tracking.Follow.Modifier;
 
     /// <summary>
@@ -65,9 +65,7 @@
         /// Defines the event with the <see cref="EventData"/>.
         /// </summary>
         [Serializable]
-        public class FollowEvent : UnityEvent<EventData>
-        {
-        }
+        public class FollowEvent : UnityEvent<EventData> { }
 
         /// <summary>
         /// A <see cref="GameObject"/> collection of target offsets to offset the <see cref="GameObjectSourceTargetProcessor.Targets"/> against the source whilst following. The <see cref="GameObject"/> for the target offset must be a child of the corresponding target.

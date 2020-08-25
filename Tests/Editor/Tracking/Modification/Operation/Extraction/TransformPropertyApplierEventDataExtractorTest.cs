@@ -1,12 +1,12 @@
-﻿using Zinnia.Tracking.Modification.Operation.Extraction;
-using Zinnia.Data.Type;
+﻿using Zinnia.Data.Type;
 using Zinnia.Tracking.Modification;
+using Zinnia.Tracking.Modification.Operation.Extraction;
 
 namespace Test.Zinnia.Tracking.Modification.Operation.Extraction
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformPropertyApplierEventDataExtractorTest

@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Tracking.Velocity.Collection
 {
-    using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
 
     /// <summary>
@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="VelocityTracker"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<VelocityTracker>
-        {
-        }
+        public class UnityEvent : UnityEvent<VelocityTracker> { }
     }
 }

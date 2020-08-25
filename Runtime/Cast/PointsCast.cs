@@ -1,18 +1,18 @@
 ﻿namespace Zinnia.Cast
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
-    using System.Collections.Generic;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Rule;
-    using Zinnia.Process;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
+    using Zinnia.Process;
+    using Zinnia.Rule;
 
     /// <summary>
     /// The base of casting components that result in points along the cast.
@@ -40,7 +40,7 @@
             public bool IsValid { get; set; }
 
             /// <summary>
-            /// The points along the the most recent cast.
+            /// The points along the most recent cast.
             /// </summary>
             public HeapAllocationFreeReadOnlyList<Vector3> Points { get; set; }
 
@@ -87,6 +87,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public RuleContainer TargetValidity { get; set; }
+        /// <summary>
+        /// Allows to optionally determine specific target point based on the set rules.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer TargetPointValidity { get; set; }
 
         /// <summary>
         /// An override for the destination location point in world space.
@@ -100,20 +106,20 @@
         public UnityEvent ResultsChanged = new UnityEvent();
 
         /// <summary>
-        /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/>.
+        /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/> or <see cref="TargetPointValidity"/> rules.
         /// </summary>
         public RaycastHit? TargetHit { get; protected set; }
         /// <summary>
-        /// Whether the current <see cref="TargetHit"/> is valid based on the <see cref="TargetValidity"/> rule.
+        /// Whether the current <see cref="TargetHit"/> is valid based on the <see cref="TargetValidity"/> and <see cref="TargetPointValidity"/> rules.
         /// </summary>
         public bool IsTargetHitValid { get; protected set; }
         /// <summary>
-        /// The points along the the most recent cast.
+        /// The points along the most recent cast.
         /// </summary>
         public HeapAllocationFreeReadOnlyList<Vector3> Points => points;
 
         /// <summary>
-        /// The points along the the most recent cast.
+        /// The points along the most recent cast.
         /// </summary>
         protected readonly List<Vector3> points = new List<Vector3>();
         /// <summary>
@@ -169,7 +175,7 @@
         [CalledAfterChangeOf(nameof(TargetHit))]
         protected virtual void OnAfterTargetHitChange()
         {
-            IsTargetHitValid = TargetHit != null && TargetValidity.Accepts(TargetHit.Value.transform.gameObject);
+            IsTargetHitValid = TargetHit != null && TargetValidity.Accepts(TargetHit.Value.transform.gameObject) && TargetPointValidity.Accepts(TargetHit.Value.point);
         }
     }
 }

@@ -36,5 +36,17 @@ namespace Test.Zinnia.Extension
             tolerance = 0.5f;
             Assert.IsFalse(a.ApproxEquals(b, tolerance));
         }
+
+        [Test]
+        public void GetSignedDegrees()
+        {
+            Assert.AreEqual(0f, 0f.GetSignedDegree());
+            Assert.AreEqual(90f, 90f.GetSignedDegree());
+            Assert.AreEqual(179f, 179f.GetSignedDegree());
+            Assert.AreEqual(180f, 180f.GetSignedDegree());
+            Assert.AreEqual(-90f, 270f.GetSignedDegree());
+            Assert.AreEqual(-179f, 181f.GetSignedDegree());
+            Assert.AreEqual(-0f, 360f.GetSignedDegree());
+        }
     }
 }

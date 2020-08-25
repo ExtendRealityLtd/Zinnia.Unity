@@ -1,10 +1,10 @@
-﻿using Zinnia.Tracking.Modification;
-using Zinnia.Cast;
+﻿using Zinnia.Cast;
+using Zinnia.Tracking.Modification;
 
 namespace Test.Zinnia.Tracking.Modification
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class PointNormalRotatorTest

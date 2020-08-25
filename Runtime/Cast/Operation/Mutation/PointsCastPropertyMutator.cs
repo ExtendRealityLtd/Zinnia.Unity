@@ -1,13 +1,13 @@
 ﻿namespace Zinnia.Cast.Operation.Mutation
 {
-    using UnityEngine;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Rule;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Extension;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Mutates the properties of a <see cref="PointsCast"/> with the benefit of being able to specify a containing <see cref="GameObject"/> as the target.

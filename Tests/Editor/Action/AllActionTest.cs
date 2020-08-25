@@ -3,11 +3,11 @@ using ZinniaAction = Zinnia.Action;
 
 namespace Test.Zinnia.Action
 {
+    using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
-    using Test.Zinnia.Utility.Mock;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class AllActionTest
@@ -291,6 +291,10 @@ namespace Test.Zinnia.Action
         public override void RemoveSource(ZinniaAction.Action action) { }
 
         public override void EmitActivationState() { }
+
+        public override void ReceiveInitialValue() { }
+
+        public override void ReceiveDefaultValue() { }
 
         public virtual void SetIsActivated(bool value)
         {

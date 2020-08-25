@@ -1,15 +1,15 @@
-﻿using Zinnia.Rule;
-using Zinnia.Data.Collection.List;
+﻿using Zinnia.Data.Collection.List;
+using Zinnia.Rule;
 using Zinnia.Tracking.Collision.Active;
 
 namespace Test.Zinnia.Tracking.Collision.Active
 {
-    using UnityEngine;
-    using UnityEngine.TestTools;
-    using System.Collections;
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
+    using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveCollisionConsumerTest
@@ -49,7 +49,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             Assert.IsNull(subject.PublisherSource);
 
-            subject.Consume(publisher, null);
+            Assert.IsTrue(subject.Consume(publisher, null));
 
             Assert.IsTrue(consumedMock.Received);
             Assert.IsFalse(clearedMock.Received);
@@ -95,7 +95,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             Assert.IsNull(subject.PublisherSource);
 
-            subject.Consume(publisher, null);
+            Assert.IsFalse(subject.Consume(publisher, null));
 
             Assert.IsFalse(consumedMock.Received);
             Assert.IsFalse(clearedMock.Received);
@@ -119,7 +119,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             publisher.SourceContainer = publisherObject;
 
             subject.gameObject.SetActive(false);
-            subject.Consume(publisher, null);
+            Assert.IsFalse(subject.Consume(publisher, null));
 
             Assert.IsFalse(consumedMock.Received);
             Assert.IsFalse(clearedMock.Received);
@@ -143,7 +143,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             publisher.SourceContainer = publisherObject;
 
             subject.enabled = false;
-            subject.Consume(publisher, null);
+            Assert.IsFalse(subject.Consume(publisher, null));
 
             Assert.IsFalse(consumedMock.Received);
             Assert.IsFalse(clearedMock.Received);

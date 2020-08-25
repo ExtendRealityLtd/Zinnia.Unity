@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Collection.List;
 
     /// <summary>

@@ -1,17 +1,17 @@
 ﻿namespace Zinnia.Pointer
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Cast;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
-    using Zinnia.Visual;
     using Zinnia.Process;
+    using Zinnia.Visual;
 
     /// <summary>
     /// Allows pointing at objects and notifies when a target is hit, continues to be hit or stops being hit by listening to a <see cref="PointsCast"/>.
@@ -75,17 +75,13 @@
         /// </summary>
         /// <remarks>The <see cref="ObjectPointer"/> data is <see langword="null"/> in case the <see cref="ObjectPointer"/> isn't hitting any target.</remarks>
         [Serializable]
-        public class UnityEvent : UnityEvent<EventData>
-        {
-        }
+        public class UnityEvent : UnityEvent<EventData> { }
 
         /// <summary>
         /// Defines the event with the <see cref="PointsRenderer.PointsData"/> state.
         /// </summary>
         [Serializable]
-        public class PointsRendererUnityEvent : UnityEvent<PointsRenderer.PointsData>
-        {
-        }
+        public class PointsRendererUnityEvent : UnityEvent<PointsRenderer.PointsData> { }
 
         /// <summary>
         /// Represents the origin, i.e. the first rendered point.
@@ -105,6 +101,18 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public PointerElement Destination { get; set; }
+        /// <summary>
+        /// Whether the <see cref="Destination"/> will be enabled if the raycast does not collide with anything and contains no <see cref="PointsCast.EventData.HitData"/>.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool EnableDestinationOnNoCollision { get; set; } = true;
+        /// <summary>
+        /// Provides an alternative as the pointer origin in the events.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject EventDataOriginTransformOverride { get; set; }
 
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> becomes active.
@@ -348,7 +356,7 @@
 
             pointsData.StartPoint.TrySetActive(true);
             pointsData.RepeatedSegmentPoint.TrySetActive(true);
-            pointsData.EndPoint.TrySetActive(true);
+            pointsData.EndPoint.TrySetActive(activePointsCastData.HitData != null || EnableDestinationOnNoCollision);
 
             RenderDataChanged?.Invoke(pointsData);
             TryEmitVisibilityEvent();
@@ -460,7 +468,7 @@
                 && elementObject != pointsData.RepeatedSegmentPoint
                 && elementObject != pointsData.EndPoint)
             {
-                elementObject.gameObject.SetActive(false);
+                elementObject.SetActive(false);
             }
         }
 
@@ -471,7 +479,7 @@
         protected virtual EventData GetEventData(PointsCast.EventData data)
         {
             Transform validDestinationTransform = Destination == null || Destination.ValidElementContainer == null ? null : Destination.ValidElementContainer.transform;
-            Transform pointerTransform = transform;
+            Transform pointerTransform = EventDataOriginTransformOverride != null ? EventDataOriginTransformOverride.transform : transform;
 
             eventData.Transform = pointerTransform;
             eventData.PositionOverride = validDestinationTransform == null ? data.HitData?.point : validDestinationTransform.position;

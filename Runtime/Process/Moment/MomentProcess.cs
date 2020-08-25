@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Process.Moment
 {
-    using UnityEngine;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
 
     /// <summary>
     /// Wrapper for an <see cref="IProcessable"/> process that has a state to determine when it is to be processed.

@@ -1,11 +1,11 @@
-﻿using Zinnia.Tracking.Follow.Operation.Extraction;
-using Zinnia.Tracking.Follow;
+﻿using Zinnia.Tracking.Follow;
+using Zinnia.Tracking.Follow.Operation.Extraction;
 
 namespace Test.Zinnia.Tracking.Follow.Operation.Extraction
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class ObjectDistanceComparatorEventDataExtractorTest

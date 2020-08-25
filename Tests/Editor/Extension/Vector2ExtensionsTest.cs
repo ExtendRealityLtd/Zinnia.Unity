@@ -2,8 +2,8 @@
 
 namespace Test.Zinnia.Extension
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class Vector2ExtensionsTest
@@ -48,6 +48,31 @@ namespace Test.Zinnia.Extension
             Vector2 a = Vector2.one * 10f;
             Vector2 b = Vector2.one * 2f;
             Assert.AreEqual(Vector2.one * 5f, a.Divide(b));
+        }
+
+        [Test]
+        public void WithinDistance()
+        {
+            Vector2 a = new Vector2(0f, 0f);
+            Vector2 b = new Vector2(0f, 0f);
+            Vector2 tolerance = new Vector2(0.2f, 0.3f);
+
+            Assert.IsTrue(a.WithinDistance(b, tolerance));
+
+            b = new Vector2(0.1f, 0.1f);
+            Assert.IsTrue(a.WithinDistance(b, tolerance));
+
+            b = new Vector2(0.2f, 0.2f);
+            Assert.IsTrue(a.WithinDistance(b, tolerance));
+
+            b = new Vector2(0.2f, 0.3f);
+            Assert.IsTrue(a.WithinDistance(b, tolerance));
+
+            b = new Vector2(0.3f, 0.3f);
+            Assert.IsFalse(a.WithinDistance(b, tolerance));
+
+            b = new Vector2(0.3f, 0.4f);
+            Assert.IsFalse(a.WithinDistance(b, tolerance));
         }
     }
 }

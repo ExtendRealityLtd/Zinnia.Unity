@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier
 {
-    using UnityEngine;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Tracking.Follow.Modifier.Property;
 
     /// <summary>

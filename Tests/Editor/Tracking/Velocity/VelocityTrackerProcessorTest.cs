@@ -3,11 +3,11 @@ using Zinnia.Tracking.Velocity.Collection;
 
 namespace Test.Zinnia.Tracking.Velocity
 {
+    using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
-    using Test.Zinnia.Utility.Mock;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class VelocityTrackerProcessorTest

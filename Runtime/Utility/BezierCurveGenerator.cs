@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Utility
 {
-    using UnityEngine;
     using System.Collections.Generic;
+    using UnityEngine;
     using Zinnia.Data.Type;
 
     /// <summary>

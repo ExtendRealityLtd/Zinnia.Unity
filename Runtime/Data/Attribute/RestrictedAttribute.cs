@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Data.Attribute
 {
-    using UnityEngine;
     using System;
+    using UnityEngine;
 
     /// <summary>
     /// Draws the property in a specified restricted way.

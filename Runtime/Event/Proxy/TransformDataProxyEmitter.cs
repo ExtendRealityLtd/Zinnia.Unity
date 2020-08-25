@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using UnityEngine.Events;
     using System;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
 
     /// <summary>
@@ -13,8 +13,6 @@
         /// Defines the event with the specified state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<TransformData>
-        {
-        }
+        public class UnityEvent : UnityEvent<TransformData> { }
     }
 }

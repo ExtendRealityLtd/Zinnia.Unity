@@ -1,9 +1,11 @@
 ﻿namespace Zinnia.Tracking.CameraRig
 {
-    using UnityEngine;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
+    using Zinnia.Data.Collection.List;
+    using Zinnia.Haptics;
     using Zinnia.Tracking.Velocity;
 
     /// <summary>
@@ -39,6 +41,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public VelocityTracker HeadsetVelocityTracker { get; set; }
+        /// <summary>
+        /// A list of any additional cameras associated with the headset.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public CameraObservableList SupplementHeadsetCameras { get; set; }
         #endregion
 
         #region Left Controller Settings
@@ -54,6 +62,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public VelocityTracker LeftControllerVelocityTracker { get; set; }
+        /// <summary>
+        /// The associated Left Controller Haptic Process.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public HapticProcess LeftControllerHapticProcess { get; set; }
         #endregion
 
         #region Right Controller Settings
@@ -69,6 +83,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public VelocityTracker RightControllerVelocityTracker { get; set; }
+        /// <summary>
+        /// The associated Right Controller Haptic Process.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public HapticProcess RightControllerHapticProcess { get; set; }
         #endregion
     }
 }

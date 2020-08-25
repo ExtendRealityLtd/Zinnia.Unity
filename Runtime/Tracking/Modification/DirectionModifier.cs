@@ -1,14 +1,14 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System.Collections;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Zinnia.Process;
+    using System.Collections;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Extension;
+    using Zinnia.Process;
 
     /// <summary>
     /// Modifies the given target direction by rotating it to look at a point in space whilst pivoting on another point in space.

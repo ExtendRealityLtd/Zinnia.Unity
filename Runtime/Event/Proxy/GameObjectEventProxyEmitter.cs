@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Event.Proxy
 {
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
 
     /// <summary>
     /// Emits a UnityEvent with a GameObject payload whenever the Receive method is called.
@@ -13,9 +13,7 @@
         /// Defines the event with the specified state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
-        {
-        }
+        public class UnityEvent : UnityEvent<GameObject> { }
 
         /// <inheritdoc />
         protected override object GetTargetToCheck()

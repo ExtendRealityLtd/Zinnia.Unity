@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Pointer.Operation.Mutation
 {
-    using UnityEngine;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Extension;
 
     /// <summary>
@@ -66,7 +66,7 @@
         /// <param name="elementVisibilityIndex">The index of the <see cref="PointerElement.Visibility"/>.</param>
         public virtual void SetElementVisibility(int elementVisibilityIndex)
         {
-            ElementVisibility = (PointerElement.Visibility)Mathf.Clamp(elementVisibilityIndex, 0, System.Enum.GetValues(typeof(PointerElement.Visibility)).Length);
+            ElementVisibility = EnumExtensions.GetByIndex<PointerElement.Visibility>(elementVisibilityIndex);
         }
 
         /// <summary>

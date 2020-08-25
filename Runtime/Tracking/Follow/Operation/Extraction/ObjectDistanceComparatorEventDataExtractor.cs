@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Follow.Operation.Extraction
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
 
     /// <summary>
     /// Extracts the parts of <see cref="ObjectDistanceComparator.EventData"/> and emits them in separate events.
@@ -15,17 +15,13 @@
         /// Defines the event with the specified <see cref="Vector3"/>.
         /// </summary>
         [Serializable]
-        public class Vector3UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class Vector3UnityEvent : UnityEvent<Vector3> { }
 
         /// <summary>
         /// Defines the event with the specified <see cref="float"/>.
         /// </summary>
         [Serializable]
-        public class FloatUnityEvent : UnityEvent<float>
-        {
-        }
+        public class FloatUnityEvent : UnityEvent<float> { }
 
         /// <summary>
         /// Emitted when the <see cref="Vector3"/> is extracted.

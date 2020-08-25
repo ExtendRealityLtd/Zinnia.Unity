@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Transforms a <see cref="float"/> angle value to a <see cref="Vector2"/> direction.
@@ -32,6 +32,24 @@
         /// A container to allow setting of the <see cref="Direction"/>.
         /// </summary>
         protected Vector2 outputAngle;
+
+        /// <summary>
+        /// Sets the <see cref="Direction"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetDirectionX(float value)
+        {
+            Direction = new Vector2(value, Direction.y);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Direction"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetDirectionY(float value)
+        {
+            Direction = new Vector2(Direction.x, value);
+        }
 
         /// <summary>
         /// Transforms the given <see cref="float"/> angle into a <see cref="Vector2"/> direction.

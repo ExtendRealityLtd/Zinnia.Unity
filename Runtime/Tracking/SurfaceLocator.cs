@@ -1,19 +1,19 @@
 ﻿namespace Zinnia.Tracking
 {
-    using UnityEngine;
-    using UnityEngine.Events;
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Cast;
-    using Zinnia.Rule;
-    using Zinnia.Process;
-    using Zinnia.Process.Moment;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
+    using Zinnia.Process;
+    using Zinnia.Process.Moment;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Casts a <see cref="Ray"/> in a given direction and looks for the nearest valid surface.
@@ -64,6 +64,18 @@
         [field: DocumentedByXml]
         public float MaximumDistance { get; set; } = 50f;
         /// <summary>
+        /// The surface will only be located if the previous position has changed from the current position.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool MustChangePosition { get; set; } = true;
+        /// <summary>
+        /// The threshold difference between the previous point value and the current point value to be considered equal.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public float PositionChangedEqualityThreshold { get; set; } = 0.0001f;
+        /// <summary>
         /// The amount to offset the position of the destination point found on the located surface.
         /// </summary>
         [Serialized]
@@ -106,10 +118,6 @@
         public readonly SurfaceData surfaceData = new SurfaceData();
 
         /// <summary>
-        /// The distance to consider a position change.
-        /// </summary>
-        protected const float DISTANCE_VARIANCE = 0.0001f;
-        /// <summary>
         /// A reused comparer instance.
         /// </summary>
         protected static readonly RayCastHitComparer Comparer = new RayCastHitComparer();
@@ -121,6 +129,33 @@
         /// A reused data instance.
         /// </summary>
         protected readonly TransformData transformData = new TransformData();
+
+        /// <summary>
+        /// Sets the <see cref="SearchDirection"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSearchDirectionX(float value)
+        {
+            SearchDirection = new Vector3(value, SearchDirection.y, SearchDirection.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="SearchDirection"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSearchDirectionY(float value)
+        {
+            SearchDirection = new Vector3(SearchDirection.x, value, SearchDirection.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="SearchDirection"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetSearchDirectionZ(float value)
+        {
+            SearchDirection = new Vector3(SearchDirection.x, SearchDirection.y, value);
+        }
 
         /// <summary>
         /// Locates the nearest available surface upon a <see cref="MomentProcess"/>.
@@ -151,12 +186,17 @@
                 return;
             }
 
-            if (CastRay(givenOrigin.Position, SearchDirection) && PositionChanged(DISTANCE_VARIANCE))
+            if (CastRay(givenOrigin.Position, SearchDirection) && (!MustChangePosition || PositionChanged(PositionChangedEqualityThreshold)))
             {
                 surfaceData.RotationOverride = givenOrigin.Rotation;
                 surfaceData.ScaleOverride = givenOrigin.Scale;
                 SurfaceLocated?.Invoke(surfaceData);
             }
+        }
+
+        protected virtual void OnEnable()
+        {
+            surfaceData.Clear();
         }
 
         /// <summary>
@@ -177,11 +217,11 @@
         /// <returns><see langword="true"/> if a valid surface is located.</returns>
         protected virtual bool CastRay(Vector3 givenOrigin, Vector3 givenDirection)
         {
-            givenOrigin = givenOrigin + (givenDirection.normalized * OriginOffset);
+            givenOrigin += givenDirection.normalized * OriginOffset;
             surfaceData.Origin = givenOrigin;
             surfaceData.Direction = givenDirection;
             Ray tracerRaycast = new Ray(givenOrigin, givenDirection);
-            return TargetValidity == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast);
+            return TargetValidity?.Interface == null ? FindFirstCollision(tracerRaycast) : FindAllCollisions(tracerRaycast);
         }
 
         /// <summary>

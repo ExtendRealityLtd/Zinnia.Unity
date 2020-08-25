@@ -29,7 +29,34 @@
         protected SurfaceData previousData;
 
         /// <summary>
-        /// Digests <see cref="SurfaceData"/> and compares the current surface to the previous surface to determine if a change has occured.
+        /// Sets the <see cref="CheckAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetCheckAxisX(bool value)
+        {
+            CheckAxis = new Vector3State(value, CheckAxis.yState, CheckAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="CheckAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetCheckAxisY(bool value)
+        {
+            CheckAxis = new Vector3State(CheckAxis.xState, value, CheckAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="CheckAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetCheckAxisZ(bool value)
+        {
+            CheckAxis = new Vector3State(CheckAxis.xState, CheckAxis.yState, value);
+        }
+
+        /// <summary>
+        /// Digests <see cref="SurfaceData"/> and compares the current surface to the previous surface to determine if a change has occurred.
         /// </summary>
         /// <param name="surfaceData">The <see cref="SurfaceData"/> to check on.</param>
         [RequiresBehaviourState]

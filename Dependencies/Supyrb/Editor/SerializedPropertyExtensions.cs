@@ -11,11 +11,11 @@
 namespace Supyrb
 {
     using System;
-    using UnityEngine;
-    using UnityEditor;
-    using System.Reflection;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
+    using UnityEditor;
+    using UnityEngine;
 
     /// <summary>
     /// Extension class for SerializedProperties

@@ -2,11 +2,10 @@
 
 namespace Test.Zinnia.Tracking.Collision
 {
+    using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
-    using Test.Zinnia.Utility.Mock;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class CollisionTrackerTest

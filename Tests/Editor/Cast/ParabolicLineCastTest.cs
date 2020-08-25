@@ -1,15 +1,15 @@
 ﻿using Zinnia.Cast;
-using Zinnia.Rule;
 using Zinnia.Data.Collection.List;
+using Zinnia.Rule;
 
 namespace Test.Zinnia.Cast
 {
-    using UnityEngine;
-    using UnityEngine.TestTools;
-    using System.Collections;
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
+    using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class ParabolicLineCastTest

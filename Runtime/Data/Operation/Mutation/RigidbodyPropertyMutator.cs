@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using UnityEngine;
+    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Extension;
 
     /// <summary>
@@ -14,7 +14,7 @@
     public class RigidbodyPropertyMutator : MonoBehaviour
     {
         /// <summary>
-        /// The rigidbody to mutate.
+        /// The <see cref="Rigidbody"/> to mutate.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
@@ -69,12 +69,66 @@
         }
 
         /// <summary>
+        /// Sets the <see cref="Velocity"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetVelocityX(float value)
+        {
+            Velocity = new Vector3(value, Velocity.y, Velocity.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Velocity"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetVelocityY(float value)
+        {
+            Velocity = new Vector3(Velocity.x, value, Velocity.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Velocity"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetVelocityZ(float value)
+        {
+            Velocity = new Vector3(Velocity.x, Velocity.y, value);
+        }
+
+        /// <summary>
         /// Sets the velocity of the <see cref="Target"/> to zero.
         /// </summary>
         [RequiresBehaviourState]
         public virtual void ClearVelocity()
         {
             Velocity = Vector3.zero;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="AngularVelocity"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetAngularVelocityX(float value)
+        {
+            AngularVelocity = new Vector3(value, AngularVelocity.y, AngularVelocity.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="AngularVelocity"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetAngularVelocityY(float value)
+        {
+            AngularVelocity = new Vector3(AngularVelocity.x, value, AngularVelocity.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="AngularVelocity"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetAngularVelocityZ(float value)
+        {
+            AngularVelocity = new Vector3(AngularVelocity.x, AngularVelocity.y, value);
         }
 
         /// <summary>

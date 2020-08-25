@@ -53,9 +53,7 @@
             }
 
             /// <inheritdoc />
-            public void Dispose()
-            {
-            }
+            public void Dispose() { }
 
             /// <inheritdoc />
             public bool MoveNext()

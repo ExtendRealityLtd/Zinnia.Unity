@@ -1,9 +1,9 @@
 namespace Zinnia.Cast
 {
-    using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.MemberChangeMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
 
     /// <summary>
     /// Casts a straight line in the direction of the origin for a fixed length.

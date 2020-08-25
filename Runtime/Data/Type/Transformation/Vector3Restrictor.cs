@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
 
     /// <summary>
     /// Transforms a <see cref="Vector3"/> by clamping the coordinates to be within given boundaries.
@@ -19,16 +19,14 @@
         /// Defines the event with the transformed <see cref="Vector3"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector3>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector3> { }
 
         /// <summary>
         /// The minimum and maximum values that the x coordinate can be.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
-        public FloatRange XBounds { get; set; }  = FloatRange.MinMax;
+        public FloatRange XBounds { get; set; } = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the y coordinate can be.
         /// </summary>

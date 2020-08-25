@@ -3,7 +3,5 @@
     using UnityEngine;
 
     [AddComponentMenu("")]
-    public class RuleStub : MonoBehaviour
-    {
-    }
+    public class RuleStub : MonoBehaviour { }
 }

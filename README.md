@@ -5,6 +5,7 @@
 >
 > `[zin-ee-uh]`
 
+[![Release][Version-Release]][Releases]
 [![License][License-Badge]][License]
 [![Backlog][Backlog-Badge]][Backlog]
 
@@ -12,31 +13,20 @@
 
 Zinnia is a collection of design patterns for the [Unity] software that can be beneficial in (but not limited to) spatial computing development.
 
-  > **Requires** the Unity software version 2018.3.10f1 (or above).
+> **Requires** the Unity software version `2018.3.10f1` (or above).
 
 ## Getting Started
 
 ### Setting up a project
 
-* Using the Unity software version 2018.3.10f1 (or above), create a new project using the 3D Template or open an existing project.
-* If the project requires Virtual Reality support:
-  * Ensure `Virtual Reality Supported` is checked.
-    * In the Unity software select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` window.
-    * Select `Player` from the left hand menu in the `Project Settings` window.
-    * In the `Player` settings panel expand `XR Settings`.
-    * In `XR Settings` ensure the `Virtual Reality Supported` option is checked.
-  * Ensure the appropriate support package is installed.
-    * In the Unity software select `Main Menu -> Window -> Package Manager` to open the `Packages` window.
-    * Find the appropriate support package in the left hand menu and click on it to select it (e.g. Oculus (Standalone) or OpenVR).
-    * Click the `Install` button in the right hand pane of the `Packages` window for the selected support package.
-    * The package will now install and be available for your supported hardware.
+* Using the Unity software version `2018.3.10f1` (or above), create a new project using the 3D Template or open an existing project.
 * Ensure the project `Scripting Runtime Version` is set to `.NET 4.x Equivalent`.
   * In the Unity software select `Main Menu -> Edit -> Project Settings` to open the `Project Settings` inspector.
   * Select `Player` from the left hand menu in the `Project Settings` window.
   * In the `Player` settings panel expand `Other Settings`.
   * Ensure the `Scripting Runtime Version` is set to `.NET 4.x Equivalent`.
 
-### Adding Zinnia to a project
+### Adding the package to the Unity project manifest
 
 * Navigate to the `Packages` directory of your project.
 * Adjust the [project manifest file][Project-Manifest] `manifest.json` in a text editor.
@@ -44,7 +34,7 @@ Zinnia is a collection of design patterns for the [Unity] software that can be b
     * Ensure `io.extendreality` is part of `scopes`.
   * Add `io.extendreality.zinnia.unity` to `dependencies`, stating the latest version.
 
-  A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version][Latest-Release].
+  A minimal example ends up looking like this. Please note that the version `X.Y.Z` stated here is to be replaced with [the latest released version][Latest-Release] which is currently [![Release][Version-Release]][Releases].
   ```json
   {
     "scopedRegistries": [
@@ -88,7 +78,7 @@ Because Zinnia is a package tests have to be explicitly enabled for this package
     }
   }
   ```
-* As noted in the [official documentation][Enable-Tests]:
+* As noted in the [official Unity documentation][Enable-Tests]:
   > **NOTE**: You may need to re-import the package, because the test framework doesn't always immediately pick up changes to the `testables` attribute.
   * Within the Unity software's `Project` window expand the `Packages` node.
   * Right-click on the `Zinnia.Unity` child node and choose `Reimport`.
@@ -99,15 +89,23 @@ Because Zinnia is a package tests have to be explicitly enabled for this package
 
 > Note: The tests are not compatible with the `Run all in player` option.
 
-## Contributing
+### Updating to the latest version
 
-We're not currently in a place where accepting contributions would be helpful. But as soon as we're ready we'll let you know!
+The package will show up in the Unity Package Manager UI once the above steps have been carried out. From then on the package can be updated by selecting the package in the Unity Package Manager and clicking on the `Update` button or using the version selection UI.
 
 ## Naming
 
 Inspired by the [Zinnia] genus of plants known for their colorful, long lasting flower heads and their great ease to grow from seeds. This repository, much like the Zinnia flower aims to be easy to use and allow your projects to grow and flourish into long lasting, easy to maintain solutions.
 
 > **Fun Fact:** Zinnias have been grown aboard the [International Space Station] and have demonstrated the capability to blossom in a weightless environment.
+
+## Contributing
+
+Please refer to the Extend Reality [Contributing guidelines] and the [Unity project coding conventions].
+
+## Code of Conduct
+
+Please refer to the Extend Reality [Code of Conduct].
 
 ## License
 
@@ -118,13 +116,22 @@ Code released under the [MIT License][License].
 These materials are not sponsored by or affiliated with Unity Technologies or its affiliates. "Unity" is a trademark or registered trademark of Unity Technologies or its affiliates in the U.S. and elsewhere.
 
 [Zinnia-Image]: https://user-images.githubusercontent.com/1029673/51488711-2ab42c80-1d9e-11e9-94c9-767e804157e7.png
+[Version-Release]: https://img.shields.io/github/release/ExtendRealityLtd/Zinnia.Unity.svg
 [License-Badge]: https://img.shields.io/github/license/ExtendRealityLtd/Zinnia.Unity.svg
 [Backlog-Badge]: https://img.shields.io/badge/project-backlog-78bdf2.svg
+
+[Releases]: ../../releases
 [License]: LICENSE.md
 [Backlog]: http://tracker.vrtk.io
+
 [Unity]: https://unity3d.com/
+[Latest-Release]: ../../releases/latest
 [Project-Manifest]: https://docs.unity3d.com/Manual/upm-manifestPrj.html
 [Enable-Tests]: https://docs.unity3d.com/Manual/cus-tests.html
-[Latest-Release]: https://github.com/ExtendRealityLtd/Zinnia.Unity/releases/latest
+
 [Zinnia]: https://en.wikipedia.org/wiki/Zinnia
 [International Space Station]: https://www.nasa.gov/image-feature/first-flower-grown-in-space-stations-veggie-facility
+
+[Contributing guidelines]: https://github.com/ExtendRealityLtd/.github/blob/master/CONTRIBUTING.md
+[Unity project coding conventions]: https://github.com/ExtendRealityLtd/.github/blob/master/CONVENTIONS/UNITY3D.md
+[Code of Conduct]: https://github.com/ExtendRealityLtd/.github/blob/master/CODE_OF_CONDUCT.md

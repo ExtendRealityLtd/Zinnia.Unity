@@ -2,8 +2,8 @@
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformPositionTest
@@ -49,6 +49,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             GameObject source = new GameObject();
             GameObject target = new GameObject();
             GameObject offset = new GameObject();
+
+            offset.transform.SetParent(target.transform);
 
             source.transform.position = Vector3.one * 2f;
             target.transform.position = Vector3.zero;

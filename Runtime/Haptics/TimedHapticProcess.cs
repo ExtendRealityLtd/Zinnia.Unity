@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Haptics
 {
-    using UnityEngine;
-    using System.Collections;
     using Malimbe.MemberChangeMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System.Collections;
+    using UnityEngine;
 
     /// <summary>
     /// Processes a given <see cref="Haptics.HapticProcess"/> repeatedly for a given duration and with a pause interval between each process.

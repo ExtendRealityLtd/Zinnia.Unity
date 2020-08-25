@@ -1,15 +1,15 @@
-﻿using Zinnia.Tracking;
+﻿using Zinnia.Data.Collection.List;
 using Zinnia.Rule;
-using Zinnia.Data.Collection.List;
+using Zinnia.Tracking;
 
 namespace Test.Zinnia.Tracking
 {
-    using UnityEngine;
-    using UnityEngine.TestTools;
-    using System.Collections;
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
+    using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class SurfaceLocatorTest
@@ -55,6 +55,11 @@ namespace Test.Zinnia.Tracking
             Assert.IsTrue(surfaceLocatedMock.Received);
             Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
 
+            subject.gameObject.SetActive(false);
+            subject.gameObject.SetActive(true);
+
+            Assert.AreEqual(null, subject.surfaceData.Transform);
+
             Object.DestroyImmediate(validSurface);
             Object.DestroyImmediate(searchOrigin);
         }
@@ -75,6 +80,71 @@ namespace Test.Zinnia.Tracking
             Assert.IsFalse(surfaceLocatedMock.Received);
             Assert.IsNull(subject.surfaceData.Transform);
 
+            Object.DestroyImmediate(searchOrigin);
+        }
+
+        [Test]
+        public void InvalidLocateSameSurface()
+        {
+            GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject searchOrigin = new GameObject("SearchOrigin");
+
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.SearchOrigin = searchOrigin;
+            subject.SearchDirection = Vector3.forward;
+
+            //Process just calls Locate() so may as well just test the first point
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Assert.IsTrue(surfaceLocatedMock.Received);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
+
+            surfaceLocatedMock.Reset();
+
+            subject.Process();
+
+            Assert.IsFalse(surfaceLocatedMock.Received);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
+
+            Object.DestroyImmediate(validSurface);
+            Object.DestroyImmediate(searchOrigin);
+        }
+
+        [Test]
+        public void ValidLocateSameSurfaceIgnoreEquality()
+        {
+            GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject searchOrigin = new GameObject("SearchOrigin");
+
+            UnityEventListenerMock surfaceLocatedMock = new UnityEventListenerMock();
+            subject.SurfaceLocated.AddListener(surfaceLocatedMock.Listen);
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.MustChangePosition = false;
+            subject.SearchOrigin = searchOrigin;
+            subject.SearchDirection = Vector3.forward;
+
+            //Process just calls Locate() so may as well just test the first point
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Assert.IsTrue(surfaceLocatedMock.Received);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
+
+            surfaceLocatedMock.Reset();
+
+            subject.Process();
+
+            Assert.IsTrue(surfaceLocatedMock.Received);
+            Assert.AreEqual(validSurface.transform, subject.surfaceData.Transform);
+
+            Object.DestroyImmediate(validSurface);
             Object.DestroyImmediate(searchOrigin);
         }
 

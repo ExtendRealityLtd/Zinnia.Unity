@@ -19,5 +19,15 @@
             float difference = Mathf.Abs(tolerance);
             return (Mathf.Abs(a - b) <= difference);
         }
+
+        /// <summary>
+        /// Converts the given degree angle from a full unsigned 0' to 360' range into the signed -180' to 180' equivalent.
+        /// </summary>
+        /// <param name="degree">The unsigned degree to convert.</param>
+        /// <returns>The converted signed degree.</returns>
+        public static float GetSignedDegree(this float degree)
+        {
+            return (degree > 180f) ? degree - 360f : degree;
+        }
     }
 }

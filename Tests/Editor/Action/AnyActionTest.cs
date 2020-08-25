@@ -3,11 +3,11 @@ using Zinnia.Action.Collection;
 
 namespace Test.Zinnia.Action
 {
+    using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
-    using Test.Zinnia.Utility.Mock;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyActionTest

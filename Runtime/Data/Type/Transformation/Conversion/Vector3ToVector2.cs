@@ -1,10 +1,11 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Transforms a <see cref="Vector3"/> to a <see cref="Vector2"/> and allows mapping of the relevant coordinates.
@@ -20,9 +21,7 @@
         /// Defines the event with the transformed <see cref="Vector2"/> value.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<Vector2>
-        {
-        }
+        public class UnityEvent : UnityEvent<Vector2> { }
 
         /// <summary>
         /// The mapping of <see cref="Vector3"/> coordinates to the <see cref="Vector2"/> coordinates.
@@ -61,6 +60,15 @@
         [Serialized]
         [field: DocumentedByXml]
         public CoordinateMapType CoordinateMap { get; set; } = CoordinateMapType.XToXAndYToYExcludeZ;
+
+        /// <summary>
+        /// Sets the <see cref="CoordinateMap"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="CoordinateMapType"/>.</param>
+        public virtual void SetCoordinateMap(int index)
+        {
+            CoordinateMap = EnumExtensions.GetByIndex<CoordinateMapType>(index);
+        }
 
         /// <summary>
         /// Transforms the given <see cref="Vector3"/> into a <see cref="Vector2"/>.

@@ -1,16 +1,16 @@
-﻿using Zinnia.Rule;
-using Zinnia.Data.Collection.List;
+﻿using Zinnia.Data.Collection.List;
+using Zinnia.Rule;
 using Zinnia.Tracking.Follow;
 using Zinnia.Tracking.Follow.Modifier;
 
 namespace Test.Zinnia.Tracking.Follow
 {
-    using UnityEngine;
-    using UnityEngine.TestTools;
-    using System.Collections;
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Stub;
+    using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class ObjectFollowerTest
@@ -385,7 +385,7 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(targetOffset1);
             Object.DestroyImmediate(targetOffset2);
             Object.DestroyImmediate(targetOffset3);
-            }
+        }
 
         public class FollowModifierMock : FollowModifier
         {

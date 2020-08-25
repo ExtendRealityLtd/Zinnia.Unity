@@ -1,12 +1,12 @@
-﻿using Zinnia.Tracking.Collision.Active;
-using Zinnia.Tracking.Collision;
+﻿using Zinnia.Tracking.Collision;
+using Zinnia.Tracking.Collision.Active;
 
 namespace Test.Zinnia.Tracking.Collision.Active
 {
-    using UnityEngine;
     using NUnit.Framework;
-    using Test.Zinnia.Utility.Mock;
     using Test.Zinnia.Utility.Helper;
+    using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class CollisionPointContainerTest

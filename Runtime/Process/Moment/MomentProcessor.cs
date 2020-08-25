@@ -1,11 +1,12 @@
 ﻿namespace Zinnia.Process.Moment
 {
-    using UnityEngine;
     using Malimbe.MemberChangeMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Process.Moment.Collection;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using UnityEngine.Rendering;
+    using Zinnia.Extension;
+    using Zinnia.Process.Moment.Collection;
 
     /// <summary>
     /// Iterates through a given <see cref="MomentProcess"/> collection and executes the <see cref="IProcessable.Process"/> method on the given Unity game loop moment.
@@ -40,7 +41,11 @@
             /// <summary>
             /// Executes the processes in the camera PreRender scene rendering part of the Unity game loop.
             /// </summary>
-            PreRender
+            PreRender,
+            /// <summary>
+            /// Executes the processes in the Application BeforeRender scene rendering part of the Unity game loop.
+            /// </summary>
+            BeforeRender
         }
 
         /// <summary>
@@ -55,6 +60,15 @@
         [Serialized]
         [field: DocumentedByXml]
         public MomentProcessObservableList Processes { get; set; }
+
+        /// <summary>
+        /// Sets the <see cref="ProcessMoment"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="Moment"/>.</param>
+        public virtual void SetProcessMoment(int index)
+        {
+            ProcessMoment = EnumExtensions.GetByIndex<Moment>(index);
+        }
 
         protected virtual void OnEnable()
         {
@@ -107,6 +121,11 @@
             Process();
         }
 
+        protected virtual void OnApplicationBeforeRender()
+        {
+            Process();
+        }
+
         /// <summary>
         /// Handles unsubscribing to the chosen subscribed moment event.
         /// </summary>
@@ -128,6 +147,9 @@
                     break;
                 case Moment.PreCull:
                     Camera.onPreCull -= OnCameraPreCull;
+                    break;
+                case Moment.BeforeRender:
+                    Application.onBeforeRender -= OnApplicationBeforeRender;
                     break;
             }
         }
@@ -155,6 +177,9 @@
                     break;
                 case Moment.PreCull:
                     Camera.onPreCull += OnCameraPreCull;
+                    break;
+                case Moment.BeforeRender:
+                    Application.onBeforeRender += OnApplicationBeforeRender;
                     break;
             }
         }

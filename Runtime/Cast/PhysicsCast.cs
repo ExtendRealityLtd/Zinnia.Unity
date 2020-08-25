@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Cast
 {
-    using UnityEngine;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
+    using UnityEngine;
 
     /// <summary>
     /// Allows customizing of Unity Physics casting within other scripts by applying settings at edit time.

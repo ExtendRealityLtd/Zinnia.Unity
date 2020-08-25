@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using UnityEngine;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberClearanceMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Type;
 
     /// <summary>
@@ -12,11 +12,12 @@
     /// </summary>
     public abstract class TransformPropertyMutator : MonoBehaviour
     {
+        #region Target Settings
         /// <summary>
         /// The target to mutate.
         /// </summary>
         [Serialized, Cleared]
-        [field: DocumentedByXml]
+        [field: Header("Target Settings"), DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// Determines whether to mutate the local or global values.
@@ -30,6 +31,34 @@
         [Serialized]
         [field: DocumentedByXml]
         public Vector3State MutateOnAxis { get; set; } = Vector3State.True;
+        #endregion
+
+        /// <summary>
+        /// Sets the <see cref="MutateOnAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetMutateOnAxisX(bool value)
+        {
+            MutateOnAxis = new Vector3State(value, MutateOnAxis.yState, MutateOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MutateOnAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetMutateOnAxisY(bool value)
+        {
+            MutateOnAxis = new Vector3State(MutateOnAxis.xState, value, MutateOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MutateOnAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetMutateOnAxisZ(bool value)
+        {
+            MutateOnAxis = new Vector3State(MutateOnAxis.xState, MutateOnAxis.yState, value);
+        }
 
         /// <summary>
         /// Sets the property to the new value.

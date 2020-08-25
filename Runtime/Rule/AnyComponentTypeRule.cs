@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Rule
 {
-    using UnityEngine;
-    using Malimbe.XmlDocumentationAttribute;
     using Malimbe.PropertySerializationAttribute;
-    using Zinnia.Extension;
-    using Zinnia.Data.Type;
+    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Determines whether a <see cref="GameObject"/> has any component found in a list.

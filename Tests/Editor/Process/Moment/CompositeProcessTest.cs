@@ -106,6 +106,8 @@ namespace Test.Zinnia.Process.Moment
             Assert.IsTrue(mockProcessable2.WasProcessCalled);
             Assert.IsTrue(mockProcessable3.WasProcessCalled);
             Assert.IsTrue(mockProcessable4.WasProcessCalled);
+
+            Object.DestroyImmediate(anotherObject);
         }
 
         private sealed class MockProcessable : IProcessable

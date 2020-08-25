@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Rule.Collection
 {
-    using UnityEngine.Events;
     using System;
     using System.Collections.Generic;
+    using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
 
     /// <summary>
@@ -14,8 +14,6 @@
         /// Defines the event with the <see cref="RulesMatcher.Element"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<RulesMatcher.Element>
-        {
-        }
+        public class UnityEvent : UnityEvent<RulesMatcher.Element> { }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Data.Attribute
 {
-    using UnityEngine;
     using System;
+    using UnityEngine;
 
     /// <summary>
     /// Defines the <c>[TypePicker]</c> attribute.

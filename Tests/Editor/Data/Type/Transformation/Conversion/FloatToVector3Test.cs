@@ -2,9 +2,9 @@
 
 namespace Test.Zinnia.Data.Type.Transformation.Conversion
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class FloatToVector3Test

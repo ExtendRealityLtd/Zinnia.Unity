@@ -1,10 +1,11 @@
 ﻿using Zinnia.Extension;
 using Zinnia.Rule;
+using BaseRule = Zinnia.Rule.Rule;
 
 namespace Test.Zinnia.Rule
 {
-    using UnityEngine;
     using NUnit.Framework;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyLayerRuleTest
@@ -98,6 +99,38 @@ namespace Test.Zinnia.Rule
             containingObject.layer = LayerMask.NameToLayer("UI");
             subject.LayerMask = LayerMask.GetMask("UI");
             subject.enabled = false;
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void AcceptsInactiveGameObject()
+        {
+            containingObject.layer = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.GetMask("UI");
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleComponentIsDisabled;
+            subject.gameObject.SetActive(false);
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.enabled = false;
+
+            Assert.IsFalse(container.Accepts(containingObject));
+        }
+
+        [Test]
+        public void AcceptsInactiveComponent()
+        {
+            containingObject.layer = LayerMask.NameToLayer("UI");
+            subject.LayerMask = LayerMask.GetMask("UI");
+
+            subject.AutoRejectStates = BaseRule.RejectRuleStates.RuleGameObjectIsNotActiveInHierarchy;
+            subject.enabled = false;
+
+            Assert.IsTrue(container.Accepts(containingObject));
+
+            subject.gameObject.SetActive(false);
+
             Assert.IsFalse(container.Accepts(containingObject));
         }
     }

@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Data.Collection
 {
+    using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.PropertySerializationAttribute;
+    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using System;
-    using Malimbe.XmlDocumentationAttribute;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Zinnia.Data.Collection.List;
 
     /// <summary>
@@ -17,9 +17,7 @@
         /// Defines the event for the output <see cref="GameObject"/>.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<GameObject>
-        {
-        }
+        public class GameObjectUnityEvent : UnityEvent<GameObject> { }
 
         /// <summary>
         /// The collection of relations.
@@ -29,10 +27,15 @@
         public GameObjectRelationObservableList Relations { get; set; }
 
         /// <summary>
-        /// Emitted when a value is retrieved for a given key.
+        /// Emitted when a value is retrieved for a given key or relation index.
         /// </summary>
         [DocumentedByXml]
-        public UnityEvent ValueRetrieved = new UnityEvent();
+        public GameObjectUnityEvent ValueRetrieved = new GameObjectUnityEvent();
+        /// <summary>
+        /// Emitted when a no key can be found the given key or relation index.
+        /// </summary>
+        [DocumentedByXml]
+        public UnityEvent KeyNotFound = new UnityEvent();
 
         /// <summary>
         /// Attempts to get the value in the list of relations for the given key.
@@ -50,6 +53,7 @@
                     return relation.Value;
                 }
             }
+            KeyNotFound?.Invoke();
             return null;
         }
 
@@ -70,6 +74,7 @@
                     return foundValue;
                 }
             }
+            KeyNotFound?.Invoke();
             return null;
         }
 

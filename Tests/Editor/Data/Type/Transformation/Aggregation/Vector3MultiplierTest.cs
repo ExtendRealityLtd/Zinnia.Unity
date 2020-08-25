@@ -1,11 +1,11 @@
-﻿using Zinnia.Data.Type.Transformation.Aggregation;
-using Zinnia.Data.Collection.List;
+﻿using Zinnia.Data.Collection.List;
+using Zinnia.Data.Type.Transformation.Aggregation;
 
 namespace Test.Zinnia.Data.Type.Transformation.Aggregation
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class Vector3MultiplierTest

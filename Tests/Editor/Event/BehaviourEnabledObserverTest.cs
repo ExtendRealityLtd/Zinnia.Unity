@@ -1,13 +1,13 @@
-﻿using Zinnia.Event;
-using Zinnia.Data.Collection.List;
+﻿using Zinnia.Data.Collection.List;
+using Zinnia.Event;
 
 namespace Test.Zinnia.Event
 {
+    using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using System.Collections;
-    using NUnit.Framework;
-    using Test.Zinnia.Utility.Mock;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class BehaviourEnabledObserverTest

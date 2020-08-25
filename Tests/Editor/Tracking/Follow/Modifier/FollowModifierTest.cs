@@ -3,9 +3,9 @@ using Zinnia.Tracking.Follow.Modifier.Property;
 
 namespace Test.Zinnia.Tracking.Follow.Modifier
 {
-    using UnityEngine;
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
+    using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class FollowModifierTest

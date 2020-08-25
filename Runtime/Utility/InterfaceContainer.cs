@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Utility
 {
-    using UnityEngine;
     using Malimbe.MemberChangeMethod;
     using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
 
     /// <summary>
     /// A container for an <see cref="Object"/> that implements an interface that can be utilized within a Unity Inspector.
@@ -57,9 +57,7 @@
         private TInterface _interface;
 
         /// <inheritdoc />
-        public void OnBeforeSerialize()
-        {
-        }
+        public void OnBeforeSerialize() { }
 
         /// <inheritdoc />
         public void OnAfterDeserialize()
