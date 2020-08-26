@@ -104,9 +104,9 @@
 
             Vector3 point = offset != null ? offset.transform.position : target.transform.position;
 
-            target.transform.RotateAround(point, target.transform.rotation * target.transform.right, input.x);
-            target.transform.RotateAround(point, target.transform.rotation * target.transform.up, input.y);
-            target.transform.RotateAround(point, target.transform.rotation * target.transform.forward, input.z);
+            target.transform.RotateAround(point, target.transform.right, input.x);
+            target.transform.RotateAround(point, target.transform.up, input.y);
+            target.transform.RotateAround(point, target.transform.forward, input.z);
         }
     }
 }
