@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.24.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.23.0...v1.24.0) (2020-08-29)
+
+#### Features
+
+* **Tracking:** ability to determine surface validity by target point ([30d1a45](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/30d1a4550734d95e37251c1b59f11279edbee07e))
+  > The new TargetPointValidity rule allows a type of Vector3Rule to be used to determine if the located point of the RayCast in the SurfaceLocator should be considered a valid target.
+  > 
+  > This can be used with the NavMeshRule to determine if a point on a surface is within the NavMesh boundaries.
+  > 
+  > The stub Vector3 rule has been moved out of the StraightLineCastTest and into its own stub so it can be used in multiple places. This is instead of testing with the actual NavMeshRule.
+* **Transformation:** add common float aggregate functions ([26ce17c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/26ce17c7b0a459d671b6f5127da51e001259c05b))
+  > A number of aggregate functions for float collections have been added to return common aggregates such as:
+  > 
+  > * Mean * Median * Mode * Min * Max * Range
+
+#### Bug Fixes
+
+* **Extraction:** extract correct direction based on UseLocal setting ([46e2fa7](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/46e2fa7922a6f379500ca6a5557b179db8844a43))
+  > The UseLocal setting was not returning data that made sense. The `UseLocal = false` was just returning the world direction Vector which had nothing to do with the `Source` so it made little sense to have it part of the TransformDirectionExtractor.
+  > 
+  > The `UseLocal = true` setting was actually returning the world direction of the `Source` so this is now the `UseLocal = false` operation as `Source.transform.forward` is actually the world forward direction of the `Source` even if it is a nested GameObject with multiple parent rotations.
+  > 
+  > This means the `UseLocal = true` setting is now the local direction of the `Source` GameObject so if it is a nested child with an additional parent rotation then the local forward is purely the local rotation of the GameObject multiplied by the world forward constant (Vector3.forward).
+  > 
+  > Whilst this will introduce a breaking change, it's actually a fix for operations that were not correct, so it's not a feature including breaking changes, it's actually fixing inaccurate behaviour.
+* **Tracking:** ensure correct axis is rotated around ([ad9c1cf](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/ad9c1cfc1cd8d9b40c6570150a7cc199bd77fcf5))
+  > The RotateAroundAngularVelocity was using the rotate axis as the current target rotation multiplied by the target direction which will only work if the target isn't rotated. It only needs to rotate around the target direction as this is already taking rotation of the target into consideration.
+
 ## [1.23.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.22.0...v1.23.0) (2020-08-15)
 
 #### Features
