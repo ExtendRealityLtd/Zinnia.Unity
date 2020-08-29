@@ -6,15 +6,15 @@
     using Zinnia.Data.Collection.List;
 
     /// <summary>
-    /// Multiplies a <see cref="float"/> collection by multiplying each one to the next entry in the collection.
+    /// Finds the mean (average) value in a <see cref="float"/> collection.
     /// </summary>
     /// <example>
-    /// 2f * 2f * 2f = 8f
+    /// [1f, 2f, 3f, 4f] = 2.5f
     /// </example>
-    public class FloatMultiplier : CollectionAggregator<float, float, FloatMultiplier.UnityEvent, FloatObservableList, FloatObservableList.UnityEvent>
+    public class FloatMeanFinder : CollectionAggregator<float, float, FloatAdder.UnityEvent, FloatObservableList, FloatObservableList.UnityEvent>
     {
         /// <summary>
-        /// Defines the event with the multiplied <see cref="float"/> value.
+        /// Defines the event with the aggregated <see cref="float"/> value.
         /// </summary>
         [Serializable]
         public class UnityEvent : UnityEvent<float> { }
@@ -22,7 +22,7 @@
         /// <inheritdoc />
         protected override float ProcessCollection()
         {
-            return Collection.NonSubscribableElements.Aggregate((a, b) => a * b);
+            return Collection.NonSubscribableElements.Average();
         }
     }
 }
