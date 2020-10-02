@@ -6,6 +6,7 @@
     using UnityEngine;
     using Zinnia.Data.Collection.List;
     using Zinnia.Haptics;
+    using Zinnia.Haptics.Collection;
     using Zinnia.Tracking.Velocity;
 
     /// <summary>
@@ -63,11 +64,17 @@
         [field: DocumentedByXml]
         public VelocityTracker LeftControllerVelocityTracker { get; set; }
         /// <summary>
-        /// The associated Left Controller Haptic Process.
+        /// The main Left Controller Haptic Process profile.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public HapticProcess LeftControllerHapticProcess { get; set; }
+        /// <summary>
+        /// A <see cref="HapticProcess"/> collection of haptic profiles that can be used with the Left Controller.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public HapticProcessObservableList LeftControllerHapticProfiles { get; set; }
         #endregion
 
         #region Right Controller Settings
@@ -84,11 +91,17 @@
         [field: DocumentedByXml]
         public VelocityTracker RightControllerVelocityTracker { get; set; }
         /// <summary>
-        /// The associated Right Controller Haptic Process.
+        /// The main Right Controller Haptic Process profile.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public HapticProcess RightControllerHapticProcess { get; set; }
+        /// <summary>
+        /// A <see cref="HapticProcess"/> collection of supplement haptic settings that can be used with the Right Controller.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public HapticProcessObservableList RightControllerHapticProfiles { get; set; }
         #endregion
     }
 }
