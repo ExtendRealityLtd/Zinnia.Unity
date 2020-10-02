@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.25.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.24.0...v1.25.0) (2020-10-02)
+
+#### Features
+
+* **Tracking:** add haptic profiles to LinkedAliasAssociationCollection ([b72822c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b72822cf0364169acae60740427fcd582960edc2))
+  > The LinkedAliasAssociationCollection now has the concept of haptic profiles for the left and right controller.
+  > 
+  > The haptic profile is a list of haptice processes for each controller that describe different haptic output scenarios.
+
 ## [1.24.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.23.0...v1.24.0) (2020-08-29)
 
 #### Features
