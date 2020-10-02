@@ -18,6 +18,9 @@
         /// <summary>
         /// The duration to pulse <see cref="Node"/> for.
         /// </summary>
+        /// <remarks>
+        /// Not supported by all devices.
+        /// </remarks>
         [Serialized]
         [field: DocumentedByXml]
         public float Duration { get; set; } = 0.005f;

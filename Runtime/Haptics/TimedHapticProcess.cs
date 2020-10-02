@@ -17,14 +17,12 @@
         [Serialized]
         [field: DocumentedByXml]
         public HapticProcess HapticProcess { get; set; }
-
         /// <summary>
         /// The amount of time to keep repeating the process for.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public float Duration { get; set; } = 1f;
-
         /// <summary>
         /// The amount of time to pause after each process iteration.
         /// </summary>
