@@ -1,5 +1,16 @@
 # Changelog
 
+### [1.25.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.25.0...v1.25.1) (2020-10-26)
+
+#### Bug Fixes
+
+* **Tracking:** calculate angular velocity angle in radians ([446974e](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/446974ebf855caf0de9bd3407e8ea94ffe838a73))
+  > The RigidbodyAngularVelocity component was calculating the angle of angular velocity in degrees but angular velocity is set in radians so this was causing artifacts when rotating.
+  > 
+  > The fix is to ensure the angle is calculated in radians.
+  > 
+  > Co-authored-by: JGroxz
+
 ## [1.25.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.24.0...v1.25.0) (2020-10-02)
 
 #### Features
