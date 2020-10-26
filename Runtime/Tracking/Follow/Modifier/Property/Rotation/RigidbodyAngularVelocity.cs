@@ -48,7 +48,7 @@
             Quaternion rotationDelta = source.transform.rotation * Quaternion.Inverse(offset != null ? offset.transform.rotation : target.transform.rotation);
 
             rotationDelta.ToAngleAxis(out float angle, out Vector3 axis);
-            angle = angle.GetSignedDegree();
+            angle = angle * Mathf.Deg2Rad / Time.deltaTime;
 
             if (!angle.ApproxEquals(0))
             {
