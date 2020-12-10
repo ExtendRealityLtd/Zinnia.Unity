@@ -46,8 +46,9 @@
             cachedTarget = target;
 
             Vector3 positionDelta = source.transform.position - (offset != null ? offset.transform.position : target.transform.position);
-            Vector3 velocityTarget = positionDelta / Time.deltaTime;
-            Vector3 calculatedVelocity = Vector3.MoveTowards(cachedTargetRigidbody.velocity, velocityTarget, MaxDistanceDelta);
+            float deltaTime = Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime;
+            Vector3 velocityTarget = positionDelta / deltaTime;
+            Vector3 calculatedVelocity = Vector3.MoveTowards(cachedTargetRigidbody.velocity, velocityTarget, MaxDistanceDelta / deltaTime);
 
             if (calculatedVelocity.sqrMagnitude < VelocityLimit)
             {
@@ -65,13 +66,15 @@
         /// <param name="offset">Any offset applied to the target.</param>
         /// <param name="a">The source position.</param>
         /// <param name="b">The target position.</param>
+
         protected override void GetCheckPoints(GameObject source, GameObject target, GameObject offset, out Vector3 a, out Vector3 b)
         {
             a = source.transform.position;
             b = target.transform.position;
+
             if (offset != null)
             {
-                b += offset.transform.localPosition;
+                a = source.transform.position - (offset.transform.position - target.transform.position);
             }
         }
     }

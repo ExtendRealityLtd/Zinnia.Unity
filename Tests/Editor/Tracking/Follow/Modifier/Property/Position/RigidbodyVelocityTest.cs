@@ -44,7 +44,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             source.transform.position = Vector3.one;
             target.transform.position = Vector3.zero;
 
-            Vector3 expectedVelocity = Vector3.one * 5.8f;
+            Vector3 expectedVelocity = Vector3.one / (Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime);
             Vector3 expectedAngularVelocity = Vector3.zero;
 
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
@@ -119,7 +119,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             target.transform.position = Vector3.zero;
             offset.transform.position = Vector3.one * 2f;
 
-            Vector3 expectedVelocity = Vector3.one * -5.8f;
+            Vector3 expectedVelocity = -(Vector3.one / (Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime));
             Vector3 expectedAngularVelocity = Vector3.zero;
 
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
@@ -197,7 +197,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             target.transform.position = Vector3.zero;
             offset.transform.position = Vector3.one * 2f;
 
-            Vector3 expectedVelocity = Vector3.one * 5.8f;
+            Vector3 expectedVelocity = Vector3.one / (Time.inFixedTimeStep ? Time.fixedDeltaTime : Time.deltaTime);
             Vector3 expectedAngularVelocity = Vector3.zero;
 
             Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
