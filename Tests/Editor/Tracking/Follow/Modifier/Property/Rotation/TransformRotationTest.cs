@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Follow.Modifier.Property.Rotation;
+﻿using Zinnia.Data.Type;
+using Zinnia.Tracking.Follow.Modifier.Property.Rotation;
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
@@ -91,6 +92,29 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(offset);
+        }
+
+        [Test]
+        public void ModifyWithAxisRestriction()
+        {
+            subject.ApplyModificationOnAxis = new Vector3State(true, false, true);
+            GameObject source = new GameObject();
+            GameObject target = new GameObject();
+
+            Quaternion sourceRotation = new Quaternion(1f, 0f, 0f, 0f);
+
+            source.transform.rotation = sourceRotation;
+            target.transform.rotation = Quaternion.identity;
+
+            subject.Modify(source, target);
+
+            Assert.AreEqual(sourceRotation, source.transform.rotation);
+            Assert.AreEqual(new Vector3(0f, 180f, 180f), source.transform.eulerAngles);
+            Assert.AreEqual(new Quaternion(0f, 0f, 1f, 0f).ToString(), target.transform.rotation.ToString());
+            Assert.AreEqual(new Vector3(0f, 0f, 180f), target.transform.eulerAngles);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
 
         [Test]

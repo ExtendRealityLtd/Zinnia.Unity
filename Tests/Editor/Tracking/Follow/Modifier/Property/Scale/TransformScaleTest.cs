@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Follow.Modifier.Property.Scale;
+﻿using Zinnia.Data.Type;
+using Zinnia.Tracking.Follow.Modifier.Property.Scale;
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
 {
@@ -85,6 +86,25 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(offset);
+        }
+
+        [Test]
+        public void ModifyWithAxisRestriction()
+        {
+            subject.ApplyModificationOnAxis = new Vector3State(true, false, true);
+            GameObject source = new GameObject();
+            GameObject target = new GameObject();
+
+            target.transform.localScale = Vector3.zero;
+            source.transform.localScale = Vector3.one;
+
+            subject.Modify(source, target);
+
+            Assert.AreEqual(Vector3.one, source.transform.localScale);
+            Assert.AreEqual(new Vector3(1f, 0f, 1f), target.transform.localScale);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
 
         [Test]
