@@ -5,7 +5,7 @@
     /// <summary>
     /// Updates the transform position of the target to match the source.
     /// </summary>
-    public class TransformPosition : PropertyModifier
+    public class TransformPosition : RestrictableTransformPropertyModifier
     {
         /// <summary>
         /// Modifies the target position to match the given source position.
@@ -15,6 +15,7 @@
         /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
+            SaveOriginalPropertyValue(target.transform.position);
             if (offset == null)
             {
                 target.transform.position = source.transform.position;
@@ -22,6 +23,11 @@
             else
             {
                 target.transform.position = source.transform.position - (offset.transform.position - target.transform.position);
+            }
+
+            if (HasAxisRestrictions)
+            {
+                target.transform.position = RestrictPropertyValue(target.transform.position);
             }
         }
     }

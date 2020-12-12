@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Follow.Modifier.Property.Position;
+﻿using Zinnia.Data.Type;
+using Zinnia.Tracking.Follow.Modifier.Property.Position;
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
 {
@@ -86,6 +87,25 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(offset);
+        }
+
+        [Test]
+        public void ModifyWithAxisRestriction()
+        {
+            subject.ApplyModificationOnAxis = new Vector3State(true, false, true);
+            GameObject source = new GameObject();
+            GameObject target = new GameObject();
+
+            source.transform.position = Vector3.one;
+            target.transform.position = Vector3.zero;
+
+            subject.Modify(source, target);
+
+            Assert.AreEqual(Vector3.one, source.transform.position);
+            Assert.AreEqual(new Vector3(1f, 0f, 1f), target.transform.position);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
         }
 
         [Test]
