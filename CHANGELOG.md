@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.27.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.26.0...v1.27.0) (2020-12-12)
+
+#### Features
+
+* **Tracking:** add ability to restrict transform property modifiers ([23b4bd4](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/23b4bd461d3ea9ad5c2149b2fb29dc845ab8948a))
+  > The modifiers of a transform can now be restricted on a per axis basis to allow finer control over the modification.
+* **Type:** add ability to provide easy reference access to Objects ([29ad720](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/29ad720bfcb6f24b2a9aa92a03d70a05097f4b21))
+  > The new ObjectReference type and custom drawer allow a Object to be specified as a property which can then be shown as a simple button in the inspector to highlight the referenced Object within the Unity Hierarchy.
+
+#### Bug Fixes
+
+* **Tracking:** calculate angular velocity angle optionally in degrees ([10279b2](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/10279b20cccbad0d5c2d574330514c1efb9cedbd))
+  > The RigidbodyAngularVelocity component was updated to calculate in radians only. Whilst, this makes sense for the most part, it does not create a good outcome in all situations. The component has been updated so it can optionally use radians or degrees and it can also take in to consideration the offset to determine the new centre of mass to calculate around.
+  > 
+  > The divergence checking code was also faulty, so this has been fixed as part of this commit.
+
 ## [1.26.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.25.1...v1.26.0) (2020-12-12)
 
 #### Features
