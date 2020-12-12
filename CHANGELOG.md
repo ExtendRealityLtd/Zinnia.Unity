@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.26.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.25.1...v1.26.0) (2020-12-12)
+
+#### Features
+
+* **Tracking:** add new velocity trackers ([89207a6](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/89207a66ceba41107755249e48b3f46297a9e491))
+  > The ConstantVelocityTracker returns the velocity data as set on its properties.
+  > 
+  > The RigidbodyVelocityTracker returns the velocity data from a rigidbody.
+* **Tracking:** extract as IProcessable for two components ([4608be1](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/4608be177e4869e235cc84f6aef887c0117ee221))
+  > Extracted ArtificialVelocityApplierProcess to allow the component to process in chosen moment. Added convenient methods IncrementVelocity() and IncrementAngularVelocity(). Use Vector3.Lerp() instead of Slerp() to calculate drag. ArtificialVelocityApplier is derived from this new process and maintains its current behaviour to process using coroutine.
+  > 
+  > Extracted AverageVelocityEstimatorProcess to allow the component to process in chosen moment. AverageVelocityEstimator is derived from this new process and maintains its current behaviour to process using LateUpdate().
+
 ### [1.25.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.25.0...v1.25.1) (2020-10-26)
 
 #### Bug Fixes
