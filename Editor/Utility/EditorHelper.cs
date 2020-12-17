@@ -192,5 +192,26 @@
 
             return results;
         }
+
+        /// <summary>
+        /// Draws a horizontal line on the GUI.
+        /// </summary>
+        /// <param name="color">The color for the line.</param>
+        /// <param name="height">The height of the line.</param>
+        /// <param name="margin">The margin space above and below the line.</param>
+        public static void DrawHorizontalLine(Color color, float height, Vector2 margin)
+        {
+            GUILayout.Space(margin.x);
+            EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, height), color);
+            GUILayout.Space(margin.y);
+        }
+
+        /// <summary>
+        /// Draws a horizontal line on the GUI.
+        /// </summary>
+        public static void DrawHorizontalLine()
+        {
+            DrawHorizontalLine(new Color(0f, 0f, 0f, 0.3f), 1f, Vector2.one * 5f);
+        }
     }
 }
