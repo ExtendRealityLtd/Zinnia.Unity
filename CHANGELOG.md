@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.28.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.27.0...v1.28.0) (2020-12-17)
+
+#### Features
+
+* **EditorHelper:** add editor helper to draw inspector horizontal line ([a04a3a1](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/a04a3a133e0b5a14eb6789f11362a00f0cc2b9c9))
+  > A new static method has been added to the EditorHelper to draw a horizontal line in any custom inspector window. This is useful for custom inspectors that require divider lines.
+* **Utility:** add custom editor to create multi part components ([78235bd](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/78235bd064134350c6d1e0567a464d390504bfbe))
+  > The ObservableListComponentGeneratorEditorWindow provides an easy way of creating components that contain nested Observable Lists by using a simple inspector window that provides a drop down list of available components to create. Selecting the component and clicking the button will add a GameObject to the scene with the desired component and then it adds a nested GameObject that contains the relevant Observable list.
+  > 
+  > This makes adding components that rely on observable lists easier to understand and quicker to achieve.
+
 ## [1.27.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.26.0...v1.27.0) (2020-12-12)
 
 #### Features
