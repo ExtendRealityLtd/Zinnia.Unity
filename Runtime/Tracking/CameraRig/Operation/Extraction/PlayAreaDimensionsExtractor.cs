@@ -3,7 +3,10 @@
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+#if UNITY_2020_2_OR_NEWER
+#else
     using UnityEngine.Experimental.XR;
+#endif
     using Zinnia.Data.Operation.Extraction;
 
     /// <summary>
@@ -20,12 +23,16 @@
         /// <inheritdoc />
         protected override Vector3? ExtractValue()
         {
+#if UNITY_2020_2_OR_NEWER
+            Debug.LogWarning("PlayAreaDimensionsExtractor is not supported on Unity 2020.2.");
+            return null;
+#else
             if (Boundary.TryGetDimensions(out Vector3 dimensions))
             {
                 return dimensions;
             }
-
             return null;
+#endif
         }
     }
 }

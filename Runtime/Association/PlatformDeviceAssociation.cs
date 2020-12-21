@@ -34,9 +34,17 @@
         /// <inheritdoc/>
         public override bool ShouldBeActive()
         {
+            string modelName = "";
+#if UNITY_2020_2_OR_NEWER
+            InputDevice currentDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
+            modelName = currentDevice != null && currentDevice.name != null ? currentDevice.name : "";
+#else
+            modelName = XRDevice.model;
+#endif
             return Regex.IsMatch(Application.platform.ToString(), PlatformPattern) &&
                 Regex.IsMatch(XRSettings.loadedDeviceName, XrSdkPattern) &&
-                Regex.IsMatch(XRDevice.model, XrModelPattern);
+                Regex.IsMatch(modelName, XrModelPattern);
+
         }
     }
 }

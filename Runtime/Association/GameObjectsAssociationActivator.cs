@@ -65,13 +65,19 @@
 
                 foreach (GameObject associatedObject in association.GameObjects.NonSubscribableElements)
                 {
-                    associatedObject.SetActive(false);
+                    if (associatedObject != null)
+                    {
+                        associatedObject.SetActive(false);
+                    }
                 }
             }
 
             foreach (GameObject associatedObject in desiredAssociation.GameObjects.NonSubscribableElements)
             {
-                associatedObject.SetActive(true);
+                if (associatedObject != null)
+                {
+                    associatedObject.SetActive(true);
+                }
             }
         }
 
@@ -146,7 +152,10 @@
 
                 foreach (GameObject associatedObject in association.GameObjects.NonSubscribableElements)
                 {
-                    associatedObject.SetActive(false);
+                    if (associatedObject != null)
+                    {
+                        associatedObject.SetActive(false);
+                    }
                 }
             }
 
@@ -154,7 +163,10 @@
             {
                 foreach (GameObject associatedObject in CurrentAssociation.GameObjects.NonSubscribableElements)
                 {
-                    associatedObject.SetActive(false);
+                    if (associatedObject != null)
+                    {
+                        associatedObject.SetActive(false);
+                    }
                 }
 
                 CurrentAssociation = null;
