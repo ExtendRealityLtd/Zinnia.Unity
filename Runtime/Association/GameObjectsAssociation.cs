@@ -20,7 +20,7 @@
         /// <summary>
         /// Whether the <see cref="GameObjects"/> should be activated.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Whether the association should be active.</returns>
         public abstract bool ShouldBeActive();
     }
 }
