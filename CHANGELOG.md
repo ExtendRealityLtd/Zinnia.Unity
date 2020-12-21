@@ -1,5 +1,18 @@
 # Changelog
 
+### [1.28.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.28.0...v1.28.1) (2020-12-21)
+
+#### Bug Fixes
+
+* **Association:** add guard to check if object is null ([a22accc](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/a22acccef8c92da0581017d2bbd9a98eb57e655d))
+  > The GameObjectsAssociationActivator could occasionally throw an error if the associated object within the loop was null. This adds a guard   to check the variable is not null before processing it.
+* **Association:** provide alternative mechanism for getting device name ([5477e2b](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/5477e2b5fc53dadaff725efe410b185c329106fb))
+  > Unity 2020.2 has removed the XRDevice.model property and in place it attempts to use InputDevice.name. This fix attempts to get the InputDevice for the XRNode.Head and uses the InputDevice.name for the retrieved device.
+  > 
+  > These names returns are piped via the XR Management System and are sometimes nonsensical values due to the vendors not providing correct string names in their XR Plugin.
+* **Tracking:** remove ability to get play area dimensions from 2020.2 ([80d4e47](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/80d4e4793faac801160dfc708b08800ab3329401))
+  > Unity 2020.2 has removed the UnityEngine.Experimental.XR.Boundary class so it is no longer possible to get the boundary data directly from unity. There does not seem to be an alternative provided in Unity so the method just returns null along with a warning.
+
 ## [1.28.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.27.0...v1.28.0) (2020-12-17)
 
 #### Features
