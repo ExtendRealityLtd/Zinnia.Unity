@@ -88,7 +88,6 @@
         /// The collection to observe changes of.
         /// </summary>
         protected abstract List<TElement> Elements { get; set; }
-
         /// <summary>
         /// Whether <see cref="Start"/> was called.
         /// </summary>
@@ -156,6 +155,16 @@
         public virtual void DoIsListEmpty()
         {
             IsListEmpty();
+        }
+
+        /// <summary>
+        /// Gets the index of the given element.
+        /// </summary>
+        /// <param name="element">The element to check for.</param>
+        /// <returns>The index of the found element.</returns>
+        public virtual int IndexOf(TElement element)
+        {
+            return Elements.IndexOf(element);
         }
 
         /// <summary>
@@ -496,6 +505,11 @@
         /// <param name="element">The element that was added.</param>
         protected virtual void EmitAddEvents(TElement element)
         {
+            if (!wasStartCalled)
+            {
+                return;
+            }
+
             Added?.Invoke(element);
 
             if (Elements.Count == 1)

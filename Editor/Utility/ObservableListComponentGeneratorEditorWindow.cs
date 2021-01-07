@@ -6,13 +6,17 @@
     using Zinnia.Action.Collection;
     using Zinnia.Association;
     using Zinnia.Association.Collection;
+    using Zinnia.Data.Collection;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Data.Type.Transformation.Aggregation;
+    using Zinnia.Event;
     using Zinnia.Haptics;
     using Zinnia.Haptics.Collection;
     using Zinnia.Process.Moment;
     using Zinnia.Process.Moment.Collection;
     using Zinnia.Rule;
     using Zinnia.Rule.Collection;
+    using Zinnia.Tracking.Modification;
     using Zinnia.Tracking.Velocity;
     using Zinnia.Tracking.Velocity.Collection;
 
@@ -29,13 +33,27 @@
             AnyBehaviourEnabledRule,
             AnyComponentTypeRule,
             AnyTagRule,
+            BehaviourEnabledObserver,
             CompositeProcess,
+            FloatAdder,
+            FloatMaxFinder,
+            FloatMeanFinder,
+            FloatMedianFinder,
+            FloatMinFinder,
+            FloatModeFinder,
+            FloatMultiplier,
+            FloatRangeFinder,
             GameObjectsAssociationActivator,
+            GameObjectRelations,
+            GameObjectStateSwitcher,
             HapticProcessor,
             ListContainsRule,
             MomentProcessor,
             PlatformDeviceAssociation,
             RulesMatcher,
+            Vector2Multiplier,
+            Vector3Multiplier,
+            Vector3Subtractor,
             VelocityTrackerProcessor
         }
 
@@ -112,6 +130,11 @@
                     StringObservableList tagList = listContainer.AddComponent<StringObservableList>();
                     tagRule.Tags = tagList;
                     break;
+                case OptionType.BehaviourEnabledObserver:
+                    BehaviourEnabledObserver behaviourEnabledObserver = componentContainer.AddComponent<BehaviourEnabledObserver>();
+                    BehaviourObservableList behaviourObservableList = listContainer.AddComponent<BehaviourObservableList>();
+                    behaviourEnabledObserver.Behaviours = behaviourObservableList;
+                    break;
                 case OptionType.ListContainsRule:
                     ListContainsRule listRule = componentContainer.AddComponent<ListContainsRule>();
                     UnityObjectObservableList listList = listContainer.AddComponent<UnityObjectObservableList>();
@@ -144,6 +167,16 @@
                     GameObjectsAssociationObservableList gameObjectsAssociationList = listContainer.AddComponent<GameObjectsAssociationObservableList>();
                     gameObjectsAssociationActivator.Associations = gameObjectsAssociationList;
                     break;
+                case OptionType.GameObjectRelations:
+                    GameObjectRelations gameObjectRelations = componentContainer.AddComponent<GameObjectRelations>();
+                    GameObjectRelationObservableList gameObjectsRelationsList = listContainer.AddComponent<GameObjectRelationObservableList>();
+                    gameObjectRelations.Relations = gameObjectsRelationsList;
+                    break;
+                case OptionType.GameObjectStateSwitcher:
+                    GameObjectStateSwitcher gameObjectStateSwitcher = componentContainer.AddComponent<GameObjectStateSwitcher>();
+                    GameObjectObservableList gameObjectsList = listContainer.AddComponent<GameObjectObservableList>();
+                    gameObjectStateSwitcher.Targets = gameObjectsList;
+                    break;
                 case OptionType.PlatformDeviceAssociation:
                     PlatformDeviceAssociation platformDeviceAssociation = componentContainer.AddComponent<PlatformDeviceAssociation>();
                     GameObjectObservableList platformGameObjectsList = listContainer.AddComponent<GameObjectObservableList>();
@@ -168,6 +201,61 @@
                     VelocityTrackerProcessor velocityTrackerProcessor = componentContainer.AddComponent<VelocityTrackerProcessor>();
                     VelocityTrackerObservableList velocityTrackerList = listContainer.AddComponent<VelocityTrackerObservableList>();
                     velocityTrackerProcessor.VelocityTrackers = velocityTrackerList;
+                    break;
+                case OptionType.FloatAdder:
+                    FloatAdder floatAdder = componentContainer.AddComponent<FloatAdder>();
+                    FloatObservableList floatList = listContainer.AddComponent<FloatObservableList>();
+                    floatAdder.Collection = floatList;
+                    break;
+                case OptionType.FloatMaxFinder:
+                    FloatMaxFinder floatMaxFinder = componentContainer.AddComponent<FloatMaxFinder>();
+                    FloatObservableList floatMaxFinderList = listContainer.AddComponent<FloatObservableList>();
+                    floatMaxFinder.Collection = floatMaxFinderList;
+                    break;
+                case OptionType.FloatMeanFinder:
+                    FloatMeanFinder floatMeanFinder = componentContainer.AddComponent<FloatMeanFinder>();
+                    FloatObservableList floatMeanFinderList = listContainer.AddComponent<FloatObservableList>();
+                    floatMeanFinder.Collection = floatMeanFinderList;
+                    break;
+                case OptionType.FloatMedianFinder:
+                    FloatMedianFinder floatMedianFinder = componentContainer.AddComponent<FloatMedianFinder>();
+                    FloatObservableList floatMedianFinderList = listContainer.AddComponent<FloatObservableList>();
+                    floatMedianFinder.Collection = floatMedianFinderList;
+                    break;
+                case OptionType.FloatMinFinder:
+                    FloatMinFinder floatMinFinder = componentContainer.AddComponent<FloatMinFinder>();
+                    FloatObservableList floatMinFinderList = listContainer.AddComponent<FloatObservableList>();
+                    floatMinFinder.Collection = floatMinFinderList;
+                    break;
+                case OptionType.FloatModeFinder:
+                    FloatModeFinder floatModeFinder = componentContainer.AddComponent<FloatModeFinder>();
+                    FloatObservableList floatModeFinderList = listContainer.AddComponent<FloatObservableList>();
+                    floatModeFinder.Collection = floatModeFinderList;
+                    break;
+                case OptionType.FloatMultiplier:
+                    FloatMultiplier floatMultiplier = componentContainer.AddComponent<FloatMultiplier>();
+                    FloatObservableList floatMultiplierList = listContainer.AddComponent<FloatObservableList>();
+                    floatMultiplier.Collection = floatMultiplierList;
+                    break;
+                case OptionType.FloatRangeFinder:
+                    FloatRangeFinder floatRangeFinder = componentContainer.AddComponent<FloatRangeFinder>();
+                    FloatObservableList floatRangeFinderList = listContainer.AddComponent<FloatObservableList>();
+                    floatRangeFinder.Collection = floatRangeFinderList;
+                    break;
+                case OptionType.Vector2Multiplier:
+                    Vector2Multiplier vector2Multiplier = componentContainer.AddComponent<Vector2Multiplier>();
+                    Vector2ObservableList vector2MultiplierList = listContainer.AddComponent<Vector2ObservableList>();
+                    vector2Multiplier.Collection = vector2MultiplierList;
+                    break;
+                case OptionType.Vector3Multiplier:
+                    Vector3Multiplier vector3Multiplier = componentContainer.AddComponent<Vector3Multiplier>();
+                    Vector3ObservableList vector3MultiplierList = listContainer.AddComponent<Vector3ObservableList>();
+                    vector3Multiplier.Collection = vector3MultiplierList;
+                    break;
+                case OptionType.Vector3Subtractor:
+                    Vector3Subtractor vector3Subtractor = componentContainer.AddComponent<Vector3Subtractor>();
+                    Vector3ObservableList vector3SubtractorList = listContainer.AddComponent<Vector3ObservableList>();
+                    vector3Subtractor.Collection = vector3SubtractorList;
                     break;
             }
         }

@@ -1107,6 +1107,29 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementTwo);
         }
 
+        [Test]
+        public void IndexOf()
+        {
+            GameObject elementOne = new GameObject();
+            GameObject elementTwo = new GameObject();
+            GameObject elementThree = new GameObject();
+            GameObject elementNA = new GameObject();
+
+            subject.Add(elementOne);
+            subject.Add(elementTwo);
+            subject.Add(elementThree);
+
+            Assert.AreEqual(0, subject.IndexOf(elementOne));
+            Assert.AreEqual(1, subject.IndexOf(elementTwo));
+            Assert.AreEqual(2, subject.IndexOf(elementThree));
+            Assert.AreEqual(-1, subject.IndexOf(elementNA));
+
+            Object.DestroyImmediate(elementOne);
+            Object.DestroyImmediate(elementTwo);
+            Object.DestroyImmediate(elementThree);
+            Object.DestroyImmediate(elementNA);
+        }
+
         private sealed class GameObjectObservableListMock : GameObjectObservableList
         {
             public void ManualStart()
