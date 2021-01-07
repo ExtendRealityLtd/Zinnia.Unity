@@ -88,7 +88,6 @@
         /// The collection to observe changes of.
         /// </summary>
         protected abstract List<TElement> Elements { get; set; }
-
         /// <summary>
         /// Whether <see cref="Start"/> was called.
         /// </summary>
@@ -496,6 +495,11 @@
         /// <param name="element">The element that was added.</param>
         protected virtual void EmitAddEvents(TElement element)
         {
+            if (!wasStartCalled)
+            {
+                return;
+            }
+
             Added?.Invoke(element);
 
             if (Elements.Count == 1)
