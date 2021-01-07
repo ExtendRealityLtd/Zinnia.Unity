@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.29.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.28.1...v1.29.0) (2021-01-07)
+
+#### Features
+
+* **Collection:** add IndexOf method to ObservableList ([54176b9](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/54176b90db35f648fab5686982b7106e56770ddd))
+  > The ObservableList now has an IndexOf method to receive the list index of a given element. This is included because the IndexOf method cannot be called on the public HeapAllocationFreeReadOnlyList.
+* **Utility:** add more options for observable list generator ([72203e9](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/72203e9e65d0150f4303c84da9f09d4006a53a9a))
+  > The ObservableListComponentGenerator now has missing options added to create even more components that rely on a single list.
+
+#### Bug Fixes
+
+* **Collection:** prevent Added event being raised twice on start ([0453ab1](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/0453ab1e6d9773f993a1a5eebf20218101b33701))
+  > There was an issue where if the ObservableList was added to in the OnEnable of another script then the Added event be raised as the ObservableList was enabled, but Start is called after OnEnable so when the Start method was called it would then loop through the list and raise the events for everything that existing in the list the first time it was loaded.
+  > 
+  > This fix just stops the normal Add method from raising events if Start hasn't been called.
+
 ### [1.28.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.28.0...v1.28.1) (2020-12-21)
 
 #### Bug Fixes
