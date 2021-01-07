@@ -158,6 +158,16 @@
         }
 
         /// <summary>
+        /// Gets the index of the given element.
+        /// </summary>
+        /// <param name="element">The element to check for.</param>
+        /// <returns>The index of the found element.</returns>
+        public virtual int IndexOf(TElement element)
+        {
+            return Elements.IndexOf(element);
+        }
+
+        /// <summary>
         /// Adds an element to the end of the collection.
         /// </summary>
         /// <param name="element">The element to add.</param>
