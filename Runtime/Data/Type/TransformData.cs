@@ -82,6 +82,43 @@
         /// <param name="gameObject">The <see cref="GameObject"/> to create the <see cref="TransformData"/> from.</param>
         public TransformData(GameObject gameObject) : this(gameObject != null ? gameObject.transform : null) { }
 
+        /// <inheritdoc />
+        public override bool Equals(object other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            TransformData data = other as TransformData;
+            return Equals(data);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// Checks to see if the given <see cref="TransformData"/> is equal to <see cref="this"/>.
+        /// </summary>
+        /// <param name="other">The instance to check equality with.</param>
+        /// <returns>Whether the two instances are equal.</returns>
+        public virtual bool Equals(TransformData other)
+        {
+            if (other == null || !GetType().Equals(other.GetType()))
+            {
+                return false;
+            }
+
+            return Transform == other.Transform &&
+                UseLocalValues == other.UseLocalValues &&
+                PositionOverride == other.PositionOverride &&
+                RotationOverride == other.RotationOverride &&
+                ScaleOverride == other.ScaleOverride;
+        }
+
         /// <summary>
         /// Clears the state back to <see langword="null"/>.
         /// </summary>

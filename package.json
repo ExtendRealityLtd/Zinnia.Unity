@@ -28,7 +28,7 @@
         "url": "https://github.com/ExtendRealityLtd"
     },
     "dependencies": {
-        "io.extendreality.malimbe": "9.6.5"
+        "io.extendreality.malimbe": "9.6.6"
     },
     "files": [
         "*.md",

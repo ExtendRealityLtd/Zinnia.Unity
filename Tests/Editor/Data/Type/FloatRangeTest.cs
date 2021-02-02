@@ -81,5 +81,20 @@ namespace Test.Zinnia.Data.Type
             FloatRange range = new FloatRange(1f, 2f);
             Assert.AreEqual(new Vector2(1f, 2f), range.ToVector2());
         }
+
+        [Test]
+        public void Comparison()
+        {
+            FloatRange rangeA = new FloatRange(1f, 1f);
+            FloatRange rangeB = new FloatRange(1f, 1f);
+            FloatRange rangeC = new FloatRange(2f, 2f);
+
+            Assert.IsTrue(rangeA.Equals(rangeB));
+            Assert.IsFalse(rangeA.Equals(rangeC));
+            Assert.IsFalse(rangeB.Equals(rangeC));
+            Assert.AreEqual(rangeA, rangeB);
+            Assert.AreNotEqual(rangeA, rangeC);
+            Assert.AreNotEqual(rangeB, rangeC);
+        }
     }
 }

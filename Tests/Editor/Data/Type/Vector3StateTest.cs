@@ -70,5 +70,20 @@ namespace Test.Zinnia.Data.Type
             Assert.AreEqual(new Vector3(1f, 0f, 1f), new Vector3State(true, false, true).ToVector3());
             Assert.AreEqual(new Vector3(0f, 1f, 0f), new Vector3State(false, true, false).ToVector3());
         }
+
+        [Test]
+        public void Comparison()
+        {
+            Vector3State stateA = Vector3State.True;
+            Vector3State stateB = Vector3State.True;
+            Vector3State stateC = Vector3State.False;
+
+            Assert.IsTrue(stateA.Equals(stateB));
+            Assert.IsFalse(stateA.Equals(stateC));
+            Assert.IsFalse(stateB.Equals(stateC));
+            Assert.AreEqual(stateA, stateB);
+            Assert.AreNotEqual(stateA, stateC);
+            Assert.AreNotEqual(stateB, stateC);
+        }
     }
 }
