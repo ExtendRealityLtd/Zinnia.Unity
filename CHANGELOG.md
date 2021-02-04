@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.30.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.29.0...v1.30.0) (2021-02-04)
+
+#### Features
+
+* **Data:** overide Equals on data types ([b42ec5e](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b42ec5ec38c5219d5410fd099da4a53155d599fd))
+  > The base data types have had their Equals method overridden so they perform a logical based equality check on the contents of the object when the properties are the same. This allows these data types to be logically compared such as in the use of Lists in where a TransformData object with the same properties should be considered the same object.
+  > 
+  > The tests have been updated to test the equality of objects.
+
+#### Bug Fixes
+
+* **Tracking:** prevent same disabled observer being added twice ([1e5e631](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/1e5e631d9132901acbc8bc54c30b1e4a5b87f513))
+  > The CollisionTrackerDisabledObserver component could be added to a component twice and track the same source and target which made no sense as the same functionality was being duplicated.
+  > 
+  > This fix adds a check to ensure the component doesn't already exist on the GameObject before adding it again.
+
 ## [1.29.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.28.1...v1.29.0) (2021-01-07)
 
 #### Features
