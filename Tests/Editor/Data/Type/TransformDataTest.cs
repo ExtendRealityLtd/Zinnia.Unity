@@ -91,5 +91,20 @@ namespace Test.Zinnia.Data.Type
 
             Object.DestroyImmediate(parent.gameObject);
         }
+
+        [Test]
+        public void Comparison()
+        {
+            Transform subject = new GameObject().transform;
+
+            TransformData subjectA = new TransformData(subject);
+            TransformData subjectB = new TransformData(subject);
+
+            Assert.IsFalse(subjectA == subjectB);
+            Assert.IsTrue(subjectA.Equals(subjectB));
+            Assert.AreEqual(subjectA, subjectB);
+
+            Object.DestroyImmediate(subject.gameObject);
+        }
     }
 }

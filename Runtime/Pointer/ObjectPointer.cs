@@ -49,6 +49,9 @@
             [field: DocumentedByXml]
             public PointsCast.EventData CurrentPointsCastData { get; set; }
 
+            public EventData() { }
+            public EventData(Transform transform) : base(transform) { }
+
             public EventData Set(EventData source)
             {
                 return Set(source.IsCurrentlyActive, source.IsCurrentlyHovering, source.CurrentHoverDuration, source.CurrentPointsCastData);
@@ -67,6 +70,36 @@
             {
                 base.Clear();
                 Set(default, default, default, default);
+            }
+
+            public override bool Equals(object other)
+            {
+                if (other == null)
+                {
+                    return false;
+                }
+
+                EventData data = other as EventData;
+                return Equals(data);
+            }
+
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
+
+            public virtual bool Equals(EventData other)
+            {
+                if (other == null || !GetType().Equals(other.GetType()))
+                {
+                    return false;
+                }
+
+                return base.Equals(other) &&
+                    IsCurrentlyActive == other.IsCurrentlyActive &&
+                    IsCurrentlyHovering == other.IsCurrentlyHovering &&
+                    CurrentHoverDuration.ApproxEquals(other.CurrentHoverDuration) &&
+                    CurrentPointsCastData == other.CurrentPointsCastData;
             }
         }
 

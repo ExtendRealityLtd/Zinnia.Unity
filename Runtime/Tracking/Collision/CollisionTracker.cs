@@ -127,7 +127,7 @@
         /// <param name="target">The target to add the <see cref="CollisionTrackerDisabledObserver"/> component to.</param>
         protected virtual void AddDisabledObserver(Collider target)
         {
-            if (target == null || !StopCollisionsOnDisable)
+            if (target == null || !StopCollisionsOnDisable || ContainsDisabledObserver(target))
             {
                 return;
             }
@@ -157,6 +157,24 @@
                     trackedCollisions.Remove(target);
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks to see if the target already contains a <see cref="CollisionTrackerDisabledObserver"/> for this source.
+        /// </summary>
+        /// <param name="target">The target to check the existence of a <see cref="CollisionTrackerDisabledObserver"/> on.</param>
+        /// <returns>Whether the target already contains a <see cref="CollisionTrackerDisabledObserver"/>.</returns>
+        protected virtual bool ContainsDisabledObserver(Collider target)
+        {
+            foreach (CollisionTrackerDisabledObserver observer in target.gameObject.GetComponents<CollisionTrackerDisabledObserver>())
+            {
+                if (observer.Source == this && observer.Target == target)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 

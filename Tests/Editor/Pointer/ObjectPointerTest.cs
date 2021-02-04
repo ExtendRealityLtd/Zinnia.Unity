@@ -950,6 +950,28 @@ namespace Test.Zinnia.Pointer
             Object.DestroyImmediate(blocker);
         }
 
+        [Test]
+        public void EventDataComparison()
+        {
+            Transform subject = new GameObject().transform;
+
+            ObjectPointer.EventData subjectA = new ObjectPointer.EventData(subject);
+            ObjectPointer.EventData subjectB = new ObjectPointer.EventData(subject);
+
+            Assert.IsFalse(subjectA == subjectB);
+            Assert.IsTrue(subjectA.Equals(subjectB));
+            Assert.AreEqual(subjectA, subjectB);
+
+            subjectA.IsCurrentlyActive = true;
+            subjectB.IsCurrentlyActive = false;
+
+            Assert.IsFalse(subjectA == subjectB);
+            Assert.IsFalse(subjectA.Equals(subjectB));
+            Assert.AreNotEqual(subjectA, subjectB);
+
+            Object.DestroyImmediate(subject.gameObject);
+        }
+
         protected static PointsCast.EventData CastPoints(List<Vector3> points, bool doesCollisionOccur = true, bool validHit = true, Ray? realRay = null)
         {
             if (doesCollisionOccur)

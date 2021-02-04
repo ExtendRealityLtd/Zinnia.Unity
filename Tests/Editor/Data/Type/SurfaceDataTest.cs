@@ -67,5 +67,27 @@ namespace Test.Zinnia.Data.Type
             Object.DestroyImmediate(bottom);
             Physics.autoSimulation = true;
         }
+
+        [Test]
+        public void Comparison()
+        {
+            Transform subject = new GameObject().transform;
+
+            SurfaceData subjectA = new SurfaceData(subject);
+            SurfaceData subjectB = new SurfaceData(subject);
+
+            Assert.IsFalse(subjectA == subjectB);
+            Assert.IsTrue(subjectA.Equals(subjectB));
+            Assert.AreEqual(subjectA, subjectB);
+
+            subjectA.Origin = Vector3.zero;
+            subjectB.Origin = Vector3.one;
+
+            Assert.IsFalse(subjectA == subjectB);
+            Assert.IsFalse(subjectA.Equals(subjectB));
+            Assert.AreNotEqual(subjectA, subjectB);
+
+            Object.DestroyImmediate(subject.gameObject);
+        }
     }
 }

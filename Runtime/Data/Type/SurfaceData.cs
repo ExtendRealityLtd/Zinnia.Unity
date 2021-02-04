@@ -5,6 +5,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Holds information about the located surface.
@@ -41,6 +42,11 @@
         public SurfaceData() { }
 
         /// <summary>
+        /// Creates a new <see cref="SurfaceData"/> with the given <see cref="Transform"/> and a default <see cref="Origin"/> and <see cref="Direction"/> for the collision search.
+        /// </summary>
+        public SurfaceData(Transform transform) : base(transform) { }
+
+        /// <summary>
         /// Creates a new <see cref="SurfaceData"/> with a given <see cref="Origin"/> and <see cref="Direction"/> for the collision search.
         /// </summary>
         /// <param name="origin">The given origin to instantiate the <see cref="SurfaceData"/> with.</param>
@@ -59,6 +65,43 @@
             Direction = new Vector3();
             CollisionData = new RaycastHit();
             PreviousCollisionData = new RaycastHit();
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            SurfaceData data = other as SurfaceData;
+            return Equals(data);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// Checks to see if the given <see cref="SurfaceData"/> is equal to <see cref="this"/>.
+        /// </summary>
+        /// <param name="other">The instance to check equality with.</param>
+        /// <returns>Whether the two instances are equal.</returns>
+        public virtual bool Equals(SurfaceData other)
+        {
+            if (other == null || !GetType().Equals(other.GetType()))
+            {
+                return false;
+            }
+
+            return base.Equals(other) &&
+                Origin.ApproxEquals(other.Origin) &&
+                Direction.ApproxEquals(other.Direction) &&
+                CollisionData.Equals(other.CollisionData) &&
+                PreviousCollisionData.Equals(other.PreviousCollisionData);
         }
 
         /// <summary>
