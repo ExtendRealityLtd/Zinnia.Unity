@@ -1,4 +1,5 @@
-﻿using Zinnia.Data.Type;
+﻿using Zinnia.Data.Collection.List;
+using Zinnia.Data.Type;
 using Zinnia.Event.Proxy;
 using Zinnia.Rule;
 
@@ -9,16 +10,16 @@ namespace Test.Zinnia.Event.Proxy
     using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
-    public class FloatEventProxyEmitterTest
+    public class TransformDataProxyEmitterTest
     {
         private GameObject containingObject;
-        private FloatEventProxyEmitter subject;
+        private TransformDataProxyEmitter subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<FloatEventProxyEmitter>();
+            subject = containingObject.AddComponent<TransformDataProxyEmitter>();
         }
 
         [TearDown]
@@ -33,9 +34,9 @@ namespace Test.Zinnia.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            const float payload = 10f;
+            TransformData payload = new TransformData();
 
-            Assert.AreEqual(0f, subject.Payload);
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
 
             subject.Receive(payload);
@@ -49,7 +50,7 @@ namespace Test.Zinnia.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            const float payload = 10f;
+            TransformData payload = new TransformData();
             subject.Payload = payload;
 
             Assert.AreEqual(payload, subject.Payload);
@@ -66,12 +67,12 @@ namespace Test.Zinnia.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            const float payload = 10f;
+            TransformData payload = new TransformData();
             subject.Payload = payload;
 
             Assert.AreEqual(payload, subject.Payload);
             subject.ClearPayload();
-            Assert.AreEqual(0f, subject.Payload);
+            Assert.IsNull(subject.Payload);
         }
 
         [Test]
@@ -79,31 +80,40 @@ namespace Test.Zinnia.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
+            GameObject digestValid = new GameObject();
+            GameObject digestInvalid = new GameObject();
+            TransformData validData = new TransformData(digestValid.transform);
+            TransformData invalidData = new TransformData(digestInvalid.transform);
 
-            FloatInRangeRule rule = subject.gameObject.AddComponent<FloatInRangeRule>();
-            rule.Range = new FloatRange(2f, 4f);
+            ListContainsRule rule = subject.gameObject.AddComponent<ListContainsRule>();
+            UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
+            rule.Objects = objects;
 
+            objects.Add(digestValid);
             subject.ReceiveValidity = new RuleContainer
             {
                 Interface = rule
             };
 
-            Assert.AreEqual(0f, subject.Payload);
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
 
-            subject.Receive(3f);
+            subject.Receive(validData);
 
-            Assert.AreEqual(3f, subject.Payload);
+            Assert.AreEqual(validData, subject.Payload);
             Assert.IsTrue(emittedMock.Received);
 
             emittedMock.Reset();
 
             Assert.IsFalse(emittedMock.Received);
 
-            subject.Receive(1f);
+            subject.Receive(invalidData);
 
-            Assert.AreEqual(3f, subject.Payload);
+            Assert.AreEqual(validData, subject.Payload);
             Assert.IsFalse(emittedMock.Received);
+
+            Object.DestroyImmediate(digestValid);
+            Object.DestroyImmediate(digestInvalid);
         }
 
         [Test]
@@ -112,15 +122,14 @@ namespace Test.Zinnia.Event.Proxy
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
             subject.gameObject.SetActive(false);
+            TransformData payload = new TransformData();
 
-            const float payload = 10f;
-
-            Assert.AreEqual(0f, subject.Payload);
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
 
             subject.Receive(payload);
 
-            Assert.AreEqual(0f, subject.Payload);
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
         }
 
@@ -130,15 +139,14 @@ namespace Test.Zinnia.Event.Proxy
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
             subject.enabled = false;
+            TransformData payload = new TransformData();
 
-            const float payload = 10f;
-
-            Assert.AreEqual(0f, subject.Payload);
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
 
             subject.Receive(payload);
 
-            Assert.AreEqual(0f, subject.Payload);
+            Assert.IsNull(subject.Payload);
             Assert.IsFalse(emittedMock.Received);
         }
 
@@ -148,7 +156,7 @@ namespace Test.Zinnia.Event.Proxy
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
             subject.gameObject.SetActive(false);
-            const float payload = 10f;
+            TransformData payload = new TransformData();
             subject.Payload = payload;
 
             Assert.AreEqual(payload, subject.Payload);
@@ -166,7 +174,7 @@ namespace Test.Zinnia.Event.Proxy
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
             subject.enabled = false;
-            const float payload = 10f;
+            TransformData payload = new TransformData();
             subject.Payload = payload;
 
             Assert.AreEqual(payload, subject.Payload);

@@ -1,4 +1,4 @@
-﻿namespace Zinnia.Tracking.Collision.Active.Event.Proxy
+﻿namespace Zinnia.Pointer.Event.Proxy
 {
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -6,12 +6,12 @@
     using UnityEngine.Events;
     using Zinnia.Event.Proxy;
     using Zinnia.Extension;
-    using Zinnia.Tracking.Collision.Active;
+    using Zinnia.Pointer;
 
     /// <summary>
-    /// Emits a UnityEvent with a <see cref="ActiveCollisionPublisher.PayloadData"/> payload whenever the Receive method is called.
+    /// Emits a <see cref="UnityEvent"/> with a <see cref="ObjectPointer.EventData"/> payload whenever <see cref="SingleEventProxyEmitter{TValue,TEvent}.Receive"/> is called.
     /// </summary>
-    public class ActiveCollisionPublisherEventProxyEmitter : RestrictableSingleEventProxyEmitter<ActiveCollisionPublisher.PayloadData, ActiveCollisionPublisherEventProxyEmitter.UnityEvent>
+    public class ObjectPointerEventProxyEmitter : RestrictableSingleEventProxyEmitter<ObjectPointer.EventData, ObjectPointerEventProxyEmitter.UnityEvent>
     {
         /// <summary>
         /// The types of <see cref="GameObject"/> that can be used for the rule source.
@@ -19,14 +19,15 @@
         public enum RuleSourceType
         {
             /// <summary>
-            /// Use the <see cref="ActiveCollisionPublisher.EventData.SourceContainer"/> for the rule.
+            /// Use the <see cref="TransformData.Transform"/> as the source for the rule.
             /// </summary>
-            SourceContainer,
+            Source,
             /// <summary>
-            /// Use the <see cref="ActiveCollisionPublisher.EventData.PublisherContainer"/> for the rule.
+            /// Use the <see cref="SurfaceData.CollisionData.transform"/> as the target for the rule.
             /// </summary>
-            PublisherContainer
+            Target
         }
+
         /// <summary>
         /// The source <see cref="GameObject"/> to apply to the <see cref="RestrictableSingleEventProxyEmitter.ReceiveValidity"/>.
         /// </summary>
@@ -38,7 +39,7 @@
         /// Defines the event with the specified state.
         /// </summary>
         [Serializable]
-        public class UnityEvent : UnityEvent<ActiveCollisionPublisher.PayloadData> { }
+        public class UnityEvent : UnityEvent<ObjectPointer.EventData> { }
 
         /// <summary>
         /// Sets the <see cref="RuleSource"/>.
@@ -54,11 +55,12 @@
         {
             switch (RuleSource)
             {
-                case RuleSourceType.PublisherContainer:
-                    return Payload?.PublisherContainer;
-                case RuleSourceType.SourceContainer:
-                    return Payload?.SourceContainer;
+                case RuleSourceType.Source:
+                    return Payload?.Transform != null ? Payload?.Transform.gameObject : null;
+                case RuleSourceType.Target:
+                    return Payload?.CollisionData.transform != null ? Payload?.CollisionData.transform.gameObject : null;
             }
+
             return null;
         }
     }
