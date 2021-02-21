@@ -21,19 +21,19 @@
         public class UnityEvent : UnityEvent<Vector3> { }
 
         /// <summary>
-        /// A float to use as the current x value of the Vector3.
+        /// A <see cref="float"/> to use as the current x value of the <see cref="Vector3"/>.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public float CurrentX { get; set; }
         /// <summary>
-        /// A float to use as the current y value of the Vector3.
+        /// A <see cref="float"/> to use as the current y value of the <see cref="Vector3"/>.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public float CurrentY { get; set; }
         /// <summary>
-        /// A float to use as the current z value of the Vector3.
+        /// A <see cref="float"/> to use as the current z value of the <see cref="Vector3"/>.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
@@ -45,7 +45,7 @@
         protected readonly float[] input = new float[3];
 
         /// <summary>
-        /// Builds a float array from the current set x, y and z values and transforms it into a Vector3.
+        /// Builds a <see cref="float"/> array from the current set x, y and z values and transforms it into a <see cref="Vector3"/>.
         /// </summary>
         public virtual Vector3 Transform()
         {
@@ -56,7 +56,7 @@
         }
 
         /// <summary>
-        /// Builds a float array from the current set x, y and z values and transforms it into a Vector3.
+        /// Builds a <see cref="float"/> array from the current set x, y and z values and transforms it into a <see cref="Vector3"/>.
         /// </summary>
         public virtual void DoTransform()
         {
@@ -64,7 +64,7 @@
         }
 
         /// <summary>
-        /// Transforms the given float array into a Vector3.
+        /// Transforms the given <see cref="float"/> array into a <see cref="Vector3"/>.
         /// </summary>
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value or <see cref="Vector3.zero"/> if the input isn't three-dimensional.</returns>

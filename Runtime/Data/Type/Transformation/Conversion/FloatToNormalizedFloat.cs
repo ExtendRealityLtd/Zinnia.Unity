@@ -39,7 +39,7 @@
         }
 
         /// <summary>
-        /// Transforms the given input float to the equivalent normalized float value.
+        /// Transforms the given input <see cref="float"/> to the equivalent normalized <see cref="float"/> value.
         /// </summary>
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value.</returns>

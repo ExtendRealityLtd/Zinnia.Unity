@@ -4,13 +4,14 @@
     using UnityEngine.Events;
 
     /// <summary>
-    /// Transforms a boolean value to the equivalent float value.
+    /// Transforms a string value to the equivalent float value.
     /// </summary>
     /// <example>
-    /// false = 0f
-    /// true = 1f
+    /// "1" = 1f
+    /// "2.2" = 2.2f
+    /// "x" = throw <see cref="FormatException"/>
     /// </example>
-    public class BooleanToFloat : Transformer<bool, float, BooleanToFloat.UnityEvent>
+    public class StringToFloat : Transformer<string, float, StringToFloat.UnityEvent>
     {
         /// <summary>
         /// Defines the event with the transformed <see cref="float"/> value.
@@ -19,13 +20,13 @@
         public class UnityEvent : UnityEvent<float> { }
 
         /// <summary>
-        /// Transforms the given input <see cref="bool"/> to the <see cref="float"/> equivalent value.
+        /// Transforms the given input <see cref="string"/> to the <see cref="float"/> equivalent value.
         /// </summary>
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value.</returns>
-        protected override float Process(bool input)
+        protected override float Process(string input)
         {
-            return input ? 1f : 0f;
+            return float.Parse(input);
         }
     }
 }
