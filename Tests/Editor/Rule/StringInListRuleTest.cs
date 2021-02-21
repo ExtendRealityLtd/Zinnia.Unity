@@ -45,7 +45,7 @@ namespace Test.Zinnia.Rule
         public void RefuseEmpty()
         {
             string toFind = "found";
-            StringObservableList list = containingObject.AddComponent<StringObservableList>();
+            containingObject.AddComponent<StringObservableList>();
             subject.InListPattern = toFind;
 
             Assert.IsFalse(container.Accepts(containingObject));
