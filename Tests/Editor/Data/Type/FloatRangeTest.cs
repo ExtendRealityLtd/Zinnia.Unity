@@ -25,6 +25,14 @@ namespace Test.Zinnia.Data.Type
         }
 
         [Test]
+        public void ConstructFromIntRange()
+        {
+            FloatRange range = new FloatRange(new IntRange(1, 2));
+            Assert.AreEqual(1f, range.minimum);
+            Assert.AreEqual(2f, range.maximum);
+        }
+
+        [Test]
         public void ConstructFromVector2()
         {
             FloatRange range = new FloatRange(new Vector2(1f, 2f));

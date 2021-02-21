@@ -38,6 +38,16 @@
         }
 
         /// <summary>
+        /// Constructs a new range from a given <see cref="IntRange"/>.
+        /// </summary>
+        /// <param name="range">The range data.</param>
+        public FloatRange(IntRange range)
+        {
+            minimum = range.minimum;
+            maximum = range.maximum;
+        }
+
+        /// <summary>
         /// Constructs a new range from a given <see cref="Vector2"/> using the <see cref="Vector2.x"/> value as the minimum value and the <see cref="Vector2.y"/> value as the maximum value.
         /// </summary>
         /// <param name="range">The range data.</param>
