@@ -236,6 +236,11 @@
         /// <returns>A <see cref="CollisionNotifier"/> collection for items found on the containing <see cref="Transform"/> component.</returns>
         protected virtual List<CollisionNotifier> GetNotifiers(EventData data, List<CollisionNotifier> collisionNotifiers)
         {
+            if (this == null || data == null || data.ColliderData == null)
+            {
+                return collisionNotifiers;
+            }
+
             Transform reference = data.ColliderData.GetContainingTransform();
 
             if (transform.IsChildOf(reference))
