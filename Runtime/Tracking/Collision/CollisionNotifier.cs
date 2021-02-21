@@ -152,6 +152,12 @@
         }
 
         /// <summary>
+        /// Whether the collisions should be processed when this component is disabled.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool ProcessCollisionsWhenDisabled { get; set; } = true;
+        /// <summary>
         /// The types of collisions that events will be emitted for.
         /// </summary>
         [Serialized]
@@ -217,6 +223,15 @@
         protected bool isProcessingStopNotifierCollection;
 
         /// <summary>
+        /// Whether to process the collision check.
+        /// </summary>
+        /// <returns><see langword="true"/> if the collision should be processed.</returns>
+        protected virtual bool CanProcess()
+        {
+            return enabled || ProcessCollisionsWhenDisabled;
+        }
+
+        /// <summary>
         /// Determines whether events should be emitted.
         /// </summary>
         /// <param name="data">The data to check.</param>
@@ -261,7 +276,7 @@
         /// <param name="data">The collision data.</param>
         protected virtual void OnCollisionStarted(EventData data)
         {
-            if ((StatesToProcess & CollisionStates.Enter) == 0 || !CanEmit(data))
+            if (!CanProcess() || (StatesToProcess & CollisionStates.Enter) == 0 || !CanEmit(data))
             {
                 return;
             }
@@ -287,7 +302,7 @@
         /// <param name="data">The collision data.</param>
         protected virtual void OnCollisionChanged(EventData data)
         {
-            if ((StatesToProcess & CollisionStates.Stay) == 0 || !CanEmit(data))
+            if (!CanProcess() || (StatesToProcess & CollisionStates.Stay) == 0 || !CanEmit(data))
             {
                 return;
             }
@@ -313,7 +328,7 @@
         /// <param name="data">The collision data.</param>
         protected virtual void OnCollisionStopped(EventData data)
         {
-            if ((StatesToProcess & CollisionStates.Exit) == 0 || !CanEmit(data))
+            if (!CanProcess() || (StatesToProcess & CollisionStates.Exit) == 0 || !CanEmit(data))
             {
                 return;
             }
