@@ -24,9 +24,14 @@
     {
         #region List Contents Events
         /// <summary>
-        /// Emitted when the searched element is found.
+        /// Emitted when the element at a given index is obtained.
         /// </summary>
         [Header("List Contents Events"), DocumentedByXml]
+        public TEvent Obtained = new TEvent();
+        /// <summary>
+        /// Emitted when the searched element is found.
+        /// </summary>
+        [DocumentedByXml]
         public TEvent Found = new TEvent();
         /// <summary>
         /// Emitted when the searched element is not found.
@@ -92,6 +97,38 @@
         /// Whether <see cref="Start"/> was called.
         /// </summary>
         protected bool wasStartCalled;
+
+        /// <summary>
+        /// Gets the element at the given index.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="index">The index in the collection to retrieve from. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
+        /// <returns>The element at the given index.</returns>
+        public virtual TElement Get(int index)
+        {
+            index = Elements.ClampIndex(index);
+
+            if (this.IsValidState())
+            {
+                Obtained?.Invoke(Elements[index]);
+            }
+
+            return Elements[index];
+        }
+
+        /// <summary>
+        /// Gets the element at the given index.
+        /// </summary>
+        /// <remarks>
+        /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
+        /// </remarks>
+        /// <param name="index">The index in the collection to retrieve from. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
+        public virtual void DoGet(int index)
+        {
+            Get(index);
+        }
 
         /// <summary>
         /// Checks to see if the collection contains the given element.
