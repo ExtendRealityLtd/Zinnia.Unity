@@ -26,6 +26,121 @@ namespace Test.Zinnia.Data.Collection.List
         }
 
         [Test]
+        public void Get()
+        {
+            UnityEventListenerMock elementObtainedMock = new UnityEventListenerMock();
+            subject.Obtained.AddListener(elementObtainedMock.Listen);
+
+            GameObject elementOne = new GameObject();
+            GameObject elementTwo = new GameObject();
+            GameObject elementThree = new GameObject();
+
+            subject.Add(elementOne);
+            subject.Add(elementTwo);
+            subject.Add(elementThree);
+
+            Assert.IsFalse(elementObtainedMock.Received);
+
+            GameObject result = subject.Get(0);
+
+            Assert.IsTrue(elementObtainedMock.Received);
+            Assert.AreEqual(elementOne, result);
+
+            elementObtainedMock.Reset();
+
+            result = subject.Get(1);
+
+            Assert.IsTrue(elementObtainedMock.Received);
+            Assert.AreEqual(elementTwo, result);
+
+            elementObtainedMock.Reset();
+
+            result = subject.Get(2);
+
+            Assert.IsTrue(elementObtainedMock.Received);
+            Assert.AreEqual(elementThree, result);
+
+            elementObtainedMock.Reset();
+
+            result = subject.Get(3);
+
+            Assert.IsTrue(elementObtainedMock.Received);
+            Assert.AreEqual(elementThree, result);
+
+            elementObtainedMock.Reset();
+
+            result = subject.Get(-1);
+
+            Assert.IsTrue(elementObtainedMock.Received);
+            Assert.AreEqual(elementThree, result);
+
+            elementObtainedMock.Reset();
+
+            result = subject.Get(-3);
+
+            Assert.IsTrue(elementObtainedMock.Received);
+            Assert.AreEqual(elementOne, result);
+
+            Object.DestroyImmediate(elementOne);
+            Object.DestroyImmediate(elementTwo);
+            Object.DestroyImmediate(elementThree);
+        }
+
+        [Test]
+        public void GetEmptyCollection()
+        {
+            UnityEventListenerMock elementObtainedMock = new UnityEventListenerMock();
+            subject.Obtained.AddListener(elementObtainedMock.Listen);
+
+            Assert.IsFalse(elementObtainedMock.Received);
+
+            NUnit.Framework.Assert.Throws<System.ArgumentOutOfRangeException>(() => subject.Get(0));
+            Assert.IsFalse(elementObtainedMock.Received);
+        }
+
+        [Test]
+        public void GetInactiveGameObject()
+        {
+            UnityEventListenerMock elementObtainedMock = new UnityEventListenerMock();
+            subject.Obtained.AddListener(elementObtainedMock.Listen);
+
+            GameObject elementOne = new GameObject();
+
+            subject.Add(elementOne);
+            subject.gameObject.SetActive(false);
+
+            Assert.IsFalse(elementObtainedMock.Received);
+
+            GameObject result = subject.Get(0);
+
+            Assert.IsFalse(elementObtainedMock.Received);
+            Assert.AreEqual(elementOne, result);
+
+            Object.DestroyImmediate(elementOne);
+        }
+
+        [Test]
+        public void GetInactiveComponent()
+        {
+            UnityEventListenerMock elementObtainedMock = new UnityEventListenerMock();
+            subject.Obtained.AddListener(elementObtainedMock.Listen);
+
+            GameObject elementOne = new GameObject();
+
+            subject.Add(elementOne);
+            subject.enabled = false;
+
+            Assert.IsFalse(elementObtainedMock.Received);
+
+            GameObject result = subject.Get(0);
+
+            Assert.IsFalse(elementObtainedMock.Received);
+            Assert.AreEqual(elementOne, result);
+
+            Object.DestroyImmediate(elementOne);
+        }
+
+        [Test]
         public void ContainsFound()
         {
             UnityEventListenerMock elementFoundMock = new UnityEventListenerMock();

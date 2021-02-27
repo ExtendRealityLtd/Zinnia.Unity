@@ -23,14 +23,14 @@
         public class UnityEvent : UnityEvent<bool> { }
 
         /// <summary>
-        /// The bounds in which the float must be to be considered a positive boolean.
+        /// The bounds in which the <see cref="float"/> must be to be considered a positive boolean.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         protected FloatRange PositiveBounds { get; set; } = new FloatRange(0f, 1f);
 
         /// <summary>
-        /// Sets the positive bounds from a given Vector2.
+        /// Sets the positive bounds from a given <see cref="Vector2"/>.
         /// </summary>
         /// <param name="positiveBounds">The new positive bounds.</param>
         public virtual void SetPositiveBounds(Vector2 positiveBounds)
@@ -39,7 +39,7 @@
         }
 
         /// <summary>
-        /// Transforms the given input float to the equivalent bool value.
+        /// Transforms the given input <see cref="flaot"/> to the equivalent <see cref="bool"/> value.
         /// </summary>
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value.</returns>

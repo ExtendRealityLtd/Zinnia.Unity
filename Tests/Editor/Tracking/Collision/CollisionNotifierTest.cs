@@ -234,6 +234,130 @@ namespace Test.Zinnia.Tracking.Collision
             Object.DestroyImmediate(forwardSourceB);
         }
 
+        [Test]
+        public void CollisionProcessedWhenDisable()
+        {
+            GameObject linkedContainer = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            CollisionNotifier linkedNotifier = linkedContainer.AddComponent<CollisionNotifier>();
+
+            GameObject unlinkedContainer = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            CollisionNotifier unlinkedNotifier = unlinkedContainer.AddComponent<CollisionNotifier>();
+
+            UnityEventListenerMock collisionStartedListenerMock = new UnityEventListenerMock();
+            subject.CollisionStarted.AddListener(collisionStartedListenerMock.Listen);
+
+            UnityEventListenerMock linkedCollisionStartedListenerMock = new UnityEventListenerMock();
+            linkedNotifier.CollisionStarted.AddListener(linkedCollisionStartedListenerMock.Listen);
+
+            UnityEventListenerMock unlinkedCollisionStartedListenerMock = new UnityEventListenerMock();
+            unlinkedNotifier.CollisionStarted.AddListener(unlinkedCollisionStartedListenerMock.Listen);
+
+            subject.ProcessCollisionsWhenDisabled = true;
+            subject.enabled = false;
+
+            subject.CollisionStartedMock(linkedContainer.GetComponent<Collider>());
+
+            Assert.IsTrue(collisionStartedListenerMock.Received);
+            Assert.IsTrue(linkedCollisionStartedListenerMock.Received);
+            Assert.IsFalse(unlinkedCollisionStartedListenerMock.Received);
+
+            Object.DestroyImmediate(linkedContainer);
+            Object.DestroyImmediate(unlinkedContainer);
+        }
+
+        [Test]
+        public void CollisionNotProcessedOnDisable()
+        {
+            GameObject linkedContainer = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            CollisionNotifier linkedNotifier = linkedContainer.AddComponent<CollisionNotifier>();
+
+            GameObject unlinkedContainer = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            CollisionNotifier unlinkedNotifier = unlinkedContainer.AddComponent<CollisionNotifier>();
+
+            UnityEventListenerMock collisionStartedListenerMock = new UnityEventListenerMock();
+            subject.CollisionStarted.AddListener(collisionStartedListenerMock.Listen);
+
+            UnityEventListenerMock linkedCollisionStartedListenerMock = new UnityEventListenerMock();
+            linkedNotifier.CollisionStarted.AddListener(linkedCollisionStartedListenerMock.Listen);
+
+            UnityEventListenerMock unlinkedCollisionStartedListenerMock = new UnityEventListenerMock();
+            unlinkedNotifier.CollisionStarted.AddListener(unlinkedCollisionStartedListenerMock.Listen);
+
+            subject.ProcessCollisionsWhenDisabled = false;
+            subject.enabled = false;
+
+            subject.CollisionStartedMock(linkedContainer.GetComponent<Collider>());
+
+            Assert.IsFalse(collisionStartedListenerMock.Received);
+            Assert.IsFalse(linkedCollisionStartedListenerMock.Received);
+            Assert.IsFalse(unlinkedCollisionStartedListenerMock.Received);
+
+            Object.DestroyImmediate(linkedContainer);
+            Object.DestroyImmediate(unlinkedContainer);
+        }
+
+        [Test]
+        public void LinkedNotifierCollisionProcessedWhenDisable()
+        {
+            GameObject linkedContainer = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            CollisionNotifier linkedNotifier = linkedContainer.AddComponent<CollisionNotifier>();
+
+            GameObject unlinkedContainer = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            CollisionNotifier unlinkedNotifier = unlinkedContainer.AddComponent<CollisionNotifier>();
+
+            UnityEventListenerMock collisionStartedListenerMock = new UnityEventListenerMock();
+            subject.CollisionStarted.AddListener(collisionStartedListenerMock.Listen);
+
+            UnityEventListenerMock linkedCollisionStartedListenerMock = new UnityEventListenerMock();
+            linkedNotifier.CollisionStarted.AddListener(linkedCollisionStartedListenerMock.Listen);
+
+            UnityEventListenerMock unlinkedCollisionStartedListenerMock = new UnityEventListenerMock();
+            unlinkedNotifier.CollisionStarted.AddListener(unlinkedCollisionStartedListenerMock.Listen);
+
+            linkedNotifier.ProcessCollisionsWhenDisabled = true;
+            linkedNotifier.enabled = false;
+
+            subject.CollisionStartedMock(linkedContainer.GetComponent<Collider>());
+
+            Assert.IsTrue(collisionStartedListenerMock.Received);
+            Assert.IsTrue(linkedCollisionStartedListenerMock.Received);
+            Assert.IsFalse(unlinkedCollisionStartedListenerMock.Received);
+
+            Object.DestroyImmediate(linkedContainer);
+            Object.DestroyImmediate(unlinkedContainer);
+        }
+
+        [Test]
+        public void LinkedNotifierCollisionNotProcessedOnDisable()
+        {
+            GameObject linkedContainer = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            CollisionNotifier linkedNotifier = linkedContainer.AddComponent<CollisionNotifier>();
+
+            GameObject unlinkedContainer = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            CollisionNotifier unlinkedNotifier = unlinkedContainer.AddComponent<CollisionNotifier>();
+
+            UnityEventListenerMock collisionStartedListenerMock = new UnityEventListenerMock();
+            subject.CollisionStarted.AddListener(collisionStartedListenerMock.Listen);
+
+            UnityEventListenerMock linkedCollisionStartedListenerMock = new UnityEventListenerMock();
+            linkedNotifier.CollisionStarted.AddListener(linkedCollisionStartedListenerMock.Listen);
+
+            UnityEventListenerMock unlinkedCollisionStartedListenerMock = new UnityEventListenerMock();
+            unlinkedNotifier.CollisionStarted.AddListener(unlinkedCollisionStartedListenerMock.Listen);
+
+            linkedNotifier.ProcessCollisionsWhenDisabled = false;
+            linkedNotifier.enabled = false;
+
+            subject.CollisionStartedMock(linkedContainer.GetComponent<Collider>());
+
+            Assert.IsTrue(collisionStartedListenerMock.Received);
+            Assert.IsFalse(linkedCollisionStartedListenerMock.Received);
+            Assert.IsFalse(unlinkedCollisionStartedListenerMock.Received);
+
+            Object.DestroyImmediate(linkedContainer);
+            Object.DestroyImmediate(unlinkedContainer);
+        }
+
         public class CollisionNotifierMock : CollisionNotifier
         {
             public virtual void CollisionStartedMock(Collider collider)

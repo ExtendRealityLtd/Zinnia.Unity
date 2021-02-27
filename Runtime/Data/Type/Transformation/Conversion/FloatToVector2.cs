@@ -21,13 +21,13 @@
         public class UnityEvent : UnityEvent<Vector2> { }
 
         /// <summary>
-        /// A float to use as the current x value of the Vector2.
+        /// A float to use as the current x value of the <see cref="Vector2"/>.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public float CurrentX { get; set; }
         /// <summary>
-        /// A float to use as the current y value of the Vector2.
+        /// A float to use as the current y value of the <see cref="Vector2"/>.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
@@ -39,7 +39,7 @@
         protected readonly float[] input = new float[2];
 
         /// <summary>
-        /// Builds a float array from the current set x and y values and transforms it into a Vector2.
+        /// Builds a <see cref="float"/> array from the current set x and y values and transforms it into a <see cref="Vector2"/>.
         /// </summary>
         public virtual Vector2 Transform()
         {
@@ -49,7 +49,7 @@
         }
 
         /// <summary>
-        /// Builds a float array from the current set x and y values and transforms it into a Vector2.
+        /// Builds a <see cref="float"/> array from the current set x and y values and transforms it into a <see cref="Vector2"/>.
         /// </summary>
         public virtual void DoTransform()
         {
@@ -57,7 +57,7 @@
         }
 
         /// <summary>
-        /// Transforms the given float array into a Vector2.
+        /// Transforms the given <see cref="float"/> array into a <see cref="Vector2"/>.
         /// </summary>
         /// <param name="input">The value to transform.</param>
         /// <returns>The transformed value or <see cref="Vector2.zero"/> if the input isn't two-dimensional.</returns>

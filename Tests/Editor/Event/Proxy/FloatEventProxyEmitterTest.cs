@@ -1,4 +1,6 @@
-﻿using Zinnia.Event.Proxy;
+﻿using Zinnia.Data.Type;
+using Zinnia.Event.Proxy;
+using Zinnia.Rule;
 
 namespace Test.Zinnia.Event.Proxy
 {
@@ -70,6 +72,38 @@ namespace Test.Zinnia.Event.Proxy
             Assert.AreEqual(payload, subject.Payload);
             subject.ClearPayload();
             Assert.AreEqual(0f, subject.Payload);
+        }
+
+        [Test]
+        public void ReceiveWithRuleRestrictions()
+        {
+            UnityEventListenerMock emittedMock = new UnityEventListenerMock();
+            subject.Emitted.AddListener(emittedMock.Listen);
+
+            FloatInRangeRule rule = subject.gameObject.AddComponent<FloatInRangeRule>();
+            rule.Range = new FloatRange(2f, 4f);
+
+            subject.ReceiveValidity = new RuleContainer
+            {
+                Interface = rule
+            };
+
+            Assert.AreEqual(0f, subject.Payload);
+            Assert.IsFalse(emittedMock.Received);
+
+            subject.Receive(3f);
+
+            Assert.AreEqual(3f, subject.Payload);
+            Assert.IsTrue(emittedMock.Received);
+
+            emittedMock.Reset();
+
+            Assert.IsFalse(emittedMock.Received);
+
+            subject.Receive(1f);
+
+            Assert.AreEqual(3f, subject.Payload);
+            Assert.IsFalse(emittedMock.Received);
         }
 
         [Test]
