@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.31.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.30.0...v1.31.0) (2021-02-27)
+
+#### Features
+
+* **Data:** add int range component ([56e1721](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/56e17215e4b7cd9c62239eb3df2d49c981108e9c))
+  > The IntRange component is similar to the FloatRange component but it takes an integer rather than a float for when absolute numbers are to be enforced.
+  > 
+  > It is also possible to make a FloatRange from an IntRange and vice versa.
+* **Data:** provide additional type converters for various types ([9a736f9](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/9a736f95fa586ac11925287e9ed8c2121320d0c5))
+  > A collection of new data converters have been added to convert:
+  > 
+  > * float to string * string to float * int to float * float to int * float to TimeSpan * TimeSpan to float * string to TimeSpan * TimeSpan to string
+* **Data:** provide get method and obtained event on observable list ([5a50fd6](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/5a50fd6b30cbf3f1e277309cc71eee8bfe60d777))
+  > The ObservableList components now have a `Get(index)` method that retrieves an element from the collection List and uses index clamping so an invalid index will not throw an error, instead an index too high will return the last element in the List and a negative index will walk the list in reverse (e.g. -2 gets the second from last element from the list).
+  > 
+  > There is also an accompanying `Obtained` event that emits the element that was retrieved in the `Get` call. If `Get` is attempted on an empty collection then it will result in an exception being thrown.
+* **Event:** ensure proxy emitters can be restricted by rules ([1d991c6](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/1d991c61465646076888e4b69000f89d6dd90a03))
+  > Nearly all of the proxy emitters can now be restricted by a rule and some new proxy emitters have been added for missing event types.
+* **Rule:** add new rule types for primitives ([4dbfa86](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/4dbfa86568ab5439233daf683855edc2faf0add3))
+  > A collection of new rule types have been added that deal with primitive object types such as floats, ints, strings and vectors.
+  > 
+  > These provide the basis for applying rules against primitive types such as determining if a number is in a range, or whether a type is equal to another type (within a given tolerance).
+* **Tracking:** option to prevent collision notification on disable ([fac4bdb](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/fac4bdbc1196328f038847b27b42053019af8f40))
+  > A new option to the CollisionNotifier has been added that will prevent collision tracking to occur if the component is disabled. Previously, all collisions would continue to process even if the component was disabled because the Unity OnCollision/Trigger[XXX] methods always run even on a disabled component.
+  > 
+  > There are times where you may not want this to be the case so a new property has been added that will prevent collision processing when the component is disabled. It is still possible to have the component disabled and collisions processed if this new property is set to true (which is is by default so no noticable changes will occur).
+
+#### Bug Fixes
+
+* **Tracking:** prevent null exception on destroying collision notifier ([a336fdb](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/a336fdb930167aad6c6a405be590762ae9cce1e2))
+  > There is an edge case where the CollisionNotifier will still attempt to get a list of Notifiers when the object has been destroyed causing a Null Exception error. This fix simply checks the state of the objects before attempting to return the notifier list.
+
 ## [1.30.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.29.0...v1.30.0) (2021-02-04)
 
 #### Features
