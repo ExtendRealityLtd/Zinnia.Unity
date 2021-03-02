@@ -3,6 +3,7 @@
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using Zinnia.Data.Attribute;
@@ -20,14 +21,51 @@
         public bool StopCollisionsOnDisable { get; protected set; } = true;
 
         /// <summary>
+        /// Determines whether to apply the fix for the PhysX 4.11 issue where when a <see cref="Rigidbody"/> kinematic state is changed it force calls a <see cref="OnTriggerExit(Collider)"/> and a subsequent <see cref="OnTriggerExit(Collider)"/> for the collision even though nothing has changed with the collision.
+        /// </summary>
+        /// <remarks>
+        /// This is set to <see langword="true"/> in Unity 2019.3 and above when the PhysX version was updated to 4.11.
+        /// </remarks>
+        public bool ApplyKinematicChangeTriggerEventFix { get; set; }
+
+        /// <summary>
         /// A collection of current existing collisions.
         /// </summary>
         protected List<Collider> trackedCollisions = new List<Collider>();
+        /// <summary>
+        /// A collection to track the kinematic state changes in for the PhysX 4.11 trigger exit/enter issue.
+        /// </summary>
+        protected HashSet<Rigidbody> trackedStateChangers = new HashSet<Rigidbody>();
+        /// <summary>
+        /// An instruction to wait for the next FixedUpdate process in the life-cycle.
+        /// </summary>
+        protected WaitForFixedUpdate waitForFixedUpdateInstruction = new WaitForFixedUpdate();
+        /// <summary>
+        /// The coroutine for deferring the <see cref="OnTriggerExit(Collider)"/> call to the next FixedUpdate process in the life-cycle.
+        /// </summary>
+        protected Coroutine deferredTriggerExit;
+
+        /// <summary>
+        /// Prepares the collision states for a kinematic state change on the given <see cref="Rigidbody"/>.
+        /// </summary>
+        /// <remarks>
+        /// This is a requirement for Unity 2019.3 and above and the PhysX 4.11 handling of kinematic changes on a <see cref="Rigidbody"/>.
+        /// </remarks>
+        /// <param name="aboutToChange">The <see cref="Rigidbody"/> that is to have the kinematic state changed on imminently.</param>
+        public virtual void PrepareKinematicStateChange(Rigidbody aboutToChange)
+        {
+            if (!ApplyKinematicChangeTriggerEventFix || aboutToChange == null)
+            {
+                return;
+            }
+
+            trackedStateChangers.Add(aboutToChange);
+        }
 
         /// <summary>
         /// Stops the collision between this <see cref="CollisionTracker"/> and the given <see cref="Collider"/>. If there is still a physical intersection, then the collision will start again in the next physics frame.
         /// </summary>
-        /// <param name="collider">The collider to stop the collision with.</param>
+        /// <param name="collider">The <see cref="Collider"/> to stop the collision with.</param>
         public virtual void StopCollision(Collider collider)
         {
             RemoveDisabledObserver(collider);
@@ -38,6 +76,13 @@
             }
 
             OnCollisionStopped(eventData.Set(this, collider.isTrigger, null, collider));
+        }
+
+        protected virtual void Awake()
+        {
+#if UNITY_2019_3_OR_NEWER
+            ApplyKinematicChangeTriggerEventFix = true;
+#endif
         }
 
         protected virtual void OnDisable()
@@ -51,6 +96,9 @@
             {
                 StopCollision(collider);
             }
+
+            StopDeferredTriggerExitRoutine();
+            trackedStateChangers.Clear();
         }
 
         protected virtual void OnCollisionEnter(Collision collision)
@@ -89,6 +137,13 @@
 
         protected virtual void OnTriggerEnter(Collider collider)
         {
+            StopDeferredTriggerExitRoutine();
+
+            if (HasKinematicStateChanged(collider, true))
+            {
+                return;
+            }
+
             AddDisabledObserver(collider);
 
             if ((StatesToProcess & CollisionStates.Enter) == 0)
@@ -111,6 +166,13 @@
 
         protected virtual void OnTriggerExit(Collider collider)
         {
+            if (HasKinematicStateChanged(collider, false))
+            {
+                StopDeferredTriggerExitRoutine();
+                deferredTriggerExit = StartCoroutine(RunTriggerExitAfterNextFixedUpdate(collider));
+                return;
+            }
+
             RemoveDisabledObserver(collider);
 
             if ((StatesToProcess & CollisionStates.Exit) == 0)
@@ -119,6 +181,51 @@
             }
 
             OnCollisionStopped(eventData.Set(this, true, null, collider));
+        }
+
+        /// <summary>
+        /// Determines whether the kinematic state of the given <see cref="Collider.attachedRigidbody"/> has been flagged as it has just changed.
+        /// </summary>
+        /// <param name="collider">The <see cref="Collider"/> to get the <see cref="Rigidbody"/> kinematic state from.</param>
+        /// <param name="remove">Whether to remove the <see cref="Rigidbody"/> from the <see cref="trackedStateChangers"/> collection.</param>
+        /// <returns>Whether the kinematic state has changed on the given <see cref="Collider.attachedRigidbody"/>.</returns>
+        protected virtual bool HasKinematicStateChanged(Collider collider, bool remove)
+        {
+            if (!ApplyKinematicChangeTriggerEventFix || collider.attachedRigidbody == null || !trackedStateChangers.Contains(collider.attachedRigidbody))
+            {
+                return false;
+            }
+
+            if (remove)
+            {
+                trackedStateChangers.Remove(collider.attachedRigidbody);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Executes the <see cref="OnTriggerExit(Collider)"/> after the next FixedUpdate process in the life-cycle.
+        /// </summary>
+        /// <param name="collider">The <see cref="Collider"/> to run with.</param>
+        /// <returns>An Enumerator to manage the running of the Coroutine.</returns>
+        protected IEnumerator RunTriggerExitAfterNextFixedUpdate(Collider collider)
+        {
+            yield return waitForFixedUpdateInstruction;
+            trackedStateChangers.Remove(collider.attachedRigidbody);
+            OnTriggerExit(collider);
+            deferredTriggerExit = null;
+        }
+
+        /// <summary>
+        /// Stops the <see cref="deferredTriggerExit"/> coroutine from running.
+        /// </summary>
+        protected virtual void StopDeferredTriggerExitRoutine()
+        {
+            if (deferredTriggerExit != null)
+            {
+                StopCoroutine(deferredTriggerExit);
+            }
         }
 
         /// <summary>
