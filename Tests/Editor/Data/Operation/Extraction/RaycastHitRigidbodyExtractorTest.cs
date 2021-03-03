@@ -3,9 +3,11 @@
 namespace Test.Zinnia.Data.Operation.Extraction
 {
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Helper;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class RaycastHitRigidbodyExtractorTest
@@ -63,11 +65,14 @@ namespace Test.Zinnia.Data.Operation.Extraction
             Assert.IsNull(subject.Result);
         }
 
-        [Test]
-        public void ExtractNoCollisionData()
+        [UnityTest]
+        public IEnumerator ExtractNoCollisionData()
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
+
+            yield return null;
+
             GameObject blocker = RaycastHitHelper.CreateBlocker();
             Rigidbody target = blocker.AddComponent<Rigidbody>();
             blocker.SetActive(false);
