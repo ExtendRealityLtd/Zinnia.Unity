@@ -3,8 +3,10 @@
 namespace Test.Zinnia.Data.Collection.List
 {
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectObservableListTest
@@ -228,8 +230,8 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementOne);
         }
 
-        [Test]
-        public void AddToEnd()
+        [UnityTest]
+        public IEnumerator AddToEnd()
         {
             UnityEventListenerMock populatedMock = new UnityEventListenerMock();
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
@@ -242,6 +244,8 @@ namespace Test.Zinnia.Data.Collection.List
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
+
+            yield return null;
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -272,8 +276,8 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementTwo);
         }
 
-        [Test]
-        public void AddUnique()
+        [UnityTest]
+        public IEnumerator AddUnique()
         {
             UnityEventListenerMock populatedMock = new UnityEventListenerMock();
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
@@ -286,6 +290,8 @@ namespace Test.Zinnia.Data.Collection.List
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
+
+            yield return null;
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -331,8 +337,8 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementTwo);
         }
 
-        [Test]
-        public void InsertAtStart()
+        [UnityTest]
+        public IEnumerator InsertAtStart()
         {
             UnityEventListenerMock populatedMock = new UnityEventListenerMock();
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
@@ -345,6 +351,8 @@ namespace Test.Zinnia.Data.Collection.List
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
+
+            yield return null;
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -375,8 +383,8 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementTwo);
         }
 
-        [Test]
-        public void InsertAt()
+        [UnityTest]
+        public IEnumerator InsertAt()
         {
             UnityEventListenerMock populatedMock = new UnityEventListenerMock();
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
@@ -392,6 +400,8 @@ namespace Test.Zinnia.Data.Collection.List
             GameObject elementThree = new GameObject();
             GameObject elementFour = new GameObject();
             GameObject elementFive = new GameObject();
+
+            yield return null;
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
@@ -457,8 +467,8 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementFive);
         }
 
-        [Test]
-        public void InsertUniqueAtStart()
+        [UnityTest]
+        public IEnumerator InsertUniqueAtStart()
         {
             UnityEventListenerMock populatedMock = new UnityEventListenerMock();
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
@@ -468,6 +478,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Added.AddListener(addedMock.Listen);
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
+
+            yield return null;
 
             GameObject elementOne = new GameObject();
             GameObject elementTwo = new GameObject();
@@ -516,8 +528,8 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementTwo);
         }
 
-        [Test]
-        public void InsertAtCurrentIndex()
+        [UnityTest]
+        public IEnumerator InsertAtCurrentIndex()
         {
             UnityEventListenerMock populatedMock = new UnityEventListenerMock();
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
@@ -527,6 +539,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Added.AddListener(addedMock.Listen);
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
+
+            yield return null;
 
             subject.CurrentIndex = 0;
 
@@ -561,8 +575,8 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementTwo);
         }
 
-        [Test]
-        public void InsertUniqueAtCurrentIndex()
+        [UnityTest]
+        public IEnumerator InsertUniqueAtCurrentIndex()
         {
             UnityEventListenerMock populatedMock = new UnityEventListenerMock();
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
@@ -572,6 +586,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Added.AddListener(addedMock.Listen);
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
+
+            yield return null;
 
             subject.CurrentIndex = 0;
 
@@ -620,8 +636,8 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementTwo);
         }
 
-        [Test]
-        public void SetAt()
+        [UnityTest]
+        public IEnumerator SetAt()
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
@@ -632,6 +648,8 @@ namespace Test.Zinnia.Data.Collection.List
             GameObject elementTwo = new GameObject("Two");
             GameObject elementThree = new GameObject("Three");
             GameObject elementFour = new GameObject("Four");
+
+            yield return null;
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
@@ -681,8 +699,8 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementOne);
         }
 
-        [Test]
-        public void SetAtOrAddIfEmptyCollection()
+        [UnityTest]
+        public IEnumerator SetAtOrAddIfEmptyCollection()
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
@@ -690,6 +708,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
 
             GameObject elementOne = new GameObject("One");
+
+            yield return null;
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -740,13 +760,15 @@ namespace Test.Zinnia.Data.Collection.List
             Object.DestroyImmediate(elementThree);
         }
 
-        [Test]
-        public void SetAtCurrentIndex()
+        [UnityTest]
+        public IEnumerator SetAtCurrentIndex()
         {
             UnityEventListenerMock addedMock = new UnityEventListenerMock();
             UnityEventListenerMock removedMock = new UnityEventListenerMock();
             subject.Added.AddListener(addedMock.Listen);
             subject.Removed.AddListener(removedMock.Listen);
+
+            yield return null;
 
             subject.CurrentIndex = 1;
 

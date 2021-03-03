@@ -4,9 +4,11 @@ using Zinnia.Data.Type;
 namespace Test.Zinnia.Data.Operation.Extraction
 {
     using NUnit.Framework;
+    using System.Collections;
     using Test.Zinnia.Utility.Helper;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
+    using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
 
     public class SurfaceDataCollisionDataExtractorTest
@@ -70,11 +72,14 @@ namespace Test.Zinnia.Data.Operation.Extraction
             Assert.IsFalse(subject.Result.HasValue);
         }
 
-        [Test]
-        public void ExtractNoCollisionData()
+        [UnityTest]
+        public IEnumerator ExtractNoCollisionData()
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
+
+            yield return null;
+
             SurfaceData surfaceData = new SurfaceData();
             GameObject blocker = RaycastHitHelper.CreateBlocker();
             blocker.SetActive(false);
