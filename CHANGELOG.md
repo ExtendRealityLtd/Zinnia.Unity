@@ -1,5 +1,18 @@
 # Changelog
 
+### [1.31.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.31.0...v1.31.1) (2021-03-03)
+
+#### Bug Fixes
+
+* **Tests:** move some tests to run as UnityTest to call unity lifecycle ([a777de9](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/a777de945bf7fc3d3ead94e7f226671d79a3e085))
+  > It would seem that a version of Unity has stopped calling Unity lifecycle events such as Start in playmode tests under the normal `[Test]` structure and now they require to be run as `[UnityTest]` instead. It is not clear from the Unity changelogs when this change was introduced, but it is definitely needed for Unity 2019.4.
+* **Tracking:** ignore extra trigger enter/exit on kinematic change ([c3853af](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c3853afed7070c9f639bdbf79d3735530fe2cc83))
+  > Unity 2019.3 introduced an undocumented change brought about by PhysX 4.11 where when a rigidbody kinematic state is changed then Unity will re-fire the OnTriggerExit and OnTriggerEnter events even though the collision between colliders did not end. This causes issues as extra events are raised that do not reflect what is actually happening in the scene.
+  > 
+  > The fix involves being able to mark a rigidbody attached to a collider as about to have its kinematic state changed, this is then stored and upon the OnTriggerExit being called (in the same frame) it will ignore the internal logic and then ignore the subsequent OnTriggerEnter logic (which is also done in the same frame) and then cleans up the rigidbody cached state so it knows that additional exits are valid.
+  > 
+  > This is only applied in Unity 2019.3 and above and can be disabled at runtime if the mechanism of how Unity 2019.3 works is required.
+
 ## [1.31.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.30.0...v1.31.0) (2021-02-27)
 
 #### Features
