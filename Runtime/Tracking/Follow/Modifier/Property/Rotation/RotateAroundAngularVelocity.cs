@@ -30,6 +30,13 @@
         [Serialized]
         [field: DocumentedByXml]
         public Vector3State ApplyToAxis { get; set; }
+        
+        /// <summary>
+        /// When true, transforms the angular velocity to be in target's space instead of world space.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool InTargetSpace { get; set; }
 
         /// <summary>
         /// Sets the <see cref="SourceMultiplier"/> x value.
@@ -99,6 +106,12 @@
             }
 
             Vector3 input = AngularVelocitySource.GetAngularVelocity();
+            
+            if (InTargetSpace) 
+            {
+                input = target.transform.parent.InverseTransformVector(input);
+            }
+            
             input.Scale(SourceMultiplier);
             input.Scale(ApplyToAxis.ToVector3());
 
