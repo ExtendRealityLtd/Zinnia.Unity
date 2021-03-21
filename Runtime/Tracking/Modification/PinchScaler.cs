@@ -44,6 +44,12 @@
         [Serialized]
         [field: DocumentedByXml]
         public bool UseLocalScale { get; set; } = true;
+        /// <summary>
+        /// Determines whether to calculate the multiplier using <see cref="Mathf.Pow(float, float)"/>.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool CalculateByPower { get; set; }
 
         /// <summary>
         /// The previous distance between <see cref="PrimaryPoint"/> and <see cref="SecondaryPoint"/>.
@@ -103,6 +109,27 @@
         {
             previousDistance = previousDistance == null ? GetDistance() : previousDistance;
 
+            if (CalculateByPower)
+            {
+                float previousDistanceValue = (float)previousDistance;
+                if (!previousDistanceValue.ApproxEquals(0))
+                {
+                    ScaleByPower();
+                }
+            }
+            else
+            {
+                ScaleByMultiplier();
+            }
+
+            previousDistance = GetDistance();
+        }
+
+        /// <summary>
+        /// Scales the object by the distance delta multiplied against the multiplier.
+        /// </summary>
+        protected virtual void ScaleByMultiplier()
+        {
             float distanceDelta = GetDistance() - (float)previousDistance;
             Vector3 newScale = Vector3.one * distanceDelta * Multiplier;
             if (UseLocalScale)
@@ -113,8 +140,24 @@
             {
                 Target.transform.SetGlobalScale(Target.transform.lossyScale + newScale);
             }
+        }
 
-            previousDistance = GetDistance();
+        /// <summary>
+        /// Scales the object using a power of the multiplier.
+        /// </summary>
+        protected virtual void ScaleByPower()
+        {
+            float scaleRatio = GetDistance() / (float)previousDistance;
+            Vector3 scaleVector = Vector3.one * Mathf.Pow(scaleRatio, Multiplier);
+
+            if (UseLocalScale)
+            {
+                Target.transform.localScale = Vector3.Scale(Target.transform.localScale, scaleVector);
+            }
+            else
+            {
+                Target.transform.SetGlobalScale(Vector3.Scale(Target.transform.lossyScale, scaleVector));
+            }
         }
 
         /// <summary>
