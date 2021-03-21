@@ -105,13 +105,10 @@
                 return;
             }
 
-            Vector3 input = AngularVelocitySource.GetAngularVelocity();
-            
-            if (InTargetSpace) 
-            {
-                input = target.transform.parent.InverseTransformVector(input);
-            }
-            
+            Vector3 input = InTargetSpace
+                ? target.transform.parent.InverseTransformVector(AngularVelocitySource.GetAngularVelocity())
+                : AngularVelocitySource.GetAngularVelocity();
+                            
             input.Scale(SourceMultiplier);
             input.Scale(ApplyToAxis.ToVector3());
 
