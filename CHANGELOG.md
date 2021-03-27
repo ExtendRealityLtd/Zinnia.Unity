@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.32.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.31.1...v1.32.0) (2021-03-27)
+
+#### Features
+
+* **Tracking:** allow local space rotation around angular velocity ([e338db5](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/e338db5d8082eaef22420d5098f4c003d1737d00))
+  > When using an angular transform drive as a handleless door knob, this class is used to track the interactor's "wrist" rotation, but as it is now the this only works when drive/interactor are aligned with world space.  By using this new option, the angular velocity will be transformed to the target's space, and thus applied properly.
+
 ### [1.31.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.31.0...v1.31.1) (2021-03-03)
 
 #### Bug Fixes
