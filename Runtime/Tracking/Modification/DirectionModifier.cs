@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using Malimbe.BehaviourStateRequirementMethod;
+    using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -16,10 +17,30 @@
     public class DirectionModifier : MonoBehaviour, IProcessable
     {
         /// <summary>
+        /// The target to use for the rotational up.
+        /// </summary>
+        public enum RotationTargetType
+        {
+            /// <summary>
+            /// Do not use any target for rotational up.
+            /// </summary>
+            UseNoTarget,
+            /// <summary>
+            /// Use the <see cref="Pivot"/> for rotational up.
+            /// </summary>
+            UsePivotAsTarget,
+            /// <summary>
+            /// Use the <see cref="LookAt"/> for rotational up.
+            /// </summary>
+            UseLookAtAsTarget
+        }
+
+        #region Reference Settings
+        /// <summary>
         /// The target to rotate.
         /// </summary>
         [Serialized, Cleared]
-        [field: DocumentedByXml]
+        [field: Header("Reference Settings"), DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// The object to look at when affecting rotation.
@@ -34,28 +55,46 @@
         [field: DocumentedByXml]
         public GameObject Pivot { get; set; }
         /// <summary>
+        /// The object providing a rotational offset for the <see cref="Target"/>.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject TargetOffset { get; set; }
+        #endregion
+
+        #region Control Settings
+        /// <summary>
+        /// The target object to use for setting the world up during the rotation process.
+        /// </summary>
+        [Serialized]
+        [field: Header("Control Settings"), DocumentedByXml]
+        public RotationTargetType RotationUpTarget { get; set; } = RotationTargetType.UsePivotAsTarget;
+        /// <summary>
+        /// Whether to snap the <see cref="Target"/> origin to the <see cref="LookAt"/> origin.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public bool SnapToLookAt { get; set; } = true;
+        /// <summary>
         /// The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public float ResetOrientationSpeed { get; set; } = 0.1f;
-        /// <summary>
-        /// Prevent z-axis rotation coming from the <see cref="LookAt"/> target.
-        /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool PreventLookAtZRotation { get; set; } = true;
+        #endregion
 
+        #region Orientation Events
         /// <summary>
         /// Emitted when the orientation is reset.
         /// </summary>
-        [DocumentedByXml]
+        [Header("Orientation Events"), DocumentedByXml]
         public UnityEvent OrientationReset = new UnityEvent();
         /// <summary>
-        /// Emitted when the orientation reset action is cancelled.
+        /// Emitted when the orientation reset action is canceled.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent OrientationResetCancelled = new UnityEvent();
+        #endregion
 
         /// <summary>
         /// The initial rotation of the <see cref="Target"/>.
@@ -74,9 +113,17 @@
         /// </summary>
         protected Quaternion pivotReleaseRotation;
         /// <summary>
+        /// The initial rotation offset.
+        /// </summary>
+        protected Quaternion offsetInitialRotation;
+        /// <summary>
         /// A reference to the started routine.
         /// </summary>
         protected Coroutine resetOrientationRoutine;
+        /// <summary>
+        /// Determines whether the <see cref="LookAt"/> is in front of the <see cref="Pivot"/> within the <see cref="Target"/> local space.
+        /// </summary>
+        protected bool IsLookAtInFrontOfPivot => Target != null && Pivot != null && LookAt != null ? Target.transform.InverseTransformPoint(LookAt.transform.position).z > Target.transform.InverseTransformPoint(Pivot.transform.position).z : false;
 
         /// <summary>
         /// Processes the current direction modification.
@@ -84,14 +131,7 @@
         [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (PreventLookAtZRotation)
-            {
-                SetTargetRotationWithZLocking();
-            }
-            else
-            {
-                SetTargetRotation();
-            }
+            SetTargetRotation();
         }
 
         /// <summary>
@@ -177,42 +217,40 @@
                 return;
             }
 
-            Target.transform.rotation = Quaternion.LookRotation(LookAt.transform.position - Pivot.transform.position, LookAt.transform.forward);
+            Target.transform.rotation = Quaternion.LookRotation(GetRotation(), GetUpwards());
+
+            if (!SnapToLookAt)
+            {
+                Target.transform.rotation *= offsetInitialRotation;
+            }
         }
 
         /// <summary>
-        /// Sets the target rotation to look at the specific point in space whilst applying z locking on the look at target.
+        /// Gets the rotation Vector based on the position of the <see cref="LookAt"/> and <see cref="Pivot"/>.
         /// </summary>
-        protected virtual void SetTargetRotationWithZLocking()
+        /// <returns></returns>
+        protected virtual Vector3 GetRotation()
         {
-            if (Target == null || LookAt == null || Pivot == null)
-            {
-                return;
-            }
-
-            Vector3 normalizedForward = (LookAt.transform.position - Pivot.transform.position).normalized;
-            Quaternion rightLocked = Quaternion.LookRotation(normalizedForward, Vector3.Cross(-Pivot.transform.right, normalizedForward).normalized);
-            Quaternion targetRotation = Target.transform.rotation;
-            Quaternion rightLockedDelta = Quaternion.Inverse(targetRotation) * rightLocked;
-            Quaternion upLocked = Quaternion.LookRotation(normalizedForward, Pivot.transform.forward);
-            Quaternion upLockedDelta = Quaternion.Inverse(targetRotation) * upLocked;
-
-            Target.transform.rotation = CalculateLockedAngle(upLockedDelta) < CalculateLockedAngle(rightLockedDelta) ? upLocked : rightLocked;
+            return IsLookAtInFrontOfPivot ? LookAt.transform.position - Pivot.transform.position : Pivot.transform.position - LookAt.transform.position;
         }
 
         /// <summary>
-        /// Calculates the locked angle.
+        /// Gets the rotational up Vector based on the <see cref="RotationUpTarget"/> value.
         /// </summary>
-        /// <param name="lockedDelta">The rotation delta to calculate the angle on.</param>
-        /// <returns>The calculated angle.</returns>
-        protected virtual float CalculateLockedAngle(Quaternion lockedDelta)
+        /// <returns>The rotational up to use.</returns>
+        protected virtual Vector3 GetUpwards()
         {
-            lockedDelta.ToAngleAxis(out float lockedAngle, out Vector3 _);
-            if (lockedAngle > 180f)
+            switch (RotationUpTarget)
             {
-                lockedAngle -= 360f;
+                case RotationTargetType.UseNoTarget:
+                    return Vector3.up;
+                case RotationTargetType.UsePivotAsTarget:
+                    return Pivot != null ? Pivot.transform.up : Vector3.zero;
+                case RotationTargetType.UseLookAtAsTarget:
+                    return LookAt != null ? LookAt.transform.up : Vector3.zero;
             }
-            return Mathf.Abs(lockedAngle);
+
+            return Vector3.zero;
         }
 
         /// <summary>
@@ -246,6 +284,26 @@
         protected virtual Quaternion GetActualInitialRotation()
         {
             return targetInitialRotation * (pivotReleaseRotation * Quaternion.Inverse(pivotInitialRotation));
+        }
+
+        /// <summary>
+        /// Sets the <see cref="offsetInitialRotation"/> value based on the initial rotations and positions of the reference objects.
+        /// </summary>
+        protected virtual void SetOffsetRotation()
+        {
+            offsetInitialRotation = (LookAt != null && Pivot != null
+                ? Quaternion.Inverse(Quaternion.LookRotation(GetRotation(), GetUpwards())) * Pivot.transform.rotation
+                : Quaternion.identity)
+                * (TargetOffset != null ? Quaternion.Inverse(TargetOffset.transform.localRotation) : Quaternion.identity);
+        }
+
+        /// <summary>
+        /// Called after <see cref="LookAt"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(LookAt))]
+        protected virtual void OnAfterLookAtChange()
+        {
+            SetOffsetRotation();
         }
     }
 }

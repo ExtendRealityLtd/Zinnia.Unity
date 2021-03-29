@@ -19,6 +19,7 @@
     using Zinnia.Tracking.Modification;
     using Zinnia.Tracking.Velocity;
     using Zinnia.Tracking.Velocity.Collection;
+    using Zinnia.Visual;
 
     [InitializeOnLoad]
     public class ObservableListComponentGeneratorEditorWindow : EditorWindow
@@ -48,6 +49,7 @@
             GameObjectStateSwitcher,
             HapticProcessor,
             ListContainsRule,
+            MeshStateModifier,
             MomentProcessor,
             PlatformDeviceAssociation,
             RulesMatcher,
@@ -186,6 +188,11 @@
                     HapticProcessor hapticProcessor = componentContainer.AddComponent<HapticProcessor>();
                     HapticProcessObservableList hapticList = listContainer.AddComponent<HapticProcessObservableList>();
                     hapticProcessor.HapticProcesses = hapticList;
+                    break;
+                case OptionType.MeshStateModifier:
+                    MeshStateModifier meshStateModifier = componentContainer.AddComponent<MeshStateModifier>();
+                    GameObjectMultiRelationObservableList gameObjectMultiRelationList = listContainer.AddComponent<GameObjectMultiRelationObservableList>();
+                    meshStateModifier.MeshCollections = gameObjectMultiRelationList;
                     break;
                 case OptionType.MomentProcessor:
                     MomentProcessor momentProcessor = componentContainer.AddComponent<MomentProcessor>();
