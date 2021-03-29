@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.33.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.32.0...v1.33.0) (2021-03-29)
+
+#### Features
+
+* **Tracking:** improve direction modifier rotation ([8049553](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/804955370039a6fad2fa71bdde9627e96b06251b))
+  > The DirectionModifier component has been improved so the rotation of the Target now works if the Pivot is in front of the LookAt GameObject and it is also possible to specify a TargetOffset for handling non LookAt snapping rotations. It is also now possible to determine which object to use for the world up in the LookRotation process.
+  > 
+  > The `PreventLookAtZRotation` logic has been removed as it no longer seems to be required after this new functionality has been added.
+* **Tracking:** provide ability to calculate scale distance by power ([23159f4](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/23159f44ad0af9e769a1fafd77be3d5346515a8b))
+  > The PinchScaler now has the option to calculate the scale distance using `Mathf.Power` on the delta and the multiplier as this gives a more accurate representation of the scale factor.
+* **Visual:** add ability to toggle mesh states ([5cd14f0](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/5cd14f0d41404c58b8d98e8617ef65382bbcb11f))
+  > The new MeshStateModifier component makes it easy to toggle the enabled state of a (Skinned)MeshRenderer associated with a given GameObject.
+  > 
+  > The MeshStateModifier can toggle the state of a mesh that is on the same GameObject as the given container, or a mesh on any of the children of the given container.
+  > 
+  > It also utilizes a new GameObjectMultiRelationsObservableList component which allows a single key container to be used to reference multiple child objects. So if the key is found then you get the values back to utilize. This is used to allow custom child meshes to be specified for a given parent container, so when the Show/Hide mesh methods are called then it will only toggle the specified child meshes.
+
 ## [1.32.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.31.1...v1.32.0) (2021-03-27)
 
 #### Features
