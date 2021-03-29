@@ -27,7 +27,7 @@ namespace Test.Zinnia.Tracking.Modification
         }
 
         [Test]
-        public void ProcessWithoutLookAtZRotation()
+        public void Process()
         {
             GameObject target = new GameObject();
             GameObject lookAt = new GameObject();
@@ -36,7 +36,6 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Target = target;
             subject.LookAt = lookAt;
             subject.Pivot = pivot;
-            subject.PreventLookAtZRotation = false;
 
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;
@@ -45,33 +44,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Process();
 
-            Assert.AreEqual(new Quaternion(0f, 0.6f, 0.8f, 0f).ToString(), target.transform.rotation.ToString());
-
-            Object.DestroyImmediate(target);
-            Object.DestroyImmediate(lookAt);
-            Object.DestroyImmediate(pivot);
-        }
-
-        [Test]
-        public void ProcessWithLookAtZRotation()
-        {
-            GameObject target = new GameObject();
-            GameObject lookAt = new GameObject();
-            GameObject pivot = new GameObject();
-
-            subject.Target = target;
-            subject.LookAt = lookAt;
-            subject.Pivot = pivot;
-            subject.PreventLookAtZRotation = true;
-
-            lookAt.transform.position = Vector3.up * 2f;
-            pivot.transform.position = Vector3.back * 0.5f;
-
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
-
-            subject.Process();
-
-            Assert.AreEqual(new Quaternion(-0.6f, 0f, 0f, 0.8f).ToString(), target.transform.rotation.ToString());
+            Assert.AreEqual(new Quaternion(-0.6f, 0.0f, 0.0f, 0.8f).ToString(), target.transform.rotation.ToString());
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(lookAt);
@@ -186,7 +159,6 @@ namespace Test.Zinnia.Tracking.Modification
             subject.LookAt = lookAt;
             subject.Pivot = pivot;
             subject.ResetOrientationSpeed = 0f;
-            subject.PreventLookAtZRotation = false;
 
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;
@@ -195,7 +167,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Process();
 
-            Assert.AreEqual(new Quaternion(0f, 0.6f, 0.8f, 0f).ToString(), target.transform.rotation.ToString());
+            Assert.AreEqual(new Quaternion(-0.6f, 0.0f, 0f, 0.8f).ToString(), target.transform.rotation.ToString());
 
             subject.ResetOrientation();
 
