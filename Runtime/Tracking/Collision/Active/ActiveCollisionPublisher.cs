@@ -49,6 +49,24 @@
             /// The <see cref="ActiveCollisionPublisher"/> that is doing the publishing.
             /// </summary>
             public ActiveCollisionPublisher Publisher { get; set; }
+
+            /// <inheritdoc />
+            public override string ToString()
+            {
+                string[] titles = new string[]
+                {
+                "SourceContainer",
+                "PublisherContainer"
+                };
+
+                object[] values = new object[]
+                {
+                SourceContainer,
+                PublisherContainer
+                };
+
+                return StringExtensions.FormatForToString(titles, values);
+            }
         }
 
         /// <summary>

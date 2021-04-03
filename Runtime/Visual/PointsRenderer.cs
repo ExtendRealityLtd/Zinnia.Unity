@@ -62,6 +62,32 @@
             [Serialized]
             [field: DocumentedByXml]
             public HeapAllocationFreeReadOnlyList<Vector3> Points { get; set; }
+
+            /// <inheritdoc />
+            public override string ToString()
+            {
+                string[] titles = new string[]
+                {
+                "StartPoint",
+                "IsStartPointVisible",
+                "RepeatedSegmentPoint",
+                "IsRepeatedSegmentPointVisible",
+                "EndPoint",
+                "IsEndPointVisible"
+                };
+
+                object[] values = new object[]
+                {
+                StartPoint,
+                IsStartPointVisible,
+                RepeatedSegmentPoint,
+                IsRepeatedSegmentPointVisible,
+                EndPoint,
+                IsEndPointVisible
+                };
+
+                return StringExtensions.FormatForToString(titles, values);
+            }
         }
 
         /// <summary>

@@ -3,6 +3,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Allows a boolean to be set per <see cref="UnityEngine.Vector3"/> element to provide a state reference.
@@ -71,6 +72,26 @@
         public Vector3 ToVector3()
         {
             return new Vector3(xState ? 1f : 0f, yState ? 1f : 0f, zState ? 1f : 0f);
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            string[] titles = new string[]
+            {
+                "xState",
+                "yState",
+                "zState"
+            };
+
+            object[] values = new object[]
+            {
+                xState,
+                yState,
+                zState
+            };
+
+            return StringExtensions.FormatForToString(titles, values);
         }
     }
 }

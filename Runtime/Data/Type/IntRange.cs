@@ -3,6 +3,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Specifies a valid range between a lower and upper float value limit.
@@ -55,6 +56,24 @@
         {
             minimum = (int)range.x;
             maximum = (int)range.y;
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            string[] titles = new string[]
+            {
+                "minimum",
+                "maximum"
+            };
+
+            object[] values = new object[]
+            {
+                minimum,
+                maximum
+            };
+
+            return StringExtensions.FormatForToString(titles, values);
         }
 
         /// <summary>

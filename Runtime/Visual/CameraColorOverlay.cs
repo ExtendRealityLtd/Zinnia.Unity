@@ -40,6 +40,22 @@
                 return this;
             }
 
+            /// <inheritdoc />
+            public override string ToString()
+            {
+                string[] titles = new string[]
+                {
+                "Color"
+                };
+
+                object[] values = new object[]
+                {
+                Color
+                };
+
+                return StringExtensions.FormatForToString(titles, values);
+            }
+
             public void Clear()
             {
                 Set(default(Color));

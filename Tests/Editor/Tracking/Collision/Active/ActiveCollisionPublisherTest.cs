@@ -122,6 +122,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             Assert.IsTrue(oneConsumer.received);
             Assert.IsTrue(twoConsumer.received);
+            Assert.AreEqual("{ SourceContainer = [null] | PublisherContainer = New Game Object (UnityEngine.GameObject) }", subject.Payload.ToString());
 
             Object.DestroyImmediate(oneContainer);
             Object.DestroyImmediate(twoContainer);

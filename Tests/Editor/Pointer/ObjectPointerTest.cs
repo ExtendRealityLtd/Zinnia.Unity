@@ -234,6 +234,7 @@ namespace Test.Zinnia.Pointer
             Assert.AreEqual(subject.transform, subject.HoverTarget.Transform);
             Assert.AreEqual(blocker, subject.HoverTarget.CollisionData.transform.gameObject);
             Assert.AreEqual(blocker, subject.SelectedTarget.CollisionData.transform.gameObject);
+            Assert.AreEqual("{ Transform = containingObject (UnityEngine.Transform) | UseLocalValues = False | PositionOverride = (0.0, 0.0, 0.0) | RotationOverride = (0.0, 0.0, 0.0, 1.0) | ScaleOverride = (1.0, 1.0, 1.0) | Origin = (0.0, 0.0, 0.0) | Direction = (0.0, 0.0, 1.0) | CollisionData = { barycentricCoordinate = (1.0, 0.0, 0.0) | Collider = Cube (UnityEngine.BoxCollider) | Distance = 4.5 | Lightmap Coord = (0.0, 0.0) | Normal = (0.0, 0.0, -1.0) | Point = (0.0, 0.0, 4.5) | Rigidbody = [null] | Texture Coord = (0.0, 0.0) | Texture Coord2 = (0.0, 0.0) | Transform = Cube (UnityEngine.Transform) | Triangle Index = -1 } | IsCurrentlyActive = True | IsCurrentlyHovering = True | CurrentHoverDuration = " + subject.SelectedTarget.CurrentHoverDuration + " | CurrentPointsCastData = { HitData = { barycentricCoordinate = (1.0, 0.0, 0.0) | Collider = Cube (UnityEngine.BoxCollider) | Distance = 4.5 | Lightmap Coord = (0.0, 0.0) | Normal = (0.0, 0.0, -1.0) | Point = (0.0, 0.0, 4.5) | Rigidbody = [null] | Texture Coord = (0.0, 0.0) | Texture Coord2 = (0.0, 0.0) | Transform = Cube (UnityEngine.Transform) | Triangle Index = -1 } | IsValid = True } }", subject.SelectedTarget.ToString());
 
             Object.DestroyImmediate(blocker);
         }
@@ -1004,6 +1005,11 @@ namespace Test.Zinnia.Pointer
 
     public class ObjectPointerMock : ObjectPointer
     {
+        public EventData GetEventData()
+        {
+            return eventData;
+        }
+
         public void ManualOnEnable()
         {
             enabled = true;

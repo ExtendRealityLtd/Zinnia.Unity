@@ -3,7 +3,6 @@
     using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
-    using UnityEditor;
     using UnityEngine.Events;
 
     /// <summary>

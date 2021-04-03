@@ -85,6 +85,26 @@
             return base.GetHashCode();
         }
 
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            string[] titles = new string[]
+            {
+                "Origin",
+                "Direction",
+                "CollisionData"
+            };
+
+            object[] values = new object[]
+            {
+                Origin,
+                Direction,
+                CollisionData.ToFormattedString()
+            };
+
+            return StringExtensions.FormatForToString(titles, values, base.ToString());
+        }
+
         /// <summary>
         /// Checks to see if the given <see cref="SurfaceData"/> is equal to <see cref="this"/>.
         /// </summary>

@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Holds a <see cref="ActiveCollisionConsumer"/> collection of consumers that have successfully been published to by a <see cref="ActiveCollisionPublisher"/>.
@@ -44,6 +45,24 @@
                 Consumer = consumer;
                 Payload = payload;
                 return this;
+            }
+
+            /// <inheritdoc />
+            public override string ToString()
+            {
+                string[] titles = new string[]
+                {
+                "Consumer",
+                "Payload"
+                };
+
+                object[] values = new object[]
+                {
+                Consumer,
+                Payload
+                };
+
+                return StringExtensions.FormatForToString(titles, values);
             }
 
             public void Clear()

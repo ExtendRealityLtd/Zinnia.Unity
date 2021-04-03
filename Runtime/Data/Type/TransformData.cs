@@ -4,6 +4,7 @@
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Holds <see cref="UnityEngine.Transform"/> information with the ability to override properties without affecting the scene <see cref="UnityEngine.Transform"/>.
@@ -98,6 +99,30 @@
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            string[] titles = new string[]
+{
+                "Transform",
+                "UseLocalValues",
+                "PositionOverride",
+                "RotationOverride",
+                "ScaleOverride"
+};
+
+            object[] values = new object[]
+            {
+                Transform,
+                UseLocalValues,
+                PositionOverride,
+                RotationOverride,
+                ScaleOverride
+            };
+
+            return StringExtensions.FormatForToString(titles, values);
         }
 
         /// <summary>

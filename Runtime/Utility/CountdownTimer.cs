@@ -32,7 +32,7 @@
         [DocumentedByXml]
         public UnityEvent Started = new UnityEvent();
         /// <summary>
-        /// Emitted when the countdown is cancelled.
+        /// Emitted when the countdown is canceled.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent Cancelled = new UnityEvent();

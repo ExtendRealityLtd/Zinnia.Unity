@@ -57,6 +57,31 @@
                 return this;
             }
 
+            /// <inheritdoc />
+            public override string ToString()
+            {
+                if (HitData == null)
+                {
+                    return "";
+                }
+
+                RaycastHit rayData = (RaycastHit)HitData;
+
+                string[] titles = new string[]
+                {
+                "HitData",
+                "IsValid"
+                };
+
+                object[] values = new object[]
+                {
+                rayData.ToFormattedString(),
+                IsValid
+                };
+
+                return StringExtensions.FormatForToString(titles, values);
+            }
+
             public void Clear()
             {
                 Set(default, default, default);

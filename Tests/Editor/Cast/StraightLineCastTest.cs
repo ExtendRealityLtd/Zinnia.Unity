@@ -57,6 +57,7 @@ namespace Test.Zinnia.Cast
             Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
             Assert.IsTrue(subject.IsTargetHitValid);
             Assert.IsTrue(castResultsChangedMock.Received);
+            Assert.AreEqual("{ HitData = { barycentricCoordinate = (1.0, 0.0, 0.0) | Collider = Cube (UnityEngine.BoxCollider) | Distance = 4.5 | Lightmap Coord = (0.0, 0.0) | Normal = (0.0, 0.0, -1.0) | Point = (0.0, 0.0, 4.5) | Rigidbody = [null] | Texture Coord = (0.0, 0.0) | Texture Coord2 = (0.0, 0.0) | Transform = Cube (UnityEngine.Transform) | Triangle Index = -1 } | IsValid = True }", subject.GetEventData().ToString());
         }
 
         [Test]
@@ -202,6 +203,11 @@ namespace Test.Zinnia.Cast
 
     public class StraightLineCastMock : StraightLineCast
     {
+        public EventData GetEventData()
+        {
+            return eventData;
+        }
+
         public void ManualOnEnable()
         {
             OnEnable();
