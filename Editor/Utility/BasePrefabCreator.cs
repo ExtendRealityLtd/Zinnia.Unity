@@ -5,9 +5,10 @@ namespace Zinnia.Utility
 
     public abstract class BasePrefabCreator : ScriptableObject
     {
-        protected const string topLevelMenuLocation = "Window/";
+        protected const string topLevelMenuLocation = "GameObject/";
         protected const string subLevelMenuLocation = "Prefabs/";
         protected const string packageRoot = "Packages";
+        protected const int priority = 49;
 
         protected static void CreatePrefab(string assetPath)
         {
