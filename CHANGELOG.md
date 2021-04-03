@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.34.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.34.0...v1.34.1) (2021-04-03)
+
+#### Bug Fixes
+
+* **Utility:** move prefab creator menu location ([34e00d3](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/34e00d30a4450eede124d48f76f4ce12887e7ac8))
+  > The Prefab Creator has now been moved to the `GameObject` main menu so it can also show up in the right click context menu for adding new items to the hierarchy.
+
 ## [1.34.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.33.0...v1.34.0) (2021-04-03)
 
 #### Features
