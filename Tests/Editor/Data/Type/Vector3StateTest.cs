@@ -85,5 +85,12 @@ namespace Test.Zinnia.Data.Type
             Assert.AreNotEqual(stateA, stateC);
             Assert.AreNotEqual(stateB, stateC);
         }
+
+        [Test]
+        public void ConvertToString()
+        {
+            Vector3State rangeA = new Vector3State(true, false, true);
+            Assert.AreEqual("{ xState = True | yState = False | zState = True }", rangeA.ToString());
+        }
     }
 }

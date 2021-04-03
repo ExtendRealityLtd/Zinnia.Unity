@@ -32,42 +32,42 @@
         }
 
         /// <summary>
-        /// Defines the source location that the raycast will originate from towards the <see cref="Target"/> location.
+        /// Defines the source location that the RayCast will originate from towards the <see cref="Target"/> location.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
-        /// Defines the target location that the raycast will attain to reach from the originating <see cref="Source"/> location.
+        /// Defines the target location that the RayCast will attain to reach from the originating <see cref="Source"/> location.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
-        /// Optional settings to use when doing the raycast.
+        /// Optional settings to use when doing the RayCast.
         /// </summary>
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public PhysicsCast PhysicsCast { get; set; }
 
         /// <summary>
-        /// Emitted when the raycast from <see cref="Source"/> to <see cref="Target"/> is obscured by another <see cref="Collider"/>.
+        /// Emitted when the RayCast from <see cref="Source"/> to <see cref="Target"/> is obscured by another <see cref="Collider"/>.
         /// </summary>
         [DocumentedByXml]
         public HitEvent TargetObscured = new HitEvent();
         /// <summary>
-        /// Emitted when the raycast from <see cref="Source"/> is reaching <see cref="Target"/> and is not obscured by another <see cref="Collider"/>.
+        /// Emitted when the RayCast from <see cref="Source"/> is reaching <see cref="Target"/> and is not obscured by another <see cref="Collider"/>.
         /// </summary>
         [DocumentedByXml]
         public UnityEvent TargetUnobscured = new UnityEvent();
 
         /// <summary>
-        /// Whether the raycast from <see cref="Source"/> to <see cref="Target"/> was previously obscured by another <see cref="Collider"/>.
+        /// Whether the RayCast from <see cref="Source"/> to <see cref="Target"/> was previously obscured by another <see cref="Collider"/>.
         /// </summary>
         protected bool? wasPreviouslyObscured;
 
         /// <summary>
-        /// Casts a ray from the <see cref="Source"/> origin location towards the <see cref="Target"/> destination location and determines whether the raycast is blocked by another <see cref="Collider"/>.
+        /// Casts a ray from the <see cref="Source"/> origin location towards the <see cref="Target"/> destination location and determines whether the RayCast is blocked by another <see cref="Collider"/>.
         /// </summary>
         public virtual void Process()
         {

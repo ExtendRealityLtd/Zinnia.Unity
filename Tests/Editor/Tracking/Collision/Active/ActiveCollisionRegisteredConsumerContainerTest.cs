@@ -12,13 +12,13 @@ namespace Test.Zinnia.Tracking.Collision.Active
     public class ActiveCollisionRegisteredConsumerContainerTest
     {
         private GameObject containingObject;
-        private ActiveCollisionRegisteredConsumerContainer subject;
+        private ActiveCollisionRegisteredConsumerContainerExtendedMock subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<ActiveCollisionRegisteredConsumerContainer>();
+            subject = containingObject.AddComponent<ActiveCollisionRegisteredConsumerContainerExtendedMock>();
         }
 
         [TearDown]
@@ -67,6 +67,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Assert.IsTrue(publishedMock.Received);
             Assert.IsTrue(oneConsumer.received);
             Assert.IsTrue(twoConsumer.received);
+            Assert.AreEqual("{ Consumer = New Game Object (Test.Zinnia.Tracking.Collision.Active.ActiveCollisionConsumerMock) | Payload = [null] }", subject.GetEventData().ToString());
         }
 
         [Test]
@@ -330,6 +331,14 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             Assert.IsFalse(publishedMock.Received);
             Assert.IsFalse(oneConsumer.received);
+        }
+
+        private class ActiveCollisionRegisteredConsumerContainerExtendedMock : ActiveCollisionRegisteredConsumerContainer
+        {
+            public EventData GetEventData()
+            {
+                return eventData;
+            }
         }
     }
 }

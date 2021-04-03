@@ -68,6 +68,28 @@
             }
 
             /// <inheritdoc />
+            public override string ToString()
+            {
+                string[] titles = new string[]
+                {
+                "ForwardSource",
+                "IsTrigger",
+                "CollisionData",
+                "ColliderData"
+                };
+
+                object[] values = new object[]
+                {
+                ForwardSource,
+                IsTrigger,
+                CollisionData,
+                ColliderData
+                };
+
+                return StringExtensions.FormatForToString(titles, values);
+            }
+
+            /// <inheritdoc />
             public bool Equals(EventData other)
             {
                 if (ReferenceEquals(null, other))

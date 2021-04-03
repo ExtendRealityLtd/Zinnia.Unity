@@ -46,6 +46,24 @@
                 return this;
             }
 
+            /// <inheritdoc />
+            public override string ToString()
+            {
+                string[] titles = new string[]
+                {
+                "Publisher",
+                "CurrentCollision"
+                };
+
+                object[] values = new object[]
+                {
+                Publisher,
+                CurrentCollision
+                };
+
+                return StringExtensions.FormatForToString(titles, values);
+            }
+
             public void Clear()
             {
                 Set(default, default);

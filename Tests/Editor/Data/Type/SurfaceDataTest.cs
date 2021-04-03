@@ -63,6 +63,8 @@ namespace Test.Zinnia.Data.Type
             Assert.AreEqual(bottom.transform, surfaceData.CollisionData.transform);
             Assert.AreEqual(front.transform, surfaceData.PreviousCollisionData.transform);
 
+            Assert.AreEqual("{ Transform = [null] | UseLocalValues = False | PositionOverride = [null] | RotationOverride = [null] | ScaleOverride = [null] | Origin = (0.0, 0.0, 0.0) | Direction = (0.0, -1.0, 0.0) | CollisionData = { barycentricCoordinate = (1.0, 0.0, 0.0) | Collider = Cube (UnityEngine.BoxCollider) | Distance = 4.5 | Lightmap Coord = (0.0, 0.0) | Normal = (0.0, 1.0, 0.0) | Point = (0.0, -4.5, 0.0) | Rigidbody = [null] | Texture Coord = (0.0, 0.0) | Texture Coord2 = (0.0, 0.0) | Transform = Cube (UnityEngine.Transform) | Triangle Index = -1 } }", surfaceData.ToString());
+
             Object.DestroyImmediate(front);
             Object.DestroyImmediate(bottom);
             Physics.autoSimulation = true;

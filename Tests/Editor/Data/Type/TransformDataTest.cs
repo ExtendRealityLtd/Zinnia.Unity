@@ -106,5 +106,20 @@ namespace Test.Zinnia.Data.Type
 
             Object.DestroyImmediate(subject.gameObject);
         }
+
+        [Test]
+        public void ConvertToString()
+        {
+            Transform defaultTransform = new GameObject().transform;
+            TransformData transformData = new TransformData(defaultTransform);
+
+            transformData.PositionOverride = Vector3.one * 2;
+            transformData.RotationOverride = new Quaternion(3f, 2f, 1f, 0f);
+            transformData.ScaleOverride = Vector3.one * 2;
+
+            Assert.AreEqual("{ Transform = New Game Object (UnityEngine.Transform) | UseLocalValues = False | PositionOverride = (2.0, 2.0, 2.0) | RotationOverride = (3.0, 2.0, 1.0, 0.0) | ScaleOverride = (2.0, 2.0, 2.0) }", transformData.ToString());
+
+            Object.DestroyImmediate(defaultTransform.gameObject);
+        }
     }
 }

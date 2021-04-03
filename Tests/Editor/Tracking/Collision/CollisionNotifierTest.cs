@@ -50,6 +50,8 @@ namespace Test.Zinnia.Tracking.Collision
             Assert.IsTrue(linkedCollisionStartedListenerMock.Received);
             Assert.IsFalse(unlinkedCollisionStartedListenerMock.Received);
 
+            Assert.AreEqual("{ ForwardSource = New Game Object (Test.Zinnia.Tracking.Collision.CollisionNotifierTest/CollisionNotifierMock) | IsTrigger = False | CollisionData = [null] | ColliderData = Cube (UnityEngine.BoxCollider) }", subject.GetEventData().ToString());
+
             Object.DestroyImmediate(linkedContainer);
             Object.DestroyImmediate(unlinkedContainer);
         }
@@ -360,6 +362,11 @@ namespace Test.Zinnia.Tracking.Collision
 
         public class CollisionNotifierMock : CollisionNotifier
         {
+            public EventData GetEventData()
+            {
+                return eventData;
+            }
+
             public virtual void CollisionStartedMock(Collider collider)
             {
                 OnCollisionStarted(eventData.Set(this, false, null, collider));

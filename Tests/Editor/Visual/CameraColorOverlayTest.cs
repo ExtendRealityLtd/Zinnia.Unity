@@ -10,13 +10,13 @@ namespace Test.Zinnia.Visual
     public class CameraColorOverlayTest
     {
         private GameObject containingObject;
-        private CameraColorOverlay subject;
+        private CameraColorOverlayMock subject;
 
         [SetUp]
         public void SetUp()
         {
             containingObject = new GameObject();
-            subject = containingObject.AddComponent<CameraColorOverlay>();
+            subject = containingObject.AddComponent<CameraColorOverlayMock>();
         }
 
         [TearDown]
@@ -47,6 +47,7 @@ namespace Test.Zinnia.Visual
             subject.AddColorOverlay();
 
             Assert.IsTrue(colorOverlayAddedMock.Received);
+            Assert.AreEqual("{ Color = RGBA(1.000, 0.000, 0.000, 1.000) }", subject.GetEventData().ToString());
         }
 
         [Test]
@@ -83,6 +84,14 @@ namespace Test.Zinnia.Visual
             subject.AddColorOverlay();
 
             Assert.IsFalse(colorOverlayAddedMock.Received);
+        }
+
+        private class CameraColorOverlayMock : CameraColorOverlay
+        {
+            public EventData GetEventData()
+            {
+                return eventData;
+            }
         }
     }
 }

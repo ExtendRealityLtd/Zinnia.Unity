@@ -104,5 +104,12 @@ namespace Test.Zinnia.Data.Type
             Assert.AreNotEqual(rangeA, rangeC);
             Assert.AreNotEqual(rangeB, rangeC);
         }
+
+        [Test]
+        public void ConvertToString()
+        {
+            FloatRange rangeA = new FloatRange(1f, 1f);
+            Assert.AreEqual("{ minimum = 1 | maximum = 1 }", rangeA.ToString());
+        }
     }
 }

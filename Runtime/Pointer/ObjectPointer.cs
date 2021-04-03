@@ -66,6 +66,28 @@
                 return this;
             }
 
+            /// <inheritdoc />
+            public override string ToString()
+            {
+                string[] titles = new string[]
+                {
+                "IsCurrentlyActive",
+                "IsCurrentlyHovering",
+                "CurrentHoverDuration",
+                "CurrentPointsCastData"
+                };
+
+                object[] values = new object[]
+                {
+                IsCurrentlyActive,
+                IsCurrentlyHovering,
+                CurrentHoverDuration,
+                CurrentPointsCastData
+                };
+
+                return StringExtensions.FormatForToString(titles, values, base.ToString());
+            }
+
             public override void Clear()
             {
                 base.Clear();
