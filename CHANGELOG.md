@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.34.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.33.0...v1.34.0) (2021-04-03)
+
+#### Features
+
+* **string:** provide ToString overrides for data types ([5ae1ae0](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/5ae1ae0b3c98a2db04ccb62fb85815ef3edf7a09))
+  > Many of the data types now have a `ToString` override to write out the data in a clear format from data types. This makes it easier to debug what is going in with the data by being able to call `ToString` on these custom types.
+* **Utility:** add base for prefab creator ([5d96bd9](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/5d96bd997e225a8c9091b20f041481c83ffadb7d))
+  > The abstract BasePrefabCreator forms a basis to allow prefabs to be easily added to the scene via a Unity window menu option.
+
+#### Bug Fixes
+
+* **Event:** remove unwanted reference to UnityEditor ([39a08fb](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/39a08fb172a5fc32322a0f556d5f1d00272cb9fd))
+  > The SingleEventProxyEmitter should not be using UnityEditor as it doesn't need it and it can cause issues including namespaces from the editor classes in build required classes.
+
 ## [1.33.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.32.0...v1.33.0) (2021-03-29)
 
 #### Features
