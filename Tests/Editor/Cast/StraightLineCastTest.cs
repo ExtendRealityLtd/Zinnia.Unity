@@ -1,6 +1,5 @@
 ﻿using Zinnia.Cast;
 using Zinnia.Data.Collection.List;
-using Zinnia.Extension;
 using Zinnia.Rule;
 
 namespace Test.Zinnia.Cast
