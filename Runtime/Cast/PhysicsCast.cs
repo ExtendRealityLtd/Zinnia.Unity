@@ -1,24 +1,17 @@
 ﻿namespace Zinnia.Cast
 {
+    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
+    using Zinnia.Cast.Operation.Conversion;
 
     /// <summary>
     /// Allows customizing of Unity Physics casting within other scripts by applying settings at edit time.
     /// </summary>
     public class PhysicsCast : MonoBehaviour
     {
-        /// <summary>
-        /// A reusable array of <see cref="RaycastHit"/>s to use with non-allocating <see cref="Physics"/> API.
-        /// </summary>
-        protected static readonly RaycastHit[] Hits = new RaycastHit[1000];
-        /// <summary>
-        /// A reusable array of <see cref="Collider"/>s to use with non-allocating <see cref="Physics"/> API.
-        /// </summary>
-        protected static readonly Collider[] Colliders = new Collider[1000];
-
         /// <summary>
         /// The layers to ignore when casting.
         /// </summary>
@@ -31,6 +24,21 @@
         [Serialized]
         [field: DocumentedByXml]
         public QueryTriggerInteraction TriggerInteraction { get; set; } = QueryTriggerInteraction.UseGlobal;
+        /// <summary>
+        /// Allows for the conversion of one cast type to another cast type.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public CastConverter ConvertTo { get; set; }
+
+        /// <summary>
+        /// A reusable array of <see cref="RaycastHit"/>s to use with non-allocating <see cref="Physics"/> API.
+        /// </summary>
+        protected static readonly RaycastHit[] Hits = new RaycastHit[1000];
+        /// <summary>
+        /// A reusable array of <see cref="Collider"/>s to use with non-allocating <see cref="Physics"/> API.
+        /// </summary>
+        protected static readonly Collider[] Colliders = new Collider[1000];
 
         /// <summary>
         /// Generates a Raycast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.Raycast(Ray,out RaycastHit,float,int,QueryTriggerInteraction)"/>.
@@ -274,9 +282,15 @@
         /// <param name="ray">The <see cref="Ray"/> to cast with.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
         /// <param name="length">The maximum length of the <see cref="Ray"/>.</param>
-        /// <returns>Whether the raycast successfully collides with a valid <see cref="GameObject"/>.</returns>
-        public virtual bool CustomRaycast(Ray ray, out RaycastHit hitData, float length)
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
+        /// <returns>Whether the Raycast successfully collides with a valid <see cref="GameObject"/>.</returns>
+        public virtual bool CustomRaycast(Ray ray, out RaycastHit hitData, float length, bool applyConversion = true)
         {
+            if (applyConversion && ConvertTo != null)
+            {
+                return ConvertTo.ConvertFromRaycast(this, out hitData, ray, length);
+            }
+
             return Physics.Raycast(ray, out hitData, length, ~LayersToIgnore, TriggerInteraction);
         }
 
@@ -285,9 +299,15 @@
         /// </summary>
         /// <param name="ray">The <see cref="Ray"/> to cast with.</param>
         /// <param name="length">The maximum length of the <see cref="Ray"/>.</param>
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public virtual ArraySegment<RaycastHit> CustomRaycastAll(Ray ray, float length)
+        public virtual ArraySegment<RaycastHit> CustomRaycastAll(Ray ray, float length, bool applyConversion = true)
         {
+            if (applyConversion && ConvertTo != null)
+            {
+                return ConvertTo.ConvertFromRaycastAll(this, ray, length);
+            }
+
             int count = Physics.RaycastNonAlloc(ray, Hits, length, ~LayersToIgnore, TriggerInteraction);
             return new ArraySegment<RaycastHit>(Hits, 0, count);
         }
@@ -295,39 +315,57 @@
         /// <summary>
         /// Generates a <see cref="Physics.Linecast(Vector3,Vector3,out RaycastHit,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="startPosition">The world position to start the linecast from.</param>
-        /// <param name="endPosition">The world position to end the linecast at.</param>
+        /// <param name="startPosition">The world position to start the Linecast from.</param>
+        /// <param name="endPosition">The world position to end the Linecast at.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
-        /// <returns>Whether the linecast successfully collides with a valid <see cref="GameObject"/>.</returns>
-        public virtual bool CustomLinecast(Vector3 startPosition, Vector3 endPosition, out RaycastHit hitData)
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
+        /// <returns>Whether the Linecast successfully collides with a valid <see cref="GameObject"/>.</returns>
+        public virtual bool CustomLinecast(Vector3 startPosition, Vector3 endPosition, out RaycastHit hitData, bool applyConversion = true)
         {
+            if (applyConversion && ConvertTo != null)
+            {
+                return ConvertTo.ConvertFromLinecast(this, out hitData, startPosition, endPosition);
+            }
+
             return Physics.Linecast(startPosition, endPosition, out hitData, ~LayersToIgnore, TriggerInteraction);
         }
 
         /// <summary>
         /// Generates a <see cref="Physics.SphereCast(Vector3,float,Vector3,out RaycastHit,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="origin">The origin point of the spherecast.</param>
-        /// <param name="radius">The radius of the spherecast.</param>
-        /// <param name="direction">The direction into which to sweep the spherecast.</param>
+        /// <param name="origin">The origin point of the SphereCast.</param>
+        /// <param name="radius">The radius of the SphereCast.</param>
+        /// <param name="direction">The direction into which to sweep the SphereCast.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
-        /// <returns>Whether the spherecast successfully collides with a valid <see cref="GameObject"/>.</returns>
-        public virtual bool CustomSphereCast(Vector3 origin, float radius, Vector3 direction, out RaycastHit hitData, float maxDistance)
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
+        /// <returns>Whether the SphereCast successfully collides with a valid <see cref="GameObject"/>.</returns>
+        public virtual bool CustomSphereCast(Vector3 origin, float radius, Vector3 direction, out RaycastHit hitData, float maxDistance, bool applyConversion = true)
         {
+            if (applyConversion && ConvertTo != null)
+            {
+                return ConvertTo.ConvertFromSphereCast(this, out hitData, origin, radius, direction, maxDistance);
+            }
+
             return Physics.SphereCast(origin, radius, direction, out hitData, maxDistance, ~LayersToIgnore, TriggerInteraction);
         }
 
         /// <summary>
         /// Generates a <see cref="Physics.SphereCastAll(Vector3,float,Vector3,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="origin">The origin point of the spherecast.</param>
-        /// <param name="radius">The radius of the spherecast.</param>
-        /// <param name="direction">The direction into which to sweep the spherecast.</param>
+        /// <param name="origin">The origin point of the SphereCast.</param>
+        /// <param name="radius">The radius of the SphereCast.</param>
+        /// <param name="direction">The direction into which to sweep the SphereCast.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public virtual ArraySegment<RaycastHit> CustomSphereCastAll(Vector3 origin, float radius, Vector3 direction, float maxDistance)
+        public virtual ArraySegment<RaycastHit> CustomSphereCastAll(Vector3 origin, float radius, Vector3 direction, float maxDistance, bool applyConversion = true)
         {
+            if (applyConversion && ConvertTo != null)
+            {
+                return ConvertTo.ConvertFromSphereCastAll(this, origin, radius, direction, maxDistance);
+            }
+
             int count = Physics.SphereCastNonAlloc(origin, radius, direction, Hits, maxDistance, ~LayersToIgnore, TriggerInteraction);
             return new ArraySegment<RaycastHit>(Hits, 0, count);
         }
@@ -337,8 +375,9 @@
         /// </summary>
         /// <param name="center">The center of the sphere.</param>
         /// <param name="radius">The radius of the sphere.</param>
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
         /// <returns>The colliders touching or inside the sphere.</returns>
-        public virtual ArraySegment<Collider> CustomOverlapSphereAll(Vector3 center, float radius)
+        public virtual ArraySegment<Collider> CustomOverlapSphereAll(Vector3 center, float radius, bool applyConversion = true)
         {
             int count = Physics.OverlapSphereNonAlloc(center, radius, Colliders, ~LayersToIgnore, TriggerInteraction);
             return new ArraySegment<Collider>(Colliders, 0, count);
@@ -347,29 +386,41 @@
         /// <summary>
         /// Generates a <see cref="Physics.CapsuleCast(Vector3,Vector3,float,Vector3,out RaycastHit,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="point1">The center of the sphere at the start of the capsulecast.</param>
-        /// <param name="point2">The center of the sphere at the end of the capsulecast.</param>
-        /// <param name="radius">The radius of the capsulecast.</param>
-        /// <param name="direction">The direction into which to sweep the capsulecast.</param>
+        /// <param name="point1">The center of the sphere at the start of the CapsuleCast.</param>
+        /// <param name="point2">The center of the sphere at the end of the CapsuleCast.</param>
+        /// <param name="radius">The radius of the CapsuleCast.</param>
+        /// <param name="direction">The direction into which to sweep the CapsuleCast.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
-        /// <returns>Whether the capsulecast successfully collides with a valid <see cref="GameObject"/>.</returns>
-        public virtual bool CustomCapsuleCast(Vector3 point1, Vector3 point2, float radius, Vector3 direction, out RaycastHit hitData, float maxDistance)
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
+        /// <returns>Whether the CapsuleCast successfully collides with a valid <see cref="GameObject"/>.</returns>
+        public virtual bool CustomCapsuleCast(Vector3 point1, Vector3 point2, float radius, Vector3 direction, out RaycastHit hitData, float maxDistance, bool applyConversion = true)
         {
+            if (applyConversion && ConvertTo != null)
+            {
+                return ConvertTo.ConvertFromCapsuleCast(this, out hitData, point1, point2, radius, direction, maxDistance);
+            }
+
             return Physics.CapsuleCast(point1, point2, radius, direction, out hitData, maxDistance, ~LayersToIgnore, TriggerInteraction);
         }
 
         /// <summary>
         /// Generates a <see cref="Physics.CapsuleCastAll(Vector3,Vector3,float,Vector3,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="point1">The center of the sphere at the start of the capsulecast.</param>
-        /// <param name="point2">The center of the sphere at the end of the capsulecast.</param>
-        /// <param name="radius">The radius of the capsulecast.</param>
-        /// <param name="direction">The direction into which to sweep the capsulecast.</param>
+        /// <param name="point1">The center of the sphere at the start of the CapsuleCast.</param>
+        /// <param name="point2">The center of the sphere at the end of the CapsuleCast.</param>
+        /// <param name="radius">The radius of the CapsuleCast.</param>
+        /// <param name="direction">The direction into which to sweep the CapsuleCast.</param>
         /// <param name="maxDistance">The max length of the sweep.</param>
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public virtual ArraySegment<RaycastHit> CustomCapsuleCastAll(Vector3 point1, Vector3 point2, float radius, Vector3 direction, float maxDistance)
+        public virtual ArraySegment<RaycastHit> CustomCapsuleCastAll(Vector3 point1, Vector3 point2, float radius, Vector3 direction, float maxDistance, bool applyConversion = true)
         {
+            if (applyConversion && ConvertTo != null)
+            {
+                return ConvertTo.ConvertFromCapsuleCastAll(this, point1, point2, radius, direction, maxDistance);
+            }
+
             int count = Physics.CapsuleCastNonAlloc(point1, point2, radius, direction, Hits, maxDistance, ~LayersToIgnore, TriggerInteraction);
             return new ArraySegment<RaycastHit>(Hits, 0, count);
         }
@@ -377,29 +428,41 @@
         /// <summary>
         /// Generates a <see cref="Physics.BoxCast(Vector3,Vector3,Vector3,out RaycastHit,Quaternion,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="center">The center of the boxcast.</param>
-        /// <param name="halfExtents">Half the size of the boxcast in each dimension.</param>
-        /// <param name="direction">The direction in which to cast the boxcast.</param>
+        /// <param name="center">The center of the BoxCast.</param>
+        /// <param name="halfExtents">Half the size of the BoxCast in each dimension.</param>
+        /// <param name="direction">The direction in which to cast the BoxCast.</param>
         /// <param name="hitData">The <see cref="RaycastHit"/> data.</param>
-        /// <param name="orientation">The rotation of the boxcast.</param>
-        /// <param name="maxDistance">The max length of the boxcast.</param>
-        /// <returns>Whether the boxcast successfully collides with a valid <see cref="GameObject"/>.</returns>
-        public virtual bool CustomBoxCast(Vector3 center, Vector3 halfExtents, Vector3 direction, out RaycastHit hitData, Quaternion orientation, float maxDistance)
+        /// <param name="orientation">The rotation of the BoxCast.</param>
+        /// <param name="maxDistance">The max length of the BoxCast.</param>
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
+        /// <returns>Whether the BoxCast successfully collides with a valid <see cref="GameObject"/>.</returns>
+        public virtual bool CustomBoxCast(Vector3 center, Vector3 halfExtents, Vector3 direction, out RaycastHit hitData, Quaternion orientation, float maxDistance, bool applyConversion = true)
         {
+            if (applyConversion && ConvertTo != null)
+            {
+                return ConvertTo.ConvertFromBoxCast(this, out hitData, center, halfExtents, direction, orientation, maxDistance);
+            }
+
             return Physics.BoxCast(center, halfExtents, direction, out hitData, orientation, maxDistance, ~LayersToIgnore, TriggerInteraction);
         }
 
         /// <summary>
         /// Generates a <see cref="Physics.BoxCastAll(Vector3,Vector3,Vector3,Quaternion,float,int,QueryTriggerInteraction)"/> based on the options defined in the <see cref="PhysicsCast"/> object.
         /// </summary>
-        /// <param name="center">The center of the boxcast.</param>
-        /// <param name="halfExtents">Half the size of the boxcast in each dimension.</param>
-        /// <param name="direction">The direction in which to cast the boxcast.</param>
-        /// <param name="orientation">The rotation of the boxcast.</param>
-        /// <param name="maxDistance">The max length of the boxcast.</param>
+        /// <param name="center">The center of the BoxCast.</param>
+        /// <param name="halfExtents">Half the size of the BoxCast in each dimension.</param>
+        /// <param name="direction">The direction in which to cast the BoxCast.</param>
+        /// <param name="orientation">The rotation of the BoxCast.</param>
+        /// <param name="maxDistance">The max length of the BoxCast.</param>
+        /// <param name="applyConversion">Whether to apply cast conversion if a <see cref="CastConverter"/> is provided in the <see cref="ConvertTo"/> property.</param>
         /// <returns>A collection of collisions determined by the cast.</returns>
-        public virtual ArraySegment<RaycastHit> CustomBoxCastAll(Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance)
+        public virtual ArraySegment<RaycastHit> CustomBoxCastAll(Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance, bool applyConversion = true)
         {
+            if (applyConversion && ConvertTo != null)
+            {
+                return ConvertTo.ConvertFromBoxCastAll(this, center, halfExtents, direction, orientation, maxDistance);
+            }
+
             int count = Physics.BoxCastNonAlloc(center, halfExtents, direction, Hits, orientation, maxDistance, ~LayersToIgnore, TriggerInteraction);
             return new ArraySegment<RaycastHit>(Hits, 0, count);
         }
