@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.35.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.34.1...v1.35.0) (2021-05-03)
+
+#### Features
+
+* **Cast:** add cast converters ([802a6c5](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/802a6c5211d555e041028a3c9af37354cf9f1caa))
+  > The new cast converters allow a PhysicsCast based caster to be converted from one cast type or another.
+  > 
+  > This allows a component to do a PhysicsCast such as a raycast and then at runtime have that component's caster switched out for a different cast type like a spherecast.
+* **Cast:** add unit tests for PhysicsCast ([3c71497](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/3c7149775b0bf4527b2003ae75662debd6ac093d))
+  > The PhysicsCast class now has unit tests which check the functionality of the custom caster methods.
+
 ### [1.34.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.34.0...v1.34.1) (2021-04-03)
 
 #### Bug Fixes
