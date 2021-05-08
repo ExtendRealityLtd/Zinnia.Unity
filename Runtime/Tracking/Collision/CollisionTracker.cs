@@ -7,18 +7,34 @@
     using System.Collections.Generic;
     using UnityEngine;
     using Zinnia.Data.Attribute;
+    using Zinnia.Extension;
+    using Zinnia.Rule;
 
     /// <summary>
     /// Tracks collisions on the <see cref="GameObject"/> this component is on.
     /// </summary>
     public class CollisionTracker : CollisionNotifier
     {
+        #region Tracker Settings
         /// <summary>
         /// Causes collisions to stop if the <see cref="GameObject"/> on either side of the collision is disabled.
         /// </summary>
         [Serialized]
-        [field: DocumentedByXml, Restricted(RestrictedAttribute.Restrictions.ReadOnlyAtRunTime)]
+        [field: Header("Tracker Settings"), DocumentedByXml, Restricted(RestrictedAttribute.Restrictions.ReadOnlyAtRunTime)]
         public bool StopCollisionsOnDisable { get; protected set; } = true;
+        /// <summary>
+        /// Allows to optionally determine which colliders to allow collisions against.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer ColliderValidity { get; set; }
+        /// <summary>
+        /// Allows to optionally determine which collider containing transforms to allow collisions against.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public RuleContainer ContainingTransformValidity { get; set; }
+        #endregion
 
         /// <summary>
         /// Determines whether to apply the fix for the PhysX 4.11 issue where when a <see cref="Rigidbody"/> kinematic state is changed it force calls a <see cref="OnTriggerExit(Collider)"/> and a subsequent <see cref="OnTriggerExit(Collider)"/> for the collision even though nothing has changed with the collision.
@@ -181,6 +197,16 @@
             }
 
             OnCollisionStopped(eventData.Set(this, true, null, collider));
+        }
+
+        /// <inheritdoc />
+        protected override bool CanEmit(EventData data)
+        {
+            return base.CanEmit(data)
+                && (data.ColliderData == null
+                    ||
+                    (ColliderValidity.Accepts(data.ColliderData.gameObject)
+                    && ContainingTransformValidity.Accepts(data.ColliderData.GetContainingTransform().gameObject)));
         }
 
         /// <summary>

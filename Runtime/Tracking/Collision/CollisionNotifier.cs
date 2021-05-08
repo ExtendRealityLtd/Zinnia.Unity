@@ -173,11 +173,12 @@
             Exit = 1 << 2
         }
 
+        #region Collision Settings
         /// <summary>
         /// Whether the collisions should be processed when this component is disabled.
         /// </summary>
         [Serialized]
-        [field: DocumentedByXml]
+        [field: Header("Collision Settings"), DocumentedByXml]
         public bool ProcessCollisionsWhenDisabled { get; set; } = true;
         /// <summary>
         /// The types of collisions that events will be emitted for.
@@ -197,11 +198,13 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public RuleContainer ForwardingSourceValidity { get; set; }
+        #endregion
 
+        #region Collision Events
         /// <summary>
         /// Emitted when a collision starts.
         /// </summary>
-        [DocumentedByXml]
+        [Header("Collision Events"), DocumentedByXml]
         public UnityEvent CollisionStarted = new UnityEvent();
         /// <summary>
         /// Emitted when the current collision changes.
@@ -213,6 +216,7 @@
         /// </summary>
         [DocumentedByXml]
         public UnityEvent CollisionStopped = new UnityEvent();
+        #endregion
 
         /// <summary>
         /// A reused instance to use when raising any of the events.
