@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.36.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.35.0...v1.36.0) (2021-05-09)
+
+#### Features
+
+* **Tracking:** add collider validity rule to collision tracker ([e05bbcf](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/e05bbcf4328979ff3d975bb7b31850fdaa5b4157))
+  > The CollisionTracker component now has a Collider Validity rule to determine whether it can emit collisions of the collider that is being collided with passes the validity rule check.
+  > 
+  > Headers have been added to the properties for better separation in the Unity editor.
+
 ## [1.35.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.34.1...v1.35.0) (2021-05-03)
 
 #### Features
