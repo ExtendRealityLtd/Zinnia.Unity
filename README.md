@@ -115,7 +115,7 @@ Code released under the [MIT License][License].
 
 These materials are not sponsored by or affiliated with Unity Technologies or its affiliates. "Unity" is a trademark or registered trademark of Unity Technologies or its affiliates in the U.S. and elsewhere.
 
-[Zinnia-Image]: https://user-images.githubusercontent.com/1029673/51488711-2ab42c80-1d9e-11e9-94c9-767e804157e7.png
+[Zinnia-Image]: https://raw.githubusercontent.com/ExtendRealityLtd/related-media/main/github/readme/zinnia.png
 [Version-Release]: https://img.shields.io/github/release/ExtendRealityLtd/Zinnia.Unity.svg
 [License-Badge]: https://img.shields.io/github/license/ExtendRealityLtd/Zinnia.Unity.svg
 [Backlog-Badge]: https://img.shields.io/badge/project-backlog-78bdf2.svg
