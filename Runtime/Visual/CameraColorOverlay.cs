@@ -8,6 +8,7 @@
     using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
+    using UnityEngine.Rendering;
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -172,6 +173,18 @@
         /// The event data to be emitted throughout the process.
         /// </summary>
         protected readonly EventData eventData = new EventData();
+        /// <summary>
+        /// A container for holding the Universal Render Pipeline fade overlay mesh.
+        /// </summary>
+        protected GameObject urpFadeOverlay;
+        /// <summary>
+        /// The mesh for use with the Universal Render Pipeline fade overlay.
+        /// </summary>
+        protected MeshRenderer fadeRenderer;
+        /// <summary>
+        /// The last used camera in the fade routine.
+        /// </summary>
+        protected Camera lastUsedCamera;
 
         /// <summary>
         /// Sets the current <see cref="OverlayColor"/> and <see cref="AddDuration"/> with the given parameters and applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/>.
@@ -217,15 +230,98 @@
 
         protected virtual void OnEnable()
         {
+            lastUsedCamera = null;
             CopyMaterialOverlayToWorking();
             OnAfterCheckDelayChange();
-            Camera.onPostRender += PostRender;
+            if (GraphicsSettings.renderPipelineAsset != null)
+            {
+                CreateFadeMesh();
+#if UNITY_2019_1_OR_NEWER
+                RenderPipelineManager.beginCameraRendering += UrpPreRender;
+#endif
+            }
+            else
+            {
+                Camera.onPostRender += PostRender;
+            }
         }
 
         protected virtual void OnDisable()
         {
             CancelBlinkRoutine();
-            Camera.onPostRender -= PostRender;
+            if (GraphicsSettings.renderPipelineAsset != null)
+            {
+#if UNITY_2019_1_OR_NEWER
+                RenderPipelineManager.beginCameraRendering -= UrpPreRender;
+#endif
+                DestroyFadeMesh();
+            }
+            else
+            {
+                Camera.onPostRender -= PostRender;
+            }
+        }
+
+        /// <summary>
+        /// Creates the fade mesh used in the Universal Render Pipeline.
+        /// </summary>
+        protected virtual void CreateFadeMesh()
+        {
+            if (urpFadeOverlay != null)
+            {
+                return;
+            }
+
+            urpFadeOverlay = new GameObject("Zinnia.URPFadeOverlay." + name);
+            MeshFilter fadeMesh = urpFadeOverlay.AddComponent<MeshFilter>();
+            fadeRenderer = urpFadeOverlay.AddComponent<MeshRenderer>();
+            Mesh mesh = new Mesh();
+            fadeMesh.mesh = mesh;
+
+            Vector3[] vertices = new Vector3[4];
+
+            float width = 2f;
+            float height = 2f;
+            float depth = 1f;
+
+            vertices[0] = new Vector3(-width, -height, depth);
+            vertices[1] = new Vector3(width, -height, depth);
+            vertices[2] = new Vector3(-width, height, depth);
+            vertices[3] = new Vector3(width, height, depth);
+
+            mesh.vertices = vertices;
+
+            int[] tri = new int[6] { 0, 2, 1, 2, 3, 1 };
+
+            mesh.triangles = tri;
+
+            Vector3[] normals = new Vector3[4] { -Vector3.forward, -Vector3.forward, -Vector3.forward, -Vector3.forward };
+
+            mesh.normals = normals;
+
+            Vector2[] uv = new Vector2[4];
+
+            uv[0] = new Vector2(0, 0);
+            uv[1] = new Vector2(1, 0);
+            uv[2] = new Vector2(0, 1);
+            uv[3] = new Vector2(1, 1);
+
+            mesh.uv = uv;
+        }
+
+        /// <summary>
+        /// Destroys the fade mesh used in the Universal Render Pipeline.
+        /// </summary>
+        protected virtual void DestroyFadeMesh()
+        {
+            if (urpFadeOverlay == null)
+            {
+                return;
+            }
+
+            urpFadeOverlay.transform.SetParent(null);
+            Destroy(urpFadeOverlay);
+
         }
 
         /// <summary>
@@ -286,16 +382,10 @@
         }
 
         /// <summary>
-        /// The moment before <see cref="Camera"/> render that will apply the <see cref="Color"/> overlay.
+        /// Processes the transition of the current color to the target color.
         /// </summary>
-        /// <param name="sceneCamera">The <see cref="Camera"/> to apply onto.</param>
-        protected virtual void PostRender(Camera sceneCamera)
+        protected virtual void ProcessColorTransition()
         {
-            if (!CameraValidity.Accepts(sceneCamera))
-            {
-                return;
-            }
-
             if (currentColor != targetColor)
             {
                 if (Mathf.Abs(currentColor.a - targetColor.a) < Mathf.Abs(deltaColor.a) * Time.deltaTime)
@@ -319,11 +409,39 @@
                 RemoveTransitioned?.Invoke(eventData.Set(currentColor));
                 IsRemoveTransitioning = false;
             }
+        }
 
+        /// <summary>
+        /// Determines whether a transition should occur and sets the transition color if required.
+        /// </summary>
+        /// <returns>Whether the transition should occur.</returns>
+        protected virtual bool ShouldTransition()
+        {
             if (currentColor.a > 0f && workingMaterial != null)
             {
                 currentColor.a = (targetColor.a > currentColor.a && currentColor.a > 0.98f ? 1f : currentColor.a);
                 workingMaterial.color = currentColor;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// The moment before <see cref="Camera"/> render that will apply the <see cref="Color"/> overlay.
+        /// </summary>
+        /// <param name="sceneCamera">The <see cref="Camera"/> to apply onto.</param>
+        protected virtual void PostRender(Camera sceneCamera)
+        {
+            if (!CameraValidity.Accepts(sceneCamera))
+            {
+                return;
+            }
+
+            ProcessColorTransition();
+
+            if (ShouldTransition())
+            {
                 workingMaterial.SetPass(0);
                 GL.PushMatrix();
                 GL.LoadOrtho();
@@ -337,6 +455,35 @@
                 GL.PopMatrix();
             }
         }
+
+        /// <summary>
+        /// The Universal Render Pipeline moment before the camera render that will apply the <see cref="Color"/> overlay.
+        /// </summary>
+        /// <param name="context">The render context.</param>
+        /// <param name="sceneCamera">The <see cref="Camera"/> to apply onto.</param>
+#if UNITY_2019_1_OR_NEWER
+        protected virtual void UrpPreRender(ScriptableRenderContext context, Camera sceneCamera)
+        {
+            ProcessColorTransition();
+            if (urpFadeOverlay != null && fadeRenderer != null && ShouldTransition())
+            {
+                if (lastUsedCamera != sceneCamera)
+                {
+                    urpFadeOverlay.transform.SetParent(sceneCamera.transform);
+                    urpFadeOverlay.transform.localPosition = Vector3.forward;
+                    urpFadeOverlay.transform.localRotation = Quaternion.identity;
+                    urpFadeOverlay.transform.localScale = Vector3.one;
+                }
+                lastUsedCamera = sceneCamera;
+                fadeRenderer.material = workingMaterial;
+                fadeRenderer.enabled = true;
+            }
+            else
+            {
+                fadeRenderer.enabled = false;
+            }
+        }
+#endif
 
         /// <summary>
         /// Copies the <see cref="OverlayMaterial"/> data to the <see cref="workingMaterial"/> data.
