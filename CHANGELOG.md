@@ -1,5 +1,19 @@
 # Changelog
 
+### [1.36.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.36.0...v1.36.1) (2021-06-10)
+
+#### Bug Fixes
+
+* **Visual:** provide way of fading for universal render pipeline ([f3c4791](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/f3c4791248f3246047f35fae6c97b8ba947c8043))
+  > The CameraColorOverlay now supports the URP rendering process by drawing a quad in front of the GameObject with the current rendering camera.
+  > 
+  > It requires a particular shader to work well, which will be included in a Tilia package.
+
+#### Miscellaneous Chores
+
+* **README.md:** update title logo to related-media repo ([4cf130c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/4cf130c88eeed67441ad3437b10dac0da41c5d48))
+  > The title logo is now located on the related-media repo.
+
 ## [1.36.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.35.0...v1.36.0) (2021-05-09)
 
 #### Features
