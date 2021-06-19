@@ -53,6 +53,10 @@
         /// </summary>
         protected HashSet<Rigidbody> trackedStateChangers = new HashSet<Rigidbody>();
         /// <summary>
+        /// A collection to track which colliders have caused the Trigger Exit within the same frame count to avoid duplicate kinematic change event fixes.
+        /// </summary>
+        Dictionary<Transform, int> exitColliderTimeStamps = new Dictionary<Transform, int>();
+        /// <summary>
         /// An instruction to wait for the next FixedUpdate process in the life-cycle.
         /// </summary>
         protected WaitForFixedUpdate waitForFixedUpdateInstruction = new WaitForFixedUpdate();
@@ -115,6 +119,7 @@
 
             StopDeferredTriggerExitRoutine();
             trackedStateChangers.Clear();
+            exitColliderTimeStamps.Clear();
         }
 
         protected virtual void OnCollisionEnter(Collision collision)
@@ -157,6 +162,7 @@
 
             if (HasKinematicStateChanged(collider, true))
             {
+                exitColliderTimeStamps.Remove(collider.GetContainingTransform());
                 return;
             }
 
@@ -182,8 +188,10 @@
 
         protected virtual void OnTriggerExit(Collider collider)
         {
-            if (HasKinematicStateChanged(collider, false))
+            Transform colliderContainingTransform = collider.GetContainingTransform();
+            if (HasKinematicStateChanged(collider, false) && (!exitColliderTimeStamps.TryGetValue(colliderContainingTransform, out int colliderFrame) || colliderFrame != Time.frameCount))
             {
+                exitColliderTimeStamps[colliderContainingTransform] = Time.frameCount;
                 StopDeferredTriggerExitRoutine();
                 deferredTriggerExit = StartCoroutine(RunTriggerExitAfterNextFixedUpdate(collider));
                 return;
