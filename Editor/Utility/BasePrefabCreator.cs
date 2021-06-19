@@ -19,7 +19,7 @@ namespace Zinnia.Utility
                 return;
             }
 
-            Selection.activeObject = PrefabUtility.InstantiatePrefab(toInstantiate);
+            Selection.activeObject = PrefabUtility.InstantiatePrefab(toInstantiate, Selection.activeGameObject != null ? Selection.activeGameObject.transform : null);
         }
     }
 }
