@@ -1,5 +1,18 @@
 # Changelog
 
+### [1.36.2](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.36.1...v1.36.2) (2021-06-19)
+
+#### Bug Fixes
+
+* **Tracking:** prevent kinematic state fix firing multiple times ([e457f82](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/e457f823ddaf074ad6ba8724ff8837d089693c8f))
+  > The kinematic state change fix that was introduced to fix the PhysX change in Unity 2019.3 was causing an issue with compound colliders because the OnTriggerXXX will fire for every change in a compound collider and not just at the containing Rigidbody.
+  > 
+  > This would mean that with compound colliders it would get out of sync with the state changed check when the kinematic state changed.
+  > 
+  > This has been fixed now by checking if the given collider in the OnTriggerExit method has already been fired (on the containing Rigidbody) within the same frame, and if it has then this is most likely a compound collider causing the event so they get ignored.
+* **Utility:** ensure created prefabs are added to selected GameObject ([10143bb](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/10143bb7570c074f06b88216fa2a6afe96a63325))
+  > The prefab creator now adds the newly created prefab to the selected GameObject rather than just putting it in the root.
+
 ### [1.36.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.36.0...v1.36.1) (2021-06-10)
 
 #### Bug Fixes
