@@ -249,6 +249,84 @@
         protected bool isProcessingStopNotifierCollection;
 
         /// <summary>
+        /// Processes any collision start events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
+        /// </summary>
+        /// <param name="data">The collision data.</param>
+        public virtual void OnCollisionStarted(EventData data)
+        {
+            if (!CanProcess() || (StatesToProcess & CollisionStates.Enter) == 0 || !CanEmit(data))
+            {
+                return;
+            }
+
+            CollisionStarted?.Invoke(data);
+
+            if (isProcessingStartNotifierCollection)
+            {
+                return;
+            }
+
+            isProcessingStartNotifierCollection = true;
+            foreach (CollisionNotifier notifier in GetNotifiers(data, startCollisionNotifiers))
+            {
+                notifier.OnCollisionStarted(data);
+            }
+            isProcessingStartNotifierCollection = false;
+        }
+
+        /// <summary>
+        /// Processes any collision change events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
+        /// </summary>
+        /// <param name="data">The collision data.</param>
+        public virtual void OnCollisionChanged(EventData data)
+        {
+            if (!CanProcess() || (StatesToProcess & CollisionStates.Stay) == 0 || !CanEmit(data))
+            {
+                return;
+            }
+
+            CollisionChanged?.Invoke(data);
+
+            if (isProcessingChangeNotifierCollection)
+            {
+                return;
+            }
+
+            isProcessingChangeNotifierCollection = true;
+            foreach (CollisionNotifier notifier in GetNotifiers(data, changeCollisionNotifiers))
+            {
+                notifier.OnCollisionChanged(data);
+            }
+            isProcessingChangeNotifierCollection = false;
+        }
+
+        /// <summary>
+        /// Processes any collision stop events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
+        /// </summary>
+        /// <param name="data">The collision data.</param>
+        public virtual void OnCollisionStopped(EventData data)
+        {
+            if (!CanProcess() || (StatesToProcess & CollisionStates.Exit) == 0 || !CanEmit(data))
+            {
+                return;
+            }
+
+            CollisionStopped?.Invoke(data);
+
+            if (isProcessingStopNotifierCollection)
+            {
+                return;
+            }
+
+            isProcessingStopNotifierCollection = true;
+            foreach (CollisionNotifier notifier in GetNotifiers(data, stopCollisionNotifiers))
+            {
+                notifier.OnCollisionStopped(data);
+            }
+            isProcessingStopNotifierCollection = false;
+        }
+
+        /// <summary>
         /// Whether to process the collision check.
         /// </summary>
         /// <returns><see langword="true"/> if the collision should be processed.</returns>
@@ -294,84 +372,6 @@
             }
 
             return collisionNotifiers;
-        }
-
-        /// <summary>
-        /// Processes any collision start events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
-        /// </summary>
-        /// <param name="data">The collision data.</param>
-        protected virtual void OnCollisionStarted(EventData data)
-        {
-            if (!CanProcess() || (StatesToProcess & CollisionStates.Enter) == 0 || !CanEmit(data))
-            {
-                return;
-            }
-
-            CollisionStarted?.Invoke(data);
-
-            if (isProcessingStartNotifierCollection)
-            {
-                return;
-            }
-
-            isProcessingStartNotifierCollection = true;
-            foreach (CollisionNotifier notifier in GetNotifiers(data, startCollisionNotifiers))
-            {
-                notifier.OnCollisionStarted(data);
-            }
-            isProcessingStartNotifierCollection = false;
-        }
-
-        /// <summary>
-        /// Processes any collision change events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
-        /// </summary>
-        /// <param name="data">The collision data.</param>
-        protected virtual void OnCollisionChanged(EventData data)
-        {
-            if (!CanProcess() || (StatesToProcess & CollisionStates.Stay) == 0 || !CanEmit(data))
-            {
-                return;
-            }
-
-            CollisionChanged?.Invoke(data);
-
-            if (isProcessingChangeNotifierCollection)
-            {
-                return;
-            }
-
-            isProcessingChangeNotifierCollection = true;
-            foreach (CollisionNotifier notifier in GetNotifiers(data, changeCollisionNotifiers))
-            {
-                notifier.OnCollisionChanged(data);
-            }
-            isProcessingChangeNotifierCollection = false;
-        }
-
-        /// <summary>
-        /// Processes any collision stop events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
-        /// </summary>
-        /// <param name="data">The collision data.</param>
-        protected virtual void OnCollisionStopped(EventData data)
-        {
-            if (!CanProcess() || (StatesToProcess & CollisionStates.Exit) == 0 || !CanEmit(data))
-            {
-                return;
-            }
-
-            CollisionStopped?.Invoke(data);
-
-            if (isProcessingStopNotifierCollection)
-            {
-                return;
-            }
-
-            isProcessingStopNotifierCollection = true;
-            foreach (CollisionNotifier notifier in GetNotifiers(data, stopCollisionNotifiers))
-            {
-                notifier.OnCollisionStopped(data);
-            }
-            isProcessingStopNotifierCollection = false;
         }
     }
 }
