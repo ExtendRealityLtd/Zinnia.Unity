@@ -465,7 +465,11 @@
         protected virtual void UrpPreRender(ScriptableRenderContext context, Camera sceneCamera)
         {
             ProcessColorTransition();
-            if (urpFadeOverlay != null && fadeRenderer != null && ShouldTransition())
+            if (fadeRenderer == default)
+            {
+                return;
+            }
+            if (urpFadeOverlay != null && ShouldTransition())
             {
                 if (lastUsedCamera != sceneCamera)
                 {
