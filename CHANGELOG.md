@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.37.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.36.2...v1.37.0) (2021-06-24)
+
+#### Features
+
+* **Tracking:** publicize collision notifier collision methods ([ebdb958](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/ebdb9583393efc758811a4101b556b7712f44e79))
+  > The methods responsible for handling collision events in the CollisionNotifier have been made public so they can be called manually if need be.
+  > 
+  > This is useful if a manual collision is needed to be raised without an actual physics collision taking place to simulate collisions.
+
+#### Bug Fixes
+
+* **Visual:** prevent fade mesh getting destroyed on disable ([bed276e](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/bed276eec87acc099d5a6364729f43a6574b14cb))
+  > The movement of the mesh overlay seems to cause the component to get disabled and then re-enabled causing the mesh to not be available at some points, which means the fade doesn't work.
+  > 
+  > Instead of destroying the mesh when the component is disabled, it now just disables the renderer component and makes the destroy mesh method public so it can be manually destroyed.
+* **Visual:** prevent null exception when objects don't exist ([c3b62c6](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c3b62c6f533bfbe0d41d7a1d5212a073ab9a5c26))
+  > There was an issue with the CameraColorOverlay where the fadeRenderer would get destroyed but it was still being accessed causing a null exception. This fix just resolves that by exiting from the method early if it is null.
+  > 
+  > Co-authored-by: Borck <borck@hotmail.de>
+
 ### [1.36.2](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.36.1...v1.36.2) (2021-06-19)
 
 #### Bug Fixes
