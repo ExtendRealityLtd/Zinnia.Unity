@@ -228,6 +228,20 @@
             blinkRoutine = StartCoroutine(ResetBlink());
         }
 
+        /// <summary>
+        /// Destroys the fade mesh used in the Universal Render Pipeline. To recreate it, the component must be disabled then re-enabled.
+        /// </summary>
+        public virtual void DestroyFadeMesh()
+        {
+            if (urpFadeOverlay == null)
+            {
+                return;
+            }
+
+            urpFadeOverlay.transform.SetParent(null);
+            Destroy(urpFadeOverlay);
+        }
+
         protected virtual void OnEnable()
         {
             lastUsedCamera = null;
@@ -251,10 +265,13 @@
             CancelBlinkRoutine();
             if (GraphicsSettings.renderPipelineAsset != null)
             {
+                if (fadeRenderer != null)
+                {
+                    fadeRenderer.enabled = false;
+                }
 #if UNITY_2019_1_OR_NEWER
                 RenderPipelineManager.beginCameraRendering -= UrpPreRender;
 #endif
-                DestroyFadeMesh();
             }
             else
             {
@@ -307,21 +324,6 @@
             uv[3] = new Vector2(1, 1);
 
             mesh.uv = uv;
-        }
-
-        /// <summary>
-        /// Destroys the fade mesh used in the Universal Render Pipeline.
-        /// </summary>
-        protected virtual void DestroyFadeMesh()
-        {
-            if (urpFadeOverlay == null)
-            {
-                return;
-            }
-
-            urpFadeOverlay.transform.SetParent(null);
-            Destroy(urpFadeOverlay);
-
         }
 
         /// <summary>
@@ -465,7 +467,13 @@
         protected virtual void UrpPreRender(ScriptableRenderContext context, Camera sceneCamera)
         {
             ProcessColorTransition();
-            if (urpFadeOverlay != null && fadeRenderer != null && ShouldTransition())
+
+            if (urpFadeOverlay == null || fadeRenderer == null)
+            {
+                return;
+            }
+
+            if (ShouldTransition())
             {
                 if (lastUsedCamera != sceneCamera)
                 {
