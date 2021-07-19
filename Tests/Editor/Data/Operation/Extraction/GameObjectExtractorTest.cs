@@ -10,7 +10,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using Assert = UnityEngine.Assertions.Assert;
     using Object = UnityEngine.Object;
 
-    public class GameObjectEmitterTest
+    public class GameObjectExtractorTest
     {
         private GameObject containingObject;
         private GameObjectExtractorImplementation subject;
