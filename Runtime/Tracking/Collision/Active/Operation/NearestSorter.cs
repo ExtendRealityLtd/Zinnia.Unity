@@ -28,8 +28,16 @@
             /// <inheritdoc />
             public virtual int Compare(CollisionNotifier.EventData x, CollisionNotifier.EventData y)
             {
-                float distance1 = Vector3.Distance(x.ColliderData.GetContainingTransform().position, SourcePosition);
-                float distance2 = Vector3.Distance(y.ColliderData.GetContainingTransform().position, SourcePosition);
+                Transform xTransform = x.ColliderData.GetContainingTransform();
+                Transform yTransform = y.ColliderData.GetContainingTransform();
+
+                if (xTransform == null && yTransform == null)
+                {
+                    return 0;
+                }
+
+                float distance1 = xTransform != null ? Vector3.Distance(xTransform.position, SourcePosition) : float.MaxValue;
+                float distance2 = yTransform != null ? Vector3.Distance(yTransform.position, SourcePosition) : float.MaxValue;
                 return distance1.CompareTo(distance2);
             }
         }
