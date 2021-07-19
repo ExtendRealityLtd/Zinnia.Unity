@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.38.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.37.0...v1.38.0) (2021-07-19)
+
+#### Features
+
+* **Extraction:** add extractor that can get a child GameObject by name ([b161b23](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b161b2386d2d8ffa8dd0e5f217e9326c08065db6))
+  > The new GameObjectChildByNameExtractor will extract a child GameObject from the Source GameObject by the path name to the child.
+* **Tracking:** provide optional pivot offset for direction modifier ([acfa833](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/acfa8334f1c3bf2ae4cd389b66ff18150f2709d5))
+  > A rotational offset for the pivot can now be applied via a GameObject containing the rotational transform data.
+
+#### Bug Fixes
+
+* **Extraction:** rename test class to the correct name ([056f7a8](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/056f7a8dafc4ed30da8f72a105834ef57de13cc2))
+  > The GameObject Extractor test class was named incorrectly so it has now been updated with the correct name.
+* **Tracking:** ensure collider is not null before checking status ([978adfd](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/978adfd5231d2ea1f64c85971b8a12df1eba8a07))
+  > There was an issue where the collider could be null even though the collider trigger status was being checked which would cause a null exception error. This is handled by just exiting the method early if the collider is now null.
+* **Tracking:** prevent fatal error if colliders are null in comparison ([637411f](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/637411fd2f132710fb7a5671017b862390509d25))
+  > There can be an issue where the collider transform is null due to it being destroyed during a loop causing the comparison to fail.
+  > 
+  > This fix just adds in a null check to make sure no fatal error can cause a crash.
+
 ## [1.37.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.36.2...v1.37.0) (2021-06-24)
 
 #### Features
