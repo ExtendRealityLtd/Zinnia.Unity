@@ -90,7 +90,7 @@
         {
             RemoveDisabledObserver(collider);
 
-            if ((StatesToProcess & CollisionStates.Exit) == 0)
+            if (collider == null || (StatesToProcess & CollisionStates.Exit) == 0)
             {
                 return;
             }
