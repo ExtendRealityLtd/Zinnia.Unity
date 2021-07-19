@@ -60,6 +60,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public GameObject TargetOffset { get; set; }
+        /// <summary>
+        /// The object providing a rotational offset for the <see cref="Pivot"/>.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public GameObject PivotOffset { get; set; }
         #endregion
 
         #region Control Settings
@@ -217,7 +223,7 @@
                 return;
             }
 
-            Target.transform.rotation = Quaternion.LookRotation(GetRotation(), GetUpwards());
+            Target.transform.rotation = Quaternion.LookRotation(GetRotation(), GetUpwards()) * (PivotOffset != null && PivotOffset.activeInHierarchy ? Quaternion.Inverse(PivotOffset.transform.localRotation) : Quaternion.identity);
 
             if (!SnapToLookAt)
             {
