@@ -55,7 +55,11 @@
         /// <summary>
         /// A collection to track which colliders have caused the Trigger Exit within the same frame count to avoid duplicate kinematic change event fixes.
         /// </summary>
-        Dictionary<Transform, int> exitColliderTimeStamps = new Dictionary<Transform, int>();
+        Dictionary<Collider, int> exitColliderTimeStamps = new Dictionary<Collider, int>();
+        /// <summary>
+        /// A collection to track which collider containers have caused the Trigger Exit within the same frame count to avoid duplicate kinematic change event fixes.
+        /// </summary>
+        Dictionary<Transform, int> exitColliderContainerTimeStamps = new Dictionary<Transform, int>();
         /// <summary>
         /// An instruction to wait for the next FixedUpdate process in the life-cycle.
         /// </summary>
@@ -120,6 +124,7 @@
             StopDeferredTriggerExitRoutine();
             trackedStateChangers.Clear();
             exitColliderTimeStamps.Clear();
+            exitColliderContainerTimeStamps.Clear();
         }
 
         protected virtual void OnCollisionEnter(Collision collision)
@@ -158,12 +163,15 @@
 
         protected virtual void OnTriggerEnter(Collider collider)
         {
-            StopDeferredTriggerExitRoutine();
-
             if (HasKinematicStateChanged(collider, true))
             {
-                exitColliderTimeStamps.Remove(collider.GetContainingTransform());
-                return;
+                exitColliderContainerTimeStamps.Remove(collider.GetContainingTransform());
+                if (exitColliderTimeStamps.TryGetValue(collider, out int colliderFrame) && colliderFrame == Time.frameCount)
+                {
+                    StopDeferredTriggerExitRoutine();
+                    exitColliderTimeStamps.Remove(collider);
+                    return;
+                }
             }
 
             AddDisabledObserver(collider);
@@ -189,9 +197,10 @@
         protected virtual void OnTriggerExit(Collider collider)
         {
             Transform colliderContainingTransform = collider.GetContainingTransform();
-            if (HasKinematicStateChanged(collider, false) && (!exitColliderTimeStamps.TryGetValue(colliderContainingTransform, out int colliderFrame) || colliderFrame != Time.frameCount))
+            if (HasKinematicStateChanged(collider, false) && (!exitColliderContainerTimeStamps.TryGetValue(colliderContainingTransform, out int colliderFrame) || colliderFrame != Time.frameCount))
             {
-                exitColliderTimeStamps[colliderContainingTransform] = Time.frameCount;
+                exitColliderTimeStamps[collider] = Time.frameCount;
+                exitColliderContainerTimeStamps[colliderContainingTransform] = Time.frameCount;
                 StopDeferredTriggerExitRoutine();
                 deferredTriggerExit = StartCoroutine(RunTriggerExitAfterNextFixedUpdate(collider));
                 return;
