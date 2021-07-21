@@ -1,5 +1,20 @@
 # Changelog
 
+### [1.38.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.38.0...v1.38.1) (2021-07-21)
+
+#### Bug Fixes
+
+* **Tracking:** ensure right trigger exit happens on kinematic change ([19c14ce](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/19c14ce4d9f0a37f8a7fdacbacd726872bba3201))
+  > There was an issue with the 2019 kinematic fix where if a GameObject with multiple child colliders was touched on one collider and then when the kinematic state changed the collider would no longer be touched but another collider in the GameObject was touched then the exit event would not happen for the original collider and the new start event for the new collider would not happen.
+  > 
+  > This would mean the collision with the original collider would have ended in the CollisionTracker but the CollisionTracker would not have reported it, and the new collider collision would not have a started event reported. Then when the actual new collider collision ended it would not report it had ended correctly.
+  > 
+  > The fix is to hold a dictionary for each collider and their frame interaction timestamp and then this is checked in the fix logic for the Exit/Enter that happens when the kinematic state is changed.
+  > 
+  > If the collider has changed then it won't cancel the deferred trigger exit so the exit will happen as expected, but if the collider hasn't changed then the deferred exit will be cancelled in the enter to prevent the enter/exit issue.
+  > 
+  > A new test has been added to prove all this logic works.
+
 ## [1.38.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.37.0...v1.38.0) (2021-07-19)
 
 #### Features
