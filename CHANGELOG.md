@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.39.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.38.1...v1.39.0) (2021-11-30)
+
+#### Features
+
+* **package.json:** update malimbe to the latest version ([55370a5](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/55370a5b649ec584adff9c60fe55de1ad7287c6b))
+  > There is an update in malimbe that will allow the weavers to run first time on Unity 2020 and above.
+
+#### Bug Fixes
+
+* **Data:** prevent null exception on deserializing type ([733ae17](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/733ae1717ee32030bbe471199ccee0a5df12e1f6))
+  > The SerializableType could throw a null exception if the assembly fully qualified name was no longer set.
+
 ### [1.38.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.38.0...v1.38.1) (2021-07-21)
 
 #### Bug Fixes
