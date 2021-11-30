@@ -51,6 +51,11 @@
         /// <inheritdoc />
         public void OnAfterDeserialize()
         {
+            if (assemblyQualifiedTypeName == null)
+            {
+                return;
+            }
+
             try
             {
                 ActualType = Type.GetType(assemblyQualifiedTypeName);
