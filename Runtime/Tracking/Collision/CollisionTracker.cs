@@ -1,5 +1,6 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
+    using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -34,6 +35,16 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public RuleContainer ContainingTransformValidity { get; set; }
+        /// <summary>
+        /// The delay interval in seconds defining how long to pause between processing the `Stay` method of the collision process. Negative values will be clamped to zero.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public float StayDelayInterval { get; set; }
+        /// <summary>
+        /// When to process the `Stay` method the next time. Updated automatically based on <see cref="StayDelayInterval"/> after a `Stay` method has been called.
+        /// </summary>
+        public float NextStayProcessTime { get; protected set; }
         #endregion
 
         /// <summary>
@@ -107,6 +118,12 @@
 #if UNITY_2019_3_OR_NEWER
             ApplyKinematicChangeTriggerEventFix = true;
 #endif
+            NextStayProcessTime = Time.time;
+        }
+
+        protected virtual void OnEnable()
+        {
+            OnAfterStayDelayIntervalChange();
         }
 
         protected virtual void OnDisable()
@@ -141,12 +158,13 @@
 
         protected virtual void OnCollisionStay(Collision collision)
         {
-            if ((StatesToProcess & CollisionStates.Stay) == 0)
+            if (ShouldIgnoreStay())
             {
                 return;
             }
 
             OnCollisionChanged(eventData.Set(this, false, collision, collision.collider));
+            NextStayProcessTime = Time.time + StayDelayInterval;
         }
 
         protected virtual void OnCollisionExit(Collision collision)
@@ -186,12 +204,13 @@
 
         protected virtual void OnTriggerStay(Collider collider)
         {
-            if ((StatesToProcess & CollisionStates.Stay) == 0)
+            if (ShouldIgnoreStay())
             {
                 return;
             }
 
             OnCollisionChanged(eventData.Set(this, true, null, collider));
+            NextStayProcessTime = Time.time + StayDelayInterval;
         }
 
         protected virtual void OnTriggerExit(Collider collider)
@@ -224,6 +243,15 @@
                     ||
                     (ColliderValidity.Accepts(data.ColliderData.gameObject)
                     && ContainingTransformValidity.Accepts(data.ColliderData.GetContainingTransform().gameObject)));
+        }
+
+        /// <summary>
+        /// Determines whether to ignore the collision/trigger stay state.
+        /// </summary>
+        /// <returns>Whether to ignore the state.</returns>
+        protected virtual bool ShouldIgnoreStay()
+        {
+            return (StatesToProcess & CollisionStates.Stay) == 0 || NextStayProcessTime > Time.time;
         }
 
         /// <summary>
@@ -325,6 +353,16 @@
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Called after <see cref="StayDelayInterval"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(StayDelayInterval))]
+        protected virtual void OnAfterStayDelayIntervalChange()
+        {
+            StayDelayInterval = Mathf.Max(0f, StayDelayInterval);
+            NextStayProcessTime = Time.time;
         }
     }
 

@@ -1,5 +1,10 @@
 ﻿namespace Zinnia.Unity.Editor.Data.Collection
 {
+#if (UNITY_2020_3_OR_NEWER && !ZINNIA_USE_CUSTOM_LIST_EDITOR) || ZINNIA_IGNORE_CUSTOM_LIST_EDITOR
+    /// Ignore this custom list editor in Unity 2020.3 or above as it breaks with Unity 2020.3.24f due to other fixes within Unity.
+    /// It can still be forced to use the custom editor if the Scripting Define Symbol of `ZINNIA_USE_CUSTOM_LIST_EDITOR` is added but the list won't be collapsible. 
+    /// It can also be completely turned off if the Scripting Define Symbol of `ZINNIA_IGNORE_CUSTOM_LIST_EDITOR` is added.
+#else
     using Malimbe.FodyRunner.UnityIntegration;
     using System;
     using System.Collections;
@@ -13,6 +18,9 @@
     /// <summary>
     /// A custom inspector editor for <see cref="ObservableList{TElement,TEvent}"/> and subclasses of it.
     /// </summary>
+    /// <remarks>
+    /// This custom editor allows for the list elements to be updated in the editor at runtime and any effects of the changes will be processed just as if the changes were made via code.
+    /// </remarks>
     [CustomEditor(typeof(ObservableList<,>), true)]
     public class ObservableListEditor : InspectorEditor
     {
@@ -53,8 +61,10 @@
 
             if (!EditorGUILayout.PropertyField(property, false))
             {
+#if !UNITY_2020_3_OR_NEWER
                 // The property is collapsed. Don't draw any children manually.
                 return;
+#endif
             }
 
             bool drawAsDisabled = Application.isPlaying
@@ -254,4 +264,5 @@ This restriction is in place to ensure any subscribed listener to events on this
             return (IList)elementsPropertyInfo.GetMethod.Invoke(targetObject, null);
         }
     }
+#endif
 }
