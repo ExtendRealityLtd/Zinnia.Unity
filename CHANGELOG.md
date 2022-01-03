@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.40.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.39.0...v1.40.0) (2022-01-03)
+
+#### Features
+
+* **Tracking:** provide ability to delay collision stay processing ([6006705](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/6006705640307ffeccdd5d7326f74105e85dd4ba))
+  > The CollisionTracker now has an option to set a delay interval for the `Collision` and `Trigger` `Stay` methods to delay processing the next stay state until the delay interval has passed.
+  > 
+  > This means it is possible to not have to process the stay state every single fixed update frame as this may be too frequent for certain circumstances and cause too much of a processing overhead.
+
+#### Bug Fixes
+
+* **Collection:** remove custom list editor for Unity 2020.3 or newer ([a958938](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/a958938baccab500468cd0f8ea80adaa61d83ed3))
+  > Unity have fixed a bug in Unity 2020.3.24f to do with reorderable lists but that fix has caused the custom observable list editor to no longer display any of the elements of the list and no longer understands if the list is collapsible or not.
+  > 
+  > I can't be bothered to put the effort in to find out what Unity have done or where this has broken, it's a constant struggle of chasing after Unity changes so instead the feature of custom list editors is now just disabled for Unity 2020.3 and above.
+  > 
+  > It can be added back in with a custom script define symbol of:
+  > 
+  > * `ZINNIA_USE_CUSTOM_LIST_EDITOR`
+  > 
+  > This will make the custom list editor appear again, however it will no longer be a collapsible element.
+  > 
+  > The custom list editor can also now be completely disabled by using the script define symbol of:
+  > 
+  > * `ZINNIA_IGNORE_CUSTOM_LIST_EDITOR`
+  > 
+  > This will completely disable the custom list editor functionality.
+
 ## [1.39.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.38.1...v1.39.0) (2021-11-30)
 
 #### Features
