@@ -1,4 +1,5 @@
-﻿namespace Zinnia.Tracking.Velocity
+﻿#if UNITY_XR
+namespace Zinnia.Tracking.Velocity
 {
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -66,4 +67,5 @@
             return new XRNodeState();
         }
     }
-}
+} 
+#endif

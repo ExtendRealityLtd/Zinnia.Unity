@@ -1,4 +1,5 @@
-﻿namespace Zinnia.Haptics
+﻿#if UNITY_XR
+namespace Zinnia.Haptics
 {
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -84,3 +85,4 @@
         }
     }
 }
+#endif
