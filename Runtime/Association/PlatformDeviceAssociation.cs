@@ -2,6 +2,7 @@
 {
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
     using System.Text.RegularExpressions;
     using UnityEngine;
     using UnityEngine.XR;
@@ -9,6 +10,7 @@
     /// <summary>
     /// Holds <see cref="GameObject"/>s to (de)activate based on the current platform and loaded XR device type.
     /// </summary>
+    [Obsolete("Use `RuleAssociation` instead.")]
     public class PlatformDeviceAssociation : GameObjectsAssociation
     {
         /// <summary>
@@ -44,7 +46,6 @@
             return Regex.IsMatch(Application.platform.ToString(), PlatformPattern) &&
                 Regex.IsMatch(XRSettings.loadedDeviceName, XrSdkPattern) &&
                 Regex.IsMatch(modelName, XrModelPattern);
-
         }
     }
 }
