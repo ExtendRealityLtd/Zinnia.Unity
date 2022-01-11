@@ -48,6 +48,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public CameraObservableList SupplementHeadsetCameras { get; set; }
+        /// <summary>
+        /// The details and status of the headset device.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public DeviceDetailsRecord HeadsetDeviceDetails { get; set; }
         #endregion
 
         #region Left Controller Settings
@@ -75,6 +81,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public HapticProcessObservableList LeftControllerHapticProfiles { get; set; }
+        /// <summary>
+        /// The details and status of the left controller device.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public DeviceDetailsRecord LeftControllerDeviceDetails { get; set; }
         #endregion
 
         #region Right Controller Settings
@@ -102,6 +114,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public HapticProcessObservableList RightControllerHapticProfiles { get; set; }
+        /// <summary>
+        /// The details and status of the right controller device.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public DeviceDetailsRecord RightControllerDeviceDetails { get; set; }
         #endregion
     }
 }
