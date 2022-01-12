@@ -1,5 +1,38 @@
 # Changelog
 
+## [1.41.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.40.0...v1.41.0) (2022-01-12)
+
+#### Features
+
+* **Association:** define associations with generic patterns ([219d1eb](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/219d1eb52b39f7e0111fae14c0366e9fae1cad1e))
+  > The PlatformDeviceAssociation component has been deprecated due to the limited ways it can form a device association via hard coded properties related to the restricted supported types.
+  > 
+  > The new RuleAssociation component replaces it with a completely generic approach that will determine activation status on the GameObject collection if the given rule passes.
+  > 
+  > This then works with the new PatternMatcherRule which takes a collection of new PatternMatcher components that will attempt to match a give pattern string against a selected source property from a given Unity namespace that contains useful data.
+  > 
+  > The existing associations in the PlatformDeviceAssociation exist now as their own PatternMatcher components:
+  > 
+  > * ApplicationPatternMatcher * XRSettingsPatternMatcher * XRDevicePatternMatcher
+  > 
+  > These provide the same functionality as before, but also offer additional properties that can be used to match against.
+  > 
+  > Thes PatternMatcher components can be set up with the PatternMatcherRule and then that rule set up as the Rule in the RuleAssociation to provide the same functionality but with much more flexibility.
+  > 
+  > A new SystemInfoPatternMatcher is also included that can use many property types from the `UnityEngine.SystemInfo` class.
+  > 
+  > The ObservableListComponentGeneratorEditorWindow has also been updated so it sets the newly created GameObject name based on the component selected rather than just the generic named `ComponentContainer` as this makes it easier to identify newly created components.
+* **Cast:** add ability to set enum properties via methods ([41631a1](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/41631a1a9bf448f336ca8d22ff87751f6b492c25))
+  > The LayersToIgnore and TriggerInteraction properties can now be set via method calls meaning they can be changed via Unity events.
+* **Tracking:** add device details and dominant controller tracking ([2ccc8fb](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/2ccc8fb0438eb152e22d00f069ac73b58dd262be))
+  > The new abstract DeviceDetailsRecord sets a framework for holding common information about a device such as model, connected status and battery status.
+  > 
+  > The LinkedAliasAssociationCollection now can hold a DeviceDetailsRecord for the headset, left and right controller. CameraRig packages will provide a concrete implementation of the DeviceDetailsRecord for the headset and controllers of that CameraRig supported SDK and then linked to the CameraRig prefab.
+  > 
+  > This will mean that the CameraRig prefab will then be able to know about the details of the headset and controllers.
+  > 
+  > A new DominantControllerObserver component has been added as well that holds a left/right controller DeviceDetailsRecord as the soruce and will be able to determine whether the left or right controller is the current dominant controller. This component is also processable so can be run on a Moment to check periodically if the dominant controller has changed.
+
 ## [1.40.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.39.0...v1.40.0) (2022-01-03)
 
 #### Features
