@@ -12,6 +12,7 @@
     using Zinnia.Event;
     using Zinnia.Haptics;
     using Zinnia.Haptics.Collection;
+    using Zinnia.Pattern.Collection;
     using Zinnia.Process.Moment;
     using Zinnia.Process.Moment.Collection;
     using Zinnia.Rule;
@@ -51,7 +52,8 @@
             ListContainsRule,
             MeshStateModifier,
             MomentProcessor,
-            PlatformDeviceAssociation,
+            PatternMatcherRule,
+            RuleAssociation,
             RulesMatcher,
             Vector2Multiplier,
             Vector3Multiplier,
@@ -65,7 +67,7 @@
         private OptionType selectedOption;
         private bool nestInSelectedObject = true;
         private GameObject selectedObject;
-        private string componentName = "ComponentContainer";
+        private string containerName = "";
 
         public void OnGUI()
         {
@@ -76,8 +78,8 @@
                 scrollPosition = scrollViewScope.scrollPosition;
                 GUILayout.Label("Generate New Multi-Part Component", EditorStyles.boldLabel);
 
-                componentName = EditorGUILayout.TextField("Container Name", componentName);
                 selectedOption = (OptionType)EditorGUILayout.EnumPopup("Component Type", selectedOption);
+                containerName = EditorGUILayout.TextField("Override Container Name", containerName);
 
                 if (selectedObject != null)
                 {
@@ -96,7 +98,7 @@
 
         protected virtual void CreateComponent(OptionType selectedOption)
         {
-            GameObject componentContainer = new GameObject(componentName);
+            GameObject componentContainer = new GameObject(string.IsNullOrEmpty(containerName) ? selectedOption.ToString() + "_Container" : containerName);
             if (selectedObject != null && nestInSelectedObject)
             {
                 componentContainer.transform.SetParent(selectedObject.transform);
@@ -179,10 +181,15 @@
                     GameObjectObservableList gameObjectsList = listContainer.AddComponent<GameObjectObservableList>();
                     gameObjectStateSwitcher.Targets = gameObjectsList;
                     break;
-                case OptionType.PlatformDeviceAssociation:
-                    PlatformDeviceAssociation platformDeviceAssociation = componentContainer.AddComponent<PlatformDeviceAssociation>();
-                    GameObjectObservableList platformGameObjectsList = listContainer.AddComponent<GameObjectObservableList>();
-                    platformDeviceAssociation.GameObjects = platformGameObjectsList;
+                case OptionType.PatternMatcherRule:
+                    PatternMatcherRule patternMatcherRule = componentContainer.AddComponent<PatternMatcherRule>();
+                    PatternMatcherObservableList patternMatcherList = listContainer.AddComponent<PatternMatcherObservableList>();
+                    patternMatcherRule.Patterns = patternMatcherList;
+                    break;
+                case OptionType.RuleAssociation:
+                    RuleAssociation ruleAssociation = componentContainer.AddComponent<RuleAssociation>();
+                    GameObjectObservableList ruleAssociationGameObjectsList = listContainer.AddComponent<GameObjectObservableList>();
+                    ruleAssociation.GameObjects = ruleAssociationGameObjectsList;
                     break;
                 case OptionType.HapticProcessor:
                     HapticProcessor hapticProcessor = componentContainer.AddComponent<HapticProcessor>();

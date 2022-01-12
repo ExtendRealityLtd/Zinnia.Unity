@@ -6,6 +6,7 @@
     using System;
     using UnityEngine;
     using Zinnia.Cast.Operation.Conversion;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Allows customizing of Unity Physics casting within other scripts by applying settings at edit time.
@@ -39,6 +40,24 @@
         /// A reusable array of <see cref="Collider"/>s to use with non-allocating <see cref="Physics"/> API.
         /// </summary>
         protected static readonly Collider[] Colliders = new Collider[1000];
+
+        /// <summary>
+        /// Sets the <see cref="LayersToIgnore"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="LayerMask"/>.</param>
+        public virtual void SetLayersToIgnore(int index)
+        {
+            LayersToIgnore = EnumExtensions.GetByIndex<LayerMask>(index);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="TriggerInteraction"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="QueryTriggerInteraction"/>.</param>
+        public virtual void SetTriggerInteraction(int index)
+        {
+            TriggerInteraction = EnumExtensions.GetByIndex<QueryTriggerInteraction>(index);
+        }
 
         /// <summary>
         /// Generates a Raycast either from the given <see cref="PhysicsCast"/> object or a default <see cref="Physics.Raycast(Ray,out RaycastHit,float,int,QueryTriggerInteraction)"/>.
