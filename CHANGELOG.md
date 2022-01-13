@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.42.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.41.0...v1.42.0) (2022-01-13)
+
+#### Features
+
+* **Utility:** abstract XRDevice queries to static class ([f5ee40e](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/f5ee40e5165f41cb1f2720e3b09b5b8885d3f6ed))
+  > The XRDevice properties that differ between Unity versions due to elements being made obsolete were originally included directly in the XRDevicePatternMatcher component. But this logic is useful in more places so it has been abstracted out into a Utility class that is static so it can be called from any other component requiring this abstraction.
+  > 
+  > It also includes the checks for IsTracked, BatteryLevel, Manufacturer (even though they only work on Unity 2019.3 and above).
+  > 
+  > The XRDevicePatternMatcher can also now specify which device node to look up the details for as on Unity 2019.3 and above the device can be specified in the look up. This does not work on versions prior to Unity 2019.3.
+
 ## [1.41.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.40.0...v1.41.0) (2022-01-12)
 
 #### Features
