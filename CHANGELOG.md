@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.43.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.42.0...v1.43.0) (2022-01-13)
+
+#### Features
+
+* **Utility:** add extra abstracted XRDevice properties ([0486d2e](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/0486d2e126d357bd917e557bf791ea5ed0048574))
+  > The XRDeviceProperties class now returns data for:
+  > 
+  > * DeviceCount * HasPositionalTracking * HasRotationalTracking * IsValid (but only for 2019.3 and above)
+  > 
+  > It also has a couple of new methods that are only available in 2019.3 and above:
+  > 
+  > * DeviceInstance * IsDeviceDefault
+  > 
+  > The XRDevicePatternMatcher has been updated to match against these new properties and it can also set the XRNode device source now via a method.
+
 ## [1.42.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.41.0...v1.42.0) (2022-01-13)
 
 #### Features
