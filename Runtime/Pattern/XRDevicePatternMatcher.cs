@@ -25,6 +25,18 @@
             /// </summary>
             BatteryLevel,
             /// <summary>
+            /// The number of devices found at a given node.
+            /// </summary>
+            DeviceCount,
+            /// <summary>
+            /// The device positional tracking state.
+            /// </summary>
+            HasPositionalTracking,
+            /// <summary>
+            /// The device rotational tracking state.
+            /// </summary>
+            HasRotationalTracking,
+            /// <summary>
             /// The device presence state.
             /// </summary>
             IsPresent,
@@ -32,6 +44,10 @@
             /// The device tracked state.
             /// </summary>
             IsTracked,
+            /// <summary>
+            /// The device validity.
+            /// </summary>
+            IsValid,
             /// <summary>
             /// The device manufacturer.
             /// </summary>
@@ -76,6 +92,19 @@
             PropertySource = EnumExtensions.GetByIndex<Source>(index);
         }
 
+        /// <summary>
+        /// Sets the <see cref="DeviceSource"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="XRNode"/>.</param>
+        public virtual void SetDeviceSource(int index)
+        {
+#if UNITY_2019_3_OR_NEWER
+            DeviceSource = EnumExtensions.GetByIndex<XRNode>(index);
+#else
+            DeviceSource = XRNode.Head;
+#endif
+        }
+
         /// <inheritdoc/>
         protected override string DefineSourceString()
         {
@@ -83,10 +112,18 @@
             {
                 case Source.BatteryLevel:
                     return XRDeviceProperties.BatteryLevel(DeviceSource).ToString();
+                case Source.DeviceCount:
+                    return XRDeviceProperties.DeviceCount(DeviceSource).ToString();
+                case Source.HasPositionalTracking:
+                    return XRDeviceProperties.HasPositionalTracking().ToString();
+                case Source.HasRotationalTracking:
+                    return XRDeviceProperties.HasRotationalTracking().ToString();
                 case Source.IsPresent:
                     return XRDeviceProperties.IsPresent().ToString();
                 case Source.IsTracked:
                     return XRDeviceProperties.IsTracked(DeviceSource).ToString();
+                case Source.IsValid:
+                    return XRDeviceProperties.IsValid(DeviceSource).ToString();
                 case Source.Manufacturer:
                     return XRDeviceProperties.Manufacturer(DeviceSource);
                 case Source.Model:
