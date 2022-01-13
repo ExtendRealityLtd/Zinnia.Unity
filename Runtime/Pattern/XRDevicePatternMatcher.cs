@@ -3,12 +3,9 @@
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
-#if UNITY_2020_2_OR_NEWER
-    using System.Collections.Generic;
-    using UnityEngine;
-#endif
     using UnityEngine.XR;
     using Zinnia.Extension;
+    using Zinnia.Utility;
 
     /// <summary>
     /// Matches the name of the selected <see cref="XRDevice"/> property.
@@ -24,9 +21,21 @@
         public enum Source
         {
             /// <summary>
+            /// The device battery level.
+            /// </summary>
+            BatteryLevel,
+            /// <summary>
             /// The device presence state.
             /// </summary>
             IsPresent,
+            /// <summary>
+            /// The device tracked state.
+            /// </summary>
+            IsTracked,
+            /// <summary>
+            /// The device manufacturer.
+            /// </summary>
+            Manufacturer,
             /// <summary>
             /// The device model.
             /// </summary>
@@ -47,6 +56,16 @@
         [Serialized]
         [field: DocumentedByXml]
         public Source PropertySource { get; set; }
+#if UNITY_2019_3_OR_NEWER
+        /// <summary>
+        /// The source node to consider as the device to check.
+        /// </summary>
+        [Serialized]
+        [field: DocumentedByXml]
+        public XRNode DeviceSource { get; set; } = XRNode.Head;
+#else
+        protected XRNode DeviceSource { get; set; } = XRNode.Head;
+#endif
 
         /// <summary>
         /// Sets the <see cref="PropertySource"/>.
@@ -62,46 +81,20 @@
         {
             switch (PropertySource)
             {
+                case Source.BatteryLevel:
+                    return XRDeviceProperties.BatteryLevel(DeviceSource).ToString();
                 case Source.IsPresent:
-                    bool isPresent = false;
-#if UNITY_2020_2_OR_NEWER
-                    List<XRDisplaySubsystem> xrDisplaySubsystems = new List<XRDisplaySubsystem>();
-                    SubsystemManager.GetInstances<XRDisplaySubsystem>(xrDisplaySubsystems);
-                    foreach (var xrDisplay in xrDisplaySubsystems)
-                    {
-                        if (xrDisplay.running)
-                        {
-                            isPresent = true;
-                        }
-                    }
-#else
-                    isPresent = XRDevice.isPresent;
-#endif
-                    return isPresent.ToString();
+                    return XRDeviceProperties.IsPresent().ToString();
+                case Source.IsTracked:
+                    return XRDeviceProperties.IsTracked(DeviceSource).ToString();
+                case Source.Manufacturer:
+                    return XRDeviceProperties.Manufacturer(DeviceSource);
                 case Source.Model:
-                    string modelName = "";
-#if UNITY_2020_2_OR_NEWER
-                    InputDevice modelDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
-                    modelName = modelDevice != null && modelDevice.name != null ? modelDevice.name : "";
-#else
-                    modelName = XRDevice.model;
-#endif
-                    return modelName;
+                    return XRDeviceProperties.Model(DeviceSource);
                 case Source.RefreshRate:
                     return XRDevice.refreshRate.ToString();
                 case Source.UserPresence:
-                    int userPresence = -1;
-#if UNITY_2020_2_OR_NEWER
-                    InputDevice userPresenceDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
-                    if (userPresenceDevice.isValid)
-                    {
-                        userPresenceDevice.TryGetFeatureValue(CommonUsages.userPresence, out bool userPresent);
-                        userPresence = userPresent ? 1 : 0;
-                    }
-#else
-                    userPresence = (int)XRDevice.userPresence;
-#endif
-                    return userPresence.ToString();
+                    return XRDeviceProperties.UserPresence(DeviceSource);
             }
 
             return null;
@@ -112,6 +105,15 @@
         /// </summary>
         [CalledAfterChangeOf(nameof(PropertySource))]
         protected virtual void OnAfterPropertySourceChange()
+        {
+            ProcessSourceString();
+        }
+
+        /// <summary>
+        /// Called after <see cref="DeviceSource"/> has been changed.
+        /// </summary>
+        [CalledAfterChangeOf(nameof(DeviceSource))]
+        protected virtual void OnAfterDeviceSourceChange()
         {
             ProcessSourceString();
         }
