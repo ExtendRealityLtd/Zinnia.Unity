@@ -54,6 +54,12 @@
         [Serialized, Cleared]
         [field: DocumentedByXml]
         public DeviceDetailsRecord HeadsetDeviceDetails { get; set; }
+        /// <summary>
+        /// The dominant controller observer.
+        /// </summary>
+        [Serialized, Cleared]
+        [field: DocumentedByXml]
+        public DominantControllerObserver DominantController { get; set; }
         #endregion
 
         #region Left Controller Settings
