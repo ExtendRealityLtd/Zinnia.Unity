@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.44.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.43.0...v1.44.0) (2022-01-17)
+
+#### Features
+
+* **Rule:** add dominant controller rule ([220e911](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/220e91199843bf92443ace1ccfa2e879ebeaa721))
+  > The DominantControllerRule can be used to determine if the selected controller is the current dominant controller in the first active DominantControllerObserver set.
+* **Tracking:** add event to raise when device tracking has begun ([f602d53](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/f602d5391d4b2783a04d5f321128d0480a6a85f9))
+  > The DeviceDetailsRecord now has a TrackingBegun event that is raised the first time the device starts tracking upon the component being enabled. There is also a backing property that can be queried.
+* **Tracking:** store dominant controller on linked alias collection ([158bdae](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/158bdae38985672f35f98c3a7f965eb6f7143661))
+  > A DominantControllerObserver can be stored on a LinkedAliasAssociationCollection to make it easier to access the current component that is checking for the dominant controller.
+  > 
+  > The debug logs have also been removed from the XRDeviceProperties that warned about methods not being available as they could just end up spamming the console and its not completely necessary.
+
 ## [1.43.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.42.0...v1.43.0) (2022-01-13)
 
 #### Features
