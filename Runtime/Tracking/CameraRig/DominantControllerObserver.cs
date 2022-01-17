@@ -43,15 +43,15 @@
         /// <summary>
         /// The current dominant controller node.
         /// </summary>
-        public XRNode DominantController => GetDominantController() == null ? XRNode.Head : LastKnownDominantControllerDetails.XRNodeType;
+        public virtual XRNode DominantController => GetDominantController() == null ? XRNode.Head : LastKnownDominantControllerDetails.XRNodeType;
         /// <summary>
         /// The current dominant controller.
         /// </summary>
-        public DeviceDetailsRecord DominantControllerDetails => GetDominantController();
+        public virtual DeviceDetailsRecord DominantControllerDetails => GetDominantController();
         /// <summary>
         /// The last known dominant controller without doing a fresh query.
         /// </summary>
-        public DeviceDetailsRecord LastKnownDominantControllerDetails { get; protected set; }
+        public virtual DeviceDetailsRecord LastKnownDominantControllerDetails { get; protected set; }
 
         /// <summary>
         /// Processes the state of the dominant controller.
