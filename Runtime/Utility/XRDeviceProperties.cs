@@ -190,8 +190,6 @@
 #if UNITY_2019_3_OR_NEWER
             InputDevice validDevice = InputDevices.GetDeviceAtXRNode(node);
             isValid = validDevice != null && validDevice.isValid;
-#else
-            Debug.Log("This method is only supported in Unity 2019.3 and above, it will always return `false` in any prior version.");
 #endif
             return isValid;
         }
@@ -237,8 +235,6 @@
             {
                 batteryLevelDevice.TryGetFeatureValue(CommonUsages.batteryLevel, out batteryLevel);
             }
-#else
-            Debug.Log("This method is only supported in Unity 2019.3 and above, it will always return `-1f` in any prior version.");
 #endif
             return batteryLevel;
         }

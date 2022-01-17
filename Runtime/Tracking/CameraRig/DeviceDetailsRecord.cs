@@ -85,6 +85,16 @@
         public abstract BatteryStatus BatteryChargeStatus { get; protected set; }
 
         /// <summary>
+        /// Whether tracking for this device has begun.
+        /// </summary>
+        public bool TrackingHasBegun { get; protected set; }
+
+        /// <summary>
+        /// Emitted when the device begins tracking.
+        /// </summary>
+        [DocumentedByXml]
+        public UnityEvent TrackingBegun = new UnityEvent();
+        /// <summary>
         /// Emitted whenever the connection status changes.
         /// </summary>
         [DocumentedByXml]
@@ -105,11 +115,17 @@
         /// </summary>
         public virtual void Process()
         {
+            HasTrackingBegun();
             HasIsConnectedChanged();
             HasTrackingTypeChanged();
             HasBatteryChargeStatusChanged();
         }
 
+        /// <summary>
+        /// Checks to see if the <see cref="BatteryChargeStatus"/> has changed.
+        /// </summary>
+        /// <returns>Whether the status has changed or not.</returns>
+        protected abstract bool HasBatteryChargeStatusChanged();
         /// <summary>
         /// Checks to see if the <see cref="IsConnected"/> has changed.
         /// </summary>
@@ -120,10 +136,26 @@
         /// </summary>
         /// <returns>Whether the status has changed or not.</returns>
         protected abstract bool HasTrackingTypeChanged();
+
+        protected virtual void OnEnable()
+        {
+            TrackingHasBegun = false;
+        }
+
         /// <summary>
-        /// Checks to see if the <see cref="BatteryChargeStatus"/> has changed.
+        /// Determines whether tracking for this device has begun.
         /// </summary>
-        /// <returns>Whether the status has changed or not.</returns>
-        protected abstract bool HasBatteryChargeStatusChanged();
+        /// <returns>Whether tracking for this device has begun.</returns>
+        protected virtual bool HasTrackingBegun()
+        {
+            if (!TrackingHasBegun && IsConnected)
+            {
+                TrackingBegun?.Invoke();
+                TrackingHasBegun = true;
+                return true;
+            }
+
+            return false;
+        }
     }
 }
