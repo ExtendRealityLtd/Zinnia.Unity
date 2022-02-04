@@ -17,12 +17,14 @@
         [Serialized]
         [field: DocumentedByXml]
         public Vector2 MaximumLength { get; set; } = new Vector2(10f, float.PositiveInfinity);
+
         /// <summary>
         /// The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml, Range(1f, 100f)]
         public float HeightLimitAngle { get; set; } = 100f;
+
         /// <summary>
         /// The number of points to generate on the parabolic line.
         /// </summary>
@@ -30,6 +32,7 @@
         [Serialized]
         [field: DocumentedByXml]
         public int SegmentCount { get; set; } = 10;
+
         /// <summary>
         /// The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at <see cref="SegmentCount" />.
         /// </summary>
@@ -37,6 +40,7 @@
         [Serialized]
         [field: DocumentedByXml]
         public int CollisionCheckFrequency { get; set; }
+
         /// <summary>
         /// The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.
         /// </summary>
@@ -48,6 +52,7 @@
         /// Used to move the points back and up a bit to prevent the cast clipping at the collision points.
         /// </summary>
         protected const float AdjustmentOffset = 0.0001f;
+
         /// <summary>
         /// A reusable collection of <see cref="Vector3"/>s.
         /// </summary>
@@ -110,7 +115,8 @@
             }
 
             Ray ray = new Ray(Origin.transform.position, Origin.transform.forward);
-            bool hasCollided = PhysicsCast.Raycast(PhysicsCast, ray, out RaycastHit hitData, length, Physics.IgnoreRaycastLayer);
+            bool hasCollided = PhysicsCast.Raycast(PhysicsCast, ray, out RaycastHit hitData, length,
+                Physics.IgnoreRaycastLayer);
 
             // Adjust the cast length if something is blocking it.
             if (hasCollided && hitData.distance < length)
@@ -132,7 +138,8 @@
             Vector3 point = Vector3.zero;
             Ray ray = new Ray(downwardOrigin, Vector3.down);
 
-            bool downRayHit = PhysicsCast.Raycast(PhysicsCast, ray, out RaycastHit hitData, MaximumLength.y, Physics.IgnoreRaycastLayer);
+            bool downRayHit = PhysicsCast.Raycast(PhysicsCast, ray, out RaycastHit hitData, MaximumLength.y,
+                Physics.IgnoreRaycastLayer);
 
             if (!downRayHit || (TargetHit?.collider != null && TargetHit.Value.collider != hitData.collider))
             {
@@ -170,7 +177,8 @@
 
                 Ray pointsRay = new Ray(currentPoint, nextPointDirection);
 
-                if (!PhysicsCast.Raycast(PhysicsCast, pointsRay, out RaycastHit pointsHitData, nextPointDistance, Physics.IgnoreRaycastLayer))
+                if (!PhysicsCast.Raycast(PhysicsCast, pointsRay, out RaycastHit pointsHitData, nextPointDistance,
+                    Physics.IgnoreRaycastLayer))
                 {
                     continue;
                 }
@@ -178,7 +186,8 @@
                 Vector3 collisionPoint = pointsRay.GetPoint(pointsHitData.distance);
                 Ray downwardRay = new Ray(collisionPoint + Vector3.up * 0.01f, Vector3.down);
 
-                if (!PhysicsCast.Raycast(PhysicsCast, downwardRay, out RaycastHit downwardHitData, float.PositiveInfinity, Physics.IgnoreRaycastLayer))
+                if (!PhysicsCast.Raycast(PhysicsCast, downwardRay, out RaycastHit downwardHitData,
+                    float.PositiveInfinity, Physics.IgnoreRaycastLayer))
                 {
                     TargetHit = null;
                     continue;
@@ -187,7 +196,9 @@
                 TargetHit = downwardHitData;
 
                 Vector3 newDownPosition = downwardRay.GetPoint(downwardHitData.distance);
-                Vector3 newJointPosition = newDownPosition.y < forward.y ? new Vector3(newDownPosition.x, forward.y, newDownPosition.z) : forward;
+                Vector3 newJointPosition = newDownPosition.y < forward.y
+                    ? new Vector3(newDownPosition.x, forward.y, newDownPosition.z)
+                    : forward;
                 GeneratePoints(newJointPosition, newDownPosition);
 
                 break;
@@ -204,18 +215,21 @@
         /// <returns>The generated points on the parabolic line.</returns>
         protected virtual void GeneratePoints(Vector3 forward, Vector3 down)
         {
-            forward = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : forward;
-            down = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : down;
-
-            curvePoints[0] = Origin.transform.position;
-            curvePoints[1] = forward + (Vector3.up * CurveOffset);
-            curvePoints[2] = down;
-            curvePoints[3] = down;
-
+            forward = DestinationPointOverride != null ? (Vector3) DestinationPointOverride : forward;
+            down = DestinationPointOverride != null ? (Vector3) DestinationPointOverride : down;
             points.Clear();
-            foreach (Vector3 generatedPoint in BezierCurveGenerator.GeneratePoints(SegmentCount, curvePoints))
+
+            if (curvePoints.Count > 3)
             {
-                points.Add(generatedPoint);
+                curvePoints[0] = Origin.transform.position;
+                curvePoints[1] = forward + (Vector3.up * CurveOffset);
+                curvePoints[2] = down;
+                curvePoints[3] = down;
+
+                foreach (Vector3 generatedPoint in BezierCurveGenerator.GeneratePoints(SegmentCount, curvePoints))
+                {
+                    points.Add(generatedPoint);
+                }
             }
         }
     }
