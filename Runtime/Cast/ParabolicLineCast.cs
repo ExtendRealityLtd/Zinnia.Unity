@@ -206,16 +206,19 @@
         {
             forward = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : forward;
             down = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : down;
-
-            curvePoints[0] = Origin.transform.position;
-            curvePoints[1] = forward + (Vector3.up * CurveOffset);
-            curvePoints[2] = down;
-            curvePoints[3] = down;
-
             points.Clear();
-            foreach (Vector3 generatedPoint in BezierCurveGenerator.GeneratePoints(SegmentCount, curvePoints))
+
+            if (curvePoints > 3)
             {
-                points.Add(generatedPoint);
+                curvePoints[0] = Origin.transform.position;
+                curvePoints[1] = forward + (Vector3.up * CurveOffset);
+                curvePoints[2] = down;
+                curvePoints[3] = down;
+            
+                foreach (Vector3 generatedPoint in BezierCurveGenerator.GeneratePoints(SegmentCount, curvePoints))
+                {
+                    points.Add(generatedPoint);
+                }
             }
         }
     }
