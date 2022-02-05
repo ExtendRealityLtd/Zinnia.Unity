@@ -225,7 +225,7 @@
                 curvePoints[1] = forward + (Vector3.up * CurveOffset);
                 curvePoints[2] = down;
                 curvePoints[3] = down;
-
+            
                 foreach (Vector3 generatedPoint in BezierCurveGenerator.GeneratePoints(SegmentCount, curvePoints))
                 {
                     points.Add(generatedPoint);
