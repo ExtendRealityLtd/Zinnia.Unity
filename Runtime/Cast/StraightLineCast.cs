@@ -50,8 +50,11 @@
 
             Vector3 destinationPosition = hasCollided ? hitData.point : originPosition + originForward * MaximumLength;
 
-            points[0] = originPosition;
-            points[1] = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : destinationPosition;
+            if (points.Count >= 2)
+            {
+                points[0] = originPosition;
+                points[1] = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : destinationPosition;
+            }
         }
     }
 }

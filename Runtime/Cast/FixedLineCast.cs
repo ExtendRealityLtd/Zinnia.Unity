@@ -36,8 +36,11 @@ namespace Zinnia.Cast
             Vector3 originPosition = Origin.transform.position;
             Vector3 destinationPosition = originPosition + Origin.transform.forward * CurrentLength;
 
-            points[0] = originPosition;
-            points[1] = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : destinationPosition;
+            if (points.Count >= 2)
+            {
+                points[0] = originPosition;
+                points[1] = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : destinationPosition;
+            }
         }
 
         /// <summary>

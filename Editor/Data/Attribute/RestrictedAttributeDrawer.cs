@@ -9,6 +9,35 @@
     [CustomPropertyDrawer(typeof(RestrictedAttribute))]
     public class RestrictedAttributeDrawer : PropertyDrawer
     {
+        /// <summary>
+        /// The original GUI enabled state.
+        /// </summary>
+        protected static bool originalGUIEnabledState = GUI.enabled;
+        /// <summary>
+        /// The original GUI color.
+        /// </summary>
+        protected static Color originalGuiColor = GUI.color;
+        /// <summary>
+        /// The original font style.
+        /// </summary>
+        protected static FontStyle originalFontStyle = EditorStyles.label.fontStyle;
+        /// <summary>
+        /// The original normal text color.
+        /// </summary>
+        protected static Color originalNormalTextColor = EditorStyles.label.normal.textColor;
+        /// <summary>
+        /// The original focused text color.
+        /// </summary>
+        protected static Color originalFocusedTextColor = EditorStyles.label.focused.textColor;
+        /// <summary>
+        /// The color to use for muted text.
+        /// </summary>
+        protected static Color mutedColor = new Color(0.75f, 0.75f, 0.75f);
+        /// <summary>
+        /// The font style to use for muted text.
+        /// </summary>
+        protected static FontStyle mutedStyle = FontStyle.Italic;
+
         /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -25,41 +54,28 @@
 
             bool muteProperty = (attrib.restrictions & RestrictedAttribute.Restrictions.Muted) != 0;
 
-            bool originalGUIEnabledState = GUI.enabled;
+            originalGUIEnabledState = GUI.enabled;
+
             if (makeReadOnly)
             {
                 GUI.enabled = false;
             }
 
-            Color controlColor = new Color(0.75f, 0.75f, 0.75f);
-
-            Color originalGuiColor = GUI.color;
-            FontStyle originalFontStyle = EditorStyles.label.fontStyle;
-            Color originalNormalTextColor = EditorStyles.label.normal.textColor;
-            Color originalFocusedTextColor = EditorStyles.label.focused.textColor;
-
             if (muteProperty)
             {
-                GUI.color = controlColor;
-                EditorStyles.label.normal.textColor = controlColor;
-                EditorStyles.label.focused.textColor = controlColor;
-                EditorStyles.label.fontStyle = FontStyle.Italic;
+                GUI.color = mutedColor;
+                EditorStyles.label.normal.textColor = mutedColor;
+                EditorStyles.label.focused.textColor = mutedColor;
+                EditorStyles.label.fontStyle = mutedStyle;
             }
 
             EditorGUI.PropertyField(position, property, label, true);
 
-            if (muteProperty)
-            {
-                GUI.color = originalGuiColor;
-                EditorStyles.label.normal.textColor = originalNormalTextColor;
-                EditorStyles.label.focused.textColor = originalFocusedTextColor;
-                EditorStyles.label.fontStyle = originalFontStyle;
-            }
-
-            if (makeReadOnly)
-            {
-                GUI.enabled = originalGUIEnabledState;
-            }
+            GUI.color = originalGuiColor;
+            EditorStyles.label.normal.textColor = originalNormalTextColor;
+            EditorStyles.label.focused.textColor = originalFocusedTextColor;
+            EditorStyles.label.fontStyle = originalFontStyle;
+            GUI.enabled = originalGUIEnabledState;
 
             EditorGUI.EndProperty();
         }
