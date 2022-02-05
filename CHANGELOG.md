@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.45.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.44.0...v1.45.0) (2022-02-05)
+
+#### Features
+
+* **Tracking:** add base device details record for extending ([ec682ee](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/ec682ee4fc0a2c78009d389a972bd5056932ffc1))
+  > The BaseDeviceDetailsRecord provides a base record to extend upon that leverages the Unity library XR settings and system info settings to provide base values for any concrete implementation.
+
+#### Bug Fixes
+
+* **Attribute:** prevent muted restricted attribute changing all fields ([3810b9c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/3810b9c00b81c9d36963b463dccfa939af43589d))
+  > There was an issue with the Muted Restricted attribute where on occasions it could change all fields to the muted styles.
+* **Cast:** prevent casts not resetting on disable ([c4444e6](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c4444e6e03ed7ba0d5a8b504ea15b584c3454a60))
+  > The LineCasts could get into a situation where they would not work after the component was disabled. This is due to the RayCast target not being reset to null when the component is disabled.
+  > 
+  > Also, extra checks to ensure the points arrays are actually set to the correct values are now done to prevent any exceptions that may occur.
+
 ## [1.44.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.43.0...v1.44.0) (2022-01-17)
 
 #### Features
