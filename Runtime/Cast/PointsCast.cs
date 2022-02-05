@@ -191,6 +191,8 @@
 
         protected virtual void OnDisable()
         {
+            TargetHit = null;
+            IsTargetHitValid = false;
             ClearDestinationPointOverride();
         }
 
