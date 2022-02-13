@@ -79,6 +79,10 @@
         /// The coroutine for deferring the <see cref="OnTriggerExit(Collider)"/> call to the next FixedUpdate process in the life-cycle.
         /// </summary>
         protected Coroutine deferredTriggerExit;
+        /// <summary>
+        /// The <see cref="Transform"/> containing the current checked collider.
+        /// </summary>
+        protected Transform colliderContainingTransform;
 
         /// <summary>
         /// Prepares the collision states for a kinematic state change on the given <see cref="Rigidbody"/>.
@@ -215,7 +219,7 @@
 
         protected virtual void OnTriggerExit(Collider collider)
         {
-            Transform colliderContainingTransform = collider.GetContainingTransform();
+            colliderContainingTransform = collider.GetContainingTransform();
             if (HasKinematicStateChanged(collider, false) && (!exitColliderContainerTimeStamps.TryGetValue(colliderContainingTransform, out int colliderFrame) || colliderFrame != Time.frameCount))
             {
                 exitColliderTimeStamps[collider] = Time.frameCount;
