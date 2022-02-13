@@ -777,6 +777,136 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
         }
 
         [Test]
+        public void SliceFirstElementHeadRemainedChangedUnchanged()
+        {
+            UnityEventListenerMock slicedChangedMock = new UnityEventListenerMock();
+            subject.SlicedChanged.AddListener(slicedChangedMock.Listen);
+            UnityEventListenerMock slicedUnchangedMock = new UnityEventListenerMock();
+            subject.SlicedUnchanged.AddListener(slicedUnchangedMock.Listen);
+
+            UnityEventListenerMock remainedChangedMock = new UnityEventListenerMock();
+            subject.RemainedChanged.AddListener(remainedChangedMock.Listen);
+            UnityEventListenerMock remainedUnchangedMock = new UnityEventListenerMock();
+            subject.RemainedUnchanged.AddListener(remainedUnchangedMock.Listen);
+
+            UnityEventListenerMock slicedMock = new UnityEventListenerMock();
+            subject.Sliced.AddListener(slicedMock.Listen);
+            UnityEventListenerMock remainedMock = new UnityEventListenerMock();
+            subject.Remained.AddListener(remainedMock.Listen);
+
+            List<CollisionNotifier.EventData> collisionList = new List<CollisionNotifier.EventData>();
+            GameObject oneContainer;
+            CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
+            collisionList.Add(oneData);
+
+            GameObject twoContainer;
+            CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
+            collisionList.Add(twoData);
+
+            GameObject threeContainer;
+            CollisionNotifier.EventData threeData = CollisionNotifierHelper.GetEventData(out threeContainer);
+            threeContainer.name = "three";
+            collisionList.Add(threeData);
+
+            GameObject fourContainer;
+            CollisionNotifier.EventData fourData = CollisionNotifierHelper.GetEventData(out fourContainer);
+            fourContainer.name = "four";
+            collisionList.Add(fourData);
+
+            GameObject fiveContainer;
+            CollisionNotifier.EventData fiveData = CollisionNotifierHelper.GetEventData(out fiveContainer);
+            fiveContainer.name = "five";
+            collisionList.Add(fiveData);
+
+            GameObject sixContainer;
+            CollisionNotifier.EventData sixData = CollisionNotifierHelper.GetEventData(out sixContainer);
+            sixContainer.name = "six";
+            collisionList.Add(sixData);
+
+            ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
+
+            subject.StartIndex = 0;
+            subject.Length = 1;
+
+            Assert.AreEqual("one,two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(eventData));
+
+            Assert.IsFalse(slicedMock.Received);
+            Assert.IsFalse(remainedMock.Received);
+            Assert.IsFalse(slicedChangedMock.Received);
+            Assert.IsFalse(slicedUnchangedMock.Received);
+            Assert.IsFalse(remainedChangedMock.Received);
+            Assert.IsFalse(remainedUnchangedMock.Received);
+
+            ActiveCollisionsContainer.EventData remainedList;
+            ActiveCollisionsContainer.EventData slicedList = subject.Slice(eventData, out remainedList);
+
+            Assert.IsTrue(slicedMock.Received);
+            Assert.IsTrue(remainedMock.Received);
+
+            Assert.IsTrue(slicedChangedMock.Received);
+            Assert.IsFalse(slicedUnchangedMock.Received);
+            Assert.IsTrue(remainedChangedMock.Received);
+            Assert.IsFalse(remainedUnchangedMock.Received);
+
+            Assert.AreEqual("one", ActiveCollisionsHelper.GetNamesOfActiveCollisions(slicedList));
+            Assert.AreEqual("two,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(remainedList));
+
+            slicedMock.Reset();
+            remainedMock.Reset();
+            slicedChangedMock.Reset();
+            slicedUnchangedMock.Reset();
+            remainedChangedMock.Reset();
+            remainedUnchangedMock.Reset();
+
+            subject.Slice(eventData, out remainedList);
+
+            Assert.IsFalse(slicedChangedMock.Received);
+            Assert.IsTrue(slicedUnchangedMock.Received);
+            Assert.IsFalse(remainedChangedMock.Received);
+            Assert.IsTrue(remainedUnchangedMock.Received);
+
+            slicedMock.Reset();
+            remainedMock.Reset();
+            slicedChangedMock.Reset();
+            slicedUnchangedMock.Reset();
+            remainedChangedMock.Reset();
+            remainedUnchangedMock.Reset();
+
+            collisionList.Clear();
+            collisionList.Add(twoData);
+            collisionList.Add(oneData);
+            collisionList.Add(threeData);
+            collisionList.Add(fourData);
+            collisionList.Add(fiveData);
+            collisionList.Add(sixData);
+
+            eventData = new ActiveCollisionsContainer.EventData().Set(collisionList);
+
+            remainedList.Clear();
+            slicedList = subject.Slice(eventData, out remainedList);
+
+            Assert.IsTrue(slicedMock.Received);
+            Assert.IsTrue(remainedMock.Received);
+
+            Assert.IsTrue(slicedChangedMock.Received);
+            Assert.IsFalse(slicedUnchangedMock.Received);
+            Assert.IsTrue(remainedChangedMock.Received);
+            Assert.IsFalse(remainedUnchangedMock.Received);
+
+            Assert.AreEqual("two", ActiveCollisionsHelper.GetNamesOfActiveCollisions(slicedList));
+            Assert.AreEqual("one,three,four,five,six", ActiveCollisionsHelper.GetNamesOfActiveCollisions(remainedList));
+
+            Object.DestroyImmediate(oneContainer);
+            Object.DestroyImmediate(twoContainer);
+            Object.DestroyImmediate(threeContainer);
+            Object.DestroyImmediate(fourContainer);
+            Object.DestroyImmediate(fiveContainer);
+            Object.DestroyImmediate(sixContainer);
+        }
+
+        [Test]
         public void SliceInactiveGameObject()
         {
             UnityEventListenerMock slicedMock = new UnityEventListenerMock();

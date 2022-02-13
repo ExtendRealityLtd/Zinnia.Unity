@@ -2,18 +2,21 @@
 {
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System.Linq;
     using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Slices a selection of the collection from the given <see cref="StartIndex"/> for the given <see cref="Length"/> and provides the sliced collection and the remaining collection separately.
     /// </summary>
     public class Slicer : MonoBehaviour
     {
+        #region Index Settings
         /// <summary>
         /// The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.
         /// </summary>
         [Serialized]
-        [field: DocumentedByXml]
+        [field: Header("Index Settings"), DocumentedByXml]
         public int StartIndex { get; set; }
         /// <summary>
         /// The number of elements in the slice.
@@ -21,34 +24,61 @@
         [Serialized]
         [field: DocumentedByXml]
         public uint Length { get; set; } = 1;
+        #endregion
 
+        #region State Events
         /// <summary>
-        /// The elements that have been sliced out of the list.
+        /// Emitted when the Sliced list has changed since last slice.
         /// </summary>
-        public ActiveCollisionsContainer.EventData SlicedList
-        {
-            get;
-            protected set;
-        } = new ActiveCollisionsContainer.EventData();
+        [Header("State Events"), DocumentedByXml]
+        public UnityEvent SlicedChanged = new UnityEvent();
         /// <summary>
-        /// The elements that are still remaining in the list after a slice.
+        /// Emitted when the Sliced list has remained unchanged since last slice.
         /// </summary>
-        public ActiveCollisionsContainer.EventData RemainingList
-        {
-            get;
-            protected set;
-        } = new ActiveCollisionsContainer.EventData();
+        [DocumentedByXml]
+        public UnityEvent SlicedUnchanged = new UnityEvent();
+        /// <summary>
+        /// Emitted when the Remained list has changed since last slice.
+        /// </summary>
+        [DocumentedByXml]
+        public UnityEvent RemainedChanged = new UnityEvent();
+        /// <summary>
+        /// Emitted when the Remained list has remained unchanged since last slice.
+        /// </summary>
+        [DocumentedByXml]
+        public UnityEvent RemainedUnchanged = new UnityEvent();
+        #endregion
 
+        #region Data Events
         /// <summary>
         /// Emitted when the sliced elements are taken from the collection.
         /// </summary>
-        [DocumentedByXml]
+        [Header("Data Events"), DocumentedByXml]
         public ActiveCollisionsContainer.ActiveCollisionUnityEvent Sliced = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
         /// <summary>
         /// Emitted when the remaining elements are left after slicing.
         /// </summary>
         [DocumentedByXml]
         public ActiveCollisionsContainer.ActiveCollisionUnityEvent Remained = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
+        #endregion
+
+        /// <summary>
+        /// The elements that have been sliced out of the list.
+        /// </summary>
+        public ActiveCollisionsContainer.EventData SlicedList { get; protected set; } = new ActiveCollisionsContainer.EventData();
+        /// <summary>
+        /// The elements that are still remaining in the list after a slice.
+        /// </summary>
+        public ActiveCollisionsContainer.EventData RemainingList { get; protected set; } = new ActiveCollisionsContainer.EventData();
+
+        /// <summary>
+        /// The cached <see cref="Sliced"/> list.
+        /// </summary>
+        protected ActiveCollisionsContainer.EventData cachedSlicedList = new ActiveCollisionsContainer.EventData();
+        /// <summary>
+        /// The cached <see cref="Remained"/> list.
+        /// </summary>
+        protected ActiveCollisionsContainer.EventData cachedRemainingList = new ActiveCollisionsContainer.EventData();
 
         /// <summary>
         /// Slices the collision collection.
@@ -74,6 +104,18 @@
                 return SlicedList;
             }
 
+            CreateSlicedList(originalList);
+            CreateRemainedList(originalList);
+
+            return SlicedList;
+        }
+
+        /// <summary>
+        /// Creates the contents of the sliced list.
+        /// </summary>
+        /// <param name="originalList">The full list to slice.</param>
+        protected virtual void CreateSlicedList(ActiveCollisionsContainer.EventData originalList)
+        {
             int collectionCount = originalList.ActiveCollisions.Count;
             int actualStartIndex = GetStartIndex(StartIndex, collectionCount);
             int actualLength = GetRangeLength(actualStartIndex, (int)Length, collectionCount);
@@ -83,8 +125,26 @@
                 SlicedList.ActiveCollisions.Add(originalList.ActiveCollisions[index]);
             }
 
+            if (!SlicedList.ActiveCollisions.SequenceEqual(cachedSlicedList.ActiveCollisions))
+            {
+                SlicedChanged?.Invoke();
+            }
+            else
+            {
+                SlicedUnchanged?.Invoke();
+            }
+
             Sliced?.Invoke(SlicedList);
 
+            cachedSlicedList.ActiveCollisions = SlicedList.ActiveCollisions.GetRange(0, SlicedList.ActiveCollisions.Count);
+        }
+
+        /// <summary>
+        /// Creates the contents of the remaining list.
+        /// </summary>
+        /// <param name="originalList">The full list to slice.</param>
+        protected virtual void CreateRemainedList(ActiveCollisionsContainer.EventData originalList)
+        {
             foreach (CollisionNotifier.EventData originalCollision in originalList.ActiveCollisions)
             {
                 if (!SlicedList.ActiveCollisions.Contains(originalCollision))
@@ -92,9 +152,19 @@
                     RemainingList.ActiveCollisions.Add(originalCollision);
                 }
             }
+
+            if (!RemainingList.ActiveCollisions.SequenceEqual(cachedRemainingList.ActiveCollisions))
+            {
+                RemainedChanged?.Invoke();
+            }
+            else
+            {
+                RemainedUnchanged?.Invoke();
+            }
+
             Remained?.Invoke(RemainingList);
 
-            return SlicedList;
+            cachedRemainingList.ActiveCollisions = RemainingList.ActiveCollisions.GetRange(0, RemainingList.ActiveCollisions.Count);
         }
 
         /// <summary>
