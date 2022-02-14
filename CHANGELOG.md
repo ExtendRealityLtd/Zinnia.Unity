@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.46.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.45.0...v1.46.0) (2022-02-14)
+
+#### Features
+
+* **Collision:** add (un)changed list events to slicer ([0009a4f](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/0009a4fa279c1bdf9d50231b5555a9542f8d4755))
+  > The Slicer component now has some additional events that are raised when the Sliced and Remaining lists change or stay unchanged when a slice operation is called.
+* **Data:** add missing data transformation types ([0293373](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/029337388ce81d5bd8b09a709617208083c7cfbf))
+  > A number of new data transformations have been added to fill the gaps where they were missing but existed for other similar data types or the data type had a certain transformation operation but was lacking in another (e.g. had an adder but no subtractor).
+
+#### Bug Fixes
+
+* **Collision:** prevent Transform creation every call ([659dee7](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/659dee728b1695ffbfe19d1e468968e42f864e31))
+  > There was a new Transform object being created every call which could have caused issues with garbage collection. The transform is now just a reused reference which shouldn't need to create a new object every call.
+* **Tracking:** add time limit to rigidbody velocity tests ([c8141a3](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c8141a339861b737fbc711c2c7e194b634cbcb77))
+  > The RigidbodyVelocityTest can occasionally fail in the diverge tests as it's relying on the physics engine to work perfectly under test conditions and it causes the test to hang indefinitely. This has been fixed by simply adding a counter that will cause the while loop to end if the timer exceeds the limit.
+
 ## [1.45.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.44.0...v1.45.0) (2022-02-05)
 
 #### Features
