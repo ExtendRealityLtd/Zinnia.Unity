@@ -1,4 +1,4 @@
-﻿using Zinnia.Data.Type.Transformation;
+using Zinnia.Data.Type.Transformation;
 
 namespace Test.Zinnia.Data.Type.Transformation
 {
@@ -7,14 +7,14 @@ namespace Test.Zinnia.Data.Type.Transformation
     using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
-    public class Vector3MagnitudeSetterTest
+    public class Vector2MagnitudeSetterTest
     {
-        private Vector3MagnitudeSetter subject;
+        private Vector2MagnitudeSetter subject;
 
         [SetUp]
         public void SetUp()
         {
-            subject = new GameObject().AddComponent<Vector3MagnitudeSetter>();
+            subject = new GameObject().AddComponent<Vector2MagnitudeSetter>();
         }
 
         [TearDown]
@@ -30,7 +30,7 @@ namespace Test.Zinnia.Data.Type.Transformation
 
             Assert.AreEqual(2f, subject.Magnitude);
 
-            Vector3 expected = new Vector3(1f, 2f, 3f);
+            Vector2 expected = new Vector2(1f, 2f);
             subject.SetMagnitude(expected);
 
             Assert.AreEqual(expected.magnitude, subject.Magnitude);
@@ -42,13 +42,13 @@ namespace Test.Zinnia.Data.Type.Transformation
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
 
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.AreEqual(Vector2.zero, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
             subject.Magnitude = 2f;
-            Vector3 input = new Vector3(1f, -2f, 5f);
-            Vector3 result = subject.Transform(input);
-            Vector3 expectedResult = new Vector3(0.3651484f, -0.7302967f, 1.825742f);
+            Vector2 input = new Vector2(1f, -2f);
+            Vector2 result = subject.Transform(input);
+            Vector2 expectedResult = new Vector2(0.8944272f, -1.788854f);
 
             Assert.AreEqual(expectedResult.ToString(), result.ToString());
             Assert.AreEqual(expectedResult.ToString(), subject.Result.ToString());
