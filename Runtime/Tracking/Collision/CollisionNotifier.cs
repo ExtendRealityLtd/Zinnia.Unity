@@ -247,6 +247,10 @@
         /// Whether the <see cref="collisionNotifiers"/> collection is being processed on stop.
         /// </summary>
         protected bool isProcessingStopNotifierCollection;
+        /// <summary>
+        /// The <see cref="Transform"/> of the notifier for the given collider data.
+        /// </summary>
+        protected Transform notifierColliderTransform;
 
         /// <summary>
         /// Processes any collision start events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.
@@ -360,15 +364,15 @@
                 return collisionNotifiers;
             }
 
-            Transform reference = data.ColliderData.GetContainingTransform();
+            notifierColliderTransform = data.ColliderData.GetContainingTransform();
 
-            if (transform.IsChildOf(reference))
+            if (transform.IsChildOf(notifierColliderTransform))
             {
                 collisionNotifiers.Clear();
             }
             else
             {
-                reference.GetComponentsInChildren(collisionNotifiers);
+                notifierColliderTransform.GetComponentsInChildren(collisionNotifiers);
             }
 
             return collisionNotifiers;
