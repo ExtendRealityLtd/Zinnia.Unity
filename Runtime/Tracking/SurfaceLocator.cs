@@ -288,6 +288,7 @@
             surfaceData.CollisionData = collision;
             surfaceData.Transform = surfaceData.CollisionData.transform;
             surfaceData.PositionOverride = surfaceData.CollisionData.point + DestinationOffset;
+            surfaceData.PositionalOffset = DestinationOffset;
         }
 
         /// <summary>

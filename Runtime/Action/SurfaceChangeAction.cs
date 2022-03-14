@@ -67,8 +67,8 @@
                 return;
             }
 
-            Vector3 generatedOrigin = GetCollisionPoint(surfaceData.PreviousCollisionData);
-            Vector3 generatedTarget = GeneratePoint(surfaceData.Position);
+            Vector3 generatedOrigin = GetCollisionPoint(surfaceData.PreviousCollisionData, surfaceData.PositionalOffset);
+            Vector3 generatedTarget = GeneratePoint(surfaceData.Position, Vector3.zero);
 
             bool result = !generatedOrigin.ApproxEquals(generatedTarget, ChangeDistance);
             Receive(result);
@@ -89,22 +89,24 @@
         /// Attempts to get the collision point for the given <see cref="RaycastHit"/> data.
         /// </summary>
         /// <param name="collisionData">The <see cref="RaycastHit"/> data to get the collision point from.</param>
+        /// <param name="offset">The positional offset to apply.</param>
         /// <returns>The collision point.</returns>
-        protected virtual Vector3 GetCollisionPoint(RaycastHit collisionData)
+        protected virtual Vector3 GetCollisionPoint(RaycastHit collisionData, Vector3 offset)
         {
-            return collisionData.transform != null ? GeneratePoint(collisionData.point) : Vector3.zero;
+            return collisionData.transform != null ? GeneratePoint(collisionData.point, offset) : Vector3.zero;
         }
 
         /// <summary>
         /// Creates a <see cref="Vector3"/> based on the given point for the valid axes.
         /// </summary>
         /// <param name="point">The Point to generate the <see cref="Vector3"/> from.</param>
+        /// <param name="offset">The positional offset to apply.</param>
         /// <returns>The point only within the valid axes.</returns>
-        protected virtual Vector3 GeneratePoint(Vector3 point)
+        protected virtual Vector3 GeneratePoint(Vector3 point, Vector3 offset)
         {
-            float resultX = CheckAxis.xState ? point.x : 0f;
-            float resultY = CheckAxis.yState ? point.y : 0f;
-            float resultZ = CheckAxis.zState ? point.z : 0f;
+            float resultX = CheckAxis.xState ? point.x + offset.x : 0f;
+            float resultY = CheckAxis.yState ? point.y + offset.y : 0f;
+            float resultZ = CheckAxis.zState ? point.z + offset.z : 0f;
             return new Vector3(resultX, resultY, resultZ);
         }
 
