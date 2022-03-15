@@ -95,9 +95,9 @@ namespace Test.Zinnia.Action
             return true;
         }
 
-        protected override Vector3 GetCollisionPoint(RaycastHit collisionData)
+        protected override Vector3 GetCollisionPoint(RaycastHit collisionData, Vector3 offset)
         {
-            return GeneratePoint(collisionData.point);
+            return GeneratePoint(collisionData.point, offset);
         }
     }
 }

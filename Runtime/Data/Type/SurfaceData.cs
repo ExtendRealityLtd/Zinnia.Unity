@@ -27,6 +27,11 @@
         public Vector3 Direction { get; set; }
 
         /// <summary>
+        /// Positional offset data that has been applied to the collision point.
+        /// </summary>
+        public Vector3 PositionalOffset { get; set; }
+
+        /// <summary>
         /// <see cref="RaycastHit"/> data about the current collision.
         /// </summary>
         public RaycastHit CollisionData { get; set; }
@@ -61,8 +66,9 @@
         public override void Clear()
         {
             base.Clear();
-            Origin = new Vector3();
-            Direction = new Vector3();
+            Origin = Vector3.zero;
+            Direction = Vector3.zero;
+            PositionalOffset = Vector3.zero;
             CollisionData = new RaycastHit();
             PreviousCollisionData = new RaycastHit();
         }
