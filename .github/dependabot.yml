@@ -8,7 +8,6 @@ updates:
     timezone: Europe/Berlin
   open-pull-requests-limit: 10
   reviewers:
-  - bddckr
   - thestonefox
   labels:
   - dependency-update
