@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.47.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.46.0...v1.47.0) (2022-03-15)
+
+#### Features
+
+* **Action:** allow access to surface locator destination offset ([ed9d32e](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/ed9d32ed2a78f923747968dff1212569fcb55fd3))
+  > The Surface Change Action actually needs to access the offset that the SurfaceLocator has on it, but there is no way of directly getting this so the SurfaceData has now been updated to contain a Positional Offset property that can be set by the Surface Locator and then accessed by the Surface Change Action.
+
 ## [1.46.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.45.0...v1.46.0) (2022-02-14)
 
 #### Features
