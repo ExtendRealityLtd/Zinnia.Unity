@@ -18,6 +18,14 @@
         /// The label style.
         /// </summary>
         protected readonly GUIContent propertyReferenceLabel = new GUIContent("Elements");
+        /// <summary>
+        /// Whether to set the serialized list data.
+        /// </summary>
+        protected bool setSerializedList;
+        /// <summary>
+        /// The serialized list object.
+        /// </summary>
+        protected SerializedObject referenceObject;
 
         /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -33,10 +41,18 @@
             using (new EditorGUI.IndentLevelScope())
             using (new EditorGUI.DisabledScope(Application.isPlaying))
             {
-                SerializedObject referenceObject = new SerializedObject(propertyObject);
+                if (!setSerializedList)
+                {
+                    referenceObject = new SerializedObject(propertyObject);
+                    setSerializedList = true;
+                }
+
                 SerializedProperty elements = referenceObject.FindProperty(propertyReference);
                 EditorGUILayout.PropertyField(elements, propertyReferenceLabel, true);
-                referenceObject.ApplyModifiedProperties();
+                if (referenceObject.ApplyModifiedProperties())
+                {
+                    setSerializedList = false;
+                }
             }
         }
     }
