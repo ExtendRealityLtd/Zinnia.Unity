@@ -1,5 +1,21 @@
 # Changelog
 
+### [1.47.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.47.0...v1.47.1) (2022-03-15)
+
+#### Bug Fixes
+
+* **Data:** allow list drawer to save changes ([6a0f1e0](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/6a0f1e04bf9c7ed7f813751dab1b6a88d3c98aa9))
+  > The Observable List Drawer has an issue in Unity 2021.2 where making changes to a linked list will not save due to the way the serialized object is obtained as new every frame, this means that the object can be out of date and load in the old changes.
+  > 
+  > This also was a cause of an issue where having the linked list component on the same component as the actual list meant it would not save changes.
+  > 
+  > The fix is to only get the new version of the serialized list object if any changes have been made and therefore it won't attempt to get it every frame.
+
+#### Miscellaneous Chores
+
+* **dependabot:** remove bddckr from reviewers ([6a9f4d1](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/6a9f4d1eaa68899c4c7f23fd897d7bcc44cce7ac))
+  > Chris hasn't been actively part of the project for a while.
+
 ## [1.47.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.46.0...v1.47.0) (2022-03-15)
 
 #### Features
