@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -126,10 +125,9 @@
         /// <param name="publisherPayload">The publisher payload data.</param>
         /// <param name="currentCollision">The current collision within published data.</param>
         /// <returns>Whether the consumption was allowed and successful.</returns>
-        [RequiresBehaviourState]
         public virtual bool Consume(ActiveCollisionPublisher.PayloadData publisherPayload, CollisionNotifier.EventData currentCollision)
         {
-            if (!PublisherValidity.Accepts(publisherPayload.PublisherContainer))
+            if (!this.IsValidState() || !PublisherValidity.Accepts(publisherPayload.PublisherContainer))
             {
                 return false;
             }
@@ -144,9 +142,13 @@
         /// <summary>
         /// Clears the previously consumed data.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Clear()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (PublisherSource != null && PublisherSource.Publisher != null)
             {
                 PublisherSource.Publisher.UnregisterRegisteredConsumer(this);

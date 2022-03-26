@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits the velocities of a given <see cref="VelocityTracker"/>.
@@ -56,10 +56,9 @@
         /// <summary>
         /// Emits the Velocity of the Tracked Velocity.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitVelocity()
         {
-            if (Source == null)
+            if (!this.IsValidState() || Source == null)
             {
                 return;
             }
@@ -70,10 +69,9 @@
         /// <summary>
         /// Emits the Speed of the Tracked Velocity.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitSpeed()
         {
-            if (Source == null)
+            if (!this.IsValidState() || Source == null)
             {
                 return;
             }
@@ -84,10 +82,9 @@
         /// <summary>
         /// Emits the Angular Velocity of the Tracked Velocity.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitAngularVelocity()
         {
-            if (Source == null)
+            if (!this.IsValidState() || Source == null)
             {
                 return;
             }
@@ -98,10 +95,9 @@
         /// <summary>
         /// Emits the Angular Velocity of the Tracked Velocity.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitAngularSpeed()
         {
-            if (Source == null)
+            if (!this.IsValidState() || Source == null)
             {
                 return;
             }

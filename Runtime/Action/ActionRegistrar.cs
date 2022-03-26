@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -8,6 +7,7 @@
     using UnityEngine;
     using Zinnia.Action.Collection;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Allows actions to dynamically register listeners to other actions.
@@ -190,9 +190,13 @@
         /// Called after an element is added to <see cref="Sources"/>.
         /// </summary>
         /// <param name="source">The element added to the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnSourceAdded(ActionSource source)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (GameObject limit in SourceLimits.SubscribableElements)
             {
                 TryAddTargetSource(source, limit);
@@ -203,9 +207,13 @@
         /// Called after an element is removed from <see cref="Sources"/>.
         /// </summary>
         /// <param name="source">The element removed from the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnSourceRemoved(ActionSource source)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (GameObject limit in SourceLimits.SubscribableElements)
             {
                 TryRemoveTargetSource(source, limit);
@@ -216,9 +224,13 @@
         /// Called after an element is added to <see cref="SourceLimits"/>.
         /// </summary>
         /// <param name="limit">The element added to the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnSourceLimitAdded(GameObject limit)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (ActionSource source in Sources.SubscribableElements)
             {
                 TryAddTargetSource(source, limit);
@@ -229,9 +241,13 @@
         /// Called after an element is removed from <see cref="SourceLimits"/>.
         /// </summary>
         /// <param name="limit">The element removed from the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnSourceLimitRemoved(GameObject limit)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (ActionSource source in Sources.SubscribableElements)
             {
                 TryRemoveTargetSource(source, limit);

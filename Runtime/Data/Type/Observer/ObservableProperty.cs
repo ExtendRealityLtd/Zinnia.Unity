@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Data.Type.Observer
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// The basis for all Observable Property types.
@@ -113,9 +113,13 @@
         /// <summary>
         /// Checks for changes from the current <see cref="Data"/> value to the previous value.
         /// </summary>
-        [RequiresBehaviourState]
         protected virtual void CheckForChanges()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (Equals(Data, previousDataValue))
             {
                 if (shouldRaiseUnmodifiedEvent)

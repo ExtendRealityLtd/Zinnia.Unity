@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -57,10 +56,9 @@
         /// Sets the <see cref="Target"/> based on the first found <see cref="Rigidbody"/> as either a direct, descendant or ancestor of the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="target">The <see cref="GameObject"/> to search for a <see cref="Rigidbody"/> on.</param>
-        [RequiresBehaviourState]
         public virtual void SetTarget(GameObject target)
         {
-            if (target == null)
+            if (!this.IsValidState() || target == null)
             {
                 return;
             }
@@ -98,9 +96,13 @@
         /// <summary>
         /// Sets the velocity of the <see cref="Target"/> to zero.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void ClearVelocity()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Velocity = Vector3.zero;
         }
 
@@ -134,9 +136,13 @@
         /// <summary>
         /// Sets the angular velocity of the <see cref="Target"/> to zero.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void ClearAngularVelocity()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             AngularVelocity = Vector3.zero;
         }
 

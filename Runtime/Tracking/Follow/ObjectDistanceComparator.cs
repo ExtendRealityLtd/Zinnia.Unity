@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -8,6 +7,7 @@
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -122,10 +122,9 @@
         /// <summary>
         /// Checks to see if the distance between the source and target exceed the threshold.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (Source == null || Target == null)
+            if (!this.IsValidState() || Source == null || Target == null)
             {
                 return;
             }

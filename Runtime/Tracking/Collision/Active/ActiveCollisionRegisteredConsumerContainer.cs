@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -111,9 +110,13 @@
         /// Publishes the registered <see cref="ActiveCollisionConsumer"/> components as the component is active and enabled.
         /// Any <see cref="ActiveCollisionConsumer"/> that is in the <see cref="IgnoredRegisteredConsumers"/> will not be published to and the <see cref="IgnoredRegisteredConsumers"/> collection is cleared at the end of the <see cref="Publish"/> operation.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Publish()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (ActiveCollisionConsumer registeredConsumer in new List<ActiveCollisionConsumer>(RegisteredConsumers.Keys))
             {
                 if (IgnoredRegisteredConsumers.Contains(registeredConsumer))
@@ -136,10 +139,9 @@
         /// </summary>
         /// <param name="consumer">The consumer to register.</param>
         /// <param name="payload">The payload that the consumer successfully consumed.</param>
-        [RequiresBehaviourState]
         public virtual void Register(ActiveCollisionConsumer consumer, ActiveCollisionPublisher.PayloadData payload)
         {
-            if (consumer == null)
+            if (!this.IsValidState() || consumer == null)
             {
                 return;
             }

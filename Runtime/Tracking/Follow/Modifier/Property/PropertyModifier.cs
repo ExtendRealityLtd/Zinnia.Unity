@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
     using Zinnia.Tracking.Follow;
 
     /// <summary>
@@ -42,9 +42,13 @@
         /// Attempts to modify the target.
         /// </summary>
         /// <param name="data">Event data that contains the required modifier properties.</param>
-        [RequiresBehaviourState]
         public virtual void Modifiy(ObjectFollower.EventData data)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Modify(data.EventSource, data.EventTarget, data.EventTargetOffset);
         }
 
@@ -54,10 +58,9 @@
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        [RequiresBehaviourState]
         public virtual void Modify(GameObject source, GameObject target, GameObject offset = null)
         {
-            if (source == null || target == null)
+            if (!this.IsValidState() || source == null || target == null)
             {
                 return;
             }

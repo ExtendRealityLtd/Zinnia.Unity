@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Action.Collection
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Allows observing changes to a <see cref="List{T}"/> of <see cref="ActionRegistrar.ActionSource"/>s.
@@ -22,9 +22,13 @@
         /// Enables the <see cref="ActionRegistrar.ActionSource"/> that has a container matching the given source.
         /// </summary>
         /// <param name="source">The source to match the container against.</param>
-        [RequiresBehaviourState]
         public virtual void EnableSource(GameObject source)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetSourceEnabledState(source, true, false);
         }
 
@@ -32,27 +36,39 @@
         /// Disables the <see cref="ActionRegistrar.ActionSource"/> that has a container matching the given source.
         /// </summary>
         /// <param name="source">The source to match the container against.</param>
-        [RequiresBehaviourState]
         public virtual void DisableSource(GameObject source)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetSourceEnabledState(source, false, false);
         }
 
         /// <summary>
         /// Enables all <see cref="ActionRegistrar.ActionSource"/> elements.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EnableAllSources()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetSourceEnabledState(null, true, true);
         }
 
         /// <summary>
         /// Disables all <see cref="ActionRegistrar.ActionSource"/> elements.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void DisableAllSources()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetSourceEnabledState(null, false, true);
         }
 

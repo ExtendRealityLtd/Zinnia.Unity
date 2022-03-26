@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Data.Collection
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Holds a collection of key/value relations between GameObjects and allows searching for a given key in the collection to emit the linked value.
@@ -42,9 +42,13 @@
         /// </summary>
         /// <param name="key">The key of the relation to get the value for.</param>
         /// <returns>The value for the given key.</returns>
-        [RequiresBehaviourState]
         public virtual GameObject GetValue(GameObject key)
         {
+            if (!this.IsValidState())
+            {
+                return null;
+            }
+
             foreach (GameObjectRelationObservableList.Relation relation in Relations.NonSubscribableElements)
             {
                 if (key.Equals(relation.Key))
@@ -62,9 +66,13 @@
         /// </summary>
         /// <param name="relationIndex">The index of the relation to get the value for.</param>
         /// <returns>The value for the given index.</returns>
-        [RequiresBehaviourState]
         public virtual GameObject GetValue(int relationIndex)
         {
+            if (!this.IsValidState())
+            {
+                return null;
+            }
+
             for (int index = 0; index < Relations.NonSubscribableElements.Count; index++)
             {
                 if (index == relationIndex)

@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Applies the velocity data from the given <see cref="VelocityTracker"/> to the given <see cref="Rigidbody"/>.
@@ -27,10 +27,9 @@
         /// <summary>
         /// Applies the velocity data to the <see cref="Target"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (Source == null || Target == null)
+            if (!this.IsValidState() || Source == null || Target == null)
             {
                 return;
             }

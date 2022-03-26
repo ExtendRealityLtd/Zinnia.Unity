@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -230,10 +229,9 @@
         /// <summary>
         /// Applies the properties of the <see cref="Source"/> parameter to the target.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Apply()
         {
-            if (Target == null || Source == null || Source.Transform == null)
+            if (!this.IsValidState() || Target == null || Source == null || Source.Transform == null)
             {
                 return;
             }

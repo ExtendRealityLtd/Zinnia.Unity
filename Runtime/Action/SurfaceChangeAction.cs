@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -59,10 +58,9 @@
         /// Digests <see cref="SurfaceData"/> and compares the current surface to the previous surface to determine if a change has occurred.
         /// </summary>
         /// <param name="surfaceData">The <see cref="SurfaceData"/> to check on.</param>
-        [RequiresBehaviourState]
         public virtual void Receive(SurfaceData surfaceData)
         {
-            if (!ValidSurfaceData(surfaceData))
+            if (!this.IsValidState() || !ValidSurfaceData(surfaceData))
             {
                 return;
             }

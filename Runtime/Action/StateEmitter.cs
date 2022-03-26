@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -21,10 +21,9 @@
         /// <summary>
         /// Re-emits the state of the Action.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (Action == null)
+            if (!this.IsValidState() || Action == null)
             {
                 return;
             }

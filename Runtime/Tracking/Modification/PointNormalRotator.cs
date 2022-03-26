@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Cast;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Rotates the <see cref="GameObject"/> to look into a normal direction.
@@ -23,10 +23,9 @@
         /// Handles the provided data to rotate the <see cref="GameObject"/>.
         /// </summary>
         /// <param name="data">The data to take the rotation info from.</param>
-        [RequiresBehaviourState]
         public virtual void HandleData(PointsCast.EventData data)
         {
-            if (Target == null || data.HitData == null)
+            if (!this.IsValidState() || Target == null || data.HitData == null)
             {
                 return;
             }

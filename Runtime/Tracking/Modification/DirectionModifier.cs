@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -134,9 +133,13 @@
         /// <summary>
         /// Processes the current direction modification.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Process()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetTargetRotation();
         }
 
@@ -152,9 +155,13 @@
         /// Saves the existing orientation of the target.
         /// </summary>
         /// <param name="cancelResetOrientation">Determines whether to cancel any existing orientation reset process.</param>
-        [RequiresBehaviourState]
         public virtual void SaveOrientation(bool cancelResetOrientation = true)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             targetInitialRotation = Target != null ? Target.transform.rotation : Quaternion.identity;
             pivotInitialRotation = Pivot != null ? Pivot.transform.rotation : Quaternion.identity;
             if (cancelResetOrientation)
@@ -166,9 +173,13 @@
         /// <summary>
         /// Resets the orientation of the target to it's initial rotation.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void ResetOrientation()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             pivotReleaseRotation = Pivot != null ? Pivot.transform.rotation : pivotReleaseRotation;
 
             if (ResetOrientationSpeed < float.MaxValue && ResetOrientationSpeed > 0f)

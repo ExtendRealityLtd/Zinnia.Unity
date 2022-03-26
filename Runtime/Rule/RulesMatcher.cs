@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -45,10 +44,9 @@
         /// Attempts to match the given object to the rules within the <see cref="Elements"/> collection. If a match occurs then the appropriate event is emitted.
         /// </summary>
         /// <param name="source">The source to provide to the rule for validity checking.</param>
-        [RequiresBehaviourState]
         public virtual void Match(object source)
         {
-            if (Elements == null)
+            if (!this.IsValidState() || Elements == null)
             {
                 return;
             }

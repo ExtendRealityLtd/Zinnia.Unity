@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -155,10 +154,9 @@
         /// <summary>
         /// Casts and creates points along the cast.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void CastPoints()
         {
-            if (Origin == null)
+            if (!this.IsValidState() || Origin == null)
             {
                 return;
             }

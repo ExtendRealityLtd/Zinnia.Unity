@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
     using System;
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -64,12 +63,11 @@
         /// The acceleration of the <see cref="Source"/>.
         /// </summary>
         /// <returns>Acceleration of the <see cref="Source"/>.</returns>
-        [RequiresBehaviourState]
         public virtual Vector3 GetAcceleration()
         {
-            if (!IsActive())
+            if (!this.IsValidState() || !IsActive())
             {
-                return Vector3.zero;
+                return default;
             }
 
             Vector3 average = Vector3.zero;

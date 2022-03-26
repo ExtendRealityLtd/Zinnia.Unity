@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Sets the state of the current target to the specified active state.
@@ -27,9 +27,13 @@
         /// <summary>
         /// Switches to the next target in the collection and sets to the appropriate state.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void SwitchNext()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Targets.CurrentIndex++;
             if (Targets.CurrentIndex >= Targets.NonSubscribableElements.Count)
             {
@@ -42,9 +46,13 @@
         /// <summary>
         /// Switches to the previous target in the collection and sets to the appropriate state.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void SwitchPrevious()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Targets.CurrentIndex--;
             if (Targets.CurrentIndex < 0)
             {
@@ -58,9 +66,13 @@
         /// Switches to the a specific target in the collection and sets to the appropriate state.
         /// </summary>
         /// <param name="index">The index of the collection to switch to.</param>
-        [RequiresBehaviourState]
         public virtual void SwitchTo(int index)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Targets.CurrentIndex = Mathf.Clamp(index, 0, Targets.NonSubscribableElements.Count - 1);
             Switch();
         }
@@ -68,9 +80,13 @@
         /// <summary>
         /// Switches to the target at the <see cref="CurrentIndex"/> in the collection and sets to the appropriate state.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void SwitchToCurrentIndex()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SwitchTo(Targets.CurrentIndex);
         }
 

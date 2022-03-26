@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Visual
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -191,9 +190,13 @@
         /// </summary>
         /// <param name="overlayColor">The <see cref="Color"/> to apply to the overlay.</param>
         /// <param name="addDuration">The duration of time to apply the overlay <see cref="Color"/>.</param>
-        [RequiresBehaviourState]
         public virtual void AddColorOverlay(Color overlayColor, float addDuration)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             OverlayColor = overlayColor;
             AddDuration = addDuration;
             AddColorOverlay();
@@ -202,18 +205,26 @@
         /// <summary>
         /// Applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void AddColorOverlay()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ApplyColorOverlay(OverlayColor, AddDuration);
         }
 
         /// <summary>
         /// Removes the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="RemoveDuration"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void RemoveColorOverlay()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ApplyColorOverlay(Color.clear, RemoveDuration);
             Removed?.Invoke(eventData.Set(Color.clear));
         }
@@ -221,9 +232,13 @@
         /// <summary>
         /// Applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/> then waits for the given <see cref="AppliedDuration"/> then removes the <see cref="OverlayColor"/> over the given <see cref="RemoveDuration"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Blink()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ApplyColorOverlay(OverlayColor, AddDuration);
             blinkRoutine = StartCoroutine(ResetBlink());
         }

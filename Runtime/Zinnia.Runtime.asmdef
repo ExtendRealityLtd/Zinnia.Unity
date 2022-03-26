@@ -7,7 +7,6 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "Malimbe.BehaviourStateRequirementMethod.dll",
         "Malimbe.MemberChangeMethod.dll",
         "Malimbe.MemberClearanceMethod.dll",
         "Malimbe.PropertySerializationAttribute.dll",

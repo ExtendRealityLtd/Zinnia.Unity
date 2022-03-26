@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Utility
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Counts down from a given start time until zero and emits appropriate events throughout the process.
@@ -113,9 +113,13 @@
         /// <summary>
         /// Starts the timer counting down.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Begin()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             IsRunning = true;
             SetInternalStates();
             Invoke(nameof(Complete), StartTime);
@@ -139,9 +143,13 @@
         /// <summary>
         /// Emits the current running status of the timer.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitStatus()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (IsRunning)
             {
                 StillRunning?.Invoke();
@@ -155,18 +163,26 @@
         /// <summary>
         /// Emits the elapsed time of the timer.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitElapsedTime()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ElapsedTimeEmitted?.Invoke(ElapsedTime);
         }
 
         /// <summary>
         /// Emits the remaining time of the timer.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitRemainingTime()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             RemainingTimeEmitted?.Invoke(RemainingTime);
         }
 

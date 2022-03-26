@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -107,10 +106,9 @@
         /// Sets the active collisions by copying it from given <see cref="ActiveCollisionsContainer.EventData"/>.
         /// </summary>
         /// <param name="data">The data to copy from.</param>
-        [RequiresBehaviourState]
         public virtual void SetActiveCollisions(ActiveCollisionsContainer.EventData data)
         {
-            if (data == null || data.ActiveCollisions == null)
+            if (!this.IsValidState() || data == null || data.ActiveCollisions == null)
             {
                 return;
             }
@@ -123,9 +121,13 @@
         /// Sets the active collision data by copying it from given <see cref="PayloadData"/> as long as the component is active and enabled.
         /// </summary>
         /// <param name="payload">The data to copy from.</param>
-        [RequiresBehaviourState]
         public virtual void SetActiveCollisions(PayloadData payload)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetActiveCollisionsEvenWhenDisabled(payload);
         }
 
@@ -155,9 +157,13 @@
         /// <summary>
         /// Publishes itself and the current collision to all <see cref="ActiveCollisionConsumer"/> components found on any of the active collisions as long as the component is active and enabled.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Publish()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ForcePublish();
         }
 

@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Tracking.Modification.Operation.Extraction
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Extracts the <see cref="TransformData"/> for the Source and Target contained within the <see cref="TransformPropertyApplier.EventData"/>.
@@ -42,10 +42,9 @@
         /// Extracts the source and target from the event data.
         /// </summary>
         /// <param name="eventData">The event data to extract from.</param>
-        [RequiresBehaviourState]
         public virtual void Extract(TransformPropertyApplier.EventData eventData)
         {
-            if (eventData == null)
+            if (!this.IsValidState() || eventData == null)
             {
                 return;
             }

@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Data.Collection.Stack
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// A collection of events to emit when a new <see cref="TElement"/> is added or removed from the stack.
@@ -68,10 +68,9 @@
         /// Push an element onto the stack and emit the related events.
         /// </summary>
         /// <param name="element">The element to push onto the stack and to become the payload of the related event.</param>
-        [RequiresBehaviourState]
         public virtual void Push(TElement element)
         {
-            if (EventIndex >= ElementEvents.Count || Stack.Contains(element))
+            if (!this.IsValidState() || EventIndex >= ElementEvents.Count || Stack.Contains(element))
             {
                 return;
             }
@@ -84,9 +83,13 @@
         /// <summary>
         /// Pops the last element off the stack and emit the related events.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Pop()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (Stack.Count > 0)
             {
                 PopAt(Stack[Stack.Count - 1]);
@@ -97,9 +100,13 @@
         /// Pops from the stack at the given stack index.
         /// </summary>
         /// <param name="index">The index at which to pop the stack at.</param>
-        [RequiresBehaviourState]
         public virtual void PopAt(int index)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (index < Stack.Count && index <= EventIndex)
             {
                 PopAt(Stack[index]);
@@ -110,9 +117,13 @@
         /// Pops the given element from the stack and subsequently remove any elements that are above the given element in the stack and emit the related events.
         /// </summary>
         /// <param name="element">The element to pop from the stack.</param>
-        [RequiresBehaviourState]
         public virtual void PopAt(TElement element)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             int elementIndex = Stack.IndexOf(element);
             if (elementIndex < 0)
             {
@@ -156,9 +167,13 @@
         /// <summary>
         /// Aborts the current stack pop process to prevent any further elements from being popped off the stack.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void AbortPop()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             abortPopProcess = true;
         }
     }

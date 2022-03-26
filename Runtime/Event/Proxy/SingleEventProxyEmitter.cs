@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a UnityEvent with a single payload whenever the Receive method is called.
@@ -29,9 +29,13 @@
         /// Attempts to emit the Emitted event with the given payload.
         /// </summary>
         /// <param name="payload"></param>
-        [RequiresBehaviourState]
         public virtual void Receive(TValue payload)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             TValue previousPayloadValue = Payload;
             Payload = payload;
 
@@ -47,10 +51,9 @@
         /// <summary>
         /// Emits the last received payload.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitPayload()
         {
-            if (!IsValid())
+            if (!this.IsValidState() || !IsValid())
             {
                 return;
             }

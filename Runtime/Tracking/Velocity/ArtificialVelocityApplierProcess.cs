@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -70,9 +69,13 @@
         /// <summary>
         /// Applies the velocity data to the <see cref="Target"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Apply()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             canProcess = true;
         }
 

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -10,6 +9,7 @@
     using UnityEngine.Events;
     using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// The basis for all action types.
@@ -142,10 +142,9 @@
         public HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => Sources;
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void AddSource(Action action)
         {
-            if (action == null)
+            if (!this.IsValidState() || action == null)
             {
                 return;
             }
@@ -155,10 +154,9 @@
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void RemoveSource(Action action)
         {
-            if (action == null)
+            if (!this.IsValidState() || action == null)
             {
                 return;
             }
@@ -168,17 +166,25 @@
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void ClearSources()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             UnsubscribeFromSources();
             Sources.Clear();
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void EmitActivationState()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (IsActivated)
             {
                 Activated?.Invoke(Value);
@@ -192,16 +198,24 @@
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void ReceiveInitialValue()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Receive(InitialValue);
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void ReceiveDefaultValue()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Receive(DefaultValue);
         }
 
@@ -209,9 +223,13 @@
         /// Acts on the value.
         /// </summary>
         /// <param name="value">The value to act on.</param>
-        [RequiresBehaviourState]
         public virtual void Receive(TValue value)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (IsValueEqual(value))
             {
                 ValueUnchanged?.Invoke(Value);

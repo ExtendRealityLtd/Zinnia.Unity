@@ -1,6 +1,5 @@
 namespace Zinnia.Visual
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -8,6 +7,7 @@ namespace Zinnia.Visual
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Modifies the enabled state of the mesh associated with given <see cref="GameObject"/>.
@@ -69,9 +69,13 @@ namespace Zinnia.Visual
         /// Shows the mesh found on the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="container">The <see cref="GameObject"/> to search for a mesh on.</param>
-        [RequiresBehaviourState]
         public virtual void ShowMesh(GameObject container)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ToggleMesh(container, true);
         }
 
@@ -79,10 +83,9 @@ namespace Zinnia.Visual
         /// Shows the mesh found on the given <see cref="Component"/>.
         /// </summary>
         /// <param name="container">The <see cref="Component"/> to search for a mesh on.</param>
-        [RequiresBehaviourState]
         public virtual void ShowMesh(Component container)
         {
-            if (container == null)
+            if (!this.IsValidState() || container == null)
             {
                 return;
             }
@@ -94,9 +97,13 @@ namespace Zinnia.Visual
         /// Shows any meshes found on any children of the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="container">The <see cref="GameObject"/> to begin the descendant search from.</param>
-        [RequiresBehaviourState]
         public virtual void ShowMeshInChildren(GameObject container)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ToggleAllMeshesInChildren(container, true);
         }
 
@@ -104,10 +111,9 @@ namespace Zinnia.Visual
         /// Shows any meshes found on any children of the given <see cref="Component"/>.
         /// </summary>
         /// <param name="container">The <see cref="Component"/> to begin the descendant search from.</param>
-        [RequiresBehaviourState]
         public virtual void ShowMeshInChildren(Component container)
         {
-            if (container == null)
+            if (!this.IsValidState() || container == null)
             {
                 return;
             }
@@ -119,9 +125,13 @@ namespace Zinnia.Visual
         /// Shows the meshes found for any relation matched to the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="key">The key to match on the <see cref="MeshCollections"/>.</param>
-        [RequiresBehaviourState]
         public virtual void ShowMeshInCollections(GameObject key)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ToggleMeshInCollections(key, true);
         }
 
@@ -129,10 +139,9 @@ namespace Zinnia.Visual
         /// Shows the meshes found for any relation matched to the given <see cref="Component"/>.
         /// </summary>
         /// <param name="key">The key to match on the <see cref="MeshCollections"/>.</param>
-        [RequiresBehaviourState]
         public virtual void ShowMeshInCollections(Component key)
         {
-            if (key == null)
+            if (!this.IsValidState() || key == null)
             {
                 return;
             }
@@ -144,9 +153,13 @@ namespace Zinnia.Visual
         /// Hides the mesh found on the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="container">The <see cref="GameObject"/> to search for a mesh on.</param>
-        [RequiresBehaviourState]
         public virtual void HideMesh(GameObject container)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ToggleMesh(container, false);
         }
 
@@ -154,10 +167,9 @@ namespace Zinnia.Visual
         /// Hides the mesh found on the given <see cref="Component"/>.
         /// </summary>
         /// <param name="container">The <see cref="Component"/> to search for a mesh on.</param>
-        [RequiresBehaviourState]
         public virtual void HideMesh(Component container)
         {
-            if (container == null)
+            if (!this.IsValidState() || container == null)
             {
                 return;
             }
@@ -169,9 +181,13 @@ namespace Zinnia.Visual
         /// Hides any meshes found on any children of the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="container">The <see cref="GameObject"/> to begin the descendant search from.</param>
-        [RequiresBehaviourState]
         public virtual void HideMeshInChildren(GameObject container)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ToggleAllMeshesInChildren(container, false);
         }
 
@@ -179,10 +195,9 @@ namespace Zinnia.Visual
         /// Hides any meshes found on any children of the given <see cref="Component"/>.
         /// </summary>
         /// <param name="container">The <see cref="Component"/> to begin the descendant search from.</param>
-        [RequiresBehaviourState]
         public virtual void HideMeshInChildren(Component container)
         {
-            if (container == null)
+            if (!this.IsValidState() || container == null)
             {
                 return;
             }
@@ -194,9 +209,13 @@ namespace Zinnia.Visual
         /// Hides the meshes found for any relation matched to the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="key">The key to match on the <see cref="MeshCollections"/>.</param>
-        [RequiresBehaviourState]
         public virtual void HideMeshInCollections(GameObject key)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ToggleMeshInCollections(key, false);
         }
 
@@ -204,10 +223,9 @@ namespace Zinnia.Visual
         /// Hides the meshes found for any relation matched to the given <see cref="Component"/>.
         /// </summary>
         /// <param name="key">The key to match on the <see cref="MeshCollections"/>.</param>
-        [RequiresBehaviourState]
         public virtual void HideMeshInCollections(Component key)
         {
-            if (key == null)
+            if (!this.IsValidState() || key == null)
             {
                 return;
             }

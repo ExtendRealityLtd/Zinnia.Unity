@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Collection.List
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -208,9 +207,13 @@
         /// Adds an element to the end of the collection.
         /// </summary>
         /// <param name="element">The element to add.</param>
-        [RequiresBehaviourState]
         public virtual void Add(TElement element)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Elements.Add(element);
             EmitAddEvents(element);
         }
@@ -219,10 +222,9 @@
         /// Adds an element to the end of the collection as long as it does not already exist in the collection.
         /// </summary>
         /// <param name="element">The unique element to add.</param>
-        [RequiresBehaviourState]
         public virtual void AddUnique(TElement element)
         {
-            if (Elements.Contains(element))
+            if (!this.IsValidState() || Elements.Contains(element))
             {
                 return;
             }
@@ -238,9 +240,13 @@
         /// </remarks>
         /// <param name="element">The element to insert.</param>
         /// <param name="index">The index to insert at. If the index is below the lower bounds it will be clamped at the lower bound of the index, if the index is above the upper bounds then a new element will be added to the end of the collection.</param>
-        [RequiresBehaviourState]
         public virtual void InsertAt(TElement element, int index)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (Elements.Count == 0 || index >= Elements.Count)
             {
                 Add(element);
@@ -260,10 +266,9 @@
         /// </remarks>
         /// <param name="element">The unique element to insert.</param>
         /// <param name="index">The index to insert at. If the index is below the lower bounds it will be clamped at the lower bound of the index, if the index is above the upper bounds then a new element will be added to the end of the collection.</param>
-        [RequiresBehaviourState]
         public virtual void InsertUniqueAt(TElement element, int index)
         {
-            if (Elements.Contains(element))
+            if (!this.IsValidState() || Elements.Contains(element))
             {
                 return;
             }
@@ -275,9 +280,13 @@
         /// Inserts an element at the <see cref="CurrentIndex"/>.
         /// </summary>
         /// <param name="element">The element to insert.</param>
-        [RequiresBehaviourState]
         public virtual void InsertAtCurrentIndex(TElement element)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             InsertAt(element, CurrentIndex);
         }
 
@@ -285,10 +294,9 @@
         /// Adds an element at the <see cref="CurrentIndex"/> as long as it does not already exist in the collection.
         /// </summary>
         /// <param name="element">The unique element to add.</param>
-        [RequiresBehaviourState]
         public virtual void AddUniqueAtCurrentIndex(TElement element)
         {
-            if (Elements.Contains(element))
+            if (!this.IsValidState() || Elements.Contains(element))
             {
                 return;
             }
@@ -304,10 +312,9 @@
         /// </remarks>
         /// <param name="element">The element to set.</param>
         /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
-        [RequiresBehaviourState]
         public virtual void SetAt(TElement element, int index)
         {
-            if (Elements.Count == 0)
+            if (!this.IsValidState() || Elements.Count == 0)
             {
                 return;
             }
@@ -325,10 +332,9 @@
         /// </remarks>
         /// <param name="element">The unique element to set.</param>
         /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
-        [RequiresBehaviourState]
         public virtual void SetUniqueAt(TElement element, int index)
         {
-            if (Elements.Contains(element))
+            if (!this.IsValidState() || Elements.Contains(element))
             {
                 return;
             }
@@ -340,9 +346,13 @@
         /// Sets the given element at the <see cref="CurrentIndex"/>.
         /// </summary>
         /// <param name="element">The element to set.</param>
-        [RequiresBehaviourState]
         public virtual void SetAtCurrentIndex(TElement element)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetAt(element, CurrentIndex);
         }
 
@@ -350,9 +360,13 @@
         /// Sets the given element at the <see cref="CurrentIndex"/> as long as it does not already exist in the collection.
         /// </summary>
         /// <param name="element">The unique element to set.</param>
-        [RequiresBehaviourState]
         public virtual void SetUniqueAtCurrentIndex(TElement element)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetUniqueAt(element, CurrentIndex);
         }
 
@@ -364,9 +378,13 @@
         /// </remarks>
         /// <param name="element">The element to set.</param>
         /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
-        [RequiresBehaviourState]
         public virtual void SetAtOrAddIfEmpty(TElement element, int index)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (Elements.Count == 0)
             {
                 Add(element);
@@ -384,10 +402,9 @@
         /// </remarks>
         /// <param name="element">The unique element to set.</param>
         /// <param name="index">The index in the collection to set at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
-        [RequiresBehaviourState]
         public virtual void SetUniqueAtOrAddIfEmpty(TElement element, int index)
         {
-            if (Elements.Contains(element))
+            if (!this.IsValidState() || Elements.Contains(element))
             {
                 return;
             }
@@ -399,9 +416,13 @@
         /// Sets the given element at the <see cref="CurrentIndex"/> or adds the element if the collection is empty.
         /// </summary>
         /// <param name="element">The element to set.</param>
-        [RequiresBehaviourState]
         public virtual void SetAtCurrentIndexOrAddIfEmpty(TElement element)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetAtOrAddIfEmpty(element, CurrentIndex);
         }
 
@@ -409,9 +430,13 @@
         /// Sets the given element at the <see cref="CurrentIndex"/> as long as it does not already exist in the collection or adds the element if the collection is empty.
         /// </summary>
         /// <param name="element">The unique element to set.</param>
-        [RequiresBehaviourState]
         public virtual void SetUniqueAtCurrentIndexOrAddIfEmpty(TElement element)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetUniqueAtOrAddIfEmpty(element, CurrentIndex);
         }
 
@@ -419,9 +444,13 @@
         /// Removes the first occurrence of an element from the collection.
         /// </summary>
         /// <param name="element">The element to remove.</param>
-        [RequiresBehaviourState]
         public virtual bool Remove(TElement element)
         {
+            if (!this.IsValidState())
+            {
+                return default;
+            }
+
             if (Elements.Remove(element))
             {
                 EmitRemoveEvents(element);
@@ -442,9 +471,13 @@
         /// Removes the last occurrence of an element from the collection.
         /// </summary>
         /// <param name="element">The element to remove.</param>
-        [RequiresBehaviourState]
         public virtual void RemoveLastOccurrence(TElement element)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             int index = Elements.LastIndexOf(element);
             if (index == -1)
             {
@@ -461,10 +494,9 @@
         /// Allows the use of a clamped index to prevent indices being out of bounds and doing negative queries such as `-1` sets the last element.
         /// </remarks>
         /// <param name="index">The index to remove at. In case this index is out of bounds for the collection it will be clamped within the index bounds.</param>
-        [RequiresBehaviourState]
         public virtual void RemoveAt(int index)
         {
-            if (Elements.Count == 0)
+            if (!this.IsValidState() || Elements.Count == 0)
             {
                 return;
             }
@@ -478,9 +510,13 @@
         /// <summary>
         /// Removes an element at the <see cref="CurrentIndex"/> from the collection.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void RemoveAtCurrentIndex()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             RemoveAt(CurrentIndex);
         }
 
@@ -488,10 +524,9 @@
         /// Removes all elements from the collection.
         /// </summary>
         /// <param name="removeFromEndToStart">Whether to reverse the collection when clearing so the removal goes from end to start.</param>
-        [RequiresBehaviourState]
         public virtual void Clear(bool removeFromEndToStart = false)
         {
-            if (Elements.Count == 0)
+            if (!this.IsValidState() || Elements.Count == 0)
             {
                 return;
             }

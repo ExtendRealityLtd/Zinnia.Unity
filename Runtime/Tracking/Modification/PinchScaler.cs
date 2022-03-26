@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -63,10 +62,9 @@
         /// <summary>
         /// Processes the current scale factor onto the target.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (Target == null || PrimaryPoint == null || SecondaryPoint == null)
+            if (!this.IsValidState() || Target == null || PrimaryPoint == null || SecondaryPoint == null)
             {
                 return;
             }

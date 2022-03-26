@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -116,9 +115,13 @@
         /// Adds the given collision as an active collision.
         /// </summary>
         /// <param name="collisionData">The collision data.</param>
-        [RequiresBehaviourState]
         public virtual void Add(CollisionNotifier.EventData collisionData)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Transform currentCollisionContainingTransform = collisionData.ColliderData.GetContainingTransform();
             if (!IsValidCollision(currentCollisionContainingTransform))
             {
@@ -151,9 +154,13 @@
         /// Removes the given collision from being an active collision.
         /// </summary>
         /// <param name="collisionData">The collision data.</param>
-        [RequiresBehaviourState]
         public virtual void Remove(CollisionNotifier.EventData collisionData)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Transform currentCollisionContainingTransform = collisionData.ColliderData.GetContainingTransform();
             if (!containingTransformCollisions.TryGetValue(currentCollisionContainingTransform, out List<CollisionNotifier.EventData> foundCollisionElements))
             {
@@ -174,9 +181,13 @@
         /// <summary>
         /// Processes any changes to the contents of existing collisions.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void ProcessContentsChanged()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ContentsChanged?.Invoke(eventData.Set(Elements));
         }
 

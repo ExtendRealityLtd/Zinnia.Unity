@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Pointer
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -290,10 +289,9 @@
         /// <summary>
         /// The Activate method turns on the <see cref="ObjectPointer"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Activate()
         {
-            if (IsActivated)
+            if (!this.IsValidState() || IsActivated)
             {
                 return;
             }
@@ -314,9 +312,13 @@
         /// <summary>
         /// Gets the current <see cref="ObjectPointer"/> state and emits it through <see cref="Selected"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Select()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SelectedTarget = IsActivated && activePointsCastData.IsValid ? HoverTarget : null;
             Selected?.Invoke(SelectedTarget);
         }
@@ -325,9 +327,13 @@
         /// Handles the provided data to transition state and emit the <see cref="ObjectPointer"/> events.
         /// </summary>
         /// <param name="data">The data describing the results of the most recent cast.</param>
-        [RequiresBehaviourState]
         public virtual void HandleData(PointsCast.EventData data)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (IsVisible)
             {
                 previousPointsCastData.Set(activePointsCastData);
@@ -362,18 +368,26 @@
         /// <summary>
         /// Handles the previous provided <see cref="PointsCast.EventData"/> once more.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void RehandleData()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             HandleData(activePointsCastData);
         }
 
         /// <summary>
         /// Processes the appearance of the pointer.
         /// </summary>
-        [RequiresBehaviourState]
         public void Process()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             TryEmitVisibilityEvent();
         }
 

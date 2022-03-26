@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Data.Operation
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Duplicates a <see cref="GameObject"/> by cloning it.
@@ -42,9 +42,13 @@
         /// Duplicates <see cref="Source"/> by cloning it and optionally parents the cloned object to <see cref="Parent"/>.
         /// </summary>
         /// <returns>The cloned object, or <see langword="null"/> if no clone has been created.</returns>
-        [RequiresBehaviourState]
         public virtual GameObject Clone()
         {
+            if (!this.IsValidState())
+            {
+                return null;
+            }
+
             return Clone(Source);
         }
 
@@ -53,10 +57,9 @@
         /// </summary>
         /// <param name="source">The object to clone.</param>
         /// <returns>The cloned object, or <see langword="null"/> if no clone has been created.</returns>
-        [RequiresBehaviourState]
         public virtual GameObject Clone(GameObject source)
         {
-            if (source == null)
+            if (!this.IsValidState() || source == null)
             {
                 return null;
             }

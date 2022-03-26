@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -92,9 +91,13 @@
         public UnityEvent Processed = new UnityEvent();
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void Process()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Preprocessed?.Invoke();
             base.Process();
             Processed?.Invoke();

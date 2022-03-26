@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Process.Component
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -50,9 +49,13 @@
         #endregion
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void Process()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ApplySourcesToTargets(Sources.NonSubscribableElements, Targets.NonSubscribableElements);
         }
 

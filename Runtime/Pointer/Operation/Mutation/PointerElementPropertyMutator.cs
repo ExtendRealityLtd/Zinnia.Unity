@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Pointer.Operation.Mutation
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -49,10 +48,9 @@
         /// Sets the <see cref="Target"/> based on the first found <see cref="PointerElement"/> as either a direct, descendant or ancestor of the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="target">The <see cref="GameObject"/> to search for a <see cref="PointerElement"/> on.</param>
-        [RequiresBehaviourState]
         public virtual void SetTarget(GameObject target)
         {
-            if (target == null)
+            if (!this.IsValidState() || target == null)
             {
                 return;
             }

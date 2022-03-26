@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Provides the ability to modify the enabled state of a <see cref="Behaviour"/> or <see cref="Renderer"/> component.
@@ -31,10 +31,9 @@
         /// Sets the enabled state of all matching <see cref="Types"/> found on <see cref="Target"/>.
         /// </summary>
         /// <param name="state">The enabled state to apply.</param>
-        [RequiresBehaviourState]
         public virtual void SetEnabledState(bool state)
         {
-            if (Types == null || Target == null)
+            if (!this.IsValidState() || Types == null || Target == null)
             {
                 return;
             }

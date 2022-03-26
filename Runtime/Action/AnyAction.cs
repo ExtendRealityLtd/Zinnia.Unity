@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Action.Collection;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value when any given actions are in their active state.
@@ -105,9 +105,13 @@
         /// Called after the <see cref="Action.IsActivated"/> state of any element in <see cref="Actions"/> changes.
         /// </summary>
         /// <param name="isActionActivated">Whether the action is activated.</param>
-        [RequiresBehaviourState]
         protected virtual void OnActionActivationStateChanged(bool isActionActivated)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (IsActivated && !isActionActivated)
             {
                 CheckAllActions();
@@ -122,10 +126,9 @@
         /// Called after an element is added to <see cref="Actions"/>.
         /// </summary>
         /// <param name="action">The element added to the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnActionAdded(Action action)
         {
-            if (action == null)
+            if (!this.IsValidState() || action == null)
             {
                 return;
             }
@@ -138,10 +141,9 @@
         /// Called after an element is removed from <see cref="Actions"/>.
         /// </summary>
         /// <param name="action">The element removed from the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnActionRemoved(Action action)
         {
-            if (action != null)
+            if (!this.IsValidState() || action != null)
             {
                 action.ActivationStateChanged.RemoveListener(OnActionActivationStateChanged);
             }

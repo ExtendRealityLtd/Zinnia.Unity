@@ -5,7 +5,6 @@
     <LogLevel>Error, Warning</LogLevel>
     <AssemblyNameRegex>^Zinnia</AssemblyNameRegex>
   </Malimbe.FodyRunner>
-  <Malimbe.BehaviourStateRequirementMethod/>
   <Malimbe.MemberChangeMethod/>
   <Malimbe.MemberClearanceMethod/>
   <Malimbe.PropertySerializationAttribute/>

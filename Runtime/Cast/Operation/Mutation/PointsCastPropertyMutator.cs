@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Cast.Operation.Mutation
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberChangeMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
@@ -46,10 +45,9 @@
         /// Sets the <see cref="Target"/> based on the first found <see cref="PointsCast"/> as either a direct, descendant or ancestor of the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="target">The <see cref="GameObject"/> to search for a <see cref="PointsCast"/> on.</param>
-        [RequiresBehaviourState]
         public virtual void SetTarget(GameObject target)
         {
-            if (target == null)
+            if (!this.IsValidState() || target == null)
             {
                 return;
             }
@@ -69,10 +67,9 @@
         /// <summary>
         /// Clears the <see cref="DestinationPointOverride"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void ClearDestinationPointOverride()
         {
-            if (Target == null)
+            if (!this.IsValidState() || Target == null)
             {
                 return;
             }

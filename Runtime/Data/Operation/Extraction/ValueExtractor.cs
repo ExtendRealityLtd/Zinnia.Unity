@@ -1,11 +1,10 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -60,9 +59,13 @@
         /// Extracts the <see cref="TResultElement"/>/
         /// </summary>
         /// <returns>The extracted <see cref="TResultElement"/>.</returns>
-        [RequiresBehaviourState]
         public virtual TResultElement Extract()
         {
+            if (!this.IsValidState())
+            {
+                return default;
+            }
+
             Result = ExtractValue();
             if (!InvokeResult(Result))
             {
@@ -85,9 +88,13 @@
         /// </summary>
         /// <param name="data">The data to extract from.</param>
         /// <returns>The extracted data.</returns>
-        [RequiresBehaviourState]
         public virtual TResultElement Extract(TSourceElement data)
         {
+            if (!this.IsValidState())
+            {
+                return default;
+            }
+
             Source = data;
             return Extract();
         }

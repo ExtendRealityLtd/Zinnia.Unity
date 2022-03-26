@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
@@ -184,10 +183,9 @@
         /// Locates the nearest available surface with the given <see cref="TransformData"/>.
         /// </summary>
         /// <param name="givenOrigin">The <see cref="TransformData"/> object to use as the origin for the surface search.</param>
-        [RequiresBehaviourState]
         public virtual void Locate(TransformData givenOrigin)
         {
-            if (givenOrigin == null || !givenOrigin.IsValid)
+            if (!this.IsValidState() || givenOrigin == null || !givenOrigin.IsValid)
             {
                 return;
             }

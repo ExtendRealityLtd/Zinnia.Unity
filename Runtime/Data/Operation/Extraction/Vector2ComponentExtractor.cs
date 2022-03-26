@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Extracts and emits the <see cref="float"/> components of a <see cref="Vector2"/>.
@@ -87,9 +87,13 @@
         /// <summary>
         /// Extracts the <see cref="float"/> component from the <see cref="Vector2"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void DoExtract()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Extract();
         }
 
@@ -98,9 +102,13 @@
         /// </summary>
         /// <param name="source">The source to extract from.</param>
         /// <returns>The extracted <see cref="float"/>.</returns>
-        [RequiresBehaviourState]
         public virtual float? Extract(Vector2 source)
         {
+            if (!this.IsValidState())
+            {
+                return null;
+            }
+
             Source = source;
             return Extract();
         }
@@ -109,9 +117,13 @@
         /// Extracts the <see cref="float"/> component from the <see cref="Vector2"/>.
         /// </summary>
         /// <param name="source">The source to extract from.</param>
-        [RequiresBehaviourState]
         public virtual void DoExtract(Vector2 source)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Extract(source);
         }
     }

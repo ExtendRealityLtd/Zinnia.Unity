@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Visual
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -151,9 +150,13 @@
         /// Renders the given points.
         /// </summary>
         /// <param name="data">The data to render.</param>
-        [RequiresBehaviourState]
         public virtual void RenderData(PointsData data)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Start = data.StartPoint;
             End = data.EndPoint;
 

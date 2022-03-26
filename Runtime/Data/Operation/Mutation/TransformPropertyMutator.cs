@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Provides a basis for mutating transform Vector3 properties.
@@ -201,9 +201,13 @@
         /// Determines if the process is valid.
         /// </summary>
         /// <returns><see langword="true"/> if it is valid.</returns>
-        [RequiresBehaviourState]
         protected virtual bool IsValid()
         {
+            if (!this.IsValidState())
+            {
+                return default;
+            }
+
             return Target != null;
         }
     }

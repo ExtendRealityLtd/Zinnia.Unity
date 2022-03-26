@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -54,10 +53,9 @@
         /// Creates a new container if it doesn't already exist and sets it to be at the point of the collision of the given event data.
         /// </summary>
         /// <param name="eventData">Contains data about the collision.</param>
-        [RequiresBehaviourState]
         public virtual void Set(ActiveCollisionConsumer.EventData eventData)
         {
-            if (IsSet)
+            if (!this.IsValidState() || IsSet)
             {
                 return;
             }
