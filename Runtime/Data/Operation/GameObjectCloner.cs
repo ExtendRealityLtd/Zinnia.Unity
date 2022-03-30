@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Operation
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -22,13 +21,13 @@
         /// <summary>
         /// The object to clone.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
         /// An optional object to parent the cloned objects to.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Parent { get; set; }
 
@@ -37,6 +36,32 @@
         /// </summary>
         [DocumentedByXml]
         public UnityEvent Cloned = new UnityEvent();
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Parent"/>.
+        /// </summary>
+        public virtual void ClearParent()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Parent = default;
+        }
 
         /// <summary>
         /// Duplicates <see cref="Source"/> by cloning it and optionally parents the cloned object to <see cref="Parent"/>.

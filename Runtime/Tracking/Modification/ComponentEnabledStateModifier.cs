@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -23,9 +22,22 @@
         /// <summary>
         /// The target to modify the enabled states for the provided <see cref="Types"/>.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
 
         /// <summary>
         /// Sets the enabled state of all matching <see cref="Types"/> found on <see cref="Target"/>.

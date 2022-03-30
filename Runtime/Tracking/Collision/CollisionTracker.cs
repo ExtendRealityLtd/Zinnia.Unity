@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
@@ -26,13 +25,13 @@
         /// <summary>
         /// Allows to optionally determine which colliders to allow collisions against.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer ColliderValidity { get; set; }
         /// <summary>
         /// Allows to optionally determine which collider containing transforms to allow collisions against.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer ContainingTransformValidity { get; set; }
         /// <summary>
@@ -83,6 +82,32 @@
         /// The <see cref="Transform"/> containing the current checked collider.
         /// </summary>
         protected Transform colliderContainingTransform;
+
+        /// <summary>
+        /// Clears <see cref="ColliderValidity"/>.
+        /// </summary>
+        public virtual void ClearColliderValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ColliderValidity = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="ContainingTransformValidity"/>.
+        /// </summary>
+        public virtual void ClearContainingTransformValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ContainingTransformValidity = default;
+        }
 
         /// <summary>
         /// Prepares the collision states for a kinematic state change on the given <see cref="Rigidbody"/>.
@@ -378,13 +403,13 @@
         /// <summary>
         /// The <see cref="CollisionTracker"/> that is causing the collision.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public CollisionTracker Source { get; set; }
         /// <summary>
         /// The <see cref="Collider"/> that is being collided with.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public Collider Target { get; set; }
 
@@ -392,6 +417,32 @@
         /// Whether <see cref="this"/> is being destroyed.
         /// </summary>
         protected bool isDestroyed;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
 
         /// <summary>
         /// Destroys <see cref="this"/> from the scene.
@@ -404,7 +455,7 @@
 
         protected virtual void OnDisable()
         {
-            if (!isDestroyed)
+            if (Source != null && !isDestroyed)
             {
                 Source.StopCollision(Target);
             }

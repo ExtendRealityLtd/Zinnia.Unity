@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -15,19 +14,19 @@
         /// <summary>
         /// The modifier to change the scale.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PropertyModifier ScaleModifier { get; set; }
         /// <summary>
         /// The modifier to change the rotation.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PropertyModifier RotationModifier { get; set; }
         /// <summary>
         /// The modifier to change the position.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PropertyModifier PositionModifier { get; set; }
 
@@ -43,32 +42,57 @@
         public ObjectFollower.FollowEvent Modified = new ObjectFollower.FollowEvent();
 
         /// The current source being used in the modifier process.
-        public GameObject CachedSource
-        {
-            get;
-            protected set;
-        }
-
+        public GameObject CachedSource { get; protected set; }
         /// The current target being used in the modifier process.
-        public GameObject CachedTarget
-        {
-            get;
-            protected set;
-        }
-
+        public GameObject CachedTarget { get; protected set; }
         /// <summary>
         /// The current being used as the offset in the modifier process.
         /// </summary>
-        public GameObject CachedOffset
-        {
-            get;
-            protected set;
-        }
+        public GameObject CachedOffset { get; protected set; }
 
         /// <summary>
         /// The event data to emit before and after each property type has been modified.
         /// </summary>
         protected readonly ObjectFollower.EventData eventData = new ObjectFollower.EventData();
+
+        /// <summary>
+        /// Clears <see cref="ScaleModifier"/>.
+        /// </summary>
+        public virtual void ClearScaleModifier()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ScaleModifier = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="RotationModifier"/>.
+        /// </summary>
+        public virtual void ClearRotationModifier()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            RotationModifier = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PositionModifier"/>.
+        /// </summary>
+        public virtual void ClearPositionModifier()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PositionModifier = default;
+        }
 
         /// <summary>
         /// Attempts to call each of the given <see cref="PropertyModifier"/> options to modify the target.

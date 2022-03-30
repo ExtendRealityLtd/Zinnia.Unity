@@ -1,11 +1,11 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.XR;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Retrieves the velocity estimations for an <see cref="XRNode"/>.
@@ -22,7 +22,7 @@
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject RelativeTo { get; set; }
 
@@ -30,6 +30,19 @@
         /// A collection of node states.
         /// </summary>
         protected readonly List<XRNodeState> nodesStates = new List<XRNodeState>();
+
+        /// <summary>
+        /// Clears <see cref="RelativeTo"/>.
+        /// </summary>
+        public virtual void ClearRelativeTo()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            RelativeTo = default;
+        }
 
         /// <inheritdoc />
         protected override Vector3 DoGetVelocity()

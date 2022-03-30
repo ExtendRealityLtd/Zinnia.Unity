@@ -28,6 +28,59 @@ namespace Test.Zinnia.Process.Moment
         }
 
         [Test]
+        public void ClearSource()
+        {
+            Assert.IsNull(subject.Source);
+            MockProcessable mockProcessable = new MockProcessable();
+            ProcessContainer processContainer = new ProcessContainer
+            {
+                Interface = mockProcessable
+            };
+            subject.Source = processContainer;
+            containingObject.SetActive(true);
+
+            Assert.AreEqual(processContainer, subject.Source);
+            subject.ClearSource();
+            Assert.IsNull(subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.Source);
+            MockProcessable mockProcessable = new MockProcessable();
+            ProcessContainer processContainer = new ProcessContainer
+            {
+                Interface = mockProcessable
+            };
+            subject.Source = processContainer;
+            containingObject.SetActive(true);
+
+            Assert.AreEqual(processContainer, subject.Source);
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+            Assert.AreEqual(processContainer, subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveComponent()
+        {
+            Assert.IsNull(subject.Source);
+            MockProcessable mockProcessable = new MockProcessable();
+            ProcessContainer processContainer = new ProcessContainer
+            {
+                Interface = mockProcessable
+            };
+            subject.Source = processContainer;
+            containingObject.SetActive(true);
+
+            Assert.AreEqual(processContainer, subject.Source);
+            subject.enabled = false;
+            subject.ClearSource();
+            Assert.AreEqual(processContainer, subject.Source);
+        }
+
+        [Test]
         public void Process()
         {
             MockProcessable mockProcessable = new MockProcessable();

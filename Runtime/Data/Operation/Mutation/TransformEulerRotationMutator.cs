@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -18,7 +17,7 @@
         /// <summary>
         /// An optional rotation origin to perform the rotation around. The origin must be a child of the <see cref="TransformPropertyMutator.Target"/>.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Rotation Settings"), DocumentedByXml]
         public GameObject Origin { get; set; }
         /// <summary>
@@ -28,6 +27,32 @@
         [field: DocumentedByXml]
         public Vector3State ApplyOriginOnAxis { get; set; } = Vector3State.True;
         #endregion
+
+        /// <summary>
+        /// Clears <see cref="Origin"/>.
+        /// </summary>
+        public virtual void ClearOrigin()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Origin = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="ApplyOriginOnAxis"/>.
+        /// </summary>
+        public virtual void ClearApplyOriginOnAxis()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ApplyOriginOnAxis = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="ApplyOriginOnAxis"/> x value.
@@ -165,7 +190,7 @@
         [CalledAfterChangeOf(nameof(Origin))]
         protected virtual void OnAfterRotationOriginChange()
         {
-            if (Origin == null)
+            if (Origin == null || Target == null)
             {
                 return;
             }

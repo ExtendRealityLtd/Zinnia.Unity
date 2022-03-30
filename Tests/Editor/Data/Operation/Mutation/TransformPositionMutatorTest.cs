@@ -487,5 +487,175 @@ namespace Test.Zinnia.Data.Operation.Mutation
 
             Object.DestroyImmediate(target);
         }
+
+        [Test]
+        public void ClearTarget()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.ClearTarget();
+            Assert.IsNull(subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveGameObject()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.gameObject.SetActive(false);
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveComponent()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.enabled = false;
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void ClearMutateOnAxis()
+        {
+            Assert.AreEqual(Vector3State.True, subject.MutateOnAxis);
+            subject.ClearMutateOnAxis();
+            Assert.AreEqual(Vector3State.False, subject.MutateOnAxis);
+        }
+
+        [Test]
+        public void ClearMutateOnAxisInactiveGameObject()
+        {
+            Assert.AreEqual(Vector3State.True, subject.MutateOnAxis);
+            subject.gameObject.SetActive(false);
+            subject.ClearMutateOnAxis();
+            Assert.AreEqual(Vector3State.True, subject.MutateOnAxis);
+        }
+
+        [Test]
+        public void ClearMutateOnAxisInactiveComponent()
+        {
+            Assert.AreEqual(Vector3State.True, subject.MutateOnAxis);
+            subject.enabled = false;
+            subject.ClearMutateOnAxis();
+            Assert.AreEqual(Vector3State.True, subject.MutateOnAxis);
+        }
+
+        [Test]
+        public void ClearFacingDirection()
+        {
+            Assert.IsNull(subject.FacingDirection);
+            subject.FacingDirection = containingObject;
+            Assert.AreEqual(containingObject, subject.FacingDirection);
+            subject.ClearFacingDirection();
+            Assert.IsNull(subject.FacingDirection);
+        }
+
+        [Test]
+        public void ClearFacingDirectionInactiveGameObject()
+        {
+            Assert.IsNull(subject.FacingDirection);
+            subject.FacingDirection = containingObject;
+            Assert.AreEqual(containingObject, subject.FacingDirection);
+            subject.gameObject.SetActive(false);
+            subject.ClearFacingDirection();
+            Assert.AreEqual(containingObject, subject.FacingDirection);
+        }
+
+        [Test]
+        public void ClearFacingDirectionInactiveComponent()
+        {
+            Assert.IsNull(subject.FacingDirection);
+            subject.FacingDirection = containingObject;
+            Assert.AreEqual(containingObject, subject.FacingDirection);
+            subject.enabled = false;
+            subject.ClearFacingDirection();
+            Assert.AreEqual(containingObject, subject.FacingDirection);
+        }
+
+        [Test]
+        public void ClearApplyFacingDirectionOnAxis()
+        {
+            Assert.AreEqual(Vector3State.True, subject.ApplyFacingDirectionOnAxis);
+            subject.ClearApplyFacingDirectionOnAxis();
+            Assert.AreEqual(Vector3State.False, subject.ApplyFacingDirectionOnAxis);
+        }
+
+        [Test]
+        public void ClearApplyFacingDirectionOnAxisInactiveGameObject()
+        {
+            Assert.AreEqual(Vector3State.True, subject.ApplyFacingDirectionOnAxis);
+            subject.gameObject.SetActive(false);
+            subject.ClearApplyFacingDirectionOnAxis();
+            Assert.AreEqual(Vector3State.True, subject.ApplyFacingDirectionOnAxis);
+        }
+
+        [Test]
+        public void ClearApplyFacingDirectionOnAxisInactiveComponent()
+        {
+            Assert.AreEqual(Vector3State.True, subject.ApplyFacingDirectionOnAxis);
+            subject.enabled = false;
+            subject.ClearApplyFacingDirectionOnAxis();
+            Assert.AreEqual(Vector3State.True, subject.ApplyFacingDirectionOnAxis);
+        }
+
+        [Test]
+        public void SetMutateOnAxisX()
+        {
+            subject.MutateOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.MutateOnAxis);
+            subject.SetMutateOnAxisX(true);
+            Assert.AreEqual(Vector3State.XOnly, subject.MutateOnAxis);
+        }
+
+        [Test]
+        public void SetMutateOnAxisY()
+        {
+            subject.MutateOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.MutateOnAxis);
+            subject.SetMutateOnAxisY(true);
+            Assert.AreEqual(Vector3State.YOnly, subject.MutateOnAxis);
+        }
+
+        [Test]
+        public void SetMutateOnAxisZ()
+        {
+            subject.MutateOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.MutateOnAxis);
+            subject.SetMutateOnAxisZ(true);
+            Assert.AreEqual(Vector3State.ZOnly, subject.MutateOnAxis);
+        }
+
+        [Test]
+        public void SetApplyFacingDirectionOnAxisX()
+        {
+            subject.ApplyFacingDirectionOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyFacingDirectionOnAxis);
+            subject.SetApplyFacingDirectionOnAxisX(true);
+            Assert.AreEqual(Vector3State.XOnly, subject.ApplyFacingDirectionOnAxis);
+        }
+
+        [Test]
+        public void SetApplyFacingDirectionOnAxisY()
+        {
+            subject.ApplyFacingDirectionOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyFacingDirectionOnAxis);
+            subject.SetApplyFacingDirectionOnAxisY(true);
+            Assert.AreEqual(Vector3State.YOnly, subject.ApplyFacingDirectionOnAxis);
+        }
+
+        [Test]
+        public void SetApplyFacingDirectionOnAxisZ()
+        {
+            subject.ApplyFacingDirectionOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyFacingDirectionOnAxis);
+            subject.SetApplyFacingDirectionOnAxisZ(true);
+            Assert.AreEqual(Vector3State.ZOnly, subject.ApplyFacingDirectionOnAxis);
+        }
     }
 }

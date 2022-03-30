@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -16,7 +15,7 @@
         /// <summary>
         /// Determines the facing direction when mutating the position.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Position Settings"), DocumentedByXml]
         public GameObject FacingDirection { get; set; }
         /// <summary>
@@ -26,6 +25,32 @@
         [field: DocumentedByXml]
         public Vector3State ApplyFacingDirectionOnAxis { get; set; } = Vector3State.True;
         #endregion
+
+        /// <summary>
+        /// Clears <see cref="FacingDirection"/>.
+        /// </summary>
+        public virtual void ClearFacingDirection()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            FacingDirection = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="ApplyFacingDirectionOnAxis"/>.
+        /// </summary>
+        public virtual void ClearApplyFacingDirectionOnAxis()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ApplyFacingDirectionOnAxis = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="ApplyFacingDirectionOnAxis"/> x value.

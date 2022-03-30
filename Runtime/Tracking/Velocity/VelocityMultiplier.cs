@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Multiplies the given source velocity data.
@@ -13,7 +13,7 @@
         /// <summary>
         /// The <see cref="VelocityTracker"/> to use as the source data.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public VelocityTracker Source { get; set; }
         /// <summary>
@@ -28,6 +28,19 @@
         [Serialized]
         [field: DocumentedByXml]
         public Vector3 AngularVelocityMultiplierFactor { get; set; } = Vector3.one;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="VelocityMultiplierFactor"/> x value.

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -23,16 +22,32 @@
             /// <summary>
             /// The registered <see cref="ActiveCollisionConsumer"/>.
             /// </summary>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public ActiveCollisionConsumer Consumer { get; set; }
 
             /// <summary>
             /// The payload data sent to the <see cref="ActiveCollisionConsumer"/>.
             /// </summary>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public ActiveCollisionPublisher.PayloadData Payload { get; set; }
+
+            /// <summary>
+            /// Clears <see cref="Consumer"/>.
+            /// </summary>
+            public virtual void ClearConsumer()
+            {
+                Consumer = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="Payload"/>.
+            /// </summary>
+            public virtual void ClearPayload()
+            {
+                Payload = default;
+            }
 
             public EventData Set(EventData source)
             {

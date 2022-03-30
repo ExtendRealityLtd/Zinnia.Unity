@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Query;
+﻿using Zinnia.Cast;
+using Zinnia.Tracking.Query;
 
 namespace Test.Zinnia.Tracking.Query
 {
@@ -200,6 +201,111 @@ namespace Test.Zinnia.Tracking.Query
 
             NUnit.Framework.Assert.Throws<ObscuranceQuery.MissingColliderException>(() => subject.Target = target);
             Object.DestroyImmediate(target);
+        }
+
+        [Test]
+        public void ClearSource()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.ClearSource();
+            Assert.IsNull(subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveComponent()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.enabled = false;
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearTarget()
+        {
+            Assert.IsNull(subject.Target);
+            containingObject.AddComponent<Rigidbody>();
+            containingObject.AddComponent<BoxCollider>();
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.ClearTarget();
+            Assert.IsNull(subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveGameObject()
+        {
+            Assert.IsNull(subject.Target);
+            containingObject.AddComponent<Rigidbody>();
+            containingObject.AddComponent<BoxCollider>();
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.gameObject.SetActive(false);
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveComponent()
+        {
+            Assert.IsNull(subject.Target);
+            containingObject.AddComponent<Rigidbody>();
+            containingObject.AddComponent<BoxCollider>();
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.enabled = false;
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void ClearPhysicsCast()
+        {
+            Assert.IsNull(subject.PhysicsCast);
+            PhysicsCast cast = containingObject.AddComponent<PhysicsCast>();
+            subject.PhysicsCast = cast;
+            Assert.AreEqual(cast, subject.PhysicsCast);
+            subject.ClearPhysicsCast();
+            Assert.IsNull(subject.PhysicsCast);
+        }
+
+        [Test]
+        public void ClearPhysicsCastInactiveGameObject()
+        {
+            Assert.IsNull(subject.PhysicsCast);
+            PhysicsCast cast = containingObject.AddComponent<PhysicsCast>();
+            subject.PhysicsCast = cast;
+            Assert.AreEqual(cast, subject.PhysicsCast);
+            subject.gameObject.SetActive(false);
+            subject.ClearPhysicsCast();
+            Assert.AreEqual(cast, subject.PhysicsCast);
+        }
+
+        [Test]
+        public void ClearPhysicsCastInactiveComponent()
+        {
+            Assert.IsNull(subject.PhysicsCast);
+            PhysicsCast cast = containingObject.AddComponent<PhysicsCast>();
+            subject.PhysicsCast = cast;
+            Assert.AreEqual(cast, subject.PhysicsCast);
+            subject.enabled = false;
+            subject.ClearPhysicsCast();
+            Assert.AreEqual(cast, subject.PhysicsCast);
         }
     }
 }

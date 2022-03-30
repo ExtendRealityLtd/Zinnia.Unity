@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Pointer.Operation.Mutation
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -15,34 +14,82 @@
         /// <summary>
         /// The <see cref="PointerElement"/> to mutate.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PointerElement Target { get; set; }
 
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when a valid collision is occuring.
         /// </summary>
-        [Cleared]
         public GameObject ValidElementContainer { get; set; }
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when a valid collision is occuring.
         /// </summary>
-        [Cleared]
         public GameObject ValidMeshContainer { get; set; }
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when an invalid collision or no collision is occuring.
         /// </summary>
-        [Cleared]
         public GameObject InvalidElementContainer { get; set; }
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when an invalid collision or no collision is occuring.
         /// </summary>
-        [Cleared]
         public GameObject InvalidMeshContainer { get; set; }
         /// <summary>
         /// Determines when the <see cref="PointerElement"/> is visible.
         /// </summary>
         public PointerElement.Visibility ElementVisibility { get; set; }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="ValidElementContainer"/>.
+        /// </summary>
+        public virtual void ClearValidElementContainer()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ValidElementContainer = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="InvalidElementContainer"/>.
+        /// </summary>
+        public virtual void ClearInvalidElementContainer()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            InvalidElementContainer = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="InvalidMeshContainer"/>.
+        /// </summary>
+        public virtual void ClearInvalidMeshContainer()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            InvalidMeshContainer = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="Target"/> based on the first found <see cref="PointerElement"/> as either a direct, descendant or ancestor of the given <see cref="GameObject"/>.

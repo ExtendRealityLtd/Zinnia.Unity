@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -23,15 +22,31 @@
             /// <summary>
             /// The publisher payload data that is being pushed to the consumer.
             /// </summary>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public ActiveCollisionPublisher.PayloadData Publisher { get; set; }
             /// <summary>
             /// The current collision data.
             /// </summary>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public CollisionNotifier.EventData CurrentCollision { get; set; }
+
+            /// <summary>
+            /// Clears <see cref="Publisher"/>.
+            /// </summary>
+            public virtual void ClearPublisher()
+            {
+                Publisher = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="CurrentCollision"/>.
+            /// </summary>
+            public virtual void ClearCurrentCollision()
+            {
+                CurrentCollision = default;
+            }
 
             public EventData Set(EventData source)
             {
@@ -78,14 +93,14 @@
         /// <summary>
         /// The highest level container of the consumer to allow for nested consumers.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Container { get; set; }
 
         /// <summary>
         /// Determines whether to consume the received call from specific publishers.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer PublisherValidity { get; set; }
 
@@ -118,6 +133,32 @@
         /// The event data emitted when collisions are consumed.
         /// </summary>
         protected readonly EventData eventData = new EventData();
+
+        /// <summary>
+        /// Clears <see cref="Container"/>.
+        /// </summary>
+        public virtual void ClearContainer()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Container = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PublisherValidity"/>.
+        /// </summary>
+        public virtual void ClearPublisherValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PublisherValidity = default;
+        }
 
         /// <summary>
         /// Consumes data from a from a <see cref="ActiveCollisionPublisher"/>.

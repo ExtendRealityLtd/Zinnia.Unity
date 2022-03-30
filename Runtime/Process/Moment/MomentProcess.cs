@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Process.Moment
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Wrapper for an <see cref="IProcessable"/> process that has a state to determine when it is to be processed.
@@ -14,7 +14,7 @@
         /// <summary>
         /// The source process to attach to the moment.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public ProcessContainer Source { get; set; }
         /// <summary>
@@ -33,6 +33,19 @@
         /// When to call <see cref="Process"/> the next time. Updated automatically based on <see cref="Interval"/> after <see cref="Process"/> has been called.
         /// </summary>
         public float NextProcessTime { get; set; }
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
 
         /// <summary>
         /// Calls <see cref="IProcessable.Process"/> on <see cref="Source"/> if <see cref="NextProcessTime"/> allows.

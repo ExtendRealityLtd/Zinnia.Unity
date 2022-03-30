@@ -27,6 +27,76 @@ namespace Test.Zinnia.Tracking.CameraRig
         }
 
         [Test]
+        public void ClearLeftController()
+        {
+            DeviceDetailsRecordMock leftController = containingObject.AddComponent<DeviceDetailsRecordMock>();
+            Assert.IsNull(subject.LeftController);
+            subject.LeftController = leftController;
+            Assert.AreEqual(leftController, subject.LeftController);
+            subject.ClearLeftController();
+            Assert.IsNull(subject.LeftController);
+        }
+
+        [Test]
+        public void ClearLeftControllerInactiveGameObject()
+        {
+            DeviceDetailsRecordMock leftController = containingObject.AddComponent<DeviceDetailsRecordMock>();
+            Assert.IsNull(subject.LeftController);
+            subject.LeftController = leftController;
+            Assert.AreEqual(leftController, subject.LeftController);
+            subject.gameObject.SetActive(false);
+            subject.ClearLeftController();
+            Assert.AreEqual(leftController, subject.LeftController);
+        }
+
+        [Test]
+        public void ClearLeftControllerInactiveComponent()
+        {
+            DeviceDetailsRecordMock leftController = containingObject.AddComponent<DeviceDetailsRecordMock>();
+            Assert.IsNull(subject.LeftController);
+            subject.LeftController = leftController;
+            Assert.AreEqual(leftController, subject.LeftController);
+            subject.enabled = false;
+            subject.ClearLeftController();
+            Assert.AreEqual(leftController, subject.LeftController);
+        }
+
+        [Test]
+        public void ClearRightController()
+        {
+            DeviceDetailsRecordMock RightController = containingObject.AddComponent<DeviceDetailsRecordMock>();
+            Assert.IsNull(subject.RightController);
+            subject.RightController = RightController;
+            Assert.AreEqual(RightController, subject.RightController);
+            subject.ClearRightController();
+            Assert.IsNull(subject.RightController);
+        }
+
+        [Test]
+        public void ClearRightControllerInactiveGameObject()
+        {
+            DeviceDetailsRecordMock RightController = containingObject.AddComponent<DeviceDetailsRecordMock>();
+            Assert.IsNull(subject.RightController);
+            subject.RightController = RightController;
+            Assert.AreEqual(RightController, subject.RightController);
+            subject.gameObject.SetActive(false);
+            subject.ClearRightController();
+            Assert.AreEqual(RightController, subject.RightController);
+        }
+
+        [Test]
+        public void ClearRightControllerInactiveComponent()
+        {
+            DeviceDetailsRecordMock RightController = containingObject.AddComponent<DeviceDetailsRecordMock>();
+            Assert.IsNull(subject.RightController);
+            subject.RightController = RightController;
+            Assert.AreEqual(RightController, subject.RightController);
+            subject.enabled = false;
+            subject.ClearRightController();
+            Assert.AreEqual(RightController, subject.RightController);
+        }
+
+        [Test]
         public void DominantControllerChanged()
         {
             UnityEventListenerMock isChangingMock = new UnityEventListenerMock();

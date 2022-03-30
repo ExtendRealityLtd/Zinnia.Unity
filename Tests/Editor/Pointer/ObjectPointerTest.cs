@@ -25,6 +25,9 @@ namespace Test.Zinnia.Pointer
         private GameObject invalidDestinationContainer;
         private GameObject invalidDestinationMesh;
         private ObjectPointerMock subject;
+        private PointerElement origin;
+        private PointerElement segment;
+        private PointerElement destination;
 
         [SetUp]
         public void SetUp()
@@ -74,9 +77,9 @@ namespace Test.Zinnia.Pointer
             invalidDestinationMesh = new GameObject("invalidDestinationMesh");
             invalidDestinationMesh.transform.SetParent(invalidDestinationContainer.transform);
 
-            PointerElement origin = containingObject.AddComponent<PointerElement>();
-            PointerElement segment = containingObject.AddComponent<PointerElement>();
-            PointerElement destination = containingObject.AddComponent<PointerElement>();
+            origin = containingObject.AddComponent<PointerElement>();
+            segment = containingObject.AddComponent<PointerElement>();
+            destination = containingObject.AddComponent<PointerElement>();
 
             origin.ValidElementContainer = validOriginContainer;
             origin.ValidMeshContainer = validOriginMesh;
@@ -971,6 +974,251 @@ namespace Test.Zinnia.Pointer
             Assert.AreNotEqual(subjectA, subjectB);
 
             Object.DestroyImmediate(subject.gameObject);
+        }
+
+        [Test]
+        public void IsVisible()
+        {
+            SetUpElements();
+
+            Assert.IsFalse(subject.IsVisible);
+
+            subject.Activate();
+
+            Assert.IsTrue(subject.IsVisible);
+
+            subject.Deactivate();
+
+            Assert.IsFalse(subject.IsVisible);
+        }
+
+        [Test]
+        public void IsVisibleInactiveComponent()
+        {
+            SetUpElements();
+
+            Assert.IsFalse(subject.IsVisible);
+
+            subject.Activate();
+            subject.enabled = false;
+
+            Assert.IsFalse(subject.IsVisible);
+        }
+
+        [Test]
+        public void IsVisibleAlwaysOff()
+        {
+            SetUpElements();
+
+            Assert.IsFalse(subject.IsVisible);
+
+            subject.Activate();
+
+            Assert.IsTrue(subject.IsVisible);
+
+            subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOff;
+
+            Assert.IsTrue(subject.IsVisible);
+
+            subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOff;
+
+            Assert.IsTrue(subject.IsVisible);
+
+            subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOff;
+
+            Assert.IsFalse(subject.IsVisible);
+        }
+
+        [Test]
+        public void IsVisibleAlwaysOn()
+        {
+            SetUpElements();
+
+            Assert.IsFalse(subject.IsVisible);
+
+            subject.Activate();
+
+            Assert.IsTrue(subject.IsVisible);
+
+            subject.Deactivate();
+
+            Assert.IsFalse(subject.IsVisible);
+
+            subject.Origin.ElementVisibility = PointerElement.Visibility.AlwaysOn;
+
+            Assert.IsTrue(subject.IsVisible);
+
+            subject.Origin.ElementVisibility = PointerElement.Visibility.OnWhenPointerActivated;
+
+            Assert.IsFalse(subject.IsVisible);
+
+            subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.AlwaysOn;
+
+            Assert.IsTrue(subject.IsVisible);
+
+            subject.RepeatedSegment.ElementVisibility = PointerElement.Visibility.OnWhenPointerActivated;
+
+            Assert.IsFalse(subject.IsVisible);
+
+            subject.Destination.ElementVisibility = PointerElement.Visibility.AlwaysOn;
+
+            Assert.IsTrue(subject.IsVisible);
+
+            subject.Destination.ElementVisibility = PointerElement.Visibility.OnWhenPointerActivated;
+
+            Assert.IsFalse(subject.IsVisible);
+        }
+
+        [Test]
+        public void ClearOrigin()
+        {
+            Assert.IsNull(subject.Origin);
+            SetUpElements();
+            Assert.AreEqual(origin, subject.Origin);
+            subject.ClearOrigin();
+            Assert.IsNull(subject.Origin);
+        }
+
+        [Test]
+        public void ClearOriginInactiveGameObject()
+        {
+            Assert.IsNull(subject.Origin);
+            SetUpElements();
+            Assert.AreEqual(origin, subject.Origin);
+            subject.gameObject.SetActive(false);
+            subject.ClearOrigin();
+            Assert.AreEqual(origin, subject.Origin);
+        }
+
+        [Test]
+        public void ClearOriginInactiveComponent()
+        {
+            Assert.IsNull(subject.Origin);
+            SetUpElements();
+            Assert.AreEqual(origin, subject.Origin);
+            subject.enabled = false;
+            subject.ClearOrigin();
+            Assert.AreEqual(origin, subject.Origin);
+        }
+
+        [Test]
+        public void ClearRepeatedSegment()
+        {
+            Assert.IsNull(subject.RepeatedSegment);
+            SetUpElements();
+            Assert.AreEqual(segment, subject.RepeatedSegment);
+            subject.ClearRepeatedSegment();
+            Assert.IsNull(subject.RepeatedSegment);
+        }
+
+        [Test]
+        public void ClearRepeatedSegmentInactiveGameObject()
+        {
+            Assert.IsNull(subject.RepeatedSegment);
+            SetUpElements();
+            Assert.AreEqual(segment, subject.RepeatedSegment);
+            subject.gameObject.SetActive(false);
+            subject.ClearRepeatedSegment();
+            Assert.AreEqual(segment, subject.RepeatedSegment);
+        }
+
+        [Test]
+        public void ClearRepeatedSegmentInactiveComponent()
+        {
+            Assert.IsNull(subject.RepeatedSegment);
+            SetUpElements();
+            Assert.AreEqual(segment, subject.RepeatedSegment);
+            subject.enabled = false;
+            subject.ClearRepeatedSegment();
+            Assert.AreEqual(segment, subject.RepeatedSegment);
+        }
+
+        [Test]
+        public void ClearDestination()
+        {
+            Assert.IsNull(subject.Destination);
+            SetUpElements();
+            Assert.AreEqual(destination, subject.Destination);
+            subject.ClearDestination();
+            Assert.IsNull(subject.Destination);
+        }
+
+        [Test]
+        public void ClearDestinationInactiveGameObject()
+        {
+            Assert.IsNull(subject.Destination);
+            SetUpElements();
+            Assert.AreEqual(destination, subject.Destination);
+            subject.gameObject.SetActive(false);
+            subject.ClearDestination();
+            Assert.AreEqual(destination, subject.Destination);
+        }
+
+        [Test]
+        public void ClearDestinationInactiveComponent()
+        {
+            Assert.IsNull(subject.Destination);
+            SetUpElements();
+            Assert.AreEqual(destination, subject.Destination);
+            subject.enabled = false;
+            subject.ClearDestination();
+            Assert.AreEqual(destination, subject.Destination);
+        }
+
+        [Test]
+        public void ClearEventDataOriginTransformOverride()
+        {
+            Assert.IsNull(subject.EventDataOriginTransformOverride);
+
+            SetUpElements();
+            GameObject originTransformOverride = new GameObject();
+            subject.EventDataOriginTransformOverride = originTransformOverride;
+
+            Assert.AreEqual(originTransformOverride, subject.EventDataOriginTransformOverride);
+
+            subject.ClearEventDataOriginTransformOverride();
+
+            Assert.IsNull(subject.EventDataOriginTransformOverride);
+
+            Object.DestroyImmediate(originTransformOverride);
+        }
+
+        [Test]
+        public void ClearEventDataOriginTransformOverrideInactiveGameObject()
+        {
+            Assert.IsNull(subject.EventDataOriginTransformOverride);
+
+            SetUpElements();
+            GameObject originTransformOverride = new GameObject();
+            subject.EventDataOriginTransformOverride = originTransformOverride;
+
+            Assert.AreEqual(originTransformOverride, subject.EventDataOriginTransformOverride);
+
+            subject.gameObject.SetActive(false);
+            subject.ClearEventDataOriginTransformOverride();
+
+            Assert.AreEqual(originTransformOverride, subject.EventDataOriginTransformOverride);
+
+            Object.DestroyImmediate(originTransformOverride);
+        }
+
+        [Test]
+        public void ClearEventDataOriginTransformOverrideInactiveComponent()
+        {
+            Assert.IsNull(subject.EventDataOriginTransformOverride);
+
+            SetUpElements();
+            GameObject originTransformOverride = new GameObject();
+            subject.EventDataOriginTransformOverride = originTransformOverride;
+
+            Assert.AreEqual(originTransformOverride, subject.EventDataOriginTransformOverride);
+
+            subject.enabled = false;
+            subject.ClearEventDataOriginTransformOverride();
+
+            Assert.AreEqual(originTransformOverride, subject.EventDataOriginTransformOverride);
+
+            Object.DestroyImmediate(originTransformOverride);
         }
 
         protected static PointsCast.EventData CastPoints(List<Vector3> points, bool doesCollisionOccur = true, bool validHit = true, Ray? realRay = null)

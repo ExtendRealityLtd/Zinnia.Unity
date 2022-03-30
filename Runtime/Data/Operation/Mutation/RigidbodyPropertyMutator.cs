@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -15,7 +14,7 @@
         /// <summary>
         /// The <see cref="Rigidbody"/> to mutate.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public Rigidbody Target { get; set; }
 
@@ -51,6 +50,19 @@
         /// The <see cref="Rigidbody.maxAngularVelocity"/> value.
         /// </summary>
         public float MaxAngularVelocity { get; set; }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="Target"/> based on the first found <see cref="Rigidbody"/> as either a direct, descendant or ancestor of the given <see cref="GameObject"/>.
@@ -94,7 +106,7 @@
         }
 
         /// <summary>
-        /// Sets the velocity of the <see cref="Target"/> to zero.
+        /// Clears <see cref="Velocity"/>.
         /// </summary>
         public virtual void ClearVelocity()
         {
@@ -103,7 +115,7 @@
                 return;
             }
 
-            Velocity = Vector3.zero;
+            Velocity = default;
         }
 
         /// <summary>
@@ -134,7 +146,7 @@
         }
 
         /// <summary>
-        /// Sets the angular velocity of the <see cref="Target"/> to zero.
+        /// Clears <see cref="AngularVelocity"/>.
         /// </summary>
         public virtual void ClearAngularVelocity()
         {
@@ -143,7 +155,7 @@
                 return;
             }
 
-            AngularVelocity = Vector3.zero;
+            AngularVelocity = default;
         }
 
         /// <summary>

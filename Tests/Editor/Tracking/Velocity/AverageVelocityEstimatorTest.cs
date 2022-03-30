@@ -320,6 +320,70 @@ namespace Test.Zinnia.Tracking.Velocity
             Assert.AreNotEqual(unexpectedResult, actualResult);
         }
 
+        [Test]
+        public void ClearSource()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.ClearSource();
+            Assert.IsNull(subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveComponent()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.enabled = false;
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearRelativeTo()
+        {
+            Assert.IsNull(subject.RelativeTo);
+            subject.RelativeTo = containingObject;
+            Assert.AreEqual(containingObject, subject.RelativeTo);
+            subject.ClearRelativeTo();
+            Assert.IsNull(subject.RelativeTo);
+        }
+
+        [Test]
+        public void ClearRelativeToInactiveGameObject()
+        {
+            Assert.IsNull(subject.RelativeTo);
+            subject.RelativeTo = containingObject;
+            Assert.AreEqual(containingObject, subject.RelativeTo);
+            subject.gameObject.SetActive(false);
+            subject.ClearRelativeTo();
+            Assert.AreEqual(containingObject, subject.RelativeTo);
+        }
+
+        [Test]
+        public void ClearRelativeToInactiveComponent()
+        {
+            Assert.IsNull(subject.RelativeTo);
+            subject.RelativeTo = containingObject;
+            Assert.AreEqual(containingObject, subject.RelativeTo);
+            subject.enabled = false;
+            subject.ClearRelativeTo();
+            Assert.AreEqual(containingObject, subject.RelativeTo);
+        }
+
         private void ProcessPositions(Vector3[] positions)
         {
             //Loop through the set custom positions and update the source's position then manually process the subject emulating an update loop

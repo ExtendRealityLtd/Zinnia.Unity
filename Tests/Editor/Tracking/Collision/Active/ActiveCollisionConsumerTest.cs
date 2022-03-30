@@ -205,5 +205,72 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             Assert.IsNull(subject.PublisherSource);
         }
+
+        [Test]
+        public void ClearContainer()
+        {
+            Assert.IsNull(subject.Container);
+            subject.Container = containingObject;
+            Assert.AreEqual(containingObject, subject.Container);
+            subject.ClearContainer();
+            Assert.IsNull(subject.Container);
+        }
+
+        [Test]
+        public void ClearContainerInactiveGameObject()
+        {
+            Assert.IsNull(subject.Container);
+            subject.Container = containingObject;
+            Assert.AreEqual(containingObject, subject.Container);
+            subject.gameObject.SetActive(false);
+            subject.ClearContainer();
+            Assert.AreEqual(containingObject, subject.Container);
+        }
+
+        [Test]
+        public void ClearContainerInactiveComponent()
+        {
+            Assert.IsNull(subject.Container);
+            subject.Container = containingObject;
+            Assert.AreEqual(containingObject, subject.Container);
+            subject.enabled = false;
+            subject.ClearContainer();
+            Assert.AreEqual(containingObject, subject.Container);
+        }
+
+        [Test]
+        public void ClearPublisherValidity()
+        {
+            Assert.IsNull(subject.PublisherValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.PublisherValidity = rule;
+            Assert.AreEqual(rule, subject.PublisherValidity);
+            subject.ClearPublisherValidity();
+            Assert.IsNull(subject.PublisherValidity);
+        }
+
+        [Test]
+        public void ClearPublisherValidityInactiveGameObject()
+        {
+            Assert.IsNull(subject.PublisherValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.PublisherValidity = rule;
+            Assert.AreEqual(rule, subject.PublisherValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearPublisherValidity();
+            Assert.AreEqual(rule, subject.PublisherValidity);
+        }
+
+        [Test]
+        public void ClearPublisherValidityInactiveComponent()
+        {
+            Assert.IsNull(subject.PublisherValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.PublisherValidity = rule;
+            Assert.AreEqual(rule, subject.PublisherValidity);
+            subject.enabled = false;
+            subject.ClearPublisherValidity();
+            Assert.AreEqual(rule, subject.PublisherValidity);
+        }
     }
 }

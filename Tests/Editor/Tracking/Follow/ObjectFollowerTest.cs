@@ -90,7 +90,7 @@ namespace Test.Zinnia.Tracking.Follow
         }
 
         [UnityTest]
-        public IEnumerator ClearTargetOffsets()
+        public IEnumerator ClearTargetOffsetsAtRuntime()
         {
             GameObject offset = new GameObject("offset");
 
@@ -385,6 +385,76 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(targetOffset1);
             Object.DestroyImmediate(targetOffset2);
             Object.DestroyImmediate(targetOffset3);
+        }
+
+        [Test]
+        public void ClearTargetOffsets()
+        {
+            Assert.IsNull(subject.TargetOffsets);
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.TargetOffsets = targets;
+            Assert.AreEqual(targets, subject.TargetOffsets);
+            subject.ClearTargetOffsets();
+            Assert.IsNull(subject.TargetOffsets);
+        }
+
+        [Test]
+        public void ClearTargetOffsetsInactiveGameObject()
+        {
+            Assert.IsNull(subject.TargetOffsets);
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.TargetOffsets = targets;
+            Assert.AreEqual(targets, subject.TargetOffsets);
+            subject.gameObject.SetActive(false);
+            subject.ClearTargetOffsets();
+            Assert.AreEqual(targets, subject.TargetOffsets);
+        }
+
+        [Test]
+        public void ClearTargetOffsetsInactiveComponent()
+        {
+            Assert.IsNull(subject.TargetOffsets);
+            GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
+            subject.TargetOffsets = targets;
+            Assert.AreEqual(targets, subject.TargetOffsets);
+            subject.enabled = false;
+            subject.ClearTargetOffsets();
+            Assert.AreEqual(targets, subject.TargetOffsets);
+        }
+
+        [Test]
+        public void ClearFollowModifier()
+        {
+            Assert.IsNull(subject.FollowModifier);
+            FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
+            subject.FollowModifier = followModifierMock;
+            Assert.AreEqual(followModifierMock, subject.FollowModifier);
+            subject.ClearFollowModifier();
+            Assert.IsNull(subject.FollowModifier);
+        }
+
+        [Test]
+        public void ClearFollowModifierInactiveGameObject()
+        {
+            Assert.IsNull(subject.FollowModifier);
+            FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
+            subject.FollowModifier = followModifierMock;
+            Assert.AreEqual(followModifierMock, subject.FollowModifier);
+            subject.gameObject.SetActive(false);
+            subject.ClearFollowModifier();
+            Assert.AreEqual(followModifierMock, subject.FollowModifier);
+        }
+
+        [Test]
+        public void ClearFollowModifierInactiveComponent()
+        {
+            Assert.IsNull(subject.FollowModifier);
+            FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
+            subject.FollowModifier = followModifierMock;
+            Assert.AreEqual(followModifierMock, subject.FollowModifier);
+            subject.enabled = false;
+            subject.ClearFollowModifier();
+            Assert.AreEqual(followModifierMock, subject.FollowModifier);
         }
 
         public class FollowModifierMock : FollowModifier

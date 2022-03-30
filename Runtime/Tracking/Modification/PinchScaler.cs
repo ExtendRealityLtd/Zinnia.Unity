@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -16,19 +15,19 @@
         /// <summary>
         /// The target to scale.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject PrimaryPoint { get; set; }
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject SecondaryPoint { get; set; }
         /// <summary>
@@ -58,6 +57,45 @@
         /// The original scale of <see cref="Target"/>.
         /// </summary>
         protected Vector3 originalScale;
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PrimaryPoint"/>.
+        /// </summary>
+        public virtual void ClearPrimaryPoint()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PrimaryPoint = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="SecondaryPoint"/>.
+        /// </summary>
+        public virtual void ClearSecondaryPoint()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            SecondaryPoint = default;
+        }
 
         /// <summary>
         /// Processes the current scale factor onto the target.

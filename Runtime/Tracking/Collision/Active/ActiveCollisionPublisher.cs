@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -23,7 +22,7 @@
             /// <summary>
             /// The container of the source that is initiating the collision.
             /// </summary>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public GameObject SourceContainer { get; set; }
 
@@ -48,6 +47,14 @@
             /// The <see cref="ActiveCollisionPublisher"/> that is doing the publishing.
             /// </summary>
             public ActiveCollisionPublisher Publisher { get; set; }
+
+            /// <summary>
+            /// Clears <see cref="SourceContainer"/>.
+            /// </summary>
+            public virtual void ClearSourceContainer()
+            {
+                SourceContainer = default;
+            }
 
             /// <inheritdoc />
             public override string ToString()
@@ -77,13 +84,13 @@
         /// <summary>
         /// The data to publish to any available consumers.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PayloadData Payload { get; set; } = new PayloadData();
         /// <summary>
         /// A collection of <see cref="ActiveCollisionConsumer"/> components that has been successfully published to.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public ActiveCollisionRegisteredConsumerContainer RegisteredConsumerContainer { get; set; }
 
@@ -101,6 +108,32 @@
         /// A reused instance to use when looking up the Active Collisions in a Payload.
         /// </summary>
         protected List<CollisionNotifier.EventData> activeCollisions = new List<CollisionNotifier.EventData>();
+
+        /// <summary>
+        /// Clears <see cref="Payload"/>.
+        /// </summary>
+        public virtual void ClearPayload()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Payload = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="RegisteredConsumerContainer"/>.
+        /// </summary>
+        public virtual void ClearRegisteredConsumerContainer()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            RegisteredConsumerContainer = default;
+        }
 
         /// <summary>
         /// Sets the active collisions by copying it from given <see cref="ActiveCollisionsContainer.EventData"/>.

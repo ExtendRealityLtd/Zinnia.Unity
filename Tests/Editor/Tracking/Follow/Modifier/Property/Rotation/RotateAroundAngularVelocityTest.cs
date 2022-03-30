@@ -226,6 +226,95 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             Object.DestroyImmediate(target);
         }
 
+        [Test]
+        public void ClearAngularVelocitySource()
+        {
+            Assert.IsNull(subject.AngularVelocitySource);
+            MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
+            subject.AngularVelocitySource = source;
+            Assert.AreEqual(source, subject.AngularVelocitySource);
+            subject.ClearAngularVelocitySource();
+            Assert.IsNull(subject.AngularVelocitySource);
+        }
+
+        [Test]
+        public void ClearAngularVelocitySourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.AngularVelocitySource);
+            MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
+            subject.AngularVelocitySource = source;
+            Assert.AreEqual(source, subject.AngularVelocitySource);
+            subject.gameObject.SetActive(false);
+            subject.ClearAngularVelocitySource();
+            Assert.AreEqual(source, subject.AngularVelocitySource);
+        }
+
+        [Test]
+        public void ClearAngularVelocitySourceInactiveComponent()
+        {
+            Assert.IsNull(subject.AngularVelocitySource);
+            MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
+            subject.AngularVelocitySource = source;
+            Assert.AreEqual(source, subject.AngularVelocitySource);
+            subject.enabled = false;
+            subject.ClearAngularVelocitySource();
+            Assert.AreEqual(source, subject.AngularVelocitySource);
+        }
+
+        [Test]
+        public void SetSourceMultiplierX()
+        {
+            subject.SourceMultiplier = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, subject.SourceMultiplier);
+            subject.SetSourceMultiplierX(1f);
+            Assert.AreEqual(Vector3.right, subject.SourceMultiplier);
+        }
+
+        [Test]
+        public void SetSourceMultiplierY()
+        {
+            subject.SourceMultiplier = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, subject.SourceMultiplier);
+            subject.SetSourceMultiplierY(1f);
+            Assert.AreEqual(Vector3.up, subject.SourceMultiplier);
+        }
+
+        [Test]
+        public void SetSourceMultiplierZ()
+        {
+            subject.SourceMultiplier = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, subject.SourceMultiplier);
+            subject.SetSourceMultiplierZ(1f);
+            Assert.AreEqual(Vector3.forward, subject.SourceMultiplier);
+        }
+
+        [Test]
+        public void SetApplyToAxisX()
+        {
+            subject.ApplyToAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyToAxis);
+            subject.SetApplyToAxisX(true);
+            Assert.AreEqual(Vector3State.XOnly, subject.ApplyToAxis);
+        }
+
+        [Test]
+        public void SetApplyToAxisY()
+        {
+            subject.ApplyToAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyToAxis);
+            subject.SetApplyToAxisY(true);
+            Assert.AreEqual(Vector3State.YOnly, subject.ApplyToAxis);
+        }
+
+        [Test]
+        public void SetApplyToAxisZ()
+        {
+            subject.ApplyToAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyToAxis);
+            subject.SetApplyToAxisZ(true);
+            Assert.AreEqual(Vector3State.ZOnly, subject.ApplyToAxis);
+        }
+
         protected class MockVelocityTracker : VelocityTracker
         {
             public Vector3 AngularVelocity;

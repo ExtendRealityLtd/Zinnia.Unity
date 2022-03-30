@@ -1,12 +1,12 @@
 ﻿namespace Zinnia.Tracking.CameraRig
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
     using UnityEngine.XR;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     public class DominantControllerObserver : MonoBehaviour, IProcessable
@@ -21,13 +21,13 @@
         /// <summary>
         /// The details about the left controller.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Controller Settings"), DocumentedByXml]
         public DeviceDetailsRecord LeftController { get; set; }
         /// <summary>
         /// The details about the right controller.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public DeviceDetailsRecord RightController { get; set; }
         #endregion
@@ -52,6 +52,32 @@
         /// The last known dominant controller without doing a fresh query.
         /// </summary>
         public virtual DeviceDetailsRecord LastKnownDominantControllerDetails { get; protected set; }
+
+        /// <summary>
+        /// Clears <see cref="LeftController"/>.
+        /// </summary>
+        public virtual void ClearLeftController()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            LeftController = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="RightController"/>.
+        /// </summary>
+        public virtual void ClearRightController()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            RightController = default;
+        }
 
         /// <summary>
         /// Processes the state of the dominant controller.

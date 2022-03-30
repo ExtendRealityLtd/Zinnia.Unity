@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -18,18 +17,16 @@
         [Serialized]
         [field: DocumentedByXml]
         public float AngularDrag { get; set; } = 1f;
-
         /// <summary>
         /// Determines which axes to rotate.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public Vector3State FollowOnAxis { get; set; } = Vector3State.True;
-
         /// <summary>
         /// An optional <see cref="GameObject"/> that is negated from the calculation if both the source and target are descendants of it.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Ancestor { get; set; }
 
@@ -42,6 +39,19 @@
         /// The previous source world position.
         /// </summary>
         protected Vector3? previousSourcePosition;
+
+        /// <summary>
+        /// Clears <see cref="Ancestor"/>.
+        /// </summary>
+        public virtual void ClearAncestor()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Ancestor = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="FollowOnAxis"/> x value.

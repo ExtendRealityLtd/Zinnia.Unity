@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -41,7 +40,7 @@
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Search Settings"), DocumentedByXml]
         public GameObject SearchOrigin { get; set; }
         /// <summary>
@@ -86,25 +85,25 @@
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Restriction Settings"), DocumentedByXml]
         public RuleContainer TargetValidity { get; set; }
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine specific target point based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer TargetPointValidity { get; set; }
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine if the search for a valid surface should be terminated if the current found target matches the rule.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer LocatorTermination { get; set; }
         /// <summary>
         /// An optional custom <see cref="Cast.PhysicsCast"/> object to affect the <see cref="Ray"/>.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PhysicsCast PhysicsCast { get; set; }
         #endregion
@@ -136,6 +135,71 @@
         protected readonly TransformData transformData = new TransformData();
 
         /// <summary>
+        /// Clears <see cref="SearchOrigin"/>.
+        /// </summary>
+        public virtual void ClearSearchOrigin()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            SearchOrigin = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetValidity = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetPointValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetPointValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetPointValidity = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="LocatorTermination"/>.
+        /// </summary>
+        public virtual void ClearLocatorTermination()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            LocatorTermination = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PhysicsCast"/>.
+        /// </summary>
+        public virtual void ClearPhysicsCast()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PhysicsCast = default;
+        }
+
+        /// <summary>
         /// Sets the <see cref="SearchDirection"/> x value.
         /// </summary>
         /// <param name="value">The value to set to.</param>
@@ -160,6 +224,33 @@
         public virtual void SetSearchDirectionZ(float value)
         {
             SearchDirection = new Vector3(SearchDirection.x, SearchDirection.y, value);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="DestinationOffset"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetDestinationOffsetX(float value)
+        {
+            DestinationOffset = new Vector3(value, DestinationOffset.y, DestinationOffset.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="DestinationOffset"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetDestinationOffsetY(float value)
+        {
+            DestinationOffset = new Vector3(DestinationOffset.x, value, DestinationOffset.z);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="DestinationOffset"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetDestinationOffsetZ(float value)
+        {
+            DestinationOffset = new Vector3(DestinationOffset.x, DestinationOffset.y, value);
         }
 
         /// <summary>

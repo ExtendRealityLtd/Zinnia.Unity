@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Pointer
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -140,19 +139,19 @@
         /// <summary>
         /// Represents the origin, i.e. the first rendered point.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Pointer Element Settings"), DocumentedByXml]
         public PointerElement Origin { get; set; }
         /// <summary>
         /// Represents the segments between <see cref="Origin"/> and <see cref="Destination"/>. This will get cloned to create all the segments.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PointerElement RepeatedSegment { get; set; }
         /// <summary>
         /// Represents the destination, i.e. the last rendered point.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PointerElement Destination { get; set; }
         /// <summary>
@@ -164,7 +163,7 @@
         /// <summary>
         /// Provides an alternative as the pointer origin in the events.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject EventDataOriginTransformOverride { get; set; }
 
@@ -285,6 +284,58 @@
         /// The points data to render the pointer with.
         /// </summary>
         protected readonly PointsRenderer.PointsData pointsData = new PointsRenderer.PointsData();
+
+        /// <summary>
+        /// Clears <see cref="Origin"/>.
+        /// </summary>
+        public virtual void ClearOrigin()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Origin = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="RepeatedSegment"/>.
+        /// </summary>
+        public virtual void ClearRepeatedSegment()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            RepeatedSegment = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Destination"/>.
+        /// </summary>
+        public virtual void ClearDestination()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Destination = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="EventDataOriginTransformOverride"/>.
+        /// </summary>
+        public virtual void ClearEventDataOriginTransformOverride()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            EventDataOriginTransformOverride = default;
+        }
 
         /// <summary>
         /// The Activate method turns on the <see cref="ObjectPointer"/>.

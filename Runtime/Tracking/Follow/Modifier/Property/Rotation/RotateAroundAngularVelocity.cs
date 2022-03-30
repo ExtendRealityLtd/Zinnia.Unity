@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
     using Zinnia.Tracking.Velocity;
 
     /// <summary>
@@ -15,7 +15,7 @@
         /// <summary>
         /// The <see cref="VelocityTracker"/> that is the source of the angular velocity.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public VelocityTracker AngularVelocitySource { get; set; }
         /// <summary>
@@ -30,13 +30,25 @@
         [Serialized]
         [field: DocumentedByXml]
         public Vector3State ApplyToAxis { get; set; }
-        
         /// <summary>
         /// When true, transforms the angular velocity to be in target's space instead of world space.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public bool InTargetSpace { get; set; }
+
+        /// <summary>
+        /// Clears <see cref="AngularVelocitySource"/>.
+        /// </summary>
+        public virtual void ClearAngularVelocitySource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            AngularVelocitySource = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="SourceMultiplier"/> x value.
@@ -108,7 +120,7 @@
             Vector3 input = InTargetSpace
                 ? target.transform.parent.InverseTransformVector(AngularVelocitySource.GetAngularVelocity())
                 : AngularVelocitySource.GetAngularVelocity();
-                            
+
             input.Scale(SourceMultiplier);
             input.Scale(ApplyToAxis.ToVector3());
 

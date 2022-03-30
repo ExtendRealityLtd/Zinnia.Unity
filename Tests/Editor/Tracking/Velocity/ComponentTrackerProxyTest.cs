@@ -51,7 +51,7 @@ namespace Test.Zinnia.Tracking.Velocity
         }
 
         [Test]
-        public void ClearProxySource()
+        public void NullProxySourceProperty()
         {
             GameObject sourceObject;
             VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
@@ -124,6 +124,38 @@ namespace Test.Zinnia.Tracking.Velocity
             Assert.AreEqual(Vector3.zero, subject.GetAngularVelocity());
 
             Object.DestroyImmediate(sourceObject);
+        }
+
+        [Test]
+        public void ClearProxySource()
+        {
+            Assert.IsNull(subject.ProxySource);
+            subject.ProxySource = containingObject;
+            Assert.AreEqual(containingObject, subject.ProxySource);
+            subject.ClearProxySource();
+            Assert.IsNull(subject.ProxySource);
+        }
+
+        [Test]
+        public void ClearProxySourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.ProxySource);
+            subject.ProxySource = containingObject;
+            Assert.AreEqual(containingObject, subject.ProxySource);
+            subject.gameObject.SetActive(false);
+            subject.ClearProxySource();
+            Assert.AreEqual(containingObject, subject.ProxySource);
+        }
+
+        [Test]
+        public void ClearProxySourceInactiveComponent()
+        {
+            Assert.IsNull(subject.ProxySource);
+            subject.ProxySource = containingObject;
+            Assert.AreEqual(containingObject, subject.ProxySource);
+            subject.enabled = false;
+            subject.ClearProxySource();
+            Assert.AreEqual(containingObject, subject.ProxySource);
         }
     }
 }

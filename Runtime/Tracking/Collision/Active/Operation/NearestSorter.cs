@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -45,7 +44,7 @@
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
 
@@ -72,6 +71,19 @@
         /// The comparison <see cref="Comparer"/> does.
         /// </summary>
         protected static readonly Comparison<CollisionNotifier.EventData> Comparison = Comparer.Compare;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
 
         /// <summary>
         /// Sorts the given collision collection by the collisions that are nearest to the source <see cref="Transform"/>.

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -16,7 +15,7 @@
         /// <summary>
         /// The target to mutate.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Target Settings"), DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
@@ -32,6 +31,32 @@
         [field: DocumentedByXml]
         public Vector3State MutateOnAxis { get; set; } = Vector3State.True;
         #endregion
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="MutateOnAxis"/>.
+        /// </summary>
+        public virtual void ClearMutateOnAxis()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            MutateOnAxis = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="MutateOnAxis"/> x value.

@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -64,13 +63,13 @@
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
@@ -95,12 +94,10 @@
         /// The difference of the positions of the target and source.
         /// </summary>
         public Vector3 Difference { get; protected set; }
-
         /// <summary>
         /// The distance between the source and target.
         /// </summary>
         public float Distance { get; protected set; }
-
         /// <summary>
         /// Determines if the distance between the source and target is exceeding the threshold.
         /// </summary>
@@ -118,6 +115,32 @@
         /// The event data to emit.
         /// </summary>
         protected readonly EventData eventData = new EventData();
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
 
         /// <summary>
         /// Checks to see if the distance between the source and target exceed the threshold.

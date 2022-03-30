@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -56,7 +55,7 @@
         /// <summary>
         /// Determines whether the collision is valid and to add it to the active collision collection.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Validity Settings"), DocumentedByXml]
         public RuleContainer CollisionValidity { get; set; }
         #endregion
@@ -110,6 +109,19 @@
         /// The event data emitted on active collision events.
         /// </summary>
         protected readonly EventData eventData = new EventData();
+
+        /// <summary>
+        /// Clears <see cref="CollisionValidity"/>.
+        /// </summary>
+        public virtual void ClearCollisionValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            CollisionValidity = default;
+        }
 
         /// <summary>
         /// Adds the given collision as an active collision.

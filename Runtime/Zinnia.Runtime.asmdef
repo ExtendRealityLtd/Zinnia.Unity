@@ -8,7 +8,6 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "Malimbe.MemberChangeMethod.dll",
-        "Malimbe.MemberClearanceMethod.dll",
         "Malimbe.PropertySerializationAttribute.dll",
         "Malimbe.XmlDocumentationAttribute.dll"
     ],

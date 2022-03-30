@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -26,7 +25,7 @@
             /// The source of this event in case it was forwarded.
             /// </summary>
             /// <remarks><see langword="null"/> if this event wasn't forwarded from anything.</remarks>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public Component ForwardSource { get; set; }
             /// <summary>
@@ -47,6 +46,14 @@
             [Serialized]
             [field: DocumentedByXml]
             public Collider ColliderData { get; set; }
+
+            /// <summary>
+            /// Clears <see cref="ForwardSource"/>.
+            /// </summary>
+            public virtual void ClearForwardSource()
+            {
+                ForwardSource = default;
+            }
 
             public EventData Set(EventData source)
             {
@@ -195,7 +202,7 @@
         /// <summary>
         /// Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer ForwardingSourceValidity { get; set; }
         #endregion
@@ -251,6 +258,19 @@
         /// The <see cref="Transform"/> of the notifier for the given collider data.
         /// </summary>
         protected Transform notifierColliderTransform;
+
+        /// <summary>
+        /// Clears <see cref="ForwardingSourceValidity"/>.
+        /// </summary>
+        public virtual void ClearForwardingSourceValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ForwardingSourceValidity = default;
+        }
 
         /// <summary>
         /// Processes any collision start events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.

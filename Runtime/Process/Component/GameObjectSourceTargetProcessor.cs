@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Process.Component
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -31,7 +30,7 @@
         /// <summary>
         /// Allows to optionally determine which sources should be processed based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer SourceValidity { get; set; }
         /// <summary>
@@ -43,10 +42,36 @@
         /// <summary>
         /// Allows to optionally determine which targets should be processed based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer TargetValidity { get; set; }
         #endregion
+
+        /// <summary>
+        /// Clears <see cref="SourceValidity"/>.
+        /// </summary>
+        public virtual void ClearSourceValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            SourceValidity = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetValidity = default;
+        }
 
         /// <inheritdoc />
         public override void Process()

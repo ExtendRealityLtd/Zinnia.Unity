@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -26,15 +25,31 @@
             /// <summary>
             /// The source <see cref="TransformData"/> to obtain the transformation properties from.
             /// </summary>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public TransformData EventSource { get; set; }
             /// <summary>
             /// The target <see cref="TransformData"/> to apply transformations to.
             /// </summary>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public TransformData EventTarget { get; set; }
+
+            /// <summary>
+            /// Clears <see cref="EventSource"/>.
+            /// </summary>
+            public virtual void ClearEventSource()
+            {
+                EventSource = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="EventTarget"/>.
+            /// </summary>
+            public virtual void ClearEventTarget()
+            {
+                EventTarget = default;
+            }
 
             public EventData Set(EventData source)
             {
@@ -69,19 +84,19 @@
         /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Reference Settings"), DocumentedByXml]
         public TransformData Source { get; set; }
         /// <summary>
         /// The target to apply the transformations to.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// The offset/pivot when applying the transformations.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Offset { get; set; }
         #endregion
@@ -165,6 +180,45 @@
         protected readonly TransformData targetTransformData = new TransformData();
 
         /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Offset"/>.
+        /// </summary>
+        public virtual void ClearOffset()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Offset = default;
+        }
+
+        /// <summary>
         /// Sets the <see cref="Source"/> parameter from <see cref="GameObject"/> data.
         /// </summary>
         /// <param name="source">The data to build the new source from.</param>
@@ -197,6 +251,33 @@
         public virtual void SetOffset(TransformData offset)
         {
             Offset = offset.TryGetGameObject();
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyPositionOffsetOnAxis"/> x value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyPositionOffsetOnAxisX(bool value)
+        {
+            ApplyPositionOffsetOnAxis = new Vector3State(value, ApplyPositionOffsetOnAxis.yState, ApplyPositionOffsetOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyPositionOffsetOnAxis"/> y value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyPositionOffsetOnAxisY(bool value)
+        {
+            ApplyPositionOffsetOnAxis = new Vector3State(ApplyPositionOffsetOnAxis.xState, value, ApplyPositionOffsetOnAxis.zState);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ApplyPositionOffsetOnAxis"/> z value.
+        /// </summary>
+        /// <param name="value">The value to set to.</param>
+        public virtual void SetApplyPositionOffsetOnAxisZ(bool value)
+        {
+            ApplyPositionOffsetOnAxis = new Vector3State(ApplyPositionOffsetOnAxis.xState, ApplyPositionOffsetOnAxis.yState, value);
         }
 
         /// <summary>

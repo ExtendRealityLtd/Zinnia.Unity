@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Tracking.Query
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -34,19 +33,19 @@
         /// <summary>
         /// Defines the source location that the RayCast will originate from towards the <see cref="Target"/> location.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
         /// Defines the target location that the RayCast will attain to reach from the originating <see cref="Source"/> location.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// Optional settings to use when doing the RayCast.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PhysicsCast PhysicsCast { get; set; }
 
@@ -65,6 +64,45 @@
         /// Whether the RayCast from <see cref="Source"/> to <see cref="Target"/> was previously obscured by another <see cref="Collider"/>.
         /// </summary>
         protected bool? wasPreviouslyObscured;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PhysicsCast"/>.
+        /// </summary>
+        public virtual void ClearPhysicsCast()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PhysicsCast = default;
+        }
 
         /// <summary>
         /// Casts a ray from the <see cref="Source"/> origin location towards the <see cref="Target"/> destination location and determines whether the RayCast is blocked by another <see cref="Collider"/>.

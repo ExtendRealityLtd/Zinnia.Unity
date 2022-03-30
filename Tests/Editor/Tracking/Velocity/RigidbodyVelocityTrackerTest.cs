@@ -84,5 +84,37 @@ namespace Test.Zinnia.Tracking.Velocity
             Assert.AreEqual(expectedResult, actualResult);
             Assert.AreNotEqual(unexpectedResult, actualResult);
         }
+
+        [Test]
+        public void ClearSource()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = source;
+            Assert.AreEqual(source, subject.Source);
+            subject.ClearSource();
+            Assert.IsNull(subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = source;
+            Assert.AreEqual(source, subject.Source);
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+            Assert.AreEqual(source, subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveComponent()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = source;
+            Assert.AreEqual(source, subject.Source);
+            subject.enabled = false;
+            subject.ClearSource();
+            Assert.AreEqual(source, subject.Source);
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -14,7 +13,7 @@
         /// <summary>
         /// The point where the attachment was made.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject AttachmentPoint { get; set; }
 
@@ -26,6 +25,19 @@
         /// A cached version of the target.
         /// </summary>
         protected GameObject cachedTarget;
+
+        /// <summary>
+        /// Clears <see cref="AttachmentPoint"/>.
+        /// </summary>
+        public virtual void ClearAttachmentPoint()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            AttachmentPoint = default;
+        }
 
         /// <summary>
         /// Applies a force at the attachment point position to the target rigidbody creating torque for rotation.

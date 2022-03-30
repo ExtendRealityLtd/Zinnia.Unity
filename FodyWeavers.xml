@@ -6,7 +6,6 @@
     <AssemblyNameRegex>^Zinnia</AssemblyNameRegex>
   </Malimbe.FodyRunner>
   <Malimbe.MemberChangeMethod/>
-  <Malimbe.MemberClearanceMethod/>
   <Malimbe.PropertySerializationAttribute/>
   <Malimbe.XmlDocumentationAttribute IdentifierReplacementFormat="`{0}`"/>
 </Weavers>

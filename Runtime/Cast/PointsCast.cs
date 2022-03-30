@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Cast
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -96,25 +95,25 @@
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Origin { get; set; }
         /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PhysicsCast PhysicsCast { get; set; }
         /// <summary>
         /// Allows to optionally determine targets based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer TargetValidity { get; set; }
         /// <summary>
         /// Allows to optionally determine specific target point based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer TargetPointValidity { get; set; }
 
@@ -152,21 +151,55 @@
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
-        /// Casts and creates points along the cast.
+        /// Clears <see cref="Origin"/>.
         /// </summary>
-        public virtual void CastPoints()
+        public virtual void ClearOrigin()
         {
-            if (!this.IsValidState() || Origin == null)
+            if (!this.IsValidState())
             {
                 return;
             }
-            DoCastPoints();
+
+            Origin = default;
         }
 
-        /// <inheritdoc />
-        public virtual void Process()
+        /// <summary>
+        /// Clears <see cref="PhysicsCast"/>.
+        /// </summary>
+        public virtual void ClearPhysicsCast()
         {
-            CastPoints();
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PhysicsCast = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetValidity = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetPointValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetPointValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetPointValidity = default;
         }
 
         /// <summary>
@@ -175,6 +208,25 @@
         public virtual void ClearDestinationPointOverride()
         {
             DestinationPointOverride = null;
+        }
+
+        /// <summary>
+        /// Casts and creates points along the cast.
+        /// </summary>
+        public virtual void CastPoints()
+        {
+            if (!this.IsValidState() || Origin == null)
+            {
+                return;
+            }
+
+            DoCastPoints();
+        }
+
+        /// <inheritdoc />
+        public virtual void Process()
+        {
+            CastPoints();
         }
 
         /// <summary>

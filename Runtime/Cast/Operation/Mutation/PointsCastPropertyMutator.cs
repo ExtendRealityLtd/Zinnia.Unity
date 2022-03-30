@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Cast.Operation.Mutation
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -16,30 +15,79 @@
         /// <summary>
         /// The <see cref="PointsCast"/> to mutate.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public PointsCast Target { get; set; }
 
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
-        [Cleared]
         public GameObject Origin { get; set; }
         /// <summary>
         /// Optionally affects the cast.
         /// </summary>
-        [Cleared]
         public PhysicsCast PhysicsCast { get; set; }
         /// <summary>
         /// Optionally determines targets based on the set rules.
         /// </summary>
-        [Cleared]
         public RuleContainer TargetValidity { get; set; }
 
         /// <summary>
         /// An override for the destination location point in world space.
         /// </summary>
-        public Vector3? DestinationPointOverride { get; set; }
+        public Vector3? DestinationPointOverride { get; protected set; }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Origin"/>.
+        /// </summary>
+        public virtual void ClearOrigin()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Origin = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PhysicsCast"/>.
+        /// </summary>
+        public virtual void ClearPhysicsCast()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PhysicsCast = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetValidity = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="Target"/> based on the first found <see cref="PointsCast"/> as either a direct, descendant or ancestor of the given <see cref="GameObject"/>.
@@ -74,6 +122,7 @@
                 return;
             }
 
+            DestinationPointOverride = default;
             Target.ClearDestinationPointOverride();
         }
 

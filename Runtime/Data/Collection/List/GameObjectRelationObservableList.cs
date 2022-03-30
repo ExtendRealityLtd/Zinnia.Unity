@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Collection.List
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -22,15 +21,31 @@
             /// <summary>
             /// The <see cref="GameObject"/> acting as the key.
             /// </summary>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public GameObject Key { get; set; }
             /// <summary>
             /// The <see cref="GameObject"/> acting as the value.
             /// </summary>
-            [Serialized, Cleared]
+            [Serialized]
             [field: DocumentedByXml]
             public GameObject Value { get; set; }
+
+            /// <summary>
+            /// Clears <see cref="Key"/>.
+            /// </summary>
+            public virtual void ClearKey()
+            {
+                Key = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="Value"/>.
+            /// </summary>
+            public virtual void ClearValue()
+            {
+                Value = default;
+            }
         }
 
         /// <summary>

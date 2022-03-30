@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Tracking.Query
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -18,13 +18,13 @@
         /// <summary>
         /// The object used as the origin to check if it is facing towards <see cref="Target"/>.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
         /// The object that will be checked to see if <see cref="Source"/> is facing it.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
@@ -49,6 +49,32 @@
         /// Whether <see cref="Source"/> was previously facing <see cref="Target"/>.
         /// </summary>
         protected bool? wasPreviouslyFacing;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
 
         /// <summary>
         /// Determines whether <see cref="Source"/> is facing <see cref="Target"/> defined by its position and <see cref="TargetRadius"/>.

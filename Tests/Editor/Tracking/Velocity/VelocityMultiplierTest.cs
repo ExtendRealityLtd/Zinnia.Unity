@@ -75,5 +75,49 @@ namespace Test.Zinnia.Tracking.Velocity
 
             Object.DestroyImmediate(tracker.gameObject);
         }
+
+        [Test]
+        public void ClearSource()
+        {
+            Assert.IsNull(subject.Source);
+            VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
+            subject.Source = tracker;
+
+            Assert.AreEqual(tracker, subject.Source);
+
+            subject.ClearSource();
+
+            Assert.IsNull(subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.Source);
+            VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
+            subject.Source = tracker;
+
+            Assert.AreEqual(tracker, subject.Source);
+
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+
+            Assert.AreEqual(tracker, subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveComponent()
+        {
+            Assert.IsNull(subject.Source);
+            VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
+            subject.Source = tracker;
+
+            Assert.AreEqual(tracker, subject.Source);
+
+            subject.enabled = false;
+            subject.ClearSource();
+
+            Assert.AreEqual(tracker, subject.Source);
+        }
     }
 }

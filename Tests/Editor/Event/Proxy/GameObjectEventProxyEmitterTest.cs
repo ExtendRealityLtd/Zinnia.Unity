@@ -121,5 +121,41 @@ namespace Test.Zinnia.Event.Proxy
 
             Object.DestroyImmediate(digest);
         }
+
+
+        [Test]
+        public void ClearReceiveValidity()
+        {
+            Assert.IsNull(subject.ReceiveValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ReceiveValidity = rule;
+            Assert.AreEqual(rule, subject.ReceiveValidity);
+            subject.ClearReceiveValidity();
+            Assert.IsNull(subject.ReceiveValidity);
+        }
+
+        [Test]
+        public void ClearReceiveValidityInactiveGameObject()
+        {
+            Assert.IsNull(subject.ReceiveValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ReceiveValidity = rule;
+            Assert.AreEqual(rule, subject.ReceiveValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearReceiveValidity();
+            Assert.AreEqual(rule, subject.ReceiveValidity);
+        }
+
+        [Test]
+        public void ClearTargetValidityInactiveComponent()
+        {
+            Assert.IsNull(subject.ReceiveValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ReceiveValidity = rule;
+            Assert.AreEqual(rule, subject.ReceiveValidity);
+            subject.enabled = false;
+            subject.ClearReceiveValidity();
+            Assert.AreEqual(rule, subject.ReceiveValidity);
+        }
     }
 }

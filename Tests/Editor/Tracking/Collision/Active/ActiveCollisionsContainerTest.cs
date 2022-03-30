@@ -540,6 +540,41 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Assert.IsFalse(allStoppedMock.Received);
         }
 
+        [Test]
+        public void ClearCollisionValidity()
+        {
+            Assert.IsNull(subject.CollisionValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.CollisionValidity = rule;
+            Assert.AreEqual(rule, subject.CollisionValidity);
+            subject.ClearCollisionValidity();
+            Assert.IsNull(subject.CollisionValidity);
+        }
+
+        [Test]
+        public void ClearCollisionValidityInactiveGameObject()
+        {
+            Assert.IsNull(subject.CollisionValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.CollisionValidity = rule;
+            Assert.AreEqual(rule, subject.CollisionValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearCollisionValidity();
+            Assert.AreEqual(rule, subject.CollisionValidity);
+        }
+
+        [Test]
+        public void ClearCollisionValidityInactiveComponent()
+        {
+            Assert.IsNull(subject.CollisionValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.CollisionValidity = rule;
+            Assert.AreEqual(rule, subject.CollisionValidity);
+            subject.enabled = false;
+            subject.ClearCollisionValidity();
+            Assert.AreEqual(rule, subject.CollisionValidity);
+        }
+
         private class ActiveCollisionsContainerMock : ActiveCollisionsContainer
         {
             public virtual void ManualOnDisable()

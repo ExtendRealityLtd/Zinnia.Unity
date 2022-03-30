@@ -1,10 +1,9 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using System;
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
+    using System;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -17,13 +16,13 @@
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Source { get; set; }
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject RelativeTo { get; set; }
         /// <summary>
@@ -45,18 +44,65 @@
         [field: DocumentedByXml]
         public int AngularVelocityAverageFrames { get; set; } = 10;
 
+        /// <summary>
+        /// The current count of samples to calculate the velocity from.
+        /// </summary>
         protected int currentSampleCount;
+        /// <summary>
+        /// The frame samples of velocity to used to calculate final velocity.
+        /// </summary>
         protected Vector3[] velocitySamples = Array.Empty<Vector3>();
+        /// <summary>
+        /// The frame samples of angular velocity to used to calculate final angular velocity.
+        /// </summary>
         protected Vector3[] angularVelocitySamples = Array.Empty<Vector3>();
+        /// <summary>
+        /// The previous position of the <see cref="Source"/>.
+        /// </summary>
         protected Vector3 previousPosition = Vector3.zero;
+        /// <summary>
+        /// The previous rotation of the <see cref="Source"/>.
+        /// </summary>
         protected Quaternion previousRotation = Quaternion.identity;
+        /// <summary>
+        /// The previous position of the <see cref="RelativeTo"/>.
+        /// </summary>
         protected Vector3 previousRelativePosition = Vector3.zero;
+        /// <summary>
+        /// The previous rotation of the <see cref="RelativeTo"/>.
+        /// </summary>
         protected Quaternion previousRelativeRotation = Quaternion.identity;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="RelativeTo"/>.
+        /// </summary>
+        public virtual void ClearRelativeTo()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            RelativeTo = default;
+        }
 
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return base.IsActive() && Source != null && Source.gameObject.activeInHierarchy;
+            return base.IsActive() && Source != null && Source.activeInHierarchy;
         }
 
         /// <summary>

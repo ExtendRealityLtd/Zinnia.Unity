@@ -4,7 +4,6 @@ using Zinnia.Data.Type;
 namespace Test.Zinnia.Data.Operation.Mutation
 {
     using NUnit.Framework;
-    using NUnit.Framework.Constraints;
     using UnityEngine;
     using Assert = UnityEngine.Assertions.Assert;
 
@@ -336,6 +335,91 @@ namespace Test.Zinnia.Data.Operation.Mutation
             Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
 
             Object.DestroyImmediate(target);
+        }
+
+        [Test]
+        public void ClearOrigin()
+        {
+            Assert.IsNull(subject.Origin);
+            subject.Origin = containingObject;
+            Assert.AreEqual(containingObject, subject.Origin);
+            subject.ClearOrigin();
+            Assert.IsNull(subject.Origin);
+        }
+
+        [Test]
+        public void ClearOriginInactiveGameObject()
+        {
+            Assert.IsNull(subject.Origin);
+            subject.Origin = containingObject;
+            Assert.AreEqual(containingObject, subject.Origin);
+            subject.gameObject.SetActive(false);
+            subject.ClearOrigin();
+            Assert.AreEqual(containingObject, subject.Origin);
+        }
+
+        [Test]
+        public void ClearOriginInactiveComponent()
+        {
+            Assert.IsNull(subject.Origin);
+            subject.Origin = containingObject;
+            Assert.AreEqual(containingObject, subject.Origin);
+            subject.enabled = false;
+            subject.ClearOrigin();
+            Assert.AreEqual(containingObject, subject.Origin);
+        }
+
+        [Test]
+        public void ClearApplyOriginOnAxis()
+        {
+            Assert.AreEqual(Vector3State.True, subject.ApplyOriginOnAxis);
+            subject.ClearApplyOriginOnAxis();
+            Assert.AreEqual(Vector3State.False, subject.ApplyOriginOnAxis);
+        }
+
+        [Test]
+        public void ClearApplyOriginOnAxisInactiveGameObject()
+        {
+            Assert.AreEqual(Vector3State.True, subject.ApplyOriginOnAxis);
+            subject.gameObject.SetActive(false);
+            subject.ClearApplyOriginOnAxis();
+            Assert.AreEqual(Vector3State.True, subject.ApplyOriginOnAxis);
+        }
+
+        [Test]
+        public void ClearApplyOriginOnAxisInactiveComponent()
+        {
+            Assert.AreEqual(Vector3State.True, subject.ApplyOriginOnAxis);
+            subject.enabled = false;
+            subject.ClearApplyOriginOnAxis();
+            Assert.AreEqual(Vector3State.True, subject.ApplyOriginOnAxis);
+        }
+
+        [Test]
+        public void SetApplyOriginOnAxisX()
+        {
+            subject.ApplyOriginOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyOriginOnAxis);
+            subject.SetApplyOriginOnAxisX(true);
+            Assert.AreEqual(Vector3State.XOnly, subject.ApplyOriginOnAxis);
+        }
+
+        [Test]
+        public void SetApplyOriginOnAxisY()
+        {
+            subject.ApplyOriginOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyOriginOnAxis);
+            subject.SetApplyOriginOnAxisY(true);
+            Assert.AreEqual(Vector3State.YOnly, subject.ApplyOriginOnAxis);
+        }
+
+        [Test]
+        public void SetApplyOriginOnAxisZ()
+        {
+            subject.ApplyOriginOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyOriginOnAxis);
+            subject.SetApplyOriginOnAxisZ(true);
+            Assert.AreEqual(Vector3State.ZOnly, subject.ApplyOriginOnAxis);
         }
     }
 }

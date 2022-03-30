@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.Events;
@@ -17,7 +16,7 @@
         /// <summary>
         /// Determines whether the received payload is valid to be re-emitted.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public RuleContainer ReceiveValidity { get; set; }
 
@@ -26,6 +25,19 @@
         /// </summary>
         /// <returns>The target to check on.</returns>
         protected abstract object GetTargetToCheck();
+
+        /// <summary>
+        /// Clears <see cref="ReceiveValidity"/>.
+        /// </summary>
+        public virtual void ClearReceiveValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ReceiveValidity = default;
+        }
 
         /// <inheritdoc />
         protected override bool IsValid()

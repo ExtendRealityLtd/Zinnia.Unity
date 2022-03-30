@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -28,7 +27,7 @@
         /// <summary>
         /// The source <see cref="VelocityTracker"/> to receive the velocity data from.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public VelocityTracker Source { get; set; }
 
@@ -52,6 +51,19 @@
         /// </summary>
         [DocumentedByXml]
         public FloatUnityEvent AngularSpeedEmitted = new FloatUnityEvent();
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
 
         /// <summary>
         /// Emits the Velocity of the Tracked Velocity.

@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
@@ -38,31 +37,31 @@
         /// <summary>
         /// The target to rotate.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: Header("Reference Settings"), DocumentedByXml]
         public GameObject Target { get; set; }
         /// <summary>
         /// The object to look at when affecting rotation.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject LookAt { get; set; }
         /// <summary>
         /// The object to be used as the pivot point for rotation.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Pivot { get; set; }
         /// <summary>
         /// The object providing a rotational offset for the <see cref="Target"/>.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject TargetOffset { get; set; }
         /// <summary>
         /// The object providing a rotational offset for the <see cref="Pivot"/>.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject PivotOffset { get; set; }
         #endregion
@@ -131,6 +130,71 @@
         protected bool IsLookAtInFrontOfPivot => Target != null && Pivot != null && LookAt != null ? Target.transform.InverseTransformPoint(LookAt.transform.position).z > Target.transform.InverseTransformPoint(Pivot.transform.position).z : false;
 
         /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="LookAt"/>.
+        /// </summary>
+        public virtual void ClearLookAt()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            LookAt = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Pivot"/>.
+        /// </summary>
+        public virtual void ClearPivotProperty()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Pivot = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetOffset"/>.
+        /// </summary>
+        public virtual void ClearTargetOffset()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetOffset = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PivotOffset"/>.
+        /// </summary>
+        public virtual void ClearPivotOffset()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PivotOffset = default;
+        }
+
+        /// <summary>
         /// Processes the current direction modification.
         /// </summary>
         public virtual void Process()
@@ -144,7 +208,7 @@
         }
 
         /// <summary>
-        /// Clears the existing pivot.
+        /// Clears the existing created pivot point.
         /// </summary>
         public virtual void ClearPivot()
         {

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
@@ -15,45 +14,39 @@
         /// <summary>
         /// The object to apply the artificial velocities to.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public GameObject Target { get; set; }
-
         /// <summary>
         /// The velocity to apply.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public Vector3 Velocity { get; set; }
-
         /// <summary>
         /// The angular velocity to apply.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public Vector3 AngularVelocity { get; set; }
-
         /// <summary>
         /// The drag to apply to reduce the directional velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public float Drag { get; set; } = 1f;
-
         /// <summary>
         /// The angular drag to apply to reduce the rotational velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public float AngularDrag { get; set; } = 0.5f;
-
         /// <summary>
         /// The tolerance the velocity can be within zero to be considered nil.
         /// </summary>
         [Serialized]
         [field: DocumentedByXml]
         public float NilVelocityTolerance { get; set; } = 0.001f;
-
         /// <summary>
         /// The tolerance the angular velocity can be within zero to be considered nil.
         /// </summary>
@@ -67,16 +60,16 @@
         protected bool canProcess = false;
 
         /// <summary>
-        /// Applies the velocity data to the <see cref="Target"/>.
+        /// Clears <see cref="Target"/>.
         /// </summary>
-        public virtual void Apply()
+        public virtual void ClearTarget()
         {
             if (!this.IsValidState())
             {
                 return;
             }
 
-            canProcess = true;
+            Target = default;
         }
 
         /// <summary>
@@ -167,9 +160,17 @@
             AngularVelocity = Vector3.zero;
         }
 
-        protected virtual void OnDisable()
+        /// <summary>
+        /// Applies the velocity data to the <see cref="Target"/>.
+        /// </summary>
+        public virtual void Apply()
         {
-            CancelDeceleration();
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            canProcess = true;
         }
 
         /// <inheritdoc />
@@ -199,9 +200,14 @@
         /// <summary>
         /// Cancels the <see cref="decelerationRoutine"/>.
         /// </summary>
-        protected virtual void CancelDeceleration()
+        public virtual void CancelDeceleration()
         {
             canProcess = false;
+        }
+
+        protected virtual void OnDisable()
+        {
+            CancelDeceleration();
         }
     }
 }

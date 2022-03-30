@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.MemberClearanceMethod;
     using Malimbe.PropertySerializationAttribute;
     using Malimbe.XmlDocumentationAttribute;
     using System;
@@ -28,7 +27,7 @@
         /// <summary>
         /// Allows for the conversion of one cast type to another cast type.
         /// </summary>
-        [Serialized, Cleared]
+        [Serialized]
         [field: DocumentedByXml]
         public CastConverter ConvertTo { get; set; }
 
@@ -42,12 +41,34 @@
         protected static readonly Collider[] Colliders = new Collider[1000];
 
         /// <summary>
+        /// Clears <see cref="ConvertTo"/>.
+        /// </summary>
+        public virtual void ClearConvertTo()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ConvertTo = default;
+        }
+
+        /// <summary>
         /// Sets the <see cref="LayersToIgnore"/>.
         /// </summary>
         /// <param name="index">The index of the <see cref="LayerMask"/>.</param>
         public virtual void SetLayersToIgnore(int index)
         {
-            LayersToIgnore = EnumExtensions.GetByIndex<LayerMask>(index);
+            LayersToIgnore = LayersToIgnore.Set(index);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="LayersToIgnore"/>.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="LayerMask"/>.</param>
+        public virtual void SetLayersToIgnore(string name)
+        {
+            LayersToIgnore = LayersToIgnore.Set(name);
         }
 
         /// <summary>
