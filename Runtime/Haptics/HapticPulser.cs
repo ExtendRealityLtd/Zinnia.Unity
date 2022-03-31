@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Haptics
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -13,9 +11,20 @@
         /// <summary>
         /// The intensity of the haptic rumble.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, Range(0f, 1f)]
-        public float Intensity { get; set; } = 1f;
+        [Tooltip("The intensity of the haptic rumble.")]
+        [SerializeField]
+        private float _intensity = 1f;
+        public float Intensity
+        {
+            get
+            {
+                return _intensity;
+            }
+            set
+            {
+                _intensity = value;
+            }
+        }
 
         /// <summary>
         /// Called after <see cref="Intensity"/> has been changed.

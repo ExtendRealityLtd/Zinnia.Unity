@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -22,15 +20,37 @@
             /// <summary>
             /// The publisher payload data that is being pushed to the consumer.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public ActiveCollisionPublisher.PayloadData Publisher { get; set; }
+            [Tooltip("The publisher payload data that is being pushed to the consumer.")]
+            [SerializeField]
+            private ActiveCollisionPublisher.PayloadData _publisher;
+            public ActiveCollisionPublisher.PayloadData Publisher
+            {
+                get
+                {
+                    return _publisher;
+                }
+                set
+                {
+                    _publisher = value;
+                }
+            }
             /// <summary>
             /// The current collision data.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public CollisionNotifier.EventData CurrentCollision { get; set; }
+            [Tooltip("The current collision data.")]
+            [SerializeField]
+            private CollisionNotifier.EventData _currentCollision;
+            public CollisionNotifier.EventData CurrentCollision
+            {
+                get
+                {
+                    return _currentCollision;
+                }
+                set
+                {
+                    _currentCollision = value;
+                }
+            }
 
             /// <summary>
             /// Clears <see cref="Publisher"/>.
@@ -93,16 +113,38 @@
         /// <summary>
         /// The highest level container of the consumer to allow for nested consumers.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Container { get; set; }
+        [Tooltip("The highest level container of the consumer to allow for nested consumers.")]
+        [SerializeField]
+        private GameObject _container;
+        public GameObject Container
+        {
+            get
+            {
+                return _container;
+            }
+            set
+            {
+                _container = value;
+            }
+        }
 
         /// <summary>
         /// Determines whether to consume the received call from specific publishers.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer PublisherValidity { get; set; }
+        [Tooltip("Determines whether to consume the received call from specific publishers.")]
+        [SerializeField]
+        private RuleContainer _publisherValidity;
+        public RuleContainer PublisherValidity
+        {
+            get
+            {
+                return _publisherValidity;
+            }
+            set
+            {
+                _publisherValidity = value;
+            }
+        }
 
         /// <summary>
         /// The publisher payload that was last received from.
@@ -121,12 +163,10 @@
         /// <summary>
         /// Emitted when the publisher call has been consumed.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Consumed = new UnityEvent();
         /// <summary>
         /// Emitted when the consumer is cleared.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Cleared = new UnityEvent();
 
         /// <summary>

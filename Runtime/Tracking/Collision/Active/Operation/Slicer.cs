@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Linq;
     using UnityEngine;
     using UnityEngine.Events;
@@ -15,37 +13,57 @@
         /// <summary>
         /// The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.
         /// </summary>
-        [Serialized]
-        [field: Header("Index Settings"), DocumentedByXml]
-        public int StartIndex { get; set; }
+        [Header("Index Settings")]
+        [Tooltip("The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.")]
+        [SerializeField]
+        private int _startIndex;
+        public int StartIndex
+        {
+            get
+            {
+                return _startIndex;
+            }
+            set
+            {
+                _startIndex = value;
+            }
+        }
         /// <summary>
         /// The number of elements in the slice.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public uint Length { get; set; } = 1;
+        [Tooltip("The number of elements in the slice.")]
+        [SerializeField]
+        private uint _length = 1;
+        public uint Length
+        {
+            get
+            {
+                return _length;
+            }
+            set
+            {
+                _length = value;
+            }
+        }
         #endregion
 
         #region State Events
         /// <summary>
         /// Emitted when the Sliced list has changed since last slice.
         /// </summary>
-        [Header("State Events"), DocumentedByXml]
+        [Header("State Events")]
         public UnityEvent SlicedChanged = new UnityEvent();
         /// <summary>
         /// Emitted when the Sliced list has remained unchanged since last slice.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent SlicedUnchanged = new UnityEvent();
         /// <summary>
         /// Emitted when the Remained list has changed since last slice.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent RemainedChanged = new UnityEvent();
         /// <summary>
         /// Emitted when the Remained list has remained unchanged since last slice.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent RemainedUnchanged = new UnityEvent();
         #endregion
 
@@ -53,12 +71,11 @@
         /// <summary>
         /// Emitted when the sliced elements are taken from the collection.
         /// </summary>
-        [Header("Data Events"), DocumentedByXml]
+        [Header("Data Events")]
         public ActiveCollisionsContainer.ActiveCollisionUnityEvent Sliced = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
         /// <summary>
         /// Emitted when the remaining elements are left after slicing.
         /// </summary>
-        [DocumentedByXml]
         public ActiveCollisionsContainer.ActiveCollisionUnityEvent Remained = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
         #endregion
 

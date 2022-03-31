@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Process
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
 
@@ -12,7 +11,6 @@
         /// <summary>
         /// Emitted when processed.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Event = new UnityEvent();
 
         /// <summary>

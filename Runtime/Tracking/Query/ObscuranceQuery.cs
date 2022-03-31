@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Tracking.Query
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -33,31 +31,62 @@
         /// <summary>
         /// Defines the source location that the RayCast will originate from towards the <see cref="Target"/> location.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        [Tooltip("Defines the source location that the RayCast will originate from towards the Target location.")]
+        [SerializeField]
+        private GameObject _source;
+        public GameObject Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
         /// <summary>
         /// Defines the target location that the RayCast will attain to reach from the originating <see cref="Source"/> location.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Tooltip("Defines the target location that the RayCast will attain to reach from the originating Source location.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// Optional settings to use when doing the RayCast.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PhysicsCast PhysicsCast { get; set; }
+        [Tooltip("Optional settings to use when doing the RayCast.")]
+        [SerializeField]
+        private PhysicsCast _physicsCast;
+        public PhysicsCast PhysicsCast
+        {
+            get
+            {
+                return _physicsCast;
+            }
+            set
+            {
+                _physicsCast = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the RayCast from <see cref="Source"/> to <see cref="Target"/> is obscured by another <see cref="Collider"/>.
         /// </summary>
-        [DocumentedByXml]
         public HitEvent TargetObscured = new HitEvent();
         /// <summary>
         /// Emitted when the RayCast from <see cref="Source"/> is reaching <see cref="Target"/> and is not obscured by another <see cref="Collider"/>.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent TargetUnobscured = new UnityEvent();
 
         /// <summary>

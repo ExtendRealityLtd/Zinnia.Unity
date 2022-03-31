@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -55,9 +53,20 @@
         /// <summary>
         /// Which <see cref="Vector3"/> coordinate to extract.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public ExtractionCoordinate CoordinateToExtract { get; set; } = ExtractionCoordinate.ExtractX;
+        [Tooltip("Which Vector3 coordinate to extract.")]
+        [SerializeField]
+        private ExtractionCoordinate _coordinateToExtract = ExtractionCoordinate.ExtractX;
+        public ExtractionCoordinate CoordinateToExtract
+        {
+            get
+            {
+                return _coordinateToExtract;
+            }
+            set
+            {
+                _coordinateToExtract = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="CoordinateToExtract"/>.

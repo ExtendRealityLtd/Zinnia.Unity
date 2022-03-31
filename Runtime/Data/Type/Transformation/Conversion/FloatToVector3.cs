@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -23,21 +21,54 @@
         /// <summary>
         /// A <see cref="float"/> to use as the current x value of the <see cref="Vector3"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentX { get; set; }
+        [Tooltip("A float to use as the current x value of the Vector3.")]
+        [SerializeField]
+        private float _currentX;
+        public float CurrentX
+        {
+            get
+            {
+                return _currentX;
+            }
+            set
+            {
+                _currentX = value;
+            }
+        }
         /// <summary>
         /// A <see cref="float"/> to use as the current y value of the <see cref="Vector3"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentY { get; set; }
+        [Tooltip("A float to use as the current y value of the Vector3.")]
+        [SerializeField]
+        private float _currentY;
+        public float CurrentY
+        {
+            get
+            {
+                return _currentY;
+            }
+            set
+            {
+                _currentY = value;
+            }
+        }
         /// <summary>
         /// A <see cref="float"/> to use as the current z value of the <see cref="Vector3"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentZ { get; set; }
+        [Tooltip("A float to use as the current z value of the Vector3.")]
+        [SerializeField]
+        private float _currentZ;
+        public float CurrentZ
+        {
+            get
+            {
+                return _currentZ;
+            }
+            set
+            {
+                _currentZ = value;
+            }
+        }
 
         /// <summary>
         /// A reusable array of three <see cref="float"/>s.

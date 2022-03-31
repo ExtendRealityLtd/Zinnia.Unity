@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Operation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -21,20 +19,41 @@
         /// <summary>
         /// The object to clone.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        [Tooltip("The object to clone.")]
+        [SerializeField]
+        private GameObject _source;
+        public GameObject Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
         /// <summary>
         /// An optional object to parent the cloned objects to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Parent { get; set; }
+        [Tooltip("An optional object to parent the cloned objects to.")]
+        [SerializeField]
+        private GameObject _parent;
+        public GameObject Parent
+        {
+            get
+            {
+                return _parent;
+            }
+            set
+            {
+                _parent = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when an object has been cloned.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Cloned = new UnityEvent();
 
         /// <summary>

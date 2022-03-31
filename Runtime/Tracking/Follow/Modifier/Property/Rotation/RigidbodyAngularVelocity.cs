@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -14,30 +12,76 @@
         /// <summary>
         /// The maximum squared magnitude of angular velocity that can be applied to the source <see cref="Transform"/>.
         /// </summary>
-        [Serialized]
-        [field: Header("Velocity Settings"), DocumentedByXml]
-        public float AngularVelocityLimit { get; set; } = float.PositiveInfinity;
+        [Header("Velocity Settings")]
+        [Tooltip("The maximum squared magnitude of angular velocity that can be applied to the source Transform.")]
+        [SerializeField]
+        private float _angularVelocityLimit = float.PositiveInfinity;
+        public float AngularVelocityLimit
+        {
+            get
+            {
+                return _angularVelocityLimit;
+            }
+            set
+            {
+                _angularVelocityLimit = value;
+            }
+        }
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float MaxDistanceDelta { get; set; } = 10f;
+        [Tooltip("The maximum difference in distance to the tracked position.")]
+        [SerializeField]
+        private float _maxDistanceDelta = 10f;
+        public float MaxDistanceDelta
+        {
+            get
+            {
+                return _maxDistanceDelta;
+            }
+            set
+            {
+                _maxDistanceDelta = value;
+            }
+        }
         #endregion
 
         #region Velocity Settings
         /// <summary>
         /// Whether to use the optional offset to set the target <see cref="Rigidbody.centerOfMass"/>;
         /// </summary>
-        [Serialized]
-        [field: Header("Calculation Settings"), DocumentedByXml]
-        public bool UseOffsetAsCentreOfMass { get; set; }
+        [Header("Calculation Settings")]
+        [Tooltip("Whether to use the optional offset to set the target Rigidbody.centerOfMass;")]
+        [SerializeField]
+        private bool _useOffsetAsCentreOfMass;
+        public bool UseOffsetAsCentreOfMass
+        {
+            get
+            {
+                return _useOffsetAsCentreOfMass;
+            }
+            set
+            {
+                _useOffsetAsCentreOfMass = value;
+            }
+        }
         /// <summary>
         /// Whether calculate the rotational angle in degrees;
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool CalculateAngleInDegrees { get; set; } = true;
+        [Tooltip("Whether calculate the rotational angle in degrees;")]
+        [SerializeField]
+        private bool _calculateAngleInDegrees = true;
+        public bool CalculateAngleInDegrees
+        {
+            get
+            {
+                return _calculateAngleInDegrees;
+            }
+            set
+            {
+                _calculateAngleInDegrees = value;
+            }
+        }
         #endregion
 
         /// <summary>

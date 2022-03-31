@@ -1,8 +1,7 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
+    using UnityEngine;
     using UnityEngine.Events;
 
     /// <summary>
@@ -19,9 +18,20 @@
         /// <summary>
         /// A standard or custom <see cref="TimeSpan"/> format string.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string Format { get; set; }
+        [Tooltip("A standard or custom TimeSpan format string.")]
+        [SerializeField]
+        private string _format;
+        public string Format
+        {
+            get
+            {
+                return _format;
+            }
+            set
+            {
+                _format = value;
+            }
+        }
 
         /// <summary>
         /// Transforms the given input <see cref="TimeSpan"/> to the <see cref="string"/> equivalent value.

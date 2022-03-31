@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -11,9 +10,11 @@
         /// <summary>
         /// Emitted when the collection is reversed.
         /// </summary>
-        [DocumentedByXml]
         public ActiveCollisionsContainer.ActiveCollisionUnityEvent Reversed = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
 
+        /// <summary>
+        /// The reserved list of active collisions.
+        /// </summary>
         protected readonly ActiveCollisionsContainer.EventData reversedList = new ActiveCollisionsContainer.EventData();
 
         /// <summary>

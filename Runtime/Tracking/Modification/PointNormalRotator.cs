@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Cast;
     using Zinnia.Extension;
@@ -14,9 +12,20 @@
         /// <summary>
         /// The target to apply the rotations to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Tooltip("The target to apply the rotations to.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
 
         /// <summary>
         /// Clears <see cref="Target"/>.

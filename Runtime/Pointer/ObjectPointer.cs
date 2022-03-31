@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Pointer
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -25,27 +23,71 @@
             /// <summary>
             /// Whether the <see cref="ObjectPointer"/> is currently activated.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsCurrentlyActive { get; set; }
+            [Tooltip("Whether the ObjectPointer is currently activated.")]
+            [SerializeField]
+            private bool _isCurrentlyActive;
+            public bool IsCurrentlyActive
+            {
+                get
+                {
+                    return _isCurrentlyActive;
+                }
+                set
+                {
+                    _isCurrentlyActive = value;
+                }
+            }
             /// <summary>
             /// Whether the <see cref="ObjectPointer"/> is currently hovering over a target.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsCurrentlyHovering { get; set; }
+            [Tooltip("Whether the ObjectPointer is currently hovering over a target.")]
+            [SerializeField]
+            private bool _isCurrentlyHovering;
+            public bool IsCurrentlyHovering
+            {
+                get
+                {
+                    return _isCurrentlyHovering;
+                }
+                set
+                {
+                    _isCurrentlyHovering = value;
+                }
+            }
             /// <summary>
             /// The duration that the <see cref="ObjectPointer"/> has been hovering over it's current target.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public float CurrentHoverDuration { get; set; }
+            [Tooltip("The duration that the ObjectPointer has been hovering over it's current target.")]
+            [SerializeField]
+            private float _currentHoverDuration;
+            public float CurrentHoverDuration
+            {
+                get
+                {
+                    return _currentHoverDuration;
+                }
+                set
+                {
+                    _currentHoverDuration = value;
+                }
+            }
             /// <summary>
             /// The points cast data given to the <see cref="ObjectPointer"/>.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public PointsCast.EventData CurrentPointsCastData { get; set; }
+            [Tooltip("The points cast data given to the ObjectPointer.")]
+            [SerializeField]
+            private PointsCast.EventData _currentPointsCastData;
+            public PointsCast.EventData CurrentPointsCastData
+            {
+                get
+                {
+                    return _currentPointsCastData;
+                }
+                set
+                {
+                    _currentPointsCastData = value;
+                }
+            }
 
             public EventData() { }
             public EventData(Transform transform) : base(transform) { }
@@ -139,78 +181,126 @@
         /// <summary>
         /// Represents the origin, i.e. the first rendered point.
         /// </summary>
-        [Serialized]
-        [field: Header("Pointer Element Settings"), DocumentedByXml]
-        public PointerElement Origin { get; set; }
+        [Header("Pointer Element Settings")]
+        [Tooltip("Represents the origin, i.e. the first rendered point.")]
+        [SerializeField]
+        private PointerElement _origin;
+        public PointerElement Origin
+        {
+            get
+            {
+                return _origin;
+            }
+            set
+            {
+                _origin = value;
+            }
+        }
         /// <summary>
         /// Represents the segments between <see cref="Origin"/> and <see cref="Destination"/>. This will get cloned to create all the segments.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PointerElement RepeatedSegment { get; set; }
+        [Tooltip("Represents the segments between Origin and Destination. This will get cloned to create all the segments.")]
+        [SerializeField]
+        private PointerElement _repeatedSegment;
+        public PointerElement RepeatedSegment
+        {
+            get
+            {
+                return _repeatedSegment;
+            }
+            set
+            {
+                _repeatedSegment = value;
+            }
+        }
         /// <summary>
         /// Represents the destination, i.e. the last rendered point.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PointerElement Destination { get; set; }
+        [Tooltip("Represents the destination, i.e. the last rendered point.")]
+        [SerializeField]
+        private PointerElement _destination;
+        public PointerElement Destination
+        {
+            get
+            {
+                return _destination;
+            }
+            set
+            {
+                _destination = value;
+            }
+        }
         /// <summary>
         /// Whether the <see cref="Destination"/> will be enabled if the raycast does not collide with anything and contains no <see cref="PointsCast.EventData.HitData"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool EnableDestinationOnNoCollision { get; set; } = true;
+        [Tooltip("Whether the Destination will be enabled if the raycast does not collide with anything and contains no PointsCast.EventData.HitData.")]
+        [SerializeField]
+        private bool _enableDestinationOnNoCollision = true;
+        public bool EnableDestinationOnNoCollision
+        {
+            get
+            {
+                return _enableDestinationOnNoCollision;
+            }
+            set
+            {
+                _enableDestinationOnNoCollision = value;
+            }
+        }
         /// <summary>
         /// Provides an alternative as the pointer origin in the events.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject EventDataOriginTransformOverride { get; set; }
+        [Tooltip("Provides an alternative as the pointer origin in the events.")]
+        [SerializeField]
+        private GameObject _eventDataOriginTransformOverride;
+        public GameObject EventDataOriginTransformOverride
+        {
+            get
+            {
+                return _eventDataOriginTransformOverride;
+            }
+            set
+            {
+                _eventDataOriginTransformOverride = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> becomes active.
         /// </summary>
-        [Header("Pointer Events"), DocumentedByXml]
+        [Header("Pointer Events")]
         public UnityEvent Activated = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> becomes inactive.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Deactivated = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> collides with a new target.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Entered = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> stops colliding with an existing target.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Exited = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> changes its hovering position over an existing target.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Hovering = new UnityEvent();
         /// <summary>
         /// Emitted whenever <see cref="Select"/> is called.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Selected = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> appears and becomes visible.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Appeared = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> disappears and becomes hidden.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Disappeared = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="ObjectPointer"/> elements change.
         /// </summary>
-        [DocumentedByXml]
         public PointsRendererUnityEvent RenderDataChanged = new PointsRendererUnityEvent();
 
         /// <summary>

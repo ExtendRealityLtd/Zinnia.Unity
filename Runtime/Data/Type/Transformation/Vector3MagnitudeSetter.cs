@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -20,9 +18,20 @@
         /// <summary>
         /// The magnitude to use when transforming values.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Magnitude { get; set; } = 1f;
+        [Tooltip("The magnitude to use when transforming values.")]
+        [SerializeField]
+        private float _magnitude = 1f;
+        public float Magnitude
+        {
+            get
+            {
+                return _magnitude;
+            }
+            set
+            {
+                _magnitude = value;
+            }
+        }
 
         /// <summary>
         /// Sets the magnitude to use.

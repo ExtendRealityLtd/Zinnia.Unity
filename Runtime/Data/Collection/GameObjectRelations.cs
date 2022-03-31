@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Collection
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -22,19 +20,28 @@
         /// <summary>
         /// The collection of relations.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectRelationObservableList Relations { get; set; }
+        [Tooltip("The collection of relations.")]
+        [SerializeField]
+        private GameObjectRelationObservableList _relations;
+        public GameObjectRelationObservableList Relations
+        {
+            get
+            {
+                return _relations;
+            }
+            set
+            {
+                _relations = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when a value is retrieved for a given key or relation index.
         /// </summary>
-        [DocumentedByXml]
         public GameObjectUnityEvent ValueRetrieved = new GameObjectUnityEvent();
         /// <summary>
         /// Emitted when a no key can be found the given key or relation index.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent KeyNotFound = new UnityEvent();
 
         /// <summary>

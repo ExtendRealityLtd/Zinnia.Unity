@@ -1,7 +1,5 @@
 namespace Zinnia.Data.Collection.List
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -22,15 +20,37 @@ namespace Zinnia.Data.Collection.List
             /// <summary>
             /// The <see cref="GameObject"/> acting as the key.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject Key { get; set; }
+            [Tooltip("The GameObject acting as the key.")]
+            [SerializeField]
+            private GameObject _key;
+            public GameObject Key
+            {
+                get
+                {
+                    return _key;
+                }
+                set
+                {
+                    _key = value;
+                }
+            }
             /// <summary>
             /// The <see cref="GameObject"/> collection of relation values.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public List<GameObject> Values { get; set; }
+            [Tooltip("The GameObject collection of relation values.")]
+            [SerializeField]
+            private List<GameObject> _values;
+            public List<GameObject> Values
+            {
+                get
+                {
+                    return _values;
+                }
+                set
+                {
+                    _values = value;
+                }
+            }
 
             /// <summary>
             /// Clears <see cref="Key"/>.
@@ -65,12 +85,11 @@ namespace Zinnia.Data.Collection.List
         /// <summary>
         /// Emitted when the given key is matched with a relationship.
         /// </summary>
-        [Header("Relationship Events"), DocumentedByXml]
+        [Header("Relationship Events")]
         public ListUnityEvent RelationshipFound = new ListUnityEvent();
         /// <summary>
         /// Emitted when the given key not is matched with a relationship.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent RelationshipNotFound = new UnityEvent();
         #endregion
 

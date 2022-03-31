@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -14,9 +12,20 @@
         /// <summary>
         /// The <see cref="GameObject"/> that contains a <see cref="VelocityTracker"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject ProxySource { get; set; }
+        [Tooltip("The GameObject that contains a VelocityTracker.")]
+        [SerializeField]
+        private GameObject _proxySource;
+        public GameObject ProxySource
+        {
+            get
+            {
+                return _proxySource;
+            }
+            set
+            {
+                _proxySource = value;
+            }
+        }
 
         /// <summary>
         /// The cached <see cref="VelocityTracker"/> found on the proxy <see cref="Component"/>.

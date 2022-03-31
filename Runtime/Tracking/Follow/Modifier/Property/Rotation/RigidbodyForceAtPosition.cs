@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -13,9 +11,20 @@
         /// <summary>
         /// The point where the attachment was made.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject AttachmentPoint { get; set; }
+        [Tooltip("The point where the attachment was made.")]
+        [SerializeField]
+        private GameObject _attachmentPoint;
+        public GameObject AttachmentPoint
+        {
+            get
+            {
+                return _attachmentPoint;
+            }
+            set
+            {
+                _attachmentPoint = value;
+            }
+        }
 
         /// <summary>
         /// A cached version of the target rigidbody.

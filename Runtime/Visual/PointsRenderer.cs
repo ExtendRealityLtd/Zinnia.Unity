@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Visual
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -22,45 +20,122 @@
             /// <summary>
             /// Represents the start, i.e. the first rendered point.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject StartPoint { get; set; }
+            [Tooltip("Represents the start, i.e. the first rendered point.")]
+            [SerializeField]
+            private GameObject _startPoint;
+            public GameObject StartPoint
+            {
+                get
+                {
+                    return _startPoint;
+                }
+                set
+                {
+                    _startPoint = value;
+                }
+            }
             /// <summary>
             /// Whether the first point should be visible.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsStartPointVisible { get; set; }
+            [Tooltip("Whether the first point should be visible.")]
+            [SerializeField]
+            private bool _isStartPointVisible;
+            public bool IsStartPointVisible
+            {
+                get
+                {
+                    return _isStartPointVisible;
+                }
+                set
+                {
+                    _isStartPointVisible = value;
+                }
+            }
             /// <summary>
             /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject RepeatedSegmentPoint { get; set; }
+            [Tooltip("Represents the segments between Start and End. This will get cloned to create all the segments.")]
+            [SerializeField]
+            private GameObject _repeatedSegmentPoint;
+            public GameObject RepeatedSegmentPoint
+            {
+                get
+                {
+                    return _repeatedSegmentPoint;
+                }
+                set
+                {
+                    _repeatedSegmentPoint = value;
+                }
+            }
             /// <summary>
             /// Whether the repeated segment point(s) should be visible.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsRepeatedSegmentPointVisible { get; set; }
+            [Tooltip("Whether the repeated segment point(s) should be visible.")]
+            [SerializeField]
+            private bool _isRepeatedSegmentPointVisible;
+            public bool IsRepeatedSegmentPointVisible
+            {
+                get
+                {
+                    return _isRepeatedSegmentPointVisible;
+                }
+                set
+                {
+                    _isRepeatedSegmentPointVisible = value;
+                }
+            }
             /// <summary>
             /// Represents the end, i.e. the last rendered point.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject EndPoint { get; set; }
+            [Tooltip("Represents the end, i.e. the last rendered point.")]
+            [SerializeField]
+            private GameObject _endPoint;
+            public GameObject EndPoint
+            {
+                get
+                {
+                    return _endPoint;
+                }
+                set
+                {
+                    _endPoint = value;
+                }
+            }
             /// <summary>
             /// Whether the end point should be visible.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsEndPointVisible { get; set; }
+            [Tooltip("Whether the end point should be visible.")]
+            [SerializeField]
+            private bool _isEndPointVisible;
+            public bool IsEndPointVisible
+            {
+                get
+                {
+                    return _isEndPointVisible;
+                }
+                set
+                {
+                    _isEndPointVisible = value;
+                }
+            }
             /// <summary>
             /// The points along the most recent cast.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public HeapAllocationFreeReadOnlyList<Vector3> Points { get; set; }
+            [Tooltip("The points along the most recent cast.")]
+            [SerializeField]
+            private HeapAllocationFreeReadOnlyList<Vector3> _points;
+            public HeapAllocationFreeReadOnlyList<Vector3> Points
+            {
+                get
+                {
+                    return _points;
+                }
+                set
+                {
+                    _points = value;
+                }
+            }
 
             /// <inheritdoc />
             public override string ToString()
@@ -92,27 +167,71 @@
         /// <summary>
         /// The direction to scale the segment <see cref="GameObject"/>s in. Set axes to 0 to disable scaling on that axis.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 SegmentScaleDirection { get; set; } = Vector3.forward;
+        [Tooltip("The direction to scale the segment GameObjects in. Set axes to 0 to disable scaling on that axis.")]
+        [SerializeField]
+        private Vector3 _segmentScaleDirection = Vector3.forward;
+        public Vector3 SegmentScaleDirection
+        {
+            get
+            {
+                return _segmentScaleDirection;
+            }
+            set
+            {
+                _segmentScaleDirection = value;
+            }
+        }
         /// <summary>
         /// Represents the start, i.e. the first rendered point.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Start { get; set; }
+        [Tooltip("Represents the start, i.e. the first rendered point.")]
+        [SerializeField]
+        private GameObject _start;
+        public GameObject Start
+        {
+            get
+            {
+                return _start;
+            }
+            set
+            {
+                _start = value;
+            }
+        }
         /// <summary>
         /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject RepeatedSegment { get; set; }
+        [Tooltip("Represents the segments between Start and End. This will get cloned to create all the segments.")]
+        [SerializeField]
+        private GameObject _repeatedSegment;
+        public GameObject RepeatedSegment
+        {
+            get
+            {
+                return _repeatedSegment;
+            }
+            set
+            {
+                _repeatedSegment = value;
+            }
+        }
         /// <summary>
         /// Represents the end, i.e. the last rendered point.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject End { get; set; }
+        [Tooltip("Represents the end, i.e. the last rendered point.")]
+        [SerializeField]
+        private GameObject _end;
+        public GameObject End
+        {
+            get
+            {
+                return _end;
+            }
+            set
+            {
+                _end = value;
+            }
+        }
 
         /// <summary>
         /// A collection of segment clones.

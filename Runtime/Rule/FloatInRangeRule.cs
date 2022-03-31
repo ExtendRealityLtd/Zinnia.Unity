@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Type;
 
     /// <summary>
@@ -12,9 +11,20 @@
         /// <summary>
         /// The range in which the given <see cref="float"/> must be equal to the bounds or within the range.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public FloatRange Range { get; set; }
+        [Tooltip("The range in which the given float must be equal to the bounds or within the range.")]
+        [SerializeField]
+        private FloatRange _range;
+        public FloatRange Range
+        {
+            get
+            {
+                return _range;
+            }
+            set
+            {
+                _range = value;
+            }
+        }
 
         /// <inheritdoc />
         protected override bool Accepts(float targetFloat)

@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Association
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Association.Collection;
     using Zinnia.Process;
@@ -15,9 +13,20 @@
         /// <summary>
         /// The associations in order they will be activated if they match the currently expected state.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectsAssociationObservableList Associations { get; set; }
+        [Tooltip("The associations in order they will be activated if they match the currently expected state.")]
+        [SerializeField]
+        private GameObjectsAssociationObservableList _associations;
+        public GameObjectsAssociationObservableList Associations
+        {
+            get
+            {
+                return _associations;
+            }
+            set
+            {
+                _associations = value;
+            }
+        }
 
         /// <summary>
         /// The currently activated association, or <see langword="null"/> if no association is activated.

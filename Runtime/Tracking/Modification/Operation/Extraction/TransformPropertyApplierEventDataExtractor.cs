@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification.Operation.Extraction
 {
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -21,12 +20,10 @@
         /// <summary>
         /// Emitted when the <see cref="TransformPropertyApplier.EventData.EventSource"/> is extracted.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent SourceExtracted = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="TransformPropertyApplier.EventData.EventTarget"/> is extracted.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent TargetExtracted = new UnityEvent();
 
         /// <summary>

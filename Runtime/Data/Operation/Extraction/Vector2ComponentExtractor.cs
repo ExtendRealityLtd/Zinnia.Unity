@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -37,20 +35,41 @@
         /// <summary>
         /// The source to extract from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector2 Source { get; set; }
+        [Tooltip("The source to extract from.")]
+        [SerializeField]
+        private Vector2 _source;
+        public Vector2 Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
         /// <summary>
         /// The component to extract from the <see cref="Vector2"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector2Component ComponentToExtract { get; set; } = Vector2Component.X;
+        [Tooltip("The component to extract from the Vector2.")]
+        [SerializeField]
+        private Vector2Component _componentToExtract = Vector2Component.X;
+        public Vector2Component ComponentToExtract
+        {
+            get
+            {
+                return _componentToExtract;
+            }
+            set
+            {
+                _componentToExtract = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the <see cref="float"/> component from <see cref="Source"/> is extracted.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Extracted = new UnityEvent();
 
         /// <summary>

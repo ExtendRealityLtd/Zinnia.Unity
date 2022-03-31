@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Data.Type
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Extension;
@@ -16,15 +14,37 @@
         /// <summary>
         /// The origin in which the surface search came from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 Origin { get; set; }
+        [Tooltip("The origin in which the surface search came from.")]
+        [SerializeField]
+        private Vector3 _origin;
+        public Vector3 Origin
+        {
+            get
+            {
+                return _origin;
+            }
+            set
+            {
+                _origin = value;
+            }
+        }
         /// <summary>
         /// The direction in which the surface search came from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 Direction { get; set; }
+        [Tooltip("The direction in which the surface search came from.")]
+        [SerializeField]
+        private Vector3 _direction;
+        public Vector3 Direction
+        {
+            get
+            {
+                return _direction;
+            }
+            set
+            {
+                _direction = value;
+            }
+        }
 
         /// <summary>
         /// Positional offset data that has been applied to the collision point.

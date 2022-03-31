@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using UnityEngine.XR;
 
     /// <summary>
@@ -12,18 +11,40 @@
         /// <summary>
         /// The node to pulse.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public XRNode Node { get; set; } = XRNode.LeftHand;
+        [Tooltip("The node to pulse.")]
+        [SerializeField]
+        private XRNode _node = XRNode.LeftHand;
+        public XRNode Node
+        {
+            get
+            {
+                return _node;
+            }
+            set
+            {
+                _node = value;
+            }
+        }
         /// <summary>
         /// The duration to pulse <see cref="Node"/> for.
         /// </summary>
         /// <remarks>
         /// Not supported by all devices.
         /// </remarks>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Duration { get; set; } = 0.005f;
+        [Tooltip("The duration to pulse Node for.")]
+        [SerializeField]
+        private float _duration = 0.005f;
+        public float Duration
+        {
+            get
+            {
+                return _duration;
+            }
+            set
+            {
+                _duration = value;
+            }
+        }
 
         /// <summary>
         /// The haptic capabilities of <see cref="Node"/>.

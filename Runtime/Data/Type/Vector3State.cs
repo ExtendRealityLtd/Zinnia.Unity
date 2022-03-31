@@ -1,30 +1,29 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Extension;
 
     /// <summary>
-    /// Allows a boolean to be set per <see cref="UnityEngine.Vector3"/> element to provide a state reference.
+    /// Allows a boolean to be set per <see cref="Vector3"/> element to provide a state reference.
     /// </summary>
     [Serializable]
     public struct Vector3State
     {
         /// <summary>
-        /// The X State of the <see cref="UnityEngine.Vector3"/>.
+        /// The X State of the <see cref="Vector3"/>.
         /// </summary>
-        [DocumentedByXml]
+        [Tooltip("The X State of the Vector3")]
         public bool xState;
         /// <summary>
-        /// The Y State of the <see cref="UnityEngine.Vector3"/>.
+        /// The Y State of the <see cref="Vector3"/>.
         /// </summary>
-        [DocumentedByXml]
+        [Tooltip("The Y State of the Vector3")]
         public bool yState;
         /// <summary>
-        /// The Z State of the <see cref="UnityEngine.Vector3"/>.
+        /// The Z State of the <see cref="Vector3"/>.
         /// </summary>
-        [DocumentedByXml]
+        [Tooltip("The Z State of the Vector3")]
         public bool zState;
 
         /// <summary>

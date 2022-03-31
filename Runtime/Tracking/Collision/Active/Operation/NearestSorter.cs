@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -20,9 +18,20 @@
             /// <summary>
             /// The position to check against.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Vector3 SourcePosition { get; set; }
+            [Tooltip("The position to check against.")]
+            [SerializeField]
+            private Vector3 _sourcePosition;
+            public Vector3 SourcePosition
+            {
+                get
+                {
+                    return _sourcePosition;
+                }
+                set
+                {
+                    _sourcePosition = value;
+                }
+            }
 
             /// <inheritdoc />
             public virtual int Compare(CollisionNotifier.EventData x, CollisionNotifier.EventData y)
@@ -44,9 +53,20 @@
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        [Tooltip("The source to determine the closest collision to.")]
+        [SerializeField]
+        private GameObject _source;
+        public GameObject Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
 
         /// <summary>
         /// The sorted list.
@@ -60,7 +80,6 @@
         /// <summary>
         /// Emitted when the collection is sorted.
         /// </summary>
-        [DocumentedByXml]
         public ActiveCollisionsContainer.ActiveCollisionUnityEvent Sorted = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
 
         /// <summary>

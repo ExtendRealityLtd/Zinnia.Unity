@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -25,9 +23,20 @@
         /// <summary>
         /// The range in which to consider the minimum and maximum value for normalizing.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        protected FloatRange Range { get; set; } = new FloatRange(0f, 1f);
+        [Tooltip("The range in which to consider the minimum and maximum value for normalizing.")]
+        [SerializeField]
+        private FloatRange _range = new FloatRange(0f, 1f);
+        protected FloatRange Range
+        {
+            get
+            {
+                return _range;
+            }
+            set
+            {
+                _range = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="Range"/> from a given Vector2.

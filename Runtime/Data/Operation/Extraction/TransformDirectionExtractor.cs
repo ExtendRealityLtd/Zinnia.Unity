@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -32,9 +30,20 @@
         /// <summary>
         /// The direction to extract from the <see cref="Transform"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public AxisDirection Direction { get; set; }
+        [Tooltip("The direction to extract from the Transform.")]
+        [SerializeField]
+        private AxisDirection _direction;
+        public AxisDirection Direction
+        {
+            get
+            {
+                return _direction;
+            }
+            set
+            {
+                _direction = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="Direction"/>.

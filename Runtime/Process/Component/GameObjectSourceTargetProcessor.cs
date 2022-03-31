@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Process.Component
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -24,27 +22,72 @@
         /// <summary>
         /// A <see cref="GameObject"/> collection of sources to apply data from.
         /// </summary>
-        [Serialized]
-        [field: Header("Entity Settings"), DocumentedByXml]
-        public GameObjectObservableList Sources { get; set; }
+        [Header("Entity Settings")]
+        [Tooltip("A GameObject collection of sources to apply data from.")]
+        [SerializeField]
+        private GameObjectObservableList _sources;
+        public GameObjectObservableList Sources
+        {
+            get
+            {
+                return _sources;
+            }
+            set
+            {
+                _sources = value;
+            }
+        }
         /// <summary>
         /// Allows to optionally determine which sources should be processed based on the set rules.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer SourceValidity { get; set; }
+        [Tooltip("Allows to optionally determine which sources should be processed based on the set rules.")]
+        [SerializeField]
+        private RuleContainer _sourceValidity;
+        public RuleContainer SourceValidity
+        {
+            get
+            {
+                return _sourceValidity;
+            }
+            set
+            {
+                _sourceValidity = value;
+            }
+        }
         /// <summary>
         /// A <see cref="GameObject"/> collection of targets to apply data to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList Targets { get; set; }
+        [Tooltip("A GameObject collection of targets to apply data to.")]
+        [SerializeField]
+        private GameObjectObservableList _targets;
+        public GameObjectObservableList Targets
+        {
+            get
+            {
+                return _targets;
+            }
+            set
+            {
+                _targets = value;
+            }
+        }
         /// <summary>
         /// Allows to optionally determine which targets should be processed based on the set rules.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer TargetValidity { get; set; }
+        [Tooltip("Allows to optionally determine which targets should be processed based on the set rules.")]
+        [SerializeField]
+        private RuleContainer _targetValidity;
+        public RuleContainer TargetValidity
+        {
+            get
+            {
+                return _targetValidity;
+            }
+            set
+            {
+                _targetValidity = value;
+            }
+        }
         #endregion
 
         /// <summary>

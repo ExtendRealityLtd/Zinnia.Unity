@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -14,9 +12,20 @@
         /// <summary>
         /// The Action to re-emit the state for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Action Action { get; set; }
+        [Tooltip("The Action to re-emit the state for.")]
+        [SerializeField]
+        private Action _action;
+        public Action Action
+        {
+            get
+            {
+                return _action;
+            }
+            set
+            {
+                _action = value;
+            }
+        }
 
         /// <summary>
         /// Re-emits the state of the Action.

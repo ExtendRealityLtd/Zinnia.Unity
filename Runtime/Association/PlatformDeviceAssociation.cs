@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Association
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Text.RegularExpressions;
     using UnityEngine;
@@ -16,22 +14,55 @@
         /// <summary>
         /// A regular expression to match the name of the current <see cref="RuntimePlatform"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string PlatformPattern { get; set; }
+        [Tooltip("A regular expression to match the name of the current RuntimePlatform.")]
+        [SerializeField]
+        private string _platformPattern;
+        public string PlatformPattern
+        {
+            get
+            {
+                return _platformPattern;
+            }
+            set
+            {
+                _platformPattern = value;
+            }
+        }
         /// <summary>
         /// A regular expression to match the name of the XR device that needs to be loaded.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string XrSdkPattern { get; set; }
+        [Tooltip("A regular expression to match the name of the XR device that needs to be loaded.")]
+        [SerializeField]
+        private string _xrSdkPattern;
+        public string XrSdkPattern
+        {
+            get
+            {
+                return _xrSdkPattern;
+            }
+            set
+            {
+                _xrSdkPattern = value;
+            }
+        }
 
         /// <summary>
         /// A regular expression to match the name of the XR model that is being used.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string XrModelPattern { get; set; }
+        [Tooltip("A regular expression to match the name of the XR model that is being used.")]
+        [SerializeField]
+        private string _xrModelPattern;
+        public string XrModelPattern
+        {
+            get
+            {
+                return _xrModelPattern;
+            }
+            set
+            {
+                _xrModelPattern = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override bool ShouldBeActive()

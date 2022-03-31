@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -15,21 +13,55 @@
         /// <summary>
         /// The target to mutate.
         /// </summary>
-        [Serialized]
-        [field: Header("Target Settings"), DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Header("Target Settings")]
+        [Tooltip("The target to mutate.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// Determines whether to mutate the local or global values.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseLocalValues { get; set; }
+        [Tooltip("Determines whether to mutate the local or global values.")]
+        [SerializeField]
+        private bool _useLocalValues;
+        public bool UseLocalValues
+        {
+            get
+            {
+                return _useLocalValues;
+            }
+            set
+            {
+                _useLocalValues = value;
+            }
+        }
         /// <summary>
         /// Determines which axes to mutate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State MutateOnAxis { get; set; } = Vector3State.True;
+        [Tooltip("Determines which axes to mutate.")]
+        [SerializeField]
+        private Vector3State _mutateOnAxis = Vector3State.True;
+        public Vector3State MutateOnAxis
+        {
+            get
+            {
+                return _mutateOnAxis;
+            }
+            set
+            {
+                _mutateOnAxis = value;
+            }
+        }
         #endregion
 
         /// <summary>

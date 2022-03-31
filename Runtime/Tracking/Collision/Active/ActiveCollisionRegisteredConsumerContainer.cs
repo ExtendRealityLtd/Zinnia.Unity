@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -22,16 +20,38 @@
             /// <summary>
             /// The registered <see cref="ActiveCollisionConsumer"/>.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public ActiveCollisionConsumer Consumer { get; set; }
+            [Tooltip("The registered ActiveCollisionConsumer.")]
+            [SerializeField]
+            private ActiveCollisionConsumer _consumer;
+            public ActiveCollisionConsumer Consumer
+            {
+                get
+                {
+                    return _consumer;
+                }
+                set
+                {
+                    _consumer = value;
+                }
+            }
 
             /// <summary>
             /// The payload data sent to the <see cref="ActiveCollisionConsumer"/>.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public ActiveCollisionPublisher.PayloadData Payload { get; set; }
+            [Tooltip("The payload data sent to the ActiveCollisionConsumer.")]
+            [SerializeField]
+            private ActiveCollisionPublisher.PayloadData _payload;
+            public ActiveCollisionPublisher.PayloadData Payload
+            {
+                get
+                {
+                    return _payload;
+                }
+                set
+                {
+                    _payload = value;
+                }
+            }
 
             /// <summary>
             /// Clears <see cref="Consumer"/>.
@@ -94,17 +114,14 @@
         /// <summary>
         /// Emitted when each registered consumer payload data is published.
         /// </summary>
-        [DocumentedByXml]
         public ActiveCollisionPublisher.UnityEvent Published = new ActiveCollisionPublisher.UnityEvent();
         /// <summary>
         /// Emitted when a consumer is registered.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Registered = new UnityEvent();
         /// <summary>
         /// Emitted when a consumer is unregistered.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Unregistered = new UnityEvent();
 
         /// <summary>

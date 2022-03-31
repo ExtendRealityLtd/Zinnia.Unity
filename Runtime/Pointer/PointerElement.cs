@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Pointer
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
@@ -35,39 +33,97 @@
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when a valid collision is occuring.
         /// </summary>
-        [Serialized]
-        [field: Header("Valid Container Settings"), DocumentedByXml]
-        public GameObject ValidElementContainer { get; set; }
+        [Header("Valid Container Settings")]
+        [Tooltip("The containing GameObject that represents the element when a valid collision is occuring.")]
+        [SerializeField]
+        private GameObject _validElementContainer;
+        public GameObject ValidElementContainer
+        {
+            get
+            {
+                return _validElementContainer;
+            }
+            set
+            {
+                _validElementContainer = value;
+            }
+        }
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when a valid collision is occuring.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject ValidMeshContainer { get; set; }
+        [Tooltip("The GameObject containing the visible mesh for the PointerElement when a valid collision is occuring.")]
+        [SerializeField]
+        private GameObject _validMeshContainer;
+        public GameObject ValidMeshContainer
+        {
+            get
+            {
+                return _validMeshContainer;
+            }
+            set
+            {
+                _validMeshContainer = value;
+            }
+        }
         #endregion
 
         #region Invalid Container Settings
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when an invalid collision or no collision is occuring.
         /// </summary>
-        [Serialized]
-        [field: Header("Invalid Container Settings"), DocumentedByXml]
-        public GameObject InvalidElementContainer { get; set; }
+        [Header("Invalid Container Settings")]
+        [Tooltip("The containing GameObject that represents the element when an invalid collision or no collision is occuring.")]
+        [SerializeField]
+        private GameObject _invalidElementContainer;
+        public GameObject InvalidElementContainer
+        {
+            get
+            {
+                return _invalidElementContainer;
+            }
+            set
+            {
+                _invalidElementContainer = value;
+            }
+        }
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when an invalid collision or no collision is occuring.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject InvalidMeshContainer { get; set; }
+        [Tooltip("The GameObject containing the visible mesh for the PointerElement when an invalid collision or no collision is occuring.")]
+        [SerializeField]
+        private GameObject _invalidMeshContainer;
+        public GameObject InvalidMeshContainer
+        {
+            get
+            {
+                return _invalidMeshContainer;
+            }
+            set
+            {
+                _invalidMeshContainer = value;
+            }
+        }
         #endregion
 
         #region Visibility Settings
         /// <summary>
         /// Determines when the <see cref="PointerElement"/> is visible.
         /// </summary>
-        [Serialized]
-        [field: Header("Visibility Settings"), DocumentedByXml]
-        public Visibility ElementVisibility { get; set; } = Visibility.OnWhenPointerActivated;
+        [Header("Visibility Settings")]
+        [Tooltip("Determines when the PointerElement is visible.")]
+        [SerializeField]
+        private Visibility _elementVisibility = Visibility.OnWhenPointerActivated;
+        public Visibility ElementVisibility
+        {
+            get
+            {
+                return _elementVisibility;
+            }
+            set
+            {
+                _elementVisibility = value;
+            }
+        }
         #endregion
 
         #region Element Events

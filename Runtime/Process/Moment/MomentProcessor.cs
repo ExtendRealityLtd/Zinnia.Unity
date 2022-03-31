@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Process.Moment
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Rendering;
     using Zinnia.Extension;
@@ -51,15 +49,37 @@
         /// <summary>
         /// The moment in which to process the given processes.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Moment ProcessMoment { get; set; } = Moment.PreRender;
+        [Tooltip("The moment in which to process the given processes.")]
+        [SerializeField]
+        private Moment _processMoment = Moment.PreRender;
+        public Moment ProcessMoment
+        {
+            get
+            {
+                return _processMoment;
+            }
+            set
+            {
+                _processMoment = value;
+            }
+        }
         /// <summary>
         /// A collection of <see cref="MomentProcess"/> to process.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public MomentProcessObservableList Processes { get; set; }
+        [Tooltip("A collection of MomentProcess to process.")]
+        [SerializeField]
+        private MomentProcessObservableList _processes;
+        public MomentProcessObservableList Processes
+        {
+            get
+            {
+                return _processes;
+            }
+            set
+            {
+                _processes = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="ProcessMoment"/>.

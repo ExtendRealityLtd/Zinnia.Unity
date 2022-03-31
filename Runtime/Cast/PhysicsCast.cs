@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Cast.Operation.Conversion;
@@ -15,21 +13,54 @@
         /// <summary>
         /// The layers to ignore when casting.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public LayerMask LayersToIgnore { get; set; } = Physics.IgnoreRaycastLayer;
+        [Tooltip("The layers to ignore when casting.")]
+        [SerializeField]
+        private LayerMask _layersToIgnore = Physics.IgnoreRaycastLayer;
+        public LayerMask LayersToIgnore
+        {
+            get
+            {
+                return _layersToIgnore;
+            }
+            set
+            {
+                _layersToIgnore = value;
+            }
+        }
         /// <summary>
         /// Determines whether the cast will interact with trigger colliders.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public QueryTriggerInteraction TriggerInteraction { get; set; } = QueryTriggerInteraction.UseGlobal;
+        [Tooltip("Determines whether the cast will interact with trigger colliders.")]
+        [SerializeField]
+        private QueryTriggerInteraction _triggerInteraction = QueryTriggerInteraction.UseGlobal;
+        public QueryTriggerInteraction TriggerInteraction
+        {
+            get
+            {
+                return _triggerInteraction;
+            }
+            set
+            {
+                _triggerInteraction = value;
+            }
+        }
         /// <summary>
         /// Allows for the conversion of one cast type to another cast type.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public CastConverter ConvertTo { get; set; }
+        [Tooltip("Allows for the conversion of one cast type to another cast type.")]
+        [SerializeField]
+        private CastConverter _convertTo;
+        public CastConverter ConvertTo
+        {
+            get
+            {
+                return _convertTo;
+            }
+            set
+            {
+                _convertTo = value;
+            }
+        }
 
         /// <summary>
         /// A reusable array of <see cref="RaycastHit"/>s to use with non-allocating <see cref="Physics"/> API.

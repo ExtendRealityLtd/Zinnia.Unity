@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
     using Zinnia.Extension;
@@ -14,15 +12,37 @@
         /// <summary>
         /// A collection of targets to set the state on when it is the active index.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList Targets { get; set; }
+        [Tooltip("A collection of targets to set the state on when it is the active index.")]
+        [SerializeField]
+        private GameObjectObservableList _targets;
+        public GameObjectObservableList Targets
+        {
+            get
+            {
+                return _targets;
+            }
+            set
+            {
+                _targets = value;
+            }
+        }
         /// <summary>
         /// The state to set the active index target. All other targets will be set to the opposite state.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool TargetState { get; set; } = true;
+        [Tooltip("The state to set the active index target. All other targets will be set to the opposite state.")]
+        [SerializeField]
+        private bool _targetState = true;
+        public bool TargetState
+        {
+            get
+            {
+                return _targetState;
+            }
+            set
+            {
+                _targetState = value;
+            }
+        }
 
         /// <summary>
         /// Switches to the next target in the collection and sets to the appropriate state.

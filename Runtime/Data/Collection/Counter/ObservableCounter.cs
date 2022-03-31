@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Collection.Counter
 {
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
@@ -16,12 +15,10 @@
         /// <summary>
         /// Emitted when an element is added for the first time.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Added = new TEvent();
         /// <summary>
         /// Emitted when an element is removed completely.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Removed = new TEvent();
 
         /// <summary>

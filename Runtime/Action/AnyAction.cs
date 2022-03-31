@@ -1,8 +1,7 @@
 ﻿namespace Zinnia.Action
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Action.Collection;
     using Zinnia.Extension;
 
@@ -14,9 +13,20 @@
         /// <summary>
         /// <see cref="Action"/>s to check the active state on.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public ActionObservableList Actions { get; set; }
+        [Tooltip("Actions to check the active state on.")]
+        [SerializeField]
+        private ActionObservableList _actions;
+        public ActionObservableList Actions
+        {
+            get
+            {
+                return _actions;
+            }
+            set
+            {
+                _actions = value;
+            }
+        }
 
         protected override void OnEnable()
         {

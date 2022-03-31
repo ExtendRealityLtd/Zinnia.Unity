@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
@@ -15,21 +13,54 @@
         /// <summary>
         /// The sources to ignore colliders from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList Sources { get; set; }
+        [Tooltip("The sources to ignore colliders from.")]
+        [SerializeField]
+        private GameObjectObservableList _sources;
+        public GameObjectObservableList Sources
+        {
+            get
+            {
+                return _sources;
+            }
+            set
+            {
+                _sources = value;
+            }
+        }
         /// <summary>
         /// The targets to ignore colliders with.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList Targets { get; set; }
+        [Tooltip("The targets to ignore colliders with.")]
+        [SerializeField]
+        private GameObjectObservableList _targets;
+        public GameObjectObservableList Targets
+        {
+            get
+            {
+                return _targets;
+            }
+            set
+            {
+                _targets = value;
+            }
+        }
         /// <summary>
         /// Whether to process inactive <see cref="GameObject"/>s when ignoring or resuming collisions.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool ProcessInactiveGameObjects { get; set; }
+        [Tooltip("Whether to process inactive GameObjects when ignoring or resuming collisions.")]
+        [SerializeField]
+        private bool _processInactiveGameObjects;
+        public bool ProcessInactiveGameObjects
+        {
+            get
+            {
+                return _processInactiveGameObjects;
+            }
+            set
+            {
+                _processInactiveGameObjects = value;
+            }
+        }
 
         /// <summary>
         /// A reused instance to store the <see cref="Collider"/> collection belonging to the <see cref="Sources"/>.

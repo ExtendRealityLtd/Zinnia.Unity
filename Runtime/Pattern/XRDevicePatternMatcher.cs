@@ -1,8 +1,7 @@
 ﻿namespace Zinnia.Pattern
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using UnityEngine.XR;
     using Zinnia.Extension;
     using Zinnia.Utility;
@@ -69,16 +68,38 @@
         /// <summary>
         /// The source property to match against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Source PropertySource { get; set; }
+        [Tooltip("The source property to match against.")]
+        [SerializeField]
+        private Source _propertySource;
+        public Source PropertySource
+        {
+            get
+            {
+                return _propertySource;
+            }
+            set
+            {
+                _propertySource = value;
+            }
+        }
 #if UNITY_2019_3_OR_NEWER
         /// <summary>
         /// The source node to consider as the device to check.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public XRNode DeviceSource { get; set; } = XRNode.Head;
+        [Tooltip("The source node to consider as the device to check.")]
+        [SerializeField]
+        private XRNode _deviceSource = XRNode.Head;
+        public XRNode DeviceSource
+        {
+            get
+            {
+                return _deviceSource;
+            }
+            set
+            {
+                _deviceSource = value;
+            }
+        }
 #else
         protected XRNode DeviceSource { get; set; } = XRNode.Head;
 #endif

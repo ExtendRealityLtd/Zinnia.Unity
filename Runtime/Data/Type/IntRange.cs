@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Extension;
@@ -14,12 +13,12 @@
         /// <summary>
         /// The inclusive minimum value of the range.
         /// </summary>
-        [DocumentedByXml]
+        [Tooltip("The inclusive minimum value of the range.")]
         public int minimum;
         /// <summary>
         /// The inclusive maximum value of the range.
         /// </summary>
-        [DocumentedByXml]
+        [Tooltip("The inclusive maximum value of the range.")]
         public int maximum;
 
         /// <summary>

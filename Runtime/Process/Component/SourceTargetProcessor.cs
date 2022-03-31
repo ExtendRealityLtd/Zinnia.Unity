@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Process.Component
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
@@ -15,15 +13,26 @@
         /// <summary>
         /// Emitted if the <see cref="ActiveSource"/> value is going to change with the new value as the payload.
         /// </summary>
-        [DocumentedByXml]
         public TEvent ActiveSourceChanging = new TEvent();
 
         /// <summary>
         /// Whether to cease the processing of the source collection after the first valid source is processed.
         /// </summary>
-        [Serialized]
-        [field: Header("Process Settings"), DocumentedByXml]
-        public bool CeaseAfterFirstSourceProcessed { get; set; } = true;
+        [Header("Process Settings")]
+        [Tooltip("Whether to cease the processing of the source collection after the first valid source is processed.")]
+        [SerializeField]
+        private bool _ceaseAfterFirstSourceProcessed = true;
+        public bool CeaseAfterFirstSourceProcessed
+        {
+            get
+            {
+                return _ceaseAfterFirstSourceProcessed;
+            }
+            set
+            {
+                _ceaseAfterFirstSourceProcessed = value;
+            }
+        }
 
         /// <summary>
         /// The <see cref="TSource"/> that is currently the active source for the process.

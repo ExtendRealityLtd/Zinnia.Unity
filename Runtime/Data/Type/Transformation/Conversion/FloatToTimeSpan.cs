@@ -1,8 +1,7 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
+    using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
 
@@ -51,9 +50,20 @@
         /// <summary>
         /// Determines which value to use from the <see cref="TimeSpan"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public TimeSpanProperty TimeSpanValue { get; set; } = TimeSpanProperty.Seconds;
+        [Tooltip("Determines which value to use from the TimeSpan.")]
+        [SerializeField]
+        private TimeSpanProperty _timeSpanValue = TimeSpanProperty.Seconds;
+        public TimeSpanProperty TimeSpanValue
+        {
+            get
+            {
+                return _timeSpanValue;
+            }
+            set
+            {
+                _timeSpanValue = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="TimeSpanValue"/>.

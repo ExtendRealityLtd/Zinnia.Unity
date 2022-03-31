@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Text.RegularExpressions;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
@@ -15,9 +13,20 @@
         /// <summary>
         /// The regular expression pattern to match against a string contained in the <see cref="StringObservableList"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string InListPattern { get; set; }
+        [Tooltip("The regular expression pattern to match against a string contained in the StringObservableList.")]
+        [SerializeField]
+        private string _inListPattern;
+        public string InListPattern
+        {
+            get
+            {
+                return _inListPattern;
+            }
+            set
+            {
+                _inListPattern = value;
+            }
+        }
 
         /// <inheritdoc/>
         protected override bool Accepts(GameObject targetGameObject)

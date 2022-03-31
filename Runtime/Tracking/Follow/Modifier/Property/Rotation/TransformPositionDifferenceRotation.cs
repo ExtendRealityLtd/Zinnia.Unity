@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -14,21 +12,54 @@
         /// <summary>
         /// The drag applied to the rotation to slow it down.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float AngularDrag { get; set; } = 1f;
+        [Tooltip("The drag applied to the rotation to slow it down.")]
+        [SerializeField]
+        private float _angularDrag = 1f;
+        public float AngularDrag
+        {
+            get
+            {
+                return _angularDrag;
+            }
+            set
+            {
+                _angularDrag = value;
+            }
+        }
         /// <summary>
         /// Determines which axes to rotate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State FollowOnAxis { get; set; } = Vector3State.True;
+        [Tooltip("Determines which axes to rotate.")]
+        [SerializeField]
+        private Vector3State _followOnAxis = Vector3State.True;
+        public Vector3State FollowOnAxis
+        {
+            get
+            {
+                return _followOnAxis;
+            }
+            set
+            {
+                _followOnAxis = value;
+            }
+        }
         /// <summary>
         /// An optional <see cref="GameObject"/> that is negated from the calculation if both the source and target are descendants of it.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Ancestor { get; set; }
+        [Tooltip("An optional GameObject that is negated from the calculation if both the source and target are descendants of it.")]
+        [SerializeField]
+        private GameObject _ancestor;
+        public GameObject Ancestor
+        {
+            get
+            {
+                return _ancestor;
+            }
+            set
+            {
+                _ancestor = value;
+            }
+        }
 
         /// <summary>
         /// The current angular velocity the rotation is applying to the target.

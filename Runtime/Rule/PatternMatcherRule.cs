@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Pattern;
     using Zinnia.Pattern.Collection;
 
@@ -13,9 +12,20 @@
         /// <summary>
         /// The patterns to attempt to match.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PatternMatcherObservableList Patterns { get; set; }
+        [Tooltip("The patterns to attempt to match.")]
+        [SerializeField]
+        private PatternMatcherObservableList _patterns;
+        public PatternMatcherObservableList Patterns
+        {
+            get
+            {
+                return _patterns;
+            }
+            set
+            {
+                _patterns = value;
+            }
+        }
 
         /// <inheritdoc />
         public override bool Accepts(object _)

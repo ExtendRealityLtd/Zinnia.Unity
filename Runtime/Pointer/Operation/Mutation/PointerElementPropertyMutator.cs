@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Pointer.Operation.Mutation
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -14,9 +12,20 @@
         /// <summary>
         /// The <see cref="PointerElement"/> to mutate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PointerElement Target { get; set; }
+        [Tooltip("The PointerElement to mutate.")]
+        [SerializeField]
+        private PointerElement _target;
+        public PointerElement Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
 
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when a valid collision is occuring.

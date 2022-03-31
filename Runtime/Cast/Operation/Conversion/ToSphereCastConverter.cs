@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Cast.Operation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
 
@@ -13,15 +11,37 @@
         /// <summary>
         /// The radius for the <see cref="Physics.SphereCast"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float RadiusOverride { get; set; }
+        [Tooltip("The radius for the Physics.SphereCast.")]
+        [SerializeField]
+        private float _radiusOverride;
+        public float RadiusOverride
+        {
+            get
+            {
+                return _radiusOverride;
+            }
+            set
+            {
+                _radiusOverride = value;
+            }
+        }
         /// <summary>
         /// Whether to use the <see cref="RadiusOverride"/> value if the source caster already supports a radius. If the source caster does not support a radius then the <see cref="RadiusOverride"/> will always be used.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseRadiusOverride { get; set; } = true;
+        [Tooltip("Whether to use the RadiusOverride value if the source caster already supports a radius. If the source caster does not support a radius then the RadiusOverride will always be used.")]
+        [SerializeField]
+        private bool _useRadiusOverride = true;
+        public bool UseRadiusOverride
+        {
+            get
+            {
+                return _useRadiusOverride;
+            }
+            set
+            {
+                _useRadiusOverride = value;
+            }
+        }
 
         /// <inheritdoc />
         public override bool ConvertFromBoxCast(PhysicsCast customCast, out RaycastHit hitData, Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance)

@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -22,23 +20,44 @@
             /// <summary>
             /// The rule to match against.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public RuleContainer Rule { get; set; }
+            [Tooltip("The rule to match against.")]
+            [SerializeField]
+            private RuleContainer _rule;
+            public RuleContainer Rule
+            {
+                get
+                {
+                    return _rule;
+                }
+                set
+                {
+                    _rule = value;
+                }
+            }
 
             /// <summary>
             /// Emitted when the <see cref="Rule"/> is valid.
             /// </summary>
-            [DocumentedByXml]
             public UnityEvent Matched = new UnityEvent();
         }
 
         /// <summary>
         /// A collection of rules to potentially match against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RulesMatcherElementObservableList Elements { get; set; }
+        [Tooltip("A collection of rules to potentially match against.")]
+        [SerializeField]
+        private RulesMatcherElementObservableList _elements;
+        public RulesMatcherElementObservableList Elements
+        {
+            get
+            {
+                return _elements;
+            }
+            set
+            {
+                _elements = value;
+            }
+        }
 
         /// <summary>
         /// Attempts to match the given object to the rules within the <see cref="Elements"/> collection. If a match occurs then the appropriate event is emitted.

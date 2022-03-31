@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Tracking.Follow.Modifier.Property;
@@ -14,31 +12,62 @@
         /// <summary>
         /// The modifier to change the scale.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PropertyModifier ScaleModifier { get; set; }
+        [Tooltip("The modifier to change the scale.")]
+        [SerializeField]
+        private PropertyModifier _scaleModifier;
+        public PropertyModifier ScaleModifier
+        {
+            get
+            {
+                return _scaleModifier;
+            }
+            set
+            {
+                _scaleModifier = value;
+            }
+        }
         /// <summary>
         /// The modifier to change the rotation.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PropertyModifier RotationModifier { get; set; }
+        [Tooltip("The modifier to change the rotation.")]
+        [SerializeField]
+        private PropertyModifier _rotationModifier;
+        public PropertyModifier RotationModifier
+        {
+            get
+            {
+                return _rotationModifier;
+            }
+            set
+            {
+                _rotationModifier = value;
+            }
+        }
         /// <summary>
         /// The modifier to change the position.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PropertyModifier PositionModifier { get; set; }
+        [Tooltip("The modifier to change the position.")]
+        [SerializeField]
+        private PropertyModifier _positionModifier;
+        public PropertyModifier PositionModifier
+        {
+            get
+            {
+                return _positionModifier;
+            }
+            set
+            {
+                _positionModifier = value;
+            }
+        }
 
         /// <summary>
         /// Emitted before the follow is modified.
         /// </summary>
-        [DocumentedByXml]
         public ObjectFollower.FollowEvent Premodified = new ObjectFollower.FollowEvent();
         /// <summary>
         /// Emitted after the follow is modified.
         /// </summary>
-        [DocumentedByXml]
         public ObjectFollower.FollowEvent Modified = new ObjectFollower.FollowEvent();
 
         /// The current source being used in the modifier process.

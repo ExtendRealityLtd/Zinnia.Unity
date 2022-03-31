@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -12,23 +10,56 @@
         /// <summary>
         /// The velocity to return.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 Velocity { get; set; }
+        [Tooltip("The velocity to return.")]
+        [SerializeField]
+        private Vector3 _velocity;
+        public Vector3 Velocity
+        {
+            get
+            {
+                return _velocity;
+            }
+            set
+            {
+                _velocity = value;
+            }
+        }
 
         /// <summary>
         /// The angular velocity to return.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 AngularVelocity { get; set; }
+        [Tooltip("The angular velocity to return.")]
+        [SerializeField]
+        private Vector3 _angularVelocity;
+        public Vector3 AngularVelocity
+        {
+            get
+            {
+                return _angularVelocity;
+            }
+            set
+            {
+                _angularVelocity = value;
+            }
+        }
 
         /// <summary>
         /// Determines whether to extract the local property or the world property.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseLocal { get; set; }
+        [Tooltip("Determines whether to extract the local property or the world property.")]
+        [SerializeField]
+        private bool _useLocal;
+        public bool UseLocal
+        {
+            get
+            {
+                return _useLocal;
+            }
+            set
+            {
+                _useLocal = value;
+            }
+        }
 
         /// <inheritdoc />
         protected override Vector3 DoGetAngularVelocity()

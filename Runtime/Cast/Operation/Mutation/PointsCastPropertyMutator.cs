@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Cast.Operation.Mutation
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Rule;
@@ -15,9 +13,20 @@
         /// <summary>
         /// The <see cref="PointsCast"/> to mutate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PointsCast Target { get; set; }
+        [Tooltip("The PointsCast to mutate.")]
+        [SerializeField]
+        private PointsCast _target;
+        public PointsCast Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
 
         /// <summary>
         /// The origin point for the cast.

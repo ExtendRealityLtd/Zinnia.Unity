@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
@@ -19,20 +17,31 @@
         /// <summary>
         /// Emitted when the <see cref="TResultElement"/> is extracted.
         /// </summary>
-        [Header("Extractor Events"), DocumentedByXml]
+        [Header("Extractor Events")]
         public TEvent Extracted = new TEvent();
         /// <summary>
         /// Emitted when the data can't be extracted.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Failed = new UnityEvent();
 
         /// <summary>
         /// The source to extract from.
         /// </summary>
-        [Serialized]
-        [field: Header("Extractor Settings"), DocumentedByXml]
-        public TSourceElement Source { get; set; }
+        [Header("Extractor Settings")]
+        [Tooltip("The source to extract from.")]
+        [SerializeField]
+        private TSourceElement _source;
+        public TSourceElement Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
 
         /// <summary>
         /// The extracted <see cref="TResultElement"/>.

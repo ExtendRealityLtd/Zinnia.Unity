@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Tracking.Velocity.Collection;
 
@@ -13,9 +11,20 @@
         /// <summary>
         /// The <see cref="VelocityTracker"/> collection to attempt to process.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public VelocityTrackerObservableList VelocityTrackers { get; set; }
+        [Tooltip("The VelocityTracker collection to attempt to process.")]
+        [SerializeField]
+        private VelocityTrackerObservableList _velocityTrackers;
+        public VelocityTrackerObservableList VelocityTrackers
+        {
+            get
+            {
+                return _velocityTrackers;
+            }
+            set
+            {
+                _velocityTrackers = value;
+            }
+        }
 
         /// <summary>
         /// The current active <see cref="VelocityTracker"/> that is reporting velocities.

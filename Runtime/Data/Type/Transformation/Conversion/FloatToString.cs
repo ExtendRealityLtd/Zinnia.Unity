@@ -1,8 +1,7 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
+    using UnityEngine;
     using UnityEngine.Events;
 
     /// <summary>
@@ -23,9 +22,20 @@
         /// <summary>
         /// The format for the conversion.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string Format { get; set; }
+        [Tooltip("The format for the conversion.")]
+        [SerializeField]
+        private string _format;
+        public string Format
+        {
+            get
+            {
+                return _format;
+            }
+            set
+            {
+                _format = value;
+            }
+        }
 
         /// <summary>
         /// Transforms the given input <see cref="float"/> to the <see cref="string"/> equivalent value.

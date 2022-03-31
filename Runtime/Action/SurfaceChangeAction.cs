@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Action
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -15,15 +13,37 @@
         /// <summary>
         /// The distance between the current surface and previous surface to consider a valid change.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float ChangeDistance { get; set; } = 0.5f;
+        [Tooltip("The distance between the current surface and previous surface to consider a valid change.")]
+        [SerializeField]
+        private float _changeDistance = 0.5f;
+        public float ChangeDistance
+        {
+            get
+            {
+                return _changeDistance;
+            }
+            set
+            {
+                _changeDistance = value;
+            }
+        }
         /// <summary>
         /// The axes to check for distance differences on.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State CheckAxis { get; set; } = Vector3State.True;
+        [Tooltip("The axes to check for distance differences on.")]
+        [SerializeField]
+        private Vector3State _checkAxis = Vector3State.True;
+        public Vector3State CheckAxis
+        {
+            get
+            {
+                return _checkAxis;
+            }
+            set
+            {
+                _checkAxis = value;
+            }
+        }
 
         protected SurfaceData previousData;
 

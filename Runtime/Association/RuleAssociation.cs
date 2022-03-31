@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Association
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Rule;
@@ -14,9 +12,20 @@
         /// <summary>
         /// The <see cref="RuleContainer"/> to match the association with.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer Rule { get; set; }
+        [Tooltip("The RuleContainer to match the association with.")]
+        [SerializeField]
+        private RuleContainer _rule;
+        public RuleContainer Rule
+        {
+            get
+            {
+                return _rule;
+            }
+            set
+            {
+                _rule = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override bool ShouldBeActive()

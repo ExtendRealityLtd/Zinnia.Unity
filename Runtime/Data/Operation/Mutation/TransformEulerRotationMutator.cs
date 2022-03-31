@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Data.Type;
@@ -17,15 +15,38 @@
         /// <summary>
         /// An optional rotation origin to perform the rotation around. The origin must be a child of the <see cref="TransformPropertyMutator.Target"/>.
         /// </summary>
-        [Serialized]
-        [field: Header("Rotation Settings"), DocumentedByXml]
-        public GameObject Origin { get; set; }
+        [Header("Rotation Settings")]
+        [Tooltip("An optional rotation origin to perform the rotation around. The origin must be a child of the TransformPropertyMutator.Target.")]
+        [SerializeField]
+        private GameObject _origin;
+        public GameObject Origin
+        {
+            get
+            {
+                return _origin;
+            }
+            set
+            {
+                _origin = value;
+            }
+        }
         /// <summary>
         /// Determines which axes to consider from the <see cref="Origin"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State ApplyOriginOnAxis { get; set; } = Vector3State.True;
+        [Tooltip("Determines which axes to consider from the Origin.")]
+        [SerializeField]
+        private Vector3State _applyOriginOnAxis = Vector3State.True;
+        public Vector3State ApplyOriginOnAxis
+        {
+            get
+            {
+                return _applyOriginOnAxis;
+            }
+            set
+            {
+                _applyOriginOnAxis = value;
+            }
+        }
         #endregion
 
         /// <summary>

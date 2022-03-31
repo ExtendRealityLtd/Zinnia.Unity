@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.XR;
@@ -15,16 +13,38 @@
         /// <summary>
         /// The node to query velocity estimations for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public XRNode Node { get; set; } = XRNode.LeftHand;
+        [Tooltip("The node to query velocity estimations for.")]
+        [SerializeField]
+        private XRNode _node = XRNode.LeftHand;
+        public XRNode Node
+        {
+            get
+            {
+                return _node;
+            }
+            set
+            {
+                _node = value;
+            }
+        }
 
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject RelativeTo { get; set; }
+        [Tooltip("An optional object to consider the source relative to when estimating the velocities.")]
+        [SerializeField]
+        private GameObject _relativeTo;
+        public GameObject RelativeTo
+        {
+            get
+            {
+                return _relativeTo;
+            }
+            set
+            {
+                _relativeTo = value;
+            }
+        }
 
         /// <summary>
         /// A collection of node states.

@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -15,15 +13,38 @@
         /// <summary>
         /// Determines the facing direction when mutating the position.
         /// </summary>
-        [Serialized]
-        [field: Header("Position Settings"), DocumentedByXml]
-        public GameObject FacingDirection { get; set; }
+        [Header("Position Settings")]
+        [Tooltip("Determines the facing direction when mutating the position.")]
+        [SerializeField]
+        private GameObject _facingDirection;
+        public GameObject FacingDirection
+        {
+            get
+            {
+                return _facingDirection;
+            }
+            set
+            {
+                _facingDirection = value;
+            }
+        }
         /// <summary>
         /// Determines which axes to take from the <see cref="FacingDirection"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State ApplyFacingDirectionOnAxis { get; set; } = Vector3State.True;
+        [Tooltip("Determines which axes to take from the FacingDirection.")]
+        [SerializeField]
+        private Vector3State _applyFacingDirectionOnAxis = Vector3State.True;
+        public Vector3State ApplyFacingDirectionOnAxis
+        {
+            get
+            {
+                return _applyFacingDirectionOnAxis;
+            }
+            set
+            {
+                _applyFacingDirectionOnAxis = value;
+            }
+        }
         #endregion
 
         /// <summary>

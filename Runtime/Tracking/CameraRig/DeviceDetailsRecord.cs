@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.CameraRig
 {
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -92,22 +91,18 @@
         /// <summary>
         /// Emitted when the device begins tracking.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent TrackingBegun = new UnityEvent();
         /// <summary>
         /// Emitted whenever the connection status changes.
         /// </summary>
-        [DocumentedByXml]
         public BoolUnityEvent ConnectionStatusChanged = new BoolUnityEvent();
         /// <summary>
         /// Emitted whenever the tracking type changes.
         /// </summary>
-        [DocumentedByXml]
         public SpatialTrackingTypeUnityEvent TrackingTypeChanged = new SpatialTrackingTypeUnityEvent();
         /// <summary>
         /// Emitted whenever the tracking type changes.
         /// </summary>
-        [DocumentedByXml]
         public BatteryStatusUnityEvent BatteryChargeStatusChanged = new BatteryStatusUnityEvent();
 
         /// <summary>

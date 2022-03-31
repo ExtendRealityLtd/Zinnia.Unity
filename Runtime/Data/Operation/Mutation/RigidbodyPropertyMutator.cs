@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -14,9 +12,20 @@
         /// <summary>
         /// The <see cref="Rigidbody"/> to mutate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Rigidbody Target { get; set; }
+        [Tooltip("The Rigidbody to mutate.")]
+        [SerializeField]
+        private Rigidbody _target;
+        public Rigidbody Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
 
         /// <summary>
         /// The <see cref="Rigidbody.mass"/> value.

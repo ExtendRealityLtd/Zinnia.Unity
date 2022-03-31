@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -14,45 +12,122 @@
         /// <summary>
         /// The object to apply the artificial velocities to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Tooltip("The object to apply the artificial velocities to.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// The velocity to apply.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 Velocity { get; set; }
+        [Tooltip("The velocity to apply.")]
+        [SerializeField]
+        private Vector3 _velocity;
+        public Vector3 Velocity
+        {
+            get
+            {
+                return _velocity;
+            }
+            set
+            {
+                _velocity = value;
+            }
+        }
         /// <summary>
         /// The angular velocity to apply.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 AngularVelocity { get; set; }
+        [Tooltip("The angular velocity to apply.")]
+        [SerializeField]
+        private Vector3 _angularVelocity;
+        public Vector3 AngularVelocity
+        {
+            get
+            {
+                return _angularVelocity;
+            }
+            set
+            {
+                _angularVelocity = value;
+            }
+        }
         /// <summary>
         /// The drag to apply to reduce the directional velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Drag { get; set; } = 1f;
+        [Tooltip("The drag to apply to reduce the directional velocity over time and to slow down Target.")]
+        [SerializeField]
+        private float _drag = 1f;
+        public float Drag
+        {
+            get
+            {
+                return _drag;
+            }
+            set
+            {
+                _drag = value;
+            }
+        }
         /// <summary>
         /// The angular drag to apply to reduce the rotational velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float AngularDrag { get; set; } = 0.5f;
+        [Tooltip("The angular drag to apply to reduce the rotational velocity over time and to slow down Target.")]
+        [SerializeField]
+        private float _angularDrag = 0.5f;
+        public float AngularDrag
+        {
+            get
+            {
+                return _angularDrag;
+            }
+            set
+            {
+                _angularDrag = value;
+            }
+        }
         /// <summary>
         /// The tolerance the velocity can be within zero to be considered nil.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float NilVelocityTolerance { get; set; } = 0.001f;
+        [Tooltip("The tolerance the velocity can be within zero to be considered nil.")]
+        [SerializeField]
+        private float _nilVelocityTolerance = 0.001f;
+        public float NilVelocityTolerance
+        {
+            get
+            {
+                return _nilVelocityTolerance;
+            }
+            set
+            {
+                _nilVelocityTolerance = value;
+            }
+        }
         /// <summary>
         /// The tolerance the angular velocity can be within zero to be considered nil.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float NilAngularVelocityTolerance { get; set; } = 0.001f;
+        [Tooltip("The tolerance the angular velocity can be within zero to be considered nil.")]
+        [SerializeField]
+        private float _nilAngularVelocityTolerance = 0.001f;
+        public float NilAngularVelocityTolerance
+        {
+            get
+            {
+                return _nilAngularVelocityTolerance;
+            }
+            set
+            {
+                _nilAngularVelocityTolerance = value;
+            }
+        }
 
         /// <summary>
         /// Determine if we can process.

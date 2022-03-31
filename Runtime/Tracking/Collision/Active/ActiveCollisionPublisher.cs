@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -22,9 +20,20 @@
             /// <summary>
             /// The container of the source that is initiating the collision.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject SourceContainer { get; set; }
+            [Tooltip("The container of the source that is initiating the collision.")]
+            [SerializeField]
+            private GameObject _sourceContainer;
+            public GameObject SourceContainer
+            {
+                get
+                {
+                    return _sourceContainer;
+                }
+                set
+                {
+                    _sourceContainer = value;
+                }
+            }
 
             /// <summary>
             /// The active collisions.
@@ -84,20 +93,41 @@
         /// <summary>
         /// The data to publish to any available consumers.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PayloadData Payload { get; set; } = new PayloadData();
+        [Tooltip("The data to publish to any available consumers.")]
+        [SerializeField]
+        private PayloadData _payload = new PayloadData();
+        public PayloadData Payload
+        {
+            get
+            {
+                return _payload;
+            }
+            set
+            {
+                _payload = value;
+            }
+        }
         /// <summary>
         /// A collection of <see cref="ActiveCollisionConsumer"/> components that has been successfully published to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public ActiveCollisionRegisteredConsumerContainer RegisteredConsumerContainer { get; set; }
+        [Tooltip("A collection of ActiveCollisionConsumer components that has been successfully published to.")]
+        [SerializeField]
+        private ActiveCollisionRegisteredConsumerContainer _registeredConsumerContainer;
+        public ActiveCollisionRegisteredConsumerContainer RegisteredConsumerContainer
+        {
+            get
+            {
+                return _registeredConsumerContainer;
+            }
+            set
+            {
+                _registeredConsumerContainer = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the payload data is published.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Published = new UnityEvent();
 
         /// <summary>

@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -26,15 +24,37 @@
             /// <summary>
             /// The difference of the positions of the target and source.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Vector3 CurrentDifference { get; set; }
+            [Tooltip("The difference of the positions of the target and source.")]
+            [SerializeField]
+            private Vector3 _currentDifference;
+            public Vector3 CurrentDifference
+            {
+                get
+                {
+                    return _currentDifference;
+                }
+                set
+                {
+                    _currentDifference = value;
+                }
+            }
             /// <summary>
             /// The distance between the source and target.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public float CurrentDistance { get; set; }
+            [Tooltip("The distance between the source and target.")]
+            [SerializeField]
+            private float _currentDistance;
+            public float CurrentDistance
+            {
+                get
+                {
+                    return _currentDistance;
+                }
+                set
+                {
+                    _currentDistance = value;
+                }
+            }
 
             public EventData Set(EventData source)
             {
@@ -63,31 +83,62 @@
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        [Tooltip("The source of the distance measurement.")]
+        [SerializeField]
+        private GameObject _source;
+        public GameObject Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Tooltip("The target of the distance measurement.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// The distance between the source and target that is considered to be exceeding the given threshold.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float DistanceThreshold { get; set; } = 1f;
+        [Tooltip("The distance between the source and target that is considered to be exceeding the given threshold.")]
+        [SerializeField]
+        private float _distanceThreshold = 1f;
+        public float DistanceThreshold
+        {
+            get
+            {
+                return _distanceThreshold;
+            }
+            set
+            {
+                _distanceThreshold = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the distance between the source and the target exceeds the threshold.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent ThresholdExceeded = new UnityEvent();
         /// <summary>
         /// Emitted when the distance between the source and the target falls back within the threshold.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent ThresholdResumed = new UnityEvent();
 
         /// <summary>

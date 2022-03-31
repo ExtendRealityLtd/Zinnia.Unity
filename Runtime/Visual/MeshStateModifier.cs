@@ -1,7 +1,5 @@
 namespace Zinnia.Visual
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -40,28 +38,50 @@ namespace Zinnia.Visual
         /// <summary>
         /// The mesh components to modify.
         /// </summary>
-        [Serialized]
-        [field: Header("Mesh Settings"), DocumentedByXml]
-        public MeshTypes MeshesToModifiy { get; set; } = (MeshTypes)(-1);
+        [Header("Mesh Settings")]
+        [Tooltip("The mesh components to modify.")]
+        [SerializeField]
+        private MeshTypes _meshesToModifiy = (MeshTypes)(-1);
+        public MeshTypes MeshesToModifiy
+        {
+            get
+            {
+                return _meshesToModifiy;
+            }
+            set
+            {
+                _meshesToModifiy = value;
+            }
+        }
 
         /// <summary>
         /// A relationship connection between a given <see cref="GameObject"/> and any meshes to modify upon matching.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectMultiRelationObservableList MeshCollections { get; set; }
+        [Tooltip("A relationship connection between a given GameObject and any meshes to modify upon matching.")]
+        [SerializeField]
+        private GameObjectMultiRelationObservableList _meshCollections;
+        public GameObjectMultiRelationObservableList MeshCollections
+        {
+            get
+            {
+                return _meshCollections;
+            }
+            set
+            {
+                _meshCollections = value;
+            }
+        }
         #endregion
 
         #region Visibility Events
         /// <summary>
         /// Emitted when the mesh is shown.
         /// </summary>
-        [Header("Visibility Events"), DocumentedByXml]
+        [Header("Visibility Events")]
         public UnityEvent Shown = new UnityEvent();
         /// <summary>
         /// Emitted when the mesh is hidden.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Hidden = new UnityEvent();
         #endregion
 

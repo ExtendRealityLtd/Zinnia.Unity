@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -28,16 +26,38 @@
         /// <summary>
         /// The range of the value from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public FloatRange From { get; set; } = new FloatRange(0f, 1f);
+        [Tooltip("The range of the value from.")]
+        [SerializeField]
+        private FloatRange _from = new FloatRange(0f, 1f);
+        public FloatRange From
+        {
+            get
+            {
+                return _from;
+            }
+            set
+            {
+                _from = value;
+            }
+        }
 
         /// <summary>
         /// The range of the value remaps to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public FloatRange To { get; set; } = new FloatRange(0f, 1f);
+        [Tooltip("The range of the value remaps to.")]
+        [SerializeField]
+        private FloatRange _to = new FloatRange(0f, 1f);
+        public FloatRange To
+        {
+            get
+            {
+                return _to;
+            }
+            set
+            {
+                _to = value;
+            }
+        }
 
         /// <summary>
         /// The mode to use when remapping.
@@ -57,9 +77,20 @@
         /// <summary>
         /// The mode to use when remapping.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public OutputMode Mode { get; set; } = OutputMode.Lerp;
+        [Tooltip("The mode to use when remapping.")]
+        [SerializeField]
+        private OutputMode _mode = OutputMode.Lerp;
+        public OutputMode Mode
+        {
+            get
+            {
+                return _mode;
+            }
+            set
+            {
+                _mode = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="Mode"/>.

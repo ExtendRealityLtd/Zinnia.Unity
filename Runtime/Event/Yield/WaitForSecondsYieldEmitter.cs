@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Event.Yield
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using UnityEngine;
 
@@ -14,9 +12,20 @@
         /// <summary>
         /// The number of seconds to wait before yielding.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float SecondsToWait { get; set; }
+        [Tooltip("The number of seconds to wait before yielding.")]
+        [SerializeField]
+        private float _secondsToWait;
+        public float SecondsToWait
+        {
+            get
+            {
+                return _secondsToWait;
+            }
+            set
+            {
+                _secondsToWait = value;
+            }
+        }
 
         /// <summary>
         /// The instruction to yield upon.

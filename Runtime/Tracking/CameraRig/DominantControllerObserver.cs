@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.CameraRig
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -21,22 +19,45 @@
         /// <summary>
         /// The details about the left controller.
         /// </summary>
-        [Serialized]
-        [field: Header("Controller Settings"), DocumentedByXml]
-        public DeviceDetailsRecord LeftController { get; set; }
+        [Header("Controller Settings")]
+        [Tooltip("The details about the left controller.")]
+        [SerializeField]
+        private DeviceDetailsRecord _leftController;
+        public DeviceDetailsRecord LeftController
+        {
+            get
+            {
+                return _leftController;
+            }
+            set
+            {
+                _leftController = value;
+            }
+        }
         /// <summary>
         /// The details about the right controller.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public DeviceDetailsRecord RightController { get; set; }
+        [Tooltip("The details about the right controller.")]
+        [SerializeField]
+        private DeviceDetailsRecord _rightController;
+        public DeviceDetailsRecord RightController
+        {
+            get
+            {
+                return _rightController;
+            }
+            set
+            {
+                _rightController = value;
+            }
+        }
         #endregion
 
         #region Device Events
         /// <summary>
         /// Emitted as the dominant controller is changing.
         /// </summary>
-        [Header("Device Events"), DocumentedByXml]
+        [Header("Device Events")]
         public UnityEvent IsChanging = new UnityEvent();
         #endregion
 

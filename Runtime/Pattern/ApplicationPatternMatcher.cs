@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Pattern
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -41,9 +39,20 @@
         /// <summary>
         /// The source property to match against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Source PropertySource { get; set; }
+        [Tooltip("The source property to match against.")]
+        [SerializeField]
+        private Source _propertySource;
+        public Source PropertySource
+        {
+            get
+            {
+                return _propertySource;
+            }
+            set
+            {
+                _propertySource = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="PropertySource"/>.

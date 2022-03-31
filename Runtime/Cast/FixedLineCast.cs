@@ -1,8 +1,6 @@
 namespace Zinnia.Cast
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -13,9 +11,20 @@ namespace Zinnia.Cast
         /// <summary>
         /// The current length of the cast.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentLength { get; set; } = 1f;
+        [Tooltip("The current length of the cast.")]
+        [SerializeField]
+        private float _currentLength = 1f;
+        public float CurrentLength
+        {
+            get
+            {
+                return _currentLength;
+            }
+            set
+            {
+                _currentLength = value;
+            }
+        }
 
         /// <summary>
         /// Sets the current length of the cast from the given event data.

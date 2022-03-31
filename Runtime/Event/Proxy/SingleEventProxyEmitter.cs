@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
 
@@ -15,14 +14,24 @@
         /// <summary>
         /// The payload data to emit.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public TValue Payload { get; set; }
+        [Tooltip("The payload data to emit.")]
+        [SerializeField]
+        private TValue _payload;
+        public TValue Payload
+        {
+            get
+            {
+                return _payload;
+            }
+            set
+            {
+                _payload = value;
+            }
+        }
 
         /// <summary>
         /// Is emitted when Receive is called.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Emitted = new TEvent();
 
         /// <summary>

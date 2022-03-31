@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Cache
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -19,9 +17,20 @@
         /// <summary>
         /// The tolerance to consider the current value and the cached value equal.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float EqualityTolerance { get; set; } = float.Epsilon;
+        [Tooltip("The tolerance to consider the current value and the cached value equal.")]
+        [SerializeField]
+        private float _equalityTolerance = float.Epsilon;
+        public float EqualityTolerance
+        {
+            get
+            {
+                return _equalityTolerance;
+            }
+            set
+            {
+                _equalityTolerance = value;
+            }
+        }
 
         /// <inheritdoc/>
         protected override bool AreEqual(Vector2 a, Vector2 b)

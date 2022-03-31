@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Visual
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections;
     using UnityEngine;
@@ -25,9 +23,20 @@
             /// <summary>
             /// The <see cref="Color"/> being applied to the camera overlay.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Color Color { get; set; }
+            [Tooltip("The Color being applied to the camera overlay.")]
+            [SerializeField]
+            private Color _color;
+            public Color Color
+            {
+                get
+                {
+                    return _color;
+                }
+                set
+                {
+                    _color = value;
+                }
+            }
 
             public EventData Set(EventData source)
             {
@@ -71,64 +80,125 @@
         /// <summary>
         /// The rules to determine which scene cameras to apply the overlay to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer CameraValidity { get; set; }
+        [Tooltip("The rules to determine which scene cameras to apply the overlay to.")]
+        [SerializeField]
+        private RuleContainer _cameraValidity;
+        public RuleContainer CameraValidity
+        {
+            get
+            {
+                return _cameraValidity;
+            }
+            set
+            {
+                _cameraValidity = value;
+            }
+        }
         /// <summary>
         /// The <see cref="Color"/> of the overlay.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Color OverlayColor { get; set; } = Color.black;
+        [Tooltip("The Color of the overlay.")]
+        [SerializeField]
+        private Color _overlayColor = Color.black;
+        public Color OverlayColor
+        {
+            get
+            {
+                return _overlayColor;
+            }
+            set
+            {
+                _overlayColor = value;
+            }
+        }
         /// <summary>
         /// The <see cref="Material"/> to use for the overlay.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Material OverlayMaterial { get; set; }
+        [Tooltip("The Material to use for the overlay.")]
+        [SerializeField]
+        private Material _overlayMaterial;
+        public Material OverlayMaterial
+        {
+            get
+            {
+                return _overlayMaterial;
+            }
+            set
+            {
+                _overlayMaterial = value;
+            }
+        }
         /// <summary>
         /// The duration of time to apply the overlay <see cref="Color"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float AddDuration { get; set; }
+        [Tooltip("The duration of time to apply the overlay Color.")]
+        [SerializeField]
+        private float _addDuration;
+        public float AddDuration
+        {
+            get
+            {
+                return _addDuration;
+            }
+            set
+            {
+                _addDuration = value;
+            }
+        }
         /// <summary>
         /// The duration of time to remove the overlay <see cref="Color"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float RemoveDuration { get; set; } = 1f;
+        [Tooltip("The duration of time to remove the overlay Color.")]
+        [SerializeField]
+        private float _removeDuration = 1f;
+        public float RemoveDuration
+        {
+            get
+            {
+                return _removeDuration;
+            }
+            set
+            {
+                _removeDuration = value;
+            }
+        }
         /// <summary>
         /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float AppliedDuration { get; set; }
+        [Tooltip("The duration of time to wait once the overlay Color is applied before it is removed.")]
+        [SerializeField]
+        private float _appliedDuration;
+        public float AppliedDuration
+        {
+            get
+            {
+                return _appliedDuration;
+            }
+            set
+            {
+                _appliedDuration = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the <see cref="AddColorOverlay"/> method is called.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Added = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="AddColorOverlay"/> target overlay <see cref="Color"/> is reached.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent AddTransitioned = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="RemoveColorOverlay"/> method is called.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Removed = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="RemoveColorOverlay"/> target overlay <see cref="Color"/> is reached.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent RemoveTransitioned = new UnityEvent();
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> has changed from the previous render frame.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Changed = new UnityEvent();
 
         /// <summary>

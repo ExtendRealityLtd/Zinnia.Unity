@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
@@ -21,7 +20,6 @@
         /// <summary>
         /// Emitted when the transformation is complete.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Transformed = new TEvent();
 
         /// <summary>

@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -13,21 +11,54 @@
         /// <summary>
         /// The <see cref="VelocityTracker"/> to use as the source data.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public VelocityTracker Source { get; set; }
+        [Tooltip("The VelocityTracker to use as the source data.")]
+        [SerializeField]
+        private VelocityTracker _source;
+        public VelocityTracker Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
         /// <summary>
         /// The amount to multiply the source velocity by.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 VelocityMultiplierFactor { get; set; } = Vector3.one;
+        [Tooltip("The amount to multiply the source velocity by.")]
+        [SerializeField]
+        private Vector3 _velocityMultiplierFactor = Vector3.one;
+        public Vector3 VelocityMultiplierFactor
+        {
+            get
+            {
+                return _velocityMultiplierFactor;
+            }
+            set
+            {
+                _velocityMultiplierFactor = value;
+            }
+        }
         /// <summary>
         /// The amount to multiply the source angular velocity by.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 AngularVelocityMultiplierFactor { get; set; } = Vector3.one;
+        [Tooltip("The amount to multiply the source angular velocity by.")]
+        [SerializeField]
+        private Vector3 _angularVelocityMultiplierFactor = Vector3.one;
+        public Vector3 AngularVelocityMultiplierFactor
+        {
+            get
+            {
+                return _angularVelocityMultiplierFactor;
+            }
+            set
+            {
+                _angularVelocityMultiplierFactor = value;
+            }
+        }
 
         /// <summary>
         /// Clears <see cref="Source"/>.

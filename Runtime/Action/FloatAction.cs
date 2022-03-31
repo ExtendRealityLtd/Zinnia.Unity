@@ -3,9 +3,8 @@
     using UnityEngine.Events;
     using System;
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using Zinnia.Extension;
+    using UnityEngine;
 
     /// <summary>
     /// Emits a <see cref="float"/> value.
@@ -21,9 +20,20 @@
         /// <summary>
         /// The tolerance of equality between two <see cref="float"/> values.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float EqualityTolerance { get; set; } = float.Epsilon;
+        [Tooltip("The tolerance of equality between two float values.")]
+        [SerializeField]
+        private float _equalityTolerance = float.Epsilon;
+        public float EqualityTolerance
+        {
+            get
+            {
+                return _equalityTolerance;
+            }
+            set
+            {
+                _equalityTolerance = value;
+            }
+        }
 
         /// <inheritdoc />
         protected override bool IsValueEqual(float value)

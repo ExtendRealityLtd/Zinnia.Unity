@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.CameraRig
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
     using Zinnia.Extension;
@@ -18,114 +16,305 @@
         /// <summary>
         /// The associated PlayArea.
         /// </summary>
-        [Serialized]
-        [field: Header("PlayArea Settings"), DocumentedByXml]
-        public GameObject PlayArea { get; set; }
+        [Header("PlayArea Settings")]
+        [Tooltip("The associated PlayArea.")]
+        [SerializeField]
+        private GameObject _playArea;
+        public GameObject PlayArea
+        {
+            get
+            {
+                return _playArea;
+            }
+            set
+            {
+                _playArea = value;
+            }
+        }
         #endregion
 
         #region Headset Settings
         /// <summary>
         /// The associated Headset.
         /// </summary>
-        [Serialized]
-        [field: Header("Headset Settings"), DocumentedByXml]
-        public GameObject Headset { get; set; }
+        [Header("Headset Settings")]
+        [Tooltip("The associated Headset.")]
+        [SerializeField]
+        private GameObject _headset;
+        public GameObject Headset
+        {
+            get
+            {
+                return _headset;
+            }
+            set
+            {
+                _headset = value;
+            }
+        }
         /// <summary>
         /// The associated Headset Camera.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Camera HeadsetCamera { get; set; }
+        [Tooltip("The associated Headset Camera.")]
+        [SerializeField]
+        private Camera _headsetCamera;
+        public Camera HeadsetCamera
+        {
+            get
+            {
+                return _headsetCamera;
+            }
+            set
+            {
+                _headsetCamera = value;
+            }
+        }
         /// <summary>
         /// The associated Headset Velocity Tracker.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public VelocityTracker HeadsetVelocityTracker { get; set; }
+        [Tooltip("The associated Headset Velocity Tracker.")]
+        [SerializeField]
+        private VelocityTracker _headsetVelocityTracker;
+        public VelocityTracker HeadsetVelocityTracker
+        {
+            get
+            {
+                return _headsetVelocityTracker;
+            }
+            set
+            {
+                _headsetVelocityTracker = value;
+            }
+        }
         /// <summary>
         /// A list of any additional cameras associated with the headset.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public CameraObservableList SupplementHeadsetCameras { get; set; }
+        [Tooltip("A list of any additional cameras associated with the headset.")]
+        [SerializeField]
+        private CameraObservableList _supplementHeadsetCameras;
+        public CameraObservableList SupplementHeadsetCameras
+        {
+            get
+            {
+                return _supplementHeadsetCameras;
+            }
+            set
+            {
+                _supplementHeadsetCameras = value;
+            }
+        }
         /// <summary>
         /// The details and status of the headset device.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public DeviceDetailsRecord HeadsetDeviceDetails { get; set; }
+        [Tooltip("The details and status of the headset device.")]
+        [SerializeField]
+        private DeviceDetailsRecord _headsetDeviceDetails;
+        public DeviceDetailsRecord HeadsetDeviceDetails
+        {
+            get
+            {
+                return _headsetDeviceDetails;
+            }
+            set
+            {
+                _headsetDeviceDetails = value;
+            }
+        }
         /// <summary>
         /// The dominant controller observer.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public DominantControllerObserver DominantController { get; set; }
+        [Tooltip("The dominant controller observer.")]
+        [SerializeField]
+        private DominantControllerObserver _dominantController;
+        public DominantControllerObserver DominantController
+        {
+            get
+            {
+                return _dominantController;
+            }
+            set
+            {
+                _dominantController = value;
+            }
+        }
         #endregion
 
         #region Left Controller Settings
         /// <summary>
         /// The associated Left Controller.
         /// </summary>
-        [Serialized]
-        [field: Header("Left Controller Settings"), DocumentedByXml]
-        public GameObject LeftController { get; set; }
+        [Header("Left Controller Settings")]
+        [Tooltip("The associated Left Controller.")]
+        [SerializeField]
+        private GameObject _leftController;
+        public GameObject LeftController
+        {
+            get
+            {
+                return _leftController;
+            }
+            set
+            {
+                _leftController = value;
+            }
+        }
         /// <summary>
         /// The associated Left Controller Velocity Tracker.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public VelocityTracker LeftControllerVelocityTracker { get; set; }
+        [Tooltip("The associated Left Controller Velocity Tracker.")]
+        [SerializeField]
+        private VelocityTracker _leftControllerVelocityTracker;
+        public VelocityTracker LeftControllerVelocityTracker
+        {
+            get
+            {
+                return _leftControllerVelocityTracker;
+            }
+            set
+            {
+                _leftControllerVelocityTracker = value;
+            }
+        }
         /// <summary>
         /// The main Left Controller Haptic Process profile.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public HapticProcess LeftControllerHapticProcess { get; set; }
+        [Tooltip("The main Left Controller Haptic Process profile.")]
+        [SerializeField]
+        private HapticProcess _leftControllerHapticProcess;
+        public HapticProcess LeftControllerHapticProcess
+        {
+            get
+            {
+                return _leftControllerHapticProcess;
+            }
+            set
+            {
+                _leftControllerHapticProcess = value;
+            }
+        }
         /// <summary>
         /// A <see cref="HapticProcess"/> collection of haptic profiles that can be used with the Left Controller.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public HapticProcessObservableList LeftControllerHapticProfiles { get; set; }
+        [Tooltip("A HapticProcess collection of haptic profiles that can be used with the Left Controller.")]
+        [SerializeField]
+        private HapticProcessObservableList _leftControllerHapticProfiles;
+        public HapticProcessObservableList LeftControllerHapticProfiles
+        {
+            get
+            {
+                return _leftControllerHapticProfiles;
+            }
+            set
+            {
+                _leftControllerHapticProfiles = value;
+            }
+        }
         /// <summary>
         /// The details and status of the left controller device.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public DeviceDetailsRecord LeftControllerDeviceDetails { get; set; }
+        [Tooltip("The details and status of the left controller device.")]
+        [SerializeField]
+        private DeviceDetailsRecord _leftControllerDeviceDetails;
+        public DeviceDetailsRecord LeftControllerDeviceDetails
+        {
+            get
+            {
+                return _leftControllerDeviceDetails;
+            }
+            set
+            {
+                _leftControllerDeviceDetails = value;
+            }
+        }
         #endregion
 
         #region Right Controller Settings
         /// <summary>
         /// The associated Right Controller.
         /// </summary>
-        [Serialized]
-        [field: Header("Right Controller Settings"), DocumentedByXml]
-        public GameObject RightController { get; set; }
+        [Header("Right Controller Settings")]
+        [Tooltip("The associated Right Controller.")]
+        [SerializeField]
+        private GameObject _rightController;
+        public GameObject RightController
+        {
+            get
+            {
+                return _rightController;
+            }
+            set
+            {
+                _rightController = value;
+            }
+        }
         /// <summary>
         /// The associated Right Controller Velocity Tracker.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public VelocityTracker RightControllerVelocityTracker { get; set; }
+        [Tooltip("The associated Right Controller Velocity Tracker.")]
+        [SerializeField]
+        private VelocityTracker _rightControllerVelocityTracker;
+        public VelocityTracker RightControllerVelocityTracker
+        {
+            get
+            {
+                return _rightControllerVelocityTracker;
+            }
+            set
+            {
+                _rightControllerVelocityTracker = value;
+            }
+        }
         /// <summary>
         /// The main Right Controller Haptic Process profile.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public HapticProcess RightControllerHapticProcess { get; set; }
+        [Tooltip("The main Right Controller Haptic Process profile.")]
+        [SerializeField]
+        private HapticProcess _rightControllerHapticProcess;
+        public HapticProcess RightControllerHapticProcess
+        {
+            get
+            {
+                return _rightControllerHapticProcess;
+            }
+            set
+            {
+                _rightControllerHapticProcess = value;
+            }
+        }
         /// <summary>
         /// A <see cref="HapticProcess"/> collection of supplement haptic settings that can be used with the Right Controller.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public HapticProcessObservableList RightControllerHapticProfiles { get; set; }
+        [Tooltip("A HapticProcess collection of supplement haptic settings that can be used with the Right Controller.")]
+        [SerializeField]
+        private HapticProcessObservableList _rightControllerHapticProfiles;
+        public HapticProcessObservableList RightControllerHapticProfiles
+        {
+            get
+            {
+                return _rightControllerHapticProfiles;
+            }
+            set
+            {
+                _rightControllerHapticProfiles = value;
+            }
+        }
         /// <summary>
         /// The details and status of the right controller device.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public DeviceDetailsRecord RightControllerDeviceDetails { get; set; }
+        [Tooltip("The details and status of the right controller device.")]
+        [SerializeField]
+        private DeviceDetailsRecord _rightControllerDeviceDetails;
+        public DeviceDetailsRecord RightControllerDeviceDetails
+        {
+            get
+            {
+                return _rightControllerDeviceDetails;
+            }
+            set
+            {
+                _rightControllerDeviceDetails = value;
+            }
+        }
         #endregion
 
         /// <summary>

@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Extension;
@@ -15,33 +13,88 @@
         /// <summary>
         /// A reference to the original <see cref="UnityEngine.Transform"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Transform Transform { get; set; }
+        [Tooltip("A reference to the original UnityEngine.Transform.")]
+        [SerializeField]
+        private Transform _transform;
+        public Transform Transform
+        {
+            get
+            {
+                return _transform;
+            }
+            set
+            {
+                _transform = value;
+            }
+        }
         /// <summary>
         /// Determines whether to operate on the local or global values.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseLocalValues { get; set; }
+        [Tooltip("Determines whether to operate on the local or global values.")]
+        [SerializeField]
+        private bool _useLocalValues;
+        public bool UseLocalValues
+        {
+            get
+            {
+                return _useLocalValues;
+            }
+            set
+            {
+                _useLocalValues = value;
+            }
+        }
         /// <summary>
         /// Position override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3? PositionOverride { get; set; }
+        [Tooltip("Position override of the UnityEngine.Transform object.")]
+        [SerializeField]
+        private Vector3? _positionOverride;
+        public Vector3? PositionOverride
+        {
+            get
+            {
+                return _positionOverride;
+            }
+            set
+            {
+                _positionOverride = value;
+            }
+        }
         /// <summary>
         /// Rotation override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Quaternion? RotationOverride { get; set; }
+        [Tooltip("Rotation override of the UnityEngine.Transform object.")]
+        [SerializeField]
+        private Quaternion? _rotationOverride;
+        public Quaternion? RotationOverride
+        {
+            get
+            {
+                return _rotationOverride;
+            }
+            set
+            {
+                _rotationOverride = value;
+            }
+        }
         /// <summary>
         /// Scale override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3? ScaleOverride { get; set; }
+        [Tooltip("Scale override of the UnityEngine.Transform object.")]
+        [SerializeField]
+        private Vector3? _scaleOverride;
+        public Vector3? ScaleOverride
+        {
+            get
+            {
+                return _scaleOverride;
+            }
+            set
+            {
+                _scaleOverride = value;
+            }
+        }
 
         /// <summary>
         /// The position of the <see cref="UnityEngine.Transform"/> or the <see cref="PositionOverride"/> if it is set.

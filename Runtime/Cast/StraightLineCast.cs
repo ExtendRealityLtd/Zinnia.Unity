@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -12,9 +10,20 @@
         /// <summary>
         /// The maximum length to cast.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float MaximumLength { get; set; } = 100f;
+        [Tooltip("The maximum length to cast.")]
+        [SerializeField]
+        private float _maximumLength = 100f;
+        public float MaximumLength
+        {
+            get
+            {
+                return _maximumLength;
+            }
+            set
+            {
+                _maximumLength = value;
+            }
+        }
 
         protected override void OnEnable()
         {

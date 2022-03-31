@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -27,29 +25,36 @@
         /// <summary>
         /// The source <see cref="VelocityTracker"/> to receive the velocity data from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public VelocityTracker Source { get; set; }
+        [Tooltip("The source VelocityTracker to receive the velocity data from.")]
+        [SerializeField]
+        private VelocityTracker _source;
+        public VelocityTracker Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the Tracked Velocity is emitted.
         /// </summary>
-        [DocumentedByXml]
         public Vector3UnityEvent VelocityEmitted = new Vector3UnityEvent();
         /// <summary>
         /// Emitted when the Tracked Speed is emitted.
         /// </summary>
-        [DocumentedByXml]
         public FloatUnityEvent SpeedEmitted = new FloatUnityEvent();
         /// <summary>
         /// Emitted when the Tracked Angular Velocity is emitted.
         /// </summary>
-        [DocumentedByXml]
         public Vector3UnityEvent AngularVelocityEmitted = new Vector3UnityEvent();
         /// <summary>
         /// Emitted when the Tracked Angular Speed is emitted.
         /// </summary>
-        [DocumentedByXml]
         public FloatUnityEvent AngularSpeedEmitted = new FloatUnityEvent();
 
         /// <summary>

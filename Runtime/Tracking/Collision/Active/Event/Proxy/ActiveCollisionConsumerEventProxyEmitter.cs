@@ -1,8 +1,7 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Event.Proxy
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
+    using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Event.Proxy;
     using Zinnia.Extension;
@@ -31,9 +30,20 @@
         /// <summary>
         /// The source <see cref="GameObject"/> to apply to the <see cref="RestrictableSingleEventProxyEmitter.ReceiveValidity"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleSourceType RuleSource { get; set; }
+        [Tooltip("The source GameObject to apply to the RestrictableSingleEventProxyEmitter.ReceiveValidity.")]
+        [SerializeField]
+        private RuleSourceType _ruleSource;
+        public RuleSourceType RuleSource
+        {
+            get
+            {
+                return _ruleSource;
+            }
+            set
+            {
+                _ruleSource = value;
+            }
+        }
 
         /// <summary>
         /// Defines the event with the specified state.

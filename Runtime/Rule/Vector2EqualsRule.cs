@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -13,15 +11,37 @@
         /// <summary>
         /// The <see cref="Vector2"/> to check equality against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector2 Target { get; set; }
+        [Tooltip("The Vector2 to check equality against.")]
+        [SerializeField]
+        private Vector2 _target;
+        public Vector2 Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// The tolerance between the two <see cref="Vector2"/> values that can be considered equal.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Tolerance { get; set; } = float.Epsilon;
+        [Tooltip("The tolerance between the two Vector2 values that can be considered equal.")]
+        [SerializeField]
+        private float _tolerance = float.Epsilon;
+        public float Tolerance
+        {
+            get
+            {
+                return _tolerance;
+            }
+            set
+            {
+                _tolerance = value;
+            }
+        }
 
         /// <inheritdoc />
         protected override bool Accepts(Vector2 targetVector2)

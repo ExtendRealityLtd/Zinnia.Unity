@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Collection.List
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -25,27 +23,23 @@
         /// <summary>
         /// Emitted when the element at a given index is obtained.
         /// </summary>
-        [Header("List Contents Events"), DocumentedByXml]
+        [Header("List Contents Events")]
         public TEvent Obtained = new TEvent();
         /// <summary>
         /// Emitted when the searched element is found.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Found = new TEvent();
         /// <summary>
         /// Emitted when the searched element is not found.
         /// </summary>
-        [DocumentedByXml]
         public TEvent NotFound = new TEvent();
         /// <summary>
         /// Emitted when the collection contents is checked but is empty.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent IsEmpty = new UnityEvent();
         /// <summary>
         /// Emitted when the collection contents is checked and is populated.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent IsPopulated = new UnityEvent();
         #endregion
 
@@ -53,31 +47,40 @@
         /// <summary>
         /// Emitted when the first element is added to the collection.
         /// </summary>
-        [Header("List Mutation Events"), DocumentedByXml]
+        [Header("List Mutation Events")]
         public TEvent Populated = new TEvent();
         /// <summary>
         /// Emitted when an element is added to the collection.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Added = new TEvent();
         /// <summary>
         /// Emitted when an element is removed from the collection.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Removed = new TEvent();
         /// <summary>
         /// Emitted when the last element is removed from the collection.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Emptied = new TEvent();
         #endregion
 
         /// <summary>
         /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will be clamped within the index bounds.
         /// </summary>
-        [Serialized]
-        [field: Header("List Settings"), DocumentedByXml]
-        public int CurrentIndex { get; set; }
+        [Header("List Settings")]
+        [Tooltip("The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will be clamped within the index bounds.")]
+        [SerializeField]
+        private int _currentIndex;
+        public int CurrentIndex
+        {
+            get
+            {
+                return _currentIndex;
+            }
+            set
+            {
+                _currentIndex = value;
+            }
+        }
 
         /// <summary>
         /// The elements to observe changes of, accessible from components that *are* keeping in sync with the state of the collection by subscribing to the list mutation events. Alternatively use <see cref="NonSubscribableElements"/> instead.

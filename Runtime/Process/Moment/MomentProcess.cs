@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Process.Moment
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -14,21 +12,54 @@
         /// <summary>
         /// The source process to attach to the moment.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public ProcessContainer Source { get; set; }
+        [Tooltip("The source process to attach to the moment.")]
+        [SerializeField]
+        private ProcessContainer _source;
+        public ProcessContainer Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
         /// <summary>
         /// The process only executes if the <see cref="GameObject"/> is active and the <see cref="Component"/> is enabled.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool OnlyProcessOnActiveAndEnabled { get; set; } = true;
+        [Tooltip("The process only executes if the GameObject is active and the Component is enabled.")]
+        [SerializeField]
+        private bool _onlyProcessOnActiveAndEnabled = true;
+        public bool OnlyProcessOnActiveAndEnabled
+        {
+            get
+            {
+                return _onlyProcessOnActiveAndEnabled;
+            }
+            set
+            {
+                _onlyProcessOnActiveAndEnabled = value;
+            }
+        }
         /// <summary>
         /// The interval in seconds defining how often to process the <see cref="Process"/>. Negative values will be clamped to zero.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Interval { get; set; }
+        [Tooltip("The interval in seconds defining how often to process the Process. Negative values will be clamped to zero.")]
+        [SerializeField]
+        private float _interval;
+        public float Interval
+        {
+            get
+            {
+                return _interval;
+            }
+            set
+            {
+                _interval = value;
+            }
+        }
         /// <summary>
         /// When to call <see cref="Process"/> the next time. Updated automatically based on <see cref="Interval"/> after <see cref="Process"/> has been called.
         /// </summary>

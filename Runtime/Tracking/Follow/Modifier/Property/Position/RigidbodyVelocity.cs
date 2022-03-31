@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Position
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -14,15 +12,38 @@
         /// <summary>
         /// The maximum squared magnitude of velocity that can be applied to the source.
         /// </summary>
-        [Serialized]
-        [field: Header("Velocity Settings"), DocumentedByXml]
-        public float VelocityLimit { get; set; } = float.PositiveInfinity;
+        [Header("Velocity Settings")]
+        [Tooltip("The maximum squared magnitude of velocity that can be applied to the source.")]
+        [SerializeField]
+        private float _velocityLimit = float.PositiveInfinity;
+        public float VelocityLimit
+        {
+            get
+            {
+                return _velocityLimit;
+            }
+            set
+            {
+                _velocityLimit = value;
+            }
+        }
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float MaxDistanceDelta { get; set; } = 10f;
+        [Tooltip("The maximum difference in distance to the tracked position.")]
+        [SerializeField]
+        private float _maxDistanceDelta = 10f;
+        public float MaxDistanceDelta
+        {
+            get
+            {
+                return _maxDistanceDelta;
+            }
+            set
+            {
+                _maxDistanceDelta = value;
+            }
+        }
         #endregion
 
         /// <summary>

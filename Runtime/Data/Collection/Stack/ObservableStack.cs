@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Collection.Stack
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
@@ -15,22 +13,18 @@
         /// <summary>
         /// Emitted when a new <see cref="TElement"/> is added to the end of the stack.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Pushed = new TEvent();
         /// <summary>
         /// Emitted when the <see cref="TElement"/> is removed from the end of the stack.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Popped = new TEvent();
         /// <summary>
         /// Emitted when the <see cref="TElement"/> is removed from the stack due to a <see cref="TElement"/> lower down in the stack being removed.
         /// </summary>
-        [DocumentedByXml]
         public TEvent ForcePopped = new TEvent();
         /// <summary>
         /// Emitted when the <see cref="TElement"/> of the stack is restored to being at the top after elements above it being popped off.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Restored = new TEvent();
     }
 
@@ -45,9 +39,20 @@
         /// <summary>
         /// The events to emit for the <see cref="TElement"/> that is added to the same index within the stack.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public List<TElementEvents> ElementEvents { get; set; } = new List<TElementEvents>();
+        [Tooltip("The events to emit for the TElement that is added to the same index within the stack.")]
+        [SerializeField]
+        private List<TElementEvents> _elementEvents = new List<TElementEvents>();
+        public List<TElementEvents> ElementEvents
+        {
+            get
+            {
+                return _elementEvents;
+            }
+            set
+            {
+                _elementEvents = value;
+            }
+        }
 
         /// <summary>
         /// The current index the events to emit is at in relation to the <see cref="TElement"/> stack.

@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -24,21 +22,54 @@
             /// <summary>
             /// The source utilize within the <see cref="Modifier.FollowModifier"/>.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject EventSource { get; set; }
+            [Tooltip("The source utilize within the Modifier.FollowModifier.")]
+            [SerializeField]
+            private GameObject _eventSource;
+            public GameObject EventSource
+            {
+                get
+                {
+                    return _eventSource;
+                }
+                set
+                {
+                    _eventSource = value;
+                }
+            }
             /// <summary>
             /// The target to apply the <see cref="Modifier.FollowModifier"/> on.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject EventTarget { get; set; }
+            [Tooltip("The target to apply the Modifier.FollowModifier on.")]
+            [SerializeField]
+            private GameObject _eventTarget;
+            public GameObject EventTarget
+            {
+                get
+                {
+                    return _eventTarget;
+                }
+                set
+                {
+                    _eventTarget = value;
+                }
+            }
             /// <summary>
             /// The optional offset the target follow against the source.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject EventTargetOffset { get; set; }
+            [Tooltip("The optional offset the target follow against the source.")]
+            [SerializeField]
+            private GameObject _eventTargetOffset;
+            public GameObject EventTargetOffset
+            {
+                get
+                {
+                    return _eventTargetOffset;
+                }
+                set
+                {
+                    _eventTargetOffset = value;
+                }
+            }
 
             /// <summary>
             /// Clears <see cref="EventSource"/>.
@@ -92,25 +123,46 @@
         /// <summary>
         /// A <see cref="GameObject"/> collection of target offsets to offset the <see cref="GameObjectSourceTargetProcessor.Targets"/> against the source whilst following. The <see cref="GameObject"/> for the target offset must be a child of the corresponding target.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList TargetOffsets { get; set; }
+        [Tooltip("A GameObject collection of target offsets to offset the GameObjectSourceTargetProcessor.Targets against the source whilst following. The GameObject for the target offset must be a child of the corresponding target.")]
+        [SerializeField]
+        private GameObjectObservableList _targetOffsets;
+        public GameObjectObservableList TargetOffsets
+        {
+            get
+            {
+                return _targetOffsets;
+            }
+            set
+            {
+                _targetOffsets = value;
+            }
+        }
         /// <summary>
         /// The <see cref="Modifier.FollowModifier"/> to apply.
         /// </summary>
-        [Serialized]
-        [field: Header("Follow Settings"), DocumentedByXml]
-        public FollowModifier FollowModifier { get; set; }
+        [Header("Follow Settings")]
+        [Tooltip("The Modifier.FollowModifier to apply.")]
+        [SerializeField]
+        private FollowModifier _followModifier;
+        public FollowModifier FollowModifier
+        {
+            get
+            {
+                return _followModifier;
+            }
+            set
+            {
+                _followModifier = value;
+            }
+        }
 
         /// <summary>
         /// Emitted before any processing.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Preprocessed = new UnityEvent();
         /// <summary>
         /// Emitted after all processing is complete.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Processed = new UnityEvent();
 
         /// <summary>

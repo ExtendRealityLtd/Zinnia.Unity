@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -13,9 +11,20 @@
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Rigidbody Source { get; set; }
+        [Tooltip("The source to track and estimate velocities for.")]
+        [SerializeField]
+        private Rigidbody _source;
+        public Rigidbody Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
 
         /// <summary>
         /// Clears <see cref="Source"/>.

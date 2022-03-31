@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -57,15 +55,37 @@
         /// <summary>
         /// The mechanism for mapping the <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public CoordinateMapType CoordinateMap { get; set; } = CoordinateMapType.XToXAndYToY;
+        [Tooltip("The mechanism for mapping the Vector2 coordinates to the Vector3 coordinates.")]
+        [SerializeField]
+        private CoordinateMapType _coordinateMap = CoordinateMapType.XToXAndYToY;
+        public CoordinateMapType CoordinateMap
+        {
+            get
+            {
+                return _coordinateMap;
+            }
+            set
+            {
+                _coordinateMap = value;
+            }
+        }
         /// <summary>
         /// The value to set the unused coordinate to during the conversion.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float UnusedCoordinateValue { get; set; }
+        [Tooltip("The value to set the unused coordinate to during the conversion.")]
+        [SerializeField]
+        private float _unusedCoordinateValue;
+        public float UnusedCoordinateValue
+        {
+            get
+            {
+                return _unusedCoordinateValue;
+            }
+            set
+            {
+                _unusedCoordinateValue = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="CoordinateMap"/>.

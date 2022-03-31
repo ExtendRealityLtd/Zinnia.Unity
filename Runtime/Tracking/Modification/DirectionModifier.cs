@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
@@ -37,66 +35,155 @@
         /// <summary>
         /// The target to rotate.
         /// </summary>
-        [Serialized]
-        [field: Header("Reference Settings"), DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Header("Reference Settings")]
+        [Tooltip("The target to rotate.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// The object to look at when affecting rotation.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject LookAt { get; set; }
+        [Tooltip("The object to look at when affecting rotation.")]
+        [SerializeField]
+        private GameObject _lookAt;
+        public GameObject LookAt
+        {
+            get
+            {
+                return _lookAt;
+            }
+            set
+            {
+                _lookAt = value;
+            }
+        }
         /// <summary>
         /// The object to be used as the pivot point for rotation.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Pivot { get; set; }
+        [Tooltip("The object to be used as the pivot point for rotation.")]
+        [SerializeField]
+        private GameObject _pivot;
+        public GameObject Pivot
+        {
+            get
+            {
+                return _pivot;
+            }
+            set
+            {
+                _pivot = value;
+            }
+        }
         /// <summary>
         /// The object providing a rotational offset for the <see cref="Target"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject TargetOffset { get; set; }
+        [Tooltip("The object providing a rotational offset for the Target.")]
+        [SerializeField]
+        private GameObject _targetOffset;
+        public GameObject TargetOffset
+        {
+            get
+            {
+                return _targetOffset;
+            }
+            set
+            {
+                _targetOffset = value;
+            }
+        }
         /// <summary>
         /// The object providing a rotational offset for the <see cref="Pivot"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject PivotOffset { get; set; }
+        [Tooltip("The object providing a rotational offset for the Pivot.")]
+        [SerializeField]
+        private GameObject _pivotOffset;
+        public GameObject PivotOffset
+        {
+            get
+            {
+                return _pivotOffset;
+            }
+            set
+            {
+                _pivotOffset = value;
+            }
+        }
         #endregion
 
         #region Control Settings
         /// <summary>
         /// The target object to use for setting the world up during the rotation process.
         /// </summary>
-        [Serialized]
-        [field: Header("Control Settings"), DocumentedByXml]
-        public RotationTargetType RotationUpTarget { get; set; } = RotationTargetType.UsePivotAsTarget;
+        [Header("Control Settings")]
+        [Tooltip("The target object to use for setting the world up during the rotation process.")]
+        [SerializeField]
+        private RotationTargetType _rotationUpTarget = RotationTargetType.UsePivotAsTarget;
+        public RotationTargetType RotationUpTarget
+        {
+            get
+            {
+                return _rotationUpTarget;
+            }
+            set
+            {
+                _rotationUpTarget = value;
+            }
+        }
         /// <summary>
         /// Whether to snap the <see cref="Target"/> origin to the <see cref="LookAt"/> origin.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool SnapToLookAt { get; set; } = true;
+        [Tooltip("Whether to snap the Target origin to the LookAt origin.")]
+        [SerializeField]
+        private bool _snapToLookAt = true;
+        public bool SnapToLookAt
+        {
+            get
+            {
+                return _snapToLookAt;
+            }
+            set
+            {
+                _snapToLookAt = value;
+            }
+        }
         /// <summary>
         /// The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float ResetOrientationSpeed { get; set; } = 0.1f;
+        [Tooltip("The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.")]
+        [SerializeField]
+        private float _resetOrientationSpeed = 0.1f;
+        public float ResetOrientationSpeed
+        {
+            get
+            {
+                return _resetOrientationSpeed;
+            }
+            set
+            {
+                _resetOrientationSpeed = value;
+            }
+        }
         #endregion
 
         #region Orientation Events
         /// <summary>
         /// Emitted when the orientation is reset.
         /// </summary>
-        [Header("Orientation Events"), DocumentedByXml]
+        [Header("Orientation Events")]
         public UnityEvent OrientationReset = new UnityEvent();
         /// <summary>
         /// Emitted when the orientation reset action is canceled.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent OrientationResetCancelled = new UnityEvent();
         #endregion
 

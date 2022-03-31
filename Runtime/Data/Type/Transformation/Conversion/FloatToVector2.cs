@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -23,15 +21,37 @@
         /// <summary>
         /// A float to use as the current x value of the <see cref="Vector2"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentX { get; set; }
+        [Tooltip("A float to use as the current x value of the Vector2.")]
+        [SerializeField]
+        private float _currentX;
+        public float CurrentX
+        {
+            get
+            {
+                return _currentX;
+            }
+            set
+            {
+                _currentX = value;
+            }
+        }
         /// <summary>
         /// A float to use as the current y value of the <see cref="Vector2"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentY { get; set; }
+        [Tooltip("A float to use as the current y value of the Vector2.")]
+        [SerializeField]
+        private float _currentY;
+        public float CurrentY
+        {
+            get
+            {
+                return _currentY;
+            }
+            set
+            {
+                _currentY = value;
+            }
+        }
 
         /// <summary>
         /// A reusable array of two <see cref="float"/>s.

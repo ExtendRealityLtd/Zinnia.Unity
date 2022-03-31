@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Utility
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -12,7 +11,8 @@
         /// <summary>
         /// The contained object.
         /// </summary>
-        [SerializeField, DocumentedByXml]
+        [Tooltip("The contained object.")]
+        [SerializeField]
         protected Object field;
         /// <summary>
         /// The contained object.

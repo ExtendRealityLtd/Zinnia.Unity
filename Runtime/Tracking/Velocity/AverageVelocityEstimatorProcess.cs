@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Extension;
@@ -16,33 +14,88 @@
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        [Tooltip("The source to track and estimate velocities for.")]
+        [SerializeField]
+        private GameObject _source;
+        public GameObject Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject RelativeTo { get; set; }
+        [Tooltip("An optional object to consider the source relative to when estimating the velocities.")]
+        [SerializeField]
+        private GameObject _relativeTo;
+        public GameObject RelativeTo
+        {
+            get
+            {
+                return _relativeTo;
+            }
+            set
+            {
+                _relativeTo = value;
+            }
+        }
         /// <summary>
         /// Whether samples are currently being collected.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool IsEstimating { get; set; } = true;
+        [Tooltip("Whether samples are currently being collected.")]
+        [SerializeField]
+        private bool _isEstimating = true;
+        public bool IsEstimating
+        {
+            get
+            {
+                return _isEstimating;
+            }
+            set
+            {
+                _isEstimating = value;
+            }
+        }
         /// <summary>
         /// The number of average frames to collect samples for velocity estimation.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public int VelocityAverageFrames { get; set; } = 5;
+        [Tooltip("The number of average frames to collect samples for velocity estimation.")]
+        [SerializeField]
+        private int _velocityAverageFrames = 5;
+        public int VelocityAverageFrames
+        {
+            get
+            {
+                return _velocityAverageFrames;
+            }
+            set
+            {
+                _velocityAverageFrames = value;
+            }
+        }
         /// <summary>
         /// The number of average frames to collect samples for angular velocity estimation.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public int AngularVelocityAverageFrames { get; set; } = 10;
+        [Tooltip("The number of average frames to collect samples for angular velocity estimation.")]
+        [SerializeField]
+        private int _angularVelocityAverageFrames = 10;
+        public int AngularVelocityAverageFrames
+        {
+            get
+            {
+                return _angularVelocityAverageFrames;
+            }
+            set
+            {
+                _angularVelocityAverageFrames = value;
+            }
+        }
 
         /// <summary>
         /// The current count of samples to calculate the velocity from.

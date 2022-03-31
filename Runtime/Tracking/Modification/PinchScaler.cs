@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -15,39 +13,105 @@
         /// <summary>
         /// The target to scale.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Tooltip("The target to scale.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject PrimaryPoint { get; set; }
+        [Tooltip("The point to determine distance from.")]
+        [SerializeField]
+        private GameObject _primaryPoint;
+        public GameObject PrimaryPoint
+        {
+            get
+            {
+                return _primaryPoint;
+            }
+            set
+            {
+                _primaryPoint = value;
+            }
+        }
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject SecondaryPoint { get; set; }
+        [Tooltip("The point to determine distance to.")]
+        [SerializeField]
+        private GameObject _secondaryPoint;
+        public GameObject SecondaryPoint
+        {
+            get
+            {
+                return _secondaryPoint;
+            }
+            set
+            {
+                _secondaryPoint = value;
+            }
+        }
         /// <summary>
         /// A scale factor multiplier.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Multiplier { get; set; } = 1f;
+        [Tooltip("A scale factor multiplier.")]
+        [SerializeField]
+        private float _multiplier = 1f;
+        public float Multiplier
+        {
+            get
+            {
+                return _multiplier;
+            }
+            set
+            {
+                _multiplier = value;
+            }
+        }
         /// <summary>
         /// Determines whether to use local or global scale.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseLocalScale { get; set; } = true;
+        [Tooltip("Determines whether to use local or global scale.")]
+        [SerializeField]
+        private bool _useLocalScale = true;
+        public bool UseLocalScale
+        {
+            get
+            {
+                return _useLocalScale;
+            }
+            set
+            {
+                _useLocalScale = value;
+            }
+        }
         /// <summary>
         /// Determines whether to calculate the multiplier using <see cref="Mathf.Pow(float, float)"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool CalculateByPower { get; set; }
+        [Tooltip("Determines whether to calculate the multiplier using Mathf.Pow(float, float).")]
+        [SerializeField]
+        private bool _calculateByPower;
+        public bool CalculateByPower
+        {
+            get
+            {
+                return _calculateByPower;
+            }
+            set
+            {
+                _calculateByPower = value;
+            }
+        }
 
         /// <summary>
         /// The previous distance between <see cref="PrimaryPoint"/> and <see cref="SecondaryPoint"/>.

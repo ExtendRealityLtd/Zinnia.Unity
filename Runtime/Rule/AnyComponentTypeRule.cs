@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
     using Zinnia.Data.Type;
@@ -15,9 +13,20 @@
         /// <summary>
         /// The component types to look for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public SerializableTypeComponentObservableList ComponentTypes { get; set; }
+        [Tooltip("The component types to look for.")]
+        [SerializeField]
+        private SerializableTypeComponentObservableList _componentTypes;
+        public SerializableTypeComponentObservableList ComponentTypes
+        {
+            get
+            {
+                return _componentTypes;
+            }
+            set
+            {
+                _componentTypes = value;
+            }
+        }
 
         /// <inheritdoc/>
         protected override bool Accepts(GameObject targetGameObject)

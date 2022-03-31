@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Cast
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -26,16 +24,38 @@
             /// <summary>
             /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public RaycastHit? HitData { get; set; }
+            [Tooltip("The result of the most recent cast. null when the cast didn't hit anything.")]
+            [SerializeField]
+            private RaycastHit? _hitData;
+            public RaycastHit? HitData
+            {
+                get
+                {
+                    return _hitData;
+                }
+                set
+                {
+                    _hitData = value;
+                }
+            }
 
             /// <summary>
             /// The validity of the most recent <see cref="HitData"/> based on the <see cref="TargetValidity"/> rule.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsValid { get; set; }
+            [Tooltip("The validity of the most recent HitData based on the TargetValidity rule.")]
+            [SerializeField]
+            private bool _isValid;
+            public bool IsValid
+            {
+                get
+                {
+                    return _isValid;
+                }
+                set
+                {
+                    _isValid = value;
+                }
+            }
 
             /// <summary>
             /// The points along the most recent cast.
@@ -95,27 +115,71 @@
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Origin { get; set; }
+        [Tooltip("The origin point for the cast.")]
+        [SerializeField]
+        private GameObject _origin;
+        public GameObject Origin
+        {
+            get
+            {
+                return _origin;
+            }
+            set
+            {
+                _origin = value;
+            }
+        }
         /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PhysicsCast PhysicsCast { get; set; }
+        [Tooltip("Allows to optionally affect the cast.")]
+        [SerializeField]
+        private PhysicsCast _physicsCast;
+        public PhysicsCast PhysicsCast
+        {
+            get
+            {
+                return _physicsCast;
+            }
+            set
+            {
+                _physicsCast = value;
+            }
+        }
         /// <summary>
         /// Allows to optionally determine targets based on the set rules.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer TargetValidity { get; set; }
+        [Tooltip("Allows to optionally determine targets based on the set rules.")]
+        [SerializeField]
+        private RuleContainer _targetValidity;
+        public RuleContainer TargetValidity
+        {
+            get
+            {
+                return _targetValidity;
+            }
+            set
+            {
+                _targetValidity = value;
+            }
+        }
         /// <summary>
         /// Allows to optionally determine specific target point based on the set rules.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer TargetPointValidity { get; set; }
+        [Tooltip("Allows to optionally determine specific target point based on the set rules.")]
+        [SerializeField]
+        private RuleContainer _targetPointValidity;
+        public RuleContainer TargetPointValidity
+        {
+            get
+            {
+                return _targetPointValidity;
+            }
+            set
+            {
+                _targetPointValidity = value;
+            }
+        }
 
         /// <summary>
         /// An override for the destination location point in world space.
@@ -125,7 +189,6 @@
         /// <summary>
         /// Emitted whenever the cast result changes.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent ResultsChanged = new UnityEvent();
 
         /// <summary>

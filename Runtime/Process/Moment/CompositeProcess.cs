@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Process.Moment
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Process.Moment.Collection;
 
@@ -13,9 +11,20 @@
         /// <summary>
         /// A collection of <see cref="MomentProcess"/> to process.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public MomentProcessObservableList Processes { get; set; }
+        [Tooltip("A collection of MomentProcess to process.")]
+        [SerializeField]
+        private MomentProcessObservableList _processes;
+        public MomentProcessObservableList Processes
+        {
+            get
+            {
+                return _processes;
+            }
+            set
+            {
+                _processes = value;
+            }
+        }
 
         /// <summary>
         /// Iterates through <see cref="Processes"/> and calls <see cref="MomentProcess.Process"/> on each one.

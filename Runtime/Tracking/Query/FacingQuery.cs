@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Query
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
@@ -18,31 +16,62 @@
         /// <summary>
         /// The object used as the origin to check if it is facing towards <see cref="Target"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        [Tooltip("The object used as the origin to check if it is facing towards Target.")]
+        [SerializeField]
+        private GameObject _source;
+        public GameObject Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
         /// <summary>
         /// The object that will be checked to see if <see cref="Source"/> is facing it.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Tooltip("The object that will be checked to see if Source is facing it.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// A sphere radius that defines the volume in which <see cref="Target"/> can still be considered seen by the <see cref="Source"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float TargetRadius { get; set; } = 0.1f;
+        [Tooltip("A sphere radius that defines the volume in which Target can still be considered seen by the Source.")]
+        [SerializeField]
+        private float _targetRadius = 0.1f;
+        public float TargetRadius
+        {
+            get
+            {
+                return _targetRadius;
+            }
+            set
+            {
+                _targetRadius = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when <see cref="Source"/> is facing <see cref="Target"/>.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent TargetFaced = new UnityEvent();
         /// <summary>
         /// Emitted when <see cref="Source"/> no longer faces <see cref="Target"/>.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent TargetNotFaced = new UnityEvent();
 
         /// <summary>

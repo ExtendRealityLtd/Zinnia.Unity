@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Haptics
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using UnityEngine;
 
@@ -14,21 +12,54 @@
         /// <summary>
         /// The process to utilize.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public HapticProcess HapticProcess { get; set; }
+        [Tooltip("The process to utilize.")]
+        [SerializeField]
+        private HapticProcess _hapticProcess;
+        public HapticProcess HapticProcess
+        {
+            get
+            {
+                return _hapticProcess;
+            }
+            set
+            {
+                _hapticProcess = value;
+            }
+        }
         /// <summary>
         /// The amount of time to keep repeating the process for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Duration { get; set; } = 1f;
+        [Tooltip("The amount of time to keep repeating the process for.")]
+        [SerializeField]
+        private float _duration = 1f;
+        public float Duration
+        {
+            get
+            {
+                return _duration;
+            }
+            set
+            {
+                _duration = value;
+            }
+        }
         /// <summary>
         /// The amount of time to pause after each process iteration.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Interval { get; set; } = 0.1f;
+        [Tooltip("The amount of time to pause after each process iteration.")]
+        [SerializeField]
+        private float _interval = 0.1f;
+        public float Interval
+        {
+            get
+            {
+                return _interval;
+            }
+            set
+            {
+                _interval = value;
+            }
+        }
 
         /// <summary>
         /// A reference to the started routine.

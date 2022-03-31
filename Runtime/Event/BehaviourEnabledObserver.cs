@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Event
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
@@ -16,27 +14,59 @@
         /// <summary>
         /// The time between each <see cref="Behaviour.enabled"/> check.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CheckDelay { get; set; } = 0.000011f;
+        [Tooltip("The time between each Behaviour.enabled check.")]
+        [SerializeField]
+        private float _checkDelay = 0.000011f;
+        public float CheckDelay
+        {
+            get
+            {
+                return _checkDelay;
+            }
+            set
+            {
+                _checkDelay = value;
+            }
+        }
         /// <summary>
         /// The maximum amount of time to perform the <see cref="Behaviour.enabled"/> check before ending.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float MaximumRunTime { get; set; } = float.PositiveInfinity;
+        [Tooltip("The maximum amount of time to perform the Behaviour.enabled check before ending.")]
+        [SerializeField]
+        private float _maximumRunTime = float.PositiveInfinity;
+        public float MaximumRunTime
+        {
+            get
+            {
+                return _maximumRunTime;
+            }
+            set
+            {
+                _maximumRunTime = value;
+            }
+        }
 
         /// <summary>
         /// The <see cref="Behaviour"/>s to observe.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public BehaviourObservableList Behaviours { get; set; }
+        [Tooltip("The Behaviours to observe.")]
+        [SerializeField]
+        private BehaviourObservableList _behaviours;
+        public BehaviourObservableList Behaviours
+        {
+            get
+            {
+                return _behaviours;
+            }
+            set
+            {
+                _behaviours = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when all <see cref="Behaviours"/> are <see cref="Behaviour.isActiveAndEnabled"/>.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent ActiveAndEnabled = new UnityEvent();
 
         /// <summary>

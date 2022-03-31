@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -21,19 +19,28 @@
         /// <summary>
         /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or to just search for the containing <see cref="Transform"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool IsParentCollisionNotifier { get; set; }
+        [Tooltip("Determines whether the collision point parent is the GameObject that contains a CollisionNotifier or to just search for the containing Transform.")]
+        [SerializeField]
+        private bool _isParentCollisionNotifier;
+        public bool IsParentCollisionNotifier
+        {
+            get
+            {
+                return _isParentCollisionNotifier;
+            }
+            set
+            {
+                _isParentCollisionNotifier = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the collision point container is created.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent PointSet = new UnityEvent();
         /// <summary>
         /// Emitted when the collision point container is destroyed.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent PointUnset = new UnityEvent();
 
         /// <summary>

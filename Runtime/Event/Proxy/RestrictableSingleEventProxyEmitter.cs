@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
     using Zinnia.Rule;
@@ -16,9 +15,20 @@
         /// <summary>
         /// Determines whether the received payload is valid to be re-emitted.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer ReceiveValidity { get; set; }
+        [Tooltip("Determines whether the received payload is valid to be re-emitted.")]
+        [SerializeField]
+        private RuleContainer _receiveValidity;
+        public RuleContainer ReceiveValidity
+        {
+            get
+            {
+                return _receiveValidity;
+            }
+            set
+            {
+                _receiveValidity = value;
+            }
+        }
 
         /// <summary>
         /// Gets the target for the validity check.

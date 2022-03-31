@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Event.Proxy
 {
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine.Events;
     using Zinnia.Extension;
 
@@ -12,7 +11,6 @@
         /// <summary>
         /// Is emitted when Receive is called.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Emitted = new UnityEvent();
 
         /// <summary>

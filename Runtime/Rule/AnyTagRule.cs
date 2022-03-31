@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
 
@@ -13,9 +11,20 @@
         /// <summary>
         /// The tags to check against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public StringObservableList Tags { get; set; }
+        [Tooltip("The tags to check against.")]
+        [SerializeField]
+        private StringObservableList _tags;
+        public StringObservableList Tags
+        {
+            get
+            {
+                return _tags;
+            }
+            set
+            {
+                _tags = value;
+            }
+        }
 
         /// <inheritdoc />
         protected override bool Accepts(GameObject targetGameObject)

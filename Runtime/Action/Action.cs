@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Action
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -25,7 +23,6 @@
         /// <summary>
         /// Emitted when <see cref="IsActivated"/> changes.
         /// </summary>
-        [DocumentedByXml]
         public BooleanUnityEvent ActivationStateChanged = new BooleanUnityEvent();
 
         /// <summary>
@@ -95,47 +92,76 @@
         /// <summary>
         /// The initial value upon creation of the component.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, Restricted(RestrictedAttribute.Restrictions.ReadOnlyAtRunTime)]
-        public TValue InitialValue { get; protected set; }
+        [Tooltip("The initial value upon creation of the component.")]
+        [SerializeField]
+        private TValue _initialValue;
+        public TValue InitialValue
+        {
+            get
+            {
+                return _initialValue;
+            }
+            set
+            {
+                _initialValue = value;
+            }
+        }
         /// <summary>
         /// The value that is considered the inactive value.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public TValue DefaultValue { get; set; }
+        [Tooltip("The value that is considered the inactive value.")]
+        [SerializeField]
+        private TValue _defaultValue;
+        public TValue DefaultValue
+        {
+            get
+            {
+                return _defaultValue;
+            }
+            set
+            {
+                _defaultValue = value;
+            }
+        }
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
         protected List<TSelf> Sources { get; set; } = new List<TSelf>();
 
         /// <summary>
         /// Emitted when the action becomes active.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Activated = new TEvent();
         /// <summary>
         /// Emitted when the <see cref="Value"/> of the action changes.
         /// </summary>
-        [DocumentedByXml]
         public TEvent ValueChanged = new TEvent();
         /// <summary>
         /// Emitted when the <see cref="Value"/> of the action remains unchanged.
         /// </summary>
-        [DocumentedByXml]
         public TEvent ValueUnchanged = new TEvent();
         /// <summary>
         /// Emitted when the action becomes deactivated.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Deactivated = new TEvent();
 
         /// <summary>
         /// The value of the action.
         /// </summary>
-        public TValue Value { get; protected set; }
+        [Tooltip("Actions to subscribe to when this action is Behaviour.enabled. Allows chaining the source actions to this action.")]
+        [SerializeField]
+        private TValue _value;
+        public TValue Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+            }
+        }
         /// <summary>
         /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>

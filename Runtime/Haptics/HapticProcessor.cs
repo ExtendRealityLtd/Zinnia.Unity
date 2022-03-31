@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Haptics.Collection;
 
     /// <summary>
@@ -12,15 +11,37 @@
         /// <summary>
         /// The <see cref="HapticProcess"/> collection to attempt to process.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public HapticProcessObservableList HapticProcesses { get; set; }
+        [Tooltip("The HapticProcess collection to attempt to process.")]
+        [SerializeField]
+        private HapticProcessObservableList _hapticProcesses;
+        public HapticProcessObservableList HapticProcesses
+        {
+            get
+            {
+                return _hapticProcesses;
+            }
+            set
+            {
+                _hapticProcesses = value;
+            }
+        }
         /// <summary>
         /// Whether to cease the processing of the collection after the first valid <see cref="HapticProcess"/> is processed.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool CeaseAfterFirstSourceProcessed { get; set; } = true;
+        [Tooltip("Whether to cease the processing of the collection after the first valid HapticProcess is processed.")]
+        [SerializeField]
+        private bool _ceaseAfterFirstSourceProcessed = true;
+        public bool CeaseAfterFirstSourceProcessed
+        {
+            get
+            {
+                return _ceaseAfterFirstSourceProcessed;
+            }
+            set
+            {
+                _ceaseAfterFirstSourceProcessed = value;
+            }
+        }
 
         /// <summary>
         /// The current active <see cref="HapticProcess"/> being utilized.

@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -32,9 +30,20 @@
         /// <summary>
         /// Determines whether to search for the <see cref="TResultElement"/> component on the ancestors and or descendants of the <see cref="Source"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, UnityFlags]
-        public SearchCriteria SearchAlsoOn { get; set; } = (SearchCriteria)(-1);
+        [Tooltip("Determines whether to search for the TResultElement component on the ancestors and or descendants of the Source.")]
+        [SerializeField]
+        private SearchCriteria _searchAlsoOn = (SearchCriteria)(-1);
+        public SearchCriteria SearchAlsoOn
+        {
+            get
+            {
+                return _searchAlsoOn;
+            }
+            set
+            {
+                _searchAlsoOn = value;
+            }
+        }
 
         /// <summary>
         /// Attempts to set the <see cref="Source"/> via a <see cref="GameObject"/>.

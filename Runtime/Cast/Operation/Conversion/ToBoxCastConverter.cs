@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Cast.Operation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
 
@@ -13,27 +11,71 @@
         /// <summary>
         /// The half extends for the <see cref="Physics.BoxCast"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 HalfExtentsOverride { get; set; }
+        [Tooltip("The half extends for the Physics.BoxCast.")]
+        [SerializeField]
+        private Vector3 _halfExtentsOverride;
+        public Vector3 HalfExtentsOverride
+        {
+            get
+            {
+                return _halfExtentsOverride;
+            }
+            set
+            {
+                _halfExtentsOverride = value;
+            }
+        }
         /// <summary>
         /// Whether to use the <see cref="HalfExtentsOverride"/> value if the source caster already supports a half extends. If the source caster does not support a half extends then the <see cref="HalfExtentsOverride"/> will always be used.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseHalfExtentsOverride { get; set; } = true;
+        [Tooltip("Whether to use the HalfExtentsOverride value if the source caster already supports a half extends. If the source caster does not support a half extends then the HalfExtentsOverride will always be used.")]
+        [SerializeField]
+        private bool _useHalfExtentsOverride = true;
+        public bool UseHalfExtentsOverride
+        {
+            get
+            {
+                return _useHalfExtentsOverride;
+            }
+            set
+            {
+                _useHalfExtentsOverride = value;
+            }
+        }
         /// <summary>
         /// The orientation for the <see cref="Physics.BoxCast"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 OrientationOverride { get; set; }
+        [Tooltip("The orientation for the Physics.BoxCast.")]
+        [SerializeField]
+        private Vector3 _orientationOverride;
+        public Vector3 OrientationOverride
+        {
+            get
+            {
+                return _orientationOverride;
+            }
+            set
+            {
+                _orientationOverride = value;
+            }
+        }
         /// <summary>
         /// Whether to use the <see cref="OrientationOverride"/> value if the source caster already supports a half extends. If the source caster does not support a half extends then the <see cref="OrientationOverride"/> will always be used.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseOrientationOverride { get; set; } = true;
+        [Tooltip("Whether to use the OrientationOverride value if the source caster already supports a half extends. If the source caster does not support a half extends then the OrientationOverride will always be used.")]
+        [SerializeField]
+        private bool _useOrientationOverride = true;
+        public bool UseOrientationOverride
+        {
+            get
+            {
+                return _useOrientationOverride;
+            }
+            set
+            {
+                _useOrientationOverride = value;
+            }
+        }
 
         /// <inheritdoc />
         public override bool ConvertFromBoxCast(PhysicsCast customCast, out RaycastHit hitData, Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance)

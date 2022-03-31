@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Operation.Extraction
 {
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -26,12 +25,10 @@
         /// <summary>
         /// Emitted when the <see cref="Vector3"/> is extracted.
         /// </summary>
-        [DocumentedByXml]
         public Vector3UnityEvent DifferenceExtracted = new Vector3UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="Vector3"/> is extracted.
         /// </summary>
-        [DocumentedByXml]
         public FloatUnityEvent DistanceExtracted = new FloatUnityEvent();
 
         /// <summary>

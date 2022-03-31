@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using Malimbe.XmlDocumentationAttribute;
     using System;
+    using UnityEngine;
     using UnityObject = UnityEngine.Object;
 
     /// <summary>
@@ -14,17 +14,17 @@
         /// <summary>
         /// The <see cref="UnityObject"/> to reference.
         /// </summary>
-        [field: DocumentedByXml]
+        [Tooltip("The UnityObject  to reference.")]
         public UnityObject linkedObject;
         /// <summary>
         /// The text to use for describing the linked reference.
         /// </summary>
-        [field: DocumentedByXml]
+        [Tooltip("The text to use for describing the linked reference.")]
         public string linkText;
         /// <summary>
         /// Whether the reference should be active.
         /// </summary>
-        [field: DocumentedByXml]
+        [Tooltip("Whether the reference should be active.")]
         public bool isActive;
     }
 }

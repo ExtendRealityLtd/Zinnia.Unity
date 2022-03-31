@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Action
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Action.Collection;
@@ -23,41 +21,107 @@
             /// <summary>
             /// Determines if the source can be used.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool Enabled { get; set; }
+            [Tooltip("Determines if the source can be used.")]
+            [SerializeField]
+            private bool _enabled;
+            public bool Enabled
+            {
+                get
+                {
+                    return _enabled;
+                }
+                set
+                {
+                    _enabled = value;
+                }
+            }
             /// <summary>
             /// The main container of the action.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject Container { get; set; }
+            [Tooltip("The main container of the action.")]
+            [SerializeField]
+            private GameObject _container;
+            public GameObject Container
+            {
+                get
+                {
+                    return _container;
+                }
+                set
+                {
+                    _container = value;
+                }
+            }
             /// <summary>
             /// The action to subscribe to.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Action Action { get; set; }
+            [Tooltip("The action to subscribe to.")]
+            [SerializeField]
+            private Action _action;
+            public Action Action
+            {
+                get
+                {
+                    return _action;
+                }
+                set
+                {
+                    _action = value;
+                }
+            }
         }
 
         /// <summary>
         /// The action that will have the sources populated by the given <see cref="Sources"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Action Target { get; set; }
+        [Tooltip("The action that will have the sources populated by the given Sources.")]
+        [SerializeField]
+        private Action _target;
+        public Action Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// A list of <see cref="ActionSource"/>s to populate the target sources list with.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public ActionRegistrarSourceObservableList Sources { get; set; }
+        [Tooltip("A list of ActionSources to populate the target sources list with.")]
+        [SerializeField]
+        private ActionRegistrarSourceObservableList _sources;
+        public ActionRegistrarSourceObservableList Sources
+        {
+            get
+            {
+                return _sources;
+            }
+            set
+            {
+                _sources = value;
+            }
+        }
         /// <summary>
         /// A list of <see cref="GameObject"/>s that are the limits of <see cref="Sources"/> by matching against <see cref="ActionSource.Container"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList SourceLimits { get; set; }
+        [Tooltip("A list of GameObjects that are the limits of Sources by matching against ActionSource.Container.")]
+        [SerializeField]
+        private GameObjectObservableList _sourceLimits;
+        public GameObjectObservableList SourceLimits
+        {
+            get
+            {
+                return _sourceLimits;
+            }
+            set
+            {
+                _sourceLimits = value;
+            }
+        }
 
         protected virtual void OnEnable()
         {

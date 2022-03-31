@@ -1,8 +1,7 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
+    using UnityEngine;
     using UnityEngine.XR;
     using Zinnia.Extension;
     using Zinnia.Tracking.CameraRig;
@@ -34,16 +33,38 @@
         /// <summary>
         /// A source collection to get the first active current dominant controller from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public List<DominantControllerObserver> Sources { get; set; } = new List<DominantControllerObserver>();
+        [Tooltip("A source collection to get the first active current dominant controller from.")]
+        [SerializeField]
+        private List<DominantControllerObserver> _sources = new List<DominantControllerObserver>();
+        public List<DominantControllerObserver> Sources
+        {
+            get
+            {
+                return _sources;
+            }
+            set
+            {
+                _sources = value;
+            }
+        }
 
         /// <summary>
         /// The controller to check to see if the source matches.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Controller ToMatch { get; set; }
+        [Tooltip("The controller to check to see if the source matches.")]
+        [SerializeField]
+        private Controller _toMatch;
+        public Controller ToMatch
+        {
+            get
+            {
+                return _toMatch;
+            }
+            set
+            {
+                _toMatch = value;
+            }
+        }
 
         /// <inheritdoc />
         public override bool Accepts(object _)

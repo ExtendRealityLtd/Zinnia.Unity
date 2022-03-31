@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Tracking.Follow;
@@ -15,12 +13,11 @@
         /// <summary>
         /// Emitted before the property is modified.
         /// </summary>
-        [Header("Modifier Events"), DocumentedByXml]
+        [Header("Modifier Events")]
         public ObjectFollower.FollowEvent Premodified = new ObjectFollower.FollowEvent();
         /// <summary>
         /// Emitted after the property is modified.
         /// </summary>
-        [DocumentedByXml]
         public ObjectFollower.FollowEvent Modified = new ObjectFollower.FollowEvent();
         #endregion
 
@@ -28,9 +25,21 @@
         /// <summary>
         /// Determines whether the offset will be applied on the modification.
         /// </summary>
-        [Serialized]
-        [field: Header("Modifier Settings"), DocumentedByXml]
-        public bool ApplyOffset { get; set; } = true;
+        [Header("Modifier Settings")]
+        [Tooltip("Determines whether the offset will be applied on the modification.")]
+        [SerializeField]
+        private bool _applyOffset = true;
+        public bool ApplyOffset
+        {
+            get
+            {
+                return _applyOffset;
+            }
+            set
+            {
+                _applyOffset = value;
+            }
+        }
         #endregion
 
         /// <summary>

@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -53,16 +51,38 @@
         /// <summary>
         /// The unit to return the converted angle in.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public AngleUnit Unit { get; set; } = AngleUnit.Degrees;
+        [Tooltip("The unit to return the converted angle in.")]
+        [SerializeField]
+        private AngleUnit _unit = AngleUnit.Degrees;
+        public AngleUnit Unit
+        {
+            get
+            {
+                return _unit;
+            }
+            set
+            {
+                _unit = value;
+            }
+        }
 
         /// <summary>
         /// The direction that defines the origin (i.e. zero) angle.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector2 Origin { get; set; } = new Vector2(0f, 1f);
+        [Tooltip("The direction that defines the origin (i.e. zero) angle.")]
+        [SerializeField]
+        private Vector2 _origin = new Vector2(0f, 1f);
+        public Vector2 Origin
+        {
+            get
+            {
+                return _origin;
+            }
+            set
+            {
+                _origin = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="Unit"/>.

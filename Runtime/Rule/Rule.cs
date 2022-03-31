@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Data.Attribute;
@@ -30,9 +28,20 @@
         /// <summary>
         /// The states on whether to automatically reject a <see cref="Rule"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, UnityFlags]
-        public RejectRuleStates AutoRejectStates { get; set; } = (RejectRuleStates)(-1);
+        [Tooltip("The states on whether to automatically reject a Rule.")]
+        [SerializeField]
+        private RejectRuleStates _autoRejectStates = (RejectRuleStates)(-1);
+        public RejectRuleStates AutoRejectStates
+        {
+            get
+            {
+                return _autoRejectStates;
+            }
+            set
+            {
+                _autoRejectStates = value;
+            }
+        }
 
         /// <inheritdoc/>
         public abstract bool Accepts(object target);

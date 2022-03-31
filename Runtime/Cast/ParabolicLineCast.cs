@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using Zinnia.Utility;
@@ -14,35 +12,90 @@
         /// <summary>
         /// The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector2 MaximumLength { get; set; } = new Vector2(10f, float.PositiveInfinity);
+        [Tooltip("The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.")]
+        [SerializeField]
+        private Vector2 _maximumLength = new Vector2(10f, float.PositiveInfinity);
+        public Vector2 MaximumLength
+        {
+            get
+            {
+                return _maximumLength;
+            }
+            set
+            {
+                _maximumLength = value;
+            }
+        }
         /// <summary>
         /// The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, Range(1f, 100f)]
-        public float HeightLimitAngle { get; set; } = 100f;
+        [Tooltip("The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.")]
+        [SerializeField]
+        private float _heightLimitAngle = 100f;
+        public float HeightLimitAngle
+        {
+            get
+            {
+                return _heightLimitAngle;
+            }
+            set
+            {
+                _heightLimitAngle = value;
+            }
+        }
         /// <summary>
         /// The number of points to generate on the parabolic line.
         /// </summary>
         /// <remarks>The higher the number, the more CPU intensive the point generation becomes.</remarks>
-        [Serialized]
-        [field: DocumentedByXml]
-        public int SegmentCount { get; set; } = 10;
+        [Tooltip("The number of points to generate on the parabolic line.")]
+        [SerializeField]
+        private int _segmentCount = 10;
+        public int SegmentCount
+        {
+            get
+            {
+                return _segmentCount;
+            }
+            set
+            {
+                _segmentCount = value;
+            }
+        }
         /// <summary>
         /// The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at <see cref="SegmentCount" />.
         /// </summary>
         /// <remarks>The higher the number, the more CPU intensive the checks become.</remarks>
-        [Serialized]
-        [field: DocumentedByXml]
-        public int CollisionCheckFrequency { get; set; }
+        [Tooltip("The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at SegmentCount.")]
+        [SerializeField]
+        private int _collisionCheckFrequency;
+        public int CollisionCheckFrequency
+        {
+            get
+            {
+                return _collisionCheckFrequency;
+            }
+            set
+            {
+                _collisionCheckFrequency = value;
+            }
+        }
         /// <summary>
         /// The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurveOffset { get; set; } = 1f;
+        [Tooltip("The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.")]
+        [SerializeField]
+        private float _curveOffset = 1f;
+        public float CurveOffset
+        {
+            get
+            {
+                return _curveOffset;
+            }
+            set
+            {
+                _curveOffset = value;
+            }
+        }
 
         /// <summary>
         /// Used to move the points back and up a bit to prevent the cast clipping at the collision points.

@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Collection.List
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -21,15 +19,37 @@
             /// <summary>
             /// The <see cref="GameObject"/> acting as the key.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject Key { get; set; }
+            [Tooltip("The GameObject acting as the key.")]
+            [SerializeField]
+            private GameObject _key;
+            public GameObject Key
+            {
+                get
+                {
+                    return _key;
+                }
+                set
+                {
+                    _key = value;
+                }
+            }
             /// <summary>
             /// The <see cref="GameObject"/> acting as the value.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject Value { get; set; }
+            [Tooltip("The GameObject acting as the value.")]
+            [SerializeField]
+            private GameObject _value;
+            public GameObject Value
+            {
+                get
+                {
+                    return _value;
+                }
+                set
+                {
+                    _value = value;
+                }
+            }
 
             /// <summary>
             /// Clears <see cref="Key"/>.

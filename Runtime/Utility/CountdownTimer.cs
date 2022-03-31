@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Utility
 {
     using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -22,44 +20,48 @@
         /// <summary>
         /// The time to start the countdown at.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float StartTime { get; set; } = 1f;
+        [Tooltip("The time to start the countdown at.")]
+        [SerializeField]
+        private float _startTime = 1f;
+        public float StartTime
+        {
+            get
+            {
+                return _startTime;
+            }
+            set
+            {
+                _startTime = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the countdown starts.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Started = new UnityEvent();
         /// <summary>
         /// Emitted when the countdown is canceled.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Cancelled = new UnityEvent();
         /// <summary>
         /// Emitted when the countdown completes.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Completed = new UnityEvent();
         /// <summary>
         /// Emitted when the status of the countdown is checked and is still running.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent StillRunning = new UnityEvent();
         /// <summary>
         /// Emitted when the status of the countdown is checked and is not running.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent NotRunning = new UnityEvent();
         /// <summary>
         /// Emitted when the elapsed time is checked.
         /// </summary>
-        [DocumentedByXml]
         public FloatUnityEvent ElapsedTimeEmitted = new FloatUnityEvent();
         /// <summary>
         /// Emitted when the remaining time is checked.
         /// </summary>
-        [DocumentedByXml]
         public FloatUnityEvent RemainingTimeEmitted = new FloatUnityEvent();
 
         /// <summary>

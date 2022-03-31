@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -40,79 +38,202 @@
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
-        [Serialized]
-        [field: Header("Search Settings"), DocumentedByXml]
-        public GameObject SearchOrigin { get; set; }
+        [Header("Search Settings")]
+        [Tooltip("The origin of where to begin the cast to locate the nearest surface.")]
+        [SerializeField]
+        private GameObject _searchOrigin;
+        public GameObject SearchOrigin
+        {
+            get
+            {
+                return _searchOrigin;
+            }
+            set
+            {
+                _searchOrigin = value;
+            }
+        }
         /// <summary>
         /// The direction in which to cast to locate the nearest surface.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 SearchDirection { get; set; }
+        [Tooltip("The direction in which to cast to locate the nearest surface.")]
+        [SerializeField]
+        private Vector3 _searchDirection;
+        public Vector3 SearchDirection
+        {
+            get
+            {
+                return _searchDirection;
+            }
+            set
+            {
+                _searchDirection = value;
+            }
+        }
         /// <summary>
         /// The distance to move the origin backwards through the <see cref="SearchDirection"/> to ensure the origin isn't clipping a surface.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float OriginOffset { get; set; } = -0.01f;
+        [Tooltip("The distance to move the origin backwards through the SearchDirection to ensure the origin isn't clipping a surface.")]
+        [SerializeField]
+        private float _originOffset = -0.01f;
+        public float OriginOffset
+        {
+            get
+            {
+                return _originOffset;
+            }
+            set
+            {
+                _originOffset = value;
+            }
+        }
         /// <summary>
         /// The maximum distance to cast the <see cref="Ray"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float MaximumDistance { get; set; } = 50f;
+        [Tooltip("The maximum distance to cast the Ray.")]
+        [SerializeField]
+        private float _maximumDistance = 50f;
+        public float MaximumDistance
+        {
+            get
+            {
+                return _maximumDistance;
+            }
+            set
+            {
+                _maximumDistance = value;
+            }
+        }
         /// <summary>
         /// The surface will only be located if the previous position has changed from the current position.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool MustChangePosition { get; set; } = true;
+        [Tooltip("The surface will only be located if the previous position has changed from the current position.")]
+        [SerializeField]
+        private bool _mustChangePosition = true;
+        public bool MustChangePosition
+        {
+            get
+            {
+                return _mustChangePosition;
+            }
+            set
+            {
+                _mustChangePosition = value;
+            }
+        }
         /// <summary>
         /// The threshold difference between the previous point value and the current point value to be considered equal.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float PositionChangedEqualityThreshold { get; set; } = 0.0001f;
+        [Tooltip("The threshold difference between the previous point value and the current point value to be considered equal.")]
+        [SerializeField]
+        private float _positionChangedEqualityThreshold = 0.0001f;
+        public float PositionChangedEqualityThreshold
+        {
+            get
+            {
+                return _positionChangedEqualityThreshold;
+            }
+            set
+            {
+                _positionChangedEqualityThreshold = value;
+            }
+        }
         /// <summary>
         /// The amount to offset the position of the destination point found on the located surface.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 DestinationOffset { get; set; } = Vector3.zero;
+        [Tooltip("The amount to offset the position of the destination point found on the located surface.")]
+        [SerializeField]
+        private Vector3 _destinationOffset = Vector3.zero;
+        public Vector3 DestinationOffset
+        {
+            get
+            {
+                return _destinationOffset;
+            }
+            set
+            {
+                _destinationOffset = value;
+            }
+        }
         #endregion
 
         #region Restriction Settings
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
         /// </summary>
-        [Serialized]
-        [field: Header("Restriction Settings"), DocumentedByXml]
-        public RuleContainer TargetValidity { get; set; }
+        [Header("Restriction Settings")]
+        [Tooltip("An optional RuleContainer to determine valid and invalid targets based on the set rules.")]
+        [SerializeField]
+        private RuleContainer _targetValidity;
+        public RuleContainer TargetValidity
+        {
+            get
+            {
+                return _targetValidity;
+            }
+            set
+            {
+                _targetValidity = value;
+            }
+        }
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine specific target point based on the set rules.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer TargetPointValidity { get; set; }
+        [Tooltip("An optional RuleContainer to determine specific target point based on the set rules.")]
+        [SerializeField]
+        private RuleContainer _targetPointValidity;
+        public RuleContainer TargetPointValidity
+        {
+            get
+            {
+                return _targetPointValidity;
+            }
+            set
+            {
+                _targetPointValidity = value;
+            }
+        }
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine if the search for a valid surface should be terminated if the current found target matches the rule.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer LocatorTermination { get; set; }
+        [Tooltip("An optional RuleContainer to determine if the search for a valid surface should be terminated if the current found target matches the rule.")]
+        [SerializeField]
+        private RuleContainer _locatorTermination;
+        public RuleContainer LocatorTermination
+        {
+            get
+            {
+                return _locatorTermination;
+            }
+            set
+            {
+                _locatorTermination = value;
+            }
+        }
         /// <summary>
         /// An optional custom <see cref="Cast.PhysicsCast"/> object to affect the <see cref="Ray"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public PhysicsCast PhysicsCast { get; set; }
+        [Tooltip("An optional custom Cast.PhysicsCast object to affect the Ray.")]
+        [SerializeField]
+        private PhysicsCast _physicsCast;
+        public PhysicsCast PhysicsCast
+        {
+            get
+            {
+                return _physicsCast;
+            }
+            set
+            {
+                _physicsCast = value;
+            }
+        }
         #endregion
 
         #region Location Events
         /// <summary>
         /// Emitted when a new surface is located.
         /// </summary>
-        [Header("Location Events"), DocumentedByXml]
+        [Header("Location Events")]
         public UnityEvent SurfaceLocated = new UnityEvent();
         #endregion
 

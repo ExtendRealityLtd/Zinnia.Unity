@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -23,9 +21,20 @@
             /// <summary>
             /// The current active collisions.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public List<CollisionNotifier.EventData> ActiveCollisions { get; set; } = new List<CollisionNotifier.EventData>();
+            [Tooltip("The current active collisions.")]
+            [SerializeField]
+            private List<CollisionNotifier.EventData> _activeCollisions = new List<CollisionNotifier.EventData>();
+            public List<CollisionNotifier.EventData> ActiveCollisions
+            {
+                get
+                {
+                    return _activeCollisions;
+                }
+                set
+                {
+                    _activeCollisions = value;
+                }
+            }
 
             public EventData Set(EventData source)
             {
@@ -55,21 +64,32 @@
         /// <summary>
         /// Determines whether the collision is valid and to add it to the active collision collection.
         /// </summary>
-        [Serialized]
-        [field: Header("Validity Settings"), DocumentedByXml]
-        public RuleContainer CollisionValidity { get; set; }
+        [Header("Validity Settings")]
+        [Tooltip("Determines whether the collision is valid and to add it to the active collision collection.")]
+        [SerializeField]
+        private RuleContainer _collisionValidity;
+        public RuleContainer CollisionValidity
+        {
+            get
+            {
+                return _collisionValidity;
+            }
+            set
+            {
+                _collisionValidity = value;
+            }
+        }
         #endregion
 
         #region Collection Events
         /// <summary>
         /// Emitted when the collision count has changed.
         /// </summary>
-        [Header("Collection Events"), DocumentedByXml]
+        [Header("Collection Events")]
         public ActiveCollisionUnityEvent CountChanged = new ActiveCollisionUnityEvent();
         /// <summary>
         /// Emitted when the collision contents have changed.
         /// </summary>
-        [DocumentedByXml]
         public ActiveCollisionUnityEvent ContentsChanged = new ActiveCollisionUnityEvent();
         #endregion
 
@@ -77,22 +97,19 @@
         /// <summary>
         /// Emitted when the first collision occurs.
         /// </summary>
-        [Header("Collision Events"), DocumentedByXml]
+        [Header("Collision Events")]
         public CollisionNotifier.UnityEvent FirstStarted = new CollisionNotifier.UnityEvent();
         /// <summary>
         /// Emitted when a collision is added.
         /// </summary>
-        [DocumentedByXml]
         public CollisionNotifier.UnityEvent Added = new CollisionNotifier.UnityEvent();
         /// <summary>
         /// Emitted when a collision is removed.
         /// </summary>
-        [DocumentedByXml]
         public CollisionNotifier.UnityEvent Removed = new CollisionNotifier.UnityEvent();
         /// <summary>
         /// Emitted when there are no more collisions occuring.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent AllStopped = new UnityEvent();
         #endregion
 

@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
     using Zinnia.Data.Type;
@@ -15,16 +13,38 @@
         /// <summary>
         /// The <see cref="Object"/> types to manage the enabled state on.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public SerializableTypeComponentObservableList Types { get; set; }
+        [Tooltip("The Object types to manage the enabled state on.")]
+        [SerializeField]
+        private SerializableTypeComponentObservableList _types;
+        public SerializableTypeComponentObservableList Types
+        {
+            get
+            {
+                return _types;
+            }
+            set
+            {
+                _types = value;
+            }
+        }
 
         /// <summary>
         /// The target to modify the enabled states for the provided <see cref="Types"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Tooltip("The target to modify the enabled states for the provided Types.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
 
         /// <summary>
         /// Clears <see cref="Target"/>.

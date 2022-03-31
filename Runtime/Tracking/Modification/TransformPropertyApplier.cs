@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections;
     using UnityEngine;
@@ -25,15 +23,37 @@
             /// <summary>
             /// The source <see cref="TransformData"/> to obtain the transformation properties from.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public TransformData EventSource { get; set; }
+            [Tooltip("The source TransformData to obtain the transformation properties from.")]
+            [SerializeField]
+            private TransformData _eventSource;
+            public TransformData EventSource
+            {
+                get
+                {
+                    return _eventSource;
+                }
+                set
+                {
+                    _eventSource = value;
+                }
+            }
             /// <summary>
             /// The target <see cref="TransformData"/> to apply transformations to.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public TransformData EventTarget { get; set; }
+            [Tooltip("The target TransformData to apply transformations to.")]
+            [SerializeField]
+            private TransformData _eventTarget;
+            public TransformData EventTarget
+            {
+                get
+                {
+                    return _eventTarget;
+                }
+                set
+                {
+                    _eventTarget = value;
+                }
+            }
 
             /// <summary>
             /// Clears <see cref="EventSource"/>.
@@ -84,81 +104,193 @@
         /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
-        [Serialized]
-        [field: Header("Reference Settings"), DocumentedByXml]
-        public TransformData Source { get; set; }
+        [Header("Reference Settings")]
+        [Tooltip("The source to obtain the transformation properties from.")]
+        [SerializeField]
+        private TransformData _source;
+        public TransformData Source
+        {
+            get
+            {
+                return _source;
+            }
+            set
+            {
+                _source = value;
+            }
+        }
         /// <summary>
         /// The target to apply the transformations to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        [Tooltip("The target to apply the transformations to.")]
+        [SerializeField]
+        private GameObject _target;
+        public GameObject Target
+        {
+            get
+            {
+                return _target;
+            }
+            set
+            {
+                _target = value;
+            }
+        }
         /// <summary>
         /// The offset/pivot when applying the transformations.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Offset { get; set; }
+        [Tooltip("The offset/pivot when applying the transformations.")]
+        [SerializeField]
+        private GameObject _offset;
+        public GameObject Offset
+        {
+            get
+            {
+                return _offset;
+            }
+            set
+            {
+                _offset = value;
+            }
+        }
         #endregion
 
         #region Apply Settings
         /// <summary>
         /// Determines which axes to apply on when utilizing the position offset.
         /// </summary>
-        [Serialized]
-        [field: Header("Apply Settings"), DocumentedByXml]
-        public Vector3State ApplyPositionOffsetOnAxis { get; set; } = Vector3State.True;
+        [Header("Apply Settings")]
+        [Tooltip("Determines which axes to apply on when utilizing the position offset.")]
+        [SerializeField]
+        private Vector3State _applyPositionOffsetOnAxis = Vector3State.True;
+        public Vector3State ApplyPositionOffsetOnAxis
+        {
+            get
+            {
+                return _applyPositionOffsetOnAxis;
+            }
+            set
+            {
+                _applyPositionOffsetOnAxis = value;
+            }
+        }
         /// <summary>
         /// Determines which axes to apply on when utilizing the rotation offset.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State ApplyRotationOffsetOnAxis { get; set; } = Vector3State.True;
+        [Tooltip("Determines which axes to apply on when utilizing the rotation offset.")]
+        [SerializeField]
+        private Vector3State _applyRotationOffsetOnAxis = Vector3State.True;
+        public Vector3State ApplyRotationOffsetOnAxis
+        {
+            get
+            {
+                return _applyRotationOffsetOnAxis;
+            }
+            set
+            {
+                _applyRotationOffsetOnAxis = value;
+            }
+        }
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, UnityFlags]
-        public TransformProperties ApplyTransformations { get; set; } = (TransformProperties)(-1);
+        [Tooltip("The Transform properties to apply the transformations on.")]
+        [SerializeField]
+        private TransformProperties _applyTransformations = (TransformProperties)(-1);
+        public TransformProperties ApplyTransformations
+        {
+            get
+            {
+                return _applyTransformations;
+            }
+            set
+            {
+                _applyTransformations = value;
+            }
+        }
         #endregion
 
         #region Transition Settings
         /// <summary>
         /// The amount of time to take when transitioning from the current <see cref="Transform"/> state to the modified <see cref="Transform"/> state.
         /// </summary>
-        [Serialized]
-        [field: Header("Transition Settings"), DocumentedByXml]
-        public float TransitionDuration { get; set; }
+        [Header("Transition Settings")]
+        [Tooltip("The amount of time to take when transitioning from the current Transform state to the modified Transform state.")]
+        [SerializeField]
+        private float _transitionDuration;
+        public float TransitionDuration
+        {
+            get
+            {
+                return _transitionDuration;
+            }
+            set
+            {
+                _transitionDuration = value;
+            }
+        }
         /// <summary>
         /// Whether to still apply the transformation properties even if the new properties are equal to the existing properties.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool ShouldApplyToEqualProperties { get; set; }
+        [Tooltip("Whether to still apply the transformation properties even if the new properties are equal to the existing properties.")]
+        [SerializeField]
+        private bool _shouldApplyToEqualProperties;
+        public bool ShouldApplyToEqualProperties
+        {
+            get
+            {
+                return _shouldApplyToEqualProperties;
+            }
+            set
+            {
+                _shouldApplyToEqualProperties = value;
+            }
+        }
         /// <summary>
         /// The threshold the current <see cref="Transform"/> properties can be within of the destination properties to be considered equal.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float TransitionDestinationThreshold { get; set; } = 0.01f;
+        [Tooltip("The threshold the current Transform properties can be within of the destination properties to be considered equal.")]
+        [SerializeField]
+        private float _transitionDestinationThreshold = 0.01f;
+        public float TransitionDestinationThreshold
+        {
+            get
+            {
+                return _transitionDestinationThreshold;
+            }
+            set
+            {
+                _transitionDestinationThreshold = value;
+            }
+        }
         /// <summary>
         /// Whether to treat the transformation destination properties as dynamic when transitioning the <see cref="Target"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool IsTransitionDestinationDynamic { get; set; }
+        [Tooltip("Whether to treat the transformation destination properties as dynamic when transitioning the Target.")]
+        [SerializeField]
+        private bool _isTransitionDestinationDynamic;
+        public bool IsTransitionDestinationDynamic
+        {
+            get
+            {
+                return _isTransitionDestinationDynamic;
+            }
+            set
+            {
+                _isTransitionDestinationDynamic = value;
+            }
+        }
         #endregion
 
         #region Applier Events
         /// <summary>
         /// Emitted before the transformation process occurs.
         /// </summary>
-        [Header("Applier Events"), DocumentedByXml]
+        [Header("Applier Events")]
         public UnityEvent BeforeTransformUpdated = new UnityEvent();
         /// <summary>
         /// Emitted after the transformation process has occured.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent AfterTransformUpdated = new UnityEvent();
         #endregion
 
