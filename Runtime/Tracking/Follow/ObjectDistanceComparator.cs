@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -21,12 +20,12 @@
         [Serializable]
         public class EventData
         {
-            /// <summary>
-            /// The difference of the positions of the target and source.
-            /// </summary>
             [Tooltip("The difference of the positions of the target and source.")]
             [SerializeField]
             private Vector3 _currentDifference;
+            /// <summary>
+            /// The difference of the positions of the target and source.
+            /// </summary>
             public Vector3 CurrentDifference
             {
                 get
@@ -38,12 +37,12 @@
                     _currentDifference = value;
                 }
             }
-            /// <summary>
-            /// The distance between the source and target.
-            /// </summary>
             [Tooltip("The distance between the source and target.")]
             [SerializeField]
             private float _currentDistance;
+            /// <summary>
+            /// The distance between the source and target.
+            /// </summary>
             public float CurrentDistance
             {
                 get
@@ -80,12 +79,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<EventData> { }
 
-        /// <summary>
-        /// The source of the distance measurement.
-        /// </summary>
         [Tooltip("The source of the distance measurement.")]
         [SerializeField]
         private GameObject _source;
+        /// <summary>
+        /// The source of the distance measurement.
+        /// </summary>
         public GameObject Source
         {
             get
@@ -95,14 +94,18 @@
             set
             {
                 _source = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourceChange();
+                }
             }
         }
-        /// <summary>
-        /// The target of the distance measurement.
-        /// </summary>
         [Tooltip("The target of the distance measurement.")]
         [SerializeField]
         private GameObject _target;
+        /// <summary>
+        /// The target of the distance measurement.
+        /// </summary>
         public GameObject Target
         {
             get
@@ -112,14 +115,18 @@
             set
             {
                 _target = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetChange();
+                }
             }
         }
-        /// <summary>
-        /// The distance between the source and target that is considered to be exceeding the given threshold.
-        /// </summary>
         [Tooltip("The distance between the source and target that is considered to be exceeding the given threshold.")]
         [SerializeField]
         private float _distanceThreshold = 1f;
+        /// <summary>
+        /// The distance between the source and target that is considered to be exceeding the given threshold.
+        /// </summary>
         public float DistanceThreshold
         {
             get
@@ -263,7 +270,6 @@
         /// <summary>
         /// Called after <see cref="Source"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Source))]
         protected virtual void OnAfterSourceChange()
         {
             SavePosition();
@@ -272,7 +278,6 @@
         /// <summary>
         /// Called after <see cref="Target"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Target))]
         protected virtual void OnAfterTargetChange()
         {
             SavePosition();

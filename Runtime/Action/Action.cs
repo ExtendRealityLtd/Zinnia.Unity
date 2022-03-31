@@ -1,11 +1,9 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
-    using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
 
@@ -89,12 +87,12 @@
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type the action will be utilizing.</typeparam>
     public abstract class Action<TSelf, TValue, TEvent> : Action where TSelf : Action<TSelf, TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
     {
-        /// <summary>
-        /// The initial value upon creation of the component.
-        /// </summary>
         [Tooltip("The initial value upon creation of the component.")]
         [SerializeField]
         private TValue _initialValue;
+        /// <summary>
+        /// The initial value upon creation of the component.
+        /// </summary>
         public TValue InitialValue
         {
             get
@@ -106,12 +104,12 @@
                 _initialValue = value;
             }
         }
-        /// <summary>
-        /// The value that is considered the inactive value.
-        /// </summary>
         [Tooltip("The value that is considered the inactive value.")]
         [SerializeField]
         private TValue _defaultValue;
+        /// <summary>
+        /// The value that is considered the inactive value.
+        /// </summary>
         public TValue DefaultValue
         {
             get
@@ -121,12 +119,35 @@
             set
             {
                 _defaultValue = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterDefaultValueChange();
+                }
             }
         }
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        protected List<TSelf> Sources { get; set; } = new List<TSelf>();
+        private List<TSelf> _sources = new List<TSelf>();
+        protected List<TSelf> Sources
+        {
+            get
+            {
+                return _sources;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeSourcesChange();
+                }
+                _sources = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourcesChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Emitted when the action becomes active.
@@ -145,12 +166,12 @@
         /// </summary>
         public TEvent Deactivated = new TEvent();
 
-        /// <summary>
-        /// The value of the action.
-        /// </summary>
         [Tooltip("Actions to subscribe to when this action is Behaviour.enabled. Allows chaining the source actions to this action.")]
         [SerializeField]
         private TValue _value;
+        /// <summary>
+        /// The value of the action.
+        /// </summary>
         public TValue Value
         {
             get
@@ -165,7 +186,7 @@
         /// <summary>
         /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => Sources;
+        public HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => _sources;
 
         /// <inheritdoc />
         public override void AddSource(Action action)
@@ -392,7 +413,6 @@
         /// <summary>
         /// Called after <see cref="DefaultValue"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(DefaultValue))]
         protected virtual void OnAfterDefaultValueChange()
         {
             bool shouldActivate = ShouldActivate(Value);
@@ -408,7 +428,6 @@
         /// <summary>
         /// Called before <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Sources))]
         protected virtual void OnBeforeSourcesChange()
         {
             UnsubscribeFromSources();
@@ -417,7 +436,6 @@
         /// <summary>
         /// Called after <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Sources))]
         protected virtual void OnAfterSourcesChange()
         {
             SubscribeToSources();

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Action.Collection;
     using Zinnia.Extension;
@@ -10,12 +9,12 @@
     /// </summary>
     public class AnyAction : BooleanAction
     {
-        /// <summary>
-        /// <see cref="Action"/>s to check the active state on.
-        /// </summary>
         [Tooltip("Actions to check the active state on.")]
         [SerializeField]
         private ActionObservableList _actions;
+        /// <summary>
+        /// <see cref="Action"/>s to check the active state on.
+        /// </summary>
         public ActionObservableList Actions
         {
             get
@@ -24,7 +23,15 @@
             }
             set
             {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeActionsChange();
+                }
                 _actions = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterActionsChange();
+                }
             }
         }
 
@@ -164,7 +171,6 @@
         /// <summary>
         /// Called before <see cref="Actions"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Actions))]
         protected virtual void OnBeforeActionsChange()
         {
             if (Actions != null)
@@ -176,7 +182,6 @@
         /// <summary>
         /// Called after <see cref="Actions"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Actions))]
         protected virtual void OnAfterActionsChange()
         {
             if (Actions != null)

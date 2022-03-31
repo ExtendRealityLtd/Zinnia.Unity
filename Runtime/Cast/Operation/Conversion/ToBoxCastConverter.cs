@@ -8,12 +8,12 @@
     /// </summary>
     public class ToBoxCastConverter : CastConverter
     {
-        /// <summary>
-        /// The half extends for the <see cref="Physics.BoxCast"/>.
-        /// </summary>
         [Tooltip("The half extends for the Physics.BoxCast.")]
         [SerializeField]
         private Vector3 _halfExtentsOverride;
+        /// <summary>
+        /// The half extends for the <see cref="Physics.BoxCast"/>.
+        /// </summary>
         public Vector3 HalfExtentsOverride
         {
             get
@@ -25,12 +25,12 @@
                 _halfExtentsOverride = value;
             }
         }
-        /// <summary>
-        /// Whether to use the <see cref="HalfExtentsOverride"/> value if the source caster already supports a half extends. If the source caster does not support a half extends then the <see cref="HalfExtentsOverride"/> will always be used.
-        /// </summary>
         [Tooltip("Whether to use the HalfExtentsOverride value if the source caster already supports a half extends. If the source caster does not support a half extends then the HalfExtentsOverride will always be used.")]
         [SerializeField]
         private bool _useHalfExtentsOverride = true;
+        /// <summary>
+        /// Whether to use the <see cref="HalfExtentsOverride"/> value if the source caster already supports a half extends. If the source caster does not support a half extends then the <see cref="HalfExtentsOverride"/> will always be used.
+        /// </summary>
         public bool UseHalfExtentsOverride
         {
             get
@@ -42,12 +42,12 @@
                 _useHalfExtentsOverride = value;
             }
         }
-        /// <summary>
-        /// The orientation for the <see cref="Physics.BoxCast"/>.
-        /// </summary>
         [Tooltip("The orientation for the Physics.BoxCast.")]
         [SerializeField]
         private Vector3 _orientationOverride;
+        /// <summary>
+        /// The orientation for the <see cref="Physics.BoxCast"/>.
+        /// </summary>
         public Vector3 OrientationOverride
         {
             get
@@ -59,12 +59,12 @@
                 _orientationOverride = value;
             }
         }
-        /// <summary>
-        /// Whether to use the <see cref="OrientationOverride"/> value if the source caster already supports a half extends. If the source caster does not support a half extends then the <see cref="OrientationOverride"/> will always be used.
-        /// </summary>
         [Tooltip("Whether to use the OrientationOverride value if the source caster already supports a half extends. If the source caster does not support a half extends then the OrientationOverride will always be used.")]
         [SerializeField]
         private bool _useOrientationOverride = true;
+        /// <summary>
+        /// Whether to use the <see cref="OrientationOverride"/> value if the source caster already supports a half extends. If the source caster does not support a half extends then the <see cref="OrientationOverride"/> will always be used.
+        /// </summary>
         public bool UseOrientationOverride
         {
             get

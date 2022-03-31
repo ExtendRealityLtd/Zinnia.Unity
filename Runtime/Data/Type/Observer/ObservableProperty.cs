@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Observer
 {
-    using Malimbe.MemberChangeMethod;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
@@ -36,13 +35,13 @@
         /// </summary>
         public TEvent Defined = new TEvent();
 
-        /// <summary>
-        /// The observed data.
-        /// </summary>
         [Header("Property Settings")]
         [Tooltip("The observed data.")]
         [SerializeField]
         private TType _data;
+        /// <summary>
+        /// The observed data.
+        /// </summary>
         public TType Data
         {
             get
@@ -51,15 +50,23 @@
             }
             set
             {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeDataChange();
+                }
                 _data = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterDataChange();
+                }
             }
         }
-        /// <summary>
-        /// Whether to observe data changes that were made when the component was disabled and subsequently re-enabled. Events are not raised when component is disabled.
-        /// </summary>
         [Tooltip("Whether to observe data changes that were made when the component was disabled and subsequently re-enabled. Events are not raised when component is disabled.")]
         [SerializeField]
         private bool _observeChangesFromDisabledState = true;
+        /// <summary>
+        /// Whether to observe data changes that were made when the component was disabled and subsequently re-enabled. Events are not raised when component is disabled.
+        /// </summary>
         public bool ObserveChangesFromDisabledState
         {
             get
@@ -165,7 +172,6 @@
         /// <summary>
         /// Called before <see cref="Data"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Data))]
         protected virtual void OnBeforeDataChange()
         {
             CacheExistingValue();
@@ -174,7 +180,6 @@
         /// <summary>
         /// Called after <see cref="Data"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Data))]
         protected virtual void OnAfterDataChange()
         {
             CheckForChanges();

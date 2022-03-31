@@ -1,10 +1,8 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
-    using Malimbe.MemberChangeMethod;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using Zinnia.Data.Attribute;
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -14,13 +12,13 @@
     public class CollisionTracker : CollisionNotifier
     {
         #region Tracker Settings
-        /// <summary>
-        /// Causes collisions to stop if the <see cref="GameObject"/> on either side of the collision is disabled.
-        /// </summary>
         [Header("Tracker Settings")]
         [Tooltip("Causes collisions to stop if the GameObject on either side of the collision is disabled.")]
         [SerializeField]
         private bool _stopCollisionsOnDisable = true;
+        /// <summary>
+        /// Causes collisions to stop if the <see cref="GameObject"/> on either side of the collision is disabled.
+        /// </summary>
         public bool StopCollisionsOnDisable
         {
             get
@@ -32,12 +30,12 @@
                 _stopCollisionsOnDisable = value;
             }
         }
-        /// <summary>
-        /// Allows to optionally determine which colliders to allow collisions against.
-        /// </summary>
         [Tooltip("Allows to optionally determine which colliders to allow collisions against.")]
         [SerializeField]
         private RuleContainer _colliderValidity;
+        /// <summary>
+        /// Allows to optionally determine which colliders to allow collisions against.
+        /// </summary>
         public RuleContainer ColliderValidity
         {
             get
@@ -49,12 +47,12 @@
                 _colliderValidity = value;
             }
         }
-        /// <summary>
-        /// Allows to optionally determine which collider containing transforms to allow collisions against.
-        /// </summary>
         [Tooltip("Allows to optionally determine which collider containing transforms to allow collisions against.")]
         [SerializeField]
         private RuleContainer _containingTransformValidity;
+        /// <summary>
+        /// Allows to optionally determine which collider containing transforms to allow collisions against.
+        /// </summary>
         public RuleContainer ContainingTransformValidity
         {
             get
@@ -66,12 +64,12 @@
                 _containingTransformValidity = value;
             }
         }
-        /// <summary>
-        /// The delay interval in seconds defining how long to pause between processing the `Stay` method of the collision process. Negative values will be clamped to zero.
-        /// </summary>
         [Tooltip("The delay interval in seconds defining how long to pause between processing the `Stay` method of the collision process. Negative values will be clamped to zero.")]
         [SerializeField]
         private float _stayDelayInterval;
+        /// <summary>
+        /// The delay interval in seconds defining how long to pause between processing the `Stay` method of the collision process. Negative values will be clamped to zero.
+        /// </summary>
         public float StayDelayInterval
         {
             get
@@ -81,6 +79,10 @@
             set
             {
                 _stayDelayInterval = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterStayDelayIntervalChange();
+                }
             }
         }
         /// <summary>
@@ -430,10 +432,9 @@
         /// <summary>
         /// Called after <see cref="StayDelayInterval"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(StayDelayInterval))]
         protected virtual void OnAfterStayDelayIntervalChange()
         {
-            StayDelayInterval = Mathf.Max(0f, StayDelayInterval);
+            _stayDelayInterval = Mathf.Max(0f, StayDelayInterval);
             NextStayProcessTime = Time.time;
         }
     }
@@ -443,12 +444,12 @@
     /// </summary>
     public class CollisionTrackerDisabledObserver : MonoBehaviour
     {
-        /// <summary>
-        /// The <see cref="CollisionTracker"/> that is causing the collision.
-        /// </summary>
         [Tooltip("The CollisionTracker that is causing the collision.")]
         [SerializeField]
         private CollisionTracker _source;
+        /// <summary>
+        /// The <see cref="CollisionTracker"/> that is causing the collision.
+        /// </summary>
         public CollisionTracker Source
         {
             get
@@ -460,12 +461,12 @@
                 _source = value;
             }
         }
-        /// <summary>
-        /// The <see cref="Collider"/> that is being collided with.
-        /// </summary>
         [Tooltip("The Collider that is being collided with.")]
         [SerializeField]
         private Collider _target;
+        /// <summary>
+        /// The <see cref="Collider"/> that is being collided with.
+        /// </summary>
         public Collider Target
         {
             get

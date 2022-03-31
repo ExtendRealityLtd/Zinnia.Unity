@@ -8,12 +8,12 @@
     /// </summary>
     public abstract class RoutineHapticPulser : HapticProcess
     {
-        /// <summary>
-        /// The pulse process to utilize.
-        /// </summary>
         [Tooltip("The pulse process to utilize.")]
         [SerializeField]
         private HapticPulser _hapticPulser;
+        /// <summary>
+        /// The pulse process to utilize.
+        /// </summary>
         public HapticPulser HapticPulser
         {
             get
@@ -25,12 +25,12 @@
                 _hapticPulser = value;
             }
         }
-        /// <summary>
-        /// Multiplies the current audio peak to affect the wave intensity.
-        /// </summary>
         [Tooltip("Multiplies the current audio peak to affect the wave intensity.")]
         [SerializeField]
         private float _intensityMultiplier = 1f;
+        /// <summary>
+        /// Multiplies the current audio peak to affect the wave intensity.
+        /// </summary>
         public float IntensityMultiplier
         {
             get

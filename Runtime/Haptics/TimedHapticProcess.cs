@@ -1,20 +1,21 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.MemberChangeMethod;
+    using System;
     using System.Collections;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Processes a given <see cref="Haptics.HapticProcess"/> repeatedly for a given duration and with a pause interval between each process.
     /// </summary>
     public class TimedHapticProcess : HapticProcess
     {
-        /// <summary>
-        /// The process to utilize.
-        /// </summary>
         [Tooltip("The process to utilize.")]
         [SerializeField]
         private HapticProcess _hapticProcess;
+        /// <summary>
+        /// The process to utilize.
+        /// </summary>
         public HapticProcess HapticProcess
         {
             get
@@ -26,12 +27,12 @@
                 _hapticProcess = value;
             }
         }
-        /// <summary>
-        /// The amount of time to keep repeating the process for.
-        /// </summary>
         [Tooltip("The amount of time to keep repeating the process for.")]
         [SerializeField]
         private float _duration = 1f;
+        /// <summary>
+        /// The amount of time to keep repeating the process for.
+        /// </summary>
         public float Duration
         {
             get
@@ -43,12 +44,12 @@
                 _duration = value;
             }
         }
-        /// <summary>
-        /// The amount of time to pause after each process iteration.
-        /// </summary>
         [Tooltip("The amount of time to pause after each process iteration.")]
         [SerializeField]
         private float _interval = 0.1f;
+        /// <summary>
+        /// The amount of time to pause after each process iteration.
+        /// </summary>
         public float Interval
         {
             get
@@ -58,6 +59,10 @@
             set
             {
                 _interval = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterIntervalChange();
+                }
             }
         }
 
@@ -78,7 +83,7 @@
 
         protected virtual void OnEnable()
         {
-            OnAfterCheckDelayChange();
+            OnAfterIntervalChange();
         }
 
         /// <summary>
@@ -128,10 +133,15 @@
         /// <summary>
         /// Called after <see cref="Interval"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Interval))]
-        protected virtual void OnAfterCheckDelayChange()
+        protected virtual void OnAfterIntervalChange()
         {
             delayYieldInstruction = new WaitForSeconds(Interval);
+        }
+
+        [Obsolete("Use `OnAfterIntervalChange` instead.")]
+        protected virtual void OnAfterCheckDelayChange()
+        {
+            OnAfterIntervalChange();
         }
     }
 }

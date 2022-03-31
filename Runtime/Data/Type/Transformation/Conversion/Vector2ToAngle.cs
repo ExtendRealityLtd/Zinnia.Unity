@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -48,12 +47,12 @@
             SignedRadians
         }
 
-        /// <summary>
-        /// The unit to return the converted angle in.
-        /// </summary>
         [Tooltip("The unit to return the converted angle in.")]
         [SerializeField]
         private AngleUnit _unit = AngleUnit.Degrees;
+        /// <summary>
+        /// The unit to return the converted angle in.
+        /// </summary>
         public AngleUnit Unit
         {
             get
@@ -66,12 +65,12 @@
             }
         }
 
-        /// <summary>
-        /// The direction that defines the origin (i.e. zero) angle.
-        /// </summary>
         [Tooltip("The direction that defines the origin (i.e. zero) angle.")]
         [SerializeField]
         private Vector2 _origin = new Vector2(0f, 1f);
+        /// <summary>
+        /// The direction that defines the origin (i.e. zero) angle.
+        /// </summary>
         public Vector2 Origin
         {
             get
@@ -81,6 +80,10 @@
             set
             {
                 _origin = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterOriginChange();
+                }
             }
         }
 
@@ -171,10 +174,9 @@
         /// <summary>
         /// Called after <see cref="Origin"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Origin))]
         protected virtual void OnAfterOriginChange()
         {
-            Origin = Origin.normalized;
+            _origin = Origin.normalized;
         }
     }
 }

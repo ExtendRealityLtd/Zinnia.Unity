@@ -15,12 +15,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector2> { }
 
-        /// <summary>
-        /// The current <see cref="Vector2"/> representing the direction.
-        /// </summary>
         [Tooltip("The current Vector2 representing the direction.")]
         [SerializeField]
         private Vector2 _direction = new Vector2(0f, 1f);
+        /// <summary>
+        /// The current <see cref="Vector2"/> representing the direction.
+        /// </summary>
         public Vector2 Direction
         {
             get

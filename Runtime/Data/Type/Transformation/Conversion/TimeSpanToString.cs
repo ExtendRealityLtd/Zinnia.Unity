@@ -15,12 +15,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<string> { }
 
-        /// <summary>
-        /// A standard or custom <see cref="TimeSpan"/> format string.
-        /// </summary>
         [Tooltip("A standard or custom TimeSpan format string.")]
         [SerializeField]
         private string _format;
+        /// <summary>
+        /// A standard or custom <see cref="TimeSpan"/> format string.
+        /// </summary>
         public string Format
         {
             get

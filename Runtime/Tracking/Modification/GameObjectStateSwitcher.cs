@@ -9,12 +9,12 @@
     /// </summary>
     public class GameObjectStateSwitcher : MonoBehaviour
     {
-        /// <summary>
-        /// A collection of targets to set the state on when it is the active index.
-        /// </summary>
         [Tooltip("A collection of targets to set the state on when it is the active index.")]
         [SerializeField]
         private GameObjectObservableList _targets;
+        /// <summary>
+        /// A collection of targets to set the state on when it is the active index.
+        /// </summary>
         public GameObjectObservableList Targets
         {
             get
@@ -26,12 +26,12 @@
                 _targets = value;
             }
         }
-        /// <summary>
-        /// The state to set the active index target. All other targets will be set to the opposite state.
-        /// </summary>
         [Tooltip("The state to set the active index target. All other targets will be set to the opposite state.")]
         [SerializeField]
         private bool _targetState = true;
+        /// <summary>
+        /// The state to set the active index target. All other targets will be set to the opposite state.
+        /// </summary>
         public bool TargetState
         {
             get

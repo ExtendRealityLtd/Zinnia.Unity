@@ -1,22 +1,22 @@
 ﻿namespace Zinnia.Event
 {
-    using Malimbe.MemberChangeMethod;
     using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits an event once a list of <see cref="Behaviour"/>s all are <see cref="Behaviour.isActiveAndEnabled"/>.
     /// </summary>
     public class BehaviourEnabledObserver : MonoBehaviour
     {
-        /// <summary>
-        /// The time between each <see cref="Behaviour.enabled"/> check.
-        /// </summary>
         [Tooltip("The time between each Behaviour.enabled check.")]
         [SerializeField]
         private float _checkDelay = 0.000011f;
+        /// <summary>
+        /// The time between each <see cref="Behaviour.enabled"/> check.
+        /// </summary>
         public float CheckDelay
         {
             get
@@ -26,14 +26,18 @@
             set
             {
                 _checkDelay = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterCheckDelayChange();
+                }
             }
         }
-        /// <summary>
-        /// The maximum amount of time to perform the <see cref="Behaviour.enabled"/> check before ending.
-        /// </summary>
         [Tooltip("The maximum amount of time to perform the Behaviour.enabled check before ending.")]
         [SerializeField]
         private float _maximumRunTime = float.PositiveInfinity;
+        /// <summary>
+        /// The maximum amount of time to perform the <see cref="Behaviour.enabled"/> check before ending.
+        /// </summary>
         public float MaximumRunTime
         {
             get
@@ -43,15 +47,19 @@
             set
             {
                 _maximumRunTime = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterMaximumRunTimeChange();
+                }
             }
         }
 
-        /// <summary>
-        /// The <see cref="Behaviour"/>s to observe.
-        /// </summary>
         [Tooltip("The Behaviours to observe.")]
         [SerializeField]
         private BehaviourObservableList _behaviours;
+        /// <summary>
+        /// The <see cref="Behaviour"/>s to observe.
+        /// </summary>
         public BehaviourObservableList Behaviours
         {
             get
@@ -163,7 +171,6 @@
         /// <summary>
         /// Called after <see cref="CheckDelay"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(CheckDelay))]
         protected virtual void OnAfterCheckDelayChange()
         {
             checkDelayYieldInstruction = new WaitForSeconds(CheckDelay);
@@ -172,7 +179,6 @@
         /// <summary>
         /// Called after <see cref="MaximumRunTime"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(MaximumRunTime))]
         protected virtual void OnAfterMaximumRunTimeChange()
         {
             float remainingRunTime = timeUntilCheckIsCancelled - Time.time;

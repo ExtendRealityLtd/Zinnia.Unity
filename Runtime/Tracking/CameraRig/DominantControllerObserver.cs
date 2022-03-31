@@ -16,13 +16,13 @@
         public class UnityEvent : UnityEvent<DeviceDetailsRecord> { }
 
         #region Reference Settings
-        /// <summary>
-        /// The details about the left controller.
-        /// </summary>
         [Header("Controller Settings")]
         [Tooltip("The details about the left controller.")]
         [SerializeField]
         private DeviceDetailsRecord _leftController;
+        /// <summary>
+        /// The details about the left controller.
+        /// </summary>
         public DeviceDetailsRecord LeftController
         {
             get
@@ -34,12 +34,12 @@
                 _leftController = value;
             }
         }
-        /// <summary>
-        /// The details about the right controller.
-        /// </summary>
         [Tooltip("The details about the right controller.")]
         [SerializeField]
         private DeviceDetailsRecord _rightController;
+        /// <summary>
+        /// The details about the right controller.
+        /// </summary>
         public DeviceDetailsRecord RightController
         {
             get

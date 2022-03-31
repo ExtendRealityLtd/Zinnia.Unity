@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Pattern
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using UnityEngine.XR;
     using Zinnia.Extension;
@@ -65,12 +64,12 @@
             UserPresence
         }
 
-        /// <summary>
-        /// The source property to match against.
-        /// </summary>
         [Tooltip("The source property to match against.")]
         [SerializeField]
         private Source _propertySource;
+        /// <summary>
+        /// The source property to match against.
+        /// </summary>
         public Source PropertySource
         {
             get
@@ -80,15 +79,19 @@
             set
             {
                 _propertySource = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterPropertySourceChange();
+                }
             }
         }
 #if UNITY_2019_3_OR_NEWER
-        /// <summary>
-        /// The source node to consider as the device to check.
-        /// </summary>
         [Tooltip("The source node to consider as the device to check.")]
         [SerializeField]
         private XRNode _deviceSource = XRNode.Head;
+        /// <summary>
+        /// The source node to consider as the device to check.
+        /// </summary>
         public XRNode DeviceSource
         {
             get
@@ -98,6 +101,10 @@
             set
             {
                 _deviceSource = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterDeviceSourceChange();
+                }
             }
         }
 #else
@@ -161,7 +168,6 @@
         /// <summary>
         /// Called after <see cref="PropertySource"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(PropertySource))]
         protected virtual void OnAfterPropertySourceChange()
         {
             ProcessSourceString();
@@ -170,7 +176,6 @@
         /// <summary>
         /// Called after <see cref="DeviceSource"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(DeviceSource))]
         protected virtual void OnAfterDeviceSourceChange()
         {
             ProcessSourceString();

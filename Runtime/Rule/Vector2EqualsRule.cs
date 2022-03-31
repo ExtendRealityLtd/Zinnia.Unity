@@ -8,12 +8,12 @@
     /// </summary>
     public class Vector2EqualsRule : Vector2Rule
     {
-        /// <summary>
-        /// The <see cref="Vector2"/> to check equality against.
-        /// </summary>
         [Tooltip("The Vector2 to check equality against.")]
         [SerializeField]
         private Vector2 _target;
+        /// <summary>
+        /// The <see cref="Vector2"/> to check equality against.
+        /// </summary>
         public Vector2 Target
         {
             get
@@ -25,12 +25,12 @@
                 _target = value;
             }
         }
-        /// <summary>
-        /// The tolerance between the two <see cref="Vector2"/> values that can be considered equal.
-        /// </summary>
         [Tooltip("The tolerance between the two Vector2 values that can be considered equal.")]
         [SerializeField]
         private float _tolerance = float.Epsilon;
+        /// <summary>
+        /// The tolerance between the two <see cref="Vector2"/> values that can be considered equal.
+        /// </summary>
         public float Tolerance
         {
             get

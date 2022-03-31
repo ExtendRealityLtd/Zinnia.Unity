@@ -11,12 +11,12 @@
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type to use.</typeparam>
     public abstract class DefaultObservableList<TElement, TEvent> : ObservableList<TElement, TEvent> where TEvent : UnityEvent<TElement>, new()
     {
-        /// <summary>
-        /// The collection to observe changes of.
-        /// </summary>
         [Tooltip("The collection to observe changes of.")]
         [SerializeField]
         private List<TElement> _elements = new List<TElement>();
+        /// <summary>
+        /// The collection to observe changes of.
+        /// </summary>
         protected override List<TElement> Elements
         {
             get

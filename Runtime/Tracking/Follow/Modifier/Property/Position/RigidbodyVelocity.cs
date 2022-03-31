@@ -9,13 +9,13 @@
     public class RigidbodyVelocity : DivergablePropertyModifier
     {
         #region Velocity Settings
-        /// <summary>
-        /// The maximum squared magnitude of velocity that can be applied to the source.
-        /// </summary>
         [Header("Velocity Settings")]
         [Tooltip("The maximum squared magnitude of velocity that can be applied to the source.")]
         [SerializeField]
         private float _velocityLimit = float.PositiveInfinity;
+        /// <summary>
+        /// The maximum squared magnitude of velocity that can be applied to the source.
+        /// </summary>
         public float VelocityLimit
         {
             get
@@ -27,12 +27,12 @@
                 _velocityLimit = value;
             }
         }
-        /// <summary>
-        /// The maximum difference in distance to the tracked position.
-        /// </summary>
         [Tooltip("The maximum difference in distance to the tracked position.")]
         [SerializeField]
         private float _maxDistanceDelta = 10f;
+        /// <summary>
+        /// The maximum difference in distance to the tracked position.
+        /// </summary>
         public float MaxDistanceDelta
         {
             get

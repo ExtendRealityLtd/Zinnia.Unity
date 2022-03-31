@@ -9,12 +9,12 @@ namespace Zinnia.Data.Operation.Extraction
     /// </summary>
     public class GameObjectChildByNameExtractor : GameObjectExtractor<GameObject, ComponentGameObjectExtractor.UnityEvent>
     {
-        /// <summary>
-        /// The path name to the child <see cref="GameObject"/>.
-        /// </summary>
         [Tooltip("The path name to the child GameObject.")]
         [SerializeField]
         private string _childNamePath;
+        /// <summary>
+        /// The path name to the child <see cref="GameObject"/>.
+        /// </summary>
         public string ChildNamePath
         {
             get

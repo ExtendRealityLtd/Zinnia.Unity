@@ -8,12 +8,12 @@
     /// </summary>
     public class RigidbodyForceAtPosition : PropertyModifier
     {
-        /// <summary>
-        /// The point where the attachment was made.
-        /// </summary>
         [Tooltip("The point where the attachment was made.")]
         [SerializeField]
         private GameObject _attachmentPoint;
+        /// <summary>
+        /// The point where the attachment was made.
+        /// </summary>
         public GameObject AttachmentPoint
         {
             get

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Cast.Operation.Mutation
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Rule;
@@ -10,12 +9,12 @@
     /// </summary>
     public class PointsCastPropertyMutator : MonoBehaviour
     {
-        /// <summary>
-        /// The <see cref="PointsCast"/> to mutate.
-        /// </summary>
         [Tooltip("The PointsCast to mutate.")]
         [SerializeField]
         private PointsCast _target;
+        /// <summary>
+        /// The <see cref="PointsCast"/> to mutate.
+        /// </summary>
         public PointsCast Target
         {
             get
@@ -31,20 +30,80 @@
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
-        public GameObject Origin { get; set; }
+        private GameObject _origin;
+        public GameObject Origin
+        {
+            get
+            {
+                return _origin;
+            }
+            set
+            {
+                _origin = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterOriginChange();
+                }
+            }
+        }
         /// <summary>
         /// Optionally affects the cast.
         /// </summary>
-        public PhysicsCast PhysicsCast { get; set; }
+        private PhysicsCast _physicsCast;
+        public PhysicsCast PhysicsCast
+        {
+            get
+            {
+                return _physicsCast;
+            }
+            set
+            {
+                _physicsCast = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterPhysicsCastChange();
+                }
+            }
+        }
         /// <summary>
         /// Optionally determines targets based on the set rules.
         /// </summary>
-        public RuleContainer TargetValidity { get; set; }
+        private RuleContainer _targetValidity;
+        public RuleContainer TargetValidity
+        {
+            get
+            {
+                return _targetValidity;
+            }
+            set
+            {
+                _targetValidity = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetValidityChange();
+                }
+            }
+        }
 
         /// <summary>
         /// An override for the destination location point in world space.
         /// </summary>
-        public Vector3? DestinationPointOverride { get; protected set; }
+        private Vector3? _destinationPointOverride;
+        public Vector3? DestinationPointOverride
+        {
+            get
+            {
+                return _destinationPointOverride;
+            }
+            protected set
+            {
+                _destinationPointOverride = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterDestinationPointOverrideChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Clears <see cref="Target"/>.
@@ -138,7 +197,6 @@
         /// <summary>
         /// Called after <see cref="Origin"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Origin))]
         protected virtual void OnAfterOriginChange()
         {
             if (Target == null)
@@ -152,7 +210,6 @@
         /// <summary>
         /// Called after <see cref="PhysicsCast"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(PhysicsCast))]
         protected virtual void OnAfterPhysicsCastChange()
         {
             if (Target == null)
@@ -166,7 +223,6 @@
         /// <summary>
         /// Called after <see cref="TargetValidity"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(TargetValidity))]
         protected virtual void OnAfterTargetValidityChange()
         {
             if (Target == null)
@@ -180,7 +236,6 @@
         /// <summary>
         /// Called after <see cref="DestinationPointOverride"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(DestinationPointOverride))]
         protected virtual void OnAfterDestinationPointOverrideChange()
         {
             if (Target == null)

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Process.Moment
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -9,12 +8,12 @@
     /// </summary>
     public class MomentProcess : MonoBehaviour, IProcessable
     {
-        /// <summary>
-        /// The source process to attach to the moment.
-        /// </summary>
         [Tooltip("The source process to attach to the moment.")]
         [SerializeField]
         private ProcessContainer _source;
+        /// <summary>
+        /// The source process to attach to the moment.
+        /// </summary>
         public ProcessContainer Source
         {
             get
@@ -26,12 +25,12 @@
                 _source = value;
             }
         }
-        /// <summary>
-        /// The process only executes if the <see cref="GameObject"/> is active and the <see cref="Component"/> is enabled.
-        /// </summary>
         [Tooltip("The process only executes if the GameObject is active and the Component is enabled.")]
         [SerializeField]
         private bool _onlyProcessOnActiveAndEnabled = true;
+        /// <summary>
+        /// The process only executes if the <see cref="GameObject"/> is active and the <see cref="Component"/> is enabled.
+        /// </summary>
         public bool OnlyProcessOnActiveAndEnabled
         {
             get
@@ -43,12 +42,12 @@
                 _onlyProcessOnActiveAndEnabled = value;
             }
         }
-        /// <summary>
-        /// The interval in seconds defining how often to process the <see cref="Process"/>. Negative values will be clamped to zero.
-        /// </summary>
         [Tooltip("The interval in seconds defining how often to process the Process. Negative values will be clamped to zero.")]
         [SerializeField]
         private float _interval;
+        /// <summary>
+        /// The interval in seconds defining how often to process the <see cref="Process"/>. Negative values will be clamped to zero.
+        /// </summary>
         public float Interval
         {
             get
@@ -58,6 +57,10 @@
             set
             {
                 _interval = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterIntervalChange();
+                }
             }
         }
         /// <summary>
@@ -132,10 +135,9 @@
         /// <summary>
         /// Called after <see cref="Interval"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Interval))]
         protected virtual void OnAfterIntervalChange()
         {
-            Interval = Mathf.Max(0f, Interval);
+            _interval = Mathf.Max(0f, Interval);
         }
     }
 }

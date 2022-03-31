@@ -20,12 +20,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<bool> { }
 
-        /// <summary>
-        /// The bounds in which the <see cref="float"/> must be to be considered a positive boolean.
-        /// </summary>
         [Tooltip("The bounds in which the float must be to be considered a positive boolean.")]
         [SerializeField]
         private FloatRange _positiveBounds = new FloatRange(0f, 1f);
+        /// <summary>
+        /// The bounds in which the <see cref="float"/> must be to be considered a positive boolean.
+        /// </summary>
         protected FloatRange PositiveBounds
         {
             get

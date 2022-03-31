@@ -13,12 +13,12 @@
     /// </remarks>
     public class FacingQuery : MonoBehaviour, IProcessable
     {
-        /// <summary>
-        /// The object used as the origin to check if it is facing towards <see cref="Target"/>.
-        /// </summary>
         [Tooltip("The object used as the origin to check if it is facing towards Target.")]
         [SerializeField]
         private GameObject _source;
+        /// <summary>
+        /// The object used as the origin to check if it is facing towards <see cref="Target"/>.
+        /// </summary>
         public GameObject Source
         {
             get
@@ -30,12 +30,12 @@
                 _source = value;
             }
         }
-        /// <summary>
-        /// The object that will be checked to see if <see cref="Source"/> is facing it.
-        /// </summary>
         [Tooltip("The object that will be checked to see if Source is facing it.")]
         [SerializeField]
         private GameObject _target;
+        /// <summary>
+        /// The object that will be checked to see if <see cref="Source"/> is facing it.
+        /// </summary>
         public GameObject Target
         {
             get
@@ -47,12 +47,12 @@
                 _target = value;
             }
         }
-        /// <summary>
-        /// A sphere radius that defines the volume in which <see cref="Target"/> can still be considered seen by the <see cref="Source"/>.
-        /// </summary>
         [Tooltip("A sphere radius that defines the volume in which Target can still be considered seen by the Source.")]
         [SerializeField]
         private float _targetRadius = 0.1f;
+        /// <summary>
+        /// A sphere radius that defines the volume in which <see cref="Target"/> can still be considered seen by the <see cref="Source"/>.
+        /// </summary>
         public float TargetRadius
         {
             get

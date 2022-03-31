@@ -10,12 +10,12 @@
     /// </summary>
     public class AnyBehaviourEnabledRule : GameObjectRule
     {
-        /// <summary>
-        /// The behaviour types to look for.
-        /// </summary>
         [Tooltip("The behaviour types to look for.")]
         [SerializeField]
         private SerializableTypeBehaviourObservableList _behaviourTypes;
+        /// <summary>
+        /// The behaviour types to look for.
+        /// </summary>
         public SerializableTypeBehaviourObservableList BehaviourTypes
         {
             get

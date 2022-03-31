@@ -17,12 +17,12 @@
         [Serializable]
         public class PayloadData
         {
-            /// <summary>
-            /// The container of the source that is initiating the collision.
-            /// </summary>
             [Tooltip("The container of the source that is initiating the collision.")]
             [SerializeField]
             private GameObject _sourceContainer;
+            /// <summary>
+            /// The container of the source that is initiating the collision.
+            /// </summary>
             public GameObject SourceContainer
             {
                 get
@@ -90,12 +90,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<PayloadData> { }
 
-        /// <summary>
-        /// The data to publish to any available consumers.
-        /// </summary>
         [Tooltip("The data to publish to any available consumers.")]
         [SerializeField]
         private PayloadData _payload = new PayloadData();
+        /// <summary>
+        /// The data to publish to any available consumers.
+        /// </summary>
         public PayloadData Payload
         {
             get
@@ -107,12 +107,12 @@
                 _payload = value;
             }
         }
-        /// <summary>
-        /// A collection of <see cref="ActiveCollisionConsumer"/> components that has been successfully published to.
-        /// </summary>
         [Tooltip("A collection of ActiveCollisionConsumer components that has been successfully published to.")]
         [SerializeField]
         private ActiveCollisionRegisteredConsumerContainer _registeredConsumerContainer;
+        /// <summary>
+        /// A collection of <see cref="ActiveCollisionConsumer"/> components that has been successfully published to.
+        /// </summary>
         public ActiveCollisionRegisteredConsumerContainer RegisteredConsumerContainer
         {
             get

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -21,12 +20,12 @@
         [Serializable]
         public class EventData
         {
-            /// <summary>
-            /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything.
-            /// </summary>
             [Tooltip("The result of the most recent cast. null when the cast didn't hit anything.")]
             [SerializeField]
             private RaycastHit? _hitData;
+            /// <summary>
+            /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything.
+            /// </summary>
             public RaycastHit? HitData
             {
                 get
@@ -39,12 +38,12 @@
                 }
             }
 
-            /// <summary>
-            /// The validity of the most recent <see cref="HitData"/> based on the <see cref="TargetValidity"/> rule.
-            /// </summary>
             [Tooltip("The validity of the most recent HitData based on the TargetValidity rule.")]
             [SerializeField]
             private bool _isValid;
+            /// <summary>
+            /// The validity of the most recent <see cref="HitData"/> based on the <see cref="TargetValidity"/> rule.
+            /// </summary>
             public bool IsValid
             {
                 get
@@ -112,12 +111,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<EventData> { }
 
-        /// <summary>
-        /// The origin point for the cast.
-        /// </summary>
         [Tooltip("The origin point for the cast.")]
         [SerializeField]
         private GameObject _origin;
+        /// <summary>
+        /// The origin point for the cast.
+        /// </summary>
         public GameObject Origin
         {
             get
@@ -129,12 +128,12 @@
                 _origin = value;
             }
         }
-        /// <summary>
-        /// Allows to optionally affect the cast.
-        /// </summary>
         [Tooltip("Allows to optionally affect the cast.")]
         [SerializeField]
         private PhysicsCast _physicsCast;
+        /// <summary>
+        /// Allows to optionally affect the cast.
+        /// </summary>
         public PhysicsCast PhysicsCast
         {
             get
@@ -146,12 +145,12 @@
                 _physicsCast = value;
             }
         }
-        /// <summary>
-        /// Allows to optionally determine targets based on the set rules.
-        /// </summary>
         [Tooltip("Allows to optionally determine targets based on the set rules.")]
         [SerializeField]
         private RuleContainer _targetValidity;
+        /// <summary>
+        /// Allows to optionally determine targets based on the set rules.
+        /// </summary>
         public RuleContainer TargetValidity
         {
             get
@@ -163,12 +162,12 @@
                 _targetValidity = value;
             }
         }
-        /// <summary>
-        /// Allows to optionally determine specific target point based on the set rules.
-        /// </summary>
         [Tooltip("Allows to optionally determine specific target point based on the set rules.")]
         [SerializeField]
         private RuleContainer _targetPointValidity;
+        /// <summary>
+        /// Allows to optionally determine specific target point based on the set rules.
+        /// </summary>
         public RuleContainer TargetPointValidity
         {
             get
@@ -194,7 +193,22 @@
         /// <summary>
         /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/> or <see cref="TargetPointValidity"/> rules.
         /// </summary>
-        public RaycastHit? TargetHit { get; protected set; }
+        private RaycastHit? _targetHit;
+        public RaycastHit? TargetHit
+        {
+            get
+            {
+                return _targetHit;
+            }
+            protected set
+            {
+                _targetHit = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetHitChange();
+                }
+            }
+        }
         /// <summary>
         /// Whether the current <see cref="TargetHit"/> is valid based on the <see cref="TargetValidity"/> and <see cref="TargetPointValidity"/> rules.
         /// </summary>
@@ -312,7 +326,6 @@
         /// <summary>
         /// Called after <see cref="TargetHit"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(TargetHit))]
         protected virtual void OnAfterTargetHitChange()
         {
             IsTargetHitValid = TargetHit != null && TargetValidity.Accepts(TargetHit.Value.transform.gameObject) && TargetPointValidity.Accepts(TargetHit.Value.point);

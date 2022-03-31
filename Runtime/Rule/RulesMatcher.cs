@@ -17,12 +17,12 @@
         [Serializable]
         public class Element
         {
-            /// <summary>
-            /// The rule to match against.
-            /// </summary>
             [Tooltip("The rule to match against.")]
             [SerializeField]
             private RuleContainer _rule;
+            /// <summary>
+            /// The rule to match against.
+            /// </summary>
             public RuleContainer Rule
             {
                 get
@@ -41,12 +41,12 @@
             public UnityEvent Matched = new UnityEvent();
         }
 
-        /// <summary>
-        /// A collection of rules to potentially match against.
-        /// </summary>
         [Tooltip("A collection of rules to potentially match against.")]
         [SerializeField]
         private RulesMatcherElementObservableList _elements;
+        /// <summary>
+        /// A collection of rules to potentially match against.
+        /// </summary>
         public RulesMatcherElementObservableList Elements
         {
             get

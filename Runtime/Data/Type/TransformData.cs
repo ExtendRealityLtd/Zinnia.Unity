@@ -10,12 +10,12 @@
     [Serializable]
     public class TransformData
     {
-        /// <summary>
-        /// A reference to the original <see cref="UnityEngine.Transform"/>.
-        /// </summary>
         [Tooltip("A reference to the original UnityEngine.Transform.")]
         [SerializeField]
         private Transform _transform;
+        /// <summary>
+        /// A reference to the original <see cref="UnityEngine.Transform"/>.
+        /// </summary>
         public Transform Transform
         {
             get
@@ -27,12 +27,12 @@
                 _transform = value;
             }
         }
-        /// <summary>
-        /// Determines whether to operate on the local or global values.
-        /// </summary>
         [Tooltip("Determines whether to operate on the local or global values.")]
         [SerializeField]
         private bool _useLocalValues;
+        /// <summary>
+        /// Determines whether to operate on the local or global values.
+        /// </summary>
         public bool UseLocalValues
         {
             get
@@ -44,12 +44,12 @@
                 _useLocalValues = value;
             }
         }
-        /// <summary>
-        /// Position override of the <see cref="UnityEngine.Transform"/> object.
-        /// </summary>
         [Tooltip("Position override of the UnityEngine.Transform object.")]
         [SerializeField]
         private Vector3? _positionOverride;
+        /// <summary>
+        /// Position override of the <see cref="UnityEngine.Transform"/> object.
+        /// </summary>
         public Vector3? PositionOverride
         {
             get
@@ -61,12 +61,12 @@
                 _positionOverride = value;
             }
         }
-        /// <summary>
-        /// Rotation override of the <see cref="UnityEngine.Transform"/> object.
-        /// </summary>
         [Tooltip("Rotation override of the UnityEngine.Transform object.")]
         [SerializeField]
         private Quaternion? _rotationOverride;
+        /// <summary>
+        /// Rotation override of the <see cref="UnityEngine.Transform"/> object.
+        /// </summary>
         public Quaternion? RotationOverride
         {
             get
@@ -78,12 +78,12 @@
                 _rotationOverride = value;
             }
         }
-        /// <summary>
-        /// Scale override of the <see cref="UnityEngine.Transform"/> object.
-        /// </summary>
         [Tooltip("Scale override of the UnityEngine.Transform object.")]
         [SerializeField]
         private Vector3? _scaleOverride;
+        /// <summary>
+        /// Scale override of the <see cref="UnityEngine.Transform"/> object.
+        /// </summary>
         public Vector3? ScaleOverride
         {
             get

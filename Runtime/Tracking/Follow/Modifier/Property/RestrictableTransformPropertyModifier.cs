@@ -8,12 +8,12 @@
     /// </summary>
     public abstract class RestrictableTransformPropertyModifier : PropertyModifier
     {
-        /// <summary>
-        /// Determines which axes to apply the modification on>.
-        /// </summary>
         [Tooltip("Determines which axes to apply the modification on>.")]
         [SerializeField]
         private Vector3State _applyModificationOnAxis = Vector3State.True;
+        /// <summary>
+        /// Determines which axes to apply the modification on>.
+        /// </summary>
         public Vector3State ApplyModificationOnAxis
         {
             get

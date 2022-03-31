@@ -17,12 +17,12 @@
         [Serializable]
         public class PointsData
         {
-            /// <summary>
-            /// Represents the start, i.e. the first rendered point.
-            /// </summary>
             [Tooltip("Represents the start, i.e. the first rendered point.")]
             [SerializeField]
             private GameObject _startPoint;
+            /// <summary>
+            /// Represents the start, i.e. the first rendered point.
+            /// </summary>
             public GameObject StartPoint
             {
                 get
@@ -34,12 +34,12 @@
                     _startPoint = value;
                 }
             }
-            /// <summary>
-            /// Whether the first point should be visible.
-            /// </summary>
             [Tooltip("Whether the first point should be visible.")]
             [SerializeField]
             private bool _isStartPointVisible;
+            /// <summary>
+            /// Whether the first point should be visible.
+            /// </summary>
             public bool IsStartPointVisible
             {
                 get
@@ -51,12 +51,12 @@
                     _isStartPointVisible = value;
                 }
             }
-            /// <summary>
-            /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
-            /// </summary>
             [Tooltip("Represents the segments between Start and End. This will get cloned to create all the segments.")]
             [SerializeField]
             private GameObject _repeatedSegmentPoint;
+            /// <summary>
+            /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
+            /// </summary>
             public GameObject RepeatedSegmentPoint
             {
                 get
@@ -68,12 +68,12 @@
                     _repeatedSegmentPoint = value;
                 }
             }
-            /// <summary>
-            /// Whether the repeated segment point(s) should be visible.
-            /// </summary>
             [Tooltip("Whether the repeated segment point(s) should be visible.")]
             [SerializeField]
             private bool _isRepeatedSegmentPointVisible;
+            /// <summary>
+            /// Whether the repeated segment point(s) should be visible.
+            /// </summary>
             public bool IsRepeatedSegmentPointVisible
             {
                 get
@@ -85,12 +85,12 @@
                     _isRepeatedSegmentPointVisible = value;
                 }
             }
-            /// <summary>
-            /// Represents the end, i.e. the last rendered point.
-            /// </summary>
             [Tooltip("Represents the end, i.e. the last rendered point.")]
             [SerializeField]
             private GameObject _endPoint;
+            /// <summary>
+            /// Represents the end, i.e. the last rendered point.
+            /// </summary>
             public GameObject EndPoint
             {
                 get
@@ -102,12 +102,12 @@
                     _endPoint = value;
                 }
             }
-            /// <summary>
-            /// Whether the end point should be visible.
-            /// </summary>
             [Tooltip("Whether the end point should be visible.")]
             [SerializeField]
             private bool _isEndPointVisible;
+            /// <summary>
+            /// Whether the end point should be visible.
+            /// </summary>
             public bool IsEndPointVisible
             {
                 get
@@ -119,12 +119,12 @@
                     _isEndPointVisible = value;
                 }
             }
-            /// <summary>
-            /// The points along the most recent cast.
-            /// </summary>
             [Tooltip("The points along the most recent cast.")]
             [SerializeField]
             private HeapAllocationFreeReadOnlyList<Vector3> _points;
+            /// <summary>
+            /// The points along the most recent cast.
+            /// </summary>
             public HeapAllocationFreeReadOnlyList<Vector3> Points
             {
                 get
@@ -164,12 +164,12 @@
             }
         }
 
-        /// <summary>
-        /// The direction to scale the segment <see cref="GameObject"/>s in. Set axes to 0 to disable scaling on that axis.
-        /// </summary>
         [Tooltip("The direction to scale the segment GameObjects in. Set axes to 0 to disable scaling on that axis.")]
         [SerializeField]
         private Vector3 _segmentScaleDirection = Vector3.forward;
+        /// <summary>
+        /// The direction to scale the segment <see cref="GameObject"/>s in. Set axes to 0 to disable scaling on that axis.
+        /// </summary>
         public Vector3 SegmentScaleDirection
         {
             get
@@ -181,12 +181,12 @@
                 _segmentScaleDirection = value;
             }
         }
-        /// <summary>
-        /// Represents the start, i.e. the first rendered point.
-        /// </summary>
         [Tooltip("Represents the start, i.e. the first rendered point.")]
         [SerializeField]
         private GameObject _start;
+        /// <summary>
+        /// Represents the start, i.e. the first rendered point.
+        /// </summary>
         public GameObject Start
         {
             get
@@ -198,12 +198,12 @@
                 _start = value;
             }
         }
-        /// <summary>
-        /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
-        /// </summary>
         [Tooltip("Represents the segments between Start and End. This will get cloned to create all the segments.")]
         [SerializeField]
         private GameObject _repeatedSegment;
+        /// <summary>
+        /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
+        /// </summary>
         public GameObject RepeatedSegment
         {
             get
@@ -215,12 +215,12 @@
                 _repeatedSegment = value;
             }
         }
-        /// <summary>
-        /// Represents the end, i.e. the last rendered point.
-        /// </summary>
         [Tooltip("Represents the end, i.e. the last rendered point.")]
         [SerializeField]
         private GameObject _end;
+        /// <summary>
+        /// Represents the end, i.e. the last rendered point.
+        /// </summary>
         public GameObject End
         {
             get

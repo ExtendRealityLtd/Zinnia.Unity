@@ -27,12 +27,12 @@
             Forward
         }
 
-        /// <summary>
-        /// The direction to extract from the <see cref="Transform"/>.
-        /// </summary>
         [Tooltip("The direction to extract from the Transform.")]
         [SerializeField]
         private AxisDirection _direction;
+        /// <summary>
+        /// The direction to extract from the <see cref="Transform"/>.
+        /// </summary>
         public AxisDirection Direction
         {
             get

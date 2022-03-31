@@ -8,12 +8,12 @@
     /// </summary>
     public class VelocityMultiplier : VelocityTracker
     {
-        /// <summary>
-        /// The <see cref="VelocityTracker"/> to use as the source data.
-        /// </summary>
         [Tooltip("The VelocityTracker to use as the source data.")]
         [SerializeField]
         private VelocityTracker _source;
+        /// <summary>
+        /// The <see cref="VelocityTracker"/> to use as the source data.
+        /// </summary>
         public VelocityTracker Source
         {
             get
@@ -25,12 +25,12 @@
                 _source = value;
             }
         }
-        /// <summary>
-        /// The amount to multiply the source velocity by.
-        /// </summary>
         [Tooltip("The amount to multiply the source velocity by.")]
         [SerializeField]
         private Vector3 _velocityMultiplierFactor = Vector3.one;
+        /// <summary>
+        /// The amount to multiply the source velocity by.
+        /// </summary>
         public Vector3 VelocityMultiplierFactor
         {
             get
@@ -42,12 +42,12 @@
                 _velocityMultiplierFactor = value;
             }
         }
-        /// <summary>
-        /// The amount to multiply the source angular velocity by.
-        /// </summary>
         [Tooltip("The amount to multiply the source angular velocity by.")]
         [SerializeField]
         private Vector3 _angularVelocityMultiplierFactor = Vector3.one;
+        /// <summary>
+        /// The amount to multiply the source angular velocity by.
+        /// </summary>
         public Vector3 AngularVelocityMultiplierFactor
         {
             get

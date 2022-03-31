@@ -67,12 +67,12 @@
             TotalSeconds
         }
 
-        /// <summary>
-        /// Determines which value to use from the <see cref="TimeSpan"/>.
-        /// </summary>
         [Tooltip("Determines which value to use from the TimeSpan.")]
         [SerializeField]
         private TimeSpanProperty _timeSpanValue;
+        /// <summary>
+        /// Determines which value to use from the <see cref="TimeSpan"/>.
+        /// </summary>
         public TimeSpanProperty TimeSpanValue
         {
             get

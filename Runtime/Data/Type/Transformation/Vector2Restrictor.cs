@@ -19,12 +19,12 @@ namespace Zinnia.Data.Type.Transformation
         [Serializable]
         public class UnityEvent : UnityEvent<Vector2> { }
 
-        /// <summary>
-        /// The minimum and maximum values that the x coordinate can be.
-        /// </summary>
         [Tooltip("The minimum and maximum values that the x coordinate can be.")]
         [SerializeField]
         private FloatRange _xBounds = FloatRange.MinMax;
+        /// <summary>
+        /// The minimum and maximum values that the x coordinate can be.
+        /// </summary>
         public FloatRange XBounds
         {
             get
@@ -36,12 +36,12 @@ namespace Zinnia.Data.Type.Transformation
                 _xBounds = value;
             }
         }
-        /// <summary>
-        /// The minimum and maximum values that the y coordinate can be.
-        /// </summary>
         [Tooltip("The minimum and maximum values that the y coordinate can be.")]
         [SerializeField]
         private FloatRange _yBounds = FloatRange.MinMax;
+        /// <summary>
+        /// The minimum and maximum values that the y coordinate can be.
+        /// </summary>
         public FloatRange YBounds
         {
             get

@@ -23,12 +23,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<float> { }
 
-        /// <summary>
-        /// The range of the value from.
-        /// </summary>
         [Tooltip("The range of the value from.")]
         [SerializeField]
         private FloatRange _from = new FloatRange(0f, 1f);
+        /// <summary>
+        /// The range of the value from.
+        /// </summary>
         public FloatRange From
         {
             get
@@ -41,12 +41,12 @@
             }
         }
 
-        /// <summary>
-        /// The range of the value remaps to.
-        /// </summary>
         [Tooltip("The range of the value remaps to.")]
         [SerializeField]
         private FloatRange _to = new FloatRange(0f, 1f);
+        /// <summary>
+        /// The range of the value remaps to.
+        /// </summary>
         public FloatRange To
         {
             get
@@ -74,12 +74,12 @@
             SmoothStep
         }
 
-        /// <summary>
-        /// The mode to use when remapping.
-        /// </summary>
         [Tooltip("The mode to use when remapping.")]
         [SerializeField]
         private OutputMode _mode = OutputMode.Lerp;
+        /// <summary>
+        /// The mode to use when remapping.
+        /// </summary>
         public OutputMode Mode
         {
             get

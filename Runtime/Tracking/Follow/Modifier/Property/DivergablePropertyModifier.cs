@@ -22,13 +22,13 @@
         #endregion
 
         #region Divergence Settings
-        /// <summary>
-        /// Determines if to track whether the source diverges from the target. Tracking divergence adds additional overhead.
-        /// </summary>
         [Header("Divergence Settings")]
         [Tooltip("Determines if to track whether the source diverges from the target. Tracking divergence adds additional overhead.")]
         [SerializeField]
         private bool _trackDivergence;
+        /// <summary>
+        /// Determines if to track whether the source diverges from the target. Tracking divergence adds additional overhead.
+        /// </summary>
         public bool TrackDivergence
         {
             get
@@ -40,12 +40,12 @@
                 _trackDivergence = value;
             }
         }
-        /// <summary>
-        /// The distance the target has to be away from the source to be considered diverged.
-        /// </summary>
         [Tooltip("The distance the target has to be away from the source to be considered diverged.")]
         [SerializeField]
         private Vector3 _divergenceThreshold = Vector3.one * 0.1f;
+        /// <summary>
+        /// The distance the target has to be away from the source to be considered diverged.
+        /// </summary>
         public Vector3 DivergenceThreshold
         {
             get

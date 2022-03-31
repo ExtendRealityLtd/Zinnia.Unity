@@ -1,19 +1,19 @@
 namespace Zinnia.Cast
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Casts a straight line in the direction of the origin for a fixed length.
     /// </summary>
     public class FixedLineCast : StraightLineCast
     {
-        /// <summary>
-        /// The current length of the cast.
-        /// </summary>
         [Tooltip("The current length of the cast.")]
         [SerializeField]
         private float _currentLength = 1f;
+        /// <summary>
+        /// The current length of the cast.
+        /// </summary>
         public float CurrentLength
         {
             get
@@ -23,6 +23,10 @@ namespace Zinnia.Cast
             set
             {
                 _currentLength = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterCurrentLengthChange();
+                }
             }
         }
 
@@ -64,19 +68,17 @@ namespace Zinnia.Cast
         /// <summary>
         /// Called after <see cref="StraightLineCast.MaximumLength"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(MaximumLength))]
-        protected virtual void OnAfterMaximumLengthChange()
+        protected override void OnAfterMaximumLengthChange()
         {
-            CurrentLength = GetClampedCurrentLength();
+            _currentLength = GetClampedCurrentLength();
         }
 
         /// <summary>
         /// Called after <see cref="CurrentLength"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(CurrentLength))]
         protected virtual void OnAfterCurrentLengthChange()
         {
-            CurrentLength = GetClampedCurrentLength();
+            _currentLength = GetClampedCurrentLength();
         }
     }
 }

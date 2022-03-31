@@ -11,12 +11,12 @@
     /// <typeparam name="TEvent">The event type to emit.</typeparam>
     public abstract class SingleEventProxyEmitter<TValue, TEvent> : EventProxyEmitter where TEvent : UnityEvent<TValue>, new()
     {
-        /// <summary>
-        /// The payload data to emit.
-        /// </summary>
         [Tooltip("The payload data to emit.")]
         [SerializeField]
         private TValue _payload;
+        /// <summary>
+        /// The payload data to emit.
+        /// </summary>
         public TValue Payload
         {
             get

@@ -3,7 +3,6 @@
     using System;
     using UnityEngine;
     using UnityEngine.Events;
-    using Zinnia.Data.Attribute;
     using Zinnia.Extension;
 
     /// <summary>
@@ -27,12 +26,12 @@
             IncludeAncestors = 1 << 1
         }
 
-        /// <summary>
-        /// Determines whether to search for the <see cref="TResultElement"/> component on the ancestors and or descendants of the <see cref="Source"/>.
-        /// </summary>
         [Tooltip("Determines whether to search for the TResultElement component on the ancestors and or descendants of the Source.")]
         [SerializeField]
         private SearchCriteria _searchAlsoOn = (SearchCriteria)(-1);
+        /// <summary>
+        /// Determines whether to search for the <see cref="TResultElement"/> component on the ancestors and or descendants of the <see cref="Source"/>.
+        /// </summary>
         public SearchCriteria SearchAlsoOn
         {
             get

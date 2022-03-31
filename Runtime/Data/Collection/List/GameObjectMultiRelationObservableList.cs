@@ -17,12 +17,12 @@ namespace Zinnia.Data.Collection.List
         [Serializable]
         public class MultiRelation
         {
-            /// <summary>
-            /// The <see cref="GameObject"/> acting as the key.
-            /// </summary>
             [Tooltip("The GameObject acting as the key.")]
             [SerializeField]
             private GameObject _key;
+            /// <summary>
+            /// The <see cref="GameObject"/> acting as the key.
+            /// </summary>
             public GameObject Key
             {
                 get
@@ -34,12 +34,12 @@ namespace Zinnia.Data.Collection.List
                     _key = value;
                 }
             }
-            /// <summary>
-            /// The <see cref="GameObject"/> collection of relation values.
-            /// </summary>
             [Tooltip("The GameObject collection of relation values.")]
             [SerializeField]
             private List<GameObject> _values;
+            /// <summary>
+            /// The <see cref="GameObject"/> collection of relation values.
+            /// </summary>
             public List<GameObject> Values
             {
                 get

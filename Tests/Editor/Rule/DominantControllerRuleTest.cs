@@ -1,13 +1,10 @@
 ﻿using Zinnia.Extension;
-using Zinnia.Pattern;
-using Zinnia.Pattern.Collection;
 using Zinnia.Rule;
 using Zinnia.Tracking.CameraRig;
 
 namespace Test.Zinnia.Rule
 {
     using NUnit.Framework;
-    using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.XR;
     using Assert = UnityEngine.Assertions.Assert;

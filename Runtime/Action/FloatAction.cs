@@ -1,10 +1,9 @@
 ﻿namespace Zinnia.Action
 {
-    using UnityEngine.Events;
     using System;
-    using Malimbe.MemberChangeMethod;
-    using Zinnia.Extension;
     using UnityEngine;
+    using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a <see cref="float"/> value.
@@ -17,12 +16,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<float> { }
 
-        /// <summary>
-        /// The tolerance of equality between two <see cref="float"/> values.
-        /// </summary>
         [Tooltip("The tolerance of equality between two float values.")]
         [SerializeField]
         private float _equalityTolerance = float.Epsilon;
+        /// <summary>
+        /// The tolerance of equality between two <see cref="float"/> values.
+        /// </summary>
         public float EqualityTolerance
         {
             get
@@ -32,6 +31,10 @@
             set
             {
                 _equalityTolerance = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterEqualityToleranceChange();
+                }
             }
         }
 
@@ -50,7 +53,6 @@
         /// <summary>
         /// Called after <see cref="EqualityTolerance"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(EqualityTolerance))]
         protected virtual void OnAfterEqualityToleranceChange()
         {
             Receive(Value);

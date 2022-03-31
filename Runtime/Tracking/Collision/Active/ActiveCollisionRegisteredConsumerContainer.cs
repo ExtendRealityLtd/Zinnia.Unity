@@ -17,12 +17,12 @@
         [Serializable]
         public class EventData
         {
-            /// <summary>
-            /// The registered <see cref="ActiveCollisionConsumer"/>.
-            /// </summary>
             [Tooltip("The registered ActiveCollisionConsumer.")]
             [SerializeField]
             private ActiveCollisionConsumer _consumer;
+            /// <summary>
+            /// The registered <see cref="ActiveCollisionConsumer"/>.
+            /// </summary>
             public ActiveCollisionConsumer Consumer
             {
                 get
@@ -35,12 +35,12 @@
                 }
             }
 
-            /// <summary>
-            /// The payload data sent to the <see cref="ActiveCollisionConsumer"/>.
-            /// </summary>
             [Tooltip("The payload data sent to the ActiveCollisionConsumer.")]
             [SerializeField]
             private ActiveCollisionPublisher.PayloadData _payload;
+            /// <summary>
+            /// The payload data sent to the <see cref="ActiveCollisionConsumer"/>.
+            /// </summary>
             public ActiveCollisionPublisher.PayloadData Payload
             {
                 get

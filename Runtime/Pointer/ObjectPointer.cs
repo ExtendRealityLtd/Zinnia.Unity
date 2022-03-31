@@ -20,12 +20,12 @@
         [Serializable]
         public class EventData : SurfaceData
         {
-            /// <summary>
-            /// Whether the <see cref="ObjectPointer"/> is currently activated.
-            /// </summary>
             [Tooltip("Whether the ObjectPointer is currently activated.")]
             [SerializeField]
             private bool _isCurrentlyActive;
+            /// <summary>
+            /// Whether the <see cref="ObjectPointer"/> is currently activated.
+            /// </summary>
             public bool IsCurrentlyActive
             {
                 get
@@ -37,12 +37,12 @@
                     _isCurrentlyActive = value;
                 }
             }
-            /// <summary>
-            /// Whether the <see cref="ObjectPointer"/> is currently hovering over a target.
-            /// </summary>
             [Tooltip("Whether the ObjectPointer is currently hovering over a target.")]
             [SerializeField]
             private bool _isCurrentlyHovering;
+            /// <summary>
+            /// Whether the <see cref="ObjectPointer"/> is currently hovering over a target.
+            /// </summary>
             public bool IsCurrentlyHovering
             {
                 get
@@ -54,12 +54,12 @@
                     _isCurrentlyHovering = value;
                 }
             }
-            /// <summary>
-            /// The duration that the <see cref="ObjectPointer"/> has been hovering over it's current target.
-            /// </summary>
             [Tooltip("The duration that the ObjectPointer has been hovering over it's current target.")]
             [SerializeField]
             private float _currentHoverDuration;
+            /// <summary>
+            /// The duration that the <see cref="ObjectPointer"/> has been hovering over it's current target.
+            /// </summary>
             public float CurrentHoverDuration
             {
                 get
@@ -71,12 +71,12 @@
                     _currentHoverDuration = value;
                 }
             }
-            /// <summary>
-            /// The points cast data given to the <see cref="ObjectPointer"/>.
-            /// </summary>
             [Tooltip("The points cast data given to the ObjectPointer.")]
             [SerializeField]
             private PointsCast.EventData _currentPointsCastData;
+            /// <summary>
+            /// The points cast data given to the <see cref="ObjectPointer"/>.
+            /// </summary>
             public PointsCast.EventData CurrentPointsCastData
             {
                 get
@@ -178,13 +178,13 @@
         [Serializable]
         public class PointsRendererUnityEvent : UnityEvent<PointsRenderer.PointsData> { }
 
-        /// <summary>
-        /// Represents the origin, i.e. the first rendered point.
-        /// </summary>
         [Header("Pointer Element Settings")]
         [Tooltip("Represents the origin, i.e. the first rendered point.")]
         [SerializeField]
         private PointerElement _origin;
+        /// <summary>
+        /// Represents the origin, i.e. the first rendered point.
+        /// </summary>
         public PointerElement Origin
         {
             get
@@ -196,12 +196,12 @@
                 _origin = value;
             }
         }
-        /// <summary>
-        /// Represents the segments between <see cref="Origin"/> and <see cref="Destination"/>. This will get cloned to create all the segments.
-        /// </summary>
         [Tooltip("Represents the segments between Origin and Destination. This will get cloned to create all the segments.")]
         [SerializeField]
         private PointerElement _repeatedSegment;
+        /// <summary>
+        /// Represents the segments between <see cref="Origin"/> and <see cref="Destination"/>. This will get cloned to create all the segments.
+        /// </summary>
         public PointerElement RepeatedSegment
         {
             get
@@ -213,12 +213,12 @@
                 _repeatedSegment = value;
             }
         }
-        /// <summary>
-        /// Represents the destination, i.e. the last rendered point.
-        /// </summary>
         [Tooltip("Represents the destination, i.e. the last rendered point.")]
         [SerializeField]
         private PointerElement _destination;
+        /// <summary>
+        /// Represents the destination, i.e. the last rendered point.
+        /// </summary>
         public PointerElement Destination
         {
             get
@@ -230,12 +230,12 @@
                 _destination = value;
             }
         }
-        /// <summary>
-        /// Whether the <see cref="Destination"/> will be enabled if the raycast does not collide with anything and contains no <see cref="PointsCast.EventData.HitData"/>.
-        /// </summary>
         [Tooltip("Whether the Destination will be enabled if the raycast does not collide with anything and contains no PointsCast.EventData.HitData.")]
         [SerializeField]
         private bool _enableDestinationOnNoCollision = true;
+        /// <summary>
+        /// Whether the <see cref="Destination"/> will be enabled if the raycast does not collide with anything and contains no <see cref="PointsCast.EventData.HitData"/>.
+        /// </summary>
         public bool EnableDestinationOnNoCollision
         {
             get
@@ -247,12 +247,12 @@
                 _enableDestinationOnNoCollision = value;
             }
         }
-        /// <summary>
-        /// Provides an alternative as the pointer origin in the events.
-        /// </summary>
         [Tooltip("Provides an alternative as the pointer origin in the events.")]
         [SerializeField]
         private GameObject _eventDataOriginTransformOverride;
+        /// <summary>
+        /// Provides an alternative as the pointer origin in the events.
+        /// </summary>
         public GameObject EventDataOriginTransformOverride
         {
             get

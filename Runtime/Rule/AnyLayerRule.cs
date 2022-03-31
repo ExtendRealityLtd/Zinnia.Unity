@@ -7,12 +7,12 @@
     /// </summary>
     public class AnyLayerRule : GameObjectRule
     {
-        /// <summary>
-        /// The layers to check against.
-        /// </summary>
         [Tooltip("The layers to check against.")]
         [SerializeField]
         private LayerMask _layerMask;
+        /// <summary>
+        /// The layers to check against.
+        /// </summary>
         public LayerMask LayerMask
         {
             get

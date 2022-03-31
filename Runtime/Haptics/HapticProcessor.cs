@@ -8,12 +8,12 @@
     /// </summary>
     public class HapticProcessor : HapticProcess
     {
-        /// <summary>
-        /// The <see cref="HapticProcess"/> collection to attempt to process.
-        /// </summary>
         [Tooltip("The HapticProcess collection to attempt to process.")]
         [SerializeField]
         private HapticProcessObservableList _hapticProcesses;
+        /// <summary>
+        /// The <see cref="HapticProcess"/> collection to attempt to process.
+        /// </summary>
         public HapticProcessObservableList HapticProcesses
         {
             get
@@ -25,12 +25,12 @@
                 _hapticProcesses = value;
             }
         }
-        /// <summary>
-        /// Whether to cease the processing of the collection after the first valid <see cref="HapticProcess"/> is processed.
-        /// </summary>
         [Tooltip("Whether to cease the processing of the collection after the first valid HapticProcess is processed.")]
         [SerializeField]
         private bool _ceaseAfterFirstSourceProcessed = true;
+        /// <summary>
+        /// Whether to cease the processing of the collection after the first valid <see cref="HapticProcess"/> is processed.
+        /// </summary>
         public bool CeaseAfterFirstSourceProcessed
         {
             get

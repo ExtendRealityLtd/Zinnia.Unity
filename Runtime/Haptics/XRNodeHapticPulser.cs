@@ -8,12 +8,12 @@
     /// </summary>
     public class XRNodeHapticPulser : HapticPulser
     {
-        /// <summary>
-        /// The node to pulse.
-        /// </summary>
         [Tooltip("The node to pulse.")]
         [SerializeField]
         private XRNode _node = XRNode.LeftHand;
+        /// <summary>
+        /// The node to pulse.
+        /// </summary>
         public XRNode Node
         {
             get
@@ -25,15 +25,15 @@
                 _node = value;
             }
         }
+        [Tooltip("The duration to pulse Node for.")]
+        [SerializeField]
+        private float _duration = 0.005f;
         /// <summary>
         /// The duration to pulse <see cref="Node"/> for.
         /// </summary>
         /// <remarks>
         /// Not supported by all devices.
         /// </remarks>
-        [Tooltip("The duration to pulse Node for.")]
-        [SerializeField]
-        private float _duration = 0.005f;
         public float Duration
         {
             get

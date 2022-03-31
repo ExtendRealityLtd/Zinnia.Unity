@@ -11,12 +11,12 @@
     [Obsolete("Use `RuleAssociation` instead.")]
     public class PlatformDeviceAssociation : GameObjectsAssociation
     {
-        /// <summary>
-        /// A regular expression to match the name of the current <see cref="RuntimePlatform"/>.
-        /// </summary>
         [Tooltip("A regular expression to match the name of the current RuntimePlatform.")]
         [SerializeField]
         private string _platformPattern;
+        /// <summary>
+        /// A regular expression to match the name of the current <see cref="RuntimePlatform"/>.
+        /// </summary>
         public string PlatformPattern
         {
             get
@@ -28,12 +28,12 @@
                 _platformPattern = value;
             }
         }
-        /// <summary>
-        /// A regular expression to match the name of the XR device that needs to be loaded.
-        /// </summary>
         [Tooltip("A regular expression to match the name of the XR device that needs to be loaded.")]
         [SerializeField]
         private string _xrSdkPattern;
+        /// <summary>
+        /// A regular expression to match the name of the XR device that needs to be loaded.
+        /// </summary>
         public string XrSdkPattern
         {
             get
@@ -46,12 +46,12 @@
             }
         }
 
-        /// <summary>
-        /// A regular expression to match the name of the XR model that is being used.
-        /// </summary>
         [Tooltip("A regular expression to match the name of the XR model that is being used.")]
         [SerializeField]
         private string _xrModelPattern;
+        /// <summary>
+        /// A regular expression to match the name of the XR model that is being used.
+        /// </summary>
         public string XrModelPattern
         {
             get

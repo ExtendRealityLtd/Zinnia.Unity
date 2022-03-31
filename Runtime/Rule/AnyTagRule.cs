@@ -8,12 +8,12 @@
     /// </summary>
     public class AnyTagRule : GameObjectRule
     {
-        /// <summary>
-        /// The tags to check against.
-        /// </summary>
         [Tooltip("The tags to check against.")]
         [SerializeField]
         private StringObservableList _tags;
+        /// <summary>
+        /// The tags to check against.
+        /// </summary>
         public StringObservableList Tags
         {
             get

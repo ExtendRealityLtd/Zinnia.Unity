@@ -13,13 +13,13 @@
     public class LinkedAliasAssociationCollection : MonoBehaviour
     {
         #region PlayArea Settings
-        /// <summary>
-        /// The associated PlayArea.
-        /// </summary>
         [Header("PlayArea Settings")]
         [Tooltip("The associated PlayArea.")]
         [SerializeField]
         private GameObject _playArea;
+        /// <summary>
+        /// The associated PlayArea.
+        /// </summary>
         public GameObject PlayArea
         {
             get
@@ -34,13 +34,13 @@
         #endregion
 
         #region Headset Settings
-        /// <summary>
-        /// The associated Headset.
-        /// </summary>
         [Header("Headset Settings")]
         [Tooltip("The associated Headset.")]
         [SerializeField]
         private GameObject _headset;
+        /// <summary>
+        /// The associated Headset.
+        /// </summary>
         public GameObject Headset
         {
             get
@@ -52,12 +52,12 @@
                 _headset = value;
             }
         }
-        /// <summary>
-        /// The associated Headset Camera.
-        /// </summary>
         [Tooltip("The associated Headset Camera.")]
         [SerializeField]
         private Camera _headsetCamera;
+        /// <summary>
+        /// The associated Headset Camera.
+        /// </summary>
         public Camera HeadsetCamera
         {
             get
@@ -69,12 +69,12 @@
                 _headsetCamera = value;
             }
         }
-        /// <summary>
-        /// The associated Headset Velocity Tracker.
-        /// </summary>
         [Tooltip("The associated Headset Velocity Tracker.")]
         [SerializeField]
         private VelocityTracker _headsetVelocityTracker;
+        /// <summary>
+        /// The associated Headset Velocity Tracker.
+        /// </summary>
         public VelocityTracker HeadsetVelocityTracker
         {
             get
@@ -86,12 +86,12 @@
                 _headsetVelocityTracker = value;
             }
         }
-        /// <summary>
-        /// A list of any additional cameras associated with the headset.
-        /// </summary>
         [Tooltip("A list of any additional cameras associated with the headset.")]
         [SerializeField]
         private CameraObservableList _supplementHeadsetCameras;
+        /// <summary>
+        /// A list of any additional cameras associated with the headset.
+        /// </summary>
         public CameraObservableList SupplementHeadsetCameras
         {
             get
@@ -103,12 +103,12 @@
                 _supplementHeadsetCameras = value;
             }
         }
-        /// <summary>
-        /// The details and status of the headset device.
-        /// </summary>
         [Tooltip("The details and status of the headset device.")]
         [SerializeField]
         private DeviceDetailsRecord _headsetDeviceDetails;
+        /// <summary>
+        /// The details and status of the headset device.
+        /// </summary>
         public DeviceDetailsRecord HeadsetDeviceDetails
         {
             get
@@ -120,12 +120,12 @@
                 _headsetDeviceDetails = value;
             }
         }
-        /// <summary>
-        /// The dominant controller observer.
-        /// </summary>
         [Tooltip("The dominant controller observer.")]
         [SerializeField]
         private DominantControllerObserver _dominantController;
+        /// <summary>
+        /// The dominant controller observer.
+        /// </summary>
         public DominantControllerObserver DominantController
         {
             get
@@ -140,13 +140,13 @@
         #endregion
 
         #region Left Controller Settings
-        /// <summary>
-        /// The associated Left Controller.
-        /// </summary>
         [Header("Left Controller Settings")]
         [Tooltip("The associated Left Controller.")]
         [SerializeField]
         private GameObject _leftController;
+        /// <summary>
+        /// The associated Left Controller.
+        /// </summary>
         public GameObject LeftController
         {
             get
@@ -158,12 +158,12 @@
                 _leftController = value;
             }
         }
-        /// <summary>
-        /// The associated Left Controller Velocity Tracker.
-        /// </summary>
         [Tooltip("The associated Left Controller Velocity Tracker.")]
         [SerializeField]
         private VelocityTracker _leftControllerVelocityTracker;
+        /// <summary>
+        /// The associated Left Controller Velocity Tracker.
+        /// </summary>
         public VelocityTracker LeftControllerVelocityTracker
         {
             get
@@ -175,12 +175,12 @@
                 _leftControllerVelocityTracker = value;
             }
         }
-        /// <summary>
-        /// The main Left Controller Haptic Process profile.
-        /// </summary>
         [Tooltip("The main Left Controller Haptic Process profile.")]
         [SerializeField]
         private HapticProcess _leftControllerHapticProcess;
+        /// <summary>
+        /// The main Left Controller Haptic Process profile.
+        /// </summary>
         public HapticProcess LeftControllerHapticProcess
         {
             get
@@ -192,12 +192,12 @@
                 _leftControllerHapticProcess = value;
             }
         }
-        /// <summary>
-        /// A <see cref="HapticProcess"/> collection of haptic profiles that can be used with the Left Controller.
-        /// </summary>
         [Tooltip("A HapticProcess collection of haptic profiles that can be used with the Left Controller.")]
         [SerializeField]
         private HapticProcessObservableList _leftControllerHapticProfiles;
+        /// <summary>
+        /// A <see cref="HapticProcess"/> collection of haptic profiles that can be used with the Left Controller.
+        /// </summary>
         public HapticProcessObservableList LeftControllerHapticProfiles
         {
             get
@@ -209,12 +209,12 @@
                 _leftControllerHapticProfiles = value;
             }
         }
-        /// <summary>
-        /// The details and status of the left controller device.
-        /// </summary>
         [Tooltip("The details and status of the left controller device.")]
         [SerializeField]
         private DeviceDetailsRecord _leftControllerDeviceDetails;
+        /// <summary>
+        /// The details and status of the left controller device.
+        /// </summary>
         public DeviceDetailsRecord LeftControllerDeviceDetails
         {
             get
@@ -229,13 +229,13 @@
         #endregion
 
         #region Right Controller Settings
-        /// <summary>
-        /// The associated Right Controller.
-        /// </summary>
         [Header("Right Controller Settings")]
         [Tooltip("The associated Right Controller.")]
         [SerializeField]
         private GameObject _rightController;
+        /// <summary>
+        /// The associated Right Controller.
+        /// </summary>
         public GameObject RightController
         {
             get
@@ -247,12 +247,12 @@
                 _rightController = value;
             }
         }
-        /// <summary>
-        /// The associated Right Controller Velocity Tracker.
-        /// </summary>
         [Tooltip("The associated Right Controller Velocity Tracker.")]
         [SerializeField]
         private VelocityTracker _rightControllerVelocityTracker;
+        /// <summary>
+        /// The associated Right Controller Velocity Tracker.
+        /// </summary>
         public VelocityTracker RightControllerVelocityTracker
         {
             get
@@ -264,12 +264,12 @@
                 _rightControllerVelocityTracker = value;
             }
         }
-        /// <summary>
-        /// The main Right Controller Haptic Process profile.
-        /// </summary>
         [Tooltip("The main Right Controller Haptic Process profile.")]
         [SerializeField]
         private HapticProcess _rightControllerHapticProcess;
+        /// <summary>
+        /// The main Right Controller Haptic Process profile.
+        /// </summary>
         public HapticProcess RightControllerHapticProcess
         {
             get
@@ -281,12 +281,12 @@
                 _rightControllerHapticProcess = value;
             }
         }
-        /// <summary>
-        /// A <see cref="HapticProcess"/> collection of supplement haptic settings that can be used with the Right Controller.
-        /// </summary>
         [Tooltip("A HapticProcess collection of supplement haptic settings that can be used with the Right Controller.")]
         [SerializeField]
         private HapticProcessObservableList _rightControllerHapticProfiles;
+        /// <summary>
+        /// A <see cref="HapticProcess"/> collection of supplement haptic settings that can be used with the Right Controller.
+        /// </summary>
         public HapticProcessObservableList RightControllerHapticProfiles
         {
             get
@@ -298,12 +298,12 @@
                 _rightControllerHapticProfiles = value;
             }
         }
-        /// <summary>
-        /// The details and status of the right controller device.
-        /// </summary>
         [Tooltip("The details and status of the right controller device.")]
         [SerializeField]
         private DeviceDetailsRecord _rightControllerDeviceDetails;
+        /// <summary>
+        /// The details and status of the right controller device.
+        /// </summary>
         public DeviceDetailsRecord RightControllerDeviceDetails
         {
             get

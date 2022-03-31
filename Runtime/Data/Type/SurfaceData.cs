@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using UnityEngine;
     using Zinnia.Extension;
@@ -11,12 +10,12 @@
     [Serializable]
     public class SurfaceData : TransformData
     {
-        /// <summary>
-        /// The origin in which the surface search came from.
-        /// </summary>
         [Tooltip("The origin in which the surface search came from.")]
         [SerializeField]
         private Vector3 _origin;
+        /// <summary>
+        /// The origin in which the surface search came from.
+        /// </summary>
         public Vector3 Origin
         {
             get
@@ -28,12 +27,12 @@
                 _origin = value;
             }
         }
-        /// <summary>
-        /// The direction in which the surface search came from.
-        /// </summary>
         [Tooltip("The direction in which the surface search came from.")]
         [SerializeField]
         private Vector3 _direction;
+        /// <summary>
+        /// The direction in which the surface search came from.
+        /// </summary>
         public Vector3 Direction
         {
             get
@@ -54,7 +53,22 @@
         /// <summary>
         /// <see cref="RaycastHit"/> data about the current collision.
         /// </summary>
-        public RaycastHit CollisionData { get; set; }
+        private RaycastHit _collisionData;
+        public RaycastHit CollisionData
+        {
+            get
+            {
+                return _collisionData;
+            }
+            set
+            {
+                if (Application.isPlaying)
+                {
+                    OnBeforeCollisionDataChange();
+                }
+                _collisionData = value;
+            }
+        }
 
         /// <summary>
         /// <see cref="RaycastHit"/> data about the previous collision.
@@ -153,7 +167,6 @@
         /// <summary>
         /// Called before <see cref="CollisionData"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(CollisionData))]
         protected virtual void OnBeforeCollisionDataChange()
         {
             PreviousCollisionData = CollisionData;

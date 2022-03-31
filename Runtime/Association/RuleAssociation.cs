@@ -9,12 +9,12 @@
     /// </summary>
     public class RuleAssociation : GameObjectsAssociation
     {
-        /// <summary>
-        /// The <see cref="RuleContainer"/> to match the association with.
-        /// </summary>
         [Tooltip("The RuleContainer to match the association with.")]
         [SerializeField]
         private RuleContainer _rule;
+        /// <summary>
+        /// The <see cref="RuleContainer"/> to match the association with.
+        /// </summary>
         public RuleContainer Rule
         {
             get

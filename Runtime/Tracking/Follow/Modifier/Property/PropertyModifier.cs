@@ -22,13 +22,13 @@
         #endregion
 
         #region Modifier Settings
-        /// <summary>
-        /// Determines whether the offset will be applied on the modification.
-        /// </summary>
         [Header("Modifier Settings")]
         [Tooltip("Determines whether the offset will be applied on the modification.")]
         [SerializeField]
         private bool _applyOffset = true;
+        /// <summary>
+        /// Determines whether the offset will be applied on the modification.
+        /// </summary>
         public bool ApplyOffset
         {
             get

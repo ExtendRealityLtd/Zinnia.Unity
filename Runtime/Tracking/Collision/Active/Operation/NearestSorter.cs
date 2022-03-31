@@ -15,12 +15,12 @@
         /// </summary>
         protected class EventDataComparer : IComparer<CollisionNotifier.EventData>
         {
-            /// <summary>
-            /// The position to check against.
-            /// </summary>
             [Tooltip("The position to check against.")]
             [SerializeField]
             private Vector3 _sourcePosition;
+            /// <summary>
+            /// The position to check against.
+            /// </summary>
             public Vector3 SourcePosition
             {
                 get
@@ -50,12 +50,12 @@
             }
         }
 
-        /// <summary>
-        /// The source to determine the closest collision to.
-        /// </summary>
         [Tooltip("The source to determine the closest collision to.")]
         [SerializeField]
         private GameObject _source;
+        /// <summary>
+        /// The source to determine the closest collision to.
+        /// </summary>
         public GameObject Source
         {
             get

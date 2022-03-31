@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Utility
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
 
     /// <summary>
@@ -19,9 +18,24 @@
         /// </summary>
         protected Object Field
         {
-            get => field;
-            set => field = value;
+            get
+            {
+                return field;
+            }
+            set
+            {
+                field = value;
+                if (Application.isPlaying)
+                {
+                    OnAfterFieldChange();
+                }
+            }
         }
+
+        /// <summary>
+        /// Called after <see cref="Field"/> has been changed.
+        /// </summary>
+        protected abstract void OnAfterFieldChange();
     }
 
     /// <summary>
@@ -75,8 +89,7 @@
         /// <summary>
         /// Called after <see cref="InterfaceContainer.Field"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Field))]
-        protected virtual void OnAfterFieldChange()
+        protected override void OnAfterFieldChange()
         {
             if (Field is TInterface @interface)
             {
@@ -84,7 +97,7 @@
             }
             else
             {
-                Field = null;
+                field = null;
             }
         }
     }

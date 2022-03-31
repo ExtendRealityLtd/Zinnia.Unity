@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Utility
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -17,12 +16,12 @@
         [Serializable]
         public class FloatUnityEvent : UnityEvent<float> { }
 
-        /// <summary>
-        /// The time to start the countdown at.
-        /// </summary>
         [Tooltip("The time to start the countdown at.")]
         [SerializeField]
         private float _startTime = 1f;
+        /// <summary>
+        /// The time to start the countdown at.
+        /// </summary>
         public float StartTime
         {
             get
@@ -32,6 +31,10 @@
             set
             {
                 _startTime = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterStartTimeChange();
+                }
             }
         }
 
@@ -67,11 +70,7 @@
         /// <summary>
         /// Determines if the countdown is still running.
         /// </summary>
-        public bool IsRunning
-        {
-            get;
-            protected set;
-        }
+        public bool IsRunning { get; protected set; }
 
         /// <summary>
         /// Elapsed time of the timer.
@@ -220,7 +219,6 @@
         /// <summary>
         /// Called after <see cref="StartTime"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(StartTime))]
         protected virtual void OnAfterStartTimeChange()
         {
             SetInternalStates();

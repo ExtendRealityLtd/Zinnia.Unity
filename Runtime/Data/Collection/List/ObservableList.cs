@@ -63,13 +63,13 @@
         public TEvent Emptied = new TEvent();
         #endregion
 
-        /// <summary>
-        /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will be clamped within the index bounds.
-        /// </summary>
         [Header("List Settings")]
         [Tooltip("The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will be clamped within the index bounds.")]
         [SerializeField]
         private int _currentIndex;
+        /// <summary>
+        /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will be clamped within the index bounds.
+        /// </summary>
         public int CurrentIndex
         {
             get

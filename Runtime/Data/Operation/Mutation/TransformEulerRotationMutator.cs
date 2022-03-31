@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using UnityEngine;
     using Zinnia.Data.Type;
@@ -12,13 +11,13 @@
     public class TransformEulerRotationMutator : TransformPropertyMutator
     {
         #region Rotation Settings
-        /// <summary>
-        /// An optional rotation origin to perform the rotation around. The origin must be a child of the <see cref="TransformPropertyMutator.Target"/>.
-        /// </summary>
         [Header("Rotation Settings")]
         [Tooltip("An optional rotation origin to perform the rotation around. The origin must be a child of the TransformPropertyMutator.Target.")]
         [SerializeField]
         private GameObject _origin;
+        /// <summary>
+        /// An optional rotation origin to perform the rotation around. The origin must be a child of the <see cref="TransformPropertyMutator.Target"/>.
+        /// </summary>
         public GameObject Origin
         {
             get
@@ -28,14 +27,18 @@
             set
             {
                 _origin = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterOriginChange();
+                }
             }
         }
-        /// <summary>
-        /// Determines which axes to consider from the <see cref="Origin"/>.
-        /// </summary>
         [Tooltip("Determines which axes to consider from the Origin.")]
         [SerializeField]
         private Vector3State _applyOriginOnAxis = Vector3State.True;
+        /// <summary>
+        /// Determines which axes to consider from the <see cref="Origin"/>.
+        /// </summary>
         public Vector3State ApplyOriginOnAxis
         {
             get
@@ -156,7 +159,7 @@
 
         protected virtual void OnEnable()
         {
-            OnAfterRotationOriginChange();
+            OnAfterOriginChange();
         }
 
         /// <summary>
@@ -208,8 +211,7 @@
         /// <summary>
         /// Called after <see cref="Origin"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Origin))]
-        protected virtual void OnAfterRotationOriginChange()
+        protected virtual void OnAfterOriginChange()
         {
             if (Origin == null || Target == null)
             {
@@ -220,6 +222,12 @@
             {
                 throw new ArgumentException($"The `RotationOrigin` [{Origin.name}] must be a child of the `Target` [{Target.name}] GameObject.");
             }
+        }
+
+        [Obsolete("Use `OnAfterOriginChange` instead.")]
+        protected virtual void OnAfterRotationOriginChange()
+        {
+            OnAfterOriginChange();
         }
     }
 }

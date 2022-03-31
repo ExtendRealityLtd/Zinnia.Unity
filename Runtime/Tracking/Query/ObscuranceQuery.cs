@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Query
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -28,12 +27,12 @@
             public MissingColliderException(UnityEngine.Object owner, GameObject missingColliderGameObject) : base($"The configured {nameof(Target)} '{missingColliderGameObject}' on '{owner}' needs a {nameof(Collider)} on it or if it has a {nameof(Rigidbody)} on it then a child {nameof(Collider)} is required.") { }
         }
 
-        /// <summary>
-        /// Defines the source location that the RayCast will originate from towards the <see cref="Target"/> location.
-        /// </summary>
         [Tooltip("Defines the source location that the RayCast will originate from towards the Target location.")]
         [SerializeField]
         private GameObject _source;
+        /// <summary>
+        /// Defines the source location that the RayCast will originate from towards the <see cref="Target"/> location.
+        /// </summary>
         public GameObject Source
         {
             get
@@ -45,12 +44,12 @@
                 _source = value;
             }
         }
-        /// <summary>
-        /// Defines the target location that the RayCast will attain to reach from the originating <see cref="Source"/> location.
-        /// </summary>
         [Tooltip("Defines the target location that the RayCast will attain to reach from the originating Source location.")]
         [SerializeField]
         private GameObject _target;
+        /// <summary>
+        /// Defines the target location that the RayCast will attain to reach from the originating <see cref="Source"/> location.
+        /// </summary>
         public GameObject Target
         {
             get
@@ -60,14 +59,18 @@
             set
             {
                 _target = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetChange();
+                }
             }
         }
-        /// <summary>
-        /// Optional settings to use when doing the RayCast.
-        /// </summary>
         [Tooltip("Optional settings to use when doing the RayCast.")]
         [SerializeField]
         private PhysicsCast _physicsCast;
+        /// <summary>
+        /// Optional settings to use when doing the RayCast.
+        /// </summary>
         public PhysicsCast PhysicsCast
         {
             get
@@ -201,7 +204,6 @@
         /// <summary>
         /// Called after <see cref="Target"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Target))]
         protected virtual void OnAfterTargetChange()
         {
             CheckTarget();

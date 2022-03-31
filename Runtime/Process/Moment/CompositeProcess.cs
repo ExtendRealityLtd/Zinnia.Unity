@@ -8,12 +8,12 @@
     /// </summary>
     public class CompositeProcess : MonoBehaviour, IProcessable
     {
-        /// <summary>
-        /// A collection of <see cref="MomentProcess"/> to process.
-        /// </summary>
         [Tooltip("A collection of MomentProcess to process.")]
         [SerializeField]
         private MomentProcessObservableList _processes;
+        /// <summary>
+        /// A collection of <see cref="MomentProcess"/> to process.
+        /// </summary>
         public MomentProcessObservableList Processes
         {
             get

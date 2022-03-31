@@ -10,13 +10,13 @@
     public abstract class TransformPropertyMutator : MonoBehaviour
     {
         #region Target Settings
-        /// <summary>
-        /// The target to mutate.
-        /// </summary>
         [Header("Target Settings")]
         [Tooltip("The target to mutate.")]
         [SerializeField]
         private GameObject _target;
+        /// <summary>
+        /// The target to mutate.
+        /// </summary>
         public GameObject Target
         {
             get
@@ -28,12 +28,12 @@
                 _target = value;
             }
         }
-        /// <summary>
-        /// Determines whether to mutate the local or global values.
-        /// </summary>
         [Tooltip("Determines whether to mutate the local or global values.")]
         [SerializeField]
         private bool _useLocalValues;
+        /// <summary>
+        /// Determines whether to mutate the local or global values.
+        /// </summary>
         public bool UseLocalValues
         {
             get
@@ -45,12 +45,12 @@
                 _useLocalValues = value;
             }
         }
-        /// <summary>
-        /// Determines which axes to mutate.
-        /// </summary>
         [Tooltip("Determines which axes to mutate.")]
         [SerializeField]
         private Vector3State _mutateOnAxis = Vector3State.True;
+        /// <summary>
+        /// Determines which axes to mutate.
+        /// </summary>
         public Vector3State MutateOnAxis
         {
             get

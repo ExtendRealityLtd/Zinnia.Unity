@@ -8,12 +8,12 @@
     /// </summary>
     public class AudioClipHapticPulser : RoutineHapticPulser
     {
-        /// <summary>
-        /// The waveform to represent the haptic pattern.
-        /// </summary>
         [Tooltip("The waveform to represent the haptic pattern.")]
         [SerializeField]
         private AudioClip _audioClip;
+        /// <summary>
+        /// The waveform to represent the haptic pattern.
+        /// </summary>
         public AudioClip AudioClip
         {
             get

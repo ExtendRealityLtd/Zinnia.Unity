@@ -9,12 +9,12 @@
     /// </summary>
     public class AnyRule : Rule
     {
-        /// <summary>
-        /// The <see cref="IRule"/>s to check against.
-        /// </summary>
         [Tooltip("The IRules to check against.")]
         [SerializeField]
         private RuleContainerObservableList _rules;
+        /// <summary>
+        /// The <see cref="IRule"/>s to check against.
+        /// </summary>
         public RuleContainerObservableList Rules
         {
             get

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -9,12 +8,12 @@
     /// </summary>
     public class RigidbodyPropertyMutator : MonoBehaviour
     {
-        /// <summary>
-        /// The <see cref="Rigidbody"/> to mutate.
-        /// </summary>
         [Tooltip("The Rigidbody to mutate.")]
         [SerializeField]
         private Rigidbody _target;
+        /// <summary>
+        /// The <see cref="Rigidbody"/> to mutate.
+        /// </summary>
         public Rigidbody Target
         {
             get
@@ -30,35 +29,155 @@
         /// <summary>
         /// The <see cref="Rigidbody.mass"/> value.
         /// </summary>
-        public float Mass { get; set; }
+        private float _mass;
+        public float Mass
+        {
+            get
+            {
+                return _mass;
+            }
+            set
+            {
+                _mass = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterMassChange();
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="Rigidbody.drag"/> value.
         /// </summary>
-        public float Drag { get; set; }
+        private float _drag;
+        public float Drag
+        {
+            get
+            {
+                return _drag;
+            }
+            set
+            {
+                _drag = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterDragChange();
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="Rigidbody.angularDrag"/> value.
         /// </summary>
-        public float AngularDrag { get; set; }
+        private float _angularDrag;
+        public float AngularDrag
+        {
+            get
+            {
+                return _angularDrag;
+            }
+            set
+            {
+                _angularDrag = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAngularDragChange();
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="Rigidbody.useGravity"/> state.
         /// </summary>
-        public bool UseGravity { get; set; }
+        private bool _useGravity;
+        public bool UseGravity
+        {
+            get
+            {
+                return _useGravity;
+            }
+            set
+            {
+                _useGravity = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterUseGravityChange();
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="Rigidbody.isKinematic"/> state.
         /// </summary>
-        public bool IsKinematic { get; set; }
+        private bool _isKinematic;
+        public bool IsKinematic
+        {
+            get
+            {
+                return _isKinematic;
+            }
+            set
+            {
+                _isKinematic = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterIsKinematicChange();
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="Rigidbody.velocity"/> value.
         /// </summary>
-        public Vector3 Velocity { get; set; }
+        private Vector3 _velocity;
+        public Vector3 Velocity
+        {
+            get
+            {
+                return _velocity;
+            }
+            set
+            {
+                _velocity = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterVelocityChange();
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="Rigidbody.angularVelocity"/> value.
         /// </summary>
-        public Vector3 AngularVelocity { get; set; }
+        private Vector3 _angularVelocity;
+        public Vector3 AngularVelocity
+        {
+            get
+            {
+                return _angularVelocity;
+            }
+            set
+            {
+                _angularVelocity = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAngularVelocityChange();
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="Rigidbody.maxAngularVelocity"/> value.
         /// </summary>
-        public float MaxAngularVelocity { get; set; }
+        private float _maxAngularVelocity;
+        public float MaxAngularVelocity
+        {
+            get
+            {
+                return _maxAngularVelocity;
+            }
+            set
+            {
+                _maxAngularVelocity = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterMaxAngularVelocityChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Clears <see cref="Target"/>.
@@ -170,7 +289,6 @@
         /// <summary>
         /// Called after <see cref="Mass"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Mass))]
         protected virtual void OnAfterMassChange()
         {
             if (Target == null)
@@ -184,7 +302,6 @@
         /// <summary>
         /// Called after <see cref="Drag"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Drag))]
         protected virtual void OnAfterDragChange()
         {
             if (Target == null)
@@ -198,7 +315,6 @@
         /// <summary>
         /// Called after <see cref="AngularDrag"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(AngularDrag))]
         protected virtual void OnAfterAngularDragChange()
         {
             if (Target == null)
@@ -212,7 +328,6 @@
         /// <summary>
         /// Called after <see cref="UseGravity"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(UseGravity))]
         protected virtual void OnAfterUseGravityChange()
         {
             if (Target == null)
@@ -226,7 +341,6 @@
         /// <summary>
         /// Called after <see cref="IsKinematic"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(IsKinematic))]
         protected virtual void OnAfterIsKinematicChange()
         {
             if (Target == null)
@@ -240,7 +354,6 @@
         /// <summary>
         /// Called after <see cref="Velocity"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Velocity))]
         protected virtual void OnAfterVelocityChange()
         {
             if (Target == null)
@@ -254,7 +367,6 @@
         /// <summary>
         /// Called after <see cref="AngularVelocity"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(AngularVelocity))]
         protected virtual void OnAfterAngularVelocityChange()
         {
             if (Target == null)
@@ -268,7 +380,6 @@
         /// <summary>
         /// Called after <see cref="MaxAngularVelocity"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(MaxAngularVelocity))]
         protected virtual void OnAfterMaxAngularVelocityChange()
         {
             if (Target == null)

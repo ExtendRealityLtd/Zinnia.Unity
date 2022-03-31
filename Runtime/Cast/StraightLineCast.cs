@@ -1,18 +1,19 @@
 ﻿namespace Zinnia.Cast
 {
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Casts a straight line and creates points at the origin and target.
     /// </summary>
     public class StraightLineCast : PointsCast
     {
-        /// <summary>
-        /// The maximum length to cast.
-        /// </summary>
         [Tooltip("The maximum length to cast.")]
         [SerializeField]
         private float _maximumLength = 100f;
+        /// <summary>
+        /// The maximum length to cast.
+        /// </summary>
         public float MaximumLength
         {
             get
@@ -22,6 +23,10 @@
             set
             {
                 _maximumLength = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterMaximumLengthChange();
+                }
             }
         }
 
@@ -65,5 +70,10 @@
                 points[1] = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : destinationPosition;
             }
         }
+
+        /// <summary>
+        /// Called after <see cref="MaximumLength"/> has been changed.
+        /// </summary>
+        protected virtual void OnAfterMaximumLengthChange() { }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Process.Moment
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using UnityEngine.Rendering;
     using Zinnia.Extension;
@@ -46,12 +45,12 @@
             BeforeRender
         }
 
-        /// <summary>
-        /// The moment in which to process the given processes.
-        /// </summary>
         [Tooltip("The moment in which to process the given processes.")]
         [SerializeField]
         private Moment _processMoment = Moment.PreRender;
+        /// <summary>
+        /// The moment in which to process the given processes.
+        /// </summary>
         public Moment ProcessMoment
         {
             get
@@ -60,15 +59,23 @@
             }
             set
             {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeProcessMomentChange();
+                }
                 _processMoment = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterProcessMomentChange();
+                }
             }
         }
-        /// <summary>
-        /// A collection of <see cref="MomentProcess"/> to process.
-        /// </summary>
         [Tooltip("A collection of MomentProcess to process.")]
         [SerializeField]
         private MomentProcessObservableList _processes;
+        /// <summary>
+        /// A collection of <see cref="MomentProcess"/> to process.
+        /// </summary>
         public MomentProcessObservableList Processes
         {
             get
@@ -223,7 +230,6 @@
         /// <summary>
         /// Called before <see cref="ProcessMoment"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(ProcessMoment))]
         protected virtual void OnBeforeProcessMomentChange()
         {
             UnsubscribeMoment();
@@ -232,7 +238,6 @@
         /// <summary>
         /// Called after <see cref="ProcessMoment"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ProcessMoment))]
         protected virtual void OnAfterProcessMomentChange()
         {
             SubscribeMoment();

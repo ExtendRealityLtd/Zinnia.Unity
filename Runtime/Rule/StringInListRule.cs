@@ -10,12 +10,12 @@
     /// </summary>
     public class StringInListRule : GameObjectRule
     {
-        /// <summary>
-        /// The regular expression pattern to match against a string contained in the <see cref="StringObservableList"/>.
-        /// </summary>
         [Tooltip("The regular expression pattern to match against a string contained in the StringObservableList.")]
         [SerializeField]
         private string _inListPattern;
+        /// <summary>
+        /// The regular expression pattern to match against a string contained in the <see cref="StringObservableList"/>.
+        /// </summary>
         public string InListPattern
         {
             get

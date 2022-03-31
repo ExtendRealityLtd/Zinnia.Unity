@@ -16,12 +16,12 @@
         [Serializable]
         public class Relation
         {
-            /// <summary>
-            /// The <see cref="GameObject"/> acting as the key.
-            /// </summary>
             [Tooltip("The GameObject acting as the key.")]
             [SerializeField]
             private GameObject _key;
+            /// <summary>
+            /// The <see cref="GameObject"/> acting as the key.
+            /// </summary>
             public GameObject Key
             {
                 get
@@ -33,12 +33,12 @@
                     _key = value;
                 }
             }
-            /// <summary>
-            /// The <see cref="GameObject"/> acting as the value.
-            /// </summary>
             [Tooltip("The GameObject acting as the value.")]
             [SerializeField]
             private GameObject _value;
+            /// <summary>
+            /// The <see cref="GameObject"/> acting as the value.
+            /// </summary>
             public GameObject Value
             {
                 get

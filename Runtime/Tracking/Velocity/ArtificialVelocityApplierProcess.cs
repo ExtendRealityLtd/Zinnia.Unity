@@ -9,12 +9,12 @@
     /// </summary>
     public class ArtificialVelocityApplierProcess : MonoBehaviour, IProcessable
     {
-        /// <summary>
-        /// The object to apply the artificial velocities to.
-        /// </summary>
         [Tooltip("The object to apply the artificial velocities to.")]
         [SerializeField]
         private GameObject _target;
+        /// <summary>
+        /// The object to apply the artificial velocities to.
+        /// </summary>
         public GameObject Target
         {
             get
@@ -26,12 +26,12 @@
                 _target = value;
             }
         }
-        /// <summary>
-        /// The velocity to apply.
-        /// </summary>
         [Tooltip("The velocity to apply.")]
         [SerializeField]
         private Vector3 _velocity;
+        /// <summary>
+        /// The velocity to apply.
+        /// </summary>
         public Vector3 Velocity
         {
             get
@@ -43,12 +43,12 @@
                 _velocity = value;
             }
         }
-        /// <summary>
-        /// The angular velocity to apply.
-        /// </summary>
         [Tooltip("The angular velocity to apply.")]
         [SerializeField]
         private Vector3 _angularVelocity;
+        /// <summary>
+        /// The angular velocity to apply.
+        /// </summary>
         public Vector3 AngularVelocity
         {
             get
@@ -60,12 +60,12 @@
                 _angularVelocity = value;
             }
         }
-        /// <summary>
-        /// The drag to apply to reduce the directional velocity over time and to slow down <see cref="Target"/>.
-        /// </summary>
         [Tooltip("The drag to apply to reduce the directional velocity over time and to slow down Target.")]
         [SerializeField]
         private float _drag = 1f;
+        /// <summary>
+        /// The drag to apply to reduce the directional velocity over time and to slow down <see cref="Target"/>.
+        /// </summary>
         public float Drag
         {
             get
@@ -77,12 +77,12 @@
                 _drag = value;
             }
         }
-        /// <summary>
-        /// The angular drag to apply to reduce the rotational velocity over time and to slow down <see cref="Target"/>.
-        /// </summary>
         [Tooltip("The angular drag to apply to reduce the rotational velocity over time and to slow down Target.")]
         [SerializeField]
         private float _angularDrag = 0.5f;
+        /// <summary>
+        /// The angular drag to apply to reduce the rotational velocity over time and to slow down <see cref="Target"/>.
+        /// </summary>
         public float AngularDrag
         {
             get
@@ -94,12 +94,12 @@
                 _angularDrag = value;
             }
         }
-        /// <summary>
-        /// The tolerance the velocity can be within zero to be considered nil.
-        /// </summary>
         [Tooltip("The tolerance the velocity can be within zero to be considered nil.")]
         [SerializeField]
         private float _nilVelocityTolerance = 0.001f;
+        /// <summary>
+        /// The tolerance the velocity can be within zero to be considered nil.
+        /// </summary>
         public float NilVelocityTolerance
         {
             get
@@ -111,12 +111,12 @@
                 _nilVelocityTolerance = value;
             }
         }
-        /// <summary>
-        /// The tolerance the angular velocity can be within zero to be considered nil.
-        /// </summary>
         [Tooltip("The tolerance the angular velocity can be within zero to be considered nil.")]
         [SerializeField]
         private float _nilAngularVelocityTolerance = 0.001f;
+        /// <summary>
+        /// The tolerance the angular velocity can be within zero to be considered nil.
+        /// </summary>
         public float NilAngularVelocityTolerance
         {
             get

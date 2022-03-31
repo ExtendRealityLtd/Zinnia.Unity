@@ -35,13 +35,13 @@
         public class UnityEvent : UnityEvent<SurfaceData> { }
 
         #region Search Settings
-        /// <summary>
-        /// The origin of where to begin the cast to locate the nearest surface.
-        /// </summary>
         [Header("Search Settings")]
         [Tooltip("The origin of where to begin the cast to locate the nearest surface.")]
         [SerializeField]
         private GameObject _searchOrigin;
+        /// <summary>
+        /// The origin of where to begin the cast to locate the nearest surface.
+        /// </summary>
         public GameObject SearchOrigin
         {
             get
@@ -53,12 +53,12 @@
                 _searchOrigin = value;
             }
         }
-        /// <summary>
-        /// The direction in which to cast to locate the nearest surface.
-        /// </summary>
         [Tooltip("The direction in which to cast to locate the nearest surface.")]
         [SerializeField]
         private Vector3 _searchDirection;
+        /// <summary>
+        /// The direction in which to cast to locate the nearest surface.
+        /// </summary>
         public Vector3 SearchDirection
         {
             get
@@ -70,12 +70,12 @@
                 _searchDirection = value;
             }
         }
-        /// <summary>
-        /// The distance to move the origin backwards through the <see cref="SearchDirection"/> to ensure the origin isn't clipping a surface.
-        /// </summary>
         [Tooltip("The distance to move the origin backwards through the SearchDirection to ensure the origin isn't clipping a surface.")]
         [SerializeField]
         private float _originOffset = -0.01f;
+        /// <summary>
+        /// The distance to move the origin backwards through the <see cref="SearchDirection"/> to ensure the origin isn't clipping a surface.
+        /// </summary>
         public float OriginOffset
         {
             get
@@ -87,12 +87,12 @@
                 _originOffset = value;
             }
         }
-        /// <summary>
-        /// The maximum distance to cast the <see cref="Ray"/>.
-        /// </summary>
         [Tooltip("The maximum distance to cast the Ray.")]
         [SerializeField]
         private float _maximumDistance = 50f;
+        /// <summary>
+        /// The maximum distance to cast the <see cref="Ray"/>.
+        /// </summary>
         public float MaximumDistance
         {
             get
@@ -104,12 +104,12 @@
                 _maximumDistance = value;
             }
         }
-        /// <summary>
-        /// The surface will only be located if the previous position has changed from the current position.
-        /// </summary>
         [Tooltip("The surface will only be located if the previous position has changed from the current position.")]
         [SerializeField]
         private bool _mustChangePosition = true;
+        /// <summary>
+        /// The surface will only be located if the previous position has changed from the current position.
+        /// </summary>
         public bool MustChangePosition
         {
             get
@@ -121,12 +121,12 @@
                 _mustChangePosition = value;
             }
         }
-        /// <summary>
-        /// The threshold difference between the previous point value and the current point value to be considered equal.
-        /// </summary>
         [Tooltip("The threshold difference between the previous point value and the current point value to be considered equal.")]
         [SerializeField]
         private float _positionChangedEqualityThreshold = 0.0001f;
+        /// <summary>
+        /// The threshold difference between the previous point value and the current point value to be considered equal.
+        /// </summary>
         public float PositionChangedEqualityThreshold
         {
             get
@@ -138,12 +138,12 @@
                 _positionChangedEqualityThreshold = value;
             }
         }
-        /// <summary>
-        /// The amount to offset the position of the destination point found on the located surface.
-        /// </summary>
         [Tooltip("The amount to offset the position of the destination point found on the located surface.")]
         [SerializeField]
         private Vector3 _destinationOffset = Vector3.zero;
+        /// <summary>
+        /// The amount to offset the position of the destination point found on the located surface.
+        /// </summary>
         public Vector3 DestinationOffset
         {
             get
@@ -158,13 +158,13 @@
         #endregion
 
         #region Restriction Settings
-        /// <summary>
-        /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
-        /// </summary>
         [Header("Restriction Settings")]
         [Tooltip("An optional RuleContainer to determine valid and invalid targets based on the set rules.")]
         [SerializeField]
         private RuleContainer _targetValidity;
+        /// <summary>
+        /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
+        /// </summary>
         public RuleContainer TargetValidity
         {
             get
@@ -176,12 +176,12 @@
                 _targetValidity = value;
             }
         }
-        /// <summary>
-        /// An optional <see cref="RuleContainer"/> to determine specific target point based on the set rules.
-        /// </summary>
         [Tooltip("An optional RuleContainer to determine specific target point based on the set rules.")]
         [SerializeField]
         private RuleContainer _targetPointValidity;
+        /// <summary>
+        /// An optional <see cref="RuleContainer"/> to determine specific target point based on the set rules.
+        /// </summary>
         public RuleContainer TargetPointValidity
         {
             get
@@ -193,12 +193,12 @@
                 _targetPointValidity = value;
             }
         }
-        /// <summary>
-        /// An optional <see cref="RuleContainer"/> to determine if the search for a valid surface should be terminated if the current found target matches the rule.
-        /// </summary>
         [Tooltip("An optional RuleContainer to determine if the search for a valid surface should be terminated if the current found target matches the rule.")]
         [SerializeField]
         private RuleContainer _locatorTermination;
+        /// <summary>
+        /// An optional <see cref="RuleContainer"/> to determine if the search for a valid surface should be terminated if the current found target matches the rule.
+        /// </summary>
         public RuleContainer LocatorTermination
         {
             get
@@ -210,12 +210,12 @@
                 _locatorTermination = value;
             }
         }
-        /// <summary>
-        /// An optional custom <see cref="Cast.PhysicsCast"/> object to affect the <see cref="Ray"/>.
-        /// </summary>
         [Tooltip("An optional custom Cast.PhysicsCast object to affect the Ray.")]
         [SerializeField]
         private PhysicsCast _physicsCast;
+        /// <summary>
+        /// An optional custom <see cref="Cast.PhysicsCast"/> object to affect the <see cref="Ray"/>.
+        /// </summary>
         public PhysicsCast PhysicsCast
         {
             get

@@ -8,12 +8,12 @@
     /// </summary>
     public class ListContainsRule : Rule
     {
-        /// <summary>
-        /// The objects to check against.
-        /// </summary>
         [Tooltip("The objects to check against.")]
         [SerializeField]
         private UnityObjectObservableList _objects;
+        /// <summary>
+        /// The objects to check against.
+        /// </summary>
         public UnityObjectObservableList Objects
         {
             get

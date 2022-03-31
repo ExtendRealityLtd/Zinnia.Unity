@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using UnityEngine;
     using Zinnia.Extension;
@@ -11,12 +10,12 @@
     /// </summary>
     public class AverageVelocityEstimatorProcess : VelocityTracker, IProcessable
     {
-        /// <summary>
-        /// The source to track and estimate velocities for.
-        /// </summary>
         [Tooltip("The source to track and estimate velocities for.")]
         [SerializeField]
         private GameObject _source;
+        /// <summary>
+        /// The source to track and estimate velocities for.
+        /// </summary>
         public GameObject Source
         {
             get
@@ -26,14 +25,18 @@
             set
             {
                 _source = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourceChange();
+                }
             }
         }
-        /// <summary>
-        /// An optional object to consider the source relative to when estimating the velocities.
-        /// </summary>
         [Tooltip("An optional object to consider the source relative to when estimating the velocities.")]
         [SerializeField]
         private GameObject _relativeTo;
+        /// <summary>
+        /// An optional object to consider the source relative to when estimating the velocities.
+        /// </summary>
         public GameObject RelativeTo
         {
             get
@@ -43,14 +46,18 @@
             set
             {
                 _relativeTo = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterRelativeToChange();
+                }
             }
         }
-        /// <summary>
-        /// Whether samples are currently being collected.
-        /// </summary>
         [Tooltip("Whether samples are currently being collected.")]
         [SerializeField]
         private bool _isEstimating = true;
+        /// <summary>
+        /// Whether samples are currently being collected.
+        /// </summary>
         public bool IsEstimating
         {
             get
@@ -62,12 +69,12 @@
                 _isEstimating = value;
             }
         }
-        /// <summary>
-        /// The number of average frames to collect samples for velocity estimation.
-        /// </summary>
         [Tooltip("The number of average frames to collect samples for velocity estimation.")]
         [SerializeField]
         private int _velocityAverageFrames = 5;
+        /// <summary>
+        /// The number of average frames to collect samples for velocity estimation.
+        /// </summary>
         public int VelocityAverageFrames
         {
             get
@@ -77,14 +84,18 @@
             set
             {
                 _velocityAverageFrames = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterVelocityAverageFramesChange();
+                }
             }
         }
-        /// <summary>
-        /// The number of average frames to collect samples for angular velocity estimation.
-        /// </summary>
         [Tooltip("The number of average frames to collect samples for angular velocity estimation.")]
         [SerializeField]
         private int _angularVelocityAverageFrames = 10;
+        /// <summary>
+        /// The number of average frames to collect samples for angular velocity estimation.
+        /// </summary>
         public int AngularVelocityAverageFrames
         {
             get
@@ -94,6 +105,10 @@
             set
             {
                 _angularVelocityAverageFrames = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAngularVelocityAverageFramesChange();
+                }
             }
         }
 
@@ -317,7 +332,6 @@
         /// <summary>
         /// Called after <see cref="Source"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Source))]
         protected virtual void OnAfterSourceChange()
         {
             previousPosition = Source.TryGetPosition();
@@ -327,7 +341,6 @@
         /// <summary>
         /// Called after <see cref="RelativeTo"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(RelativeTo))]
         protected virtual void OnAfterRelativeToChange()
         {
             previousRelativePosition = RelativeTo.TryGetPosition();
@@ -337,7 +350,6 @@
         /// <summary>
         /// Called after <see cref="VelocityAverageFrames"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(VelocityAverageFrames))]
         protected virtual void OnAfterVelocityAverageFramesChange()
         {
             velocitySamples = new Vector3[VelocityAverageFrames];
@@ -346,7 +358,6 @@
         /// <summary>
         /// Called after <see cref="AngularVelocityAverageFrames"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(AngularVelocityAverageFrames))]
         protected virtual void OnAfterAngularVelocityAverageFramesChange()
         {
             angularVelocitySamples = new Vector3[AngularVelocityAverageFrames];

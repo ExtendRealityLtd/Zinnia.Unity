@@ -10,12 +10,12 @@
     /// </summary>
     public class RotateAroundAngularVelocity : PropertyModifier
     {
-        /// <summary>
-        /// The <see cref="VelocityTracker"/> that is the source of the angular velocity.
-        /// </summary>
         [Tooltip("The VelocityTracker that is the source of the angular velocity.")]
         [SerializeField]
         private VelocityTracker _angularVelocitySource;
+        /// <summary>
+        /// The <see cref="VelocityTracker"/> that is the source of the angular velocity.
+        /// </summary>
         public VelocityTracker AngularVelocitySource
         {
             get
@@ -27,12 +27,12 @@
                 _angularVelocitySource = value;
             }
         }
-        /// <summary>
-        /// Multiplies the <see cref="AngularVelocitySource"/> by this value.
-        /// </summary>
         [Tooltip("Multiplies the AngularVelocitySource by this value.")]
         [SerializeField]
         private Vector3 _sourceMultiplier = Vector3.one;
+        /// <summary>
+        /// Multiplies the <see cref="AngularVelocitySource"/> by this value.
+        /// </summary>
         public Vector3 SourceMultiplier
         {
             get
@@ -44,12 +44,12 @@
                 _sourceMultiplier = value;
             }
         }
-        /// <summary>
-        /// The axes to apply the angular velocity to.
-        /// </summary>
         [Tooltip("The axes to apply the angular velocity to.")]
         [SerializeField]
         private Vector3State _applyToAxis;
+        /// <summary>
+        /// The axes to apply the angular velocity to.
+        /// </summary>
         public Vector3State ApplyToAxis
         {
             get
@@ -61,12 +61,12 @@
                 _applyToAxis = value;
             }
         }
-        /// <summary>
-        /// When true, transforms the angular velocity to be in target's space instead of world space.
-        /// </summary>
         [Tooltip("When true, transforms the angular velocity to be in target's space instead of world space.")]
         [SerializeField]
         private bool _inTargetSpace;
+        /// <summary>
+        /// When true, transforms the angular velocity to be in target's space instead of world space.
+        /// </summary>
         public bool InTargetSpace
         {
             get

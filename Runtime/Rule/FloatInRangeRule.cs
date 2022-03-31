@@ -8,12 +8,12 @@
     /// </summary>
     public class FloatInRangeRule : FloatRule
     {
-        /// <summary>
-        /// The range in which the given <see cref="float"/> must be equal to the bounds or within the range.
-        /// </summary>
         [Tooltip("The range in which the given float must be equal to the bounds or within the range.")]
         [SerializeField]
         private FloatRange _range;
+        /// <summary>
+        /// The range in which the given <see cref="float"/> must be equal to the bounds or within the range.
+        /// </summary>
         public FloatRange Range
         {
             get

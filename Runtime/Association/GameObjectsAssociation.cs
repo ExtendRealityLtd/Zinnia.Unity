@@ -8,12 +8,12 @@
     /// </summary>
     public abstract class GameObjectsAssociation : MonoBehaviour
     {
-        /// <summary>
-        /// The <see cref="GameObject"/>s to (de)activate.
-        /// </summary>
         [Tooltip("The GameObjects to (de)activate.")]
         [SerializeField]
         private GameObjectObservableList _gameObjects;
+        /// <summary>
+        /// The <see cref="GameObject"/>s to (de)activate.
+        /// </summary>
         public GameObjectObservableList GameObjects
         {
             get

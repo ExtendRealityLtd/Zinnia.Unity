@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Visual
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using System.Collections;
     using UnityEngine;
@@ -20,12 +19,12 @@
         [Serializable]
         public class EventData
         {
-            /// <summary>
-            /// The <see cref="Color"/> being applied to the camera overlay.
-            /// </summary>
             [Tooltip("The Color being applied to the camera overlay.")]
             [SerializeField]
             private Color _color;
+            /// <summary>
+            /// The <see cref="Color"/> being applied to the camera overlay.
+            /// </summary>
             public Color Color
             {
                 get
@@ -77,12 +76,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<EventData> { }
 
-        /// <summary>
-        /// The rules to determine which scene cameras to apply the overlay to.
-        /// </summary>
         [Tooltip("The rules to determine which scene cameras to apply the overlay to.")]
         [SerializeField]
         private RuleContainer _cameraValidity;
+        /// <summary>
+        /// The rules to determine which scene cameras to apply the overlay to.
+        /// </summary>
         public RuleContainer CameraValidity
         {
             get
@@ -94,12 +93,12 @@
                 _cameraValidity = value;
             }
         }
-        /// <summary>
-        /// The <see cref="Color"/> of the overlay.
-        /// </summary>
         [Tooltip("The Color of the overlay.")]
         [SerializeField]
         private Color _overlayColor = Color.black;
+        /// <summary>
+        /// The <see cref="Color"/> of the overlay.
+        /// </summary>
         public Color OverlayColor
         {
             get
@@ -111,12 +110,12 @@
                 _overlayColor = value;
             }
         }
-        /// <summary>
-        /// The <see cref="Material"/> to use for the overlay.
-        /// </summary>
         [Tooltip("The Material to use for the overlay.")]
         [SerializeField]
         private Material _overlayMaterial;
+        /// <summary>
+        /// The <see cref="Material"/> to use for the overlay.
+        /// </summary>
         public Material OverlayMaterial
         {
             get
@@ -126,14 +125,18 @@
             set
             {
                 _overlayMaterial = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterOverlayMaterialChange();
+                }
             }
         }
-        /// <summary>
-        /// The duration of time to apply the overlay <see cref="Color"/>.
-        /// </summary>
         [Tooltip("The duration of time to apply the overlay Color.")]
         [SerializeField]
         private float _addDuration;
+        /// <summary>
+        /// The duration of time to apply the overlay <see cref="Color"/>.
+        /// </summary>
         public float AddDuration
         {
             get
@@ -143,14 +146,18 @@
             set
             {
                 _addDuration = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAddDurationChange();
+                }
             }
         }
-        /// <summary>
-        /// The duration of time to remove the overlay <see cref="Color"/>.
-        /// </summary>
         [Tooltip("The duration of time to remove the overlay Color.")]
         [SerializeField]
         private float _removeDuration = 1f;
+        /// <summary>
+        /// The duration of time to remove the overlay <see cref="Color"/>.
+        /// </summary>
         public float RemoveDuration
         {
             get
@@ -162,12 +169,12 @@
                 _removeDuration = value;
             }
         }
-        /// <summary>
-        /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
-        /// </summary>
         [Tooltip("The duration of time to wait once the overlay Color is applied before it is removed.")]
         [SerializeField]
         private float _appliedDuration;
+        /// <summary>
+        /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
+        /// </summary>
         public float AppliedDuration
         {
             get
@@ -177,6 +184,10 @@
             set
             {
                 _appliedDuration = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAppliedDurationChange();
+                }
             }
         }
 
@@ -331,7 +342,7 @@
         {
             lastUsedCamera = null;
             CopyMaterialOverlayToWorking();
-            OnAfterCheckDelayChange();
+            SetResetDelayInstruction();
             if (GraphicsSettings.renderPipelineAsset != null)
             {
                 CreateFadeMesh();
@@ -599,18 +610,38 @@
         }
 
         /// <summary>
+        /// Sets the <see cref="resetDelayYieldInstruction"/> value based on the current <see cref="AddDuration"/> plus the <see cref="AppliedDuration"/>.
+        /// </summary>
+        protected virtual void SetResetDelayInstruction()
+        {
+            resetDelayYieldInstruction = new WaitForSeconds(AddDuration + AppliedDuration);
+        }
+
+        /// <summary>
         /// Called after <see cref="OverlayMaterial"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(OverlayMaterial))]
         protected virtual void OnAfterOverlayMaterialChange()
         {
             CopyMaterialOverlayToWorking();
         }
 
         /// <summary>
-        /// Called after <see cref="AddDuration"/> or <see cref="AppliedDuration"/> have been changed.
+        /// Called after <see cref="AddDuration"/>.
         /// </summary>
-        [CalledAfterChangeOf(nameof(AddDuration)), CalledAfterChangeOf(nameof(AppliedDuration))]
+        protected virtual void OnAfterAddDurationChange()
+        {
+            SetResetDelayInstruction();
+        }
+
+        /// <summary>
+        /// Called after <see cref="AppliedDuration"/>.
+        /// </summary>
+        protected virtual void OnAfterAppliedDurationChange()
+        {
+            SetResetDelayInstruction();
+        }
+
+        [Obsolete("Use `SetResetDelayInstruction` instead.")]
         protected virtual void OnAfterCheckDelayChange()
         {
             resetDelayYieldInstruction = new WaitForSeconds(AddDuration + AppliedDuration);

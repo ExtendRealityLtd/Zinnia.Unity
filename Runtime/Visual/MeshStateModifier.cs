@@ -35,13 +35,13 @@ namespace Zinnia.Visual
         }
 
         #region Mesh Settings
-        /// <summary>
-        /// The mesh components to modify.
-        /// </summary>
         [Header("Mesh Settings")]
         [Tooltip("The mesh components to modify.")]
         [SerializeField]
         private MeshTypes _meshesToModifiy = (MeshTypes)(-1);
+        /// <summary>
+        /// The mesh components to modify.
+        /// </summary>
         public MeshTypes MeshesToModifiy
         {
             get
@@ -54,12 +54,12 @@ namespace Zinnia.Visual
             }
         }
 
-        /// <summary>
-        /// A relationship connection between a given <see cref="GameObject"/> and any meshes to modify upon matching.
-        /// </summary>
         [Tooltip("A relationship connection between a given GameObject and any meshes to modify upon matching.")]
         [SerializeField]
         private GameObjectMultiRelationObservableList _meshCollections;
+        /// <summary>
+        /// A relationship connection between a given <see cref="GameObject"/> and any meshes to modify upon matching.
+        /// </summary>
         public GameObjectMultiRelationObservableList MeshCollections
         {
             get

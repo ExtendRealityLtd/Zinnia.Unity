@@ -1,8 +1,8 @@
 ﻿namespace Zinnia.Association
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Association.Collection;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -10,12 +10,12 @@
     /// </summary>
     public class GameObjectsAssociationActivator : MonoBehaviour, IProcessable
     {
-        /// <summary>
-        /// The associations in order they will be activated if they match the currently expected state.
-        /// </summary>
         [Tooltip("The associations in order they will be activated if they match the currently expected state.")]
         [SerializeField]
         private GameObjectsAssociationObservableList _associations;
+        /// <summary>
+        /// The associations in order they will be activated if they match the currently expected state.
+        /// </summary>
         public GameObjectsAssociationObservableList Associations
         {
             get
@@ -24,7 +24,15 @@
             }
             set
             {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeAssociationsChange();
+                }
                 _associations = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAssociationsChange();
+                }
             }
         }
 
@@ -185,7 +193,6 @@
         /// <summary>
         /// Called before <see cref="Associations"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Associations))]
         protected virtual void OnBeforeAssociationsChange()
         {
             Deactivate(Associations);
@@ -194,7 +201,6 @@
         /// <summary>
         /// Called after <see cref="Associations"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Associations))]
         protected virtual void OnAfterAssociationsChange()
         {
             Activate();

@@ -9,12 +9,12 @@
     /// </summary>
     public class PatternMatcherRule : Rule
     {
-        /// <summary>
-        /// The patterns to attempt to match.
-        /// </summary>
         [Tooltip("The patterns to attempt to match.")]
         [SerializeField]
         private PatternMatcherObservableList _patterns;
+        /// <summary>
+        /// The patterns to attempt to match.
+        /// </summary>
         public PatternMatcherObservableList Patterns
         {
             get

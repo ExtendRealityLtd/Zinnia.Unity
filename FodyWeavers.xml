@@ -5,5 +5,4 @@
     <LogLevel>Error, Warning</LogLevel>
     <AssemblyNameRegex>^Zinnia</AssemblyNameRegex>
   </Malimbe.FodyRunner>
-  <Malimbe.MemberChangeMethod/>
 </Weavers>

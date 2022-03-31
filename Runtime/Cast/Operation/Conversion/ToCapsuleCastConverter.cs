@@ -8,12 +8,12 @@
     /// </summary>
     public class ToCapsuleCastConverter : CastConverter
     {
-        /// <summary>
-        /// Half of the capsule height.
-        /// </summary>
         [Tooltip("Half of the capsule height.")]
         [SerializeField]
         private float _halfHeight;
+        /// <summary>
+        /// Half of the capsule height.
+        /// </summary>
         public float HalfHeight
         {
             get
@@ -25,12 +25,12 @@
                 _halfHeight = value;
             }
         }
-        /// <summary>
-        /// The radius for the <see cref="Physics.CapsuleCast"/>.
-        /// </summary>
         [Tooltip("The radius for the Physics.CapsuleCast.")]
         [SerializeField]
         private float _radiusOverride;
+        /// <summary>
+        /// The radius for the <see cref="Physics.CapsuleCast"/>.
+        /// </summary>
         public float RadiusOverride
         {
             get
@@ -42,12 +42,12 @@
                 _radiusOverride = value;
             }
         }
-        /// <summary>
-        /// Whether to use the <see cref="RadiusOverride"/> value if the source caster already supports a radius. If the source caster does not support a radius then the <see cref="RadiusOverride"/> will always be used.
-        /// </summary>
         [Tooltip("Whether to use the RadiusOverride value if the source caster already supports a radius. If the source caster does not support a radius then the RadiusOverride will always be used.")]
         [SerializeField]
         private bool _useRadiusOverride = true;
+        /// <summary>
+        /// Whether to use the <see cref="RadiusOverride"/> value if the source caster already supports a radius. If the source caster does not support a radius then the <see cref="RadiusOverride"/> will always be used.
+        /// </summary>
         public bool UseRadiusOverride
         {
             get

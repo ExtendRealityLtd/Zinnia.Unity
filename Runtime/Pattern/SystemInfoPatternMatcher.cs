@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Pattern
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -132,12 +131,12 @@
             SystemMemorySize
         }
 
-        /// <summary>
-        /// The source property to match against.
-        /// </summary>
         [Tooltip("The source property to match against.")]
         [SerializeField]
         private Source _propertySource;
+        /// <summary>
+        /// The source property to match against.
+        /// </summary>
         public Source PropertySource
         {
             get
@@ -147,6 +146,10 @@
             set
             {
                 _propertySource = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterPropertySourceChange();
+                }
             }
         }
 
@@ -230,7 +233,6 @@
         /// <summary>
         /// Called after <see cref="PropertySource"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(PropertySource))]
         protected virtual void OnAfterPropertySourceChange()
         {
             ProcessSourceString();

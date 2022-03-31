@@ -10,12 +10,12 @@
     /// </summary>
     public class PhysicsCast : MonoBehaviour
     {
-        /// <summary>
-        /// The layers to ignore when casting.
-        /// </summary>
         [Tooltip("The layers to ignore when casting.")]
         [SerializeField]
         private LayerMask _layersToIgnore = Physics.IgnoreRaycastLayer;
+        /// <summary>
+        /// The layers to ignore when casting.
+        /// </summary>
         public LayerMask LayersToIgnore
         {
             get
@@ -27,12 +27,12 @@
                 _layersToIgnore = value;
             }
         }
-        /// <summary>
-        /// Determines whether the cast will interact with trigger colliders.
-        /// </summary>
         [Tooltip("Determines whether the cast will interact with trigger colliders.")]
         [SerializeField]
         private QueryTriggerInteraction _triggerInteraction = QueryTriggerInteraction.UseGlobal;
+        /// <summary>
+        /// Determines whether the cast will interact with trigger colliders.
+        /// </summary>
         public QueryTriggerInteraction TriggerInteraction
         {
             get
@@ -44,12 +44,12 @@
                 _triggerInteraction = value;
             }
         }
-        /// <summary>
-        /// Allows for the conversion of one cast type to another cast type.
-        /// </summary>
         [Tooltip("Allows for the conversion of one cast type to another cast type.")]
         [SerializeField]
         private CastConverter _convertTo;
+        /// <summary>
+        /// Allows for the conversion of one cast type to another cast type.
+        /// </summary>
         public CastConverter ConvertTo
         {
             get

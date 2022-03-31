@@ -52,12 +52,12 @@
             XToZAndYToY
         }
 
-        /// <summary>
-        /// The mechanism for mapping the <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
-        /// </summary>
         [Tooltip("The mechanism for mapping the Vector2 coordinates to the Vector3 coordinates.")]
         [SerializeField]
         private CoordinateMapType _coordinateMap = CoordinateMapType.XToXAndYToY;
+        /// <summary>
+        /// The mechanism for mapping the <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
+        /// </summary>
         public CoordinateMapType CoordinateMap
         {
             get
@@ -69,12 +69,12 @@
                 _coordinateMap = value;
             }
         }
-        /// <summary>
-        /// The value to set the unused coordinate to during the conversion.
-        /// </summary>
         [Tooltip("The value to set the unused coordinate to during the conversion.")]
         [SerializeField]
         private float _unusedCoordinateValue;
+        /// <summary>
+        /// The value to set the unused coordinate to during the conversion.
+        /// </summary>
         public float UnusedCoordinateValue
         {
             get

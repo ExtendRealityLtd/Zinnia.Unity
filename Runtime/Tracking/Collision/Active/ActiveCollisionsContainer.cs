@@ -18,12 +18,12 @@
         [Serializable]
         public class EventData
         {
-            /// <summary>
-            /// The current active collisions.
-            /// </summary>
             [Tooltip("The current active collisions.")]
             [SerializeField]
             private List<CollisionNotifier.EventData> _activeCollisions = new List<CollisionNotifier.EventData>();
+            /// <summary>
+            /// The current active collisions.
+            /// </summary>
             public List<CollisionNotifier.EventData> ActiveCollisions
             {
                 get
@@ -61,13 +61,13 @@
         public class ActiveCollisionUnityEvent : UnityEvent<EventData> { }
 
         #region Validity Settings
-        /// <summary>
-        /// Determines whether the collision is valid and to add it to the active collision collection.
-        /// </summary>
         [Header("Validity Settings")]
         [Tooltip("Determines whether the collision is valid and to add it to the active collision collection.")]
         [SerializeField]
         private RuleContainer _collisionValidity;
+        /// <summary>
+        /// Determines whether the collision is valid and to add it to the active collision collection.
+        /// </summary>
         public RuleContainer CollisionValidity
         {
             get

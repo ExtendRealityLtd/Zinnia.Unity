@@ -19,8 +19,8 @@
         [SerializeField]
         [TypePicker(typeof(Behaviour))]
         private List<SerializableType> _elements = new List<SerializableType>();
-        protected override List<SerializableType> Elements 
-        { 
+        protected override List<SerializableType> Elements
+        {
             get
             {
                 return _elements;

@@ -19,12 +19,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<string> { }
 
-        /// <summary>
-        /// The format for the conversion.
-        /// </summary>
         [Tooltip("The format for the conversion.")]
         [SerializeField]
         private string _format;
+        /// <summary>
+        /// The format for the conversion.
+        /// </summary>
         public string Format
         {
             get

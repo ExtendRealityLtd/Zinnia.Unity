@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -9,12 +8,12 @@
     /// </summary>
     public class ComponentTrackerProxy : VelocityTracker
     {
-        /// <summary>
-        /// The <see cref="GameObject"/> that contains a <see cref="VelocityTracker"/>.
-        /// </summary>
         [Tooltip("The GameObject that contains a VelocityTracker.")]
         [SerializeField]
         private GameObject _proxySource;
+        /// <summary>
+        /// The <see cref="GameObject"/> that contains a <see cref="VelocityTracker"/>.
+        /// </summary>
         public GameObject ProxySource
         {
             get
@@ -24,6 +23,10 @@
             set
             {
                 _proxySource = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterProxySourceChange();
+                }
             }
         }
 
@@ -71,7 +74,6 @@
         /// <summary>
         /// Called after <see cref="ProxySource"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ProxySource))]
         protected virtual void OnAfterProxySourceChange()
         {
             SetCachedVelocityTracker();

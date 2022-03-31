@@ -8,12 +8,12 @@
     /// </summary>
     public class NegationRule : Rule
     {
-        /// <summary>
-        /// The <see cref="IRule"/> to negate.
-        /// </summary>
         [Tooltip("The IRule to negate.")]
         [SerializeField]
         private RuleContainer _rule;
+        /// <summary>
+        /// The <see cref="IRule"/> to negate.
+        /// </summary>
         public RuleContainer Rule
         {
             get

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.MemberChangeMethod;
     using System;
     using UnityEngine;
     using Zinnia.Action.Collection;
@@ -18,12 +17,12 @@
         [Serializable]
         public struct ActionSource
         {
-            /// <summary>
-            /// Determines if the source can be used.
-            /// </summary>
             [Tooltip("Determines if the source can be used.")]
             [SerializeField]
             private bool _enabled;
+            /// <summary>
+            /// Determines if the source can be used.
+            /// </summary>
             public bool Enabled
             {
                 get
@@ -35,12 +34,12 @@
                     _enabled = value;
                 }
             }
-            /// <summary>
-            /// The main container of the action.
-            /// </summary>
             [Tooltip("The main container of the action.")]
             [SerializeField]
             private GameObject _container;
+            /// <summary>
+            /// The main container of the action.
+            /// </summary>
             public GameObject Container
             {
                 get
@@ -52,12 +51,12 @@
                     _container = value;
                 }
             }
-            /// <summary>
-            /// The action to subscribe to.
-            /// </summary>
             [Tooltip("The action to subscribe to.")]
             [SerializeField]
             private Action _action;
+            /// <summary>
+            /// The action to subscribe to.
+            /// </summary>
             public Action Action
             {
                 get
@@ -71,12 +70,12 @@
             }
         }
 
-        /// <summary>
-        /// The action that will have the sources populated by the given <see cref="Sources"/>.
-        /// </summary>
         [Tooltip("The action that will have the sources populated by the given Sources.")]
         [SerializeField]
         private Action _target;
+        /// <summary>
+        /// The action that will have the sources populated by the given <see cref="Sources"/>.
+        /// </summary>
         public Action Target
         {
             get
@@ -85,15 +84,23 @@
             }
             set
             {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeTargetChange();
+                }
                 _target = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetChange();
+                }
             }
         }
-        /// <summary>
-        /// A list of <see cref="ActionSource"/>s to populate the target sources list with.
-        /// </summary>
         [Tooltip("A list of ActionSources to populate the target sources list with.")]
         [SerializeField]
         private ActionRegistrarSourceObservableList _sources;
+        /// <summary>
+        /// A list of <see cref="ActionSource"/>s to populate the target sources list with.
+        /// </summary>
         public ActionRegistrarSourceObservableList Sources
         {
             get
@@ -102,15 +109,23 @@
             }
             set
             {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeSourcesChange();
+                }
                 _sources = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourcesChange();
+                }
             }
         }
-        /// <summary>
-        /// A list of <see cref="GameObject"/>s that are the limits of <see cref="Sources"/> by matching against <see cref="ActionSource.Container"/>.
-        /// </summary>
         [Tooltip("A list of GameObjects that are the limits of Sources by matching against ActionSource.Container.")]
         [SerializeField]
         private GameObjectObservableList _sourceLimits;
+        /// <summary>
+        /// A list of <see cref="GameObject"/>s that are the limits of <see cref="Sources"/> by matching against <see cref="ActionSource.Container"/>.
+        /// </summary>
         public GameObjectObservableList SourceLimits
         {
             get
@@ -119,7 +134,15 @@
             }
             set
             {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeSourceLimitsChange();
+                }
                 _sourceLimits = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourceLimitsChange();
+                }
             }
         }
 
@@ -321,7 +344,6 @@
         /// <summary>
         /// Called before <see cref="Target"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Target))]
         protected virtual void OnBeforeTargetChange()
         {
             ClearTargetSources();
@@ -330,7 +352,6 @@
         /// <summary>
         /// Called after <see cref="Target"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Target))]
         protected virtual void OnAfterTargetChange()
         {
             if (Target != null)
@@ -342,7 +363,6 @@
         /// <summary>
         /// Called before <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Sources))]
         protected virtual void OnBeforeSourcesChange()
         {
             if (Sources == null)
@@ -360,7 +380,6 @@
         /// <summary>
         /// Called after <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Sources))]
         protected virtual void OnAfterSourcesChange()
         {
             AddSourcesListeners();
@@ -370,7 +389,6 @@
         /// <summary>
         /// Called before <see cref="SourceLimits"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(SourceLimits))]
         protected virtual void OnBeforeSourceLimitsChange()
         {
             if (SourceLimits == null)
@@ -388,7 +406,6 @@
         /// <summary>
         /// Called after <see cref="SourceLimits"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(SourceLimits))]
         protected virtual void OnAfterSourceLimitsChange()
         {
             AddSourceLimitsListeners();

@@ -52,12 +52,12 @@
             XToYAndZToXExcludeY
         }
 
-        /// <summary>
-        /// The mechanism for mapping the <see cref="Vector3"/> coordinates to the <see cref="Vector2"/> coordinates.
-        /// </summary>
         [Tooltip("The mechanism for mapping the Vector3 coordinates to the Vector2 coordinates.")]
         [SerializeField]
         private CoordinateMapType _coordinateMap = CoordinateMapType.XToXAndYToYExcludeZ;
+        /// <summary>
+        /// The mechanism for mapping the <see cref="Vector3"/> coordinates to the <see cref="Vector2"/> coordinates.
+        /// </summary>
         public CoordinateMapType CoordinateMap
         {
             get

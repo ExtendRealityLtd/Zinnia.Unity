@@ -30,12 +30,12 @@
             RightController
         }
 
-        /// <summary>
-        /// A source collection to get the first active current dominant controller from.
-        /// </summary>
         [Tooltip("A source collection to get the first active current dominant controller from.")]
         [SerializeField]
         private List<DominantControllerObserver> _sources = new List<DominantControllerObserver>();
+        /// <summary>
+        /// A source collection to get the first active current dominant controller from.
+        /// </summary>
         public List<DominantControllerObserver> Sources
         {
             get
@@ -48,12 +48,12 @@
             }
         }
 
-        /// <summary>
-        /// The controller to check to see if the source matches.
-        /// </summary>
         [Tooltip("The controller to check to see if the source matches.")]
         [SerializeField]
         private Controller _toMatch;
+        /// <summary>
+        /// The controller to check to see if the source matches.
+        /// </summary>
         public Controller ToMatch
         {
             get

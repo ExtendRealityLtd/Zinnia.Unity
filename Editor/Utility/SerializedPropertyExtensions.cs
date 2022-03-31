@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Utility
 {
-    using UnityEditor;
     using System.Text.RegularExpressions;
+    using UnityEditor;
 
     /// <summary>
     /// Extension methods for <see cref="SerializedProperty"/>.

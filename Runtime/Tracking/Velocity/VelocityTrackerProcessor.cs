@@ -8,12 +8,12 @@
     /// </summary>
     public class VelocityTrackerProcessor : VelocityTracker
     {
-        /// <summary>
-        /// The <see cref="VelocityTracker"/> collection to attempt to process.
-        /// </summary>
         [Tooltip("The VelocityTracker collection to attempt to process.")]
         [SerializeField]
         private VelocityTrackerObservableList _velocityTrackers;
+        /// <summary>
+        /// The <see cref="VelocityTracker"/> collection to attempt to process.
+        /// </summary>
         public VelocityTrackerObservableList VelocityTrackers
         {
             get

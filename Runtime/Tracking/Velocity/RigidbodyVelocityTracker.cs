@@ -8,12 +8,12 @@
     /// </summary>
     public class RigidbodyVelocityTracker : VelocityTracker
     {
-        /// <summary>
-        /// The source to track and estimate velocities for.
-        /// </summary>
         [Tooltip("The source to track and estimate velocities for.")]
         [SerializeField]
         private Rigidbody _source;
+        /// <summary>
+        /// The source to track and estimate velocities for.
+        /// </summary>
         public Rigidbody Source
         {
             get

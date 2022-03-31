@@ -16,12 +16,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<GameObject> { }
 
-        /// <summary>
-        /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or to just search for the containing <see cref="Transform"/>.
-        /// </summary>
         [Tooltip("Determines whether the collision point parent is the GameObject that contains a CollisionNotifier or to just search for the containing Transform.")]
         [SerializeField]
         private bool _isParentCollisionNotifier;
+        /// <summary>
+        /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or to just search for the containing <see cref="Transform"/>.
+        /// </summary>
         public bool IsParentCollisionNotifier
         {
             get

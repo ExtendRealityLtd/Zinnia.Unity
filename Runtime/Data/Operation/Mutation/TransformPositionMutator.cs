@@ -10,13 +10,13 @@
     public class TransformPositionMutator : TransformPropertyMutator
     {
         #region Position Settings
-        /// <summary>
-        /// Determines the facing direction when mutating the position.
-        /// </summary>
         [Header("Position Settings")]
         [Tooltip("Determines the facing direction when mutating the position.")]
         [SerializeField]
         private GameObject _facingDirection;
+        /// <summary>
+        /// Determines the facing direction when mutating the position.
+        /// </summary>
         public GameObject FacingDirection
         {
             get
@@ -28,12 +28,12 @@
                 _facingDirection = value;
             }
         }
-        /// <summary>
-        /// Determines which axes to take from the <see cref="FacingDirection"/>.
-        /// </summary>
         [Tooltip("Determines which axes to take from the FacingDirection.")]
         [SerializeField]
         private Vector3State _applyFacingDirectionOnAxis = Vector3State.True;
+        /// <summary>
+        /// Determines which axes to take from the <see cref="FacingDirection"/>.
+        /// </summary>
         public Vector3State ApplyFacingDirectionOnAxis
         {
             get

@@ -9,12 +9,12 @@
     /// </summary>
     public class PointNormalRotator : MonoBehaviour
     {
-        /// <summary>
-        /// The target to apply the rotations to.
-        /// </summary>
         [Tooltip("The target to apply the rotations to.")]
         [SerializeField]
         private GameObject _target;
+        /// <summary>
+        /// The target to apply the rotations to.
+        /// </summary>
         public GameObject Target
         {
             get

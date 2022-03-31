@@ -45,12 +45,12 @@
             ExtractSqrMagnitude
         }
 
-        /// <summary>
-        /// Which <see cref="Vector2"/> coordinate to extract.
-        /// </summary>
         [Tooltip("Which Vector2 coordinate to extract.")]
         [SerializeField]
         private ExtractionCoordinate _coordinateToExtract = ExtractionCoordinate.ExtractX;
+        /// <summary>
+        /// Which <see cref="Vector2"/> coordinate to extract.
+        /// </summary>
         public ExtractionCoordinate CoordinateToExtract
         {
             get

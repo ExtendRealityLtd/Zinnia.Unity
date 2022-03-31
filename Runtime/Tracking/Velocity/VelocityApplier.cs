@@ -8,12 +8,12 @@
     /// </summary>
     public class VelocityApplier : MonoBehaviour
     {
-        /// <summary>
-        /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
-        /// </summary>
         [Tooltip("The source VelocityTracker  to receive the velocity data from.")]
         [SerializeField]
         private VelocityTracker _source;
+        /// <summary>
+        /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
+        /// </summary>
         public VelocityTracker Source
         {
             get
@@ -25,12 +25,12 @@
                 _source = value;
             }
         }
-        /// <summary>
-        /// The target <see cref="Rigidbody"/> to apply the source velocity data to.
-        /// </summary>
         [Tooltip("The target Rigidbody to apply the source velocity data to.")]
         [SerializeField]
         private Rigidbody _target;
+        /// <summary>
+        /// The target <see cref="Rigidbody"/> to apply the source velocity data to.
+        /// </summary>
         public Rigidbody Target
         {
             get

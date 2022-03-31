@@ -15,12 +15,12 @@ namespace Zinnia.Data.Type.Transformation
         [Serializable]
         public class UnityEvent : UnityEvent<Vector2> { }
 
-        /// <summary>
-        /// The magnitude to use when transforming values.
-        /// </summary>
         [Tooltip("The magnitude to use when transforming values.")]
         [SerializeField]
         private float _magnitude = 1f;
+        /// <summary>
+        /// The magnitude to use when transforming values.
+        /// </summary>
         public float Magnitude
         {
             get

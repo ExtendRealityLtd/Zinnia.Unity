@@ -9,12 +9,12 @@
     /// </summary>
     public class ParabolicLineCast : PointsCast
     {
-        /// <summary>
-        /// The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.
-        /// </summary>
         [Tooltip("The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.")]
         [SerializeField]
         private Vector2 _maximumLength = new Vector2(10f, float.PositiveInfinity);
+        /// <summary>
+        /// The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.
+        /// </summary>
         public Vector2 MaximumLength
         {
             get
@@ -26,12 +26,12 @@
                 _maximumLength = value;
             }
         }
-        /// <summary>
-        /// The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.
-        /// </summary>
         [Tooltip("The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.")]
         [SerializeField]
         private float _heightLimitAngle = 100f;
+        /// <summary>
+        /// The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.
+        /// </summary>
         public float HeightLimitAngle
         {
             get
@@ -43,13 +43,13 @@
                 _heightLimitAngle = value;
             }
         }
+        [Tooltip("The number of points to generate on the parabolic line.")]
+        [SerializeField]
+        private int _segmentCount = 10;
         /// <summary>
         /// The number of points to generate on the parabolic line.
         /// </summary>
         /// <remarks>The higher the number, the more CPU intensive the point generation becomes.</remarks>
-        [Tooltip("The number of points to generate on the parabolic line.")]
-        [SerializeField]
-        private int _segmentCount = 10;
         public int SegmentCount
         {
             get
@@ -61,13 +61,13 @@
                 _segmentCount = value;
             }
         }
+        [Tooltip("The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at SegmentCount.")]
+        [SerializeField]
+        private int _collisionCheckFrequency;
         /// <summary>
         /// The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at <see cref="SegmentCount" />.
         /// </summary>
         /// <remarks>The higher the number, the more CPU intensive the checks become.</remarks>
-        [Tooltip("The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at SegmentCount.")]
-        [SerializeField]
-        private int _collisionCheckFrequency;
         public int CollisionCheckFrequency
         {
             get
@@ -79,12 +79,12 @@
                 _collisionCheckFrequency = value;
             }
         }
-        /// <summary>
-        /// The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.
-        /// </summary>
         [Tooltip("The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.")]
         [SerializeField]
         private float _curveOffset = 1f;
+        /// <summary>
+        /// The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.
+        /// </summary>
         public float CurveOffset
         {
             get

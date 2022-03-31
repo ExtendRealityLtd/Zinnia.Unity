@@ -8,12 +8,12 @@
     /// </summary>
     public class StringMatchesRule : StringRule
     {
-        /// <summary>
-        /// The regular expression pattern to match against a string against.
-        /// </summary>
         [Tooltip("The regular expression pattern to match against a string against.")]
         [SerializeField]
         private string _targetPattern;
+        /// <summary>
+        /// The regular expression pattern to match against a string against.
+        /// </summary>
         public string TargetPattern
         {
             get

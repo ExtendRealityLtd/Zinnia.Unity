@@ -24,13 +24,13 @@
         /// </summary>
         public UnityEvent Failed = new UnityEvent();
 
-        /// <summary>
-        /// The source to extract from.
-        /// </summary>
         [Header("Extractor Settings")]
         [Tooltip("The source to extract from.")]
         [SerializeField]
         private TSourceElement _source;
+        /// <summary>
+        /// The source to extract from.
+        /// </summary>
         public TSourceElement Source
         {
             get

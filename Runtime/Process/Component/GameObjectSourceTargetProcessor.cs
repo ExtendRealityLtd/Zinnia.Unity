@@ -19,13 +19,13 @@
         public class GameObjectUnityEvent : UnityEvent<GameObject> { }
 
         #region Processor Settings
-        /// <summary>
-        /// A <see cref="GameObject"/> collection of sources to apply data from.
-        /// </summary>
         [Header("Entity Settings")]
         [Tooltip("A GameObject collection of sources to apply data from.")]
         [SerializeField]
         private GameObjectObservableList _sources;
+        /// <summary>
+        /// A <see cref="GameObject"/> collection of sources to apply data from.
+        /// </summary>
         public GameObjectObservableList Sources
         {
             get
@@ -37,12 +37,12 @@
                 _sources = value;
             }
         }
-        /// <summary>
-        /// Allows to optionally determine which sources should be processed based on the set rules.
-        /// </summary>
         [Tooltip("Allows to optionally determine which sources should be processed based on the set rules.")]
         [SerializeField]
         private RuleContainer _sourceValidity;
+        /// <summary>
+        /// Allows to optionally determine which sources should be processed based on the set rules.
+        /// </summary>
         public RuleContainer SourceValidity
         {
             get
@@ -54,12 +54,12 @@
                 _sourceValidity = value;
             }
         }
-        /// <summary>
-        /// A <see cref="GameObject"/> collection of targets to apply data to.
-        /// </summary>
         [Tooltip("A GameObject collection of targets to apply data to.")]
         [SerializeField]
         private GameObjectObservableList _targets;
+        /// <summary>
+        /// A <see cref="GameObject"/> collection of targets to apply data to.
+        /// </summary>
         public GameObjectObservableList Targets
         {
             get
@@ -71,12 +71,12 @@
                 _targets = value;
             }
         }
-        /// <summary>
-        /// Allows to optionally determine which targets should be processed based on the set rules.
-        /// </summary>
         [Tooltip("Allows to optionally determine which targets should be processed based on the set rules.")]
         [SerializeField]
         private RuleContainer _targetValidity;
+        /// <summary>
+        /// Allows to optionally determine which targets should be processed based on the set rules.
+        /// </summary>
         public RuleContainer TargetValidity
         {
             get

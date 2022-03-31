@@ -18,12 +18,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector3> { }
 
-        /// <summary>
-        /// A <see cref="float"/> to use as the current x value of the <see cref="Vector3"/>.
-        /// </summary>
         [Tooltip("A float to use as the current x value of the Vector3.")]
         [SerializeField]
         private float _currentX;
+        /// <summary>
+        /// A <see cref="float"/> to use as the current x value of the <see cref="Vector3"/>.
+        /// </summary>
         public float CurrentX
         {
             get
@@ -35,12 +35,12 @@
                 _currentX = value;
             }
         }
-        /// <summary>
-        /// A <see cref="float"/> to use as the current y value of the <see cref="Vector3"/>.
-        /// </summary>
         [Tooltip("A float to use as the current y value of the Vector3.")]
         [SerializeField]
         private float _currentY;
+        /// <summary>
+        /// A <see cref="float"/> to use as the current y value of the <see cref="Vector3"/>.
+        /// </summary>
         public float CurrentY
         {
             get
@@ -52,12 +52,12 @@
                 _currentY = value;
             }
         }
-        /// <summary>
-        /// A <see cref="float"/> to use as the current z value of the <see cref="Vector3"/>.
-        /// </summary>
         [Tooltip("A float to use as the current z value of the Vector3.")]
         [SerializeField]
         private float _currentZ;
+        /// <summary>
+        /// A <see cref="float"/> to use as the current z value of the <see cref="Vector3"/>.
+        /// </summary>
         public float CurrentZ
         {
             get

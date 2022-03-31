@@ -17,12 +17,12 @@
         [Serializable]
         public class EventData
         {
-            /// <summary>
-            /// The publisher payload data that is being pushed to the consumer.
-            /// </summary>
             [Tooltip("The publisher payload data that is being pushed to the consumer.")]
             [SerializeField]
             private ActiveCollisionPublisher.PayloadData _publisher;
+            /// <summary>
+            /// The publisher payload data that is being pushed to the consumer.
+            /// </summary>
             public ActiveCollisionPublisher.PayloadData Publisher
             {
                 get
@@ -34,12 +34,12 @@
                     _publisher = value;
                 }
             }
-            /// <summary>
-            /// The current collision data.
-            /// </summary>
             [Tooltip("The current collision data.")]
             [SerializeField]
             private CollisionNotifier.EventData _currentCollision;
+            /// <summary>
+            /// The current collision data.
+            /// </summary>
             public CollisionNotifier.EventData CurrentCollision
             {
                 get
@@ -110,12 +110,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<EventData> { }
 
-        /// <summary>
-        /// The highest level container of the consumer to allow for nested consumers.
-        /// </summary>
         [Tooltip("The highest level container of the consumer to allow for nested consumers.")]
         [SerializeField]
         private GameObject _container;
+        /// <summary>
+        /// The highest level container of the consumer to allow for nested consumers.
+        /// </summary>
         public GameObject Container
         {
             get
@@ -128,12 +128,12 @@
             }
         }
 
-        /// <summary>
-        /// Determines whether to consume the received call from specific publishers.
-        /// </summary>
         [Tooltip("Determines whether to consume the received call from specific publishers.")]
         [SerializeField]
         private RuleContainer _publisherValidity;
+        /// <summary>
+        /// Determines whether to consume the received call from specific publishers.
+        /// </summary>
         public RuleContainer PublisherValidity
         {
             get

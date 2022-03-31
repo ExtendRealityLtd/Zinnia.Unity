@@ -20,12 +20,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<float> { }
 
-        /// <summary>
-        /// The range in which to consider the minimum and maximum value for normalizing.
-        /// </summary>
         [Tooltip("The range in which to consider the minimum and maximum value for normalizing.")]
         [SerializeField]
         private FloatRange _range = new FloatRange(0f, 1f);
+        /// <summary>
+        /// The range in which to consider the minimum and maximum value for normalizing.
+        /// </summary>
         protected FloatRange Range
         {
             get

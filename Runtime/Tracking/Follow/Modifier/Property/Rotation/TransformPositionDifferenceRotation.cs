@@ -9,12 +9,12 @@
     /// </summary>
     public class TransformPositionDifferenceRotation : PropertyModifier
     {
-        /// <summary>
-        /// The drag applied to the rotation to slow it down.
-        /// </summary>
         [Tooltip("The drag applied to the rotation to slow it down.")]
         [SerializeField]
         private float _angularDrag = 1f;
+        /// <summary>
+        /// The drag applied to the rotation to slow it down.
+        /// </summary>
         public float AngularDrag
         {
             get
@@ -26,12 +26,12 @@
                 _angularDrag = value;
             }
         }
-        /// <summary>
-        /// Determines which axes to rotate.
-        /// </summary>
         [Tooltip("Determines which axes to rotate.")]
         [SerializeField]
         private Vector3State _followOnAxis = Vector3State.True;
+        /// <summary>
+        /// Determines which axes to rotate.
+        /// </summary>
         public Vector3State FollowOnAxis
         {
             get
@@ -43,12 +43,12 @@
                 _followOnAxis = value;
             }
         }
-        /// <summary>
-        /// An optional <see cref="GameObject"/> that is negated from the calculation if both the source and target are descendants of it.
-        /// </summary>
         [Tooltip("An optional GameObject that is negated from the calculation if both the source and target are descendants of it.")]
         [SerializeField]
         private GameObject _ancestor;
+        /// <summary>
+        /// An optional <see cref="GameObject"/> that is negated from the calculation if both the source and target are descendants of it.
+        /// </summary>
         public GameObject Ancestor
         {
             get

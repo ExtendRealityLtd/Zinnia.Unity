@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -10,12 +9,12 @@
     /// </summary>
     public class SurfaceChangeAction : BooleanAction
     {
-        /// <summary>
-        /// The distance between the current surface and previous surface to consider a valid change.
-        /// </summary>
         [Tooltip("The distance between the current surface and previous surface to consider a valid change.")]
         [SerializeField]
         private float _changeDistance = 0.5f;
+        /// <summary>
+        /// The distance between the current surface and previous surface to consider a valid change.
+        /// </summary>
         public float ChangeDistance
         {
             get
@@ -25,14 +24,18 @@
             set
             {
                 _changeDistance = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterChangeDistanceChange();
+                }
             }
         }
-        /// <summary>
-        /// The axes to check for distance differences on.
-        /// </summary>
         [Tooltip("The axes to check for distance differences on.")]
         [SerializeField]
         private Vector3State _checkAxis = Vector3State.True;
+        /// <summary>
+        /// The axes to check for distance differences on.
+        /// </summary>
         public Vector3State CheckAxis
         {
             get
@@ -42,6 +45,10 @@
             set
             {
                 _checkAxis = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterCheckAxisChange();
+                }
             }
         }
 
@@ -131,7 +138,6 @@
         /// <summary>
         /// Called after <see cref="ChangeDistance"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ChangeDistance))]
         protected virtual void OnAfterChangeDistanceChange()
         {
             if (previousData != null)
@@ -143,7 +149,6 @@
         /// <summary>
         /// Called after <see cref="CheckAxis"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(CheckAxis))]
         protected virtual void OnAfterCheckAxisChange()
         {
             if (previousData != null)

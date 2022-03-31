@@ -19,12 +19,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector3> { }
 
-        /// <summary>
-        /// The minimum and maximum values that the x coordinate can be.
-        /// </summary>
         [Tooltip("The minimum and maximum values that the x coordinate can be.")]
         [SerializeField]
         private FloatRange _xBounds = FloatRange.MinMax;
+        /// <summary>
+        /// The minimum and maximum values that the x coordinate can be.
+        /// </summary>
         public FloatRange XBounds
         {
             get
@@ -36,12 +36,12 @@
                 _xBounds = value;
             }
         }
-        /// <summary>
-        /// The minimum and maximum values that the y coordinate can be.
-        /// </summary>
         [Tooltip("The minimum and maximum values that the y coordinate can be.")]
         [SerializeField]
         private FloatRange _yBounds = FloatRange.MinMax;
+        /// <summary>
+        /// The minimum and maximum values that the y coordinate can be.
+        /// </summary>
         public FloatRange YBounds
         {
             get
@@ -53,12 +53,12 @@
                 _yBounds = value;
             }
         }
-        /// <summary>
-        /// The minimum and maximum values that the z coordinate can be.
-        /// </summary>
         [Tooltip("The minimum and maximum values that the z coordinate can be.")]
         [SerializeField]
         private FloatRange _zBounds = FloatRange.MinMax;
+        /// <summary>
+        /// The minimum and maximum values that the z coordinate can be.
+        /// </summary>
         public FloatRange ZBounds
         {
             get

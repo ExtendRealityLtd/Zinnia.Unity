@@ -15,12 +15,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector3> { }
 
-        /// <summary>
-        /// Determines whether to extract the local property or the world property.
-        /// </summary>
         [Tooltip("Determines whether to extract the local property or the world property.")]
         [SerializeField]
         private bool _useLocal;
+        /// <summary>
+        /// Determines whether to extract the local property or the world property.
+        /// </summary>
         public bool UseLocal
         {
             get

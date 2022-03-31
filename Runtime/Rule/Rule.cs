@@ -2,7 +2,6 @@
 {
     using System;
     using UnityEngine;
-    using Zinnia.Data.Attribute;
 
     /// <summary>
     /// The basis for all rule types.
@@ -25,12 +24,12 @@
             RuleGameObjectIsNotActiveInHierarchy = 1 << 1
         }
 
-        /// <summary>
-        /// The states on whether to automatically reject a <see cref="Rule"/>.
-        /// </summary>
         [Tooltip("The states on whether to automatically reject a Rule.")]
         [SerializeField]
         private RejectRuleStates _autoRejectStates = (RejectRuleStates)(-1);
+        /// <summary>
+        /// The states on whether to automatically reject a <see cref="Rule"/>.
+        /// </summary>
         public RejectRuleStates AutoRejectStates
         {
             get

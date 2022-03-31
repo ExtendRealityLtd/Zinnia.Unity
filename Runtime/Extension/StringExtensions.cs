@@ -25,7 +25,7 @@
 
             string[] data = new string[dataLength];
 
-            if(baseData != null)
+            if (baseData != null)
             {
                 data[0] = baseData.Remove(baseData.Length - 2).Remove(0, 2);
             }

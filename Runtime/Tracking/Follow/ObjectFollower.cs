@@ -19,12 +19,12 @@
         [Serializable]
         public class EventData
         {
-            /// <summary>
-            /// The source utilize within the <see cref="Modifier.FollowModifier"/>.
-            /// </summary>
             [Tooltip("The source utilize within the Modifier.FollowModifier.")]
             [SerializeField]
             private GameObject _eventSource;
+            /// <summary>
+            /// The source utilize within the <see cref="Modifier.FollowModifier"/>.
+            /// </summary>
             public GameObject EventSource
             {
                 get
@@ -36,12 +36,12 @@
                     _eventSource = value;
                 }
             }
-            /// <summary>
-            /// The target to apply the <see cref="Modifier.FollowModifier"/> on.
-            /// </summary>
             [Tooltip("The target to apply the Modifier.FollowModifier on.")]
             [SerializeField]
             private GameObject _eventTarget;
+            /// <summary>
+            /// The target to apply the <see cref="Modifier.FollowModifier"/> on.
+            /// </summary>
             public GameObject EventTarget
             {
                 get
@@ -53,12 +53,12 @@
                     _eventTarget = value;
                 }
             }
-            /// <summary>
-            /// The optional offset the target follow against the source.
-            /// </summary>
             [Tooltip("The optional offset the target follow against the source.")]
             [SerializeField]
             private GameObject _eventTargetOffset;
+            /// <summary>
+            /// The optional offset the target follow against the source.
+            /// </summary>
             public GameObject EventTargetOffset
             {
                 get
@@ -120,12 +120,12 @@
         [Serializable]
         public class FollowEvent : UnityEvent<EventData> { }
 
-        /// <summary>
-        /// A <see cref="GameObject"/> collection of target offsets to offset the <see cref="GameObjectSourceTargetProcessor.Targets"/> against the source whilst following. The <see cref="GameObject"/> for the target offset must be a child of the corresponding target.
-        /// </summary>
         [Tooltip("A GameObject collection of target offsets to offset the GameObjectSourceTargetProcessor.Targets against the source whilst following. The GameObject for the target offset must be a child of the corresponding target.")]
         [SerializeField]
         private GameObjectObservableList _targetOffsets;
+        /// <summary>
+        /// A <see cref="GameObject"/> collection of target offsets to offset the <see cref="GameObjectSourceTargetProcessor.Targets"/> against the source whilst following. The <see cref="GameObject"/> for the target offset must be a child of the corresponding target.
+        /// </summary>
         public GameObjectObservableList TargetOffsets
         {
             get
@@ -137,13 +137,13 @@
                 _targetOffsets = value;
             }
         }
-        /// <summary>
-        /// The <see cref="Modifier.FollowModifier"/> to apply.
-        /// </summary>
         [Header("Follow Settings")]
         [Tooltip("The Modifier.FollowModifier to apply.")]
         [SerializeField]
         private FollowModifier _followModifier;
+        /// <summary>
+        /// The <see cref="Modifier.FollowModifier"/> to apply.
+        /// </summary>
         public FollowModifier FollowModifier
         {
             get

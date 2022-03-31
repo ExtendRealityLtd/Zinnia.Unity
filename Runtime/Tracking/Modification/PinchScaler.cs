@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -10,12 +9,12 @@
     /// </summary>
     public class PinchScaler : MonoBehaviour, IProcessable
     {
-        /// <summary>
-        /// The target to scale.
-        /// </summary>
         [Tooltip("The target to scale.")]
         [SerializeField]
         private GameObject _target;
+        /// <summary>
+        /// The target to scale.
+        /// </summary>
         public GameObject Target
         {
             get
@@ -27,12 +26,12 @@
                 _target = value;
             }
         }
-        /// <summary>
-        /// The point to determine distance from.
-        /// </summary>
         [Tooltip("The point to determine distance from.")]
         [SerializeField]
         private GameObject _primaryPoint;
+        /// <summary>
+        /// The point to determine distance from.
+        /// </summary>
         public GameObject PrimaryPoint
         {
             get
@@ -42,14 +41,18 @@
             set
             {
                 _primaryPoint = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterPrimaryPointChange();
+                }
             }
         }
-        /// <summary>
-        /// The point to determine distance to.
-        /// </summary>
         [Tooltip("The point to determine distance to.")]
         [SerializeField]
         private GameObject _secondaryPoint;
+        /// <summary>
+        /// The point to determine distance to.
+        /// </summary>
         public GameObject SecondaryPoint
         {
             get
@@ -59,14 +62,18 @@
             set
             {
                 _secondaryPoint = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSecondaryPointChange();
+                }
             }
         }
-        /// <summary>
-        /// A scale factor multiplier.
-        /// </summary>
         [Tooltip("A scale factor multiplier.")]
         [SerializeField]
         private float _multiplier = 1f;
+        /// <summary>
+        /// A scale factor multiplier.
+        /// </summary>
         public float Multiplier
         {
             get
@@ -78,12 +85,12 @@
                 _multiplier = value;
             }
         }
-        /// <summary>
-        /// Determines whether to use local or global scale.
-        /// </summary>
         [Tooltip("Determines whether to use local or global scale.")]
         [SerializeField]
         private bool _useLocalScale = true;
+        /// <summary>
+        /// Determines whether to use local or global scale.
+        /// </summary>
         public bool UseLocalScale
         {
             get
@@ -95,12 +102,12 @@
                 _useLocalScale = value;
             }
         }
-        /// <summary>
-        /// Determines whether to calculate the multiplier using <see cref="Mathf.Pow(float, float)"/>.
-        /// </summary>
         [Tooltip("Determines whether to calculate the multiplier using Mathf.Pow(float, float).")]
         [SerializeField]
         private bool _calculateByPower;
+        /// <summary>
+        /// Determines whether to calculate the multiplier using <see cref="Mathf.Pow(float, float)"/>.
+        /// </summary>
         public bool CalculateByPower
         {
             get
@@ -281,7 +288,6 @@
         /// <summary>
         /// Called after <see cref="PrimaryPoint"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(PrimaryPoint))]
         protected virtual void OnAfterPrimaryPointChange()
         {
             previousDistance = null;
@@ -290,7 +296,6 @@
         /// <summary>
         /// Called after <see cref="SecondaryPoint"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(SecondaryPoint))]
         protected virtual void OnAfterSecondaryPointChange()
         {
             previousDistance = null;

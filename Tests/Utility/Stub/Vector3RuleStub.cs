@@ -1,5 +1,5 @@
-﻿using Zinnia.Rule;
-using Zinnia.Extension;
+﻿using Zinnia.Extension;
+using Zinnia.Rule;
 
 namespace Test.Zinnia.Utility.Stub
 {

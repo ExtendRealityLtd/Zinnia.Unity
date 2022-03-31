@@ -10,12 +10,12 @@
     /// </summary>
     public class XRNodeVelocityEstimator : VelocityTracker
     {
-        /// <summary>
-        /// The node to query velocity estimations for.
-        /// </summary>
         [Tooltip("The node to query velocity estimations for.")]
         [SerializeField]
         private XRNode _node = XRNode.LeftHand;
+        /// <summary>
+        /// The node to query velocity estimations for.
+        /// </summary>
         public XRNode Node
         {
             get
@@ -28,12 +28,12 @@
             }
         }
 
-        /// <summary>
-        /// An optional object to consider the source relative to when estimating the velocities.
-        /// </summary>
         [Tooltip("An optional object to consider the source relative to when estimating the velocities.")]
         [SerializeField]
         private GameObject _relativeTo;
+        /// <summary>
+        /// An optional object to consider the source relative to when estimating the velocities.
+        /// </summary>
         public GameObject RelativeTo
         {
             get

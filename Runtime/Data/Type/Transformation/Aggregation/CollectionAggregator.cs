@@ -20,12 +20,12 @@
         /// </summary>
         public UnityEvent Failed = new UnityEvent();
 
-        /// <summary>
-        /// The collection to aggregate.
-        /// </summary>
         [Tooltip("The collection to aggregate.")]
         [SerializeField]
         private TCollection _collection;
+        /// <summary>
+        /// The collection to aggregate.
+        /// </summary>
         public TCollection Collection
         {
             get

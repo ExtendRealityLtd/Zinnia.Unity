@@ -9,12 +9,12 @@
     /// </summary>
     public class StateEmitter : MonoBehaviour, IProcessable
     {
-        /// <summary>
-        /// The Action to re-emit the state for.
-        /// </summary>
         [Tooltip("The Action to re-emit the state for.")]
         [SerializeField]
         private Action _action;
+        /// <summary>
+        /// The Action to re-emit the state for.
+        /// </summary>
         public Action Action
         {
             get

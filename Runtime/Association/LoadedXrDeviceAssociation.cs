@@ -11,12 +11,12 @@
     [Obsolete("Use `PlatformDeviceAssociation` instead.")]
     public class LoadedXrDeviceAssociation : GameObjectsAssociation
     {
-        /// <summary>
-        /// A regular expression to match the name of the XR device that needs to be loaded.
-        /// </summary>
         [Tooltip("A regular expression to match the name of the XR device that needs to be loaded.")]
         [SerializeField]
         private string _xrDeviceNamePattern;
+        /// <summary>
+        /// A regular expression to match the name of the XR device that needs to be loaded.
+        /// </summary>
         public string XrDeviceNamePattern
         {
             get

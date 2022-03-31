@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
-    using Zinnia.Data.Attribute;
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -19,13 +18,13 @@
         [Serializable]
         public class EventData : IEquatable<EventData>
         {
+            [Tooltip("The source of this event in case it was forwarded.")]
+            [SerializeField]
+            private Component _forwardSource;
             /// <summary>
             /// The source of this event in case it was forwarded.
             /// </summary>
             /// <remarks><see langword="null"/> if this event wasn't forwarded from anything.</remarks>
-            [Tooltip("The source of this event in case it was forwarded.")]
-            [SerializeField]
-            private Component _forwardSource;
             public Component ForwardSource
             {
                 get
@@ -37,12 +36,12 @@
                     _forwardSource = value;
                 }
             }
-            /// <summary>
-            /// Whether the collision was observed through a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
-            /// </summary>
             [Tooltip("Whether the collision was observed through a Collider with Collider.isTrigger set.")]
             [SerializeField]
             private bool _isTrigger;
+            /// <summary>
+            /// Whether the collision was observed through a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
+            /// </summary>
             public bool IsTrigger
             {
                 get
@@ -54,12 +53,12 @@
                     _isTrigger = value;
                 }
             }
-            /// <summary>
-            /// The observed <see cref="Collision"/>. <see langword="null"/> if <see cref="IsTrigger"/> is <see langword="true"/>.
-            /// </summary>
             [Tooltip("The observed Collision. null if IsTrigger is true.")]
             [SerializeField]
             private Collision _collisionData;
+            /// <summary>
+            /// The observed <see cref="Collision"/>. <see langword="null"/> if <see cref="IsTrigger"/> is <see langword="true"/>.
+            /// </summary>
             public Collision CollisionData
             {
                 get
@@ -71,12 +70,12 @@
                     _collisionData = value;
                 }
             }
-            /// <summary>
-            /// The observed <see cref="Collider"/>.
-            /// </summary>
             [Tooltip("The observed Collider.")]
             [SerializeField]
             private Collider _colliderData;
+            /// <summary>
+            /// The observed <see cref="Collider"/>.
+            /// </summary>
             public Collider ColliderData
             {
                 get
@@ -223,13 +222,13 @@
         }
 
         #region Collision Settings
-        /// <summary>
-        /// Whether the collisions should be processed when this component is disabled.
-        /// </summary>
         [Header("Collision Settings")]
         [Tooltip("Whether the collisions should be processed when this component is disabled.")]
         [SerializeField]
         private bool _processCollisionsWhenDisabled = true;
+        /// <summary>
+        /// Whether the collisions should be processed when this component is disabled.
+        /// </summary>
         public bool ProcessCollisionsWhenDisabled
         {
             get
@@ -241,12 +240,12 @@
                 _processCollisionsWhenDisabled = value;
             }
         }
-        /// <summary>
-        /// The types of collisions that events will be emitted for.
-        /// </summary>
         [Tooltip("The types of collisions that events will be emitted for.")]
         [SerializeField]
         private CollisionTypes _emittedTypes = (CollisionTypes)(-1);
+        /// <summary>
+        /// The types of collisions that events will be emitted for.
+        /// </summary>
         public CollisionTypes EmittedTypes
         {
             get
@@ -258,12 +257,12 @@
                 _emittedTypes = value;
             }
         }
-        /// <summary>
-        /// The <see cref="CollisionStates"/> to process.
-        /// </summary>
         [Tooltip("The CollisionStates to process.")]
         [SerializeField]
         private CollisionStates _statesToProcess = (CollisionStates)(-1);
+        /// <summary>
+        /// The <see cref="CollisionStates"/> to process.
+        /// </summary>
         public CollisionStates StatesToProcess
         {
             get
@@ -275,12 +274,12 @@
                 _statesToProcess = value;
             }
         }
-        /// <summary>
-        /// Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.
-        /// </summary>
         [Tooltip("Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.")]
         [SerializeField]
         private RuleContainer _forwardingSourceValidity;
+        /// <summary>
+        /// Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.
+        /// </summary>
         public RuleContainer ForwardingSourceValidity
         {
             get

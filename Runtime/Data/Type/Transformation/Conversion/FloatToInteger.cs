@@ -39,12 +39,12 @@
             Ceil
         }
 
-        /// <summary>
-        /// Determines how to round the <see cref="float"/> to a whole <see cref="int"/>.
-        /// </summary>
         [Tooltip("Determines how to round the float to a whole int.")]
         [SerializeField]
         private RoundingType _roundBy;
+        /// <summary>
+        /// Determines how to round the <see cref="float"/> to a whole <see cref="int"/>.
+        /// </summary>
         public RoundingType RoundBy
         {
             get

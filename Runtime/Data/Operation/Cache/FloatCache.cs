@@ -14,12 +14,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<float> { }
 
-        /// <summary>
-        /// The tolerance to consider the current value and the cached value equal.
-        /// </summary>
         [Tooltip("The tolerance to consider the current value and the cached value equal.")]
         [SerializeField]
         private float _equalityTolerance = float.Epsilon;
+        /// <summary>
+        /// The tolerance to consider the current value and the cached value equal.
+        /// </summary>
         public float EqualityTolerance
         {
             get

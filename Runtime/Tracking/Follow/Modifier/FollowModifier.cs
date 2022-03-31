@@ -9,12 +9,12 @@
     /// </summary>
     public class FollowModifier : MonoBehaviour
     {
-        /// <summary>
-        /// The modifier to change the scale.
-        /// </summary>
         [Tooltip("The modifier to change the scale.")]
         [SerializeField]
         private PropertyModifier _scaleModifier;
+        /// <summary>
+        /// The modifier to change the scale.
+        /// </summary>
         public PropertyModifier ScaleModifier
         {
             get
@@ -26,12 +26,12 @@
                 _scaleModifier = value;
             }
         }
-        /// <summary>
-        /// The modifier to change the rotation.
-        /// </summary>
         [Tooltip("The modifier to change the rotation.")]
         [SerializeField]
         private PropertyModifier _rotationModifier;
+        /// <summary>
+        /// The modifier to change the rotation.
+        /// </summary>
         public PropertyModifier RotationModifier
         {
             get
@@ -43,12 +43,12 @@
                 _rotationModifier = value;
             }
         }
-        /// <summary>
-        /// The modifier to change the position.
-        /// </summary>
         [Tooltip("The modifier to change the position.")]
         [SerializeField]
         private PropertyModifier _positionModifier;
+        /// <summary>
+        /// The modifier to change the position.
+        /// </summary>
         public PropertyModifier PositionModifier
         {
             get

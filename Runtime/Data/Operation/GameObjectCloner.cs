@@ -16,12 +16,12 @@
         [Serializable]
         public class UnityEvent : UnityEvent<GameObject> { }
 
-        /// <summary>
-        /// The object to clone.
-        /// </summary>
         [Tooltip("The object to clone.")]
         [SerializeField]
         private GameObject _source;
+        /// <summary>
+        /// The object to clone.
+        /// </summary>
         public GameObject Source
         {
             get
@@ -33,12 +33,12 @@
                 _source = value;
             }
         }
-        /// <summary>
-        /// An optional object to parent the cloned objects to.
-        /// </summary>
         [Tooltip("An optional object to parent the cloned objects to.")]
         [SerializeField]
         private GameObject _parent;
+        /// <summary>
+        /// An optional object to parent the cloned objects to.
+        /// </summary>
         public GameObject Parent
         {
             get

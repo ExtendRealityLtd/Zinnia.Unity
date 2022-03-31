@@ -36,12 +36,12 @@
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type to use.</typeparam>
     public abstract class ObservableStack<TElement, TElementEvents, TEvent> : MonoBehaviour where TElementEvents : ObservableStackElementEvents<TElement, TEvent> where TEvent : UnityEvent<TElement>, new()
     {
-        /// <summary>
-        /// The events to emit for the <see cref="TElement"/> that is added to the same index within the stack.
-        /// </summary>
         [Tooltip("The events to emit for the TElement that is added to the same index within the stack.")]
         [SerializeField]
         private List<TElementEvents> _elementEvents = new List<TElementEvents>();
+        /// <summary>
+        /// The events to emit for the <see cref="TElement"/> that is added to the same index within the stack.
+        /// </summary>
         public List<TElementEvents> ElementEvents
         {
             get

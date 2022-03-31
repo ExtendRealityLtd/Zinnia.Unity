@@ -15,13 +15,13 @@
         /// </summary>
         public TEvent ActiveSourceChanging = new TEvent();
 
-        /// <summary>
-        /// Whether to cease the processing of the source collection after the first valid source is processed.
-        /// </summary>
         [Header("Process Settings")]
         [Tooltip("Whether to cease the processing of the source collection after the first valid source is processed.")]
         [SerializeField]
         private bool _ceaseAfterFirstSourceProcessed = true;
+        /// <summary>
+        /// Whether to cease the processing of the source collection after the first valid source is processed.
+        /// </summary>
         public bool CeaseAfterFirstSourceProcessed
         {
             get

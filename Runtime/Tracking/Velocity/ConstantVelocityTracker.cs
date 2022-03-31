@@ -7,12 +7,12 @@
     /// </summary>
     public class ConstantVelocityTracker : VelocityTracker
     {
-        /// <summary>
-        /// The velocity to return.
-        /// </summary>
         [Tooltip("The velocity to return.")]
         [SerializeField]
         private Vector3 _velocity;
+        /// <summary>
+        /// The velocity to return.
+        /// </summary>
         public Vector3 Velocity
         {
             get
@@ -25,12 +25,12 @@
             }
         }
 
-        /// <summary>
-        /// The angular velocity to return.
-        /// </summary>
         [Tooltip("The angular velocity to return.")]
         [SerializeField]
         private Vector3 _angularVelocity;
+        /// <summary>
+        /// The angular velocity to return.
+        /// </summary>
         public Vector3 AngularVelocity
         {
             get
@@ -43,12 +43,12 @@
             }
         }
 
-        /// <summary>
-        /// Determines whether to extract the local property or the world property.
-        /// </summary>
         [Tooltip("Determines whether to extract the local property or the world property.")]
         [SerializeField]
         private bool _useLocal;
+        /// <summary>
+        /// Determines whether to extract the local property or the world property.
+        /// </summary>
         public bool UseLocal
         {
             get

@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Pointer.Operation.Mutation
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -9,12 +8,12 @@
     /// </summary>
     public class PointerElementPropertyMutator : MonoBehaviour
     {
-        /// <summary>
-        /// The <see cref="PointerElement"/> to mutate.
-        /// </summary>
         [Tooltip("The PointerElement to mutate.")]
         [SerializeField]
         private PointerElement _target;
+        /// <summary>
+        /// The <see cref="PointerElement"/> to mutate.
+        /// </summary>
         public PointerElement Target
         {
             get
@@ -30,23 +29,98 @@
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when a valid collision is occuring.
         /// </summary>
-        public GameObject ValidElementContainer { get; set; }
+        private GameObject _validElementContainer;
+        public GameObject ValidElementContainer
+        {
+            get
+            {
+                return _validElementContainer;
+            }
+            set
+            {
+                _validElementContainer = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterValidElementContainerChange();
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when a valid collision is occuring.
         /// </summary>
-        public GameObject ValidMeshContainer { get; set; }
+        private GameObject _validMeshContainer;
+        public GameObject ValidMeshContainer
+        {
+            get
+            {
+                return _validMeshContainer;
+            }
+            set
+            {
+                _validMeshContainer = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterValidMeshContainerChange();
+                }
+            }
+        }
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when an invalid collision or no collision is occuring.
         /// </summary>
-        public GameObject InvalidElementContainer { get; set; }
+        private GameObject _invalidElementContainer;
+        public GameObject InvalidElementContainer
+        {
+            get
+            {
+                return _invalidElementContainer;
+            }
+            set
+            {
+                _invalidElementContainer = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterInvalidElementContainerChange();
+                }
+            }
+        }
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when an invalid collision or no collision is occuring.
         /// </summary>
-        public GameObject InvalidMeshContainer { get; set; }
+        private GameObject _invalidMeshContainer;
+        public GameObject InvalidMeshContainer
+        {
+            get
+            {
+                return _invalidMeshContainer;
+            }
+            set
+            {
+                _invalidMeshContainer = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterInvalidMeshContainerChange();
+                }
+            }
+        }
         /// <summary>
         /// Determines when the <see cref="PointerElement"/> is visible.
         /// </summary>
-        public PointerElement.Visibility ElementVisibility { get; set; }
+        private PointerElement.Visibility _elementVisibility;
+        public PointerElement.Visibility ElementVisibility
+        {
+            get
+            {
+                return _elementVisibility;
+            }
+            set
+            {
+                _elementVisibility = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterElementVisibilityChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Clears <see cref="Target"/>.
@@ -126,7 +200,6 @@
         /// <summary>
         /// Called after <see cref="ValidElementContainer"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ValidElementContainer))]
         protected virtual void OnAfterValidElementContainerChange()
         {
             if (Target == null)
@@ -140,7 +213,6 @@
         /// <summary>
         /// Called after <see cref="ValidMeshContainer"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ValidMeshContainer))]
         protected virtual void OnAfterValidMeshContainerChange()
         {
             if (Target == null)
@@ -154,7 +226,6 @@
         /// <summary>
         /// Called after <see cref="InvalidElementContainer"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(InvalidElementContainer))]
         protected virtual void OnAfterInvalidElementContainerChange()
         {
             if (Target == null)
@@ -168,7 +239,6 @@
         /// <summary>
         /// Called after <see cref="InvalidMeshContainer"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(InvalidMeshContainer))]
         protected virtual void OnAfterInvalidMeshContainerChange()
         {
             if (Target == null)
@@ -182,7 +252,6 @@
         /// <summary>
         /// Called after <see cref="ElementVisibility"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ElementVisibility))]
         protected virtual void OnAfterElementVisibilityChange()
         {
             if (Target == null)

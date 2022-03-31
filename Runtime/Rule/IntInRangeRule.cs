@@ -8,12 +8,12 @@
     /// </summary>
     public class IntInRangeRule : IntRule
     {
-        /// <summary>
-        /// The range in which the given <see cref="int"/> must be equal to the bounds or within the range.
-        /// </summary>
         [Tooltip("The range in which the given int must be equal to the bounds or within the range.")]
         [SerializeField]
         private IntRange _range;
+        /// <summary>
+        /// The range in which the given <see cref="int"/> must be equal to the bounds or within the range.
+        /// </summary>
         public IntRange Range
         {
             get

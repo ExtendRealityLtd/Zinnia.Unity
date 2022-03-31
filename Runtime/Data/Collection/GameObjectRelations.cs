@@ -17,12 +17,12 @@
         [Serializable]
         public class GameObjectUnityEvent : UnityEvent<GameObject> { }
 
-        /// <summary>
-        /// The collection of relations.
-        /// </summary>
         [Tooltip("The collection of relations.")]
         [SerializeField]
         private GameObjectRelationObservableList _relations;
+        /// <summary>
+        /// The collection of relations.
+        /// </summary>
         public GameObjectRelationObservableList Relations
         {
             get

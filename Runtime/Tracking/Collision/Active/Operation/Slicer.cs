@@ -10,13 +10,13 @@
     public class Slicer : MonoBehaviour
     {
         #region Index Settings
-        /// <summary>
-        /// The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.
-        /// </summary>
         [Header("Index Settings")]
         [Tooltip("The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.")]
         [SerializeField]
         private int _startIndex;
+        /// <summary>
+        /// The zero-based index to start the slice at. A negative value counts backwards from the last index in the collection.
+        /// </summary>
         public int StartIndex
         {
             get
@@ -28,12 +28,12 @@
                 _startIndex = value;
             }
         }
-        /// <summary>
-        /// The number of elements in the slice.
-        /// </summary>
         [Tooltip("The number of elements in the slice.")]
         [SerializeField]
         private uint _length = 1;
+        /// <summary>
+        /// The number of elements in the slice.
+        /// </summary>
         public uint Length
         {
             get

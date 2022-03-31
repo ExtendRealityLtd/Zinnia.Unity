@@ -10,12 +10,12 @@
     /// </summary>
     public class AnyComponentTypeRule : GameObjectRule
     {
-        /// <summary>
-        /// The component types to look for.
-        /// </summary>
         [Tooltip("The component types to look for.")]
         [SerializeField]
         private SerializableTypeComponentObservableList _componentTypes;
+        /// <summary>
+        /// The component types to look for.
+        /// </summary>
         public SerializableTypeComponentObservableList ComponentTypes
         {
             get

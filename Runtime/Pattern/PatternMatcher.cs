@@ -8,12 +8,12 @@
     /// </summary>
     public abstract class PatternMatcher : MonoBehaviour
     {
-        /// <summary>
-        /// The pattern to match the source against.
-        /// </summary>
         [Tooltip("The pattern to match the source against.")]
         [SerializeField]
         private string _pattern;
+        /// <summary>
+        /// The pattern to match the source against.
+        /// </summary>
         public string Pattern
         {
             get

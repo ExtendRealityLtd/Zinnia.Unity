@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Aggregation
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using UnityEngine.Events;
     using Zinnia.Data.Collection.List;

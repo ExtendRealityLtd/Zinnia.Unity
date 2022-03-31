@@ -10,12 +10,12 @@
     /// </summary>
     public class ComponentEnabledStateModifier : MonoBehaviour
     {
-        /// <summary>
-        /// The <see cref="Object"/> types to manage the enabled state on.
-        /// </summary>
         [Tooltip("The Object types to manage the enabled state on.")]
         [SerializeField]
         private SerializableTypeComponentObservableList _types;
+        /// <summary>
+        /// The <see cref="Object"/> types to manage the enabled state on.
+        /// </summary>
         public SerializableTypeComponentObservableList Types
         {
             get
@@ -28,12 +28,12 @@
             }
         }
 
-        /// <summary>
-        /// The target to modify the enabled states for the provided <see cref="Types"/>.
-        /// </summary>
         [Tooltip("The target to modify the enabled states for the provided Types.")]
         [SerializeField]
         private GameObject _target;
+        /// <summary>
+        /// The target to modify the enabled states for the provided <see cref="Types"/>.
+        /// </summary>
         public GameObject Target
         {
             get

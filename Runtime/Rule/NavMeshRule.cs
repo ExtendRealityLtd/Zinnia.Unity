@@ -8,12 +8,12 @@
     /// </summary>
     public class NavMeshRule : Vector3Rule
     {
-        /// <summary>
-        /// The relative vertical displacement of the <see cref="NavMesh"/> to the nearest surface.
-        /// </summary>
         [Tooltip("The relative vertical displacement of the NavMesh to the nearest surface.")]
         [SerializeField]
         private float _baseOffset = 0f;
+        /// <summary>
+        /// The relative vertical displacement of the <see cref="NavMesh"/> to the nearest surface.
+        /// </summary>
         public float BaseOffset
         {
             get
@@ -25,12 +25,12 @@
                 _baseOffset = value;
             }
         }
-        /// <summary>
-        /// The max distance given point can be outside the <see cref="NavMesh"/> to be considered valid.
-        /// </summary>
         [Tooltip("The max distance given point can be outside the NavMesh to be considered valid.")]
         [SerializeField]
         private float _distanceLimit = 0.1f;
+        /// <summary>
+        /// The max distance given point can be outside the <see cref="NavMesh"/> to be considered valid.
+        /// </summary>
         public float DistanceLimit
         {
             get
@@ -42,12 +42,12 @@
                 _distanceLimit = value;
             }
         }
-        /// <summary>
-        /// The parts of the <see cref="NavMesh"/> that are considered valid.
-        /// </summary>
         [Tooltip("The parts of the NavMesh that are considered valid.")]
         [SerializeField]
         private int _validAreas = -1;
+        /// <summary>
+        /// The parts of the <see cref="NavMesh"/> that are considered valid.
+        /// </summary>
         public int ValidAreas
         {
             get

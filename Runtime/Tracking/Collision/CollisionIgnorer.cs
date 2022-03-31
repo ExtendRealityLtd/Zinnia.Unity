@@ -1,21 +1,21 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
-    using Malimbe.MemberChangeMethod;
     using System.Collections.Generic;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Ignores the collisions between the source <see cref="GameObject"/> colliders and the target <see cref="GameObject"/> colliders.
     /// </summary>
     public class CollisionIgnorer : MonoBehaviour
     {
-        /// <summary>
-        /// The sources to ignore colliders from.
-        /// </summary>
         [Tooltip("The sources to ignore colliders from.")]
         [SerializeField]
         private GameObjectObservableList _sources;
+        /// <summary>
+        /// The sources to ignore colliders from.
+        /// </summary>
         public GameObjectObservableList Sources
         {
             get
@@ -24,15 +24,23 @@
             }
             set
             {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeSourcesChange();
+                }
                 _sources = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourcesChange();
+                }
             }
         }
-        /// <summary>
-        /// The targets to ignore colliders with.
-        /// </summary>
         [Tooltip("The targets to ignore colliders with.")]
         [SerializeField]
         private GameObjectObservableList _targets;
+        /// <summary>
+        /// The targets to ignore colliders with.
+        /// </summary>
         public GameObjectObservableList Targets
         {
             get
@@ -41,15 +49,23 @@
             }
             set
             {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeTargetsChange();
+                }
                 _targets = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetsChange();
+                }
             }
         }
-        /// <summary>
-        /// Whether to process inactive <see cref="GameObject"/>s when ignoring or resuming collisions.
-        /// </summary>
         [Tooltip("Whether to process inactive GameObjects when ignoring or resuming collisions.")]
         [SerializeField]
         private bool _processInactiveGameObjects;
+        /// <summary>
+        /// Whether to process inactive <see cref="GameObject"/>s when ignoring or resuming collisions.
+        /// </summary>
         public bool ProcessInactiveGameObjects
         {
             get
@@ -227,7 +243,6 @@
         /// <summary>
         /// Called before <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Sources))]
         protected virtual void OnBeforeSourcesChange()
         {
             if (Sources != null)
@@ -240,7 +255,6 @@
         /// <summary>
         /// Called after <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Sources))]
         protected virtual void OnAfterSourcesChange()
         {
             if (Sources != null)
@@ -253,7 +267,6 @@
         /// <summary>
         /// Called before <see cref="Targets"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Targets))]
         protected virtual void OnBeforeTargetsChange()
         {
             if (Targets != null)
@@ -266,7 +279,6 @@
         /// <summary>
         /// Called after <see cref="Targets"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Targets))]
         protected virtual void OnAfterTargetsChange()
         {
             if (Targets != null)

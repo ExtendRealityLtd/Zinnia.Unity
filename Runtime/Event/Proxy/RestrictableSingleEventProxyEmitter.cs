@@ -12,12 +12,12 @@
     /// <typeparam name="TEvent">The event that is emitted.</typeparam>
     public abstract class RestrictableSingleEventProxyEmitter<TValue, TEvent> : SingleEventProxyEmitter<TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
     {
-        /// <summary>
-        /// Determines whether the received payload is valid to be re-emitted.
-        /// </summary>
         [Tooltip("Determines whether the received payload is valid to be re-emitted.")]
         [SerializeField]
         private RuleContainer _receiveValidity;
+        /// <summary>
+        /// Determines whether the received payload is valid to be re-emitted.
+        /// </summary>
         public RuleContainer ReceiveValidity
         {
             get

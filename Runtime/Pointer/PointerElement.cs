@@ -1,6 +1,5 @@
 ﻿namespace Zinnia.Pointer
 {
-    using Malimbe.MemberChangeMethod;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
@@ -30,13 +29,13 @@
         }
 
         #region Valid Container Settings
-        /// <summary>
-        /// The containing <see cref="GameObject"/> that represents the element when a valid collision is occuring.
-        /// </summary>
         [Header("Valid Container Settings")]
         [Tooltip("The containing GameObject that represents the element when a valid collision is occuring.")]
         [SerializeField]
         private GameObject _validElementContainer;
+        /// <summary>
+        /// The containing <see cref="GameObject"/> that represents the element when a valid collision is occuring.
+        /// </summary>
         public GameObject ValidElementContainer
         {
             get
@@ -48,12 +47,12 @@
                 _validElementContainer = value;
             }
         }
-        /// <summary>
-        /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when a valid collision is occuring.
-        /// </summary>
         [Tooltip("The GameObject containing the visible mesh for the PointerElement when a valid collision is occuring.")]
         [SerializeField]
         private GameObject _validMeshContainer;
+        /// <summary>
+        /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when a valid collision is occuring.
+        /// </summary>
         public GameObject ValidMeshContainer
         {
             get
@@ -68,13 +67,13 @@
         #endregion
 
         #region Invalid Container Settings
-        /// <summary>
-        /// The containing <see cref="GameObject"/> that represents the element when an invalid collision or no collision is occuring.
-        /// </summary>
         [Header("Invalid Container Settings")]
         [Tooltip("The containing GameObject that represents the element when an invalid collision or no collision is occuring.")]
         [SerializeField]
         private GameObject _invalidElementContainer;
+        /// <summary>
+        /// The containing <see cref="GameObject"/> that represents the element when an invalid collision or no collision is occuring.
+        /// </summary>
         public GameObject InvalidElementContainer
         {
             get
@@ -86,12 +85,12 @@
                 _invalidElementContainer = value;
             }
         }
-        /// <summary>
-        /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when an invalid collision or no collision is occuring.
-        /// </summary>
         [Tooltip("The GameObject containing the visible mesh for the PointerElement when an invalid collision or no collision is occuring.")]
         [SerializeField]
         private GameObject _invalidMeshContainer;
+        /// <summary>
+        /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when an invalid collision or no collision is occuring.
+        /// </summary>
         public GameObject InvalidMeshContainer
         {
             get
@@ -106,13 +105,13 @@
         #endregion
 
         #region Visibility Settings
-        /// <summary>
-        /// Determines when the <see cref="PointerElement"/> is visible.
-        /// </summary>
         [Header("Visibility Settings")]
         [Tooltip("Determines when the PointerElement is visible.")]
         [SerializeField]
         private Visibility _elementVisibility = Visibility.OnWhenPointerActivated;
+        /// <summary>
+        /// Determines when the <see cref="PointerElement"/> is visible.
+        /// </summary>
         public Visibility ElementVisibility
         {
             get
@@ -122,6 +121,10 @@
             set
             {
                 _elementVisibility = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterElementVisibilityChange();
+                }
             }
         }
         #endregion
@@ -203,7 +206,6 @@
         /// <summary>
         /// Called after <see cref="ElementVisibility"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ElementVisibility))]
         protected virtual void OnAfterElementVisibilityChange()
         {
             VisibilityChanged?.Invoke();
