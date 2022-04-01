@@ -27,9 +27,6 @@
         "email": "hello@extendreality.io",
         "url": "https://github.com/ExtendRealityLtd"
     },
-    "dependencies": {
-        "io.extendreality.malimbe": "9.7.0"
-    },
     "files": [
         "*.md",
         "*.meta",

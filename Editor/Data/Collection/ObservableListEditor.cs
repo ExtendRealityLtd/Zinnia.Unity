@@ -5,7 +5,6 @@
     /// It can still be forced to use the custom editor if the Scripting Define Symbol of `ZINNIA_USE_CUSTOM_LIST_EDITOR` is added but the list won't be collapsible. 
     /// It can also be completely turned off if the Scripting Define Symbol of `ZINNIA_IGNORE_CUSTOM_LIST_EDITOR` is added.
 #else
-    using Malimbe.FodyRunner.UnityIntegration;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -22,7 +21,7 @@
     /// This custom editor allows for the list elements to be updated in the editor at runtime and any effects of the changes will be processed just as if the changes were made via code.
     /// </remarks>
     [CustomEditor(typeof(ObservableList<,>), true)]
-    public class ObservableListEditor : InspectorEditor
+    public class ObservableListEditor : ZinniaInspector
     {
         /// <summary>
         /// The name of the field on <see cref="ObservableList{TElement,TEvent}"/> that holds the elements.
@@ -132,9 +131,9 @@ This restriction is in place to ensure any subscribed listener to events on this
         }
 
         /// <inheritdoc/>
-        protected override void BeforeChange(SerializedProperty property)
+        protected override void BeforeChange(MethodInfo methodInfo, SerializedProperty property)
         {
-            base.BeforeChange(property);
+            base.BeforeChange(methodInfo, property);
 
             if (sizeBeforeSizeChange == null && changedIndex == null)
             {
@@ -167,9 +166,9 @@ This restriction is in place to ensure any subscribed listener to events on this
         }
 
         /// <inheritdoc />
-        protected override void AfterChange(SerializedProperty property)
+        protected override void AfterChange(MethodInfo methodInfo, SerializedProperty property)
         {
-            base.AfterChange(property);
+            base.AfterChange(methodInfo, property);
 
             if (sizeBeforeSizeChange == null && changedIndex == null)
             {
@@ -193,11 +192,11 @@ This restriction is in place to ensure any subscribed listener to events on this
                     }
 
                     // ...and call the Remove API for those elements.
-                    MethodInfo methodInfo = type.GetMethod(nameof(GameObjectObservableList.RemoveAt), BindingFlags.Public | BindingFlags.Instance);
+                    MethodInfo apiMethodInfo = type.GetMethod(nameof(GameObjectObservableList.RemoveAt), BindingFlags.Public | BindingFlags.Instance);
                     for (int index = previousSize - 1; index >= newSize; index--)
                     {
                         parameters[0] = index;
-                        methodInfo.Invoke(targetObject, parameters);
+                        apiMethodInfo.Invoke(targetObject, parameters);
                     }
                 }
                 else if (newSize > previousSize)
@@ -215,11 +214,11 @@ This restriction is in place to ensure any subscribed listener to events on this
                     }
 
                     // ...and finally call the Add API for those elements.
-                    MethodInfo methodInfo = type.GetMethod(nameof(GameObjectObservableList.Add), BindingFlags.Public | BindingFlags.Instance);
+                    MethodInfo apiMethodInfo = type.GetMethod(nameof(GameObjectObservableList.Add), BindingFlags.Public | BindingFlags.Instance);
                     foreach (object element in elements)
                     {
                         parameters[0] = element;
-                        methodInfo.Invoke(targetObject, parameters);
+                        apiMethodInfo.Invoke(targetObject, parameters);
                     }
                 }
 
@@ -235,13 +234,13 @@ This restriction is in place to ensure any subscribed listener to events on this
                 list[changedIndex.Value] = changedElement;
 
                 // ...and finally call the SetAt API with the new element.
-                MethodInfo methodInfo = type.GetMethod(nameof(GameObjectObservableList.SetAt), BindingFlags.Public | BindingFlags.Instance);
+                MethodInfo apiMethodInfo = type.GetMethod(nameof(GameObjectObservableList.SetAt), BindingFlags.Public | BindingFlags.Instance);
                 parameters = new[]
                 {
                     newElement,
                     changedIndex.Value
                 };
-                methodInfo.Invoke(targetObject, parameters);
+                apiMethodInfo.Invoke(targetObject, parameters);
 
                 changedIndex = null;
                 changedElement = null;

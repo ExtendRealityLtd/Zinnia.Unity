@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<Weavers>
-  <Malimbe.FodyRunner>
-    <LogLevel>Error, Warning</LogLevel>
-    <AssemblyNameRegex>^Zinnia</AssemblyNameRegex>
-  </Malimbe.FodyRunner>
-</Weavers>
