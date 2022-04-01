@@ -19,7 +19,7 @@
         {
             [Tooltip("The registered ActiveCollisionConsumer.")]
             [SerializeField]
-            private ActiveCollisionConsumer _consumer;
+            private ActiveCollisionConsumer consumer;
             /// <summary>
             /// The registered <see cref="ActiveCollisionConsumer"/>.
             /// </summary>
@@ -27,17 +27,17 @@
             {
                 get
                 {
-                    return _consumer;
+                    return consumer;
                 }
                 set
                 {
-                    _consumer = value;
+                    consumer = value;
                 }
             }
 
             [Tooltip("The payload data sent to the ActiveCollisionConsumer.")]
             [SerializeField]
-            private ActiveCollisionPublisher.PayloadData _payload;
+            private ActiveCollisionPublisher.PayloadData payload;
             /// <summary>
             /// The payload data sent to the <see cref="ActiveCollisionConsumer"/>.
             /// </summary>
@@ -45,11 +45,11 @@
             {
                 get
                 {
-                    return _payload;
+                    return payload;
                 }
                 set
                 {
-                    _payload = value;
+                    payload = value;
                 }
             }
 

@@ -38,7 +38,7 @@ namespace Zinnia.Visual
         [Header("Mesh Settings")]
         [Tooltip("The mesh components to modify.")]
         [SerializeField]
-        private MeshTypes _meshesToModifiy = (MeshTypes)(-1);
+        private MeshTypes meshesToModifiy = (MeshTypes)(-1);
         /// <summary>
         /// The mesh components to modify.
         /// </summary>
@@ -46,17 +46,17 @@ namespace Zinnia.Visual
         {
             get
             {
-                return _meshesToModifiy;
+                return meshesToModifiy;
             }
             set
             {
-                _meshesToModifiy = value;
+                meshesToModifiy = value;
             }
         }
 
         [Tooltip("A relationship connection between a given GameObject and any meshes to modify upon matching.")]
         [SerializeField]
-        private GameObjectMultiRelationObservableList _meshCollections;
+        private GameObjectMultiRelationObservableList meshCollections;
         /// <summary>
         /// A relationship connection between a given <see cref="GameObject"/> and any meshes to modify upon matching.
         /// </summary>
@@ -64,11 +64,11 @@ namespace Zinnia.Visual
         {
             get
             {
-                return _meshCollections;
+                return meshCollections;
             }
             set
             {
-                _meshCollections = value;
+                meshCollections = value;
             }
         }
         #endregion

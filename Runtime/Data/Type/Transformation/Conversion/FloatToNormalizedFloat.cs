@@ -22,7 +22,7 @@
 
         [Tooltip("The range in which to consider the minimum and maximum value for normalizing.")]
         [SerializeField]
-        private FloatRange _range = new FloatRange(0f, 1f);
+        private FloatRange range = new FloatRange(0f, 1f);
         /// <summary>
         /// The range in which to consider the minimum and maximum value for normalizing.
         /// </summary>
@@ -30,11 +30,11 @@
         {
             get
             {
-                return _range;
+                return range;
             }
             set
             {
-                _range = value;
+                range = value;
             }
         }
 

@@ -10,7 +10,7 @@ namespace Zinnia.Cast
     {
         [Tooltip("The current length of the cast.")]
         [SerializeField]
-        private float _currentLength = 1f;
+        private float currentLength = 1f;
         /// <summary>
         /// The current length of the cast.
         /// </summary>
@@ -18,11 +18,11 @@ namespace Zinnia.Cast
         {
             get
             {
-                return _currentLength;
+                return currentLength;
             }
             set
             {
-                _currentLength = value;
+                currentLength = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterCurrentLengthChange();
@@ -70,7 +70,7 @@ namespace Zinnia.Cast
         /// </summary>
         protected override void OnAfterMaximumLengthChange()
         {
-            _currentLength = GetClampedCurrentLength();
+            currentLength = GetClampedCurrentLength();
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Zinnia.Cast
         /// </summary>
         protected virtual void OnAfterCurrentLengthChange()
         {
-            _currentLength = GetClampedCurrentLength();
+            currentLength = GetClampedCurrentLength();
         }
     }
 }

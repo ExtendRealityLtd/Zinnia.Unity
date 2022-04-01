@@ -10,7 +10,7 @@
     {
         [Tooltip("The maximum length to cast.")]
         [SerializeField]
-        private float _maximumLength = 100f;
+        private float maximumLength = 100f;
         /// <summary>
         /// The maximum length to cast.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _maximumLength;
+                return maximumLength;
             }
             set
             {
-                _maximumLength = value;
+                maximumLength = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterMaximumLengthChange();

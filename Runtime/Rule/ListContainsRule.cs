@@ -10,7 +10,7 @@
     {
         [Tooltip("The objects to check against.")]
         [SerializeField]
-        private UnityObjectObservableList _objects;
+        private UnityObjectObservableList objects;
         /// <summary>
         /// The objects to check against.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _objects;
+                return objects;
             }
             set
             {
-                _objects = value;
+                objects = value;
             }
         }
 

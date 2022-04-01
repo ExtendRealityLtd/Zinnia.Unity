@@ -13,7 +13,7 @@
     {
         [Tooltip("The collection to observe changes of.")]
         [SerializeField]
-        private List<TElement> _elements = new List<TElement>();
+        private List<TElement> elements = new List<TElement>();
         /// <summary>
         /// The collection to observe changes of.
         /// </summary>
@@ -21,11 +21,11 @@
         {
             get
             {
-                return _elements;
+                return elements;
             }
             set
             {
-                _elements = value;
+                elements = value;
             }
         }
     }

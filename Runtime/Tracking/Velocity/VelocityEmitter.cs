@@ -24,7 +24,7 @@
 
         [Tooltip("The source VelocityTracker to receive the velocity data from.")]
         [SerializeField]
-        private VelocityTracker _source;
+        private VelocityTracker source;
         /// <summary>
         /// The source <see cref="VelocityTracker"/> to receive the velocity data from.
         /// </summary>
@@ -32,11 +32,11 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
 

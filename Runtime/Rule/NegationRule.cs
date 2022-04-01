@@ -10,7 +10,7 @@
     {
         [Tooltip("The IRule to negate.")]
         [SerializeField]
-        private RuleContainer _rule;
+        private RuleContainer rule;
         /// <summary>
         /// The <see cref="IRule"/> to negate.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _rule;
+                return rule;
             }
             set
             {
-                _rule = value;
+                rule = value;
             }
         }
 

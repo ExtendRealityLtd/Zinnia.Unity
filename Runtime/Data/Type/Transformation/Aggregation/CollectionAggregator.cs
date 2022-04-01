@@ -22,7 +22,7 @@
 
         [Tooltip("The collection to aggregate.")]
         [SerializeField]
-        private TCollection _collection;
+        private TCollection collection;
         /// <summary>
         /// The collection to aggregate.
         /// </summary>
@@ -30,11 +30,11 @@
         {
             get
             {
-                return _collection;
+                return collection;
             }
             set
             {
-                _collection = value;
+                collection = value;
             }
         }
 

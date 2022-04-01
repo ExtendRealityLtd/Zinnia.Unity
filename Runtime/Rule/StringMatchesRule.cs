@@ -10,7 +10,7 @@
     {
         [Tooltip("The regular expression pattern to match against a string against.")]
         [SerializeField]
-        private string _targetPattern;
+        private string targetPattern;
         /// <summary>
         /// The regular expression pattern to match against a string against.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _targetPattern;
+                return targetPattern;
             }
             set
             {
-                _targetPattern = value;
+                targetPattern = value;
             }
         }
 

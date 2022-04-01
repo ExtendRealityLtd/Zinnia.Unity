@@ -29,7 +29,7 @@
 
         [Tooltip("Defines the source location that the RayCast will originate from towards the Target location.")]
         [SerializeField]
-        private GameObject _source;
+        private GameObject source;
         /// <summary>
         /// Defines the source location that the RayCast will originate from towards the <see cref="Target"/> location.
         /// </summary>
@@ -37,16 +37,16 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
         [Tooltip("Defines the target location that the RayCast will attain to reach from the originating Source location.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// Defines the target location that the RayCast will attain to reach from the originating <see cref="Source"/> location.
         /// </summary>
@@ -54,11 +54,11 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterTargetChange();
@@ -67,7 +67,7 @@
         }
         [Tooltip("Optional settings to use when doing the RayCast.")]
         [SerializeField]
-        private PhysicsCast _physicsCast;
+        private PhysicsCast physicsCast;
         /// <summary>
         /// Optional settings to use when doing the RayCast.
         /// </summary>
@@ -75,11 +75,11 @@
         {
             get
             {
-                return _physicsCast;
+                return physicsCast;
             }
             set
             {
-                _physicsCast = value;
+                physicsCast = value;
             }
         }
 

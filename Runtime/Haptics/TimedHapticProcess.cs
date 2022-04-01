@@ -12,7 +12,7 @@
     {
         [Tooltip("The process to utilize.")]
         [SerializeField]
-        private HapticProcess _hapticProcess;
+        private HapticProcess hapticProcess;
         /// <summary>
         /// The process to utilize.
         /// </summary>
@@ -20,16 +20,16 @@
         {
             get
             {
-                return _hapticProcess;
+                return hapticProcess;
             }
             set
             {
-                _hapticProcess = value;
+                hapticProcess = value;
             }
         }
         [Tooltip("The amount of time to keep repeating the process for.")]
         [SerializeField]
-        private float _duration = 1f;
+        private float duration = 1f;
         /// <summary>
         /// The amount of time to keep repeating the process for.
         /// </summary>
@@ -37,16 +37,16 @@
         {
             get
             {
-                return _duration;
+                return duration;
             }
             set
             {
-                _duration = value;
+                duration = value;
             }
         }
         [Tooltip("The amount of time to pause after each process iteration.")]
         [SerializeField]
-        private float _interval = 0.1f;
+        private float interval = 0.1f;
         /// <summary>
         /// The amount of time to pause after each process iteration.
         /// </summary>
@@ -54,11 +54,11 @@
         {
             get
             {
-                return _interval;
+                return interval;
             }
             set
             {
-                _interval = value;
+                interval = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterIntervalChange();

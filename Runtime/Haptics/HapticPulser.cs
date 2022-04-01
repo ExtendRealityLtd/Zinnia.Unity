@@ -10,7 +10,7 @@
     {
         [Tooltip("The intensity of the haptic rumble.")]
         [SerializeField]
-        private float _intensity = 1f;
+        private float intensity = 1f;
         /// <summary>
         /// The intensity of the haptic rumble.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _intensity;
+                return intensity;
             }
             set
             {
-                _intensity = value;
+                intensity = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterIntensityChange();
@@ -35,7 +35,7 @@
         /// </summary>
         protected virtual void OnAfterIntensityChange()
         {
-            _intensity = Mathf.Clamp01(Intensity);
+            intensity = Mathf.Clamp01(Intensity);
         }
     }
 }

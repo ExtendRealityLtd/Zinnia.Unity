@@ -66,7 +66,7 @@
         [Header("List Settings")]
         [Tooltip("The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will be clamped within the index bounds.")]
         [SerializeField]
-        private int _currentIndex;
+        private int currentIndex;
         /// <summary>
         /// The index to use in methods specifically specifying to use it. In case this index is out of bounds for the collection it will be clamped within the index bounds.
         /// </summary>
@@ -74,11 +74,11 @@
         {
             get
             {
-                return _currentIndex;
+                return currentIndex;
             }
             set
             {
-                _currentIndex = value;
+                currentIndex = value;
             }
         }
 

@@ -18,7 +18,7 @@
 
         [Tooltip("The tolerance of equality between two Vector3 values.")]
         [SerializeField]
-        private float _equalityTolerance = float.Epsilon;
+        private float equalityTolerance = float.Epsilon;
         /// <summary>
         /// The tolerance of equality between two <see cref="Vector3"/> values.
         /// </summary>
@@ -26,11 +26,11 @@
         {
             get
             {
-                return _equalityTolerance;
+                return equalityTolerance;
             }
             set
             {
-                _equalityTolerance = value;
+                equalityTolerance = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterEqualityToleranceChange();

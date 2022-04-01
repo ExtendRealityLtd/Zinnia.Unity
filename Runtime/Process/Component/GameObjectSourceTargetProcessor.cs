@@ -22,7 +22,7 @@
         [Header("Entity Settings")]
         [Tooltip("A GameObject collection of sources to apply data from.")]
         [SerializeField]
-        private GameObjectObservableList _sources;
+        private GameObjectObservableList sources;
         /// <summary>
         /// A <see cref="GameObject"/> collection of sources to apply data from.
         /// </summary>
@@ -30,16 +30,16 @@
         {
             get
             {
-                return _sources;
+                return sources;
             }
             set
             {
-                _sources = value;
+                sources = value;
             }
         }
         [Tooltip("Allows to optionally determine which sources should be processed based on the set rules.")]
         [SerializeField]
-        private RuleContainer _sourceValidity;
+        private RuleContainer sourceValidity;
         /// <summary>
         /// Allows to optionally determine which sources should be processed based on the set rules.
         /// </summary>
@@ -47,16 +47,16 @@
         {
             get
             {
-                return _sourceValidity;
+                return sourceValidity;
             }
             set
             {
-                _sourceValidity = value;
+                sourceValidity = value;
             }
         }
         [Tooltip("A GameObject collection of targets to apply data to.")]
         [SerializeField]
-        private GameObjectObservableList _targets;
+        private GameObjectObservableList targets;
         /// <summary>
         /// A <see cref="GameObject"/> collection of targets to apply data to.
         /// </summary>
@@ -64,16 +64,16 @@
         {
             get
             {
-                return _targets;
+                return targets;
             }
             set
             {
-                _targets = value;
+                targets = value;
             }
         }
         [Tooltip("Allows to optionally determine which targets should be processed based on the set rules.")]
         [SerializeField]
-        private RuleContainer _targetValidity;
+        private RuleContainer targetValidity;
         /// <summary>
         /// Allows to optionally determine which targets should be processed based on the set rules.
         /// </summary>
@@ -81,11 +81,11 @@
         {
             get
             {
-                return _targetValidity;
+                return targetValidity;
             }
             set
             {
-                _targetValidity = value;
+                targetValidity = value;
             }
         }
         #endregion

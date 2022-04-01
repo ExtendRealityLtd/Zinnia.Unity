@@ -11,7 +11,7 @@
     {
         [Tooltip("Actions to check the active state on.")]
         [SerializeField]
-        private ActionObservableList _actions;
+        private ActionObservableList actions;
         /// <summary>
         /// <see cref="Action"/>s to check the active state on.
         /// </summary>
@@ -19,7 +19,7 @@
         {
             get
             {
-                return _actions;
+                return actions;
             }
             set
             {
@@ -27,7 +27,7 @@
                 {
                     OnBeforeActionsChange();
                 }
-                _actions = value;
+                actions = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterActionsChange();

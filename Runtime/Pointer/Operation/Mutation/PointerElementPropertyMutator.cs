@@ -10,7 +10,7 @@
     {
         [Tooltip("The PointerElement to mutate.")]
         [SerializeField]
-        private PointerElement _target;
+        private PointerElement target;
         /// <summary>
         /// The <see cref="PointerElement"/> to mutate.
         /// </summary>
@@ -18,27 +18,27 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
 
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when a valid collision is occuring.
         /// </summary>
-        private GameObject _validElementContainer;
+        private GameObject validElementContainer;
         public GameObject ValidElementContainer
         {
             get
             {
-                return _validElementContainer;
+                return validElementContainer;
             }
             set
             {
-                _validElementContainer = value;
+                validElementContainer = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterValidElementContainerChange();
@@ -48,16 +48,16 @@
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when a valid collision is occuring.
         /// </summary>
-        private GameObject _validMeshContainer;
+        private GameObject validMeshContainer;
         public GameObject ValidMeshContainer
         {
             get
             {
-                return _validMeshContainer;
+                return validMeshContainer;
             }
             set
             {
-                _validMeshContainer = value;
+                validMeshContainer = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterValidMeshContainerChange();
@@ -67,16 +67,16 @@
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when an invalid collision or no collision is occuring.
         /// </summary>
-        private GameObject _invalidElementContainer;
+        private GameObject invalidElementContainer;
         public GameObject InvalidElementContainer
         {
             get
             {
-                return _invalidElementContainer;
+                return invalidElementContainer;
             }
             set
             {
-                _invalidElementContainer = value;
+                invalidElementContainer = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterInvalidElementContainerChange();
@@ -86,16 +86,16 @@
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when an invalid collision or no collision is occuring.
         /// </summary>
-        private GameObject _invalidMeshContainer;
+        private GameObject invalidMeshContainer;
         public GameObject InvalidMeshContainer
         {
             get
             {
-                return _invalidMeshContainer;
+                return invalidMeshContainer;
             }
             set
             {
-                _invalidMeshContainer = value;
+                invalidMeshContainer = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterInvalidMeshContainerChange();
@@ -105,16 +105,16 @@
         /// <summary>
         /// Determines when the <see cref="PointerElement"/> is visible.
         /// </summary>
-        private PointerElement.Visibility _elementVisibility;
+        private PointerElement.Visibility elementVisibility;
         public PointerElement.Visibility ElementVisibility
         {
             get
             {
-                return _elementVisibility;
+                return elementVisibility;
             }
             set
             {
-                _elementVisibility = value;
+                elementVisibility = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterElementVisibilityChange();

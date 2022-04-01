@@ -11,7 +11,7 @@
     {
         [Tooltip("The PointsCast to mutate.")]
         [SerializeField]
-        private PointsCast _target;
+        private PointsCast target;
         /// <summary>
         /// The <see cref="PointsCast"/> to mutate.
         /// </summary>
@@ -19,27 +19,27 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
 
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
-        private GameObject _origin;
+        private GameObject origin;
         public GameObject Origin
         {
             get
             {
-                return _origin;
+                return origin;
             }
             set
             {
-                _origin = value;
+                origin = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterOriginChange();
@@ -49,16 +49,16 @@
         /// <summary>
         /// Optionally affects the cast.
         /// </summary>
-        private PhysicsCast _physicsCast;
+        private PhysicsCast physicsCast;
         public PhysicsCast PhysicsCast
         {
             get
             {
-                return _physicsCast;
+                return physicsCast;
             }
             set
             {
-                _physicsCast = value;
+                physicsCast = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterPhysicsCastChange();
@@ -68,16 +68,16 @@
         /// <summary>
         /// Optionally determines targets based on the set rules.
         /// </summary>
-        private RuleContainer _targetValidity;
+        private RuleContainer targetValidity;
         public RuleContainer TargetValidity
         {
             get
             {
-                return _targetValidity;
+                return targetValidity;
             }
             set
             {
-                _targetValidity = value;
+                targetValidity = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterTargetValidityChange();
@@ -88,16 +88,16 @@
         /// <summary>
         /// An override for the destination location point in world space.
         /// </summary>
-        private Vector3? _destinationPointOverride;
+        private Vector3? destinationPointOverride;
         public Vector3? DestinationPointOverride
         {
             get
             {
-                return _destinationPointOverride;
+                return destinationPointOverride;
             }
             protected set
             {
-                _destinationPointOverride = value;
+                destinationPointOverride = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterDestinationPointOverrideChange();

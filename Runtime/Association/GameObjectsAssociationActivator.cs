@@ -12,7 +12,7 @@
     {
         [Tooltip("The associations in order they will be activated if they match the currently expected state.")]
         [SerializeField]
-        private GameObjectsAssociationObservableList _associations;
+        private GameObjectsAssociationObservableList associations;
         /// <summary>
         /// The associations in order they will be activated if they match the currently expected state.
         /// </summary>
@@ -20,7 +20,7 @@
         {
             get
             {
-                return _associations;
+                return associations;
             }
             set
             {
@@ -28,7 +28,7 @@
                 {
                     OnBeforeAssociationsChange();
                 }
-                _associations = value;
+                associations = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterAssociationsChange();

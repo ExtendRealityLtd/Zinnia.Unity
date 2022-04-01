@@ -12,7 +12,7 @@
     {
         [Tooltip("The Object types to manage the enabled state on.")]
         [SerializeField]
-        private SerializableTypeComponentObservableList _types;
+        private SerializableTypeComponentObservableList types;
         /// <summary>
         /// The <see cref="Object"/> types to manage the enabled state on.
         /// </summary>
@@ -20,17 +20,17 @@
         {
             get
             {
-                return _types;
+                return types;
             }
             set
             {
-                _types = value;
+                types = value;
             }
         }
 
         [Tooltip("The target to modify the enabled states for the provided Types.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// The target to modify the enabled states for the provided <see cref="Types"/>.
         /// </summary>
@@ -38,11 +38,11 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
 

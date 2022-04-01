@@ -17,7 +17,7 @@
         {
             [Tooltip("The position to check against.")]
             [SerializeField]
-            private Vector3 _sourcePosition;
+            private Vector3 sourcePosition;
             /// <summary>
             /// The position to check against.
             /// </summary>
@@ -25,11 +25,11 @@
             {
                 get
                 {
-                    return _sourcePosition;
+                    return sourcePosition;
                 }
                 set
                 {
-                    _sourcePosition = value;
+                    sourcePosition = value;
                 }
             }
 
@@ -52,7 +52,7 @@
 
         [Tooltip("The source to determine the closest collision to.")]
         [SerializeField]
-        private GameObject _source;
+        private GameObject source;
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
@@ -60,11 +60,11 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
 

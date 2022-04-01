@@ -19,7 +19,7 @@
         {
             [Tooltip("The publisher payload data that is being pushed to the consumer.")]
             [SerializeField]
-            private ActiveCollisionPublisher.PayloadData _publisher;
+            private ActiveCollisionPublisher.PayloadData publisher;
             /// <summary>
             /// The publisher payload data that is being pushed to the consumer.
             /// </summary>
@@ -27,16 +27,16 @@
             {
                 get
                 {
-                    return _publisher;
+                    return publisher;
                 }
                 set
                 {
-                    _publisher = value;
+                    publisher = value;
                 }
             }
             [Tooltip("The current collision data.")]
             [SerializeField]
-            private CollisionNotifier.EventData _currentCollision;
+            private CollisionNotifier.EventData currentCollision;
             /// <summary>
             /// The current collision data.
             /// </summary>
@@ -44,11 +44,11 @@
             {
                 get
                 {
-                    return _currentCollision;
+                    return currentCollision;
                 }
                 set
                 {
-                    _currentCollision = value;
+                    currentCollision = value;
                 }
             }
 
@@ -112,7 +112,7 @@
 
         [Tooltip("The highest level container of the consumer to allow for nested consumers.")]
         [SerializeField]
-        private GameObject _container;
+        private GameObject container;
         /// <summary>
         /// The highest level container of the consumer to allow for nested consumers.
         /// </summary>
@@ -120,17 +120,17 @@
         {
             get
             {
-                return _container;
+                return container;
             }
             set
             {
-                _container = value;
+                container = value;
             }
         }
 
         [Tooltip("Determines whether to consume the received call from specific publishers.")]
         [SerializeField]
-        private RuleContainer _publisherValidity;
+        private RuleContainer publisherValidity;
         /// <summary>
         /// Determines whether to consume the received call from specific publishers.
         /// </summary>
@@ -138,11 +138,11 @@
         {
             get
             {
-                return _publisherValidity;
+                return publisherValidity;
             }
             set
             {
-                _publisherValidity = value;
+                publisherValidity = value;
             }
         }
 

@@ -11,7 +11,7 @@
     {
         [Tooltip("The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.")]
         [SerializeField]
-        private Vector2 _maximumLength = new Vector2(10f, float.PositiveInfinity);
+        private Vector2 maximumLength = new Vector2(10f, float.PositiveInfinity);
         /// <summary>
         /// The maximum length of the projected cast. The x value is the length of the forward cast, the y value is the length of the downward cast.
         /// </summary>
@@ -19,16 +19,16 @@
         {
             get
             {
-                return _maximumLength;
+                return maximumLength;
             }
             set
             {
-                _maximumLength = value;
+                maximumLength = value;
             }
         }
         [Tooltip("The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.")]
         [SerializeField]
-        private float _heightLimitAngle = 100f;
+        private float heightLimitAngle = 100f;
         /// <summary>
         /// The maximum angle in degrees of the origin before the cast line height is restricted. A lower angle setting will prevent the cast being projected high into the sky and curving back down.
         /// </summary>
@@ -36,16 +36,16 @@
         {
             get
             {
-                return _heightLimitAngle;
+                return heightLimitAngle;
             }
             set
             {
-                _heightLimitAngle = value;
+                heightLimitAngle = value;
             }
         }
         [Tooltip("The number of points to generate on the parabolic line.")]
         [SerializeField]
-        private int _segmentCount = 10;
+        private int segmentCount = 10;
         /// <summary>
         /// The number of points to generate on the parabolic line.
         /// </summary>
@@ -54,16 +54,16 @@
         {
             get
             {
-                return _segmentCount;
+                return segmentCount;
             }
             set
             {
-                _segmentCount = value;
+                segmentCount = value;
             }
         }
         [Tooltip("The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at SegmentCount.")]
         [SerializeField]
-        private int _collisionCheckFrequency;
+        private int collisionCheckFrequency;
         /// <summary>
         /// The number of points along the parabolic line to check for an early cast collision. Useful if the parabolic line is appearing to clip through locations. 0 won't make any checks and it will be capped at <see cref="SegmentCount" />.
         /// </summary>
@@ -72,16 +72,16 @@
         {
             get
             {
-                return _collisionCheckFrequency;
+                return collisionCheckFrequency;
             }
             set
             {
-                _collisionCheckFrequency = value;
+                collisionCheckFrequency = value;
             }
         }
         [Tooltip("The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.")]
         [SerializeField]
-        private float _curveOffset = 1f;
+        private float curveOffset = 1f;
         /// <summary>
         /// The amount of height offset to apply to the projected cast to generate a smoother line even when the cast is pointing straight.
         /// </summary>
@@ -89,11 +89,11 @@
         {
             get
             {
-                return _curveOffset;
+                return curveOffset;
             }
             set
             {
-                _curveOffset = value;
+                curveOffset = value;
             }
         }
 

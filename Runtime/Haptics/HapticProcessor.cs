@@ -10,7 +10,7 @@
     {
         [Tooltip("The HapticProcess collection to attempt to process.")]
         [SerializeField]
-        private HapticProcessObservableList _hapticProcesses;
+        private HapticProcessObservableList hapticProcesses;
         /// <summary>
         /// The <see cref="HapticProcess"/> collection to attempt to process.
         /// </summary>
@@ -18,16 +18,16 @@
         {
             get
             {
-                return _hapticProcesses;
+                return hapticProcesses;
             }
             set
             {
-                _hapticProcesses = value;
+                hapticProcesses = value;
             }
         }
         [Tooltip("Whether to cease the processing of the collection after the first valid HapticProcess is processed.")]
         [SerializeField]
-        private bool _ceaseAfterFirstSourceProcessed = true;
+        private bool ceaseAfterFirstSourceProcessed = true;
         /// <summary>
         /// Whether to cease the processing of the collection after the first valid <see cref="HapticProcess"/> is processed.
         /// </summary>
@@ -35,11 +35,11 @@
         {
             get
             {
-                return _ceaseAfterFirstSourceProcessed;
+                return ceaseAfterFirstSourceProcessed;
             }
             set
             {
-                _ceaseAfterFirstSourceProcessed = value;
+                ceaseAfterFirstSourceProcessed = value;
             }
         }
 

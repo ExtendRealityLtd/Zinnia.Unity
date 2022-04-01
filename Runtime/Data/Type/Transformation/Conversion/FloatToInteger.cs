@@ -41,7 +41,7 @@
 
         [Tooltip("Determines how to round the float to a whole int.")]
         [SerializeField]
-        private RoundingType _roundBy;
+        private RoundingType roundBy;
         /// <summary>
         /// Determines how to round the <see cref="float"/> to a whole <see cref="int"/>.
         /// </summary>
@@ -49,11 +49,11 @@
         {
             get
             {
-                return _roundBy;
+                return roundBy;
             }
             set
             {
-                _roundBy = value;
+                roundBy = value;
             }
         }
 

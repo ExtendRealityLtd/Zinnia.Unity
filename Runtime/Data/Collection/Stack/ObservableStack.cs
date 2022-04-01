@@ -38,7 +38,7 @@
     {
         [Tooltip("The events to emit for the TElement that is added to the same index within the stack.")]
         [SerializeField]
-        private List<TElementEvents> _elementEvents = new List<TElementEvents>();
+        private List<TElementEvents> elementEvents = new List<TElementEvents>();
         /// <summary>
         /// The events to emit for the <see cref="TElement"/> that is added to the same index within the stack.
         /// </summary>
@@ -46,11 +46,11 @@
         {
             get
             {
-                return _elementEvents;
+                return elementEvents;
             }
             set
             {
-                _elementEvents = value;
+                elementEvents = value;
             }
         }
 

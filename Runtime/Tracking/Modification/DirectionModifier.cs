@@ -34,7 +34,7 @@
         [Header("Reference Settings")]
         [Tooltip("The target to rotate.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// The target to rotate.
         /// </summary>
@@ -42,16 +42,16 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
         [Tooltip("The object to look at when affecting rotation.")]
         [SerializeField]
-        private GameObject _lookAt;
+        private GameObject lookAt;
         /// <summary>
         /// The object to look at when affecting rotation.
         /// </summary>
@@ -59,11 +59,11 @@
         {
             get
             {
-                return _lookAt;
+                return lookAt;
             }
             set
             {
-                _lookAt = value;
+                lookAt = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterLookAtChange();
@@ -72,7 +72,7 @@
         }
         [Tooltip("The object to be used as the pivot point for rotation.")]
         [SerializeField]
-        private GameObject _pivot;
+        private GameObject pivot;
         /// <summary>
         /// The object to be used as the pivot point for rotation.
         /// </summary>
@@ -80,16 +80,16 @@
         {
             get
             {
-                return _pivot;
+                return pivot;
             }
             set
             {
-                _pivot = value;
+                pivot = value;
             }
         }
         [Tooltip("The object providing a rotational offset for the Target.")]
         [SerializeField]
-        private GameObject _targetOffset;
+        private GameObject targetOffset;
         /// <summary>
         /// The object providing a rotational offset for the <see cref="Target"/>.
         /// </summary>
@@ -97,16 +97,16 @@
         {
             get
             {
-                return _targetOffset;
+                return targetOffset;
             }
             set
             {
-                _targetOffset = value;
+                targetOffset = value;
             }
         }
         [Tooltip("The object providing a rotational offset for the Pivot.")]
         [SerializeField]
-        private GameObject _pivotOffset;
+        private GameObject pivotOffset;
         /// <summary>
         /// The object providing a rotational offset for the <see cref="Pivot"/>.
         /// </summary>
@@ -114,11 +114,11 @@
         {
             get
             {
-                return _pivotOffset;
+                return pivotOffset;
             }
             set
             {
-                _pivotOffset = value;
+                pivotOffset = value;
             }
         }
         #endregion
@@ -127,7 +127,7 @@
         [Header("Control Settings")]
         [Tooltip("The target object to use for setting the world up during the rotation process.")]
         [SerializeField]
-        private RotationTargetType _rotationUpTarget = RotationTargetType.UsePivotAsTarget;
+        private RotationTargetType rotationUpTarget = RotationTargetType.UsePivotAsTarget;
         /// <summary>
         /// The target object to use for setting the world up during the rotation process.
         /// </summary>
@@ -135,16 +135,16 @@
         {
             get
             {
-                return _rotationUpTarget;
+                return rotationUpTarget;
             }
             set
             {
-                _rotationUpTarget = value;
+                rotationUpTarget = value;
             }
         }
         [Tooltip("Whether to snap the Target origin to the LookAt origin.")]
         [SerializeField]
-        private bool _snapToLookAt = true;
+        private bool snapToLookAt = true;
         /// <summary>
         /// Whether to snap the <see cref="Target"/> origin to the <see cref="LookAt"/> origin.
         /// </summary>
@@ -152,16 +152,16 @@
         {
             get
             {
-                return _snapToLookAt;
+                return snapToLookAt;
             }
             set
             {
-                _snapToLookAt = value;
+                snapToLookAt = value;
             }
         }
         [Tooltip("The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.")]
         [SerializeField]
-        private float _resetOrientationSpeed = 0.1f;
+        private float resetOrientationSpeed = 0.1f;
         /// <summary>
         /// The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.
         /// </summary>
@@ -169,11 +169,11 @@
         {
             get
             {
-                return _resetOrientationSpeed;
+                return resetOrientationSpeed;
             }
             set
             {
-                _resetOrientationSpeed = value;
+                resetOrientationSpeed = value;
             }
         }
         #endregion

@@ -17,7 +17,7 @@
 
         [Tooltip("A standard or custom TimeSpan format string.")]
         [SerializeField]
-        private string _format;
+        private string format;
         /// <summary>
         /// A standard or custom <see cref="TimeSpan"/> format string.
         /// </summary>
@@ -25,11 +25,11 @@
         {
             get
             {
-                return _format;
+                return format;
             }
             set
             {
-                _format = value;
+                format = value;
             }
         }
 

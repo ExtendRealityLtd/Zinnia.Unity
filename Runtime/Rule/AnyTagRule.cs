@@ -10,7 +10,7 @@
     {
         [Tooltip("The tags to check against.")]
         [SerializeField]
-        private StringObservableList _tags;
+        private StringObservableList tags;
         /// <summary>
         /// The tags to check against.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _tags;
+                return tags;
             }
             set
             {
-                _tags = value;
+                tags = value;
             }
         }
 

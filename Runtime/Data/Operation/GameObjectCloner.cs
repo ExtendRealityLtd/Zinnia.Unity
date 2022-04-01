@@ -18,7 +18,7 @@
 
         [Tooltip("The object to clone.")]
         [SerializeField]
-        private GameObject _source;
+        private GameObject source;
         /// <summary>
         /// The object to clone.
         /// </summary>
@@ -26,16 +26,16 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
         [Tooltip("An optional object to parent the cloned objects to.")]
         [SerializeField]
-        private GameObject _parent;
+        private GameObject parent;
         /// <summary>
         /// An optional object to parent the cloned objects to.
         /// </summary>
@@ -43,11 +43,11 @@
         {
             get
             {
-                return _parent;
+                return parent;
             }
             set
             {
-                _parent = value;
+                parent = value;
             }
         }
 

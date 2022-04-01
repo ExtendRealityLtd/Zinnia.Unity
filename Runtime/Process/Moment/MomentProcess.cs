@@ -10,7 +10,7 @@
     {
         [Tooltip("The source process to attach to the moment.")]
         [SerializeField]
-        private ProcessContainer _source;
+        private ProcessContainer source;
         /// <summary>
         /// The source process to attach to the moment.
         /// </summary>
@@ -18,16 +18,16 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
         [Tooltip("The process only executes if the GameObject is active and the Component is enabled.")]
         [SerializeField]
-        private bool _onlyProcessOnActiveAndEnabled = true;
+        private bool onlyProcessOnActiveAndEnabled = true;
         /// <summary>
         /// The process only executes if the <see cref="GameObject"/> is active and the <see cref="Component"/> is enabled.
         /// </summary>
@@ -35,16 +35,16 @@
         {
             get
             {
-                return _onlyProcessOnActiveAndEnabled;
+                return onlyProcessOnActiveAndEnabled;
             }
             set
             {
-                _onlyProcessOnActiveAndEnabled = value;
+                onlyProcessOnActiveAndEnabled = value;
             }
         }
         [Tooltip("The interval in seconds defining how often to process the Process. Negative values will be clamped to zero.")]
         [SerializeField]
-        private float _interval;
+        private float interval;
         /// <summary>
         /// The interval in seconds defining how often to process the <see cref="Process"/>. Negative values will be clamped to zero.
         /// </summary>
@@ -52,11 +52,11 @@
         {
             get
             {
-                return _interval;
+                return interval;
             }
             set
             {
-                _interval = value;
+                interval = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterIntervalChange();
@@ -137,7 +137,7 @@
         /// </summary>
         protected virtual void OnAfterIntervalChange()
         {
-            _interval = Mathf.Max(0f, Interval);
+            interval = Mathf.Max(0f, Interval);
         }
     }
 }

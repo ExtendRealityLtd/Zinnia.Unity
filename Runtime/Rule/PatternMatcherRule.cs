@@ -11,7 +11,7 @@
     {
         [Tooltip("The patterns to attempt to match.")]
         [SerializeField]
-        private PatternMatcherObservableList _patterns;
+        private PatternMatcherObservableList patterns;
         /// <summary>
         /// The patterns to attempt to match.
         /// </summary>
@@ -19,11 +19,11 @@
         {
             get
             {
-                return _patterns;
+                return patterns;
             }
             set
             {
-                _patterns = value;
+                patterns = value;
             }
         }
 

@@ -20,7 +20,7 @@
 
         [Tooltip("A float to use as the current x value of the Vector2.")]
         [SerializeField]
-        private float _currentX;
+        private float currentX;
         /// <summary>
         /// A float to use as the current x value of the <see cref="Vector2"/>.
         /// </summary>
@@ -28,16 +28,16 @@
         {
             get
             {
-                return _currentX;
+                return currentX;
             }
             set
             {
-                _currentX = value;
+                currentX = value;
             }
         }
         [Tooltip("A float to use as the current y value of the Vector2.")]
         [SerializeField]
-        private float _currentY;
+        private float currentY;
         /// <summary>
         /// A float to use as the current y value of the <see cref="Vector2"/>.
         /// </summary>
@@ -45,11 +45,11 @@
         {
             get
             {
-                return _currentY;
+                return currentY;
             }
             set
             {
-                _currentY = value;
+                currentY = value;
             }
         }
 

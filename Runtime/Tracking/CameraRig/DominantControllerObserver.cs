@@ -19,7 +19,7 @@
         [Header("Controller Settings")]
         [Tooltip("The details about the left controller.")]
         [SerializeField]
-        private DeviceDetailsRecord _leftController;
+        private DeviceDetailsRecord leftController;
         /// <summary>
         /// The details about the left controller.
         /// </summary>
@@ -27,16 +27,16 @@
         {
             get
             {
-                return _leftController;
+                return leftController;
             }
             set
             {
-                _leftController = value;
+                leftController = value;
             }
         }
         [Tooltip("The details about the right controller.")]
         [SerializeField]
-        private DeviceDetailsRecord _rightController;
+        private DeviceDetailsRecord rightController;
         /// <summary>
         /// The details about the right controller.
         /// </summary>
@@ -44,11 +44,11 @@
         {
             get
             {
-                return _rightController;
+                return rightController;
             }
             set
             {
-                _rightController = value;
+                rightController = value;
             }
         }
         #endregion

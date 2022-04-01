@@ -14,7 +14,7 @@
         [Header("Rotation Settings")]
         [Tooltip("An optional rotation origin to perform the rotation around. The origin must be a child of the TransformPropertyMutator.Target.")]
         [SerializeField]
-        private GameObject _origin;
+        private GameObject origin;
         /// <summary>
         /// An optional rotation origin to perform the rotation around. The origin must be a child of the <see cref="TransformPropertyMutator.Target"/>.
         /// </summary>
@@ -22,11 +22,11 @@
         {
             get
             {
-                return _origin;
+                return origin;
             }
             set
             {
-                _origin = value;
+                origin = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterOriginChange();
@@ -35,7 +35,7 @@
         }
         [Tooltip("Determines which axes to consider from the Origin.")]
         [SerializeField]
-        private Vector3State _applyOriginOnAxis = Vector3State.True;
+        private Vector3State applyOriginOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to consider from the <see cref="Origin"/>.
         /// </summary>
@@ -43,11 +43,11 @@
         {
             get
             {
-                return _applyOriginOnAxis;
+                return applyOriginOnAxis;
             }
             set
             {
-                _applyOriginOnAxis = value;
+                applyOriginOnAxis = value;
             }
         }
         #endregion

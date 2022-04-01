@@ -10,7 +10,7 @@
     {
         [Tooltip("A collection of MomentProcess to process.")]
         [SerializeField]
-        private MomentProcessObservableList _processes;
+        private MomentProcessObservableList processes;
         /// <summary>
         /// A collection of <see cref="MomentProcess"/> to process.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _processes;
+                return processes;
             }
             set
             {
-                _processes = value;
+                processes = value;
             }
         }
 

@@ -21,7 +21,7 @@
         {
             [Tooltip("The Color being applied to the camera overlay.")]
             [SerializeField]
-            private Color _color;
+            private Color color;
             /// <summary>
             /// The <see cref="Color"/> being applied to the camera overlay.
             /// </summary>
@@ -29,11 +29,11 @@
             {
                 get
                 {
-                    return _color;
+                    return color;
                 }
                 set
                 {
-                    _color = value;
+                    color = value;
                 }
             }
 
@@ -78,7 +78,7 @@
 
         [Tooltip("The rules to determine which scene cameras to apply the overlay to.")]
         [SerializeField]
-        private RuleContainer _cameraValidity;
+        private RuleContainer cameraValidity;
         /// <summary>
         /// The rules to determine which scene cameras to apply the overlay to.
         /// </summary>
@@ -86,16 +86,16 @@
         {
             get
             {
-                return _cameraValidity;
+                return cameraValidity;
             }
             set
             {
-                _cameraValidity = value;
+                cameraValidity = value;
             }
         }
         [Tooltip("The Color of the overlay.")]
         [SerializeField]
-        private Color _overlayColor = Color.black;
+        private Color overlayColor = Color.black;
         /// <summary>
         /// The <see cref="Color"/> of the overlay.
         /// </summary>
@@ -103,16 +103,16 @@
         {
             get
             {
-                return _overlayColor;
+                return overlayColor;
             }
             set
             {
-                _overlayColor = value;
+                overlayColor = value;
             }
         }
         [Tooltip("The Material to use for the overlay.")]
         [SerializeField]
-        private Material _overlayMaterial;
+        private Material overlayMaterial;
         /// <summary>
         /// The <see cref="Material"/> to use for the overlay.
         /// </summary>
@@ -120,11 +120,11 @@
         {
             get
             {
-                return _overlayMaterial;
+                return overlayMaterial;
             }
             set
             {
-                _overlayMaterial = value;
+                overlayMaterial = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterOverlayMaterialChange();
@@ -133,7 +133,7 @@
         }
         [Tooltip("The duration of time to apply the overlay Color.")]
         [SerializeField]
-        private float _addDuration;
+        private float addDuration;
         /// <summary>
         /// The duration of time to apply the overlay <see cref="Color"/>.
         /// </summary>
@@ -141,11 +141,11 @@
         {
             get
             {
-                return _addDuration;
+                return addDuration;
             }
             set
             {
-                _addDuration = value;
+                addDuration = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterAddDurationChange();
@@ -154,7 +154,7 @@
         }
         [Tooltip("The duration of time to remove the overlay Color.")]
         [SerializeField]
-        private float _removeDuration = 1f;
+        private float removeDuration = 1f;
         /// <summary>
         /// The duration of time to remove the overlay <see cref="Color"/>.
         /// </summary>
@@ -162,16 +162,16 @@
         {
             get
             {
-                return _removeDuration;
+                return removeDuration;
             }
             set
             {
-                _removeDuration = value;
+                removeDuration = value;
             }
         }
         [Tooltip("The duration of time to wait once the overlay Color is applied before it is removed.")]
         [SerializeField]
-        private float _appliedDuration;
+        private float appliedDuration;
         /// <summary>
         /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
         /// </summary>
@@ -179,11 +179,11 @@
         {
             get
             {
-                return _appliedDuration;
+                return appliedDuration;
             }
             set
             {
-                _appliedDuration = value;
+                appliedDuration = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterAppliedDurationChange();

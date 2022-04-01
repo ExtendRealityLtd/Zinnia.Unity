@@ -10,7 +10,7 @@
     {
         [Tooltip("The GameObject that contains a VelocityTracker.")]
         [SerializeField]
-        private GameObject _proxySource;
+        private GameObject proxySource;
         /// <summary>
         /// The <see cref="GameObject"/> that contains a <see cref="VelocityTracker"/>.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _proxySource;
+                return proxySource;
             }
             set
             {
-                _proxySource = value;
+                proxySource = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterProxySourceChange();

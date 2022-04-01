@@ -10,7 +10,7 @@
     {
         [Tooltip("The pulse process to utilize.")]
         [SerializeField]
-        private HapticPulser _hapticPulser;
+        private HapticPulser hapticPulser;
         /// <summary>
         /// The pulse process to utilize.
         /// </summary>
@@ -18,16 +18,16 @@
         {
             get
             {
-                return _hapticPulser;
+                return hapticPulser;
             }
             set
             {
-                _hapticPulser = value;
+                hapticPulser = value;
             }
         }
         [Tooltip("Multiplies the current audio peak to affect the wave intensity.")]
         [SerializeField]
-        private float _intensityMultiplier = 1f;
+        private float intensityMultiplier = 1f;
         /// <summary>
         /// Multiplies the current audio peak to affect the wave intensity.
         /// </summary>
@@ -35,11 +35,11 @@
         {
             get
             {
-                return _intensityMultiplier;
+                return intensityMultiplier;
             }
             set
             {
-                _intensityMultiplier = value;
+                intensityMultiplier = value;
             }
         }
 

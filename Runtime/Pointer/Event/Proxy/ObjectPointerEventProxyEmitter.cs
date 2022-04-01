@@ -29,7 +29,7 @@
 
         [Tooltip("The source GameObject to apply to the RestrictableSingleEventProxyEmitter.ReceiveValidity.")]
         [SerializeField]
-        private RuleSourceType _ruleSource;
+        private RuleSourceType ruleSource;
         /// <summary>
         /// The source <see cref="GameObject"/> to apply to the <see cref="RestrictableSingleEventProxyEmitter.ReceiveValidity"/>.
         /// </summary>
@@ -37,11 +37,11 @@
         {
             get
             {
-                return _ruleSource;
+                return ruleSource;
             }
             set
             {
-                _ruleSource = value;
+                ruleSource = value;
             }
         }
 

@@ -11,7 +11,7 @@
     {
         [Tooltip("The number of seconds to wait before yielding.")]
         [SerializeField]
-        private float _secondsToWait;
+        private float secondsToWait;
         /// <summary>
         /// The number of seconds to wait before yielding.
         /// </summary>
@@ -19,11 +19,11 @@
         {
             get
             {
-                return _secondsToWait;
+                return secondsToWait;
             }
             set
             {
-                _secondsToWait = value;
+                secondsToWait = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterSecondsToWaitChange();

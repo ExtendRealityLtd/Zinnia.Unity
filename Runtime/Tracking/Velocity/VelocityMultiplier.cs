@@ -10,7 +10,7 @@
     {
         [Tooltip("The VelocityTracker to use as the source data.")]
         [SerializeField]
-        private VelocityTracker _source;
+        private VelocityTracker source;
         /// <summary>
         /// The <see cref="VelocityTracker"/> to use as the source data.
         /// </summary>
@@ -18,16 +18,16 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
         [Tooltip("The amount to multiply the source velocity by.")]
         [SerializeField]
-        private Vector3 _velocityMultiplierFactor = Vector3.one;
+        private Vector3 velocityMultiplierFactor = Vector3.one;
         /// <summary>
         /// The amount to multiply the source velocity by.
         /// </summary>
@@ -35,16 +35,16 @@
         {
             get
             {
-                return _velocityMultiplierFactor;
+                return velocityMultiplierFactor;
             }
             set
             {
-                _velocityMultiplierFactor = value;
+                velocityMultiplierFactor = value;
             }
         }
         [Tooltip("The amount to multiply the source angular velocity by.")]
         [SerializeField]
-        private Vector3 _angularVelocityMultiplierFactor = Vector3.one;
+        private Vector3 angularVelocityMultiplierFactor = Vector3.one;
         /// <summary>
         /// The amount to multiply the source angular velocity by.
         /// </summary>
@@ -52,11 +52,11 @@
         {
             get
             {
-                return _angularVelocityMultiplierFactor;
+                return angularVelocityMultiplierFactor;
             }
             set
             {
-                _angularVelocityMultiplierFactor = value;
+                angularVelocityMultiplierFactor = value;
             }
         }
 

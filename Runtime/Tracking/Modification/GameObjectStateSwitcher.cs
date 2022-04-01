@@ -11,7 +11,7 @@
     {
         [Tooltip("A collection of targets to set the state on when it is the active index.")]
         [SerializeField]
-        private GameObjectObservableList _targets;
+        private GameObjectObservableList targets;
         /// <summary>
         /// A collection of targets to set the state on when it is the active index.
         /// </summary>
@@ -19,16 +19,16 @@
         {
             get
             {
-                return _targets;
+                return targets;
             }
             set
             {
-                _targets = value;
+                targets = value;
             }
         }
         [Tooltip("The state to set the active index target. All other targets will be set to the opposite state.")]
         [SerializeField]
-        private bool _targetState = true;
+        private bool targetState = true;
         /// <summary>
         /// The state to set the active index target. All other targets will be set to the opposite state.
         /// </summary>
@@ -36,11 +36,11 @@
         {
             get
             {
-                return _targetState;
+                return targetState;
             }
             set
             {
-                _targetState = value;
+                targetState = value;
             }
         }
 

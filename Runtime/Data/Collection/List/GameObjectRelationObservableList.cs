@@ -18,7 +18,7 @@
         {
             [Tooltip("The GameObject acting as the key.")]
             [SerializeField]
-            private GameObject _key;
+            private GameObject key;
             /// <summary>
             /// The <see cref="GameObject"/> acting as the key.
             /// </summary>
@@ -26,16 +26,16 @@
             {
                 get
                 {
-                    return _key;
+                    return key;
                 }
                 set
                 {
-                    _key = value;
+                    key = value;
                 }
             }
             [Tooltip("The GameObject acting as the value.")]
             [SerializeField]
-            private GameObject _value;
+            private GameObject value;
             /// <summary>
             /// The <see cref="GameObject"/> acting as the value.
             /// </summary>
@@ -43,11 +43,11 @@
             {
                 get
                 {
-                    return _value;
+                    return value;
                 }
                 set
                 {
-                    _value = value;
+                    this.value = value;
                 }
             }
 

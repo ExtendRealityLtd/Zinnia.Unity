@@ -13,7 +13,7 @@
     {
         [Tooltip("The payload data to emit.")]
         [SerializeField]
-        private TValue _payload;
+        private TValue payload;
         /// <summary>
         /// The payload data to emit.
         /// </summary>
@@ -21,11 +21,11 @@
         {
             get
             {
-                return _payload;
+                return payload;
             }
             set
             {
-                _payload = value;
+                payload = value;
             }
         }
 

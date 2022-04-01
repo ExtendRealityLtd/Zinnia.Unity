@@ -66,7 +66,7 @@
 
         [Tooltip("The source property to match against.")]
         [SerializeField]
-        private Source _propertySource;
+        private Source propertySource;
         /// <summary>
         /// The source property to match against.
         /// </summary>
@@ -74,11 +74,11 @@
         {
             get
             {
-                return _propertySource;
+                return propertySource;
             }
             set
             {
-                _propertySource = value;
+                propertySource = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterPropertySourceChange();
@@ -88,7 +88,7 @@
 #if UNITY_2019_3_OR_NEWER
         [Tooltip("The source node to consider as the device to check.")]
         [SerializeField]
-        private XRNode _deviceSource = XRNode.Head;
+        private XRNode deviceSource = XRNode.Head;
         /// <summary>
         /// The source node to consider as the device to check.
         /// </summary>
@@ -96,11 +96,11 @@
         {
             get
             {
-                return _deviceSource;
+                return deviceSource;
             }
             set
             {
-                _deviceSource = value;
+                deviceSource = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterDeviceSourceChange();

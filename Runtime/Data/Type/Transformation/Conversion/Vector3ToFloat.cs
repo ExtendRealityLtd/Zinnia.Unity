@@ -52,7 +52,7 @@
 
         [Tooltip("Which Vector3 coordinate to extract.")]
         [SerializeField]
-        private ExtractionCoordinate _coordinateToExtract = ExtractionCoordinate.ExtractX;
+        private ExtractionCoordinate coordinateToExtract = ExtractionCoordinate.ExtractX;
         /// <summary>
         /// Which <see cref="Vector3"/> coordinate to extract.
         /// </summary>
@@ -60,11 +60,11 @@
         {
             get
             {
-                return _coordinateToExtract;
+                return coordinateToExtract;
             }
             set
             {
-                _coordinateToExtract = value;
+                coordinateToExtract = value;
             }
         }
 

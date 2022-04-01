@@ -18,16 +18,16 @@
         [Tooltip("The collection to observe changes of.")]
         [SerializeField]
         [TypePicker(typeof(Behaviour))]
-        private List<SerializableType> _elements = new List<SerializableType>();
+        private List<SerializableType> elements = new List<SerializableType>();
         protected override List<SerializableType> Elements
         {
             get
             {
-                return _elements;
+                return elements;
             }
             set
             {
-                _elements = value;
+                elements = value;
             }
         }
 

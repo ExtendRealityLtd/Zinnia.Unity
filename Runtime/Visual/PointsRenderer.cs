@@ -19,7 +19,7 @@
         {
             [Tooltip("Represents the start, i.e. the first rendered point.")]
             [SerializeField]
-            private GameObject _startPoint;
+            private GameObject startPoint;
             /// <summary>
             /// Represents the start, i.e. the first rendered point.
             /// </summary>
@@ -27,16 +27,16 @@
             {
                 get
                 {
-                    return _startPoint;
+                    return startPoint;
                 }
                 set
                 {
-                    _startPoint = value;
+                    startPoint = value;
                 }
             }
             [Tooltip("Whether the first point should be visible.")]
             [SerializeField]
-            private bool _isStartPointVisible;
+            private bool isStartPointVisible;
             /// <summary>
             /// Whether the first point should be visible.
             /// </summary>
@@ -44,16 +44,16 @@
             {
                 get
                 {
-                    return _isStartPointVisible;
+                    return isStartPointVisible;
                 }
                 set
                 {
-                    _isStartPointVisible = value;
+                    isStartPointVisible = value;
                 }
             }
             [Tooltip("Represents the segments between Start and End. This will get cloned to create all the segments.")]
             [SerializeField]
-            private GameObject _repeatedSegmentPoint;
+            private GameObject repeatedSegmentPoint;
             /// <summary>
             /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
             /// </summary>
@@ -61,16 +61,16 @@
             {
                 get
                 {
-                    return _repeatedSegmentPoint;
+                    return repeatedSegmentPoint;
                 }
                 set
                 {
-                    _repeatedSegmentPoint = value;
+                    repeatedSegmentPoint = value;
                 }
             }
             [Tooltip("Whether the repeated segment point(s) should be visible.")]
             [SerializeField]
-            private bool _isRepeatedSegmentPointVisible;
+            private bool isRepeatedSegmentPointVisible;
             /// <summary>
             /// Whether the repeated segment point(s) should be visible.
             /// </summary>
@@ -78,16 +78,16 @@
             {
                 get
                 {
-                    return _isRepeatedSegmentPointVisible;
+                    return isRepeatedSegmentPointVisible;
                 }
                 set
                 {
-                    _isRepeatedSegmentPointVisible = value;
+                    isRepeatedSegmentPointVisible = value;
                 }
             }
             [Tooltip("Represents the end, i.e. the last rendered point.")]
             [SerializeField]
-            private GameObject _endPoint;
+            private GameObject endPoint;
             /// <summary>
             /// Represents the end, i.e. the last rendered point.
             /// </summary>
@@ -95,16 +95,16 @@
             {
                 get
                 {
-                    return _endPoint;
+                    return endPoint;
                 }
                 set
                 {
-                    _endPoint = value;
+                    endPoint = value;
                 }
             }
             [Tooltip("Whether the end point should be visible.")]
             [SerializeField]
-            private bool _isEndPointVisible;
+            private bool isEndPointVisible;
             /// <summary>
             /// Whether the end point should be visible.
             /// </summary>
@@ -112,16 +112,16 @@
             {
                 get
                 {
-                    return _isEndPointVisible;
+                    return isEndPointVisible;
                 }
                 set
                 {
-                    _isEndPointVisible = value;
+                    isEndPointVisible = value;
                 }
             }
             [Tooltip("The points along the most recent cast.")]
             [SerializeField]
-            private HeapAllocationFreeReadOnlyList<Vector3> _points;
+            private HeapAllocationFreeReadOnlyList<Vector3> points;
             /// <summary>
             /// The points along the most recent cast.
             /// </summary>
@@ -129,11 +129,11 @@
             {
                 get
                 {
-                    return _points;
+                    return points;
                 }
                 set
                 {
-                    _points = value;
+                    points = value;
                 }
             }
 
@@ -166,7 +166,7 @@
 
         [Tooltip("The direction to scale the segment GameObjects in. Set axes to 0 to disable scaling on that axis.")]
         [SerializeField]
-        private Vector3 _segmentScaleDirection = Vector3.forward;
+        private Vector3 segmentScaleDirection = Vector3.forward;
         /// <summary>
         /// The direction to scale the segment <see cref="GameObject"/>s in. Set axes to 0 to disable scaling on that axis.
         /// </summary>
@@ -174,16 +174,16 @@
         {
             get
             {
-                return _segmentScaleDirection;
+                return segmentScaleDirection;
             }
             set
             {
-                _segmentScaleDirection = value;
+                segmentScaleDirection = value;
             }
         }
         [Tooltip("Represents the start, i.e. the first rendered point.")]
         [SerializeField]
-        private GameObject _start;
+        private GameObject start;
         /// <summary>
         /// Represents the start, i.e. the first rendered point.
         /// </summary>
@@ -191,16 +191,16 @@
         {
             get
             {
-                return _start;
+                return start;
             }
             set
             {
-                _start = value;
+                start = value;
             }
         }
         [Tooltip("Represents the segments between Start and End. This will get cloned to create all the segments.")]
         [SerializeField]
-        private GameObject _repeatedSegment;
+        private GameObject repeatedSegment;
         /// <summary>
         /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
         /// </summary>
@@ -208,16 +208,16 @@
         {
             get
             {
-                return _repeatedSegment;
+                return repeatedSegment;
             }
             set
             {
-                _repeatedSegment = value;
+                repeatedSegment = value;
             }
         }
         [Tooltip("Represents the end, i.e. the last rendered point.")]
         [SerializeField]
-        private GameObject _end;
+        private GameObject end;
         /// <summary>
         /// Represents the end, i.e. the last rendered point.
         /// </summary>
@@ -225,11 +225,11 @@
         {
             get
             {
-                return _end;
+                return end;
             }
             set
             {
-                _end = value;
+                end = value;
             }
         }
 

@@ -13,7 +13,7 @@
     {
         [Tooltip("The time between each Behaviour.enabled check.")]
         [SerializeField]
-        private float _checkDelay = 0.000011f;
+        private float checkDelay = 0.000011f;
         /// <summary>
         /// The time between each <see cref="Behaviour.enabled"/> check.
         /// </summary>
@@ -21,11 +21,11 @@
         {
             get
             {
-                return _checkDelay;
+                return checkDelay;
             }
             set
             {
-                _checkDelay = value;
+                checkDelay = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterCheckDelayChange();
@@ -34,7 +34,7 @@
         }
         [Tooltip("The maximum amount of time to perform the Behaviour.enabled check before ending.")]
         [SerializeField]
-        private float _maximumRunTime = float.PositiveInfinity;
+        private float maximumRunTime = float.PositiveInfinity;
         /// <summary>
         /// The maximum amount of time to perform the <see cref="Behaviour.enabled"/> check before ending.
         /// </summary>
@@ -42,11 +42,11 @@
         {
             get
             {
-                return _maximumRunTime;
+                return maximumRunTime;
             }
             set
             {
-                _maximumRunTime = value;
+                maximumRunTime = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterMaximumRunTimeChange();
@@ -56,7 +56,7 @@
 
         [Tooltip("The Behaviours to observe.")]
         [SerializeField]
-        private BehaviourObservableList _behaviours;
+        private BehaviourObservableList behaviours;
         /// <summary>
         /// The <see cref="Behaviour"/>s to observe.
         /// </summary>
@@ -64,11 +64,11 @@
         {
             get
             {
-                return _behaviours;
+                return behaviours;
             }
             set
             {
-                _behaviours = value;
+                behaviours = value;
             }
         }
 

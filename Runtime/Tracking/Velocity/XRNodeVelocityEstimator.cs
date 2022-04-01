@@ -12,7 +12,7 @@
     {
         [Tooltip("The node to query velocity estimations for.")]
         [SerializeField]
-        private XRNode _node = XRNode.LeftHand;
+        private XRNode node = XRNode.LeftHand;
         /// <summary>
         /// The node to query velocity estimations for.
         /// </summary>
@@ -20,17 +20,17 @@
         {
             get
             {
-                return _node;
+                return node;
             }
             set
             {
-                _node = value;
+                node = value;
             }
         }
 
         [Tooltip("An optional object to consider the source relative to when estimating the velocities.")]
         [SerializeField]
-        private GameObject _relativeTo;
+        private GameObject relativeTo;
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
@@ -38,11 +38,11 @@
         {
             get
             {
-                return _relativeTo;
+                return relativeTo;
             }
             set
             {
-                _relativeTo = value;
+                relativeTo = value;
             }
         }
 

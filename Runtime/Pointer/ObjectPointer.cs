@@ -22,7 +22,7 @@
         {
             [Tooltip("Whether the ObjectPointer is currently activated.")]
             [SerializeField]
-            private bool _isCurrentlyActive;
+            private bool isCurrentlyActive;
             /// <summary>
             /// Whether the <see cref="ObjectPointer"/> is currently activated.
             /// </summary>
@@ -30,16 +30,16 @@
             {
                 get
                 {
-                    return _isCurrentlyActive;
+                    return isCurrentlyActive;
                 }
                 set
                 {
-                    _isCurrentlyActive = value;
+                    isCurrentlyActive = value;
                 }
             }
             [Tooltip("Whether the ObjectPointer is currently hovering over a target.")]
             [SerializeField]
-            private bool _isCurrentlyHovering;
+            private bool isCurrentlyHovering;
             /// <summary>
             /// Whether the <see cref="ObjectPointer"/> is currently hovering over a target.
             /// </summary>
@@ -47,16 +47,16 @@
             {
                 get
                 {
-                    return _isCurrentlyHovering;
+                    return isCurrentlyHovering;
                 }
                 set
                 {
-                    _isCurrentlyHovering = value;
+                    isCurrentlyHovering = value;
                 }
             }
             [Tooltip("The duration that the ObjectPointer has been hovering over it's current target.")]
             [SerializeField]
-            private float _currentHoverDuration;
+            private float currentHoverDuration;
             /// <summary>
             /// The duration that the <see cref="ObjectPointer"/> has been hovering over it's current target.
             /// </summary>
@@ -64,16 +64,16 @@
             {
                 get
                 {
-                    return _currentHoverDuration;
+                    return currentHoverDuration;
                 }
                 set
                 {
-                    _currentHoverDuration = value;
+                    currentHoverDuration = value;
                 }
             }
             [Tooltip("The points cast data given to the ObjectPointer.")]
             [SerializeField]
-            private PointsCast.EventData _currentPointsCastData;
+            private PointsCast.EventData currentPointsCastData;
             /// <summary>
             /// The points cast data given to the <see cref="ObjectPointer"/>.
             /// </summary>
@@ -81,11 +81,11 @@
             {
                 get
                 {
-                    return _currentPointsCastData;
+                    return currentPointsCastData;
                 }
                 set
                 {
-                    _currentPointsCastData = value;
+                    currentPointsCastData = value;
                 }
             }
 
@@ -181,7 +181,7 @@
         [Header("Pointer Element Settings")]
         [Tooltip("Represents the origin, i.e. the first rendered point.")]
         [SerializeField]
-        private PointerElement _origin;
+        private PointerElement origin;
         /// <summary>
         /// Represents the origin, i.e. the first rendered point.
         /// </summary>
@@ -189,16 +189,16 @@
         {
             get
             {
-                return _origin;
+                return origin;
             }
             set
             {
-                _origin = value;
+                origin = value;
             }
         }
         [Tooltip("Represents the segments between Origin and Destination. This will get cloned to create all the segments.")]
         [SerializeField]
-        private PointerElement _repeatedSegment;
+        private PointerElement repeatedSegment;
         /// <summary>
         /// Represents the segments between <see cref="Origin"/> and <see cref="Destination"/>. This will get cloned to create all the segments.
         /// </summary>
@@ -206,16 +206,16 @@
         {
             get
             {
-                return _repeatedSegment;
+                return repeatedSegment;
             }
             set
             {
-                _repeatedSegment = value;
+                repeatedSegment = value;
             }
         }
         [Tooltip("Represents the destination, i.e. the last rendered point.")]
         [SerializeField]
-        private PointerElement _destination;
+        private PointerElement destination;
         /// <summary>
         /// Represents the destination, i.e. the last rendered point.
         /// </summary>
@@ -223,16 +223,16 @@
         {
             get
             {
-                return _destination;
+                return destination;
             }
             set
             {
-                _destination = value;
+                destination = value;
             }
         }
         [Tooltip("Whether the Destination will be enabled if the raycast does not collide with anything and contains no PointsCast.EventData.HitData.")]
         [SerializeField]
-        private bool _enableDestinationOnNoCollision = true;
+        private bool enableDestinationOnNoCollision = true;
         /// <summary>
         /// Whether the <see cref="Destination"/> will be enabled if the raycast does not collide with anything and contains no <see cref="PointsCast.EventData.HitData"/>.
         /// </summary>
@@ -240,16 +240,16 @@
         {
             get
             {
-                return _enableDestinationOnNoCollision;
+                return enableDestinationOnNoCollision;
             }
             set
             {
-                _enableDestinationOnNoCollision = value;
+                enableDestinationOnNoCollision = value;
             }
         }
         [Tooltip("Provides an alternative as the pointer origin in the events.")]
         [SerializeField]
-        private GameObject _eventDataOriginTransformOverride;
+        private GameObject eventDataOriginTransformOverride;
         /// <summary>
         /// Provides an alternative as the pointer origin in the events.
         /// </summary>
@@ -257,11 +257,11 @@
         {
             get
             {
-                return _eventDataOriginTransformOverride;
+                return eventDataOriginTransformOverride;
             }
             set
             {
-                _eventDataOriginTransformOverride = value;
+                eventDataOriginTransformOverride = value;
             }
         }
 

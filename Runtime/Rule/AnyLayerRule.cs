@@ -9,7 +9,7 @@
     {
         [Tooltip("The layers to check against.")]
         [SerializeField]
-        private LayerMask _layerMask;
+        private LayerMask layerMask;
         /// <summary>
         /// The layers to check against.
         /// </summary>
@@ -17,11 +17,11 @@
         {
             get
             {
-                return _layerMask;
+                return layerMask;
             }
             set
             {
-                _layerMask = value;
+                layerMask = value;
             }
         }
 

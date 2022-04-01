@@ -10,7 +10,7 @@
     {
         [Tooltip("Determines which axes to apply the modification on>.")]
         [SerializeField]
-        private Vector3State _applyModificationOnAxis = Vector3State.True;
+        private Vector3State applyModificationOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to apply the modification on>.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _applyModificationOnAxis;
+                return applyModificationOnAxis;
             }
             set
             {
-                _applyModificationOnAxis = value;
+                applyModificationOnAxis = value;
             }
         }
 

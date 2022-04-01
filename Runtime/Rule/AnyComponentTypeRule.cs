@@ -12,7 +12,7 @@
     {
         [Tooltip("The component types to look for.")]
         [SerializeField]
-        private SerializableTypeComponentObservableList _componentTypes;
+        private SerializableTypeComponentObservableList componentTypes;
         /// <summary>
         /// The component types to look for.
         /// </summary>
@@ -20,11 +20,11 @@
         {
             get
             {
-                return _componentTypes;
+                return componentTypes;
             }
             set
             {
-                _componentTypes = value;
+                componentTypes = value;
             }
         }
 

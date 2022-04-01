@@ -11,7 +11,7 @@
     {
         [Tooltip("The Action to re-emit the state for.")]
         [SerializeField]
-        private Action _action;
+        private Action action;
         /// <summary>
         /// The Action to re-emit the state for.
         /// </summary>
@@ -19,11 +19,11 @@
         {
             get
             {
-                return _action;
+                return action;
             }
             set
             {
-                _action = value;
+                action = value;
             }
         }
 

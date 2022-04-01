@@ -14,7 +14,7 @@
     {
         [Tooltip("Determines whether the received payload is valid to be re-emitted.")]
         [SerializeField]
-        private RuleContainer _receiveValidity;
+        private RuleContainer receiveValidity;
         /// <summary>
         /// Determines whether the received payload is valid to be re-emitted.
         /// </summary>
@@ -22,11 +22,11 @@
         {
             get
             {
-                return _receiveValidity;
+                return receiveValidity;
             }
             set
             {
-                _receiveValidity = value;
+                receiveValidity = value;
             }
         }
 

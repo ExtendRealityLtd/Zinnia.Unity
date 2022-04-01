@@ -19,7 +19,7 @@
         {
             [Tooltip("Determines if the source can be used.")]
             [SerializeField]
-            private bool _enabled;
+            private bool enabled;
             /// <summary>
             /// Determines if the source can be used.
             /// </summary>
@@ -27,16 +27,16 @@
             {
                 get
                 {
-                    return _enabled;
+                    return enabled;
                 }
                 set
                 {
-                    _enabled = value;
+                    enabled = value;
                 }
             }
             [Tooltip("The main container of the action.")]
             [SerializeField]
-            private GameObject _container;
+            private GameObject container;
             /// <summary>
             /// The main container of the action.
             /// </summary>
@@ -44,16 +44,16 @@
             {
                 get
                 {
-                    return _container;
+                    return container;
                 }
                 set
                 {
-                    _container = value;
+                    container = value;
                 }
             }
             [Tooltip("The action to subscribe to.")]
             [SerializeField]
-            private Action _action;
+            private Action action;
             /// <summary>
             /// The action to subscribe to.
             /// </summary>
@@ -61,18 +61,18 @@
             {
                 get
                 {
-                    return _action;
+                    return action;
                 }
                 set
                 {
-                    _action = value;
+                    action = value;
                 }
             }
         }
 
         [Tooltip("The action that will have the sources populated by the given Sources.")]
         [SerializeField]
-        private Action _target;
+        private Action target;
         /// <summary>
         /// The action that will have the sources populated by the given <see cref="Sources"/>.
         /// </summary>
@@ -80,7 +80,7 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
@@ -88,7 +88,7 @@
                 {
                     OnBeforeTargetChange();
                 }
-                _target = value;
+                target = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterTargetChange();
@@ -97,7 +97,7 @@
         }
         [Tooltip("A list of ActionSources to populate the target sources list with.")]
         [SerializeField]
-        private ActionRegistrarSourceObservableList _sources;
+        private ActionRegistrarSourceObservableList sources;
         /// <summary>
         /// A list of <see cref="ActionSource"/>s to populate the target sources list with.
         /// </summary>
@@ -105,7 +105,7 @@
         {
             get
             {
-                return _sources;
+                return sources;
             }
             set
             {
@@ -113,7 +113,7 @@
                 {
                     OnBeforeSourcesChange();
                 }
-                _sources = value;
+                sources = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterSourcesChange();
@@ -122,7 +122,7 @@
         }
         [Tooltip("A list of GameObjects that are the limits of Sources by matching against ActionSource.Container.")]
         [SerializeField]
-        private GameObjectObservableList _sourceLimits;
+        private GameObjectObservableList sourceLimits;
         /// <summary>
         /// A list of <see cref="GameObject"/>s that are the limits of <see cref="Sources"/> by matching against <see cref="ActionSource.Container"/>.
         /// </summary>
@@ -130,7 +130,7 @@
         {
             get
             {
-                return _sourceLimits;
+                return sourceLimits;
             }
             set
             {
@@ -138,7 +138,7 @@
                 {
                     OnBeforeSourceLimitsChange();
                 }
-                _sourceLimits = value;
+                sourceLimits = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterSourceLimitsChange();

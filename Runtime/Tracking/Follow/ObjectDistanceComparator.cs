@@ -22,7 +22,7 @@
         {
             [Tooltip("The difference of the positions of the target and source.")]
             [SerializeField]
-            private Vector3 _currentDifference;
+            private Vector3 currentDifference;
             /// <summary>
             /// The difference of the positions of the target and source.
             /// </summary>
@@ -30,16 +30,16 @@
             {
                 get
                 {
-                    return _currentDifference;
+                    return currentDifference;
                 }
                 set
                 {
-                    _currentDifference = value;
+                    currentDifference = value;
                 }
             }
             [Tooltip("The distance between the source and target.")]
             [SerializeField]
-            private float _currentDistance;
+            private float currentDistance;
             /// <summary>
             /// The distance between the source and target.
             /// </summary>
@@ -47,11 +47,11 @@
             {
                 get
                 {
-                    return _currentDistance;
+                    return currentDistance;
                 }
                 set
                 {
-                    _currentDistance = value;
+                    currentDistance = value;
                 }
             }
 
@@ -81,7 +81,7 @@
 
         [Tooltip("The source of the distance measurement.")]
         [SerializeField]
-        private GameObject _source;
+        private GameObject source;
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
@@ -89,11 +89,11 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterSourceChange();
@@ -102,7 +102,7 @@
         }
         [Tooltip("The target of the distance measurement.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
@@ -110,11 +110,11 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterTargetChange();
@@ -123,7 +123,7 @@
         }
         [Tooltip("The distance between the source and target that is considered to be exceeding the given threshold.")]
         [SerializeField]
-        private float _distanceThreshold = 1f;
+        private float distanceThreshold = 1f;
         /// <summary>
         /// The distance between the source and target that is considered to be exceeding the given threshold.
         /// </summary>
@@ -131,11 +131,11 @@
         {
             get
             {
-                return _distanceThreshold;
+                return distanceThreshold;
             }
             set
             {
-                _distanceThreshold = value;
+                distanceThreshold = value;
             }
         }
 

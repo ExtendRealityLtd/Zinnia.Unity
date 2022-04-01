@@ -19,7 +19,7 @@ namespace Zinnia.Data.Collection.List
         {
             [Tooltip("The GameObject acting as the key.")]
             [SerializeField]
-            private GameObject _key;
+            private GameObject key;
             /// <summary>
             /// The <see cref="GameObject"/> acting as the key.
             /// </summary>
@@ -27,16 +27,16 @@ namespace Zinnia.Data.Collection.List
             {
                 get
                 {
-                    return _key;
+                    return key;
                 }
                 set
                 {
-                    _key = value;
+                    key = value;
                 }
             }
             [Tooltip("The GameObject collection of relation values.")]
             [SerializeField]
-            private List<GameObject> _values;
+            private List<GameObject> values;
             /// <summary>
             /// The <see cref="GameObject"/> collection of relation values.
             /// </summary>
@@ -44,11 +44,11 @@ namespace Zinnia.Data.Collection.List
             {
                 get
                 {
-                    return _values;
+                    return values;
                 }
                 set
                 {
-                    _values = value;
+                    values = value;
                 }
             }
 

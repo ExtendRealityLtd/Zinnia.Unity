@@ -19,7 +19,7 @@
 
         [Tooltip("The collection of relations.")]
         [SerializeField]
-        private GameObjectRelationObservableList _relations;
+        private GameObjectRelationObservableList relations;
         /// <summary>
         /// The collection of relations.
         /// </summary>
@@ -27,11 +27,11 @@
         {
             get
             {
-                return _relations;
+                return relations;
             }
             set
             {
-                _relations = value;
+                relations = value;
             }
         }
 

@@ -11,7 +11,7 @@
     {
         [Tooltip("The distance between the current surface and previous surface to consider a valid change.")]
         [SerializeField]
-        private float _changeDistance = 0.5f;
+        private float changeDistance = 0.5f;
         /// <summary>
         /// The distance between the current surface and previous surface to consider a valid change.
         /// </summary>
@@ -19,11 +19,11 @@
         {
             get
             {
-                return _changeDistance;
+                return changeDistance;
             }
             set
             {
-                _changeDistance = value;
+                changeDistance = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterChangeDistanceChange();
@@ -32,7 +32,7 @@
         }
         [Tooltip("The axes to check for distance differences on.")]
         [SerializeField]
-        private Vector3State _checkAxis = Vector3State.True;
+        private Vector3State checkAxis = Vector3State.True;
         /// <summary>
         /// The axes to check for distance differences on.
         /// </summary>
@@ -40,11 +40,11 @@
         {
             get
             {
-                return _checkAxis;
+                return checkAxis;
             }
             set
             {
-                _checkAxis = value;
+                checkAxis = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterCheckAxisChange();

@@ -12,7 +12,7 @@
     {
         [Tooltip("The sources to ignore colliders from.")]
         [SerializeField]
-        private GameObjectObservableList _sources;
+        private GameObjectObservableList sources;
         /// <summary>
         /// The sources to ignore colliders from.
         /// </summary>
@@ -20,7 +20,7 @@
         {
             get
             {
-                return _sources;
+                return sources;
             }
             set
             {
@@ -28,7 +28,7 @@
                 {
                     OnBeforeSourcesChange();
                 }
-                _sources = value;
+                sources = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterSourcesChange();
@@ -37,7 +37,7 @@
         }
         [Tooltip("The targets to ignore colliders with.")]
         [SerializeField]
-        private GameObjectObservableList _targets;
+        private GameObjectObservableList targets;
         /// <summary>
         /// The targets to ignore colliders with.
         /// </summary>
@@ -45,7 +45,7 @@
         {
             get
             {
-                return _targets;
+                return targets;
             }
             set
             {
@@ -53,7 +53,7 @@
                 {
                     OnBeforeTargetsChange();
                 }
-                _targets = value;
+                targets = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterTargetsChange();
@@ -62,7 +62,7 @@
         }
         [Tooltip("Whether to process inactive GameObjects when ignoring or resuming collisions.")]
         [SerializeField]
-        private bool _processInactiveGameObjects;
+        private bool processInactiveGameObjects;
         /// <summary>
         /// Whether to process inactive <see cref="GameObject"/>s when ignoring or resuming collisions.
         /// </summary>
@@ -70,11 +70,11 @@
         {
             get
             {
-                return _processInactiveGameObjects;
+                return processInactiveGameObjects;
             }
             set
             {
-                _processInactiveGameObjects = value;
+                processInactiveGameObjects = value;
             }
         }
 

@@ -10,7 +10,7 @@
     {
         [Tooltip("The node to pulse.")]
         [SerializeField]
-        private XRNode _node = XRNode.LeftHand;
+        private XRNode node = XRNode.LeftHand;
         /// <summary>
         /// The node to pulse.
         /// </summary>
@@ -18,16 +18,16 @@
         {
             get
             {
-                return _node;
+                return node;
             }
             set
             {
-                _node = value;
+                node = value;
             }
         }
         [Tooltip("The duration to pulse Node for.")]
         [SerializeField]
-        private float _duration = 0.005f;
+        private float duration = 0.005f;
         /// <summary>
         /// The duration to pulse <see cref="Node"/> for.
         /// </summary>
@@ -38,11 +38,11 @@
         {
             get
             {
-                return _duration;
+                return duration;
             }
             set
             {
-                _duration = value;
+                duration = value;
             }
         }
 

@@ -49,7 +49,7 @@
 
         [Tooltip("Determines which value to use from the TimeSpan.")]
         [SerializeField]
-        private TimeSpanProperty _timeSpanValue = TimeSpanProperty.Seconds;
+        private TimeSpanProperty timeSpanValue = TimeSpanProperty.Seconds;
         /// <summary>
         /// Determines which value to use from the <see cref="TimeSpan"/>.
         /// </summary>
@@ -57,11 +57,11 @@
         {
             get
             {
-                return _timeSpanValue;
+                return timeSpanValue;
             }
             set
             {
-                _timeSpanValue = value;
+                timeSpanValue = value;
             }
         }
 

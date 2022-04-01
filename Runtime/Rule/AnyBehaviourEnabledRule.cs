@@ -12,7 +12,7 @@
     {
         [Tooltip("The behaviour types to look for.")]
         [SerializeField]
-        private SerializableTypeBehaviourObservableList _behaviourTypes;
+        private SerializableTypeBehaviourObservableList behaviourTypes;
         /// <summary>
         /// The behaviour types to look for.
         /// </summary>
@@ -20,11 +20,11 @@
         {
             get
             {
-                return _behaviourTypes;
+                return behaviourTypes;
             }
             set
             {
-                _behaviourTypes = value;
+                behaviourTypes = value;
             }
         }
 

@@ -15,7 +15,7 @@
     {
         [Tooltip("The object used as the origin to check if it is facing towards Target.")]
         [SerializeField]
-        private GameObject _source;
+        private GameObject source;
         /// <summary>
         /// The object used as the origin to check if it is facing towards <see cref="Target"/>.
         /// </summary>
@@ -23,16 +23,16 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
         [Tooltip("The object that will be checked to see if Source is facing it.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// The object that will be checked to see if <see cref="Source"/> is facing it.
         /// </summary>
@@ -40,16 +40,16 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
         [Tooltip("A sphere radius that defines the volume in which Target can still be considered seen by the Source.")]
         [SerializeField]
-        private float _targetRadius = 0.1f;
+        private float targetRadius = 0.1f;
         /// <summary>
         /// A sphere radius that defines the volume in which <see cref="Target"/> can still be considered seen by the <see cref="Source"/>.
         /// </summary>
@@ -57,11 +57,11 @@
         {
             get
             {
-                return _targetRadius;
+                return targetRadius;
             }
             set
             {
-                _targetRadius = value;
+                targetRadius = value;
             }
         }
 

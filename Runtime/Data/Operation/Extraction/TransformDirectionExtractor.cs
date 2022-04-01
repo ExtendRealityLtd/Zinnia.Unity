@@ -29,7 +29,7 @@
 
         [Tooltip("The direction to extract from the Transform.")]
         [SerializeField]
-        private AxisDirection _direction;
+        private AxisDirection direction;
         /// <summary>
         /// The direction to extract from the <see cref="Transform"/>.
         /// </summary>
@@ -37,11 +37,11 @@
         {
             get
             {
-                return _direction;
+                return direction;
             }
             set
             {
-                _direction = value;
+                direction = value;
             }
         }
 

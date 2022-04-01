@@ -12,7 +12,7 @@
         [Header("Velocity Settings")]
         [Tooltip("The maximum squared magnitude of velocity that can be applied to the source.")]
         [SerializeField]
-        private float _velocityLimit = float.PositiveInfinity;
+        private float velocityLimit = float.PositiveInfinity;
         /// <summary>
         /// The maximum squared magnitude of velocity that can be applied to the source.
         /// </summary>
@@ -20,16 +20,16 @@
         {
             get
             {
-                return _velocityLimit;
+                return velocityLimit;
             }
             set
             {
-                _velocityLimit = value;
+                velocityLimit = value;
             }
         }
         [Tooltip("The maximum difference in distance to the tracked position.")]
         [SerializeField]
-        private float _maxDistanceDelta = 10f;
+        private float maxDistanceDelta = 10f;
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
@@ -37,11 +37,11 @@
         {
             get
             {
-                return _maxDistanceDelta;
+                return maxDistanceDelta;
             }
             set
             {
-                _maxDistanceDelta = value;
+                maxDistanceDelta = value;
             }
         }
         #endregion

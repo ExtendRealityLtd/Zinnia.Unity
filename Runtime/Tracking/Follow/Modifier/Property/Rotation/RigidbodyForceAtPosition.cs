@@ -10,7 +10,7 @@
     {
         [Tooltip("The point where the attachment was made.")]
         [SerializeField]
-        private GameObject _attachmentPoint;
+        private GameObject attachmentPoint;
         /// <summary>
         /// The point where the attachment was made.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _attachmentPoint;
+                return attachmentPoint;
             }
             set
             {
-                _attachmentPoint = value;
+                attachmentPoint = value;
             }
         }
 

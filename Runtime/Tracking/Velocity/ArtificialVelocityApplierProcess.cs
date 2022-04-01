@@ -11,7 +11,7 @@
     {
         [Tooltip("The object to apply the artificial velocities to.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// The object to apply the artificial velocities to.
         /// </summary>
@@ -19,16 +19,16 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
         [Tooltip("The velocity to apply.")]
         [SerializeField]
-        private Vector3 _velocity;
+        private Vector3 velocity;
         /// <summary>
         /// The velocity to apply.
         /// </summary>
@@ -36,16 +36,16 @@
         {
             get
             {
-                return _velocity;
+                return velocity;
             }
             set
             {
-                _velocity = value;
+                velocity = value;
             }
         }
         [Tooltip("The angular velocity to apply.")]
         [SerializeField]
-        private Vector3 _angularVelocity;
+        private Vector3 angularVelocity;
         /// <summary>
         /// The angular velocity to apply.
         /// </summary>
@@ -53,16 +53,16 @@
         {
             get
             {
-                return _angularVelocity;
+                return angularVelocity;
             }
             set
             {
-                _angularVelocity = value;
+                angularVelocity = value;
             }
         }
         [Tooltip("The drag to apply to reduce the directional velocity over time and to slow down Target.")]
         [SerializeField]
-        private float _drag = 1f;
+        private float drag = 1f;
         /// <summary>
         /// The drag to apply to reduce the directional velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
@@ -70,16 +70,16 @@
         {
             get
             {
-                return _drag;
+                return drag;
             }
             set
             {
-                _drag = value;
+                drag = value;
             }
         }
         [Tooltip("The angular drag to apply to reduce the rotational velocity over time and to slow down Target.")]
         [SerializeField]
-        private float _angularDrag = 0.5f;
+        private float angularDrag = 0.5f;
         /// <summary>
         /// The angular drag to apply to reduce the rotational velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
@@ -87,16 +87,16 @@
         {
             get
             {
-                return _angularDrag;
+                return angularDrag;
             }
             set
             {
-                _angularDrag = value;
+                angularDrag = value;
             }
         }
         [Tooltip("The tolerance the velocity can be within zero to be considered nil.")]
         [SerializeField]
-        private float _nilVelocityTolerance = 0.001f;
+        private float nilVelocityTolerance = 0.001f;
         /// <summary>
         /// The tolerance the velocity can be within zero to be considered nil.
         /// </summary>
@@ -104,16 +104,16 @@
         {
             get
             {
-                return _nilVelocityTolerance;
+                return nilVelocityTolerance;
             }
             set
             {
-                _nilVelocityTolerance = value;
+                nilVelocityTolerance = value;
             }
         }
         [Tooltip("The tolerance the angular velocity can be within zero to be considered nil.")]
         [SerializeField]
-        private float _nilAngularVelocityTolerance = 0.001f;
+        private float nilAngularVelocityTolerance = 0.001f;
         /// <summary>
         /// The tolerance the angular velocity can be within zero to be considered nil.
         /// </summary>
@@ -121,11 +121,11 @@
         {
             get
             {
-                return _nilAngularVelocityTolerance;
+                return nilAngularVelocityTolerance;
             }
             set
             {
-                _nilAngularVelocityTolerance = value;
+                nilAngularVelocityTolerance = value;
             }
         }
 

@@ -12,7 +12,7 @@
     {
         [Tooltip("The regular expression pattern to match against a string contained in the StringObservableList.")]
         [SerializeField]
-        private string _inListPattern;
+        private string inListPattern;
         /// <summary>
         /// The regular expression pattern to match against a string contained in the <see cref="StringObservableList"/>.
         /// </summary>
@@ -20,11 +20,11 @@
         {
             get
             {
-                return _inListPattern;
+                return inListPattern;
             }
             set
             {
-                _inListPattern = value;
+                inListPattern = value;
             }
         }
 

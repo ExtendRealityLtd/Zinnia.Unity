@@ -27,7 +27,7 @@
         [Header("Extractor Settings")]
         [Tooltip("The source to extract from.")]
         [SerializeField]
-        private TSourceElement _source;
+        private TSourceElement source;
         /// <summary>
         /// The source to extract from.
         /// </summary>
@@ -35,11 +35,11 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
 

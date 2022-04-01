@@ -22,7 +22,7 @@
         {
             [Tooltip("The result of the most recent cast. null when the cast didn't hit anything.")]
             [SerializeField]
-            private RaycastHit? _hitData;
+            private RaycastHit? hitData;
             /// <summary>
             /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything.
             /// </summary>
@@ -30,17 +30,17 @@
             {
                 get
                 {
-                    return _hitData;
+                    return hitData;
                 }
                 set
                 {
-                    _hitData = value;
+                    hitData = value;
                 }
             }
 
             [Tooltip("The validity of the most recent HitData based on the TargetValidity rule.")]
             [SerializeField]
-            private bool _isValid;
+            private bool isValid;
             /// <summary>
             /// The validity of the most recent <see cref="HitData"/> based on the <see cref="TargetValidity"/> rule.
             /// </summary>
@@ -48,11 +48,11 @@
             {
                 get
                 {
-                    return _isValid;
+                    return isValid;
                 }
                 set
                 {
-                    _isValid = value;
+                    isValid = value;
                 }
             }
 
@@ -113,7 +113,7 @@
 
         [Tooltip("The origin point for the cast.")]
         [SerializeField]
-        private GameObject _origin;
+        private GameObject origin;
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
@@ -121,16 +121,16 @@
         {
             get
             {
-                return _origin;
+                return origin;
             }
             set
             {
-                _origin = value;
+                origin = value;
             }
         }
         [Tooltip("Allows to optionally affect the cast.")]
         [SerializeField]
-        private PhysicsCast _physicsCast;
+        private PhysicsCast physicsCast;
         /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
@@ -138,16 +138,16 @@
         {
             get
             {
-                return _physicsCast;
+                return physicsCast;
             }
             set
             {
-                _physicsCast = value;
+                physicsCast = value;
             }
         }
         [Tooltip("Allows to optionally determine targets based on the set rules.")]
         [SerializeField]
-        private RuleContainer _targetValidity;
+        private RuleContainer targetValidity;
         /// <summary>
         /// Allows to optionally determine targets based on the set rules.
         /// </summary>
@@ -155,16 +155,16 @@
         {
             get
             {
-                return _targetValidity;
+                return targetValidity;
             }
             set
             {
-                _targetValidity = value;
+                targetValidity = value;
             }
         }
         [Tooltip("Allows to optionally determine specific target point based on the set rules.")]
         [SerializeField]
-        private RuleContainer _targetPointValidity;
+        private RuleContainer targetPointValidity;
         /// <summary>
         /// Allows to optionally determine specific target point based on the set rules.
         /// </summary>
@@ -172,11 +172,11 @@
         {
             get
             {
-                return _targetPointValidity;
+                return targetPointValidity;
             }
             set
             {
-                _targetPointValidity = value;
+                targetPointValidity = value;
             }
         }
 
@@ -193,16 +193,16 @@
         /// <summary>
         /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/> or <see cref="TargetPointValidity"/> rules.
         /// </summary>
-        private RaycastHit? _targetHit;
+        private RaycastHit? targetHit;
         public RaycastHit? TargetHit
         {
             get
             {
-                return _targetHit;
+                return targetHit;
             }
             protected set
             {
-                _targetHit = value;
+                targetHit = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterTargetHitChange();

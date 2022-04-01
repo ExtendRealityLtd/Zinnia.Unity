@@ -12,7 +12,7 @@
         [Header("Velocity Settings")]
         [Tooltip("The maximum squared magnitude of angular velocity that can be applied to the source Transform.")]
         [SerializeField]
-        private float _angularVelocityLimit = float.PositiveInfinity;
+        private float angularVelocityLimit = float.PositiveInfinity;
         /// <summary>
         /// The maximum squared magnitude of angular velocity that can be applied to the source <see cref="Transform"/>.
         /// </summary>
@@ -20,16 +20,16 @@
         {
             get
             {
-                return _angularVelocityLimit;
+                return angularVelocityLimit;
             }
             set
             {
-                _angularVelocityLimit = value;
+                angularVelocityLimit = value;
             }
         }
         [Tooltip("The maximum difference in distance to the tracked position.")]
         [SerializeField]
-        private float _maxDistanceDelta = 10f;
+        private float maxDistanceDelta = 10f;
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
@@ -37,11 +37,11 @@
         {
             get
             {
-                return _maxDistanceDelta;
+                return maxDistanceDelta;
             }
             set
             {
-                _maxDistanceDelta = value;
+                maxDistanceDelta = value;
             }
         }
         #endregion
@@ -50,7 +50,7 @@
         [Header("Calculation Settings")]
         [Tooltip("Whether to use the optional offset to set the target Rigidbody.centerOfMass;")]
         [SerializeField]
-        private bool _useOffsetAsCentreOfMass;
+        private bool useOffsetAsCentreOfMass;
         /// <summary>
         /// Whether to use the optional offset to set the target <see cref="Rigidbody.centerOfMass"/>;
         /// </summary>
@@ -58,16 +58,16 @@
         {
             get
             {
-                return _useOffsetAsCentreOfMass;
+                return useOffsetAsCentreOfMass;
             }
             set
             {
-                _useOffsetAsCentreOfMass = value;
+                useOffsetAsCentreOfMass = value;
             }
         }
         [Tooltip("Whether calculate the rotational angle in degrees;")]
         [SerializeField]
-        private bool _calculateAngleInDegrees = true;
+        private bool calculateAngleInDegrees = true;
         /// <summary>
         /// Whether calculate the rotational angle in degrees;
         /// </summary>
@@ -75,11 +75,11 @@
         {
             get
             {
-                return _calculateAngleInDegrees;
+                return calculateAngleInDegrees;
             }
             set
             {
-                _calculateAngleInDegrees = value;
+                calculateAngleInDegrees = value;
             }
         }
         #endregion

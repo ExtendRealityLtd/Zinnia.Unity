@@ -32,7 +32,7 @@
         [Header("Valid Container Settings")]
         [Tooltip("The containing GameObject that represents the element when a valid collision is occuring.")]
         [SerializeField]
-        private GameObject _validElementContainer;
+        private GameObject validElementContainer;
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when a valid collision is occuring.
         /// </summary>
@@ -40,16 +40,16 @@
         {
             get
             {
-                return _validElementContainer;
+                return validElementContainer;
             }
             set
             {
-                _validElementContainer = value;
+                validElementContainer = value;
             }
         }
         [Tooltip("The GameObject containing the visible mesh for the PointerElement when a valid collision is occuring.")]
         [SerializeField]
-        private GameObject _validMeshContainer;
+        private GameObject validMeshContainer;
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when a valid collision is occuring.
         /// </summary>
@@ -57,11 +57,11 @@
         {
             get
             {
-                return _validMeshContainer;
+                return validMeshContainer;
             }
             set
             {
-                _validMeshContainer = value;
+                validMeshContainer = value;
             }
         }
         #endregion
@@ -70,7 +70,7 @@
         [Header("Invalid Container Settings")]
         [Tooltip("The containing GameObject that represents the element when an invalid collision or no collision is occuring.")]
         [SerializeField]
-        private GameObject _invalidElementContainer;
+        private GameObject invalidElementContainer;
         /// <summary>
         /// The containing <see cref="GameObject"/> that represents the element when an invalid collision or no collision is occuring.
         /// </summary>
@@ -78,16 +78,16 @@
         {
             get
             {
-                return _invalidElementContainer;
+                return invalidElementContainer;
             }
             set
             {
-                _invalidElementContainer = value;
+                invalidElementContainer = value;
             }
         }
         [Tooltip("The GameObject containing the visible mesh for the PointerElement when an invalid collision or no collision is occuring.")]
         [SerializeField]
-        private GameObject _invalidMeshContainer;
+        private GameObject invalidMeshContainer;
         /// <summary>
         /// The <see cref="GameObject"/> containing the visible mesh for the <see cref="PointerElement"/> when an invalid collision or no collision is occuring.
         /// </summary>
@@ -95,11 +95,11 @@
         {
             get
             {
-                return _invalidMeshContainer;
+                return invalidMeshContainer;
             }
             set
             {
-                _invalidMeshContainer = value;
+                invalidMeshContainer = value;
             }
         }
         #endregion
@@ -108,7 +108,7 @@
         [Header("Visibility Settings")]
         [Tooltip("Determines when the PointerElement is visible.")]
         [SerializeField]
-        private Visibility _elementVisibility = Visibility.OnWhenPointerActivated;
+        private Visibility elementVisibility = Visibility.OnWhenPointerActivated;
         /// <summary>
         /// Determines when the <see cref="PointerElement"/> is visible.
         /// </summary>
@@ -116,11 +116,11 @@
         {
             get
             {
-                return _elementVisibility;
+                return elementVisibility;
             }
             set
             {
-                _elementVisibility = value;
+                elementVisibility = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterElementVisibilityChange();

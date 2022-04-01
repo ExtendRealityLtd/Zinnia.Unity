@@ -13,7 +13,7 @@
     {
         [Tooltip("A regular expression to match the name of the XR device that needs to be loaded.")]
         [SerializeField]
-        private string _xrDeviceNamePattern;
+        private string xrDeviceNamePattern;
         /// <summary>
         /// A regular expression to match the name of the XR device that needs to be loaded.
         /// </summary>
@@ -21,11 +21,11 @@
         {
             get
             {
-                return _xrDeviceNamePattern;
+                return xrDeviceNamePattern;
             }
             set
             {
-                _xrDeviceNamePattern = value;
+                xrDeviceNamePattern = value;
             }
         }
 

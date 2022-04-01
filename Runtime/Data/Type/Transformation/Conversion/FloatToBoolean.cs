@@ -22,7 +22,7 @@
 
         [Tooltip("The bounds in which the float must be to be considered a positive boolean.")]
         [SerializeField]
-        private FloatRange _positiveBounds = new FloatRange(0f, 1f);
+        private FloatRange positiveBounds = new FloatRange(0f, 1f);
         /// <summary>
         /// The bounds in which the <see cref="float"/> must be to be considered a positive boolean.
         /// </summary>
@@ -30,11 +30,11 @@
         {
             get
             {
-                return _positiveBounds;
+                return positiveBounds;
             }
             set
             {
-                _positiveBounds = value;
+                positiveBounds = value;
             }
         }
 

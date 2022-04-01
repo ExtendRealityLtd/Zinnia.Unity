@@ -13,7 +13,7 @@
         [Header("Target Settings")]
         [Tooltip("The target to mutate.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// The target to mutate.
         /// </summary>
@@ -21,16 +21,16 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
         [Tooltip("Determines whether to mutate the local or global values.")]
         [SerializeField]
-        private bool _useLocalValues;
+        private bool useLocalValues;
         /// <summary>
         /// Determines whether to mutate the local or global values.
         /// </summary>
@@ -38,16 +38,16 @@
         {
             get
             {
-                return _useLocalValues;
+                return useLocalValues;
             }
             set
             {
-                _useLocalValues = value;
+                useLocalValues = value;
             }
         }
         [Tooltip("Determines which axes to mutate.")]
         [SerializeField]
-        private Vector3State _mutateOnAxis = Vector3State.True;
+        private Vector3State mutateOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to mutate.
         /// </summary>
@@ -55,11 +55,11 @@
         {
             get
             {
-                return _mutateOnAxis;
+                return mutateOnAxis;
             }
             set
             {
-                _mutateOnAxis = value;
+                mutateOnAxis = value;
             }
         }
         #endregion

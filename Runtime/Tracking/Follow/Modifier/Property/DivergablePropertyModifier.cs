@@ -25,7 +25,7 @@
         [Header("Divergence Settings")]
         [Tooltip("Determines if to track whether the source diverges from the target. Tracking divergence adds additional overhead.")]
         [SerializeField]
-        private bool _trackDivergence;
+        private bool trackDivergence;
         /// <summary>
         /// Determines if to track whether the source diverges from the target. Tracking divergence adds additional overhead.
         /// </summary>
@@ -33,16 +33,16 @@
         {
             get
             {
-                return _trackDivergence;
+                return trackDivergence;
             }
             set
             {
-                _trackDivergence = value;
+                trackDivergence = value;
             }
         }
         [Tooltip("The distance the target has to be away from the source to be considered diverged.")]
         [SerializeField]
-        private Vector3 _divergenceThreshold = Vector3.one * 0.1f;
+        private Vector3 divergenceThreshold = Vector3.one * 0.1f;
         /// <summary>
         /// The distance the target has to be away from the source to be considered diverged.
         /// </summary>
@@ -50,11 +50,11 @@
         {
             get
             {
-                return _divergenceThreshold;
+                return divergenceThreshold;
             }
             set
             {
-                _divergenceThreshold = value;
+                divergenceThreshold = value;
             }
         }
         #endregion

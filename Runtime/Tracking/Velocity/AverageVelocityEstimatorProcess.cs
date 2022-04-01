@@ -12,7 +12,7 @@
     {
         [Tooltip("The source to track and estimate velocities for.")]
         [SerializeField]
-        private GameObject _source;
+        private GameObject source;
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
@@ -20,11 +20,11 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterSourceChange();
@@ -33,7 +33,7 @@
         }
         [Tooltip("An optional object to consider the source relative to when estimating the velocities.")]
         [SerializeField]
-        private GameObject _relativeTo;
+        private GameObject relativeTo;
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
@@ -41,11 +41,11 @@
         {
             get
             {
-                return _relativeTo;
+                return relativeTo;
             }
             set
             {
-                _relativeTo = value;
+                relativeTo = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterRelativeToChange();
@@ -54,7 +54,7 @@
         }
         [Tooltip("Whether samples are currently being collected.")]
         [SerializeField]
-        private bool _isEstimating = true;
+        private bool isEstimating = true;
         /// <summary>
         /// Whether samples are currently being collected.
         /// </summary>
@@ -62,16 +62,16 @@
         {
             get
             {
-                return _isEstimating;
+                return isEstimating;
             }
             set
             {
-                _isEstimating = value;
+                isEstimating = value;
             }
         }
         [Tooltip("The number of average frames to collect samples for velocity estimation.")]
         [SerializeField]
-        private int _velocityAverageFrames = 5;
+        private int velocityAverageFrames = 5;
         /// <summary>
         /// The number of average frames to collect samples for velocity estimation.
         /// </summary>
@@ -79,11 +79,11 @@
         {
             get
             {
-                return _velocityAverageFrames;
+                return velocityAverageFrames;
             }
             set
             {
-                _velocityAverageFrames = value;
+                velocityAverageFrames = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterVelocityAverageFramesChange();
@@ -92,7 +92,7 @@
         }
         [Tooltip("The number of average frames to collect samples for angular velocity estimation.")]
         [SerializeField]
-        private int _angularVelocityAverageFrames = 10;
+        private int angularVelocityAverageFrames = 10;
         /// <summary>
         /// The number of average frames to collect samples for angular velocity estimation.
         /// </summary>
@@ -100,11 +100,11 @@
         {
             get
             {
-                return _angularVelocityAverageFrames;
+                return angularVelocityAverageFrames;
             }
             set
             {
-                _angularVelocityAverageFrames = value;
+                angularVelocityAverageFrames = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterAngularVelocityAverageFramesChange();

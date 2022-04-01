@@ -10,7 +10,7 @@
     {
         [Tooltip("The source to track and estimate velocities for.")]
         [SerializeField]
-        private Rigidbody _source;
+        private Rigidbody source;
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
 

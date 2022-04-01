@@ -16,7 +16,7 @@
 
         [Tooltip("The tolerance to consider the current value and the cached value equal.")]
         [SerializeField]
-        private float _equalityTolerance = float.Epsilon;
+        private float equalityTolerance = float.Epsilon;
         /// <summary>
         /// The tolerance to consider the current value and the cached value equal.
         /// </summary>
@@ -24,11 +24,11 @@
         {
             get
             {
-                return _equalityTolerance;
+                return equalityTolerance;
             }
             set
             {
-                _equalityTolerance = value;
+                equalityTolerance = value;
             }
         }
 

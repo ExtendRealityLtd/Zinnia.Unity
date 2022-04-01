@@ -11,7 +11,7 @@
     {
         [Tooltip("The modifier to change the scale.")]
         [SerializeField]
-        private PropertyModifier _scaleModifier;
+        private PropertyModifier scaleModifier;
         /// <summary>
         /// The modifier to change the scale.
         /// </summary>
@@ -19,16 +19,16 @@
         {
             get
             {
-                return _scaleModifier;
+                return scaleModifier;
             }
             set
             {
-                _scaleModifier = value;
+                scaleModifier = value;
             }
         }
         [Tooltip("The modifier to change the rotation.")]
         [SerializeField]
-        private PropertyModifier _rotationModifier;
+        private PropertyModifier rotationModifier;
         /// <summary>
         /// The modifier to change the rotation.
         /// </summary>
@@ -36,16 +36,16 @@
         {
             get
             {
-                return _rotationModifier;
+                return rotationModifier;
             }
             set
             {
-                _rotationModifier = value;
+                rotationModifier = value;
             }
         }
         [Tooltip("The modifier to change the position.")]
         [SerializeField]
-        private PropertyModifier _positionModifier;
+        private PropertyModifier positionModifier;
         /// <summary>
         /// The modifier to change the position.
         /// </summary>
@@ -53,11 +53,11 @@
         {
             get
             {
-                return _positionModifier;
+                return positionModifier;
             }
             set
             {
-                _positionModifier = value;
+                positionModifier = value;
             }
         }
 

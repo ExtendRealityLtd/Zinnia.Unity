@@ -18,7 +18,7 @@
 
         [Tooltip("Determines whether the collision point parent is the GameObject that contains a CollisionNotifier or to just search for the containing Transform.")]
         [SerializeField]
-        private bool _isParentCollisionNotifier;
+        private bool isParentCollisionNotifier;
         /// <summary>
         /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or to just search for the containing <see cref="Transform"/>.
         /// </summary>
@@ -26,11 +26,11 @@
         {
             get
             {
-                return _isParentCollisionNotifier;
+                return isParentCollisionNotifier;
             }
             set
             {
-                _isParentCollisionNotifier = value;
+                isParentCollisionNotifier = value;
             }
         }
 

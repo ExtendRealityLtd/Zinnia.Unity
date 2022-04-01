@@ -11,7 +11,7 @@
     {
         [Tooltip("The IRules to check against.")]
         [SerializeField]
-        private RuleContainerObservableList _rules;
+        private RuleContainerObservableList rules;
         /// <summary>
         /// The <see cref="IRule"/>s to check against.
         /// </summary>
@@ -19,11 +19,11 @@
         {
             get
             {
-                return _rules;
+                return rules;
             }
             set
             {
-                _rules = value;
+                rules = value;
             }
         }
 

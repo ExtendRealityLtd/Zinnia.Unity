@@ -25,7 +25,7 @@
         [Header("Modifier Settings")]
         [Tooltip("Determines whether the offset will be applied on the modification.")]
         [SerializeField]
-        private bool _applyOffset = true;
+        private bool applyOffset = true;
         /// <summary>
         /// Determines whether the offset will be applied on the modification.
         /// </summary>
@@ -33,11 +33,11 @@
         {
             get
             {
-                return _applyOffset;
+                return applyOffset;
             }
             set
             {
-                _applyOffset = value;
+                applyOffset = value;
             }
         }
         #endregion

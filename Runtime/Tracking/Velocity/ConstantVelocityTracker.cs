@@ -9,7 +9,7 @@
     {
         [Tooltip("The velocity to return.")]
         [SerializeField]
-        private Vector3 _velocity;
+        private Vector3 velocity;
         /// <summary>
         /// The velocity to return.
         /// </summary>
@@ -17,17 +17,17 @@
         {
             get
             {
-                return _velocity;
+                return velocity;
             }
             set
             {
-                _velocity = value;
+                velocity = value;
             }
         }
 
         [Tooltip("The angular velocity to return.")]
         [SerializeField]
-        private Vector3 _angularVelocity;
+        private Vector3 angularVelocity;
         /// <summary>
         /// The angular velocity to return.
         /// </summary>
@@ -35,17 +35,17 @@
         {
             get
             {
-                return _angularVelocity;
+                return angularVelocity;
             }
             set
             {
-                _angularVelocity = value;
+                angularVelocity = value;
             }
         }
 
         [Tooltip("Determines whether to extract the local property or the world property.")]
         [SerializeField]
-        private bool _useLocal;
+        private bool useLocal;
         /// <summary>
         /// Determines whether to extract the local property or the world property.
         /// </summary>
@@ -53,11 +53,11 @@
         {
             get
             {
-                return _useLocal;
+                return useLocal;
             }
             set
             {
-                _useLocal = value;
+                useLocal = value;
             }
         }
 

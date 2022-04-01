@@ -89,7 +89,7 @@
     {
         [Tooltip("The initial value upon creation of the component.")]
         [SerializeField]
-        private TValue _initialValue;
+        private TValue initialValue;
         /// <summary>
         /// The initial value upon creation of the component.
         /// </summary>
@@ -97,16 +97,16 @@
         {
             get
             {
-                return _initialValue;
+                return initialValue;
             }
             set
             {
-                _initialValue = value;
+                initialValue = value;
             }
         }
         [Tooltip("The value that is considered the inactive value.")]
         [SerializeField]
-        private TValue _defaultValue;
+        private TValue defaultValue;
         /// <summary>
         /// The value that is considered the inactive value.
         /// </summary>
@@ -114,11 +114,11 @@
         {
             get
             {
-                return _defaultValue;
+                return defaultValue;
             }
             set
             {
-                _defaultValue = value;
+                defaultValue = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterDefaultValueChange();
@@ -128,12 +128,12 @@
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        private List<TSelf> _sources = new List<TSelf>();
+        private List<TSelf> sources = new List<TSelf>();
         protected List<TSelf> Sources
         {
             get
             {
-                return _sources;
+                return sources;
             }
             set
             {
@@ -141,7 +141,7 @@
                 {
                     OnBeforeSourcesChange();
                 }
-                _sources = value;
+                sources = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterSourcesChange();
@@ -168,7 +168,7 @@
 
         [Tooltip("Actions to subscribe to when this action is Behaviour.enabled. Allows chaining the source actions to this action.")]
         [SerializeField]
-        private TValue _value;
+        private TValue value;
         /// <summary>
         /// The value of the action.
         /// </summary>
@@ -176,17 +176,17 @@
         {
             get
             {
-                return _value;
+                return value;
             }
             set
             {
-                _value = value;
+                this.value = value;
             }
         }
         /// <summary>
         /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => _sources;
+        public HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => sources;
 
         /// <inheritdoc />
         public override void AddSource(Action action)

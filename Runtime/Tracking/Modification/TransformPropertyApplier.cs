@@ -21,7 +21,7 @@
         {
             [Tooltip("The source TransformData to obtain the transformation properties from.")]
             [SerializeField]
-            private TransformData _eventSource;
+            private TransformData eventSource;
             /// <summary>
             /// The source <see cref="TransformData"/> to obtain the transformation properties from.
             /// </summary>
@@ -29,16 +29,16 @@
             {
                 get
                 {
-                    return _eventSource;
+                    return eventSource;
                 }
                 set
                 {
-                    _eventSource = value;
+                    eventSource = value;
                 }
             }
             [Tooltip("The target TransformData to apply transformations to.")]
             [SerializeField]
-            private TransformData _eventTarget;
+            private TransformData eventTarget;
             /// <summary>
             /// The target <see cref="TransformData"/> to apply transformations to.
             /// </summary>
@@ -46,11 +46,11 @@
             {
                 get
                 {
-                    return _eventTarget;
+                    return eventTarget;
                 }
                 set
                 {
-                    _eventTarget = value;
+                    eventTarget = value;
                 }
             }
 
@@ -103,7 +103,7 @@
         [Header("Reference Settings")]
         [Tooltip("The source to obtain the transformation properties from.")]
         [SerializeField]
-        private TransformData _source;
+        private TransformData source;
         /// <summary>
         /// The source to obtain the transformation properties from.
         /// </summary>
@@ -111,16 +111,16 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
         [Tooltip("The target to apply the transformations to.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// The target to apply the transformations to.
         /// </summary>
@@ -128,16 +128,16 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
         [Tooltip("The offset/pivot when applying the transformations.")]
         [SerializeField]
-        private GameObject _offset;
+        private GameObject offset;
         /// <summary>
         /// The offset/pivot when applying the transformations.
         /// </summary>
@@ -145,11 +145,11 @@
         {
             get
             {
-                return _offset;
+                return offset;
             }
             set
             {
-                _offset = value;
+                offset = value;
             }
         }
         #endregion
@@ -158,7 +158,7 @@
         [Header("Apply Settings")]
         [Tooltip("Determines which axes to apply on when utilizing the position offset.")]
         [SerializeField]
-        private Vector3State _applyPositionOffsetOnAxis = Vector3State.True;
+        private Vector3State applyPositionOffsetOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to apply on when utilizing the position offset.
         /// </summary>
@@ -166,16 +166,16 @@
         {
             get
             {
-                return _applyPositionOffsetOnAxis;
+                return applyPositionOffsetOnAxis;
             }
             set
             {
-                _applyPositionOffsetOnAxis = value;
+                applyPositionOffsetOnAxis = value;
             }
         }
         [Tooltip("Determines which axes to apply on when utilizing the rotation offset.")]
         [SerializeField]
-        private Vector3State _applyRotationOffsetOnAxis = Vector3State.True;
+        private Vector3State applyRotationOffsetOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to apply on when utilizing the rotation offset.
         /// </summary>
@@ -183,16 +183,16 @@
         {
             get
             {
-                return _applyRotationOffsetOnAxis;
+                return applyRotationOffsetOnAxis;
             }
             set
             {
-                _applyRotationOffsetOnAxis = value;
+                applyRotationOffsetOnAxis = value;
             }
         }
         [Tooltip("The Transform properties to apply the transformations on.")]
         [SerializeField]
-        private TransformProperties _applyTransformations = (TransformProperties)(-1);
+        private TransformProperties applyTransformations = (TransformProperties)(-1);
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
         /// </summary>
@@ -200,11 +200,11 @@
         {
             get
             {
-                return _applyTransformations;
+                return applyTransformations;
             }
             set
             {
-                _applyTransformations = value;
+                applyTransformations = value;
             }
         }
         #endregion
@@ -213,7 +213,7 @@
         [Header("Transition Settings")]
         [Tooltip("The amount of time to take when transitioning from the current Transform state to the modified Transform state.")]
         [SerializeField]
-        private float _transitionDuration;
+        private float transitionDuration;
         /// <summary>
         /// The amount of time to take when transitioning from the current <see cref="Transform"/> state to the modified <see cref="Transform"/> state.
         /// </summary>
@@ -221,16 +221,16 @@
         {
             get
             {
-                return _transitionDuration;
+                return transitionDuration;
             }
             set
             {
-                _transitionDuration = value;
+                transitionDuration = value;
             }
         }
         [Tooltip("Whether to still apply the transformation properties even if the new properties are equal to the existing properties.")]
         [SerializeField]
-        private bool _shouldApplyToEqualProperties;
+        private bool shouldApplyToEqualProperties;
         /// <summary>
         /// Whether to still apply the transformation properties even if the new properties are equal to the existing properties.
         /// </summary>
@@ -238,16 +238,16 @@
         {
             get
             {
-                return _shouldApplyToEqualProperties;
+                return shouldApplyToEqualProperties;
             }
             set
             {
-                _shouldApplyToEqualProperties = value;
+                shouldApplyToEqualProperties = value;
             }
         }
         [Tooltip("The threshold the current Transform properties can be within of the destination properties to be considered equal.")]
         [SerializeField]
-        private float _transitionDestinationThreshold = 0.01f;
+        private float transitionDestinationThreshold = 0.01f;
         /// <summary>
         /// The threshold the current <see cref="Transform"/> properties can be within of the destination properties to be considered equal.
         /// </summary>
@@ -255,16 +255,16 @@
         {
             get
             {
-                return _transitionDestinationThreshold;
+                return transitionDestinationThreshold;
             }
             set
             {
-                _transitionDestinationThreshold = value;
+                transitionDestinationThreshold = value;
             }
         }
         [Tooltip("Whether to treat the transformation destination properties as dynamic when transitioning the Target.")]
         [SerializeField]
-        private bool _isTransitionDestinationDynamic;
+        private bool isTransitionDestinationDynamic;
         /// <summary>
         /// Whether to treat the transformation destination properties as dynamic when transitioning the <see cref="Target"/>.
         /// </summary>
@@ -272,11 +272,11 @@
         {
             get
             {
-                return _isTransitionDestinationDynamic;
+                return isTransitionDestinationDynamic;
             }
             set
             {
-                _isTransitionDestinationDynamic = value;
+                isTransitionDestinationDynamic = value;
             }
         }
         #endregion

@@ -26,7 +26,7 @@
 
         [Tooltip("The states on whether to automatically reject a Rule.")]
         [SerializeField]
-        private RejectRuleStates _autoRejectStates = (RejectRuleStates)(-1);
+        private RejectRuleStates autoRejectStates = (RejectRuleStates)(-1);
         /// <summary>
         /// The states on whether to automatically reject a <see cref="Rule"/>.
         /// </summary>
@@ -34,11 +34,11 @@
         {
             get
             {
-                return _autoRejectStates;
+                return autoRejectStates;
             }
             set
             {
-                _autoRejectStates = value;
+                autoRejectStates = value;
             }
         }
 

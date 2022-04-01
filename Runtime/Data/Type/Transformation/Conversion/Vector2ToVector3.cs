@@ -54,7 +54,7 @@
 
         [Tooltip("The mechanism for mapping the Vector2 coordinates to the Vector3 coordinates.")]
         [SerializeField]
-        private CoordinateMapType _coordinateMap = CoordinateMapType.XToXAndYToY;
+        private CoordinateMapType coordinateMap = CoordinateMapType.XToXAndYToY;
         /// <summary>
         /// The mechanism for mapping the <see cref="Vector2"/> coordinates to the <see cref="Vector3"/> coordinates.
         /// </summary>
@@ -62,16 +62,16 @@
         {
             get
             {
-                return _coordinateMap;
+                return coordinateMap;
             }
             set
             {
-                _coordinateMap = value;
+                coordinateMap = value;
             }
         }
         [Tooltip("The value to set the unused coordinate to during the conversion.")]
         [SerializeField]
-        private float _unusedCoordinateValue;
+        private float unusedCoordinateValue;
         /// <summary>
         /// The value to set the unused coordinate to during the conversion.
         /// </summary>
@@ -79,11 +79,11 @@
         {
             get
             {
-                return _unusedCoordinateValue;
+                return unusedCoordinateValue;
             }
             set
             {
-                _unusedCoordinateValue = value;
+                unusedCoordinateValue = value;
             }
         }
 

@@ -10,7 +10,7 @@
     {
         [Tooltip("The VelocityTracker collection to attempt to process.")]
         [SerializeField]
-        private VelocityTrackerObservableList _velocityTrackers;
+        private VelocityTrackerObservableList velocityTrackers;
         /// <summary>
         /// The <see cref="VelocityTracker"/> collection to attempt to process.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _velocityTrackers;
+                return velocityTrackers;
             }
             set
             {
-                _velocityTrackers = value;
+                velocityTrackers = value;
             }
         }
 

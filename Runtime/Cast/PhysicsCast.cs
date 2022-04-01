@@ -12,7 +12,7 @@
     {
         [Tooltip("The layers to ignore when casting.")]
         [SerializeField]
-        private LayerMask _layersToIgnore = Physics.IgnoreRaycastLayer;
+        private LayerMask layersToIgnore = Physics.IgnoreRaycastLayer;
         /// <summary>
         /// The layers to ignore when casting.
         /// </summary>
@@ -20,16 +20,16 @@
         {
             get
             {
-                return _layersToIgnore;
+                return layersToIgnore;
             }
             set
             {
-                _layersToIgnore = value;
+                layersToIgnore = value;
             }
         }
         [Tooltip("Determines whether the cast will interact with trigger colliders.")]
         [SerializeField]
-        private QueryTriggerInteraction _triggerInteraction = QueryTriggerInteraction.UseGlobal;
+        private QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.UseGlobal;
         /// <summary>
         /// Determines whether the cast will interact with trigger colliders.
         /// </summary>
@@ -37,16 +37,16 @@
         {
             get
             {
-                return _triggerInteraction;
+                return triggerInteraction;
             }
             set
             {
-                _triggerInteraction = value;
+                triggerInteraction = value;
             }
         }
         [Tooltip("Allows for the conversion of one cast type to another cast type.")]
         [SerializeField]
-        private CastConverter _convertTo;
+        private CastConverter convertTo;
         /// <summary>
         /// Allows for the conversion of one cast type to another cast type.
         /// </summary>
@@ -54,11 +54,11 @@
         {
             get
             {
-                return _convertTo;
+                return convertTo;
             }
             set
             {
-                _convertTo = value;
+                convertTo = value;
             }
         }
 

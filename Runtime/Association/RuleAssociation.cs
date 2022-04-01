@@ -11,7 +11,7 @@
     {
         [Tooltip("The RuleContainer to match the association with.")]
         [SerializeField]
-        private RuleContainer _rule;
+        private RuleContainer rule;
         /// <summary>
         /// The <see cref="RuleContainer"/> to match the association with.
         /// </summary>
@@ -19,11 +19,11 @@
         {
             get
             {
-                return _rule;
+                return rule;
             }
             set
             {
-                _rule = value;
+                rule = value;
             }
         }
 

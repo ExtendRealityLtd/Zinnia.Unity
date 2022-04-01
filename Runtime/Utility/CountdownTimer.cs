@@ -18,7 +18,7 @@
 
         [Tooltip("The time to start the countdown at.")]
         [SerializeField]
-        private float _startTime = 1f;
+        private float startTime = 1f;
         /// <summary>
         /// The time to start the countdown at.
         /// </summary>
@@ -26,11 +26,11 @@
         {
             get
             {
-                return _startTime;
+                return startTime;
             }
             set
             {
-                _startTime = value;
+                startTime = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterStartTimeChange();

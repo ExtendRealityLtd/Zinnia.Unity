@@ -11,7 +11,7 @@
     {
         [Tooltip("The drag applied to the rotation to slow it down.")]
         [SerializeField]
-        private float _angularDrag = 1f;
+        private float angularDrag = 1f;
         /// <summary>
         /// The drag applied to the rotation to slow it down.
         /// </summary>
@@ -19,16 +19,16 @@
         {
             get
             {
-                return _angularDrag;
+                return angularDrag;
             }
             set
             {
-                _angularDrag = value;
+                angularDrag = value;
             }
         }
         [Tooltip("Determines which axes to rotate.")]
         [SerializeField]
-        private Vector3State _followOnAxis = Vector3State.True;
+        private Vector3State followOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to rotate.
         /// </summary>
@@ -36,16 +36,16 @@
         {
             get
             {
-                return _followOnAxis;
+                return followOnAxis;
             }
             set
             {
-                _followOnAxis = value;
+                followOnAxis = value;
             }
         }
         [Tooltip("An optional GameObject that is negated from the calculation if both the source and target are descendants of it.")]
         [SerializeField]
-        private GameObject _ancestor;
+        private GameObject ancestor;
         /// <summary>
         /// An optional <see cref="GameObject"/> that is negated from the calculation if both the source and target are descendants of it.
         /// </summary>
@@ -53,11 +53,11 @@
         {
             get
             {
-                return _ancestor;
+                return ancestor;
             }
             set
             {
-                _ancestor = value;
+                ancestor = value;
             }
         }
 

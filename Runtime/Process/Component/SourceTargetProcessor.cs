@@ -18,7 +18,7 @@
         [Header("Process Settings")]
         [Tooltip("Whether to cease the processing of the source collection after the first valid source is processed.")]
         [SerializeField]
-        private bool _ceaseAfterFirstSourceProcessed = true;
+        private bool ceaseAfterFirstSourceProcessed = true;
         /// <summary>
         /// Whether to cease the processing of the source collection after the first valid source is processed.
         /// </summary>
@@ -26,11 +26,11 @@
         {
             get
             {
-                return _ceaseAfterFirstSourceProcessed;
+                return ceaseAfterFirstSourceProcessed;
             }
             set
             {
-                _ceaseAfterFirstSourceProcessed = value;
+                ceaseAfterFirstSourceProcessed = value;
             }
         }
 

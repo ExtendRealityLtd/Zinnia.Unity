@@ -16,7 +16,7 @@
         [Header("PlayArea Settings")]
         [Tooltip("The associated PlayArea.")]
         [SerializeField]
-        private GameObject _playArea;
+        private GameObject playArea;
         /// <summary>
         /// The associated PlayArea.
         /// </summary>
@@ -24,11 +24,11 @@
         {
             get
             {
-                return _playArea;
+                return playArea;
             }
             set
             {
-                _playArea = value;
+                playArea = value;
             }
         }
         #endregion
@@ -37,7 +37,7 @@
         [Header("Headset Settings")]
         [Tooltip("The associated Headset.")]
         [SerializeField]
-        private GameObject _headset;
+        private GameObject headset;
         /// <summary>
         /// The associated Headset.
         /// </summary>
@@ -45,16 +45,16 @@
         {
             get
             {
-                return _headset;
+                return headset;
             }
             set
             {
-                _headset = value;
+                headset = value;
             }
         }
         [Tooltip("The associated Headset Camera.")]
         [SerializeField]
-        private Camera _headsetCamera;
+        private Camera headsetCamera;
         /// <summary>
         /// The associated Headset Camera.
         /// </summary>
@@ -62,16 +62,16 @@
         {
             get
             {
-                return _headsetCamera;
+                return headsetCamera;
             }
             set
             {
-                _headsetCamera = value;
+                headsetCamera = value;
             }
         }
         [Tooltip("The associated Headset Velocity Tracker.")]
         [SerializeField]
-        private VelocityTracker _headsetVelocityTracker;
+        private VelocityTracker headsetVelocityTracker;
         /// <summary>
         /// The associated Headset Velocity Tracker.
         /// </summary>
@@ -79,16 +79,16 @@
         {
             get
             {
-                return _headsetVelocityTracker;
+                return headsetVelocityTracker;
             }
             set
             {
-                _headsetVelocityTracker = value;
+                headsetVelocityTracker = value;
             }
         }
         [Tooltip("A list of any additional cameras associated with the headset.")]
         [SerializeField]
-        private CameraObservableList _supplementHeadsetCameras;
+        private CameraObservableList supplementHeadsetCameras;
         /// <summary>
         /// A list of any additional cameras associated with the headset.
         /// </summary>
@@ -96,16 +96,16 @@
         {
             get
             {
-                return _supplementHeadsetCameras;
+                return supplementHeadsetCameras;
             }
             set
             {
-                _supplementHeadsetCameras = value;
+                supplementHeadsetCameras = value;
             }
         }
         [Tooltip("The details and status of the headset device.")]
         [SerializeField]
-        private DeviceDetailsRecord _headsetDeviceDetails;
+        private DeviceDetailsRecord headsetDeviceDetails;
         /// <summary>
         /// The details and status of the headset device.
         /// </summary>
@@ -113,16 +113,16 @@
         {
             get
             {
-                return _headsetDeviceDetails;
+                return headsetDeviceDetails;
             }
             set
             {
-                _headsetDeviceDetails = value;
+                headsetDeviceDetails = value;
             }
         }
         [Tooltip("The dominant controller observer.")]
         [SerializeField]
-        private DominantControllerObserver _dominantController;
+        private DominantControllerObserver dominantController;
         /// <summary>
         /// The dominant controller observer.
         /// </summary>
@@ -130,11 +130,11 @@
         {
             get
             {
-                return _dominantController;
+                return dominantController;
             }
             set
             {
-                _dominantController = value;
+                dominantController = value;
             }
         }
         #endregion
@@ -143,7 +143,7 @@
         [Header("Left Controller Settings")]
         [Tooltip("The associated Left Controller.")]
         [SerializeField]
-        private GameObject _leftController;
+        private GameObject leftController;
         /// <summary>
         /// The associated Left Controller.
         /// </summary>
@@ -151,16 +151,16 @@
         {
             get
             {
-                return _leftController;
+                return leftController;
             }
             set
             {
-                _leftController = value;
+                leftController = value;
             }
         }
         [Tooltip("The associated Left Controller Velocity Tracker.")]
         [SerializeField]
-        private VelocityTracker _leftControllerVelocityTracker;
+        private VelocityTracker leftControllerVelocityTracker;
         /// <summary>
         /// The associated Left Controller Velocity Tracker.
         /// </summary>
@@ -168,16 +168,16 @@
         {
             get
             {
-                return _leftControllerVelocityTracker;
+                return leftControllerVelocityTracker;
             }
             set
             {
-                _leftControllerVelocityTracker = value;
+                leftControllerVelocityTracker = value;
             }
         }
         [Tooltip("The main Left Controller Haptic Process profile.")]
         [SerializeField]
-        private HapticProcess _leftControllerHapticProcess;
+        private HapticProcess leftControllerHapticProcess;
         /// <summary>
         /// The main Left Controller Haptic Process profile.
         /// </summary>
@@ -185,16 +185,16 @@
         {
             get
             {
-                return _leftControllerHapticProcess;
+                return leftControllerHapticProcess;
             }
             set
             {
-                _leftControllerHapticProcess = value;
+                leftControllerHapticProcess = value;
             }
         }
         [Tooltip("A HapticProcess collection of haptic profiles that can be used with the Left Controller.")]
         [SerializeField]
-        private HapticProcessObservableList _leftControllerHapticProfiles;
+        private HapticProcessObservableList leftControllerHapticProfiles;
         /// <summary>
         /// A <see cref="HapticProcess"/> collection of haptic profiles that can be used with the Left Controller.
         /// </summary>
@@ -202,16 +202,16 @@
         {
             get
             {
-                return _leftControllerHapticProfiles;
+                return leftControllerHapticProfiles;
             }
             set
             {
-                _leftControllerHapticProfiles = value;
+                leftControllerHapticProfiles = value;
             }
         }
         [Tooltip("The details and status of the left controller device.")]
         [SerializeField]
-        private DeviceDetailsRecord _leftControllerDeviceDetails;
+        private DeviceDetailsRecord leftControllerDeviceDetails;
         /// <summary>
         /// The details and status of the left controller device.
         /// </summary>
@@ -219,11 +219,11 @@
         {
             get
             {
-                return _leftControllerDeviceDetails;
+                return leftControllerDeviceDetails;
             }
             set
             {
-                _leftControllerDeviceDetails = value;
+                leftControllerDeviceDetails = value;
             }
         }
         #endregion
@@ -232,7 +232,7 @@
         [Header("Right Controller Settings")]
         [Tooltip("The associated Right Controller.")]
         [SerializeField]
-        private GameObject _rightController;
+        private GameObject rightController;
         /// <summary>
         /// The associated Right Controller.
         /// </summary>
@@ -240,16 +240,16 @@
         {
             get
             {
-                return _rightController;
+                return rightController;
             }
             set
             {
-                _rightController = value;
+                rightController = value;
             }
         }
         [Tooltip("The associated Right Controller Velocity Tracker.")]
         [SerializeField]
-        private VelocityTracker _rightControllerVelocityTracker;
+        private VelocityTracker rightControllerVelocityTracker;
         /// <summary>
         /// The associated Right Controller Velocity Tracker.
         /// </summary>
@@ -257,16 +257,16 @@
         {
             get
             {
-                return _rightControllerVelocityTracker;
+                return rightControllerVelocityTracker;
             }
             set
             {
-                _rightControllerVelocityTracker = value;
+                rightControllerVelocityTracker = value;
             }
         }
         [Tooltip("The main Right Controller Haptic Process profile.")]
         [SerializeField]
-        private HapticProcess _rightControllerHapticProcess;
+        private HapticProcess rightControllerHapticProcess;
         /// <summary>
         /// The main Right Controller Haptic Process profile.
         /// </summary>
@@ -274,16 +274,16 @@
         {
             get
             {
-                return _rightControllerHapticProcess;
+                return rightControllerHapticProcess;
             }
             set
             {
-                _rightControllerHapticProcess = value;
+                rightControllerHapticProcess = value;
             }
         }
         [Tooltip("A HapticProcess collection of supplement haptic settings that can be used with the Right Controller.")]
         [SerializeField]
-        private HapticProcessObservableList _rightControllerHapticProfiles;
+        private HapticProcessObservableList rightControllerHapticProfiles;
         /// <summary>
         /// A <see cref="HapticProcess"/> collection of supplement haptic settings that can be used with the Right Controller.
         /// </summary>
@@ -291,16 +291,16 @@
         {
             get
             {
-                return _rightControllerHapticProfiles;
+                return rightControllerHapticProfiles;
             }
             set
             {
-                _rightControllerHapticProfiles = value;
+                rightControllerHapticProfiles = value;
             }
         }
         [Tooltip("The details and status of the right controller device.")]
         [SerializeField]
-        private DeviceDetailsRecord _rightControllerDeviceDetails;
+        private DeviceDetailsRecord rightControllerDeviceDetails;
         /// <summary>
         /// The details and status of the right controller device.
         /// </summary>
@@ -308,11 +308,11 @@
         {
             get
             {
-                return _rightControllerDeviceDetails;
+                return rightControllerDeviceDetails;
             }
             set
             {
-                _rightControllerDeviceDetails = value;
+                rightControllerDeviceDetails = value;
             }
         }
         #endregion

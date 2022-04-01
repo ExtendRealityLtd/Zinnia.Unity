@@ -11,7 +11,7 @@ namespace Zinnia.Data.Operation.Extraction
     {
         [Tooltip("The path name to the child GameObject.")]
         [SerializeField]
-        private string _childNamePath;
+        private string childNamePath;
         /// <summary>
         /// The path name to the child <see cref="GameObject"/>.
         /// </summary>
@@ -19,11 +19,11 @@ namespace Zinnia.Data.Operation.Extraction
         {
             get
             {
-                return _childNamePath;
+                return childNamePath;
             }
             set
             {
-                _childNamePath = value;
+                childNamePath = value;
             }
         }
 

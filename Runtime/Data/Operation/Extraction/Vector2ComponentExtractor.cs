@@ -34,7 +34,7 @@
 
         [Tooltip("The source to extract from.")]
         [SerializeField]
-        private Vector2 _source;
+        private Vector2 source;
         /// <summary>
         /// The source to extract from.
         /// </summary>
@@ -42,16 +42,16 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
         [Tooltip("The component to extract from the Vector2.")]
         [SerializeField]
-        private Vector2Component _componentToExtract = Vector2Component.X;
+        private Vector2Component componentToExtract = Vector2Component.X;
         /// <summary>
         /// The component to extract from the <see cref="Vector2"/>.
         /// </summary>
@@ -59,11 +59,11 @@
         {
             get
             {
-                return _componentToExtract;
+                return componentToExtract;
             }
             set
             {
-                _componentToExtract = value;
+                componentToExtract = value;
             }
         }
 

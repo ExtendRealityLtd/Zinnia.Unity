@@ -17,7 +17,7 @@
 
         [Tooltip("The current Vector2 representing the direction.")]
         [SerializeField]
-        private Vector2 _direction = new Vector2(0f, 1f);
+        private Vector2 direction = new Vector2(0f, 1f);
         /// <summary>
         /// The current <see cref="Vector2"/> representing the direction.
         /// </summary>
@@ -25,11 +25,11 @@
         {
             get
             {
-                return _direction;
+                return direction;
             }
             set
             {
-                _direction = value;
+                direction = value;
             }
         }
 

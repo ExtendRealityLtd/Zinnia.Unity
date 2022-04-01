@@ -19,7 +19,7 @@
         {
             [Tooltip("The container of the source that is initiating the collision.")]
             [SerializeField]
-            private GameObject _sourceContainer;
+            private GameObject sourceContainer;
             /// <summary>
             /// The container of the source that is initiating the collision.
             /// </summary>
@@ -27,11 +27,11 @@
             {
                 get
                 {
-                    return _sourceContainer;
+                    return sourceContainer;
                 }
                 set
                 {
-                    _sourceContainer = value;
+                    sourceContainer = value;
                 }
             }
 
@@ -92,7 +92,7 @@
 
         [Tooltip("The data to publish to any available consumers.")]
         [SerializeField]
-        private PayloadData _payload = new PayloadData();
+        private PayloadData payload = new PayloadData();
         /// <summary>
         /// The data to publish to any available consumers.
         /// </summary>
@@ -100,16 +100,16 @@
         {
             get
             {
-                return _payload;
+                return payload;
             }
             set
             {
-                _payload = value;
+                payload = value;
             }
         }
         [Tooltip("A collection of ActiveCollisionConsumer components that has been successfully published to.")]
         [SerializeField]
-        private ActiveCollisionRegisteredConsumerContainer _registeredConsumerContainer;
+        private ActiveCollisionRegisteredConsumerContainer registeredConsumerContainer;
         /// <summary>
         /// A collection of <see cref="ActiveCollisionConsumer"/> components that has been successfully published to.
         /// </summary>
@@ -117,11 +117,11 @@
         {
             get
             {
-                return _registeredConsumerContainer;
+                return registeredConsumerContainer;
             }
             set
             {
-                _registeredConsumerContainer = value;
+                registeredConsumerContainer = value;
             }
         }
 

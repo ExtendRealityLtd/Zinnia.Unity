@@ -12,7 +12,7 @@
     {
         [Tooltip("A reference to the original UnityEngine.Transform.")]
         [SerializeField]
-        private Transform _transform;
+        private Transform transform;
         /// <summary>
         /// A reference to the original <see cref="UnityEngine.Transform"/>.
         /// </summary>
@@ -20,16 +20,16 @@
         {
             get
             {
-                return _transform;
+                return transform;
             }
             set
             {
-                _transform = value;
+                transform = value;
             }
         }
         [Tooltip("Determines whether to operate on the local or global values.")]
         [SerializeField]
-        private bool _useLocalValues;
+        private bool useLocalValues;
         /// <summary>
         /// Determines whether to operate on the local or global values.
         /// </summary>
@@ -37,16 +37,16 @@
         {
             get
             {
-                return _useLocalValues;
+                return useLocalValues;
             }
             set
             {
-                _useLocalValues = value;
+                useLocalValues = value;
             }
         }
         [Tooltip("Position override of the UnityEngine.Transform object.")]
         [SerializeField]
-        private Vector3? _positionOverride;
+        private Vector3? positionOverride;
         /// <summary>
         /// Position override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
@@ -54,16 +54,16 @@
         {
             get
             {
-                return _positionOverride;
+                return positionOverride;
             }
             set
             {
-                _positionOverride = value;
+                positionOverride = value;
             }
         }
         [Tooltip("Rotation override of the UnityEngine.Transform object.")]
         [SerializeField]
-        private Quaternion? _rotationOverride;
+        private Quaternion? rotationOverride;
         /// <summary>
         /// Rotation override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
@@ -71,16 +71,16 @@
         {
             get
             {
-                return _rotationOverride;
+                return rotationOverride;
             }
             set
             {
-                _rotationOverride = value;
+                rotationOverride = value;
             }
         }
         [Tooltip("Scale override of the UnityEngine.Transform object.")]
         [SerializeField]
-        private Vector3? _scaleOverride;
+        private Vector3? scaleOverride;
         /// <summary>
         /// Scale override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
@@ -88,11 +88,11 @@
         {
             get
             {
-                return _scaleOverride;
+                return scaleOverride;
             }
             set
             {
-                _scaleOverride = value;
+                scaleOverride = value;
             }
         }
 

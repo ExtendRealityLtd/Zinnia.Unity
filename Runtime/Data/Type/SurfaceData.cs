@@ -12,7 +12,7 @@
     {
         [Tooltip("The origin in which the surface search came from.")]
         [SerializeField]
-        private Vector3 _origin;
+        private Vector3 origin;
         /// <summary>
         /// The origin in which the surface search came from.
         /// </summary>
@@ -20,16 +20,16 @@
         {
             get
             {
-                return _origin;
+                return origin;
             }
             set
             {
-                _origin = value;
+                origin = value;
             }
         }
         [Tooltip("The direction in which the surface search came from.")]
         [SerializeField]
-        private Vector3 _direction;
+        private Vector3 direction;
         /// <summary>
         /// The direction in which the surface search came from.
         /// </summary>
@@ -37,11 +37,11 @@
         {
             get
             {
-                return _direction;
+                return direction;
             }
             set
             {
-                _direction = value;
+                direction = value;
             }
         }
 
@@ -53,12 +53,12 @@
         /// <summary>
         /// <see cref="RaycastHit"/> data about the current collision.
         /// </summary>
-        private RaycastHit _collisionData;
+        private RaycastHit collisionData;
         public RaycastHit CollisionData
         {
             get
             {
-                return _collisionData;
+                return collisionData;
             }
             set
             {
@@ -66,7 +66,7 @@
                 {
                     OnBeforeCollisionDataChange();
                 }
-                _collisionData = value;
+                collisionData = value;
             }
         }
 

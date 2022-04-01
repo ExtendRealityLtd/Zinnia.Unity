@@ -49,7 +49,7 @@
 
         [Tooltip("The unit to return the converted angle in.")]
         [SerializeField]
-        private AngleUnit _unit = AngleUnit.Degrees;
+        private AngleUnit unit = AngleUnit.Degrees;
         /// <summary>
         /// The unit to return the converted angle in.
         /// </summary>
@@ -57,17 +57,17 @@
         {
             get
             {
-                return _unit;
+                return unit;
             }
             set
             {
-                _unit = value;
+                unit = value;
             }
         }
 
         [Tooltip("The direction that defines the origin (i.e. zero) angle.")]
         [SerializeField]
-        private Vector2 _origin = new Vector2(0f, 1f);
+        private Vector2 origin = new Vector2(0f, 1f);
         /// <summary>
         /// The direction that defines the origin (i.e. zero) angle.
         /// </summary>
@@ -75,11 +75,11 @@
         {
             get
             {
-                return _origin;
+                return origin;
             }
             set
             {
-                _origin = value;
+                origin = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterOriginChange();
@@ -176,7 +176,7 @@
         /// </summary>
         protected virtual void OnAfterOriginChange()
         {
-            _origin = Origin.normalized;
+            origin = Origin.normalized;
         }
     }
 }

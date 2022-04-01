@@ -10,7 +10,7 @@
     {
         [Tooltip("The GameObjects to (de)activate.")]
         [SerializeField]
-        private GameObjectObservableList _gameObjects;
+        private GameObjectObservableList gameObjects;
         /// <summary>
         /// The <see cref="GameObject"/>s to (de)activate.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _gameObjects;
+                return gameObjects;
             }
             set
             {
-                _gameObjects = value;
+                gameObjects = value;
             }
         }
 

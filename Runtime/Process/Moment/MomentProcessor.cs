@@ -47,7 +47,7 @@
 
         [Tooltip("The moment in which to process the given processes.")]
         [SerializeField]
-        private Moment _processMoment = Moment.PreRender;
+        private Moment processMoment = Moment.PreRender;
         /// <summary>
         /// The moment in which to process the given processes.
         /// </summary>
@@ -55,7 +55,7 @@
         {
             get
             {
-                return _processMoment;
+                return processMoment;
             }
             set
             {
@@ -63,7 +63,7 @@
                 {
                     OnBeforeProcessMomentChange();
                 }
-                _processMoment = value;
+                processMoment = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterProcessMomentChange();
@@ -72,7 +72,7 @@
         }
         [Tooltip("A collection of MomentProcess to process.")]
         [SerializeField]
-        private MomentProcessObservableList _processes;
+        private MomentProcessObservableList processes;
         /// <summary>
         /// A collection of <see cref="MomentProcess"/> to process.
         /// </summary>
@@ -80,11 +80,11 @@
         {
             get
             {
-                return _processes;
+                return processes;
             }
             set
             {
-                _processes = value;
+                processes = value;
             }
         }
 

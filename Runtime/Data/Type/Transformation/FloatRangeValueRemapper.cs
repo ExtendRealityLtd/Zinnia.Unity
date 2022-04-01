@@ -25,7 +25,7 @@
 
         [Tooltip("The range of the value from.")]
         [SerializeField]
-        private FloatRange _from = new FloatRange(0f, 1f);
+        private FloatRange from = new FloatRange(0f, 1f);
         /// <summary>
         /// The range of the value from.
         /// </summary>
@@ -33,17 +33,17 @@
         {
             get
             {
-                return _from;
+                return from;
             }
             set
             {
-                _from = value;
+                from = value;
             }
         }
 
         [Tooltip("The range of the value remaps to.")]
         [SerializeField]
-        private FloatRange _to = new FloatRange(0f, 1f);
+        private FloatRange to = new FloatRange(0f, 1f);
         /// <summary>
         /// The range of the value remaps to.
         /// </summary>
@@ -51,11 +51,11 @@
         {
             get
             {
-                return _to;
+                return to;
             }
             set
             {
-                _to = value;
+                to = value;
             }
         }
 
@@ -76,7 +76,7 @@
 
         [Tooltip("The mode to use when remapping.")]
         [SerializeField]
-        private OutputMode _mode = OutputMode.Lerp;
+        private OutputMode mode = OutputMode.Lerp;
         /// <summary>
         /// The mode to use when remapping.
         /// </summary>
@@ -84,11 +84,11 @@
         {
             get
             {
-                return _mode;
+                return mode;
             }
             set
             {
-                _mode = value;
+                mode = value;
             }
         }
 

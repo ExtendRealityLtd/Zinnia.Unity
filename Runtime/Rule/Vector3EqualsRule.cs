@@ -10,7 +10,7 @@
     {
         [Tooltip("The Vector3 to check equality against.")]
         [SerializeField]
-        private Vector3 _target;
+        private Vector3 target;
         /// <summary>
         /// The <see cref="Vector3"/> to check equality against.
         /// </summary>
@@ -18,16 +18,16 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
         [Tooltip("The tolerance between the two Vector3 values that can be considered equal.")]
         [SerializeField]
-        private float _tolerance = float.Epsilon;
+        private float tolerance = float.Epsilon;
         /// <summary>
         /// The tolerance between the two <see cref="Vector3"/> values that can be considered equal.
         /// </summary>
@@ -35,11 +35,11 @@
         {
             get
             {
-                return _tolerance;
+                return tolerance;
             }
             set
             {
-                _tolerance = value;
+                tolerance = value;
             }
         }
 

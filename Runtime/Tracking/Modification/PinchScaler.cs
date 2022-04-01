@@ -11,7 +11,7 @@
     {
         [Tooltip("The target to scale.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// The target to scale.
         /// </summary>
@@ -19,16 +19,16 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
         [Tooltip("The point to determine distance from.")]
         [SerializeField]
-        private GameObject _primaryPoint;
+        private GameObject primaryPoint;
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
@@ -36,11 +36,11 @@
         {
             get
             {
-                return _primaryPoint;
+                return primaryPoint;
             }
             set
             {
-                _primaryPoint = value;
+                primaryPoint = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterPrimaryPointChange();
@@ -49,7 +49,7 @@
         }
         [Tooltip("The point to determine distance to.")]
         [SerializeField]
-        private GameObject _secondaryPoint;
+        private GameObject secondaryPoint;
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
@@ -57,11 +57,11 @@
         {
             get
             {
-                return _secondaryPoint;
+                return secondaryPoint;
             }
             set
             {
-                _secondaryPoint = value;
+                secondaryPoint = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterSecondaryPointChange();
@@ -70,7 +70,7 @@
         }
         [Tooltip("A scale factor multiplier.")]
         [SerializeField]
-        private float _multiplier = 1f;
+        private float multiplier = 1f;
         /// <summary>
         /// A scale factor multiplier.
         /// </summary>
@@ -78,16 +78,16 @@
         {
             get
             {
-                return _multiplier;
+                return multiplier;
             }
             set
             {
-                _multiplier = value;
+                multiplier = value;
             }
         }
         [Tooltip("Determines whether to use local or global scale.")]
         [SerializeField]
-        private bool _useLocalScale = true;
+        private bool useLocalScale = true;
         /// <summary>
         /// Determines whether to use local or global scale.
         /// </summary>
@@ -95,16 +95,16 @@
         {
             get
             {
-                return _useLocalScale;
+                return useLocalScale;
             }
             set
             {
-                _useLocalScale = value;
+                useLocalScale = value;
             }
         }
         [Tooltip("Determines whether to calculate the multiplier using Mathf.Pow(float, float).")]
         [SerializeField]
-        private bool _calculateByPower;
+        private bool calculateByPower;
         /// <summary>
         /// Determines whether to calculate the multiplier using <see cref="Mathf.Pow(float, float)"/>.
         /// </summary>
@@ -112,11 +112,11 @@
         {
             get
             {
-                return _calculateByPower;
+                return calculateByPower;
             }
             set
             {
-                _calculateByPower = value;
+                calculateByPower = value;
             }
         }
 

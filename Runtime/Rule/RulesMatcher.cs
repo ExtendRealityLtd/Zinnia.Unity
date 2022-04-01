@@ -19,7 +19,7 @@
         {
             [Tooltip("The rule to match against.")]
             [SerializeField]
-            private RuleContainer _rule;
+            private RuleContainer rule;
             /// <summary>
             /// The rule to match against.
             /// </summary>
@@ -27,11 +27,11 @@
             {
                 get
                 {
-                    return _rule;
+                    return rule;
                 }
                 set
                 {
-                    _rule = value;
+                    rule = value;
                 }
             }
 
@@ -43,7 +43,7 @@
 
         [Tooltip("A collection of rules to potentially match against.")]
         [SerializeField]
-        private RulesMatcherElementObservableList _elements;
+        private RulesMatcherElementObservableList elements;
         /// <summary>
         /// A collection of rules to potentially match against.
         /// </summary>
@@ -51,11 +51,11 @@
         {
             get
             {
-                return _elements;
+                return elements;
             }
             set
             {
-                _elements = value;
+                elements = value;
             }
         }
 

@@ -32,7 +32,7 @@
 
         [Tooltip("A source collection to get the first active current dominant controller from.")]
         [SerializeField]
-        private List<DominantControllerObserver> _sources = new List<DominantControllerObserver>();
+        private List<DominantControllerObserver> sources = new List<DominantControllerObserver>();
         /// <summary>
         /// A source collection to get the first active current dominant controller from.
         /// </summary>
@@ -40,17 +40,17 @@
         {
             get
             {
-                return _sources;
+                return sources;
             }
             set
             {
-                _sources = value;
+                sources = value;
             }
         }
 
         [Tooltip("The controller to check to see if the source matches.")]
         [SerializeField]
-        private Controller _toMatch;
+        private Controller toMatch;
         /// <summary>
         /// The controller to check to see if the source matches.
         /// </summary>
@@ -58,11 +58,11 @@
         {
             get
             {
-                return _toMatch;
+                return toMatch;
             }
             set
             {
-                _toMatch = value;
+                toMatch = value;
             }
         }
 

@@ -13,7 +13,7 @@
         [Header("Position Settings")]
         [Tooltip("Determines the facing direction when mutating the position.")]
         [SerializeField]
-        private GameObject _facingDirection;
+        private GameObject facingDirection;
         /// <summary>
         /// Determines the facing direction when mutating the position.
         /// </summary>
@@ -21,16 +21,16 @@
         {
             get
             {
-                return _facingDirection;
+                return facingDirection;
             }
             set
             {
-                _facingDirection = value;
+                facingDirection = value;
             }
         }
         [Tooltip("Determines which axes to take from the FacingDirection.")]
         [SerializeField]
-        private Vector3State _applyFacingDirectionOnAxis = Vector3State.True;
+        private Vector3State applyFacingDirectionOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to take from the <see cref="FacingDirection"/>.
         /// </summary>
@@ -38,11 +38,11 @@
         {
             get
             {
-                return _applyFacingDirectionOnAxis;
+                return applyFacingDirectionOnAxis;
             }
             set
             {
-                _applyFacingDirectionOnAxis = value;
+                applyFacingDirectionOnAxis = value;
             }
         }
         #endregion

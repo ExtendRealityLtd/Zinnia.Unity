@@ -46,7 +46,7 @@
 
         [Tooltip("The source property to match against.")]
         [SerializeField]
-        private Source _propertySource;
+        private Source propertySource;
         /// <summary>
         /// The source property to match against.
         /// </summary>
@@ -54,11 +54,11 @@
         {
             get
             {
-                return _propertySource;
+                return propertySource;
             }
             set
             {
-                _propertySource = value;
+                propertySource = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterPropertySourceChange();

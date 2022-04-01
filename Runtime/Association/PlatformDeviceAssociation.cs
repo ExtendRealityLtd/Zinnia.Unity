@@ -13,7 +13,7 @@
     {
         [Tooltip("A regular expression to match the name of the current RuntimePlatform.")]
         [SerializeField]
-        private string _platformPattern;
+        private string platformPattern;
         /// <summary>
         /// A regular expression to match the name of the current <see cref="RuntimePlatform"/>.
         /// </summary>
@@ -21,16 +21,16 @@
         {
             get
             {
-                return _platformPattern;
+                return platformPattern;
             }
             set
             {
-                _platformPattern = value;
+                platformPattern = value;
             }
         }
         [Tooltip("A regular expression to match the name of the XR device that needs to be loaded.")]
         [SerializeField]
-        private string _xrSdkPattern;
+        private string xrSdkPattern;
         /// <summary>
         /// A regular expression to match the name of the XR device that needs to be loaded.
         /// </summary>
@@ -38,17 +38,17 @@
         {
             get
             {
-                return _xrSdkPattern;
+                return xrSdkPattern;
             }
             set
             {
-                _xrSdkPattern = value;
+                xrSdkPattern = value;
             }
         }
 
         [Tooltip("A regular expression to match the name of the XR model that is being used.")]
         [SerializeField]
-        private string _xrModelPattern;
+        private string xrModelPattern;
         /// <summary>
         /// A regular expression to match the name of the XR model that is being used.
         /// </summary>
@@ -56,11 +56,11 @@
         {
             get
             {
-                return _xrModelPattern;
+                return xrModelPattern;
             }
             set
             {
-                _xrModelPattern = value;
+                xrModelPattern = value;
             }
         }
 

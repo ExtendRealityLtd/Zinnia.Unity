@@ -10,7 +10,7 @@
     {
         [Tooltip("The source VelocityTracker  to receive the velocity data from.")]
         [SerializeField]
-        private VelocityTracker _source;
+        private VelocityTracker source;
         /// <summary>
         /// The source <see cref="VelocityTracker "/> to receive the velocity data from.
         /// </summary>
@@ -18,16 +18,16 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
         [Tooltip("The target Rigidbody to apply the source velocity data to.")]
         [SerializeField]
-        private Rigidbody _target;
+        private Rigidbody target;
         /// <summary>
         /// The target <see cref="Rigidbody"/> to apply the source velocity data to.
         /// </summary>
@@ -35,11 +35,11 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
 

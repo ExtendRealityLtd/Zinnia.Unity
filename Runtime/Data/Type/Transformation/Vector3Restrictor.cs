@@ -21,7 +21,7 @@
 
         [Tooltip("The minimum and maximum values that the x coordinate can be.")]
         [SerializeField]
-        private FloatRange _xBounds = FloatRange.MinMax;
+        private FloatRange xBounds = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the x coordinate can be.
         /// </summary>
@@ -29,16 +29,16 @@
         {
             get
             {
-                return _xBounds;
+                return xBounds;
             }
             set
             {
-                _xBounds = value;
+                xBounds = value;
             }
         }
         [Tooltip("The minimum and maximum values that the y coordinate can be.")]
         [SerializeField]
-        private FloatRange _yBounds = FloatRange.MinMax;
+        private FloatRange yBounds = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the y coordinate can be.
         /// </summary>
@@ -46,16 +46,16 @@
         {
             get
             {
-                return _yBounds;
+                return yBounds;
             }
             set
             {
-                _yBounds = value;
+                yBounds = value;
             }
         }
         [Tooltip("The minimum and maximum values that the z coordinate can be.")]
         [SerializeField]
-        private FloatRange _zBounds = FloatRange.MinMax;
+        private FloatRange zBounds = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the z coordinate can be.
         /// </summary>
@@ -63,11 +63,11 @@
         {
             get
             {
-                return _zBounds;
+                return zBounds;
             }
             set
             {
-                _zBounds = value;
+                zBounds = value;
             }
         }
 

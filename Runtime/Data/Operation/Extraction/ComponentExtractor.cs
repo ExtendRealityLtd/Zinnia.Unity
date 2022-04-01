@@ -28,7 +28,7 @@
 
         [Tooltip("Determines whether to search for the TResultElement component on the ancestors and or descendants of the Source.")]
         [SerializeField]
-        private SearchCriteria _searchAlsoOn = (SearchCriteria)(-1);
+        private SearchCriteria searchAlsoOn = (SearchCriteria)(-1);
         /// <summary>
         /// Determines whether to search for the <see cref="TResultElement"/> component on the ancestors and or descendants of the <see cref="Source"/>.
         /// </summary>
@@ -36,11 +36,11 @@
         {
             get
             {
-                return _searchAlsoOn;
+                return searchAlsoOn;
             }
             set
             {
-                _searchAlsoOn = value;
+                searchAlsoOn = value;
             }
         }
 

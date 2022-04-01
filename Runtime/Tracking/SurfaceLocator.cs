@@ -38,7 +38,7 @@
         [Header("Search Settings")]
         [Tooltip("The origin of where to begin the cast to locate the nearest surface.")]
         [SerializeField]
-        private GameObject _searchOrigin;
+        private GameObject searchOrigin;
         /// <summary>
         /// The origin of where to begin the cast to locate the nearest surface.
         /// </summary>
@@ -46,16 +46,16 @@
         {
             get
             {
-                return _searchOrigin;
+                return searchOrigin;
             }
             set
             {
-                _searchOrigin = value;
+                searchOrigin = value;
             }
         }
         [Tooltip("The direction in which to cast to locate the nearest surface.")]
         [SerializeField]
-        private Vector3 _searchDirection;
+        private Vector3 searchDirection;
         /// <summary>
         /// The direction in which to cast to locate the nearest surface.
         /// </summary>
@@ -63,16 +63,16 @@
         {
             get
             {
-                return _searchDirection;
+                return searchDirection;
             }
             set
             {
-                _searchDirection = value;
+                searchDirection = value;
             }
         }
         [Tooltip("The distance to move the origin backwards through the SearchDirection to ensure the origin isn't clipping a surface.")]
         [SerializeField]
-        private float _originOffset = -0.01f;
+        private float originOffset = -0.01f;
         /// <summary>
         /// The distance to move the origin backwards through the <see cref="SearchDirection"/> to ensure the origin isn't clipping a surface.
         /// </summary>
@@ -80,16 +80,16 @@
         {
             get
             {
-                return _originOffset;
+                return originOffset;
             }
             set
             {
-                _originOffset = value;
+                originOffset = value;
             }
         }
         [Tooltip("The maximum distance to cast the Ray.")]
         [SerializeField]
-        private float _maximumDistance = 50f;
+        private float maximumDistance = 50f;
         /// <summary>
         /// The maximum distance to cast the <see cref="Ray"/>.
         /// </summary>
@@ -97,16 +97,16 @@
         {
             get
             {
-                return _maximumDistance;
+                return maximumDistance;
             }
             set
             {
-                _maximumDistance = value;
+                maximumDistance = value;
             }
         }
         [Tooltip("The surface will only be located if the previous position has changed from the current position.")]
         [SerializeField]
-        private bool _mustChangePosition = true;
+        private bool mustChangePosition = true;
         /// <summary>
         /// The surface will only be located if the previous position has changed from the current position.
         /// </summary>
@@ -114,16 +114,16 @@
         {
             get
             {
-                return _mustChangePosition;
+                return mustChangePosition;
             }
             set
             {
-                _mustChangePosition = value;
+                mustChangePosition = value;
             }
         }
         [Tooltip("The threshold difference between the previous point value and the current point value to be considered equal.")]
         [SerializeField]
-        private float _positionChangedEqualityThreshold = 0.0001f;
+        private float positionChangedEqualityThreshold = 0.0001f;
         /// <summary>
         /// The threshold difference between the previous point value and the current point value to be considered equal.
         /// </summary>
@@ -131,16 +131,16 @@
         {
             get
             {
-                return _positionChangedEqualityThreshold;
+                return positionChangedEqualityThreshold;
             }
             set
             {
-                _positionChangedEqualityThreshold = value;
+                positionChangedEqualityThreshold = value;
             }
         }
         [Tooltip("The amount to offset the position of the destination point found on the located surface.")]
         [SerializeField]
-        private Vector3 _destinationOffset = Vector3.zero;
+        private Vector3 destinationOffset = Vector3.zero;
         /// <summary>
         /// The amount to offset the position of the destination point found on the located surface.
         /// </summary>
@@ -148,11 +148,11 @@
         {
             get
             {
-                return _destinationOffset;
+                return destinationOffset;
             }
             set
             {
-                _destinationOffset = value;
+                destinationOffset = value;
             }
         }
         #endregion
@@ -161,7 +161,7 @@
         [Header("Restriction Settings")]
         [Tooltip("An optional RuleContainer to determine valid and invalid targets based on the set rules.")]
         [SerializeField]
-        private RuleContainer _targetValidity;
+        private RuleContainer targetValidity;
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine valid and invalid targets based on the set rules.
         /// </summary>
@@ -169,16 +169,16 @@
         {
             get
             {
-                return _targetValidity;
+                return targetValidity;
             }
             set
             {
-                _targetValidity = value;
+                targetValidity = value;
             }
         }
         [Tooltip("An optional RuleContainer to determine specific target point based on the set rules.")]
         [SerializeField]
-        private RuleContainer _targetPointValidity;
+        private RuleContainer targetPointValidity;
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine specific target point based on the set rules.
         /// </summary>
@@ -186,16 +186,16 @@
         {
             get
             {
-                return _targetPointValidity;
+                return targetPointValidity;
             }
             set
             {
-                _targetPointValidity = value;
+                targetPointValidity = value;
             }
         }
         [Tooltip("An optional RuleContainer to determine if the search for a valid surface should be terminated if the current found target matches the rule.")]
         [SerializeField]
-        private RuleContainer _locatorTermination;
+        private RuleContainer locatorTermination;
         /// <summary>
         /// An optional <see cref="RuleContainer"/> to determine if the search for a valid surface should be terminated if the current found target matches the rule.
         /// </summary>
@@ -203,16 +203,16 @@
         {
             get
             {
-                return _locatorTermination;
+                return locatorTermination;
             }
             set
             {
-                _locatorTermination = value;
+                locatorTermination = value;
             }
         }
         [Tooltip("An optional custom Cast.PhysicsCast object to affect the Ray.")]
         [SerializeField]
-        private PhysicsCast _physicsCast;
+        private PhysicsCast physicsCast;
         /// <summary>
         /// An optional custom <see cref="Cast.PhysicsCast"/> object to affect the <see cref="Ray"/>.
         /// </summary>
@@ -220,11 +220,11 @@
         {
             get
             {
-                return _physicsCast;
+                return physicsCast;
             }
             set
             {
-                _physicsCast = value;
+                physicsCast = value;
             }
         }
         #endregion

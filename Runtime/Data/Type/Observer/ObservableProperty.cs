@@ -38,7 +38,7 @@
         [Header("Property Settings")]
         [Tooltip("The observed data.")]
         [SerializeField]
-        private TType _data;
+        private TType data;
         /// <summary>
         /// The observed data.
         /// </summary>
@@ -46,7 +46,7 @@
         {
             get
             {
-                return _data;
+                return data;
             }
             set
             {
@@ -54,7 +54,7 @@
                 {
                     OnBeforeDataChange();
                 }
-                _data = value;
+                data = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterDataChange();
@@ -63,7 +63,7 @@
         }
         [Tooltip("Whether to observe data changes that were made when the component was disabled and subsequently re-enabled. Events are not raised when component is disabled.")]
         [SerializeField]
-        private bool _observeChangesFromDisabledState = true;
+        private bool observeChangesFromDisabledState = true;
         /// <summary>
         /// Whether to observe data changes that were made when the component was disabled and subsequently re-enabled. Events are not raised when component is disabled.
         /// </summary>
@@ -71,11 +71,11 @@
         {
             get
             {
-                return _observeChangesFromDisabledState;
+                return observeChangesFromDisabledState;
             }
             set
             {
-                _observeChangesFromDisabledState = value;
+                observeChangesFromDisabledState = value;
             }
         }
 

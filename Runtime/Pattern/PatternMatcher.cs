@@ -10,7 +10,7 @@
     {
         [Tooltip("The pattern to match the source against.")]
         [SerializeField]
-        private string _pattern;
+        private string pattern;
         /// <summary>
         /// The pattern to match the source against.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _pattern;
+                return pattern;
             }
             set
             {
-                _pattern = value;
+                pattern = value;
             }
         }
 

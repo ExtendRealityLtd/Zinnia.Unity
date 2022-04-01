@@ -17,7 +17,7 @@ namespace Zinnia.Data.Type.Transformation
 
         [Tooltip("The magnitude to use when transforming values.")]
         [SerializeField]
-        private float _magnitude = 1f;
+        private float magnitude = 1f;
         /// <summary>
         /// The magnitude to use when transforming values.
         /// </summary>
@@ -25,11 +25,11 @@ namespace Zinnia.Data.Type.Transformation
         {
             get
             {
-                return _magnitude;
+                return magnitude;
             }
             set
             {
-                _magnitude = value;
+                magnitude = value;
             }
         }
 

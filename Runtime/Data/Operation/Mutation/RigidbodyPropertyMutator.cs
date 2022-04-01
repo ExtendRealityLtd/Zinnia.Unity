@@ -10,7 +10,7 @@
     {
         [Tooltip("The Rigidbody to mutate.")]
         [SerializeField]
-        private Rigidbody _target;
+        private Rigidbody target;
         /// <summary>
         /// The <see cref="Rigidbody"/> to mutate.
         /// </summary>
@@ -18,27 +18,27 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
 
         /// <summary>
         /// The <see cref="Rigidbody.mass"/> value.
         /// </summary>
-        private float _mass;
+        private float mass;
         public float Mass
         {
             get
             {
-                return _mass;
+                return mass;
             }
             set
             {
-                _mass = value;
+                mass = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterMassChange();
@@ -48,16 +48,16 @@
         /// <summary>
         /// The <see cref="Rigidbody.drag"/> value.
         /// </summary>
-        private float _drag;
+        private float drag;
         public float Drag
         {
             get
             {
-                return _drag;
+                return drag;
             }
             set
             {
-                _drag = value;
+                drag = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterDragChange();
@@ -67,16 +67,16 @@
         /// <summary>
         /// The <see cref="Rigidbody.angularDrag"/> value.
         /// </summary>
-        private float _angularDrag;
+        private float angularDrag;
         public float AngularDrag
         {
             get
             {
-                return _angularDrag;
+                return angularDrag;
             }
             set
             {
-                _angularDrag = value;
+                angularDrag = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterAngularDragChange();
@@ -86,16 +86,16 @@
         /// <summary>
         /// The <see cref="Rigidbody.useGravity"/> state.
         /// </summary>
-        private bool _useGravity;
+        private bool useGravity;
         public bool UseGravity
         {
             get
             {
-                return _useGravity;
+                return useGravity;
             }
             set
             {
-                _useGravity = value;
+                useGravity = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterUseGravityChange();
@@ -105,16 +105,16 @@
         /// <summary>
         /// The <see cref="Rigidbody.isKinematic"/> state.
         /// </summary>
-        private bool _isKinematic;
+        private bool isKinematic;
         public bool IsKinematic
         {
             get
             {
-                return _isKinematic;
+                return isKinematic;
             }
             set
             {
-                _isKinematic = value;
+                isKinematic = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterIsKinematicChange();
@@ -124,16 +124,16 @@
         /// <summary>
         /// The <see cref="Rigidbody.velocity"/> value.
         /// </summary>
-        private Vector3 _velocity;
+        private Vector3 velocity;
         public Vector3 Velocity
         {
             get
             {
-                return _velocity;
+                return velocity;
             }
             set
             {
-                _velocity = value;
+                velocity = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterVelocityChange();
@@ -143,16 +143,16 @@
         /// <summary>
         /// The <see cref="Rigidbody.angularVelocity"/> value.
         /// </summary>
-        private Vector3 _angularVelocity;
+        private Vector3 angularVelocity;
         public Vector3 AngularVelocity
         {
             get
             {
-                return _angularVelocity;
+                return angularVelocity;
             }
             set
             {
-                _angularVelocity = value;
+                angularVelocity = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterAngularVelocityChange();
@@ -162,16 +162,16 @@
         /// <summary>
         /// The <see cref="Rigidbody.maxAngularVelocity"/> value.
         /// </summary>
-        private float _maxAngularVelocity;
+        private float maxAngularVelocity;
         public float MaxAngularVelocity
         {
             get
             {
-                return _maxAngularVelocity;
+                return maxAngularVelocity;
             }
             set
             {
-                _maxAngularVelocity = value;
+                maxAngularVelocity = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterMaxAngularVelocityChange();

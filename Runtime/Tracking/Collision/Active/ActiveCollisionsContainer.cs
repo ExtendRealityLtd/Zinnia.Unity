@@ -20,7 +20,7 @@
         {
             [Tooltip("The current active collisions.")]
             [SerializeField]
-            private List<CollisionNotifier.EventData> _activeCollisions = new List<CollisionNotifier.EventData>();
+            private List<CollisionNotifier.EventData> activeCollisions = new List<CollisionNotifier.EventData>();
             /// <summary>
             /// The current active collisions.
             /// </summary>
@@ -28,11 +28,11 @@
             {
                 get
                 {
-                    return _activeCollisions;
+                    return activeCollisions;
                 }
                 set
                 {
-                    _activeCollisions = value;
+                    activeCollisions = value;
                 }
             }
 
@@ -64,7 +64,7 @@
         [Header("Validity Settings")]
         [Tooltip("Determines whether the collision is valid and to add it to the active collision collection.")]
         [SerializeField]
-        private RuleContainer _collisionValidity;
+        private RuleContainer collisionValidity;
         /// <summary>
         /// Determines whether the collision is valid and to add it to the active collision collection.
         /// </summary>
@@ -72,11 +72,11 @@
         {
             get
             {
-                return _collisionValidity;
+                return collisionValidity;
             }
             set
             {
-                _collisionValidity = value;
+                collisionValidity = value;
             }
         }
         #endregion

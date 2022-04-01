@@ -21,7 +21,7 @@
 
         [Tooltip("The format for the conversion.")]
         [SerializeField]
-        private string _format;
+        private string format;
         /// <summary>
         /// The format for the conversion.
         /// </summary>
@@ -29,11 +29,11 @@
         {
             get
             {
-                return _format;
+                return format;
             }
             set
             {
-                _format = value;
+                format = value;
             }
         }
 

@@ -10,7 +10,7 @@
     {
         [Tooltip("The range in which the given float must be equal to the bounds or within the range.")]
         [SerializeField]
-        private FloatRange _range;
+        private FloatRange range;
         /// <summary>
         /// The range in which the given <see cref="float"/> must be equal to the bounds or within the range.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _range;
+                return range;
             }
             set
             {
-                _range = value;
+                range = value;
             }
         }
 

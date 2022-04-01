@@ -17,7 +17,7 @@
 
         [Tooltip("Determines whether to extract the local property or the world property.")]
         [SerializeField]
-        private bool _useLocal;
+        private bool useLocal;
         /// <summary>
         /// Determines whether to extract the local property or the world property.
         /// </summary>
@@ -25,11 +25,11 @@
         {
             get
             {
-                return _useLocal;
+                return useLocal;
             }
             set
             {
-                _useLocal = value;
+                useLocal = value;
             }
         }
 

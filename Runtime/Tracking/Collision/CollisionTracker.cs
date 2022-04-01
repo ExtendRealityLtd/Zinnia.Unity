@@ -15,7 +15,7 @@
         [Header("Tracker Settings")]
         [Tooltip("Causes collisions to stop if the GameObject on either side of the collision is disabled.")]
         [SerializeField]
-        private bool _stopCollisionsOnDisable = true;
+        private bool stopCollisionsOnDisable = true;
         /// <summary>
         /// Causes collisions to stop if the <see cref="GameObject"/> on either side of the collision is disabled.
         /// </summary>
@@ -23,16 +23,16 @@
         {
             get
             {
-                return _stopCollisionsOnDisable;
+                return stopCollisionsOnDisable;
             }
             set
             {
-                _stopCollisionsOnDisable = value;
+                stopCollisionsOnDisable = value;
             }
         }
         [Tooltip("Allows to optionally determine which colliders to allow collisions against.")]
         [SerializeField]
-        private RuleContainer _colliderValidity;
+        private RuleContainer colliderValidity;
         /// <summary>
         /// Allows to optionally determine which colliders to allow collisions against.
         /// </summary>
@@ -40,16 +40,16 @@
         {
             get
             {
-                return _colliderValidity;
+                return colliderValidity;
             }
             set
             {
-                _colliderValidity = value;
+                colliderValidity = value;
             }
         }
         [Tooltip("Allows to optionally determine which collider containing transforms to allow collisions against.")]
         [SerializeField]
-        private RuleContainer _containingTransformValidity;
+        private RuleContainer containingTransformValidity;
         /// <summary>
         /// Allows to optionally determine which collider containing transforms to allow collisions against.
         /// </summary>
@@ -57,16 +57,16 @@
         {
             get
             {
-                return _containingTransformValidity;
+                return containingTransformValidity;
             }
             set
             {
-                _containingTransformValidity = value;
+                containingTransformValidity = value;
             }
         }
         [Tooltip("The delay interval in seconds defining how long to pause between processing the `Stay` method of the collision process. Negative values will be clamped to zero.")]
         [SerializeField]
-        private float _stayDelayInterval;
+        private float stayDelayInterval;
         /// <summary>
         /// The delay interval in seconds defining how long to pause between processing the `Stay` method of the collision process. Negative values will be clamped to zero.
         /// </summary>
@@ -74,11 +74,11 @@
         {
             get
             {
-                return _stayDelayInterval;
+                return stayDelayInterval;
             }
             set
             {
-                _stayDelayInterval = value;
+                stayDelayInterval = value;
                 if (this.IsMemberChangeAllowed())
                 {
                     OnAfterStayDelayIntervalChange();
@@ -434,7 +434,7 @@
         /// </summary>
         protected virtual void OnAfterStayDelayIntervalChange()
         {
-            _stayDelayInterval = Mathf.Max(0f, StayDelayInterval);
+            stayDelayInterval = Mathf.Max(0f, StayDelayInterval);
             NextStayProcessTime = Time.time;
         }
     }
@@ -446,7 +446,7 @@
     {
         [Tooltip("The CollisionTracker that is causing the collision.")]
         [SerializeField]
-        private CollisionTracker _source;
+        private CollisionTracker source;
         /// <summary>
         /// The <see cref="CollisionTracker"/> that is causing the collision.
         /// </summary>
@@ -454,16 +454,16 @@
         {
             get
             {
-                return _source;
+                return source;
             }
             set
             {
-                _source = value;
+                source = value;
             }
         }
         [Tooltip("The Collider that is being collided with.")]
         [SerializeField]
-        private Collider _target;
+        private Collider target;
         /// <summary>
         /// The <see cref="Collider"/> that is being collided with.
         /// </summary>
@@ -471,11 +471,11 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
 

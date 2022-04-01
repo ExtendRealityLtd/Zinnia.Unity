@@ -10,7 +10,7 @@
     {
         [Tooltip("The relative vertical displacement of the NavMesh to the nearest surface.")]
         [SerializeField]
-        private float _baseOffset = 0f;
+        private float baseOffset = 0f;
         /// <summary>
         /// The relative vertical displacement of the <see cref="NavMesh"/> to the nearest surface.
         /// </summary>
@@ -18,16 +18,16 @@
         {
             get
             {
-                return _baseOffset;
+                return baseOffset;
             }
             set
             {
-                _baseOffset = value;
+                baseOffset = value;
             }
         }
         [Tooltip("The max distance given point can be outside the NavMesh to be considered valid.")]
         [SerializeField]
-        private float _distanceLimit = 0.1f;
+        private float distanceLimit = 0.1f;
         /// <summary>
         /// The max distance given point can be outside the <see cref="NavMesh"/> to be considered valid.
         /// </summary>
@@ -35,16 +35,16 @@
         {
             get
             {
-                return _distanceLimit;
+                return distanceLimit;
             }
             set
             {
-                _distanceLimit = value;
+                distanceLimit = value;
             }
         }
         [Tooltip("The parts of the NavMesh that are considered valid.")]
         [SerializeField]
-        private int _validAreas = -1;
+        private int validAreas = -1;
         /// <summary>
         /// The parts of the <see cref="NavMesh"/> that are considered valid.
         /// </summary>
@@ -52,11 +52,11 @@
         {
             get
             {
-                return _validAreas;
+                return validAreas;
             }
             set
             {
-                _validAreas = value;
+                validAreas = value;
             }
         }
 

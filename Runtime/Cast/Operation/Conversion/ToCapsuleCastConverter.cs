@@ -10,7 +10,7 @@
     {
         [Tooltip("Half of the capsule height.")]
         [SerializeField]
-        private float _halfHeight;
+        private float halfHeight;
         /// <summary>
         /// Half of the capsule height.
         /// </summary>
@@ -18,16 +18,16 @@
         {
             get
             {
-                return _halfHeight;
+                return halfHeight;
             }
             set
             {
-                _halfHeight = value;
+                halfHeight = value;
             }
         }
         [Tooltip("The radius for the Physics.CapsuleCast.")]
         [SerializeField]
-        private float _radiusOverride;
+        private float radiusOverride;
         /// <summary>
         /// The radius for the <see cref="Physics.CapsuleCast"/>.
         /// </summary>
@@ -35,16 +35,16 @@
         {
             get
             {
-                return _radiusOverride;
+                return radiusOverride;
             }
             set
             {
-                _radiusOverride = value;
+                radiusOverride = value;
             }
         }
         [Tooltip("Whether to use the RadiusOverride value if the source caster already supports a radius. If the source caster does not support a radius then the RadiusOverride will always be used.")]
         [SerializeField]
-        private bool _useRadiusOverride = true;
+        private bool useRadiusOverride = true;
         /// <summary>
         /// Whether to use the <see cref="RadiusOverride"/> value if the source caster already supports a radius. If the source caster does not support a radius then the <see cref="RadiusOverride"/> will always be used.
         /// </summary>
@@ -52,11 +52,11 @@
         {
             get
             {
-                return _useRadiusOverride;
+                return useRadiusOverride;
             }
             set
             {
-                _useRadiusOverride = value;
+                useRadiusOverride = value;
             }
         }
 

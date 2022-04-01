@@ -10,7 +10,7 @@
     {
         [Tooltip("The waveform to represent the haptic pattern.")]
         [SerializeField]
-        private AudioClip _audioClip;
+        private AudioClip audioClip;
         /// <summary>
         /// The waveform to represent the haptic pattern.
         /// </summary>
@@ -18,11 +18,11 @@
         {
             get
             {
-                return _audioClip;
+                return audioClip;
             }
             set
             {
-                _audioClip = value;
+                audioClip = value;
             }
         }
 

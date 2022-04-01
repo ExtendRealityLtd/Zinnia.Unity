@@ -54,7 +54,7 @@
 
         [Tooltip("The mechanism for mapping the Vector3 coordinates to the Vector2 coordinates.")]
         [SerializeField]
-        private CoordinateMapType _coordinateMap = CoordinateMapType.XToXAndYToYExcludeZ;
+        private CoordinateMapType coordinateMap = CoordinateMapType.XToXAndYToYExcludeZ;
         /// <summary>
         /// The mechanism for mapping the <see cref="Vector3"/> coordinates to the <see cref="Vector2"/> coordinates.
         /// </summary>
@@ -62,11 +62,11 @@
         {
             get
             {
-                return _coordinateMap;
+                return coordinateMap;
             }
             set
             {
-                _coordinateMap = value;
+                coordinateMap = value;
             }
         }
 

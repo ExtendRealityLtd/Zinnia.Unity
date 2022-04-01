@@ -11,7 +11,7 @@
     {
         [Tooltip("The target to apply the rotations to.")]
         [SerializeField]
-        private GameObject _target;
+        private GameObject target;
         /// <summary>
         /// The target to apply the rotations to.
         /// </summary>
@@ -19,11 +19,11 @@
         {
             get
             {
-                return _target;
+                return target;
             }
             set
             {
-                _target = value;
+                target = value;
             }
         }
 
