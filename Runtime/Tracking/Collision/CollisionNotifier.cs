@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Data.Attribute;
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -242,6 +243,7 @@
         }
         [Tooltip("The types of collisions that events will be emitted for.")]
         [SerializeField]
+        [UnityFlags]
         private CollisionTypes emittedTypes = (CollisionTypes)(-1);
         /// <summary>
         /// The types of collisions that events will be emitted for.
@@ -259,6 +261,7 @@
         }
         [Tooltip("The CollisionStates to process.")]
         [SerializeField]
+        [UnityFlags]
         private CollisionStates statesToProcess = (CollisionStates)(-1);
         /// <summary>
         /// The <see cref="CollisionStates"/> to process.

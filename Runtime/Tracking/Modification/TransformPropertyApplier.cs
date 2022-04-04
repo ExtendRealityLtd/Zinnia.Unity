@@ -4,6 +4,7 @@
     using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Data.Attribute;
     using Zinnia.Data.Enum;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -192,6 +193,7 @@
         }
         [Tooltip("The Transform properties to apply the transformations on.")]
         [SerializeField]
+        [UnityFlags]
         private TransformProperties applyTransformations = (TransformProperties)(-1);
         /// <summary>
         /// The <see cref="Transform"/> properties to apply the transformations on.
