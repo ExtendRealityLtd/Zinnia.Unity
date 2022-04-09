@@ -99,22 +99,22 @@
         /// <summary>
         /// The position of the <see cref="UnityEngine.Transform"/> or the <see cref="PositionOverride"/> if it is set.
         /// </summary>
-        public Vector3 Position => PositionOverride ?? (UseLocalValues ? Transform.localPosition : Transform.position);
+        public virtual Vector3 Position => PositionOverride ?? (UseLocalValues ? Transform.localPosition : Transform.position);
 
         /// <summary>
         /// The rotation of the <see cref="UnityEngine.Transform"/> or the <see cref="RotationOverride"/> if it is set.
         /// </summary>
-        public Quaternion Rotation => RotationOverride ?? (UseLocalValues ? Transform.localRotation : Transform.rotation);
+        public virtual Quaternion Rotation => RotationOverride ?? (UseLocalValues ? Transform.localRotation : Transform.rotation);
 
         /// <summary>
         /// The scale of the <see cref="UnityEngine.Transform"/> or the <see cref="ScaleOverride"/> if it is set.
         /// </summary>
-        public Vector3 Scale => ScaleOverride ?? (UseLocalValues ? Transform.localScale : Transform.lossyScale);
+        public virtual Vector3 Scale => ScaleOverride ?? (UseLocalValues ? Transform.localScale : Transform.lossyScale);
 
         /// <summary>
         /// The state of whether the <see cref="TransformData"/> is valid.
         /// </summary>
-        public bool IsValid => Transform != null;
+        public virtual bool IsValid => Transform != null;
 
         /// <summary>
         /// Creates a new <see cref="TransformData"/> for an empty <see cref="UnityEngine.Transform"/>.

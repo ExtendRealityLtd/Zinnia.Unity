@@ -306,28 +306,28 @@
         /// <summary>
         /// Whether the <see cref="ObjectPointer"/> is currently activated.
         /// </summary>
-        public bool IsActivated { get; protected set; }
+        public virtual bool IsActivated { get; protected set; }
         /// <summary>
         /// Whether the <see cref="ObjectPointer"/> is currently hovering over a target.
         /// </summary>
-        public bool IsHovering { get; protected set; }
+        public virtual bool IsHovering { get; protected set; }
         /// <summary>
         /// The duration that the <see cref="ObjectPointer"/> is hovering over the current target.
         /// </summary>
-        public float HoverDuration { get; protected set; }
+        public virtual float HoverDuration { get; protected set; }
         /// <summary>
         /// The target that the <see cref="ObjectPointer"/> is currently hovering over. If there is no target then it is <see langword="null"/>.
         /// </summary>
-        public EventData HoverTarget => IsHovering ? GetEventData(activePointsCastData) : null;
+        public virtual EventData HoverTarget => IsHovering ? GetEventData(activePointsCastData) : null;
         /// <summary>
         /// The target that the <see cref="ObjectPointer"/> has most recently selected.
         /// </summary>
-        public EventData SelectedTarget { get; protected set; }
+        public virtual EventData SelectedTarget { get; protected set; }
 
         /// <summary>
         /// Whether any <see cref="PointerElement"/> of the <see cref="ObjectPointer"/> is currently visible.
         /// </summary>
-        public bool IsVisible
+        public virtual bool IsVisible
         {
             get
             {

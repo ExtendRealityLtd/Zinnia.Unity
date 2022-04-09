@@ -29,7 +29,7 @@
         /// <summary>
         /// The current active <see cref="VelocityTracker"/> that is reporting velocities.
         /// </summary>
-        public VelocityTracker ActiveVelocityTracker
+        public virtual VelocityTracker ActiveVelocityTracker
         {
             get => activeVelocityTracker != null && activeVelocityTracker.IsActive() ? activeVelocityTracker : null;
             protected set

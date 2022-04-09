@@ -46,7 +46,7 @@
         /// <summary>
         /// The current active <see cref="HapticProcess"/> being utilized.
         /// </summary>
-        public HapticProcess ActiveHapticProcess
+        public virtual HapticProcess ActiveHapticProcess
         {
             get => activeHapticProcess != null && activeHapticProcess.IsActive() ? activeHapticProcess : null;
             protected set

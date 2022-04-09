@@ -217,7 +217,7 @@
         /// <summary>
         /// Determines whether the <see cref="LookAt"/> is in front of the <see cref="Pivot"/> within the <see cref="Target"/> local space.
         /// </summary>
-        protected bool IsLookAtInFrontOfPivot => Target != null && Pivot != null && LookAt != null ? Target.transform.InverseTransformPoint(LookAt.transform.position).z > Target.transform.InverseTransformPoint(Pivot.transform.position).z : false;
+        protected virtual bool IsLookAtInFrontOfPivot => Target != null && Pivot != null && LookAt != null ? Target.transform.InverseTransformPoint(LookAt.transform.position).z > Target.transform.InverseTransformPoint(Pivot.transform.position).z : false;
 
         /// <summary>
         /// Clears <see cref="Target"/>.

@@ -29,7 +29,7 @@
         /// <summary>
         /// Whether the modifier has restrictable axes on.
         /// </summary>
-        public bool HasAxisRestrictions => !ApplyModificationOnAxis.ToVector3().Equals(Vector3.one);
+        public virtual bool HasAxisRestrictions => !ApplyModificationOnAxis.ToVector3().Equals(Vector3.one);
 
         /// <summary>
         /// The original value of the property.

@@ -22,7 +22,7 @@
         /// <summary>
         /// Whether the routine is currently running.
         /// </summary>
-        public bool IsRunning => routine != null;
+        public virtual bool IsRunning => routine != null;
 
         /// <summary>
         /// The routine to process.

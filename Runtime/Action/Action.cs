@@ -26,7 +26,7 @@
         /// <summary>
         /// Whether the action is currently activated.
         /// </summary>
-        public bool IsActivated
+        public virtual bool IsActivated
         {
             get => isActivated;
             protected set
@@ -186,7 +186,7 @@
         /// <summary>
         /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => sources;
+        public virtual HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => sources;
 
         /// <inheritdoc />
         public override void AddSource(Action action)

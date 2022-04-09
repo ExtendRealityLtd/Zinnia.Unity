@@ -216,7 +216,7 @@
         /// <summary>
         /// The points along the most recent cast.
         /// </summary>
-        public HeapAllocationFreeReadOnlyList<Vector3> Points => points;
+        public virtual HeapAllocationFreeReadOnlyList<Vector3> Points => points;
 
         /// <summary>
         /// The points along the most recent cast.
