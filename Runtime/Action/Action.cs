@@ -24,6 +24,10 @@
         public BooleanUnityEvent ActivationStateChanged = new BooleanUnityEvent();
 
         /// <summary>
+        /// The backing field for holding the value of <see cref="IsActivated"/>.
+        /// </summary>
+        private bool isActivated;
+        /// <summary>
         /// Whether the action is currently activated.
         /// </summary>
         public virtual bool IsActivated
@@ -40,7 +44,6 @@
                 ActivationStateChanged?.Invoke(value);
             }
         }
-        private bool isActivated;
 
         /// <summary>
         /// Adds a given action to the sources collection.
@@ -125,10 +128,12 @@
                 }
             }
         }
+        [Tooltip("Actions to subscribe to when this action is Behaviour.enabled. Allows chaining the source actions to this action.")]
+        [SerializeField]
+        private List<TSelf> sources = new List<TSelf>();
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        private List<TSelf> sources = new List<TSelf>();
         protected List<TSelf> Sources
         {
             get

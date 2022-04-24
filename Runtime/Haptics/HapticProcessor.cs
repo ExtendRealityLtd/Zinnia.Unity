@@ -44,6 +44,10 @@
         }
 
         /// <summary>
+        /// The backing field for holding the value of <see cref="ActiveHapticProcess"/>.
+        /// </summary>
+        private HapticProcess activeHapticProcess;
+        /// <summary>
         /// The current active <see cref="HapticProcess"/> being utilized.
         /// </summary>
         public virtual HapticProcess ActiveHapticProcess
@@ -54,10 +58,6 @@
                 activeHapticProcess = value;
             }
         }
-        /// <summary>
-        /// The backing field for holding the value of <see cref="ActiveHapticProcess"/>.
-        /// </summary>
-        private HapticProcess activeHapticProcess;
 
         /// <summary>
         /// Starts the first active <see cref="HapticProcess"/> found.
