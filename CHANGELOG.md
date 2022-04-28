@@ -1,5 +1,54 @@
 # Changelog
 
+## [2.0.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.47.1...v2.0.0) (2022-04-28)
+
+#### :warning: BREAKING CHANGES :warning:
+
+* **Malimbe:** This removes the last remaining elements of Malimbe and whilst it does not cause any breaking changes within Zinnia, it removes Malimbe as a dependency which other projects that rely on Zinnia may piggy back off this Malimbe dependency so it will break any project like that.
+
+The Malimbe custom inspector has been replaced with the new ZinniaInspector which performs pretty much the same task except instead of looking for the MemberChange attributes it now specifically expects `OnBefore` and `OnAfter` property methods to be explicityly named with the property name followed by the suffix of `Change`.
+
+E.g.
+
+``` public bool MyProperty {};
+
+protected virtual void OnBeforeMyPropertyChange(); ```
+
+The dependency of Malimbe has also been removed as it is no longer used anywhere now. ([4e38df2](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/4e38df278f9b4788ca288167008a87f36909487a))
+
+#### Features
+
+* **Extension:** add extension for setting LayerMask ([19694ae](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/19694aef9b2fed53d453a3915eb572d1f369bd0a))
+  > The LayerMask has now been extended to have a Set(int) and a Set(name) method that allows the layer mask to be set via the index value or the string literal value of the desired layer.
+* **Malimbe:** remove Malimbe custom inspector ([4e38df2](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/4e38df278f9b4788ca288167008a87f36909487a))
+* **Malimbe:** remove MemberChangeMethod attribute dependency ([baef56b](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/baef56b81da435b97a3bf7db59f03e84bfa9035d))
+  > The Malimbe MemberChangeMethod attribute has been removed as a dependency and instead every property now manually calls the `OnBefore` before the value is set and the `OnAfter` after the value is set.
+  > 
+  > These are also wrapped in a check to ensure the application is playing and the component is active and enabled to copy the behaviour of how the Malimbe attribute worked.
+* **Malimbe:** remove MemberClearanceMethod attribute dependency ([dbffb25](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/dbffb250f21205863d3308ba2387ace2ac9d8480))
+  > The Malimbe MemberClearanceMethod attribute has been removed as a dependency and instead every property that relied on the `[Cleared]` attribute now has a hard coded `Clear<PropertyName>` method that performs the same as the weaved `Cleared` code.
+* **Malimbe:** remove property serialization and xml documentation ([80e86bd](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/80e86bdb0ef1d82281254ad266147b446c4db4fd))
+  > The Malimbe PropertySerializationAttribute and XMLDocumentation attribute have been removed as a dependency and the property serialization is now done manually by providing a private backing field that is used within the related property in the same naming convention that Malimbe used so all references should be remembered.
+  > 
+  > XML Documentation is now simply duplicated into the Unity `Toolkit` attribute.
+  > 
+  > This commit may have some unwanted outcomes as the MemberChange attributes still exist and may not weave correctly with the hard coded property setters.
+* **Malimbe:** remove RequiresBehaviourState attribute dependency ([e34b560](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/e34b56056288267f51c6452e05d364fddb7a4b33))
+  > The Malimbe RequireBehaviourState attribute has been removed as a dependency and the hard coded check of if the gameobject is active in hierarchy and whether the component is enabled is now used in place in every method that utilized the RequiresBehaviourState attribute.
+* **properties:** ensure logic properties are marked as virtual ([9e642fd](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/9e642fde43bab3368e6583623da9e49d8ce3daba))
+  > Properties that contain logic have now been marked as virtual so they can be overriden if needed.
+
+#### Bug Fixes
+
+* **Action:** ensure sources field is serialized ([389509f](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/389509f3b49acf267ec4559b7507606123bf9290))
+  > The Sources field was not serialized meaning it was not showing up in the Unity inspector.
+* **Malimbe:** add UnityFlags attribute back for multi select enums ([b219190](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b219190949daefa36c3c5a450691f2176773ff50))
+  > The UnityFlags attribute had been stripped off the multi select enums during the update process meaning these enum properties could only have a single value selected. Adding the UnityFlags attribute back means that multiple values can again be selected.
+  > 
+  > Another quick fix in the Rule has been added to that sets a bool value if the rule is destroyed to ensure it cannot be checked when the object has already been destroyed.
+* **Malimbe:** remove underscore from backing fields ([c4559b4](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c4559b4b8622203286e4c10475fab4c1f4e7e323))
+  > Malimbe did not create backing fields with an underscore so any existing references would have been lost. All of the fields now are the direct match of the property name just with a lowercase first letter as Malimbe would have created.
+
 ### [1.47.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.47.0...v1.47.1) (2022-03-15)
 
 #### Bug Fixes
