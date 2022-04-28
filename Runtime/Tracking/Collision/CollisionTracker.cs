@@ -1,13 +1,8 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using Zinnia.Data.Attribute;
     using Zinnia.Extension;
     using Zinnia.Rule;
 
@@ -17,30 +12,79 @@
     public class CollisionTracker : CollisionNotifier
     {
         #region Tracker Settings
+        [Header("Tracker Settings")]
+        [Tooltip("Causes collisions to stop if the GameObject on either side of the collision is disabled.")]
+        [SerializeField]
+        private bool stopCollisionsOnDisable = true;
         /// <summary>
         /// Causes collisions to stop if the <see cref="GameObject"/> on either side of the collision is disabled.
         /// </summary>
-        [Serialized]
-        [field: Header("Tracker Settings"), DocumentedByXml, Restricted(RestrictedAttribute.Restrictions.ReadOnlyAtRunTime)]
-        public bool StopCollisionsOnDisable { get; protected set; } = true;
+        public bool StopCollisionsOnDisable
+        {
+            get
+            {
+                return stopCollisionsOnDisable;
+            }
+            set
+            {
+                stopCollisionsOnDisable = value;
+            }
+        }
+        [Tooltip("Allows to optionally determine which colliders to allow collisions against.")]
+        [SerializeField]
+        private RuleContainer colliderValidity;
         /// <summary>
         /// Allows to optionally determine which colliders to allow collisions against.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public RuleContainer ColliderValidity { get; set; }
+        public RuleContainer ColliderValidity
+        {
+            get
+            {
+                return colliderValidity;
+            }
+            set
+            {
+                colliderValidity = value;
+            }
+        }
+        [Tooltip("Allows to optionally determine which collider containing transforms to allow collisions against.")]
+        [SerializeField]
+        private RuleContainer containingTransformValidity;
         /// <summary>
         /// Allows to optionally determine which collider containing transforms to allow collisions against.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public RuleContainer ContainingTransformValidity { get; set; }
+        public RuleContainer ContainingTransformValidity
+        {
+            get
+            {
+                return containingTransformValidity;
+            }
+            set
+            {
+                containingTransformValidity = value;
+            }
+        }
+        [Tooltip("The delay interval in seconds defining how long to pause between processing the `Stay` method of the collision process. Negative values will be clamped to zero.")]
+        [SerializeField]
+        private float stayDelayInterval;
         /// <summary>
         /// The delay interval in seconds defining how long to pause between processing the `Stay` method of the collision process. Negative values will be clamped to zero.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float StayDelayInterval { get; set; }
+        public float StayDelayInterval
+        {
+            get
+            {
+                return stayDelayInterval;
+            }
+            set
+            {
+                stayDelayInterval = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterStayDelayIntervalChange();
+                }
+            }
+        }
         /// <summary>
         /// When to process the `Stay` method the next time. Updated automatically based on <see cref="StayDelayInterval"/> after a `Stay` method has been called.
         /// </summary>
@@ -83,6 +127,32 @@
         /// The <see cref="Transform"/> containing the current checked collider.
         /// </summary>
         protected Transform colliderContainingTransform;
+
+        /// <summary>
+        /// Clears <see cref="ColliderValidity"/>.
+        /// </summary>
+        public virtual void ClearColliderValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ColliderValidity = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="ContainingTransformValidity"/>.
+        /// </summary>
+        public virtual void ClearContainingTransformValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ContainingTransformValidity = default;
+        }
 
         /// <summary>
         /// Prepares the collision states for a kinematic state change on the given <see cref="Rigidbody"/>.
@@ -362,10 +432,9 @@
         /// <summary>
         /// Called after <see cref="StayDelayInterval"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(StayDelayInterval))]
         protected virtual void OnAfterStayDelayIntervalChange()
         {
-            StayDelayInterval = Mathf.Max(0f, StayDelayInterval);
+            stayDelayInterval = Mathf.Max(0f, StayDelayInterval);
             NextStayProcessTime = Time.time;
         }
     }
@@ -375,23 +444,71 @@
     /// </summary>
     public class CollisionTrackerDisabledObserver : MonoBehaviour
     {
+        [Tooltip("The CollisionTracker that is causing the collision.")]
+        [SerializeField]
+        private CollisionTracker source;
         /// <summary>
         /// The <see cref="CollisionTracker"/> that is causing the collision.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public CollisionTracker Source { get; set; }
+        public CollisionTracker Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+            }
+        }
+        [Tooltip("The Collider that is being collided with.")]
+        [SerializeField]
+        private Collider target;
         /// <summary>
         /// The <see cref="Collider"/> that is being collided with.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public Collider Target { get; set; }
+        public Collider Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                target = value;
+            }
+        }
 
         /// <summary>
         /// Whether <see cref="this"/> is being destroyed.
         /// </summary>
         protected bool isDestroyed;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
 
         /// <summary>
         /// Destroys <see cref="this"/> from the scene.
@@ -404,7 +521,7 @@
 
         protected virtual void OnDisable()
         {
-            if (!isDestroyed)
+            if (Source != null && !isDestroyed)
             {
                 Source.StopCollision(Target);
             }

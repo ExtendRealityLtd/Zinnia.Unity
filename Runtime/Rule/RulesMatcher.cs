@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -20,35 +17,55 @@
         [Serializable]
         public class Element
         {
+            [Tooltip("The rule to match against.")]
+            [SerializeField]
+            private RuleContainer rule;
             /// <summary>
             /// The rule to match against.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public RuleContainer Rule { get; set; }
+            public RuleContainer Rule
+            {
+                get
+                {
+                    return rule;
+                }
+                set
+                {
+                    rule = value;
+                }
+            }
 
             /// <summary>
             /// Emitted when the <see cref="Rule"/> is valid.
             /// </summary>
-            [DocumentedByXml]
             public UnityEvent Matched = new UnityEvent();
         }
 
+        [Tooltip("A collection of rules to potentially match against.")]
+        [SerializeField]
+        private RulesMatcherElementObservableList elements;
         /// <summary>
         /// A collection of rules to potentially match against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RulesMatcherElementObservableList Elements { get; set; }
+        public RulesMatcherElementObservableList Elements
+        {
+            get
+            {
+                return elements;
+            }
+            set
+            {
+                elements = value;
+            }
+        }
 
         /// <summary>
         /// Attempts to match the given object to the rules within the <see cref="Elements"/> collection. If a match occurs then the appropriate event is emitted.
         /// </summary>
         /// <param name="source">The source to provide to the rule for validity checking.</param>
-        [RequiresBehaviourState]
         public virtual void Match(object source)
         {
-            if (Elements == null)
+            if (!this.IsValidState() || Elements == null)
             {
                 return;
             }

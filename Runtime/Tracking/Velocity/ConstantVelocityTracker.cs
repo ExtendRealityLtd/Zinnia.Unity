@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -9,26 +7,59 @@
     /// </summary>
     public class ConstantVelocityTracker : VelocityTracker
     {
+        [Tooltip("The velocity to return.")]
+        [SerializeField]
+        private Vector3 velocity;
         /// <summary>
         /// The velocity to return.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 Velocity { get; set; }
+        public Vector3 Velocity
+        {
+            get
+            {
+                return velocity;
+            }
+            set
+            {
+                velocity = value;
+            }
+        }
 
+        [Tooltip("The angular velocity to return.")]
+        [SerializeField]
+        private Vector3 angularVelocity;
         /// <summary>
         /// The angular velocity to return.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 AngularVelocity { get; set; }
+        public Vector3 AngularVelocity
+        {
+            get
+            {
+                return angularVelocity;
+            }
+            set
+            {
+                angularVelocity = value;
+            }
+        }
 
+        [Tooltip("Determines whether to extract the local property or the world property.")]
+        [SerializeField]
+        private bool useLocal;
         /// <summary>
         /// Determines whether to extract the local property or the world property.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseLocal { get; set; }
+        public bool UseLocal
+        {
+            get
+            {
+                return useLocal;
+            }
+            set
+            {
+                useLocal = value;
+            }
+        }
 
         /// <inheritdoc />
         protected override Vector3 DoGetAngularVelocity()

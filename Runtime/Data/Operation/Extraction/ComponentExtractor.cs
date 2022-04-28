@@ -1,12 +1,10 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Data.Attribute;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Extracts and emits the <see cref="Component"/> found in relation to the <see cref="Source"/>.
@@ -29,20 +27,36 @@
             IncludeAncestors = 1 << 1
         }
 
+        [Tooltip("Determines whether to search for the TResultElement component on the ancestors and or descendants of the Source.")]
+        [SerializeField]
+        [UnityFlags]
+        private SearchCriteria searchAlsoOn = (SearchCriteria)(-1);
         /// <summary>
         /// Determines whether to search for the <see cref="TResultElement"/> component on the ancestors and or descendants of the <see cref="Source"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, UnityFlags]
-        public SearchCriteria SearchAlsoOn { get; set; } = (SearchCriteria)(-1);
+        public SearchCriteria SearchAlsoOn
+        {
+            get
+            {
+                return searchAlsoOn;
+            }
+            set
+            {
+                searchAlsoOn = value;
+            }
+        }
 
         /// <summary>
         /// Attempts to set the <see cref="Source"/> via a <see cref="GameObject"/>.
         /// </summary>
         /// <param name="source">The source of the <see cref="GameObject"/> component.</param>
-        [RequiresBehaviourState]
         public virtual void SetSource(GameObject source)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Source = source != null ? source.transform : null;
         }
 
@@ -51,9 +65,13 @@
         /// </summary>
         /// <param name="data">The data to extract from.</param>
         /// <returns>The extracted data.</returns>
-        [RequiresBehaviourState]
         public virtual TResultElement Extract(GameObject data)
         {
+            if (!this.IsValidState())
+            {
+                return default;
+            }
+
             SetSource(data);
             return Extract();
         }

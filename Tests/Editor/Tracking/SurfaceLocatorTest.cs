@@ -1,4 +1,5 @@
-﻿using Zinnia.Data.Collection.List;
+﻿using Zinnia.Cast;
+using Zinnia.Data.Collection.List;
 using Zinnia.Rule;
 using Zinnia.Tracking;
 
@@ -588,6 +589,226 @@ namespace Test.Zinnia.Tracking
             Object.DestroyImmediate(validSurface);
             Object.DestroyImmediate(validSurface2);
             Object.DestroyImmediate(searchOrigin);
+        }
+
+        [Test]
+        public void ClearSearchOrigin()
+        {
+            Assert.IsNull(subject.SearchOrigin);
+            subject.SearchOrigin = containingObject;
+            Assert.AreEqual(containingObject, subject.SearchOrigin);
+            subject.ClearSearchOrigin();
+            Assert.IsNull(subject.SearchOrigin);
+        }
+
+        [Test]
+        public void ClearSearchOriginInactiveGameObject()
+        {
+            Assert.IsNull(subject.SearchOrigin);
+            subject.SearchOrigin = containingObject;
+            Assert.AreEqual(containingObject, subject.SearchOrigin);
+            subject.gameObject.SetActive(false);
+            subject.ClearSearchOrigin();
+            Assert.AreEqual(containingObject, subject.SearchOrigin);
+        }
+
+        [Test]
+        public void ClearSearchOriginInactiveComponent()
+        {
+            Assert.IsNull(subject.SearchOrigin);
+            subject.SearchOrigin = containingObject;
+            Assert.AreEqual(containingObject, subject.SearchOrigin);
+            subject.enabled = false;
+            subject.ClearSearchOrigin();
+            Assert.AreEqual(containingObject, subject.SearchOrigin);
+        }
+
+        [Test]
+        public void ClearTargetValidity()
+        {
+            Assert.IsNull(subject.TargetValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.TargetValidity = rule;
+            Assert.AreEqual(rule, subject.TargetValidity);
+            subject.ClearTargetValidity();
+            Assert.IsNull(subject.TargetValidity);
+        }
+
+        [Test]
+        public void ClearTargetValidityInactiveGameObject()
+        {
+            Assert.IsNull(subject.TargetValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.TargetValidity = rule;
+            Assert.AreEqual(rule, subject.TargetValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearTargetValidity();
+            Assert.AreEqual(rule, subject.TargetValidity);
+        }
+
+        [Test]
+        public void ClearTargetValidityInactiveComponent()
+        {
+            Assert.IsNull(subject.TargetValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.TargetValidity = rule;
+            Assert.AreEqual(rule, subject.TargetValidity);
+            subject.enabled = false;
+            subject.ClearTargetValidity();
+            Assert.AreEqual(rule, subject.TargetValidity);
+        }
+
+        [Test]
+        public void ClearTargetPointValidity()
+        {
+            Assert.IsNull(subject.TargetPointValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.TargetPointValidity = rule;
+            Assert.AreEqual(rule, subject.TargetPointValidity);
+            subject.ClearTargetPointValidity();
+            Assert.IsNull(subject.TargetPointValidity);
+        }
+
+        [Test]
+        public void ClearTargetPointValidityInactiveGameObject()
+        {
+            Assert.IsNull(subject.TargetPointValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.TargetPointValidity = rule;
+            Assert.AreEqual(rule, subject.TargetPointValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearTargetPointValidity();
+            Assert.AreEqual(rule, subject.TargetPointValidity);
+        }
+
+        [Test]
+        public void ClearTargetPointValidityInactiveComponent()
+        {
+            Assert.IsNull(subject.TargetPointValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.TargetPointValidity = rule;
+            Assert.AreEqual(rule, subject.TargetPointValidity);
+            subject.enabled = false;
+            subject.ClearTargetPointValidity();
+            Assert.AreEqual(rule, subject.TargetPointValidity);
+        }
+
+        [Test]
+        public void ClearLocatorTermination()
+        {
+            Assert.IsNull(subject.LocatorTermination);
+            RuleContainer rule = new RuleContainer();
+            subject.LocatorTermination = rule;
+            Assert.AreEqual(rule, subject.LocatorTermination);
+            subject.ClearLocatorTermination();
+            Assert.IsNull(subject.LocatorTermination);
+        }
+
+        [Test]
+        public void ClearLocatorTerminationInactiveGameObject()
+        {
+            Assert.IsNull(subject.LocatorTermination);
+            RuleContainer rule = new RuleContainer();
+            subject.LocatorTermination = rule;
+            Assert.AreEqual(rule, subject.LocatorTermination);
+            subject.gameObject.SetActive(false);
+            subject.ClearLocatorTermination();
+            Assert.AreEqual(rule, subject.LocatorTermination);
+        }
+
+        [Test]
+        public void ClearLocatorTerminationInactiveComponent()
+        {
+            Assert.IsNull(subject.LocatorTermination);
+            RuleContainer rule = new RuleContainer();
+            subject.LocatorTermination = rule;
+            Assert.AreEqual(rule, subject.LocatorTermination);
+            subject.enabled = false;
+            subject.ClearLocatorTermination();
+            Assert.AreEqual(rule, subject.LocatorTermination);
+        }
+
+        [Test]
+        public void ClearPhysicsCast()
+        {
+            Assert.IsNull(subject.PhysicsCast);
+            PhysicsCast cast = containingObject.AddComponent<PhysicsCast>();
+            subject.PhysicsCast = cast;
+            Assert.AreEqual(cast, subject.PhysicsCast);
+            subject.ClearPhysicsCast();
+            Assert.IsNull(subject.PhysicsCast);
+        }
+
+        [Test]
+        public void ClearPhysicsCastInactiveGameObject()
+        {
+            Assert.IsNull(subject.PhysicsCast);
+            PhysicsCast cast = containingObject.AddComponent<PhysicsCast>();
+            subject.PhysicsCast = cast;
+            Assert.AreEqual(cast, subject.PhysicsCast);
+            subject.gameObject.SetActive(false);
+            subject.ClearPhysicsCast();
+            Assert.AreEqual(cast, subject.PhysicsCast);
+        }
+
+        [Test]
+        public void ClearPhysicsCastInactiveComponent()
+        {
+            Assert.IsNull(subject.PhysicsCast);
+            PhysicsCast cast = containingObject.AddComponent<PhysicsCast>();
+            subject.PhysicsCast = cast;
+            Assert.AreEqual(cast, subject.PhysicsCast);
+            subject.enabled = false;
+            subject.ClearPhysicsCast();
+            Assert.AreEqual(cast, subject.PhysicsCast);
+        }
+
+        [Test]
+        public void SetSearchDirectionX()
+        {
+            Assert.AreEqual(Vector3.zero, subject.SearchDirection);
+            subject.SetSearchDirectionX(1f);
+            Assert.AreEqual(Vector3.right, subject.SearchDirection);
+        }
+
+        [Test]
+        public void SetSearchDirectionY()
+        {
+            Assert.AreEqual(Vector3.zero, subject.SearchDirection);
+            subject.SetSearchDirectionY(1f);
+            Assert.AreEqual(Vector3.up, subject.SearchDirection);
+        }
+
+        [Test]
+        public void SetSearchDirectionZ()
+        {
+            Assert.AreEqual(Vector3.zero, subject.SearchDirection);
+            subject.SetSearchDirectionZ(1f);
+            Assert.AreEqual(Vector3.forward, subject.SearchDirection);
+        }
+
+        [Test]
+        public void SetDestinationOffsetX()
+        {
+            Assert.AreEqual(Vector3.zero, subject.DestinationOffset);
+            subject.SetDestinationOffsetX(1f);
+            Assert.AreEqual(Vector3.right, subject.DestinationOffset);
+        }
+
+        [Test]
+        public void SetDestinationOffsetY()
+        {
+            Assert.AreEqual(Vector3.zero, subject.DestinationOffset);
+            subject.SetDestinationOffsetY(1f);
+            Assert.AreEqual(Vector3.up, subject.DestinationOffset);
+        }
+
+        [Test]
+        public void SetDestinationOffsetZ()
+        {
+            Assert.AreEqual(Vector3.zero, subject.DestinationOffset);
+            subject.SetDestinationOffsetZ(1f);
+            Assert.AreEqual(Vector3.forward, subject.DestinationOffset);
         }
     }
 }

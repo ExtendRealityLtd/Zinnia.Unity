@@ -1,12 +1,9 @@
 ﻿namespace Zinnia.Data.Type.Observer
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// The basis for all Observable Property types.
@@ -23,36 +20,64 @@
         /// <summary>
         /// Emitted when the property value is set and modified from its previous value.
         /// </summary>
-        [Header("Observable Events"), DocumentedByXml]
+        [Header("Observable Events")]
         public TEvent Modified = new TEvent();
         /// <summary>
         /// Emitted when the property value is set and unmodified from its previous value.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Unmodified = new TEvent();
         /// <summary>
         /// Emitted when the property value is set and modified back to the data type's default value.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Defaulted = new TEvent();
         /// <summary>
         /// Emitted when the property value is set and modified from the data type's default value to a defined value.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Defined = new TEvent();
 
+        [Header("Property Settings")]
+        [Tooltip("The observed data.")]
+        [SerializeField]
+        private TType data;
         /// <summary>
         /// The observed data.
         /// </summary>
-        [Serialized]
-        [field: Header("Property Settings"), DocumentedByXml]
-        public TType Data { get; set; }
+        public TType Data
+        {
+            get
+            {
+                return data;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeDataChange();
+                }
+                data = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterDataChange();
+                }
+            }
+        }
+        [Tooltip("Whether to observe data changes that were made when the component was disabled and subsequently re-enabled. Events are not raised when component is disabled.")]
+        [SerializeField]
+        private bool observeChangesFromDisabledState = true;
         /// <summary>
         /// Whether to observe data changes that were made when the component was disabled and subsequently re-enabled. Events are not raised when component is disabled.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool ObserveChangesFromDisabledState { get; set; } = true;
+        public bool ObserveChangesFromDisabledState
+        {
+            get
+            {
+                return observeChangesFromDisabledState;
+            }
+            set
+            {
+                observeChangesFromDisabledState = value;
+            }
+        }
 
         /// <summary>
         /// The previous value of the <see cref="TType"/>.
@@ -113,9 +138,13 @@
         /// <summary>
         /// Checks for changes from the current <see cref="Data"/> value to the previous value.
         /// </summary>
-        [RequiresBehaviourState]
         protected virtual void CheckForChanges()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (Equals(Data, previousDataValue))
             {
                 if (shouldRaiseUnmodifiedEvent)
@@ -143,7 +172,6 @@
         /// <summary>
         /// Called before <see cref="Data"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Data))]
         protected virtual void OnBeforeDataChange()
         {
             CacheExistingValue();
@@ -152,7 +180,6 @@
         /// <summary>
         /// Called after <see cref="Data"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Data))]
         protected virtual void OnAfterDataChange()
         {
             CheckForChanges();

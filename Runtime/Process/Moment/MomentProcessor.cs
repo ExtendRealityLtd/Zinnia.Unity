@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Process.Moment
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Rendering;
     using Zinnia.Extension;
@@ -48,18 +45,48 @@
             BeforeRender
         }
 
+        [Tooltip("The moment in which to process the given processes.")]
+        [SerializeField]
+        private Moment processMoment = Moment.PreRender;
         /// <summary>
         /// The moment in which to process the given processes.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Moment ProcessMoment { get; set; } = Moment.PreRender;
+        public Moment ProcessMoment
+        {
+            get
+            {
+                return processMoment;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeProcessMomentChange();
+                }
+                processMoment = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterProcessMomentChange();
+                }
+            }
+        }
+        [Tooltip("A collection of MomentProcess to process.")]
+        [SerializeField]
+        private MomentProcessObservableList processes;
         /// <summary>
         /// A collection of <see cref="MomentProcess"/> to process.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public MomentProcessObservableList Processes { get; set; }
+        public MomentProcessObservableList Processes
+        {
+            get
+            {
+                return processes;
+            }
+            set
+            {
+                processes = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="ProcessMoment"/>.
@@ -203,7 +230,6 @@
         /// <summary>
         /// Called before <see cref="ProcessMoment"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(ProcessMoment))]
         protected virtual void OnBeforeProcessMomentChange()
         {
             UnsubscribeMoment();
@@ -212,7 +238,6 @@
         /// <summary>
         /// Called after <see cref="ProcessMoment"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ProcessMoment))]
         protected virtual void OnAfterProcessMomentChange()
         {
             SubscribeMoment();

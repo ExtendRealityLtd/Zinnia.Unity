@@ -1,13 +1,10 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Action.Collection;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Allows actions to dynamically register listeners to other actions.
@@ -20,44 +17,134 @@
         [Serializable]
         public struct ActionSource
         {
+            [Tooltip("Determines if the source can be used.")]
+            [SerializeField]
+            private bool enabled;
             /// <summary>
             /// Determines if the source can be used.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool Enabled { get; set; }
+            public bool Enabled
+            {
+                get
+                {
+                    return enabled;
+                }
+                set
+                {
+                    enabled = value;
+                }
+            }
+            [Tooltip("The main container of the action.")]
+            [SerializeField]
+            private GameObject container;
             /// <summary>
             /// The main container of the action.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject Container { get; set; }
+            public GameObject Container
+            {
+                get
+                {
+                    return container;
+                }
+                set
+                {
+                    container = value;
+                }
+            }
+            [Tooltip("The action to subscribe to.")]
+            [SerializeField]
+            private Action action;
             /// <summary>
             /// The action to subscribe to.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Action Action { get; set; }
+            public Action Action
+            {
+                get
+                {
+                    return action;
+                }
+                set
+                {
+                    action = value;
+                }
+            }
         }
 
+        [Tooltip("The action that will have the sources populated by the given Sources.")]
+        [SerializeField]
+        private Action target;
         /// <summary>
         /// The action that will have the sources populated by the given <see cref="Sources"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Action Target { get; set; }
+        public Action Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeTargetChange();
+                }
+                target = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetChange();
+                }
+            }
+        }
+        [Tooltip("A list of ActionSources to populate the target sources list with.")]
+        [SerializeField]
+        private ActionRegistrarSourceObservableList sources;
         /// <summary>
         /// A list of <see cref="ActionSource"/>s to populate the target sources list with.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public ActionRegistrarSourceObservableList Sources { get; set; }
+        public ActionRegistrarSourceObservableList Sources
+        {
+            get
+            {
+                return sources;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeSourcesChange();
+                }
+                sources = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourcesChange();
+                }
+            }
+        }
+        [Tooltip("A list of GameObjects that are the limits of Sources by matching against ActionSource.Container.")]
+        [SerializeField]
+        private GameObjectObservableList sourceLimits;
         /// <summary>
         /// A list of <see cref="GameObject"/>s that are the limits of <see cref="Sources"/> by matching against <see cref="ActionSource.Container"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList SourceLimits { get; set; }
+        public GameObjectObservableList SourceLimits
+        {
+            get
+            {
+                return sourceLimits;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeSourceLimitsChange();
+                }
+                sourceLimits = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourceLimitsChange();
+                }
+            }
+        }
 
         protected virtual void OnEnable()
         {
@@ -190,9 +277,13 @@
         /// Called after an element is added to <see cref="Sources"/>.
         /// </summary>
         /// <param name="source">The element added to the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnSourceAdded(ActionSource source)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (GameObject limit in SourceLimits.SubscribableElements)
             {
                 TryAddTargetSource(source, limit);
@@ -203,9 +294,13 @@
         /// Called after an element is removed from <see cref="Sources"/>.
         /// </summary>
         /// <param name="source">The element removed from the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnSourceRemoved(ActionSource source)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (GameObject limit in SourceLimits.SubscribableElements)
             {
                 TryRemoveTargetSource(source, limit);
@@ -216,9 +311,13 @@
         /// Called after an element is added to <see cref="SourceLimits"/>.
         /// </summary>
         /// <param name="limit">The element added to the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnSourceLimitAdded(GameObject limit)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (ActionSource source in Sources.SubscribableElements)
             {
                 TryAddTargetSource(source, limit);
@@ -229,9 +328,13 @@
         /// Called after an element is removed from <see cref="SourceLimits"/>.
         /// </summary>
         /// <param name="limit">The element removed from the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnSourceLimitRemoved(GameObject limit)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (ActionSource source in Sources.SubscribableElements)
             {
                 TryRemoveTargetSource(source, limit);
@@ -241,7 +344,6 @@
         /// <summary>
         /// Called before <see cref="Target"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Target))]
         protected virtual void OnBeforeTargetChange()
         {
             ClearTargetSources();
@@ -250,7 +352,6 @@
         /// <summary>
         /// Called after <see cref="Target"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Target))]
         protected virtual void OnAfterTargetChange()
         {
             if (Target != null)
@@ -262,7 +363,6 @@
         /// <summary>
         /// Called before <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Sources))]
         protected virtual void OnBeforeSourcesChange()
         {
             if (Sources == null)
@@ -280,7 +380,6 @@
         /// <summary>
         /// Called after <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Sources))]
         protected virtual void OnAfterSourcesChange()
         {
             AddSourcesListeners();
@@ -290,7 +389,6 @@
         /// <summary>
         /// Called before <see cref="SourceLimits"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(SourceLimits))]
         protected virtual void OnBeforeSourceLimitsChange()
         {
             if (SourceLimits == null)
@@ -308,7 +406,6 @@
         /// <summary>
         /// Called after <see cref="SourceLimits"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(SourceLimits))]
         protected virtual void OnAfterSourceLimitsChange()
         {
             AddSourceLimitsListeners();

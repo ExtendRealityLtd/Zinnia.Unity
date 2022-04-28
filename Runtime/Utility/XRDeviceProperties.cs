@@ -1,7 +1,9 @@
 ﻿namespace Zinnia.Utility
 {
     using System.Collections.Generic;
+#if UNITY_2019_3_OR_NEWER
     using UnityEngine;
+#endif
     using UnityEngine.XR;
 
     /// <summary>

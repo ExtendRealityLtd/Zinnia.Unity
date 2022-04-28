@@ -25,6 +25,19 @@
         }
 
         /// <summary>
+        /// Cancels the <see cref="decelerationRoutine"/>.
+        /// </summary>
+        public override void CancelDeceleration()
+        {
+            canProcess = false;
+            if (decelerationRoutine != null)
+            {
+                StopCoroutine(decelerationRoutine);
+                decelerationRoutine = null;
+            }
+        }
+
+        /// <summary>
         /// Begins decelerating the <see cref="Target"/> based on any opposing drag forces.
         /// </summary>
         /// <returns>An Enumerator to manage the running state of the Coroutine.</returns>
@@ -37,19 +50,6 @@
             }
 
             decelerationRoutine = null;
-        }
-
-        /// <summary>
-        /// Cancels the <see cref="decelerationRoutine"/>.
-        /// </summary>
-        protected override void CancelDeceleration()
-        {
-            canProcess = false;
-            if (decelerationRoutine != null)
-            {
-                StopCoroutine(decelerationRoutine);
-                decelerationRoutine = null;
-            }
         }
     }
 }

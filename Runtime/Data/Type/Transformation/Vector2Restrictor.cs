@@ -1,7 +1,5 @@
 namespace Zinnia.Data.Type.Transformation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -21,18 +19,40 @@ namespace Zinnia.Data.Type.Transformation
         [Serializable]
         public class UnityEvent : UnityEvent<Vector2> { }
 
+        [Tooltip("The minimum and maximum values that the x coordinate can be.")]
+        [SerializeField]
+        private FloatRange xBounds = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the x coordinate can be.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public FloatRange XBounds { get; set; } = FloatRange.MinMax;
+        public FloatRange XBounds
+        {
+            get
+            {
+                return xBounds;
+            }
+            set
+            {
+                xBounds = value;
+            }
+        }
+        [Tooltip("The minimum and maximum values that the y coordinate can be.")]
+        [SerializeField]
+        private FloatRange yBounds = FloatRange.MinMax;
         /// <summary>
         /// The minimum and maximum values that the y coordinate can be.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public FloatRange YBounds { get; set; } = FloatRange.MinMax;
+        public FloatRange YBounds
+        {
+            get
+            {
+                return yBounds;
+            }
+            set
+            {
+                yBounds = value;
+            }
+        }
 
         /// <summary>
         /// Transforms the given input by clamping it within the specified bounds.

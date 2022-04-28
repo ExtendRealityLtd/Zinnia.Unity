@@ -1,13 +1,9 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -24,18 +20,40 @@
         [Serializable]
         public class EventData
         {
+            [Tooltip("The difference of the positions of the target and source.")]
+            [SerializeField]
+            private Vector3 currentDifference;
             /// <summary>
             /// The difference of the positions of the target and source.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Vector3 CurrentDifference { get; set; }
+            public Vector3 CurrentDifference
+            {
+                get
+                {
+                    return currentDifference;
+                }
+                set
+                {
+                    currentDifference = value;
+                }
+            }
+            [Tooltip("The distance between the source and target.")]
+            [SerializeField]
+            private float currentDistance;
             /// <summary>
             /// The distance between the source and target.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public float CurrentDistance { get; set; }
+            public float CurrentDistance
+            {
+                get
+                {
+                    return currentDistance;
+                }
+                set
+                {
+                    currentDistance = value;
+                }
+            }
 
             public EventData Set(EventData source)
             {
@@ -61,46 +79,83 @@
         [Serializable]
         public class UnityEvent : UnityEvent<EventData> { }
 
+        [Tooltip("The source of the distance measurement.")]
+        [SerializeField]
+        private GameObject source;
         /// <summary>
         /// The source of the distance measurement.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        public GameObject Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourceChange();
+                }
+            }
+        }
+        [Tooltip("The target of the distance measurement.")]
+        [SerializeField]
+        private GameObject target;
         /// <summary>
         /// The target of the distance measurement.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        public GameObject Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                target = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetChange();
+                }
+            }
+        }
+        [Tooltip("The distance between the source and target that is considered to be exceeding the given threshold.")]
+        [SerializeField]
+        private float distanceThreshold = 1f;
         /// <summary>
         /// The distance between the source and target that is considered to be exceeding the given threshold.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float DistanceThreshold { get; set; } = 1f;
+        public float DistanceThreshold
+        {
+            get
+            {
+                return distanceThreshold;
+            }
+            set
+            {
+                distanceThreshold = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the distance between the source and the target exceeds the threshold.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent ThresholdExceeded = new UnityEvent();
         /// <summary>
         /// Emitted when the distance between the source and the target falls back within the threshold.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent ThresholdResumed = new UnityEvent();
 
         /// <summary>
         /// The difference of the positions of the target and source.
         /// </summary>
         public Vector3 Difference { get; protected set; }
-
         /// <summary>
         /// The distance between the source and target.
         /// </summary>
         public float Distance { get; protected set; }
-
         /// <summary>
         /// Determines if the distance between the source and target is exceeding the threshold.
         /// </summary>
@@ -120,12 +175,37 @@
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
         /// Checks to see if the distance between the source and target exceed the threshold.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (Source == null || Target == null)
+            if (!this.IsValidState() || Source == null || Target == null)
             {
                 return;
             }
@@ -190,7 +270,6 @@
         /// <summary>
         /// Called after <see cref="Source"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Source))]
         protected virtual void OnAfterSourceChange()
         {
             SavePosition();
@@ -199,7 +278,6 @@
         /// <summary>
         /// Called after <see cref="Target"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Target))]
         protected virtual void OnAfterTargetChange()
         {
             SavePosition();

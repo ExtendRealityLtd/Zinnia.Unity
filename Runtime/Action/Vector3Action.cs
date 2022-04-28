@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -19,12 +16,27 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector3> { }
 
+        [Tooltip("The tolerance of equality between two Vector3 values.")]
+        [SerializeField]
+        private float equalityTolerance = float.Epsilon;
         /// <summary>
         /// The tolerance of equality between two <see cref="Vector3"/> values.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float EqualityTolerance { get; set; } = float.Epsilon;
+        public float EqualityTolerance
+        {
+            get
+            {
+                return equalityTolerance;
+            }
+            set
+            {
+                equalityTolerance = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterEqualityToleranceChange();
+                }
+            }
+        }
 
         /// <inheritdoc />
         protected override bool IsValueEqual(Vector3 value)
@@ -41,7 +53,6 @@
         /// <summary>
         /// Called after <see cref="EqualityTolerance"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(EqualityTolerance))]
         protected virtual void OnAfterEqualityToleranceChange()
         {
             Receive(Value);

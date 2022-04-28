@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Pattern
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Text.RegularExpressions;
     using UnityEngine;
 
@@ -10,12 +8,23 @@
     /// </summary>
     public abstract class PatternMatcher : MonoBehaviour
     {
+        [Tooltip("The pattern to match the source against.")]
+        [SerializeField]
+        private string pattern;
         /// <summary>
         /// The pattern to match the source against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string Pattern { get; set; }
+        public string Pattern
+        {
+            get
+            {
+                return pattern;
+            }
+            set
+            {
+                pattern = value;
+            }
+        }
 
         /// <summary>
         /// The current value of the source string.

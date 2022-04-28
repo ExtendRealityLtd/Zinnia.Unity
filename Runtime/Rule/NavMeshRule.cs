@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.AI;
 
@@ -10,24 +8,57 @@
     /// </summary>
     public class NavMeshRule : Vector3Rule
     {
+        [Tooltip("The relative vertical displacement of the NavMesh to the nearest surface.")]
+        [SerializeField]
+        private float baseOffset = 0f;
         /// <summary>
         /// The relative vertical displacement of the <see cref="NavMesh"/> to the nearest surface.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float BaseOffset { get; set; } = 0f;
+        public float BaseOffset
+        {
+            get
+            {
+                return baseOffset;
+            }
+            set
+            {
+                baseOffset = value;
+            }
+        }
+        [Tooltip("The max distance given point can be outside the NavMesh to be considered valid.")]
+        [SerializeField]
+        private float distanceLimit = 0.1f;
         /// <summary>
         /// The max distance given point can be outside the <see cref="NavMesh"/> to be considered valid.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float DistanceLimit { get; set; } = 0.1f;
+        public float DistanceLimit
+        {
+            get
+            {
+                return distanceLimit;
+            }
+            set
+            {
+                distanceLimit = value;
+            }
+        }
+        [Tooltip("The parts of the NavMesh that are considered valid.")]
+        [SerializeField]
+        private int validAreas = -1;
         /// <summary>
         /// The parts of the <see cref="NavMesh"/> that are considered valid.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public int ValidAreas { get; set; } = -1;
+        public int ValidAreas
+        {
+            get
+            {
+                return validAreas;
+            }
+            set
+            {
+                validAreas = value;
+            }
+        }
 
         /// <inheritdoc />
         protected override bool Accepts(Vector3 targetVector3)

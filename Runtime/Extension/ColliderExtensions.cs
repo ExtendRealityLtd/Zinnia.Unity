@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Extension
 {
-    using UnityEngine;
     using System.Collections.Generic;
+    using UnityEngine;
 
     /// <summary>
     /// Extended methods for the <see cref="Collider"/> Type.

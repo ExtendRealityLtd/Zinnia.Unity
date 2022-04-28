@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -19,22 +16,31 @@
         [Serializable]
         public class UnityEvent : UnityEvent<GameObject> { }
 
+        [Tooltip("Determines whether the collision point parent is the GameObject that contains a CollisionNotifier or to just search for the containing Transform.")]
+        [SerializeField]
+        private bool isParentCollisionNotifier;
         /// <summary>
         /// Determines whether the collision point parent is the <see cref="GameObject"/> that contains a <see cref="CollisionNotifier"/> or to just search for the containing <see cref="Transform"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool IsParentCollisionNotifier { get; set; }
+        public bool IsParentCollisionNotifier
+        {
+            get
+            {
+                return isParentCollisionNotifier;
+            }
+            set
+            {
+                isParentCollisionNotifier = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the collision point container is created.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent PointSet = new UnityEvent();
         /// <summary>
         /// Emitted when the collision point container is destroyed.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent PointUnset = new UnityEvent();
 
         /// <summary>
@@ -54,10 +60,9 @@
         /// Creates a new container if it doesn't already exist and sets it to be at the point of the collision of the given event data.
         /// </summary>
         /// <param name="eventData">Contains data about the collision.</param>
-        [RequiresBehaviourState]
         public virtual void Set(ActiveCollisionConsumer.EventData eventData)
         {
-            if (IsSet)
+            if (!this.IsValidState() || IsSet)
             {
                 return;
             }

@@ -1,9 +1,7 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -11,20 +9,30 @@
     /// </summary>
     public class StateEmitter : MonoBehaviour, IProcessable
     {
+        [Tooltip("The Action to re-emit the state for.")]
+        [SerializeField]
+        private Action action;
         /// <summary>
         /// The Action to re-emit the state for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Action Action { get; set; }
+        public Action Action
+        {
+            get
+            {
+                return action;
+            }
+            set
+            {
+                action = value;
+            }
+        }
 
         /// <summary>
         /// Re-emits the state of the Action.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (Action == null)
+            if (!this.IsValidState() || Action == null)
             {
                 return;
             }

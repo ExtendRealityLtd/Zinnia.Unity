@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -20,24 +18,57 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector3> { }
 
+        [Tooltip("A float to use as the current x value of the Vector3.")]
+        [SerializeField]
+        private float currentX;
         /// <summary>
         /// A <see cref="float"/> to use as the current x value of the <see cref="Vector3"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentX { get; set; }
+        public float CurrentX
+        {
+            get
+            {
+                return currentX;
+            }
+            set
+            {
+                currentX = value;
+            }
+        }
+        [Tooltip("A float to use as the current y value of the Vector3.")]
+        [SerializeField]
+        private float currentY;
         /// <summary>
         /// A <see cref="float"/> to use as the current y value of the <see cref="Vector3"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentY { get; set; }
+        public float CurrentY
+        {
+            get
+            {
+                return currentY;
+            }
+            set
+            {
+                currentY = value;
+            }
+        }
+        [Tooltip("A float to use as the current z value of the Vector3.")]
+        [SerializeField]
+        private float currentZ;
         /// <summary>
         /// A <see cref="float"/> to use as the current z value of the <see cref="Vector3"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentZ { get; set; }
+        public float CurrentZ
+        {
+            get
+            {
+                return currentZ;
+            }
+            set
+            {
+                currentZ = value;
+            }
+        }
 
         /// <summary>
         /// A reusable array of three <see cref="float"/>s.

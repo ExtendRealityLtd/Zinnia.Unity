@@ -1,10 +1,10 @@
 ﻿namespace Zinnia.Data.Operation.Cache
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Caches <see cref="TValue"/> data and invokves an appropriate event when the cache is updated.
@@ -32,9 +32,13 @@
             {
                 return data;
             }
-            [RequiresBehaviourState]
             set
             {
+                if (!this.IsValidState())
+                {
+                    return;
+                }
+
                 if (AreEqual(value, data))
                 {
                     Unmodified?.Invoke(value);
@@ -54,9 +58,13 @@
         /// <summary>
         /// Clears the cache by setting it to the default value.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void ClearCache()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Data = default;
         }
 

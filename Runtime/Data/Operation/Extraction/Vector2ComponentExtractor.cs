@@ -1,11 +1,9 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Extracts and emits the <see cref="float"/> components of a <see cref="Vector2"/>.
@@ -34,23 +32,44 @@
             Y
         }
 
+        [Tooltip("The source to extract from.")]
+        [SerializeField]
+        private Vector2 source;
         /// <summary>
         /// The source to extract from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector2 Source { get; set; }
+        public Vector2 Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+            }
+        }
+        [Tooltip("The component to extract from the Vector2.")]
+        [SerializeField]
+        private Vector2Component componentToExtract = Vector2Component.X;
         /// <summary>
         /// The component to extract from the <see cref="Vector2"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector2Component ComponentToExtract { get; set; } = Vector2Component.X;
+        public Vector2Component ComponentToExtract
+        {
+            get
+            {
+                return componentToExtract;
+            }
+            set
+            {
+                componentToExtract = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the <see cref="float"/> component from <see cref="Source"/> is extracted.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Extracted = new UnityEvent();
 
         /// <summary>
@@ -87,9 +106,13 @@
         /// <summary>
         /// Extracts the <see cref="float"/> component from the <see cref="Vector2"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void DoExtract()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Extract();
         }
 
@@ -98,9 +121,13 @@
         /// </summary>
         /// <param name="source">The source to extract from.</param>
         /// <returns>The extracted <see cref="float"/>.</returns>
-        [RequiresBehaviourState]
         public virtual float? Extract(Vector2 source)
         {
+            if (!this.IsValidState())
+            {
+                return null;
+            }
+
             Source = source;
             return Extract();
         }
@@ -109,9 +136,13 @@
         /// Extracts the <see cref="float"/> component from the <see cref="Vector2"/>.
         /// </summary>
         /// <param name="source">The source to extract from.</param>
-        [RequiresBehaviourState]
         public virtual void DoExtract(Vector2 source)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Extract(source);
         }
     }

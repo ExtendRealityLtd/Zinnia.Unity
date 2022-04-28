@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using Zinnia.Extension;
@@ -15,28 +13,50 @@
         /// <summary>
         /// Emitted when the target is back within the threshold distance of the source after being diverged.
         /// </summary>
-        [Header("Divergence Events"), DocumentedByXml]
+        [Header("Divergence Events")]
         public ObjectFollower.FollowEvent Converged = new ObjectFollower.FollowEvent();
         /// <summary>
         /// Emitted when the target is no longer within the threshold distance of the source.
         /// </summary>
-        [DocumentedByXml]
         public ObjectFollower.FollowEvent Diverged = new ObjectFollower.FollowEvent();
         #endregion
 
         #region Divergence Settings
+        [Header("Divergence Settings")]
+        [Tooltip("Determines if to track whether the source diverges from the target. Tracking divergence adds additional overhead.")]
+        [SerializeField]
+        private bool trackDivergence;
         /// <summary>
         /// Determines if to track whether the source diverges from the target. Tracking divergence adds additional overhead.
         /// </summary>
-        [Serialized]
-        [field: Header("Divergence Settings"), DocumentedByXml]
-        public bool TrackDivergence { get; set; }
+        public bool TrackDivergence
+        {
+            get
+            {
+                return trackDivergence;
+            }
+            set
+            {
+                trackDivergence = value;
+            }
+        }
+        [Tooltip("The distance the target has to be away from the source to be considered diverged.")]
+        [SerializeField]
+        private Vector3 divergenceThreshold = Vector3.one * 0.1f;
         /// <summary>
         /// The distance the target has to be away from the source to be considered diverged.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 DivergenceThreshold { get; set; } = Vector3.one * 0.1f;
+        public Vector3 DivergenceThreshold
+        {
+            get
+            {
+                return divergenceThreshold;
+            }
+            set
+            {
+                divergenceThreshold = value;
+            }
+        }
         #endregion
 
         /// <summary>

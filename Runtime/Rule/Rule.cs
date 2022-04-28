@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Data.Attribute;
@@ -27,12 +25,26 @@
             RuleGameObjectIsNotActiveInHierarchy = 1 << 1
         }
 
+        [Tooltip("The states on whether to automatically reject a Rule.")]
+        [SerializeField]
+        [UnityFlags]
+        private RejectRuleStates autoRejectStates = (RejectRuleStates)(-1);
         /// <summary>
         /// The states on whether to automatically reject a <see cref="Rule"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, UnityFlags]
-        public RejectRuleStates AutoRejectStates { get; set; } = (RejectRuleStates)(-1);
+        public RejectRuleStates AutoRejectStates
+        {
+            get
+            {
+                return autoRejectStates;
+            }
+            set
+            {
+                autoRejectStates = value;
+            }
+        }
+
+        protected bool isDestroyed;
 
         /// <inheritdoc/>
         public abstract bool Accepts(object target);
@@ -45,6 +57,11 @@
         {
             return ((AutoRejectStates & RejectRuleStates.RuleComponentIsDisabled) != 0 && !enabled)
                    || ((AutoRejectStates & RejectRuleStates.RuleGameObjectIsNotActiveInHierarchy) != 0 && !gameObject.activeInHierarchy);
+        }
+
+        protected virtual void OnDestroy()
+        {
+            isDestroyed = true;
         }
     }
 }

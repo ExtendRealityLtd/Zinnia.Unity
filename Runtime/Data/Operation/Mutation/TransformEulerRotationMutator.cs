@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Data.Type;
@@ -15,19 +11,72 @@
     public class TransformEulerRotationMutator : TransformPropertyMutator
     {
         #region Rotation Settings
+        [Header("Rotation Settings")]
+        [Tooltip("An optional rotation origin to perform the rotation around. The origin must be a child of the TransformPropertyMutator.Target.")]
+        [SerializeField]
+        private GameObject origin;
         /// <summary>
         /// An optional rotation origin to perform the rotation around. The origin must be a child of the <see cref="TransformPropertyMutator.Target"/>.
         /// </summary>
-        [Serialized, Cleared]
-        [field: Header("Rotation Settings"), DocumentedByXml]
-        public GameObject Origin { get; set; }
+        public GameObject Origin
+        {
+            get
+            {
+                return origin;
+            }
+            set
+            {
+                origin = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterOriginChange();
+                }
+            }
+        }
+        [Tooltip("Determines which axes to consider from the Origin.")]
+        [SerializeField]
+        private Vector3State applyOriginOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to consider from the <see cref="Origin"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State ApplyOriginOnAxis { get; set; } = Vector3State.True;
+        public Vector3State ApplyOriginOnAxis
+        {
+            get
+            {
+                return applyOriginOnAxis;
+            }
+            set
+            {
+                applyOriginOnAxis = value;
+            }
+        }
         #endregion
+
+        /// <summary>
+        /// Clears <see cref="Origin"/>.
+        /// </summary>
+        public virtual void ClearOrigin()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Origin = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="ApplyOriginOnAxis"/>.
+        /// </summary>
+        public virtual void ClearApplyOriginOnAxis()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ApplyOriginOnAxis = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="ApplyOriginOnAxis"/> x value.
@@ -110,7 +159,7 @@
 
         protected virtual void OnEnable()
         {
-            OnAfterRotationOriginChange();
+            OnAfterOriginChange();
         }
 
         /// <summary>
@@ -162,10 +211,9 @@
         /// <summary>
         /// Called after <see cref="Origin"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Origin))]
-        protected virtual void OnAfterRotationOriginChange()
+        protected virtual void OnAfterOriginChange()
         {
-            if (Origin == null)
+            if (Origin == null || Target == null)
             {
                 return;
             }
@@ -174,6 +222,12 @@
             {
                 throw new ArgumentException($"The `RotationOrigin` [{Origin.name}] must be a child of the `Target` [{Target.name}] GameObject.");
             }
+        }
+
+        [Obsolete("Use `OnAfterOriginChange` instead.")]
+        protected virtual void OnAfterRotationOriginChange()
+        {
+            OnAfterOriginChange();
         }
     }
 }

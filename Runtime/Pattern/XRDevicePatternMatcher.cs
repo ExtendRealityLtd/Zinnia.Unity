@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Pattern
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using UnityEngine.XR;
     using Zinnia.Extension;
     using Zinnia.Utility;
@@ -66,19 +64,49 @@
             UserPresence
         }
 
+        [Tooltip("The source property to match against.")]
+        [SerializeField]
+        private Source propertySource;
         /// <summary>
         /// The source property to match against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Source PropertySource { get; set; }
+        public Source PropertySource
+        {
+            get
+            {
+                return propertySource;
+            }
+            set
+            {
+                propertySource = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterPropertySourceChange();
+                }
+            }
+        }
 #if UNITY_2019_3_OR_NEWER
+        [Tooltip("The source node to consider as the device to check.")]
+        [SerializeField]
+        private XRNode deviceSource = XRNode.Head;
         /// <summary>
         /// The source node to consider as the device to check.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public XRNode DeviceSource { get; set; } = XRNode.Head;
+        public XRNode DeviceSource
+        {
+            get
+            {
+                return deviceSource;
+            }
+            set
+            {
+                deviceSource = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterDeviceSourceChange();
+                }
+            }
+        }
 #else
         protected XRNode DeviceSource { get; set; } = XRNode.Head;
 #endif
@@ -140,7 +168,6 @@
         /// <summary>
         /// Called after <see cref="PropertySource"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(PropertySource))]
         protected virtual void OnAfterPropertySourceChange()
         {
             ProcessSourceString();
@@ -149,7 +176,6 @@
         /// <summary>
         /// Called after <see cref="DeviceSource"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(DeviceSource))]
         protected virtual void OnAfterDeviceSourceChange()
         {
             ProcessSourceString();

@@ -1,9 +1,9 @@
 ﻿namespace Zinnia.Event.Yield
 {
-    using Malimbe.BehaviourStateRequirementMethod;
     using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits an event when a coroutine has complete after the yield.
@@ -22,7 +22,7 @@
         /// <summary>
         /// Whether the routine is currently running.
         /// </summary>
-        public bool IsRunning => routine != null;
+        public virtual bool IsRunning => routine != null;
 
         /// <summary>
         /// The routine to process.
@@ -32,9 +32,13 @@
         /// <summary>
         /// Cancels any existing yield check before beginning a new one.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void CancelThenBegin()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Cancel();
             Begin();
         }
@@ -42,9 +46,13 @@
         /// <summary>
         /// Starts a new yield check if one is not already running.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Begin()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (routine == null)
             {
                 routine = StartCoroutine(Routine());

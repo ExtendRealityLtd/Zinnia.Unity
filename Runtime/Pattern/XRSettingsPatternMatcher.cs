@@ -1,8 +1,6 @@
 ﻿namespace Zinnia.Pattern
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using UnityEngine.XR;
     using Zinnia.Extension;
 
@@ -46,12 +44,27 @@
             StereoRenderingMode
         }
 
+        [Tooltip("The source property to match against.")]
+        [SerializeField]
+        private Source propertySource;
         /// <summary>
         /// The source property to match against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Source PropertySource { get; set; }
+        public Source PropertySource
+        {
+            get
+            {
+                return propertySource;
+            }
+            set
+            {
+                propertySource = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterPropertySourceChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="PropertySource"/>.
@@ -89,7 +102,6 @@
         /// <summary>
         /// Called after <see cref="PropertySource"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(PropertySource))]
         protected virtual void OnAfterPropertySourceChange()
         {
             ProcessSourceString();

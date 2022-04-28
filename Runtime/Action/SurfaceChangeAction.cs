@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -13,18 +9,48 @@
     /// </summary>
     public class SurfaceChangeAction : BooleanAction
     {
+        [Tooltip("The distance between the current surface and previous surface to consider a valid change.")]
+        [SerializeField]
+        private float changeDistance = 0.5f;
         /// <summary>
         /// The distance between the current surface and previous surface to consider a valid change.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float ChangeDistance { get; set; } = 0.5f;
+        public float ChangeDistance
+        {
+            get
+            {
+                return changeDistance;
+            }
+            set
+            {
+                changeDistance = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterChangeDistanceChange();
+                }
+            }
+        }
+        [Tooltip("The axes to check for distance differences on.")]
+        [SerializeField]
+        private Vector3State checkAxis = Vector3State.True;
         /// <summary>
         /// The axes to check for distance differences on.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State CheckAxis { get; set; } = Vector3State.True;
+        public Vector3State CheckAxis
+        {
+            get
+            {
+                return checkAxis;
+            }
+            set
+            {
+                checkAxis = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterCheckAxisChange();
+                }
+            }
+        }
 
         protected SurfaceData previousData;
 
@@ -59,10 +85,9 @@
         /// Digests <see cref="SurfaceData"/> and compares the current surface to the previous surface to determine if a change has occurred.
         /// </summary>
         /// <param name="surfaceData">The <see cref="SurfaceData"/> to check on.</param>
-        [RequiresBehaviourState]
         public virtual void Receive(SurfaceData surfaceData)
         {
-            if (!ValidSurfaceData(surfaceData))
+            if (!this.IsValidState() || !ValidSurfaceData(surfaceData))
             {
                 return;
             }
@@ -113,7 +138,6 @@
         /// <summary>
         /// Called after <see cref="ChangeDistance"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ChangeDistance))]
         protected virtual void OnAfterChangeDistanceChange()
         {
             if (previousData != null)
@@ -125,7 +149,6 @@
         /// <summary>
         /// Called after <see cref="CheckAxis"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(CheckAxis))]
         protected virtual void OnAfterCheckAxisChange()
         {
             if (previousData != null)

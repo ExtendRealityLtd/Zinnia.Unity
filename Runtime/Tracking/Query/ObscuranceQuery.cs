@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Tracking.Query
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -31,40 +27,114 @@
             public MissingColliderException(UnityEngine.Object owner, GameObject missingColliderGameObject) : base($"The configured {nameof(Target)} '{missingColliderGameObject}' on '{owner}' needs a {nameof(Collider)} on it or if it has a {nameof(Rigidbody)} on it then a child {nameof(Collider)} is required.") { }
         }
 
+        [Tooltip("Defines the source location that the RayCast will originate from towards the Target location.")]
+        [SerializeField]
+        private GameObject source;
         /// <summary>
         /// Defines the source location that the RayCast will originate from towards the <see cref="Target"/> location.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        public GameObject Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+            }
+        }
+        [Tooltip("Defines the target location that the RayCast will attain to reach from the originating Source location.")]
+        [SerializeField]
+        private GameObject target;
         /// <summary>
         /// Defines the target location that the RayCast will attain to reach from the originating <see cref="Source"/> location.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        public GameObject Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                target = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetChange();
+                }
+            }
+        }
+        [Tooltip("Optional settings to use when doing the RayCast.")]
+        [SerializeField]
+        private PhysicsCast physicsCast;
         /// <summary>
         /// Optional settings to use when doing the RayCast.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public PhysicsCast PhysicsCast { get; set; }
+        public PhysicsCast PhysicsCast
+        {
+            get
+            {
+                return physicsCast;
+            }
+            set
+            {
+                physicsCast = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the RayCast from <see cref="Source"/> to <see cref="Target"/> is obscured by another <see cref="Collider"/>.
         /// </summary>
-        [DocumentedByXml]
         public HitEvent TargetObscured = new HitEvent();
         /// <summary>
         /// Emitted when the RayCast from <see cref="Source"/> is reaching <see cref="Target"/> and is not obscured by another <see cref="Collider"/>.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent TargetUnobscured = new UnityEvent();
 
         /// <summary>
         /// Whether the RayCast from <see cref="Source"/> to <see cref="Target"/> was previously obscured by another <see cref="Collider"/>.
         /// </summary>
         protected bool? wasPreviouslyObscured;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PhysicsCast"/>.
+        /// </summary>
+        public virtual void ClearPhysicsCast()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PhysicsCast = default;
+        }
 
         /// <summary>
         /// Casts a ray from the <see cref="Source"/> origin location towards the <see cref="Target"/> destination location and determines whether the RayCast is blocked by another <see cref="Collider"/>.
@@ -134,7 +204,6 @@
         /// <summary>
         /// Called after <see cref="Target"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Target))]
         protected virtual void OnAfterTargetChange()
         {
             CheckTarget();

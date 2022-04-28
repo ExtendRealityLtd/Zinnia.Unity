@@ -243,5 +243,157 @@ namespace Test.Zinnia.Tracking.Follow
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
         }
+
+        [Test]
+        public void ClearSource()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.ClearSource();
+            Assert.IsNull(subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveComponent()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.enabled = false;
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearTarget()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.ClearTarget();
+            Assert.IsNull(subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveGameObject()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.gameObject.SetActive(false);
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveComponent()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.enabled = false;
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void SavePosition()
+        {
+            ObjectDistanceComparatorMock subjectMock = containingObject.AddComponent<ObjectDistanceComparatorMock>();
+            GameObject source = new GameObject("Source");
+
+            subjectMock.Source = source;
+            subjectMock.Target = source;
+
+            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.IsFalse(subjectMock.GetPreviousState());
+
+            source.transform.position = Vector3.one;
+            subjectMock.SetPreviousState(true);
+
+            subjectMock.SavePosition();
+
+            Assert.AreEqual(Vector3.one, subjectMock.GetTheSourcePosition());
+            Assert.IsFalse(subjectMock.GetPreviousState());
+
+            Object.DestroyImmediate(source);
+        }
+
+        [Test]
+        public void SavePositionNullSource()
+        {
+            ObjectDistanceComparatorMock subjectMock = containingObject.AddComponent<ObjectDistanceComparatorMock>();
+            GameObject source = new GameObject("Source");
+
+            subjectMock.Target = source;
+
+            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.IsFalse(subjectMock.GetPreviousState());
+
+            source.transform.position = Vector3.one;
+            subjectMock.SetPreviousState(true);
+
+            subjectMock.SavePosition();
+
+            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.IsTrue(subjectMock.GetPreviousState());
+
+            Object.DestroyImmediate(source);
+        }
+
+        [Test]
+        public void SavePositionSourceNotEqualTarget()
+        {
+            ObjectDistanceComparatorMock subjectMock = containingObject.AddComponent<ObjectDistanceComparatorMock>();
+            GameObject source = new GameObject("Source");
+            GameObject target = new GameObject("Target");
+
+            subjectMock.Source = source;
+            subjectMock.Target = target;
+
+            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.IsFalse(subjectMock.GetPreviousState());
+
+            source.transform.position = Vector3.one;
+            subjectMock.SetPreviousState(true);
+
+            subjectMock.SavePosition();
+
+            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.IsTrue(subjectMock.GetPreviousState());
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
+        }
+
+        protected class ObjectDistanceComparatorMock : ObjectDistanceComparator
+        {
+            public Vector3 GetTheSourcePosition()
+            {
+                return sourcePosition;
+            }
+
+            public bool GetPreviousState()
+            {
+                return previousState;
+            }
+
+            public void SetPreviousState(bool state)
+            {
+                previousState = state;
+            }
+        }
     }
 }

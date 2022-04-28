@@ -1,35 +1,82 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections.Generic;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Ignores the collisions between the source <see cref="GameObject"/> colliders and the target <see cref="GameObject"/> colliders.
     /// </summary>
     public class CollisionIgnorer : MonoBehaviour
     {
+        [Tooltip("The sources to ignore colliders from.")]
+        [SerializeField]
+        private GameObjectObservableList sources;
         /// <summary>
         /// The sources to ignore colliders from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList Sources { get; set; }
+        public GameObjectObservableList Sources
+        {
+            get
+            {
+                return sources;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeSourcesChange();
+                }
+                sources = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourcesChange();
+                }
+            }
+        }
+        [Tooltip("The targets to ignore colliders with.")]
+        [SerializeField]
+        private GameObjectObservableList targets;
         /// <summary>
         /// The targets to ignore colliders with.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList Targets { get; set; }
+        public GameObjectObservableList Targets
+        {
+            get
+            {
+                return targets;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeTargetsChange();
+                }
+                targets = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetsChange();
+                }
+            }
+        }
+        [Tooltip("Whether to process inactive GameObjects when ignoring or resuming collisions.")]
+        [SerializeField]
+        private bool processInactiveGameObjects;
         /// <summary>
         /// Whether to process inactive <see cref="GameObject"/>s when ignoring or resuming collisions.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool ProcessInactiveGameObjects { get; set; }
+        public bool ProcessInactiveGameObjects
+        {
+            get
+            {
+                return processInactiveGameObjects;
+            }
+            set
+            {
+                processInactiveGameObjects = value;
+            }
+        }
 
         /// <summary>
         /// A reused instance to store the <see cref="Collider"/> collection belonging to the <see cref="Sources"/>.
@@ -196,7 +243,6 @@
         /// <summary>
         /// Called before <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Sources))]
         protected virtual void OnBeforeSourcesChange()
         {
             if (Sources != null)
@@ -209,7 +255,6 @@
         /// <summary>
         /// Called after <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Sources))]
         protected virtual void OnAfterSourcesChange()
         {
             if (Sources != null)
@@ -222,7 +267,6 @@
         /// <summary>
         /// Called before <see cref="Targets"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Targets))]
         protected virtual void OnBeforeTargetsChange()
         {
             if (Targets != null)
@@ -235,7 +279,6 @@
         /// <summary>
         /// Called after <see cref="Targets"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Targets))]
         protected virtual void OnAfterTargetsChange()
         {
             if (Targets != null)

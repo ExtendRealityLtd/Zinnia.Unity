@@ -1,11 +1,8 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -20,20 +17,31 @@
         /// <summary>
         /// Emitted when the <see cref="TResultElement"/> is extracted.
         /// </summary>
-        [Header("Extractor Events"), DocumentedByXml]
+        [Header("Extractor Events")]
         public TEvent Extracted = new TEvent();
         /// <summary>
         /// Emitted when the data can't be extracted.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Failed = new UnityEvent();
 
+        [Header("Extractor Settings")]
+        [Tooltip("The source to extract from.")]
+        [SerializeField]
+        private TSourceElement source;
         /// <summary>
         /// The source to extract from.
         /// </summary>
-        [Serialized]
-        [field: Header("Extractor Settings"), DocumentedByXml]
-        public TSourceElement Source { get; set; }
+        public TSourceElement Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+            }
+        }
 
         /// <summary>
         /// The extracted <see cref="TResultElement"/>.
@@ -60,9 +68,13 @@
         /// Extracts the <see cref="TResultElement"/>/
         /// </summary>
         /// <returns>The extracted <see cref="TResultElement"/>.</returns>
-        [RequiresBehaviourState]
         public virtual TResultElement Extract()
         {
+            if (!this.IsValidState())
+            {
+                return default;
+            }
+
             Result = ExtractValue();
             if (!InvokeResult(Result))
             {
@@ -85,9 +97,13 @@
         /// </summary>
         /// <param name="data">The data to extract from.</param>
         /// <returns>The extracted data.</returns>
-        [RequiresBehaviourState]
         public virtual TResultElement Extract(TSourceElement data)
         {
+            if (!this.IsValidState())
+            {
+                return default;
+            }
+
             Source = data;
             return Extract();
         }

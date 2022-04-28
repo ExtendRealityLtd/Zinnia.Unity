@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Data.Collection.List
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -19,18 +16,56 @@
         [Serializable]
         public class Relation
         {
+            [Tooltip("The GameObject acting as the key.")]
+            [SerializeField]
+            private GameObject key;
             /// <summary>
             /// The <see cref="GameObject"/> acting as the key.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public GameObject Key { get; set; }
+            public GameObject Key
+            {
+                get
+                {
+                    return key;
+                }
+                set
+                {
+                    key = value;
+                }
+            }
+            [Tooltip("The GameObject acting as the value.")]
+            [SerializeField]
+            private GameObject value;
             /// <summary>
             /// The <see cref="GameObject"/> acting as the value.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public GameObject Value { get; set; }
+            public GameObject Value
+            {
+                get
+                {
+                    return value;
+                }
+                set
+                {
+                    this.value = value;
+                }
+            }
+
+            /// <summary>
+            /// Clears <see cref="Key"/>.
+            /// </summary>
+            public virtual void ClearKey()
+            {
+                Key = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="Value"/>.
+            /// </summary>
+            public virtual void ClearValue()
+            {
+                Value = default;
+            }
         }
 
         /// <summary>

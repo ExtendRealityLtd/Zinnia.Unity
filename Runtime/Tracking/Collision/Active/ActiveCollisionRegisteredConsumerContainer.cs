@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -21,19 +17,57 @@
         [Serializable]
         public class EventData
         {
+            [Tooltip("The registered ActiveCollisionConsumer.")]
+            [SerializeField]
+            private ActiveCollisionConsumer consumer;
             /// <summary>
             /// The registered <see cref="ActiveCollisionConsumer"/>.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public ActiveCollisionConsumer Consumer { get; set; }
+            public ActiveCollisionConsumer Consumer
+            {
+                get
+                {
+                    return consumer;
+                }
+                set
+                {
+                    consumer = value;
+                }
+            }
 
+            [Tooltip("The payload data sent to the ActiveCollisionConsumer.")]
+            [SerializeField]
+            private ActiveCollisionPublisher.PayloadData payload;
             /// <summary>
             /// The payload data sent to the <see cref="ActiveCollisionConsumer"/>.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public ActiveCollisionPublisher.PayloadData Payload { get; set; }
+            public ActiveCollisionPublisher.PayloadData Payload
+            {
+                get
+                {
+                    return payload;
+                }
+                set
+                {
+                    payload = value;
+                }
+            }
+
+            /// <summary>
+            /// Clears <see cref="Consumer"/>.
+            /// </summary>
+            public virtual void ClearConsumer()
+            {
+                Consumer = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="Payload"/>.
+            /// </summary>
+            public virtual void ClearPayload()
+            {
+                Payload = default;
+            }
 
             public EventData Set(EventData source)
             {
@@ -80,17 +114,14 @@
         /// <summary>
         /// Emitted when each registered consumer payload data is published.
         /// </summary>
-        [DocumentedByXml]
         public ActiveCollisionPublisher.UnityEvent Published = new ActiveCollisionPublisher.UnityEvent();
         /// <summary>
         /// Emitted when a consumer is registered.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Registered = new UnityEvent();
         /// <summary>
         /// Emitted when a consumer is unregistered.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Unregistered = new UnityEvent();
 
         /// <summary>
@@ -111,9 +142,13 @@
         /// Publishes the registered <see cref="ActiveCollisionConsumer"/> components as the component is active and enabled.
         /// Any <see cref="ActiveCollisionConsumer"/> that is in the <see cref="IgnoredRegisteredConsumers"/> will not be published to and the <see cref="IgnoredRegisteredConsumers"/> collection is cleared at the end of the <see cref="Publish"/> operation.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Publish()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             foreach (ActiveCollisionConsumer registeredConsumer in new List<ActiveCollisionConsumer>(RegisteredConsumers.Keys))
             {
                 if (IgnoredRegisteredConsumers.Contains(registeredConsumer))
@@ -136,10 +171,9 @@
         /// </summary>
         /// <param name="consumer">The consumer to register.</param>
         /// <param name="payload">The payload that the consumer successfully consumed.</param>
-        [RequiresBehaviourState]
         public virtual void Register(ActiveCollisionConsumer consumer, ActiveCollisionPublisher.PayloadData payload)
         {
-            if (consumer == null)
+            if (!this.IsValidState() || consumer == null)
             {
                 return;
             }

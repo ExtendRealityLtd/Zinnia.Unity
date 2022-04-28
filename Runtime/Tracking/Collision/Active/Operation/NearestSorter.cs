@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -18,12 +15,23 @@
         /// </summary>
         protected class EventDataComparer : IComparer<CollisionNotifier.EventData>
         {
+            [Tooltip("The position to check against.")]
+            [SerializeField]
+            private Vector3 sourcePosition;
             /// <summary>
             /// The position to check against.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Vector3 SourcePosition { get; set; }
+            public Vector3 SourcePosition
+            {
+                get
+                {
+                    return sourcePosition;
+                }
+                set
+                {
+                    sourcePosition = value;
+                }
+            }
 
             /// <inheritdoc />
             public virtual int Compare(CollisionNotifier.EventData x, CollisionNotifier.EventData y)
@@ -42,12 +50,23 @@
             }
         }
 
+        [Tooltip("The source to determine the closest collision to.")]
+        [SerializeField]
+        private GameObject source;
         /// <summary>
         /// The source to determine the closest collision to.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        public GameObject Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+            }
+        }
 
         /// <summary>
         /// The sorted list.
@@ -61,7 +80,6 @@
         /// <summary>
         /// Emitted when the collection is sorted.
         /// </summary>
-        [DocumentedByXml]
         public ActiveCollisionsContainer.ActiveCollisionUnityEvent Sorted = new ActiveCollisionsContainer.ActiveCollisionUnityEvent();
 
         /// <summary>
@@ -72,6 +90,19 @@
         /// The comparison <see cref="Comparer"/> does.
         /// </summary>
         protected static readonly Comparison<CollisionNotifier.EventData> Comparison = Comparer.Compare;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
 
         /// <summary>
         /// Sorts the given collision collection by the collisions that are nearest to the source <see cref="Transform"/>.

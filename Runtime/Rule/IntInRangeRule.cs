@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Data.Type;
 
     /// <summary>
@@ -9,12 +8,23 @@
     /// </summary>
     public class IntInRangeRule : IntRule
     {
+        [Tooltip("The range in which the given int must be equal to the bounds or within the range.")]
+        [SerializeField]
+        private IntRange range;
         /// <summary>
         /// The range in which the given <see cref="int"/> must be equal to the bounds or within the range.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public IntRange Range { get; set; }
+        public IntRange Range
+        {
+            get
+            {
+                return range;
+            }
+            set
+            {
+                range = value;
+            }
+        }
 
         /// <inheritdoc />
         protected override bool Accepts(int targetInt)

@@ -1,12 +1,9 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits the velocities of a given <see cref="VelocityTracker"/>.
@@ -25,41 +22,60 @@
         [Serializable]
         public class FloatUnityEvent : UnityEvent<float> { }
 
+        [Tooltip("The source VelocityTracker to receive the velocity data from.")]
+        [SerializeField]
+        private VelocityTracker source;
         /// <summary>
         /// The source <see cref="VelocityTracker"/> to receive the velocity data from.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public VelocityTracker Source { get; set; }
+        public VelocityTracker Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when the Tracked Velocity is emitted.
         /// </summary>
-        [DocumentedByXml]
         public Vector3UnityEvent VelocityEmitted = new Vector3UnityEvent();
         /// <summary>
         /// Emitted when the Tracked Speed is emitted.
         /// </summary>
-        [DocumentedByXml]
         public FloatUnityEvent SpeedEmitted = new FloatUnityEvent();
         /// <summary>
         /// Emitted when the Tracked Angular Velocity is emitted.
         /// </summary>
-        [DocumentedByXml]
         public Vector3UnityEvent AngularVelocityEmitted = new Vector3UnityEvent();
         /// <summary>
         /// Emitted when the Tracked Angular Speed is emitted.
         /// </summary>
-        [DocumentedByXml]
         public FloatUnityEvent AngularSpeedEmitted = new FloatUnityEvent();
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
 
         /// <summary>
         /// Emits the Velocity of the Tracked Velocity.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitVelocity()
         {
-            if (Source == null)
+            if (!this.IsValidState() || Source == null)
             {
                 return;
             }
@@ -70,10 +86,9 @@
         /// <summary>
         /// Emits the Speed of the Tracked Velocity.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitSpeed()
         {
-            if (Source == null)
+            if (!this.IsValidState() || Source == null)
             {
                 return;
             }
@@ -84,10 +99,9 @@
         /// <summary>
         /// Emits the Angular Velocity of the Tracked Velocity.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitAngularVelocity()
         {
-            if (Source == null)
+            if (!this.IsValidState() || Source == null)
             {
                 return;
             }
@@ -98,10 +112,9 @@
         /// <summary>
         /// Emits the Angular Velocity of the Tracked Velocity.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitAngularSpeed()
         {
-            if (Source == null)
+            if (!this.IsValidState() || Source == null)
             {
                 return;
             }

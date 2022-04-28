@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Position
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -11,18 +9,41 @@
     public class RigidbodyVelocity : DivergablePropertyModifier
     {
         #region Velocity Settings
+        [Header("Velocity Settings")]
+        [Tooltip("The maximum squared magnitude of velocity that can be applied to the source.")]
+        [SerializeField]
+        private float velocityLimit = float.PositiveInfinity;
         /// <summary>
         /// The maximum squared magnitude of velocity that can be applied to the source.
         /// </summary>
-        [Serialized]
-        [field: Header("Velocity Settings"), DocumentedByXml]
-        public float VelocityLimit { get; set; } = float.PositiveInfinity;
+        public float VelocityLimit
+        {
+            get
+            {
+                return velocityLimit;
+            }
+            set
+            {
+                velocityLimit = value;
+            }
+        }
+        [Tooltip("The maximum difference in distance to the tracked position.")]
+        [SerializeField]
+        private float maxDistanceDelta = 10f;
         /// <summary>
         /// The maximum difference in distance to the tracked position.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float MaxDistanceDelta { get; set; } = 10f;
+        public float MaxDistanceDelta
+        {
+            get
+            {
+                return maxDistanceDelta;
+            }
+            set
+            {
+                maxDistanceDelta = value;
+            }
+        }
         #endregion
 
         /// <summary>

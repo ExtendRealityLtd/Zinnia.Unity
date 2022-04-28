@@ -1,21 +1,34 @@
 namespace Zinnia.Cast
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Casts a straight line in the direction of the origin for a fixed length.
     /// </summary>
     public class FixedLineCast : StraightLineCast
     {
+        [Tooltip("The current length of the cast.")]
+        [SerializeField]
+        private float currentLength = 1f;
         /// <summary>
         /// The current length of the cast.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentLength { get; set; } = 1f;
+        public float CurrentLength
+        {
+            get
+            {
+                return currentLength;
+            }
+            set
+            {
+                currentLength = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterCurrentLengthChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Sets the current length of the cast from the given event data.
@@ -55,19 +68,17 @@ namespace Zinnia.Cast
         /// <summary>
         /// Called after <see cref="StraightLineCast.MaximumLength"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(MaximumLength))]
-        protected virtual void OnAfterMaximumLengthChange()
+        protected override void OnAfterMaximumLengthChange()
         {
-            CurrentLength = GetClampedCurrentLength();
+            currentLength = GetClampedCurrentLength();
         }
 
         /// <summary>
         /// Called after <see cref="CurrentLength"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(CurrentLength))]
         protected virtual void OnAfterCurrentLengthChange()
         {
-            CurrentLength = GetClampedCurrentLength();
+            currentLength = GetClampedCurrentLength();
         }
     }
 }

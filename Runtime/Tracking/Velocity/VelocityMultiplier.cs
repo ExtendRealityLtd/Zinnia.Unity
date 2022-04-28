@@ -1,33 +1,77 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Multiplies the given source velocity data.
     /// </summary>
     public class VelocityMultiplier : VelocityTracker
     {
+        [Tooltip("The VelocityTracker to use as the source data.")]
+        [SerializeField]
+        private VelocityTracker source;
         /// <summary>
         /// The <see cref="VelocityTracker"/> to use as the source data.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public VelocityTracker Source { get; set; }
+        public VelocityTracker Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+            }
+        }
+        [Tooltip("The amount to multiply the source velocity by.")]
+        [SerializeField]
+        private Vector3 velocityMultiplierFactor = Vector3.one;
         /// <summary>
         /// The amount to multiply the source velocity by.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 VelocityMultiplierFactor { get; set; } = Vector3.one;
+        public Vector3 VelocityMultiplierFactor
+        {
+            get
+            {
+                return velocityMultiplierFactor;
+            }
+            set
+            {
+                velocityMultiplierFactor = value;
+            }
+        }
+        [Tooltip("The amount to multiply the source angular velocity by.")]
+        [SerializeField]
+        private Vector3 angularVelocityMultiplierFactor = Vector3.one;
         /// <summary>
         /// The amount to multiply the source angular velocity by.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 AngularVelocityMultiplierFactor { get; set; } = Vector3.one;
+        public Vector3 AngularVelocityMultiplierFactor
+        {
+            get
+            {
+                return angularVelocityMultiplierFactor;
+            }
+            set
+            {
+                angularVelocityMultiplierFactor = value;
+            }
+        }
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="VelocityMultiplierFactor"/> x value.

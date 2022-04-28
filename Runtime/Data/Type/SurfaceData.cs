@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Extension;
@@ -13,18 +10,40 @@
     [Serializable]
     public class SurfaceData : TransformData
     {
+        [Tooltip("The origin in which the surface search came from.")]
+        [SerializeField]
+        private Vector3 origin;
         /// <summary>
         /// The origin in which the surface search came from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 Origin { get; set; }
+        public Vector3 Origin
+        {
+            get
+            {
+                return origin;
+            }
+            set
+            {
+                origin = value;
+            }
+        }
+        [Tooltip("The direction in which the surface search came from.")]
+        [SerializeField]
+        private Vector3 direction;
         /// <summary>
         /// The direction in which the surface search came from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 Direction { get; set; }
+        public Vector3 Direction
+        {
+            get
+            {
+                return direction;
+            }
+            set
+            {
+                direction = value;
+            }
+        }
 
         /// <summary>
         /// Positional offset data that has been applied to the collision point.
@@ -34,7 +53,22 @@
         /// <summary>
         /// <see cref="RaycastHit"/> data about the current collision.
         /// </summary>
-        public RaycastHit CollisionData { get; set; }
+        private RaycastHit collisionData;
+        public RaycastHit CollisionData
+        {
+            get
+            {
+                return collisionData;
+            }
+            set
+            {
+                if (Application.isPlaying)
+                {
+                    OnBeforeCollisionDataChange();
+                }
+                collisionData = value;
+            }
+        }
 
         /// <summary>
         /// <see cref="RaycastHit"/> data about the previous collision.
@@ -133,7 +167,6 @@
         /// <summary>
         /// Called before <see cref="CollisionData"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(CollisionData))]
         protected virtual void OnBeforeCollisionDataChange()
         {
             PreviousCollisionData = CollisionData;

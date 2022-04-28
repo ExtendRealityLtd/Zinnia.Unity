@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Cast.Operation.Conversion;
@@ -13,24 +10,57 @@
     /// </summary>
     public class PhysicsCast : MonoBehaviour
     {
+        [Tooltip("The layers to ignore when casting.")]
+        [SerializeField]
+        private LayerMask layersToIgnore = Physics.IgnoreRaycastLayer;
         /// <summary>
         /// The layers to ignore when casting.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public LayerMask LayersToIgnore { get; set; } = Physics.IgnoreRaycastLayer;
+        public LayerMask LayersToIgnore
+        {
+            get
+            {
+                return layersToIgnore;
+            }
+            set
+            {
+                layersToIgnore = value;
+            }
+        }
+        [Tooltip("Determines whether the cast will interact with trigger colliders.")]
+        [SerializeField]
+        private QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.UseGlobal;
         /// <summary>
         /// Determines whether the cast will interact with trigger colliders.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public QueryTriggerInteraction TriggerInteraction { get; set; } = QueryTriggerInteraction.UseGlobal;
+        public QueryTriggerInteraction TriggerInteraction
+        {
+            get
+            {
+                return triggerInteraction;
+            }
+            set
+            {
+                triggerInteraction = value;
+            }
+        }
+        [Tooltip("Allows for the conversion of one cast type to another cast type.")]
+        [SerializeField]
+        private CastConverter convertTo;
         /// <summary>
         /// Allows for the conversion of one cast type to another cast type.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public CastConverter ConvertTo { get; set; }
+        public CastConverter ConvertTo
+        {
+            get
+            {
+                return convertTo;
+            }
+            set
+            {
+                convertTo = value;
+            }
+        }
 
         /// <summary>
         /// A reusable array of <see cref="RaycastHit"/>s to use with non-allocating <see cref="Physics"/> API.
@@ -42,12 +72,34 @@
         protected static readonly Collider[] Colliders = new Collider[1000];
 
         /// <summary>
+        /// Clears <see cref="ConvertTo"/>.
+        /// </summary>
+        public virtual void ClearConvertTo()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ConvertTo = default;
+        }
+
+        /// <summary>
         /// Sets the <see cref="LayersToIgnore"/>.
         /// </summary>
         /// <param name="index">The index of the <see cref="LayerMask"/>.</param>
         public virtual void SetLayersToIgnore(int index)
         {
-            LayersToIgnore = EnumExtensions.GetByIndex<LayerMask>(index);
+            LayersToIgnore = LayersToIgnore.Set(index);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="LayersToIgnore"/>.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="LayerMask"/>.</param>
+        public virtual void SetLayersToIgnore(string name)
+        {
+            LayersToIgnore = LayersToIgnore.Set(name);
         }
 
         /// <summary>

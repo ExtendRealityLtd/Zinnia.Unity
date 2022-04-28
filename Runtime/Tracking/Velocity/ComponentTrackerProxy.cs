@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
 
@@ -12,17 +8,45 @@
     /// </summary>
     public class ComponentTrackerProxy : VelocityTracker
     {
+        [Tooltip("The GameObject that contains a VelocityTracker.")]
+        [SerializeField]
+        private GameObject proxySource;
         /// <summary>
         /// The <see cref="GameObject"/> that contains a <see cref="VelocityTracker"/>.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject ProxySource { get; set; }
+        public GameObject ProxySource
+        {
+            get
+            {
+                return proxySource;
+            }
+            set
+            {
+                proxySource = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterProxySourceChange();
+                }
+            }
+        }
 
         /// <summary>
         /// The cached <see cref="VelocityTracker"/> found on the proxy <see cref="Component"/>.
         /// </summary>
         protected VelocityTracker cachedVelocityTracker;
+
+        /// <summary>
+        /// Clears <see cref="ProxySource"/>.
+        /// </summary>
+        public virtual void ClearProxySource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ProxySource = default;
+        }
 
         protected virtual void OnEnable()
         {
@@ -50,7 +74,6 @@
         /// <summary>
         /// Called after <see cref="ProxySource"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(ProxySource))]
         protected virtual void OnAfterProxySourceChange()
         {
             SetCachedVelocityTracker();

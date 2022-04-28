@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -22,12 +20,23 @@
         [Serializable]
         public class UnityEvent : UnityEvent<bool> { }
 
+        [Tooltip("The bounds in which the float must be to be considered a positive boolean.")]
+        [SerializeField]
+        private FloatRange positiveBounds = new FloatRange(0f, 1f);
         /// <summary>
         /// The bounds in which the <see cref="float"/> must be to be considered a positive boolean.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        protected FloatRange PositiveBounds { get; set; } = new FloatRange(0f, 1f);
+        protected FloatRange PositiveBounds
+        {
+            get
+            {
+                return positiveBounds;
+            }
+            set
+            {
+                positiveBounds = value;
+            }
+        }
 
         /// <summary>
         /// Sets the positive bounds from a given <see cref="Vector2"/>.

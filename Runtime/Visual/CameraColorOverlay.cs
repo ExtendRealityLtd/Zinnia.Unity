@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Visual
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections;
     using UnityEngine;
@@ -23,12 +19,23 @@
         [Serializable]
         public class EventData
         {
+            [Tooltip("The Color being applied to the camera overlay.")]
+            [SerializeField]
+            private Color color;
             /// <summary>
             /// The <see cref="Color"/> being applied to the camera overlay.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Color Color { get; set; }
+            public Color Color
+            {
+                get
+                {
+                    return color;
+                }
+                set
+                {
+                    color = value;
+                }
+            }
 
             public EventData Set(EventData source)
             {
@@ -69,67 +76,140 @@
         [Serializable]
         public class UnityEvent : UnityEvent<EventData> { }
 
+        [Tooltip("The rules to determine which scene cameras to apply the overlay to.")]
+        [SerializeField]
+        private RuleContainer cameraValidity;
         /// <summary>
         /// The rules to determine which scene cameras to apply the overlay to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer CameraValidity { get; set; }
+        public RuleContainer CameraValidity
+        {
+            get
+            {
+                return cameraValidity;
+            }
+            set
+            {
+                cameraValidity = value;
+            }
+        }
+        [Tooltip("The Color of the overlay.")]
+        [SerializeField]
+        private Color overlayColor = Color.black;
         /// <summary>
         /// The <see cref="Color"/> of the overlay.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Color OverlayColor { get; set; } = Color.black;
+        public Color OverlayColor
+        {
+            get
+            {
+                return overlayColor;
+            }
+            set
+            {
+                overlayColor = value;
+            }
+        }
+        [Tooltip("The Material to use for the overlay.")]
+        [SerializeField]
+        private Material overlayMaterial;
         /// <summary>
         /// The <see cref="Material"/> to use for the overlay.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Material OverlayMaterial { get; set; }
+        public Material OverlayMaterial
+        {
+            get
+            {
+                return overlayMaterial;
+            }
+            set
+            {
+                overlayMaterial = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterOverlayMaterialChange();
+                }
+            }
+        }
+        [Tooltip("The duration of time to apply the overlay Color.")]
+        [SerializeField]
+        private float addDuration;
         /// <summary>
         /// The duration of time to apply the overlay <see cref="Color"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float AddDuration { get; set; }
+        public float AddDuration
+        {
+            get
+            {
+                return addDuration;
+            }
+            set
+            {
+                addDuration = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAddDurationChange();
+                }
+            }
+        }
+        [Tooltip("The duration of time to remove the overlay Color.")]
+        [SerializeField]
+        private float removeDuration = 1f;
         /// <summary>
         /// The duration of time to remove the overlay <see cref="Color"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float RemoveDuration { get; set; } = 1f;
+        public float RemoveDuration
+        {
+            get
+            {
+                return removeDuration;
+            }
+            set
+            {
+                removeDuration = value;
+            }
+        }
+        [Tooltip("The duration of time to wait once the overlay Color is applied before it is removed.")]
+        [SerializeField]
+        private float appliedDuration;
         /// <summary>
         /// The duration of time to wait once the overlay <see cref="Color"/> is applied before it is removed.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float AppliedDuration { get; set; }
+        public float AppliedDuration
+        {
+            get
+            {
+                return appliedDuration;
+            }
+            set
+            {
+                appliedDuration = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAppliedDurationChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Emitted when the <see cref="AddColorOverlay"/> method is called.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Added = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="AddColorOverlay"/> target overlay <see cref="Color"/> is reached.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent AddTransitioned = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="RemoveColorOverlay"/> method is called.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Removed = new UnityEvent();
         /// <summary>
         /// Emitted when the <see cref="RemoveColorOverlay"/> target overlay <see cref="Color"/> is reached.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent RemoveTransitioned = new UnityEvent();
         /// <summary>
         /// Emitted when an overlay <see cref="Color"/> has changed from the previous render frame.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Changed = new UnityEvent();
 
         /// <summary>
@@ -191,9 +271,13 @@
         /// </summary>
         /// <param name="overlayColor">The <see cref="Color"/> to apply to the overlay.</param>
         /// <param name="addDuration">The duration of time to apply the overlay <see cref="Color"/>.</param>
-        [RequiresBehaviourState]
         public virtual void AddColorOverlay(Color overlayColor, float addDuration)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             OverlayColor = overlayColor;
             AddDuration = addDuration;
             AddColorOverlay();
@@ -202,18 +286,26 @@
         /// <summary>
         /// Applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void AddColorOverlay()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ApplyColorOverlay(OverlayColor, AddDuration);
         }
 
         /// <summary>
         /// Removes the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="RemoveDuration"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void RemoveColorOverlay()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ApplyColorOverlay(Color.clear, RemoveDuration);
             Removed?.Invoke(eventData.Set(Color.clear));
         }
@@ -221,9 +313,13 @@
         /// <summary>
         /// Applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/> then waits for the given <see cref="AppliedDuration"/> then removes the <see cref="OverlayColor"/> over the given <see cref="RemoveDuration"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Blink()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ApplyColorOverlay(OverlayColor, AddDuration);
             blinkRoutine = StartCoroutine(ResetBlink());
         }
@@ -246,7 +342,7 @@
         {
             lastUsedCamera = null;
             CopyMaterialOverlayToWorking();
-            OnAfterCheckDelayChange();
+            SetResetDelayInstruction();
             if (GraphicsSettings.renderPipelineAsset != null)
             {
                 CreateFadeMesh();
@@ -514,18 +610,38 @@
         }
 
         /// <summary>
+        /// Sets the <see cref="resetDelayYieldInstruction"/> value based on the current <see cref="AddDuration"/> plus the <see cref="AppliedDuration"/>.
+        /// </summary>
+        protected virtual void SetResetDelayInstruction()
+        {
+            resetDelayYieldInstruction = new WaitForSeconds(AddDuration + AppliedDuration);
+        }
+
+        /// <summary>
         /// Called after <see cref="OverlayMaterial"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(OverlayMaterial))]
         protected virtual void OnAfterOverlayMaterialChange()
         {
             CopyMaterialOverlayToWorking();
         }
 
         /// <summary>
-        /// Called after <see cref="AddDuration"/> or <see cref="AppliedDuration"/> have been changed.
+        /// Called after <see cref="AddDuration"/>.
         /// </summary>
-        [CalledAfterChangeOf(nameof(AddDuration)), CalledAfterChangeOf(nameof(AppliedDuration))]
+        protected virtual void OnAfterAddDurationChange()
+        {
+            SetResetDelayInstruction();
+        }
+
+        /// <summary>
+        /// Called after <see cref="AppliedDuration"/>.
+        /// </summary>
+        protected virtual void OnAfterAppliedDurationChange()
+        {
+            SetResetDelayInstruction();
+        }
+
+        [Obsolete("Use `SetResetDelayInstruction` instead.")]
         protected virtual void OnAfterCheckDelayChange()
         {
             resetDelayYieldInstruction = new WaitForSeconds(AddDuration + AppliedDuration);

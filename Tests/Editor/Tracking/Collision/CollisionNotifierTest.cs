@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Collision;
+﻿using Zinnia.Rule;
+using Zinnia.Tracking.Collision;
 
 namespace Test.Zinnia.Tracking.Collision
 {
@@ -358,6 +359,44 @@ namespace Test.Zinnia.Tracking.Collision
 
             Object.DestroyImmediate(linkedContainer);
             Object.DestroyImmediate(unlinkedContainer);
+        }
+
+        [Test]
+        public void ClearForwardingSourceValidity()
+        {
+            containingObject.SetActive(true);
+            Assert.IsNull(subject.ForwardingSourceValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ForwardingSourceValidity = rule;
+            Assert.AreEqual(rule, subject.ForwardingSourceValidity);
+            subject.ClearForwardingSourceValidity();
+            Assert.IsNull(subject.ForwardingSourceValidity);
+        }
+
+        [Test]
+        public void ClearForwardingSourceValidityInactiveGameObject()
+        {
+            containingObject.SetActive(true);
+            Assert.IsNull(subject.ForwardingSourceValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ForwardingSourceValidity = rule;
+            Assert.AreEqual(rule, subject.ForwardingSourceValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearForwardingSourceValidity();
+            Assert.AreEqual(rule, subject.ForwardingSourceValidity);
+        }
+
+        [Test]
+        public void ClearForwardingSourceValidityInactiveComponent()
+        {
+            containingObject.SetActive(true);
+            Assert.IsNull(subject.ForwardingSourceValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ForwardingSourceValidity = rule;
+            Assert.AreEqual(rule, subject.ForwardingSourceValidity);
+            subject.enabled = false;
+            subject.ClearForwardingSourceValidity();
+            Assert.AreEqual(rule, subject.ForwardingSourceValidity);
         }
 
         public class CollisionNotifierMock : CollisionNotifier

@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -22,12 +18,23 @@
         [Serializable]
         public class EventData
         {
+            [Tooltip("The current active collisions.")]
+            [SerializeField]
+            private List<CollisionNotifier.EventData> activeCollisions = new List<CollisionNotifier.EventData>();
             /// <summary>
             /// The current active collisions.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public List<CollisionNotifier.EventData> ActiveCollisions { get; set; } = new List<CollisionNotifier.EventData>();
+            public List<CollisionNotifier.EventData> ActiveCollisions
+            {
+                get
+                {
+                    return activeCollisions;
+                }
+                set
+                {
+                    activeCollisions = value;
+                }
+            }
 
             public EventData Set(EventData source)
             {
@@ -54,24 +61,35 @@
         public class ActiveCollisionUnityEvent : UnityEvent<EventData> { }
 
         #region Validity Settings
+        [Header("Validity Settings")]
+        [Tooltip("Determines whether the collision is valid and to add it to the active collision collection.")]
+        [SerializeField]
+        private RuleContainer collisionValidity;
         /// <summary>
         /// Determines whether the collision is valid and to add it to the active collision collection.
         /// </summary>
-        [Serialized, Cleared]
-        [field: Header("Validity Settings"), DocumentedByXml]
-        public RuleContainer CollisionValidity { get; set; }
+        public RuleContainer CollisionValidity
+        {
+            get
+            {
+                return collisionValidity;
+            }
+            set
+            {
+                collisionValidity = value;
+            }
+        }
         #endregion
 
         #region Collection Events
         /// <summary>
         /// Emitted when the collision count has changed.
         /// </summary>
-        [Header("Collection Events"), DocumentedByXml]
+        [Header("Collection Events")]
         public ActiveCollisionUnityEvent CountChanged = new ActiveCollisionUnityEvent();
         /// <summary>
         /// Emitted when the collision contents have changed.
         /// </summary>
-        [DocumentedByXml]
         public ActiveCollisionUnityEvent ContentsChanged = new ActiveCollisionUnityEvent();
         #endregion
 
@@ -79,22 +97,19 @@
         /// <summary>
         /// Emitted when the first collision occurs.
         /// </summary>
-        [Header("Collision Events"), DocumentedByXml]
+        [Header("Collision Events")]
         public CollisionNotifier.UnityEvent FirstStarted = new CollisionNotifier.UnityEvent();
         /// <summary>
         /// Emitted when a collision is added.
         /// </summary>
-        [DocumentedByXml]
         public CollisionNotifier.UnityEvent Added = new CollisionNotifier.UnityEvent();
         /// <summary>
         /// Emitted when a collision is removed.
         /// </summary>
-        [DocumentedByXml]
         public CollisionNotifier.UnityEvent Removed = new CollisionNotifier.UnityEvent();
         /// <summary>
         /// Emitted when there are no more collisions occuring.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent AllStopped = new UnityEvent();
         #endregion
 
@@ -113,12 +128,29 @@
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
+        /// Clears <see cref="CollisionValidity"/>.
+        /// </summary>
+        public virtual void ClearCollisionValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            CollisionValidity = default;
+        }
+
+        /// <summary>
         /// Adds the given collision as an active collision.
         /// </summary>
         /// <param name="collisionData">The collision data.</param>
-        [RequiresBehaviourState]
         public virtual void Add(CollisionNotifier.EventData collisionData)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Transform currentCollisionContainingTransform = collisionData.ColliderData.GetContainingTransform();
             if (!IsValidCollision(currentCollisionContainingTransform))
             {
@@ -151,9 +183,13 @@
         /// Removes the given collision from being an active collision.
         /// </summary>
         /// <param name="collisionData">The collision data.</param>
-        [RequiresBehaviourState]
         public virtual void Remove(CollisionNotifier.EventData collisionData)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Transform currentCollisionContainingTransform = collisionData.ColliderData.GetContainingTransform();
             if (!containingTransformCollisions.TryGetValue(currentCollisionContainingTransform, out List<CollisionNotifier.EventData> foundCollisionElements))
             {
@@ -174,9 +210,13 @@
         /// <summary>
         /// Processes any changes to the contents of existing collisions.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void ProcessContentsChanged()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ContentsChanged?.Invoke(eventData.Set(Elements));
         }
 

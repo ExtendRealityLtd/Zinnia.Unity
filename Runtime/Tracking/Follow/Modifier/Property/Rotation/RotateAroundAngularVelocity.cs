@@ -1,10 +1,8 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
     using Zinnia.Tracking.Velocity;
 
     /// <summary>
@@ -12,31 +10,87 @@
     /// </summary>
     public class RotateAroundAngularVelocity : PropertyModifier
     {
+        [Tooltip("The VelocityTracker that is the source of the angular velocity.")]
+        [SerializeField]
+        private VelocityTracker angularVelocitySource;
         /// <summary>
         /// The <see cref="VelocityTracker"/> that is the source of the angular velocity.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public VelocityTracker AngularVelocitySource { get; set; }
+        public VelocityTracker AngularVelocitySource
+        {
+            get
+            {
+                return angularVelocitySource;
+            }
+            set
+            {
+                angularVelocitySource = value;
+            }
+        }
+        [Tooltip("Multiplies the AngularVelocitySource by this value.")]
+        [SerializeField]
+        private Vector3 sourceMultiplier = Vector3.one;
         /// <summary>
         /// Multiplies the <see cref="AngularVelocitySource"/> by this value.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 SourceMultiplier { get; set; } = Vector3.one;
+        public Vector3 SourceMultiplier
+        {
+            get
+            {
+                return sourceMultiplier;
+            }
+            set
+            {
+                sourceMultiplier = value;
+            }
+        }
+        [Tooltip("The axes to apply the angular velocity to.")]
+        [SerializeField]
+        private Vector3State applyToAxis;
         /// <summary>
         /// The axes to apply the angular velocity to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State ApplyToAxis { get; set; }
-        
+        public Vector3State ApplyToAxis
+        {
+            get
+            {
+                return applyToAxis;
+            }
+            set
+            {
+                applyToAxis = value;
+            }
+        }
+        [Tooltip("When true, transforms the angular velocity to be in target's space instead of world space.")]
+        [SerializeField]
+        private bool inTargetSpace;
         /// <summary>
         /// When true, transforms the angular velocity to be in target's space instead of world space.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool InTargetSpace { get; set; }
+        public bool InTargetSpace
+        {
+            get
+            {
+                return inTargetSpace;
+            }
+            set
+            {
+                inTargetSpace = value;
+            }
+        }
+
+        /// <summary>
+        /// Clears <see cref="AngularVelocitySource"/>.
+        /// </summary>
+        public virtual void ClearAngularVelocitySource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            AngularVelocitySource = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="SourceMultiplier"/> x value.
@@ -108,7 +162,7 @@
             Vector3 input = InTargetSpace
                 ? target.transform.parent.InverseTransformVector(AngularVelocitySource.GetAngularVelocity())
                 : AngularVelocitySource.GetAngularVelocity();
-                            
+
             input.Scale(SourceMultiplier);
             input.Scale(ApplyToAxis.ToVector3());
 

@@ -1,10 +1,5 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -25,19 +20,41 @@
         [Serializable]
         public class EventData
         {
+            [Tooltip("The result of the most recent cast. null when the cast didn't hit anything.")]
+            [SerializeField]
+            private RaycastHit? hitData;
             /// <summary>
             /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public RaycastHit? HitData { get; set; }
+            public RaycastHit? HitData
+            {
+                get
+                {
+                    return hitData;
+                }
+                set
+                {
+                    hitData = value;
+                }
+            }
 
+            [Tooltip("The validity of the most recent HitData based on the TargetValidity rule.")]
+            [SerializeField]
+            private bool isValid;
             /// <summary>
             /// The validity of the most recent <see cref="HitData"/> based on the <see cref="TargetValidity"/> rule.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsValid { get; set; }
+            public bool IsValid
+            {
+                get
+                {
+                    return isValid;
+                }
+                set
+                {
+                    isValid = value;
+                }
+            }
 
             /// <summary>
             /// The points along the most recent cast.
@@ -94,30 +111,74 @@
         [Serializable]
         public class UnityEvent : UnityEvent<EventData> { }
 
+        [Tooltip("The origin point for the cast.")]
+        [SerializeField]
+        private GameObject origin;
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Origin { get; set; }
+        public GameObject Origin
+        {
+            get
+            {
+                return origin;
+            }
+            set
+            {
+                origin = value;
+            }
+        }
+        [Tooltip("Allows to optionally affect the cast.")]
+        [SerializeField]
+        private PhysicsCast physicsCast;
         /// <summary>
         /// Allows to optionally affect the cast.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public PhysicsCast PhysicsCast { get; set; }
+        public PhysicsCast PhysicsCast
+        {
+            get
+            {
+                return physicsCast;
+            }
+            set
+            {
+                physicsCast = value;
+            }
+        }
+        [Tooltip("Allows to optionally determine targets based on the set rules.")]
+        [SerializeField]
+        private RuleContainer targetValidity;
         /// <summary>
         /// Allows to optionally determine targets based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public RuleContainer TargetValidity { get; set; }
+        public RuleContainer TargetValidity
+        {
+            get
+            {
+                return targetValidity;
+            }
+            set
+            {
+                targetValidity = value;
+            }
+        }
+        [Tooltip("Allows to optionally determine specific target point based on the set rules.")]
+        [SerializeField]
+        private RuleContainer targetPointValidity;
         /// <summary>
         /// Allows to optionally determine specific target point based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public RuleContainer TargetPointValidity { get; set; }
+        public RuleContainer TargetPointValidity
+        {
+            get
+            {
+                return targetPointValidity;
+            }
+            set
+            {
+                targetPointValidity = value;
+            }
+        }
 
         /// <summary>
         /// An override for the destination location point in world space.
@@ -127,13 +188,27 @@
         /// <summary>
         /// Emitted whenever the cast result changes.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent ResultsChanged = new UnityEvent();
 
         /// <summary>
         /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/> or <see cref="TargetPointValidity"/> rules.
         /// </summary>
-        public RaycastHit? TargetHit { get; protected set; }
+        private RaycastHit? targetHit;
+        public RaycastHit? TargetHit
+        {
+            get
+            {
+                return targetHit;
+            }
+            protected set
+            {
+                targetHit = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetHitChange();
+                }
+            }
+        }
         /// <summary>
         /// Whether the current <see cref="TargetHit"/> is valid based on the <see cref="TargetValidity"/> and <see cref="TargetPointValidity"/> rules.
         /// </summary>
@@ -141,7 +216,7 @@
         /// <summary>
         /// The points along the most recent cast.
         /// </summary>
-        public HeapAllocationFreeReadOnlyList<Vector3> Points => points;
+        public virtual HeapAllocationFreeReadOnlyList<Vector3> Points => points;
 
         /// <summary>
         /// The points along the most recent cast.
@@ -153,22 +228,55 @@
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
-        /// Casts and creates points along the cast.
+        /// Clears <see cref="Origin"/>.
         /// </summary>
-        [RequiresBehaviourState]
-        public virtual void CastPoints()
+        public virtual void ClearOrigin()
         {
-            if (Origin == null)
+            if (!this.IsValidState())
             {
                 return;
             }
-            DoCastPoints();
+
+            Origin = default;
         }
 
-        /// <inheritdoc />
-        public virtual void Process()
+        /// <summary>
+        /// Clears <see cref="PhysicsCast"/>.
+        /// </summary>
+        public virtual void ClearPhysicsCast()
         {
-            CastPoints();
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PhysicsCast = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetValidity = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetPointValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetPointValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetPointValidity = default;
         }
 
         /// <summary>
@@ -177,6 +285,25 @@
         public virtual void ClearDestinationPointOverride()
         {
             DestinationPointOverride = null;
+        }
+
+        /// <summary>
+        /// Casts and creates points along the cast.
+        /// </summary>
+        public virtual void CastPoints()
+        {
+            if (!this.IsValidState() || Origin == null)
+            {
+                return;
+            }
+
+            DoCastPoints();
+        }
+
+        /// <inheritdoc />
+        public virtual void Process()
+        {
+            CastPoints();
         }
 
         /// <summary>
@@ -199,7 +326,6 @@
         /// <summary>
         /// Called after <see cref="TargetHit"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(TargetHit))]
         protected virtual void OnAfterTargetHitChange()
         {
             IsTargetHitValid = TargetHit != null && TargetValidity.Accepts(TargetHit.Value.transform.gameObject) && TargetPointValidity.Accepts(TargetHit.Value.point);

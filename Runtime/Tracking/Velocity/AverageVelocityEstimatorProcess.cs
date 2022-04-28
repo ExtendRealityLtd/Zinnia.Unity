@@ -1,11 +1,6 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
     using System;
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -15,61 +10,178 @@
     /// </summary>
     public class AverageVelocityEstimatorProcess : VelocityTracker, IProcessable
     {
+        [Tooltip("The source to track and estimate velocities for.")]
+        [SerializeField]
+        private GameObject source;
         /// <summary>
         /// The source to track and estimate velocities for.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Source { get; set; }
+        public GameObject Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourceChange();
+                }
+            }
+        }
+        [Tooltip("An optional object to consider the source relative to when estimating the velocities.")]
+        [SerializeField]
+        private GameObject relativeTo;
         /// <summary>
         /// An optional object to consider the source relative to when estimating the velocities.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject RelativeTo { get; set; }
+        public GameObject RelativeTo
+        {
+            get
+            {
+                return relativeTo;
+            }
+            set
+            {
+                relativeTo = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterRelativeToChange();
+                }
+            }
+        }
+        [Tooltip("Whether samples are currently being collected.")]
+        [SerializeField]
+        private bool isEstimating = true;
         /// <summary>
         /// Whether samples are currently being collected.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool IsEstimating { get; set; } = true;
+        public bool IsEstimating
+        {
+            get
+            {
+                return isEstimating;
+            }
+            set
+            {
+                isEstimating = value;
+            }
+        }
+        [Tooltip("The number of average frames to collect samples for velocity estimation.")]
+        [SerializeField]
+        private int velocityAverageFrames = 5;
         /// <summary>
         /// The number of average frames to collect samples for velocity estimation.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public int VelocityAverageFrames { get; set; } = 5;
+        public int VelocityAverageFrames
+        {
+            get
+            {
+                return velocityAverageFrames;
+            }
+            set
+            {
+                velocityAverageFrames = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterVelocityAverageFramesChange();
+                }
+            }
+        }
+        [Tooltip("The number of average frames to collect samples for angular velocity estimation.")]
+        [SerializeField]
+        private int angularVelocityAverageFrames = 10;
         /// <summary>
         /// The number of average frames to collect samples for angular velocity estimation.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public int AngularVelocityAverageFrames { get; set; } = 10;
+        public int AngularVelocityAverageFrames
+        {
+            get
+            {
+                return angularVelocityAverageFrames;
+            }
+            set
+            {
+                angularVelocityAverageFrames = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAngularVelocityAverageFramesChange();
+                }
+            }
+        }
 
+        /// <summary>
+        /// The current count of samples to calculate the velocity from.
+        /// </summary>
         protected int currentSampleCount;
+        /// <summary>
+        /// The frame samples of velocity to used to calculate final velocity.
+        /// </summary>
         protected Vector3[] velocitySamples = Array.Empty<Vector3>();
+        /// <summary>
+        /// The frame samples of angular velocity to used to calculate final angular velocity.
+        /// </summary>
         protected Vector3[] angularVelocitySamples = Array.Empty<Vector3>();
+        /// <summary>
+        /// The previous position of the <see cref="Source"/>.
+        /// </summary>
         protected Vector3 previousPosition = Vector3.zero;
+        /// <summary>
+        /// The previous rotation of the <see cref="Source"/>.
+        /// </summary>
         protected Quaternion previousRotation = Quaternion.identity;
+        /// <summary>
+        /// The previous position of the <see cref="RelativeTo"/>.
+        /// </summary>
         protected Vector3 previousRelativePosition = Vector3.zero;
+        /// <summary>
+        /// The previous rotation of the <see cref="RelativeTo"/>.
+        /// </summary>
         protected Quaternion previousRelativeRotation = Quaternion.identity;
+
+        /// <summary>
+        /// Clears <see cref="Source"/>.
+        /// </summary>
+        public virtual void ClearSource()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Source = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="RelativeTo"/>.
+        /// </summary>
+        public virtual void ClearRelativeTo()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            RelativeTo = default;
+        }
 
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return base.IsActive() && Source != null && Source.gameObject.activeInHierarchy;
+            return base.IsActive() && Source != null && Source.activeInHierarchy;
         }
 
         /// <summary>
         /// The acceleration of the <see cref="Source"/>.
         /// </summary>
         /// <returns>Acceleration of the <see cref="Source"/>.</returns>
-        [RequiresBehaviourState]
         public virtual Vector3 GetAcceleration()
         {
-            if (!IsActive())
+            if (!this.IsValidState() || !IsActive())
             {
-                return Vector3.zero;
+                return default;
             }
 
             Vector3 average = Vector3.zero;
@@ -220,7 +332,6 @@
         /// <summary>
         /// Called after <see cref="Source"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Source))]
         protected virtual void OnAfterSourceChange()
         {
             previousPosition = Source.TryGetPosition();
@@ -230,7 +341,6 @@
         /// <summary>
         /// Called after <see cref="RelativeTo"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(RelativeTo))]
         protected virtual void OnAfterRelativeToChange()
         {
             previousRelativePosition = RelativeTo.TryGetPosition();
@@ -240,7 +350,6 @@
         /// <summary>
         /// Called after <see cref="VelocityAverageFrames"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(VelocityAverageFrames))]
         protected virtual void OnAfterVelocityAverageFramesChange()
         {
             velocitySamples = new Vector3[VelocityAverageFrames];
@@ -249,7 +358,6 @@
         /// <summary>
         /// Called after <see cref="AngularVelocityAverageFrames"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(AngularVelocityAverageFrames))]
         protected virtual void OnAfterAngularVelocityAverageFramesChange()
         {
             angularVelocitySamples = new Vector3[AngularVelocityAverageFrames];

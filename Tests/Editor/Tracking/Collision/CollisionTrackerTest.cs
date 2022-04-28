@@ -1,7 +1,9 @@
-﻿using Zinnia.Tracking.Collision;
+﻿using Zinnia.Rule;
+using Zinnia.Tracking.Collision;
 
 namespace Test.Zinnia.Tracking.Collision
 {
+    using NUnit.Framework;
     using System.Collections;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
@@ -1010,6 +1012,206 @@ namespace Test.Zinnia.Tracking.Collision
 
             Object.DestroyImmediate(trackerContainer);
             Object.DestroyImmediate(targetContainer);
+        }
+
+        [Test]
+        public void ClearColliderValidity()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
+
+            Assert.IsNull(subject.ColliderValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ColliderValidity = rule;
+            Assert.AreEqual(rule, subject.ColliderValidity);
+            subject.ClearColliderValidity();
+            Assert.IsNull(subject.ColliderValidity);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void ClearColliderValidityInactiveGameObject()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
+
+            Assert.IsNull(subject.ColliderValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ColliderValidity = rule;
+            Assert.AreEqual(rule, subject.ColliderValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearColliderValidity();
+            Assert.AreEqual(rule, subject.ColliderValidity);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void ClearColliderValidityInactiveComponent()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
+
+            Assert.IsNull(subject.ColliderValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ColliderValidity = rule;
+            Assert.AreEqual(rule, subject.ColliderValidity);
+            subject.enabled = false;
+            subject.ClearColliderValidity();
+            Assert.AreEqual(rule, subject.ColliderValidity);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void ClearContainingTransformValidity()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
+
+            Assert.IsNull(subject.ContainingTransformValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ContainingTransformValidity = rule;
+            Assert.AreEqual(rule, subject.ContainingTransformValidity);
+            subject.ClearContainingTransformValidity();
+            Assert.IsNull(subject.ContainingTransformValidity);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void ClearContainingTransformValidityInactiveGameObject()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
+
+            Assert.IsNull(subject.ContainingTransformValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ContainingTransformValidity = rule;
+            Assert.AreEqual(rule, subject.ContainingTransformValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearContainingTransformValidity();
+            Assert.AreEqual(rule, subject.ContainingTransformValidity);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void ClearContainingTransformValidityInactiveComponent()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
+
+            Assert.IsNull(subject.ContainingTransformValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.ContainingTransformValidity = rule;
+            Assert.AreEqual(rule, subject.ContainingTransformValidity);
+            subject.enabled = false;
+            subject.ClearContainingTransformValidity();
+            Assert.AreEqual(rule, subject.ContainingTransformValidity);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void CollisionTrackerDisabledObserver_ClearSource()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
+            CollisionTracker tracker = containingObject.AddComponent<CollisionTracker>();
+
+            Assert.IsNull(subject.Source);
+            subject.Source = tracker;
+            Assert.AreEqual(tracker, subject.Source);
+            subject.ClearSource();
+            Assert.IsNull(subject.Source);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void CollisionTrackerDisabledObserver_ClearSourceInactiveGameObject()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
+            CollisionTracker tracker = containingObject.AddComponent<CollisionTracker>();
+
+            Assert.IsNull(subject.Source);
+            subject.Source = tracker;
+            Assert.AreEqual(tracker, subject.Source);
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+            Assert.AreEqual(tracker, subject.Source);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void CollisionTrackerDisabledObserver_ClearSourceInactiveComponent()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
+            CollisionTracker tracker = containingObject.AddComponent<CollisionTracker>();
+
+            Assert.IsNull(subject.Source);
+            subject.Source = tracker;
+            Assert.AreEqual(tracker, subject.Source);
+            subject.enabled = false;
+            subject.ClearSource();
+            Assert.AreEqual(tracker, subject.Source);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void CollisionTrackerDisabledObserver_ClearTarget()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
+            BoxCollider collider = containingObject.AddComponent<BoxCollider>();
+
+            Assert.IsNull(subject.Target);
+            subject.Target = collider;
+            Assert.AreEqual(collider, subject.Target);
+            subject.ClearTarget();
+            Assert.IsNull(subject.Target);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void CollisionTrackerDisabledObserver_ClearTargetInactiveGameObject()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
+            BoxCollider collider = containingObject.AddComponent<BoxCollider>();
+
+            Assert.IsNull(subject.Target);
+            subject.Target = collider;
+            Assert.AreEqual(collider, subject.Target);
+            subject.gameObject.SetActive(false);
+            subject.ClearTarget();
+            Assert.AreEqual(collider, subject.Target);
+
+            Object.DestroyImmediate(containingObject);
+        }
+
+        [Test]
+        public void CollisionTrackerDisabledObserver_ClearTargetInactiveComponent()
+        {
+            GameObject containingObject = new GameObject();
+            CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
+            BoxCollider collider = containingObject.AddComponent<BoxCollider>();
+
+            Assert.IsNull(subject.Target);
+            subject.Target = collider;
+            Assert.AreEqual(collider, subject.Target);
+            subject.enabled = false;
+            subject.ClearTarget();
+            Assert.AreEqual(collider, subject.Target);
+
+            Object.DestroyImmediate(containingObject);
         }
 
         public class CollisionTrackerMock : CollisionTracker

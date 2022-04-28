@@ -1,11 +1,8 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Provides a basis for mutating transform Vector3 properties.
@@ -13,25 +10,85 @@
     public abstract class TransformPropertyMutator : MonoBehaviour
     {
         #region Target Settings
+        [Header("Target Settings")]
+        [Tooltip("The target to mutate.")]
+        [SerializeField]
+        private GameObject target;
         /// <summary>
         /// The target to mutate.
         /// </summary>
-        [Serialized, Cleared]
-        [field: Header("Target Settings"), DocumentedByXml]
-        public GameObject Target { get; set; }
+        public GameObject Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                target = value;
+            }
+        }
+        [Tooltip("Determines whether to mutate the local or global values.")]
+        [SerializeField]
+        private bool useLocalValues;
         /// <summary>
         /// Determines whether to mutate the local or global values.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseLocalValues { get; set; }
+        public bool UseLocalValues
+        {
+            get
+            {
+                return useLocalValues;
+            }
+            set
+            {
+                useLocalValues = value;
+            }
+        }
+        [Tooltip("Determines which axes to mutate.")]
+        [SerializeField]
+        private Vector3State mutateOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to mutate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State MutateOnAxis { get; set; } = Vector3State.True;
+        public Vector3State MutateOnAxis
+        {
+            get
+            {
+                return mutateOnAxis;
+            }
+            set
+            {
+                mutateOnAxis = value;
+            }
+        }
         #endregion
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="MutateOnAxis"/>.
+        /// </summary>
+        public virtual void ClearMutateOnAxis()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            MutateOnAxis = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="MutateOnAxis"/> x value.
@@ -201,9 +258,13 @@
         /// Determines if the process is valid.
         /// </summary>
         /// <returns><see langword="true"/> if it is valid.</returns>
-        [RequiresBehaviourState]
         protected virtual bool IsValid()
         {
+            if (!this.IsValidState())
+            {
+                return default;
+            }
+
             return Target != null;
         }
     }

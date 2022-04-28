@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Process.Component
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -23,36 +19,111 @@
         public class GameObjectUnityEvent : UnityEvent<GameObject> { }
 
         #region Processor Settings
+        [Header("Entity Settings")]
+        [Tooltip("A GameObject collection of sources to apply data from.")]
+        [SerializeField]
+        private GameObjectObservableList sources;
         /// <summary>
         /// A <see cref="GameObject"/> collection of sources to apply data from.
         /// </summary>
-        [Serialized]
-        [field: Header("Entity Settings"), DocumentedByXml]
-        public GameObjectObservableList Sources { get; set; }
+        public GameObjectObservableList Sources
+        {
+            get
+            {
+                return sources;
+            }
+            set
+            {
+                sources = value;
+            }
+        }
+        [Tooltip("Allows to optionally determine which sources should be processed based on the set rules.")]
+        [SerializeField]
+        private RuleContainer sourceValidity;
         /// <summary>
         /// Allows to optionally determine which sources should be processed based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public RuleContainer SourceValidity { get; set; }
+        public RuleContainer SourceValidity
+        {
+            get
+            {
+                return sourceValidity;
+            }
+            set
+            {
+                sourceValidity = value;
+            }
+        }
+        [Tooltip("A GameObject collection of targets to apply data to.")]
+        [SerializeField]
+        private GameObjectObservableList targets;
         /// <summary>
         /// A <see cref="GameObject"/> collection of targets to apply data to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList Targets { get; set; }
+        public GameObjectObservableList Targets
+        {
+            get
+            {
+                return targets;
+            }
+            set
+            {
+                targets = value;
+            }
+        }
+        [Tooltip("Allows to optionally determine which targets should be processed based on the set rules.")]
+        [SerializeField]
+        private RuleContainer targetValidity;
         /// <summary>
         /// Allows to optionally determine which targets should be processed based on the set rules.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public RuleContainer TargetValidity { get; set; }
+        public RuleContainer TargetValidity
+        {
+            get
+            {
+                return targetValidity;
+            }
+            set
+            {
+                targetValidity = value;
+            }
+        }
         #endregion
 
+        /// <summary>
+        /// Clears <see cref="SourceValidity"/>.
+        /// </summary>
+        public virtual void ClearSourceValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            SourceValidity = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetValidity = default;
+        }
+
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void Process()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ApplySourcesToTargets(Sources.NonSubscribableElements, Targets.NonSubscribableElements);
         }
 

@@ -1,22 +1,39 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Action.Collection;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits a <see cref="bool"/> value when any given actions are in their active state.
     /// </summary>
     public class AnyAction : BooleanAction
     {
+        [Tooltip("Actions to check the active state on.")]
+        [SerializeField]
+        private ActionObservableList actions;
         /// <summary>
         /// <see cref="Action"/>s to check the active state on.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public ActionObservableList Actions { get; set; }
+        public ActionObservableList Actions
+        {
+            get
+            {
+                return actions;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeActionsChange();
+                }
+                actions = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterActionsChange();
+                }
+            }
+        }
 
         protected override void OnEnable()
         {
@@ -105,9 +122,13 @@
         /// Called after the <see cref="Action.IsActivated"/> state of any element in <see cref="Actions"/> changes.
         /// </summary>
         /// <param name="isActionActivated">Whether the action is activated.</param>
-        [RequiresBehaviourState]
         protected virtual void OnActionActivationStateChanged(bool isActionActivated)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (IsActivated && !isActionActivated)
             {
                 CheckAllActions();
@@ -122,10 +143,9 @@
         /// Called after an element is added to <see cref="Actions"/>.
         /// </summary>
         /// <param name="action">The element added to the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnActionAdded(Action action)
         {
-            if (action == null)
+            if (!this.IsValidState() || action == null)
             {
                 return;
             }
@@ -138,10 +158,9 @@
         /// Called after an element is removed from <see cref="Actions"/>.
         /// </summary>
         /// <param name="action">The element removed from the collection.</param>
-        [RequiresBehaviourState]
         protected virtual void OnActionRemoved(Action action)
         {
-            if (action != null)
+            if (!this.IsValidState() || action != null)
             {
                 action.ActivationStateChanged.RemoveListener(OnActionActivationStateChanged);
             }
@@ -152,7 +171,6 @@
         /// <summary>
         /// Called before <see cref="Actions"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Actions))]
         protected virtual void OnBeforeActionsChange()
         {
             if (Actions != null)
@@ -164,7 +182,6 @@
         /// <summary>
         /// Called after <see cref="Actions"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Actions))]
         protected virtual void OnAfterActionsChange()
         {
             if (Actions != null)

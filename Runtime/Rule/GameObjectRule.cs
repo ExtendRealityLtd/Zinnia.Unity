@@ -10,7 +10,7 @@
         /// <inheritdoc />
         public override bool Accepts(object target)
         {
-            if (ShouldAutoRejectDueToState())
+            if (isDestroyed || ShouldAutoRejectDueToState())
             {
                 return false;
             }

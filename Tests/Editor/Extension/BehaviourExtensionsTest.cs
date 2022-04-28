@@ -78,6 +78,28 @@ namespace Test.Zinnia.Extension
 
             Object.DestroyImmediate(parent);
         }
+
+        [Test]
+        public void IsMemberChangeAllowed()
+        {
+            GameObject container = new GameObject();
+            MockBehaviour mockBehaviour = container.AddComponent<MockBehaviour>();
+
+            Assert.IsTrue(mockBehaviour.IsMemberChangeAllowed());
+
+            mockBehaviour.enabled = false;
+
+            Assert.IsFalse(mockBehaviour.IsMemberChangeAllowed());
+
+            mockBehaviour.enabled = true;
+
+            Assert.IsTrue(mockBehaviour.IsMemberChangeAllowed());
+
+            mockBehaviour.gameObject.SetActive(false);
+
+            Assert.IsFalse(mockBehaviour.IsMemberChangeAllowed());
+
+        }
     }
 
     public class MockBehaviour : MonoBehaviour

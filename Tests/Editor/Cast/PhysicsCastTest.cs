@@ -1,4 +1,5 @@
 ﻿using Zinnia.Cast;
+using Zinnia.Cast.Operation.Conversion;
 
 namespace Test.Zinnia.Cast
 {
@@ -451,6 +452,84 @@ namespace Test.Zinnia.Cast
             Assert.AreEqual(backSurface, result[0].transform.gameObject);
 
             Object.DestroyImmediate(backSurface);
+        }
+
+        [Test]
+        public void ClearConvertTo()
+        {
+            ToBoxCastConverter converter = containingObject.AddComponent<ToBoxCastConverter>();
+            subject.ConvertTo = converter;
+
+            Assert.AreEqual(converter, subject.ConvertTo);
+            subject.ClearConvertTo();
+            Assert.IsNull(subject.ConvertTo);
+        }
+
+        [Test]
+        public void ClearConvertToInactiveGameObject()
+        {
+            ToBoxCastConverter converter = containingObject.AddComponent<ToBoxCastConverter>();
+            subject.ConvertTo = converter;
+
+            Assert.AreEqual(converter, subject.ConvertTo);
+            subject.gameObject.SetActive(false);
+            subject.ClearConvertTo();
+            Assert.AreEqual(converter, subject.ConvertTo);
+        }
+
+        [Test]
+        public void ClearConvertToInactiveComponent()
+        {
+            ToBoxCastConverter converter = containingObject.AddComponent<ToBoxCastConverter>();
+            subject.ConvertTo = converter;
+
+            Assert.AreEqual(converter, subject.ConvertTo);
+            subject.enabled = false;
+            subject.ClearConvertTo();
+            Assert.AreEqual(converter, subject.ConvertTo);
+        }
+
+        [Test]
+        public void SetLayersToIgnoreByInt()
+        {
+            Assert.IsTrue(subject.LayersToIgnore == (subject.LayersToIgnore | (1 << 2)));
+            Assert.IsFalse(subject.LayersToIgnore == (subject.LayersToIgnore | (1 << 4)));
+
+            subject.SetLayersToIgnore(4);
+
+            Assert.IsFalse(subject.LayersToIgnore == (subject.LayersToIgnore | (1 << 2)));
+            Assert.IsTrue(subject.LayersToIgnore == (subject.LayersToIgnore | (1 << 4)));
+        }
+
+        [Test]
+        public void SetLayersToIgnoreByString()
+        {
+            Assert.IsTrue(subject.LayersToIgnore == (subject.LayersToIgnore | (1 << 2)));
+            Assert.IsFalse(subject.LayersToIgnore == (subject.LayersToIgnore | (1 << 4)));
+
+            subject.SetLayersToIgnore("Water");
+
+            Assert.IsFalse(subject.LayersToIgnore == (subject.LayersToIgnore | (1 << 2)));
+            Assert.IsTrue(subject.LayersToIgnore == (subject.LayersToIgnore | (1 << 4)));
+        }
+
+
+        [Test]
+        public void SetTriggerInteraction()
+        {
+            Assert.AreEqual(QueryTriggerInteraction.UseGlobal, subject.TriggerInteraction);
+
+            subject.SetTriggerInteraction(1);
+
+            Assert.AreEqual(QueryTriggerInteraction.Ignore, subject.TriggerInteraction);
+
+            subject.SetTriggerInteraction(2);
+
+            Assert.AreEqual(QueryTriggerInteraction.Collide, subject.TriggerInteraction);
+
+            subject.SetTriggerInteraction(0);
+
+            Assert.AreEqual(QueryTriggerInteraction.UseGlobal, subject.TriggerInteraction);
         }
     }
 }

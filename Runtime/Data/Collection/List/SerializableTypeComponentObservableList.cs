@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Collection.List
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -17,9 +15,21 @@
         /// <summary>
         /// The collection to observe changes of.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, TypePicker(typeof(Component))]
-        protected override List<SerializableType> Elements { get; set; } = new List<SerializableType>();
+        [Tooltip("The collection to observe changes of.")]
+        [SerializeField]
+        [TypePicker(typeof(Component))]
+        private List<SerializableType> elements = new List<SerializableType>();
+        protected override List<SerializableType> Elements
+        {
+            get
+            {
+                return elements;
+            }
+            set
+            {
+                elements = value;
+            }
+        }
 
         /// <summary>
         /// Defines the event with the <see cref="SerializableType"/>.

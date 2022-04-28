@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Visual
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -20,48 +17,125 @@
         [Serializable]
         public class PointsData
         {
+            [Tooltip("Represents the start, i.e. the first rendered point.")]
+            [SerializeField]
+            private GameObject startPoint;
             /// <summary>
             /// Represents the start, i.e. the first rendered point.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject StartPoint { get; set; }
+            public GameObject StartPoint
+            {
+                get
+                {
+                    return startPoint;
+                }
+                set
+                {
+                    startPoint = value;
+                }
+            }
+            [Tooltip("Whether the first point should be visible.")]
+            [SerializeField]
+            private bool isStartPointVisible;
             /// <summary>
             /// Whether the first point should be visible.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsStartPointVisible { get; set; }
+            public bool IsStartPointVisible
+            {
+                get
+                {
+                    return isStartPointVisible;
+                }
+                set
+                {
+                    isStartPointVisible = value;
+                }
+            }
+            [Tooltip("Represents the segments between Start and End. This will get cloned to create all the segments.")]
+            [SerializeField]
+            private GameObject repeatedSegmentPoint;
             /// <summary>
             /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject RepeatedSegmentPoint { get; set; }
+            public GameObject RepeatedSegmentPoint
+            {
+                get
+                {
+                    return repeatedSegmentPoint;
+                }
+                set
+                {
+                    repeatedSegmentPoint = value;
+                }
+            }
+            [Tooltip("Whether the repeated segment point(s) should be visible.")]
+            [SerializeField]
+            private bool isRepeatedSegmentPointVisible;
             /// <summary>
             /// Whether the repeated segment point(s) should be visible.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsRepeatedSegmentPointVisible { get; set; }
+            public bool IsRepeatedSegmentPointVisible
+            {
+                get
+                {
+                    return isRepeatedSegmentPointVisible;
+                }
+                set
+                {
+                    isRepeatedSegmentPointVisible = value;
+                }
+            }
+            [Tooltip("Represents the end, i.e. the last rendered point.")]
+            [SerializeField]
+            private GameObject endPoint;
             /// <summary>
             /// Represents the end, i.e. the last rendered point.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public GameObject EndPoint { get; set; }
+            public GameObject EndPoint
+            {
+                get
+                {
+                    return endPoint;
+                }
+                set
+                {
+                    endPoint = value;
+                }
+            }
+            [Tooltip("Whether the end point should be visible.")]
+            [SerializeField]
+            private bool isEndPointVisible;
             /// <summary>
             /// Whether the end point should be visible.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsEndPointVisible { get; set; }
+            public bool IsEndPointVisible
+            {
+                get
+                {
+                    return isEndPointVisible;
+                }
+                set
+                {
+                    isEndPointVisible = value;
+                }
+            }
+            [Tooltip("The points along the most recent cast.")]
+            [SerializeField]
+            private HeapAllocationFreeReadOnlyList<Vector3> points;
             /// <summary>
             /// The points along the most recent cast.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public HeapAllocationFreeReadOnlyList<Vector3> Points { get; set; }
+            public HeapAllocationFreeReadOnlyList<Vector3> Points
+            {
+                get
+                {
+                    return points;
+                }
+                set
+                {
+                    points = value;
+                }
+            }
 
             /// <inheritdoc />
             public override string ToString()
@@ -90,30 +164,74 @@
             }
         }
 
+        [Tooltip("The direction to scale the segment GameObjects in. Set axes to 0 to disable scaling on that axis.")]
+        [SerializeField]
+        private Vector3 segmentScaleDirection = Vector3.forward;
         /// <summary>
         /// The direction to scale the segment <see cref="GameObject"/>s in. Set axes to 0 to disable scaling on that axis.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 SegmentScaleDirection { get; set; } = Vector3.forward;
+        public Vector3 SegmentScaleDirection
+        {
+            get
+            {
+                return segmentScaleDirection;
+            }
+            set
+            {
+                segmentScaleDirection = value;
+            }
+        }
+        [Tooltip("Represents the start, i.e. the first rendered point.")]
+        [SerializeField]
+        private GameObject start;
         /// <summary>
         /// Represents the start, i.e. the first rendered point.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject Start { get; set; }
+        public GameObject Start
+        {
+            get
+            {
+                return start;
+            }
+            set
+            {
+                start = value;
+            }
+        }
+        [Tooltip("Represents the segments between Start and End. This will get cloned to create all the segments.")]
+        [SerializeField]
+        private GameObject repeatedSegment;
         /// <summary>
         /// Represents the segments between <see cref="Start"/> and <see cref="End"/>. This will get cloned to create all the segments.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject RepeatedSegment { get; set; }
+        public GameObject RepeatedSegment
+        {
+            get
+            {
+                return repeatedSegment;
+            }
+            set
+            {
+                repeatedSegment = value;
+            }
+        }
+        [Tooltip("Represents the end, i.e. the last rendered point.")]
+        [SerializeField]
+        private GameObject end;
         /// <summary>
         /// Represents the end, i.e. the last rendered point.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObject End { get; set; }
+        public GameObject End
+        {
+            get
+            {
+                return end;
+            }
+            set
+            {
+                end = value;
+            }
+        }
 
         /// <summary>
         /// A collection of segment clones.
@@ -151,9 +269,13 @@
         /// Renders the given points.
         /// </summary>
         /// <param name="data">The data to render.</param>
-        [RequiresBehaviourState]
         public virtual void RenderData(PointsData data)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Start = data.StartPoint;
             End = data.EndPoint;
 

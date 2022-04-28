@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Cast.Operation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
 
@@ -10,24 +8,57 @@
     /// </summary>
     public class ToCapsuleCastConverter : CastConverter
     {
+        [Tooltip("Half of the capsule height.")]
+        [SerializeField]
+        private float halfHeight;
         /// <summary>
         /// Half of the capsule height.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float HalfHeight { get; set; }
+        public float HalfHeight
+        {
+            get
+            {
+                return halfHeight;
+            }
+            set
+            {
+                halfHeight = value;
+            }
+        }
+        [Tooltip("The radius for the Physics.CapsuleCast.")]
+        [SerializeField]
+        private float radiusOverride;
         /// <summary>
         /// The radius for the <see cref="Physics.CapsuleCast"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float RadiusOverride { get; set; }
+        public float RadiusOverride
+        {
+            get
+            {
+                return radiusOverride;
+            }
+            set
+            {
+                radiusOverride = value;
+            }
+        }
+        [Tooltip("Whether to use the RadiusOverride value if the source caster already supports a radius. If the source caster does not support a radius then the RadiusOverride will always be used.")]
+        [SerializeField]
+        private bool useRadiusOverride = true;
         /// <summary>
         /// Whether to use the <see cref="RadiusOverride"/> value if the source caster already supports a radius. If the source caster does not support a radius then the <see cref="RadiusOverride"/> will always be used.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseRadiusOverride { get; set; } = true;
+        public bool UseRadiusOverride
+        {
+            get
+            {
+                return useRadiusOverride;
+            }
+            set
+            {
+                useRadiusOverride = value;
+            }
+        }
 
         /// <inheritdoc />
         public override bool ConvertFromBoxCast(PhysicsCast customCast, out RaycastHit hitData, Vector3 center, Vector3 halfExtents, Vector3 direction, Quaternion orientation, float maxDistance)

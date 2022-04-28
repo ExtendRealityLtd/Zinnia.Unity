@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using UnityEngine;
 
@@ -10,12 +8,23 @@
     /// </summary>
     public class AudioSourceHapticPulser : RoutineHapticPulser
     {
+        [Tooltip("The waveform to represent the haptic pattern.")]
+        [SerializeField]
+        private AudioSource audioSource;
         /// <summary>
         /// The waveform to represent the haptic pattern.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public AudioSource AudioSource { get; set; }
+        public AudioSource AudioSource
+        {
+            get
+            {
+                return audioSource;
+            }
+            set
+            {
+                audioSource = value;
+            }
+        }
 
         /// <summary>
         /// <see cref="AudioSettings.dspTime"/> of the last <see cref="OnAudioFilterRead"/>.

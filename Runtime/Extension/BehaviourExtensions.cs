@@ -1,7 +1,7 @@
 ﻿namespace Zinnia.Extension
 {
-    using UnityEngine;
     using System;
+    using UnityEngine;
 
     /// <summary>
     /// Extended methods for <see cref="Behaviour"/>.
@@ -75,6 +75,16 @@
                 ((gameObjectActivity & GameObjectActivity.None) != 0
                 || ((gameObjectActivity & GameObjectActivity.Self) != 0 && behaviour.gameObject.activeSelf)
                 || ((gameObjectActivity & GameObjectActivity.InHierarchy) != 0 && behaviour.gameObject.activeInHierarchy));
+        }
+
+        /// <summary>
+        /// Whether the property member state methods are allowed to run.
+        /// </summary>
+        /// <param name="behaviour">The <see cref="Behaviour"/> to check against.</param>
+        /// <returns>Whether the member change method is allowed to run.</returns>
+        public static bool IsMemberChangeAllowed(this Behaviour behaviour)
+        {
+            return Application.isPlaying && behaviour.isActiveAndEnabled;
         }
     }
 }

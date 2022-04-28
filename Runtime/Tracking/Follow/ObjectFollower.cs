@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -23,24 +19,81 @@
         [Serializable]
         public class EventData
         {
+            [Tooltip("The source utilize within the Modifier.FollowModifier.")]
+            [SerializeField]
+            private GameObject eventSource;
             /// <summary>
             /// The source utilize within the <see cref="Modifier.FollowModifier"/>.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public GameObject EventSource { get; set; }
+            public GameObject EventSource
+            {
+                get
+                {
+                    return eventSource;
+                }
+                set
+                {
+                    eventSource = value;
+                }
+            }
+            [Tooltip("The target to apply the Modifier.FollowModifier on.")]
+            [SerializeField]
+            private GameObject eventTarget;
             /// <summary>
             /// The target to apply the <see cref="Modifier.FollowModifier"/> on.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public GameObject EventTarget { get; set; }
+            public GameObject EventTarget
+            {
+                get
+                {
+                    return eventTarget;
+                }
+                set
+                {
+                    eventTarget = value;
+                }
+            }
+            [Tooltip("The optional offset the target follow against the source.")]
+            [SerializeField]
+            private GameObject eventTargetOffset;
             /// <summary>
             /// The optional offset the target follow against the source.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public GameObject EventTargetOffset { get; set; }
+            public GameObject EventTargetOffset
+            {
+                get
+                {
+                    return eventTargetOffset;
+                }
+                set
+                {
+                    eventTargetOffset = value;
+                }
+            }
+
+            /// <summary>
+            /// Clears <see cref="EventSource"/>.
+            /// </summary>
+            public virtual void ClearEventSource()
+            {
+                EventSource = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="EventTarget"/>.
+            /// </summary>
+            public virtual void ClearEventTarget()
+            {
+                EventTarget = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="EventTargetOffset"/>.
+            /// </summary>
+            public virtual void ClearEventTargetOffset()
+            {
+                EventTargetOffset = default;
+            }
 
             public EventData Set(EventData source)
             {
@@ -67,34 +120,85 @@
         [Serializable]
         public class FollowEvent : UnityEvent<EventData> { }
 
+        [Tooltip("A GameObject collection of target offsets to offset the GameObjectSourceTargetProcessor.Targets against the source whilst following. The GameObject for the target offset must be a child of the corresponding target.")]
+        [SerializeField]
+        private GameObjectObservableList targetOffsets;
         /// <summary>
         /// A <see cref="GameObject"/> collection of target offsets to offset the <see cref="GameObjectSourceTargetProcessor.Targets"/> against the source whilst following. The <see cref="GameObject"/> for the target offset must be a child of the corresponding target.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObjectObservableList TargetOffsets { get; set; }
+        public GameObjectObservableList TargetOffsets
+        {
+            get
+            {
+                return targetOffsets;
+            }
+            set
+            {
+                targetOffsets = value;
+            }
+        }
+        [Header("Follow Settings")]
+        [Tooltip("The Modifier.FollowModifier to apply.")]
+        [SerializeField]
+        private FollowModifier followModifier;
         /// <summary>
         /// The <see cref="Modifier.FollowModifier"/> to apply.
         /// </summary>
-        [Serialized, Cleared]
-        [field: Header("Follow Settings"), DocumentedByXml]
-        public FollowModifier FollowModifier { get; set; }
+        public FollowModifier FollowModifier
+        {
+            get
+            {
+                return followModifier;
+            }
+            set
+            {
+                followModifier = value;
+            }
+        }
 
         /// <summary>
         /// Emitted before any processing.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Preprocessed = new UnityEvent();
         /// <summary>
         /// Emitted after all processing is complete.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Processed = new UnityEvent();
 
+        /// <summary>
+        /// Clears <see cref="TargetOffsets"/>.
+        /// </summary>
+        public virtual void ClearTargetOffsets()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetOffsets = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="FollowModifier"/>.
+        /// </summary>
+        public virtual void ClearFollowModifier()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            FollowModifier = default;
+        }
+
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void Process()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Preprocessed?.Invoke();
             base.Process();
             Processed?.Invoke();

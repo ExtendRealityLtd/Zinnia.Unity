@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Follow.Modifier.Property.Rotation;
+﻿using Zinnia.Data.Type;
+using Zinnia.Tracking.Follow.Modifier.Property.Rotation;
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
@@ -123,6 +124,65 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
+        }
+
+        [Test]
+        public void ClearAncestor()
+        {
+            Assert.IsNull(subject.Ancestor);
+            subject.Ancestor = containingObject;
+            Assert.AreEqual(containingObject, subject.Ancestor);
+            subject.ClearAncestor();
+            Assert.IsNull(subject.Ancestor);
+        }
+
+        [Test]
+        public void ClearAncestorInactiveGameObject()
+        {
+            Assert.IsNull(subject.Ancestor);
+            subject.Ancestor = containingObject;
+            Assert.AreEqual(containingObject, subject.Ancestor);
+            subject.gameObject.SetActive(false);
+            subject.ClearAncestor();
+            Assert.AreEqual(containingObject, subject.Ancestor);
+        }
+
+        [Test]
+        public void ClearAncestorInactiveComponent()
+        {
+            Assert.IsNull(subject.Ancestor);
+            subject.Ancestor = containingObject;
+            Assert.AreEqual(containingObject, subject.Ancestor);
+            subject.enabled = false;
+            subject.ClearAncestor();
+            Assert.AreEqual(containingObject, subject.Ancestor);
+        }
+
+        [Test]
+        public void SetFollowOnAxisX()
+        {
+            subject.FollowOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.FollowOnAxis);
+            subject.SetFollowOnAxisX(true);
+            Assert.AreEqual(Vector3State.XOnly, subject.FollowOnAxis);
+        }
+
+        [Test]
+        public void SetFollowOnAxisY()
+        {
+            subject.FollowOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.FollowOnAxis);
+            subject.SetFollowOnAxisY(true);
+            Assert.AreEqual(Vector3State.YOnly, subject.FollowOnAxis);
+        }
+
+        [Test]
+        public void SetFollowOnAxisZ()
+        {
+            subject.FollowOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.FollowOnAxis);
+            subject.SetFollowOnAxisZ(true);
+            Assert.AreEqual(Vector3State.ZOnly, subject.FollowOnAxis);
         }
     }
 }

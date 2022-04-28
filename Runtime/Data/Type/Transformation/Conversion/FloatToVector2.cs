@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -20,18 +18,40 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector2> { }
 
+        [Tooltip("A float to use as the current x value of the Vector2.")]
+        [SerializeField]
+        private float currentX;
         /// <summary>
         /// A float to use as the current x value of the <see cref="Vector2"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentX { get; set; }
+        public float CurrentX
+        {
+            get
+            {
+                return currentX;
+            }
+            set
+            {
+                currentX = value;
+            }
+        }
+        [Tooltip("A float to use as the current y value of the Vector2.")]
+        [SerializeField]
+        private float currentY;
         /// <summary>
         /// A float to use as the current y value of the <see cref="Vector2"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CurrentY { get; set; }
+        public float CurrentY
+        {
+            get
+            {
+                return currentY;
+            }
+            set
+            {
+                currentY = value;
+            }
+        }
 
         /// <summary>
         /// A reusable array of two <see cref="float"/>s.

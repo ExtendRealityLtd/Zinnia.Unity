@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -22,31 +19,83 @@
         [Serializable]
         public class EventData : IEquatable<EventData>
         {
+            [Tooltip("The source of this event in case it was forwarded.")]
+            [SerializeField]
+            private Component forwardSource;
             /// <summary>
             /// The source of this event in case it was forwarded.
             /// </summary>
             /// <remarks><see langword="null"/> if this event wasn't forwarded from anything.</remarks>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public Component ForwardSource { get; set; }
+            public Component ForwardSource
+            {
+                get
+                {
+                    return forwardSource;
+                }
+                set
+                {
+                    forwardSource = value;
+                }
+            }
+            [Tooltip("Whether the collision was observed through a Collider with Collider.isTrigger set.")]
+            [SerializeField]
+            private bool isTrigger;
             /// <summary>
             /// Whether the collision was observed through a <see cref="Collider"/> with <see cref="Collider.isTrigger"/> set.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public bool IsTrigger { get; set; }
+            public bool IsTrigger
+            {
+                get
+                {
+                    return isTrigger;
+                }
+                set
+                {
+                    isTrigger = value;
+                }
+            }
+            [Tooltip("The observed Collision. null if IsTrigger is true.")]
+            [SerializeField]
+            private Collision collisionData;
             /// <summary>
             /// The observed <see cref="Collision"/>. <see langword="null"/> if <see cref="IsTrigger"/> is <see langword="true"/>.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Collision CollisionData { get; set; }
+            public Collision CollisionData
+            {
+                get
+                {
+                    return collisionData;
+                }
+                set
+                {
+                    collisionData = value;
+                }
+            }
+            [Tooltip("The observed Collider.")]
+            [SerializeField]
+            private Collider colliderData;
             /// <summary>
             /// The observed <see cref="Collider"/>.
             /// </summary>
-            [Serialized]
-            [field: DocumentedByXml]
-            public Collider ColliderData { get; set; }
+            public Collider ColliderData
+            {
+                get
+                {
+                    return colliderData;
+                }
+                set
+                {
+                    colliderData = value;
+                }
+            }
+
+            /// <summary>
+            /// Clears <see cref="ForwardSource"/>.
+            /// </summary>
+            public virtual void ClearForwardSource()
+            {
+                ForwardSource = default;
+            }
 
             public EventData Set(EventData source)
             {
@@ -174,47 +223,92 @@
         }
 
         #region Collision Settings
+        [Header("Collision Settings")]
+        [Tooltip("Whether the collisions should be processed when this component is disabled.")]
+        [SerializeField]
+        private bool processCollisionsWhenDisabled = true;
         /// <summary>
         /// Whether the collisions should be processed when this component is disabled.
         /// </summary>
-        [Serialized]
-        [field: Header("Collision Settings"), DocumentedByXml]
-        public bool ProcessCollisionsWhenDisabled { get; set; } = true;
+        public bool ProcessCollisionsWhenDisabled
+        {
+            get
+            {
+                return processCollisionsWhenDisabled;
+            }
+            set
+            {
+                processCollisionsWhenDisabled = value;
+            }
+        }
+        [Tooltip("The types of collisions that events will be emitted for.")]
+        [SerializeField]
+        [UnityFlags]
+        private CollisionTypes emittedTypes = (CollisionTypes)(-1);
         /// <summary>
         /// The types of collisions that events will be emitted for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, UnityFlags]
-        public CollisionTypes EmittedTypes { get; set; } = (CollisionTypes)(-1);
+        public CollisionTypes EmittedTypes
+        {
+            get
+            {
+                return emittedTypes;
+            }
+            set
+            {
+                emittedTypes = value;
+            }
+        }
+        [Tooltip("The CollisionStates to process.")]
+        [SerializeField]
+        [UnityFlags]
+        private CollisionStates statesToProcess = (CollisionStates)(-1);
         /// <summary>
         /// The <see cref="CollisionStates"/> to process.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, UnityFlags]
-        public CollisionStates StatesToProcess { get; set; } = (CollisionStates)(-1);
+        public CollisionStates StatesToProcess
+        {
+            get
+            {
+                return statesToProcess;
+            }
+            set
+            {
+                statesToProcess = value;
+            }
+        }
+        [Tooltip("Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.")]
+        [SerializeField]
+        private RuleContainer forwardingSourceValidity;
         /// <summary>
         /// Allows to optionally determine which forwarded collisions to react to based on the set rules for the forwarding sender.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public RuleContainer ForwardingSourceValidity { get; set; }
+        public RuleContainer ForwardingSourceValidity
+        {
+            get
+            {
+                return forwardingSourceValidity;
+            }
+            set
+            {
+                forwardingSourceValidity = value;
+            }
+        }
         #endregion
 
         #region Collision Events
         /// <summary>
         /// Emitted when a collision starts.
         /// </summary>
-        [Header("Collision Events"), DocumentedByXml]
+        [Header("Collision Events")]
         public UnityEvent CollisionStarted = new UnityEvent();
         /// <summary>
         /// Emitted when the current collision changes.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent CollisionChanged = new UnityEvent();
         /// <summary>
         /// Emitted when the current collision stops.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent CollisionStopped = new UnityEvent();
         #endregion
 
@@ -251,6 +345,19 @@
         /// The <see cref="Transform"/> of the notifier for the given collider data.
         /// </summary>
         protected Transform notifierColliderTransform;
+
+        /// <summary>
+        /// Clears <see cref="ForwardingSourceValidity"/>.
+        /// </summary>
+        public virtual void ClearForwardingSourceValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ForwardingSourceValidity = default;
+        }
 
         /// <summary>
         /// Processes any collision start events on the given data and propagates it to any linked <see cref="CollisionNotifier"/>.

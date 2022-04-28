@@ -436,5 +436,161 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Apply();
             Assert.AreEqual(Vector3.zero, targetObject.transform.position);
         }
+
+        [Test]
+        public void ClearSource()
+        {
+            Assert.IsNull(subject.Source);
+
+            TransformData source = new TransformData(sourceObject);
+            subject.Source = source;
+            Assert.AreEqual(source, subject.Source);
+            subject.ClearSource();
+            Assert.IsNull(subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.Source);
+
+            TransformData source = new TransformData(sourceObject);
+            subject.Source = source;
+            Assert.AreEqual(source, subject.Source);
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+            Assert.AreEqual(source, subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveComponent()
+        {
+            Assert.IsNull(subject.Source);
+
+            TransformData source = new TransformData(sourceObject);
+            subject.Source = source;
+            Assert.AreEqual(source, subject.Source);
+            subject.enabled = false;
+            subject.ClearSource();
+            Assert.AreEqual(source, subject.Source);
+        }
+
+        [Test]
+        public void ClearTarget()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.ClearTarget();
+            Assert.IsNull(subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveGameObject()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.gameObject.SetActive(false);
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveComponent()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.enabled = false;
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void ClearOffset()
+        {
+            Assert.IsNull(subject.Offset);
+            subject.Offset = containingObject;
+            Assert.AreEqual(containingObject, subject.Offset);
+            subject.ClearOffset();
+            Assert.IsNull(subject.Offset);
+        }
+
+        [Test]
+        public void ClearOffsetInactiveGameObject()
+        {
+            Assert.IsNull(subject.Offset);
+            subject.Offset = containingObject;
+            Assert.AreEqual(containingObject, subject.Offset);
+            subject.gameObject.SetActive(false);
+            subject.ClearOffset();
+            Assert.AreEqual(containingObject, subject.Offset);
+        }
+
+        [Test]
+        public void ClearOffsetInactiveComponent()
+        {
+            Assert.IsNull(subject.Offset);
+            subject.Offset = containingObject;
+            Assert.AreEqual(containingObject, subject.Offset);
+            subject.enabled = false;
+            subject.ClearOffset();
+            Assert.AreEqual(containingObject, subject.Offset);
+        }
+
+        [Test]
+        public void SetApplyPositionOffsetOnAxisX()
+        {
+            subject.ApplyPositionOffsetOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyPositionOffsetOnAxis);
+            subject.SetApplyPositionOffsetOnAxisX(true);
+            Assert.AreEqual(Vector3State.XOnly, subject.ApplyPositionOffsetOnAxis);
+        }
+
+        [Test]
+        public void SetApplyPositionOffsetOnAxisY()
+        {
+            subject.ApplyPositionOffsetOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyPositionOffsetOnAxis);
+            subject.SetApplyPositionOffsetOnAxisY(true);
+            Assert.AreEqual(Vector3State.YOnly, subject.ApplyPositionOffsetOnAxis);
+        }
+
+        [Test]
+        public void SetApplyPositionOffsetOnAxisZ()
+        {
+            subject.ApplyPositionOffsetOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyPositionOffsetOnAxis);
+            subject.SetApplyPositionOffsetOnAxisZ(true);
+            Assert.AreEqual(Vector3State.ZOnly, subject.ApplyPositionOffsetOnAxis);
+        }
+
+        [Test]
+        public void SetApplyRotationOffsetOnAxisX()
+        {
+            subject.ApplyRotationOffsetOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyRotationOffsetOnAxis);
+            subject.SetApplyRotationOffsetOnAxisX(true);
+            Assert.AreEqual(Vector3State.XOnly, subject.ApplyRotationOffsetOnAxis);
+        }
+
+        [Test]
+        public void SetApplyRotationOffsetOnAxisY()
+        {
+            subject.ApplyRotationOffsetOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyRotationOffsetOnAxis);
+            subject.SetApplyRotationOffsetOnAxisY(true);
+            Assert.AreEqual(Vector3State.YOnly, subject.ApplyRotationOffsetOnAxis);
+        }
+
+        [Test]
+        public void SetApplyRotationOffsetOnAxisZ()
+        {
+            subject.ApplyRotationOffsetOnAxis = Vector3State.False;
+            Assert.AreEqual(Vector3State.False, subject.ApplyRotationOffsetOnAxis);
+            subject.SetApplyRotationOffsetOnAxisZ(true);
+            Assert.AreEqual(Vector3State.ZOnly, subject.ApplyRotationOffsetOnAxis);
+        }
     }
 }

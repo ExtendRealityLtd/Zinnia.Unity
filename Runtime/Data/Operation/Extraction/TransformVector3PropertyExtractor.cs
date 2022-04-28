@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -17,12 +15,23 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector3> { }
 
+        [Tooltip("Determines whether to extract the local property or the world property.")]
+        [SerializeField]
+        private bool useLocal;
         /// <summary>
         /// Determines whether to extract the local property or the world property.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseLocal { get; set; }
+        public bool UseLocal
+        {
+            get
+            {
+                return useLocal;
+            }
+            set
+            {
+                useLocal = value;
+            }
+        }
 
         /// <summary>
         /// The last extracted property value.

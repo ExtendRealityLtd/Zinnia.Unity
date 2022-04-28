@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Association
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Text.RegularExpressions;
     using UnityEngine;
@@ -13,12 +11,23 @@
     [Obsolete("Use `PlatformDeviceAssociation` instead.")]
     public class LoadedXrDeviceAssociation : GameObjectsAssociation
     {
+        [Tooltip("A regular expression to match the name of the XR device that needs to be loaded.")]
+        [SerializeField]
+        private string xrDeviceNamePattern;
         /// <summary>
         /// A regular expression to match the name of the XR device that needs to be loaded.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string XrDeviceNamePattern { get; set; }
+        public string XrDeviceNamePattern
+        {
+            get
+            {
+                return xrDeviceNamePattern;
+            }
+            set
+            {
+                xrDeviceNamePattern = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override bool ShouldBeActive()

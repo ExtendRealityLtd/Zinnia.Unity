@@ -93,5 +93,69 @@ namespace Test.Zinnia.Tracking.Query
             Object.Destroy(objectA);
             Object.Destroy(objectB);
         }
+
+        [Test]
+        public void ClearSource()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.ClearSource();
+            Assert.IsNull(subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveComponent()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.enabled = false;
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearTarget()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.ClearTarget();
+            Assert.IsNull(subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveGameObject()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.gameObject.SetActive(false);
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveComponent()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.enabled = false;
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
     }
 }

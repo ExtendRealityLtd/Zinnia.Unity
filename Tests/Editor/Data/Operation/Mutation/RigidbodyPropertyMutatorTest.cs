@@ -150,5 +150,158 @@ namespace Test.Zinnia.Data.Operation.Mutation
 
             Object.DestroyImmediate(rigidBodyContainer);
         }
+
+        [Test]
+        public void ClearTarget()
+        {
+            Assert.IsNull(subject.Target);
+            Rigidbody rb = containingObject.AddComponent<Rigidbody>();
+            subject.Target = rb;
+            Assert.AreEqual(rb, subject.Target);
+            subject.ClearTarget();
+            Assert.IsNull(subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveGameObject()
+        {
+            Assert.IsNull(subject.Target);
+            Rigidbody rb = containingObject.AddComponent<Rigidbody>();
+            subject.Target = rb;
+            Assert.AreEqual(rb, subject.Target);
+            subject.gameObject.SetActive(false);
+            subject.ClearTarget();
+            Assert.AreEqual(rb, subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveComponent()
+        {
+            Assert.IsNull(subject.Target);
+            Rigidbody rb = containingObject.AddComponent<Rigidbody>();
+            subject.Target = rb;
+            Assert.AreEqual(rb, subject.Target);
+            subject.enabled = false;
+            subject.ClearTarget();
+            Assert.AreEqual(rb, subject.Target);
+        }
+
+        [Test]
+        public void SetVelocityX()
+        {
+            subject.Velocity = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            subject.SetVelocityX(1f);
+            Assert.AreEqual(Vector3.right, subject.Velocity);
+        }
+
+        [Test]
+        public void SetVelocityY()
+        {
+            subject.Velocity = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            subject.SetVelocityY(1f);
+            Assert.AreEqual(Vector3.up, subject.Velocity);
+        }
+
+        [Test]
+        public void SetVelocityZ()
+        {
+            subject.Velocity = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            subject.SetVelocityZ(1f);
+            Assert.AreEqual(Vector3.forward, subject.Velocity);
+        }
+
+        [Test]
+        public void ClearVelocity()
+        {
+            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            subject.Velocity = Vector3.one;
+            Assert.AreEqual(Vector3.one, subject.Velocity);
+            subject.ClearVelocity();
+            Assert.AreEqual(Vector3.zero, subject.Velocity);
+        }
+
+        [Test]
+        public void ClearVelocityInactiveGameObject()
+        {
+            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            subject.Velocity = Vector3.one;
+            Assert.AreEqual(Vector3.one, subject.Velocity);
+            subject.gameObject.SetActive(false);
+            subject.ClearVelocity();
+            Assert.AreEqual(Vector3.one, subject.Velocity);
+        }
+
+        [Test]
+        public void ClearVelocityInactiveComponent()
+        {
+            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            subject.Velocity = Vector3.one;
+            Assert.AreEqual(Vector3.one, subject.Velocity);
+            subject.enabled = false;
+            subject.ClearVelocity();
+            Assert.AreEqual(Vector3.one, subject.Velocity);
+        }
+
+        [Test]
+        public void SetAngularVelocityX()
+        {
+            subject.AngularVelocity = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            subject.SetAngularVelocityX(1f);
+            Assert.AreEqual(Vector3.right, subject.AngularVelocity);
+        }
+
+        [Test]
+        public void SetAngularVelocityY()
+        {
+            subject.AngularVelocity = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            subject.SetAngularVelocityY(1f);
+            Assert.AreEqual(Vector3.up, subject.AngularVelocity);
+        }
+
+        [Test]
+        public void SetAngularVelocityZ()
+        {
+            subject.AngularVelocity = Vector3.zero;
+            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            subject.SetAngularVelocityZ(1f);
+            Assert.AreEqual(Vector3.forward, subject.AngularVelocity);
+        }
+
+        [Test]
+        public void ClearAngularVelocity()
+        {
+            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            subject.AngularVelocity = Vector3.one;
+            Assert.AreEqual(Vector3.one, subject.AngularVelocity);
+            subject.ClearAngularVelocity();
+            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+        }
+
+        [Test]
+        public void ClearAngularVelocityInactiveGameObject()
+        {
+            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            subject.AngularVelocity = Vector3.one;
+            Assert.AreEqual(Vector3.one, subject.AngularVelocity);
+            subject.gameObject.SetActive(false);
+            subject.ClearAngularVelocity();
+            Assert.AreEqual(Vector3.one, subject.AngularVelocity);
+        }
+
+        [Test]
+        public void ClearAngularVelocityInactiveComponent()
+        {
+            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            subject.AngularVelocity = Vector3.one;
+            Assert.AreEqual(Vector3.one, subject.AngularVelocity);
+            subject.enabled = false;
+            subject.ClearAngularVelocity();
+            Assert.AreEqual(Vector3.one, subject.AngularVelocity);
+        }
     }
 }

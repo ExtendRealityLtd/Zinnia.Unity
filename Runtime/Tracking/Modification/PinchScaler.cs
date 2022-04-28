@@ -1,10 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -14,42 +9,116 @@
     /// </summary>
     public class PinchScaler : MonoBehaviour, IProcessable
     {
+        [Tooltip("The target to scale.")]
+        [SerializeField]
+        private GameObject target;
         /// <summary>
         /// The target to scale.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
+        public GameObject Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                target = value;
+            }
+        }
+        [Tooltip("The point to determine distance from.")]
+        [SerializeField]
+        private GameObject primaryPoint;
         /// <summary>
         /// The point to determine distance from.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject PrimaryPoint { get; set; }
+        public GameObject PrimaryPoint
+        {
+            get
+            {
+                return primaryPoint;
+            }
+            set
+            {
+                primaryPoint = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterPrimaryPointChange();
+                }
+            }
+        }
+        [Tooltip("The point to determine distance to.")]
+        [SerializeField]
+        private GameObject secondaryPoint;
         /// <summary>
         /// The point to determine distance to.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject SecondaryPoint { get; set; }
+        public GameObject SecondaryPoint
+        {
+            get
+            {
+                return secondaryPoint;
+            }
+            set
+            {
+                secondaryPoint = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSecondaryPointChange();
+                }
+            }
+        }
+        [Tooltip("A scale factor multiplier.")]
+        [SerializeField]
+        private float multiplier = 1f;
         /// <summary>
         /// A scale factor multiplier.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Multiplier { get; set; } = 1f;
+        public float Multiplier
+        {
+            get
+            {
+                return multiplier;
+            }
+            set
+            {
+                multiplier = value;
+            }
+        }
+        [Tooltip("Determines whether to use local or global scale.")]
+        [SerializeField]
+        private bool useLocalScale = true;
         /// <summary>
         /// Determines whether to use local or global scale.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseLocalScale { get; set; } = true;
+        public bool UseLocalScale
+        {
+            get
+            {
+                return useLocalScale;
+            }
+            set
+            {
+                useLocalScale = value;
+            }
+        }
+        [Tooltip("Determines whether to calculate the multiplier using Mathf.Pow(float, float).")]
+        [SerializeField]
+        private bool calculateByPower;
         /// <summary>
         /// Determines whether to calculate the multiplier using <see cref="Mathf.Pow(float, float)"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool CalculateByPower { get; set; }
+        public bool CalculateByPower
+        {
+            get
+            {
+                return calculateByPower;
+            }
+            set
+            {
+                calculateByPower = value;
+            }
+        }
 
         /// <summary>
         /// The previous distance between <see cref="PrimaryPoint"/> and <see cref="SecondaryPoint"/>.
@@ -61,12 +130,50 @@
         protected Vector3 originalScale;
 
         /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PrimaryPoint"/>.
+        /// </summary>
+        public virtual void ClearPrimaryPoint()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PrimaryPoint = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="SecondaryPoint"/>.
+        /// </summary>
+        public virtual void ClearSecondaryPoint()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            SecondaryPoint = default;
+        }
+
+        /// <summary>
         /// Processes the current scale factor onto the target.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Process()
         {
-            if (Target == null || PrimaryPoint == null || SecondaryPoint == null)
+            if (!this.IsValidState() || Target == null || PrimaryPoint == null || SecondaryPoint == null)
             {
                 return;
             }
@@ -181,7 +288,6 @@
         /// <summary>
         /// Called after <see cref="PrimaryPoint"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(PrimaryPoint))]
         protected virtual void OnAfterPrimaryPointChange()
         {
             previousDistance = null;
@@ -190,7 +296,6 @@
         /// <summary>
         /// Called after <see cref="SecondaryPoint"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(SecondaryPoint))]
         protected virtual void OnAfterSecondaryPointChange()
         {
             previousDistance = null;

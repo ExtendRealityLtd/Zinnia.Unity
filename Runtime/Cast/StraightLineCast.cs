@@ -1,20 +1,34 @@
 ﻿namespace Zinnia.Cast
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Casts a straight line and creates points at the origin and target.
     /// </summary>
     public class StraightLineCast : PointsCast
     {
+        [Tooltip("The maximum length to cast.")]
+        [SerializeField]
+        private float maximumLength = 100f;
         /// <summary>
         /// The maximum length to cast.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float MaximumLength { get; set; } = 100f;
+        public float MaximumLength
+        {
+            get
+            {
+                return maximumLength;
+            }
+            set
+            {
+                maximumLength = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterMaximumLengthChange();
+                }
+            }
+        }
 
         protected override void OnEnable()
         {
@@ -56,5 +70,10 @@
                 points[1] = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : destinationPosition;
             }
         }
+
+        /// <summary>
+        /// Called after <see cref="MaximumLength"/> has been changed.
+        /// </summary>
+        protected virtual void OnAfterMaximumLengthChange() { }
     }
 }

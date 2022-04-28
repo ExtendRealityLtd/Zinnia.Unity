@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Aggregation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
 
@@ -19,15 +18,25 @@
         /// <summary>
         /// Emitted when the aggregation operation has failed.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Failed = new UnityEvent();
 
+        [Tooltip("The collection to aggregate.")]
+        [SerializeField]
+        private TCollection collection;
         /// <summary>
         /// The collection to aggregate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public TCollection Collection { get; set; }
+        public TCollection Collection
+        {
+            get
+            {
+                return collection;
+            }
+            set
+            {
+                collection = value;
+            }
+        }
 
         /// <summary>
         /// Processes the current collection and aggregates the collection total.

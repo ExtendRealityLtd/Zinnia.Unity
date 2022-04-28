@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Extension;
 
     /// <summary>
@@ -9,12 +8,23 @@
     /// </summary>
     public class NegationRule : Rule
     {
+        [Tooltip("The IRule to negate.")]
+        [SerializeField]
+        private RuleContainer rule;
         /// <summary>
         /// The <see cref="IRule"/> to negate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleContainer Rule { get; set; }
+        public RuleContainer Rule
+        {
+            get
+            {
+                return rule;
+            }
+            set
+            {
+                rule = value;
+            }
+        }
 
         /// <inheritdoc />
         public override bool Accepts(object target)

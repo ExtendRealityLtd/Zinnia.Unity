@@ -129,7 +129,6 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsTrue(behaviour.enabled);
         }
 
-
         [UnityTest]
         public IEnumerator SetEnabledStateInactiveComponent()
         {
@@ -145,6 +144,38 @@ namespace Test.Zinnia.Tracking.Modification
             Assert.IsTrue(behaviour.enabled);
             subject.SetEnabledState(false);
             Assert.IsTrue(behaviour.enabled);
+        }
+
+        [Test]
+        public void ClearTarget()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.ClearTarget();
+            Assert.IsNull(subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveGameObject()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.gameObject.SetActive(false);
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
+        }
+
+        [Test]
+        public void ClearTargetInactiveComponent()
+        {
+            Assert.IsNull(subject.Target);
+            subject.Target = containingObject;
+            Assert.AreEqual(containingObject, subject.Target);
+            subject.enabled = false;
+            subject.ClearTarget();
+            Assert.AreEqual(containingObject, subject.Target);
         }
     }
 }

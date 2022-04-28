@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Event.Proxy
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -35,12 +33,23 @@
             TargetOffset
         }
 
+        [Tooltip("The source GameObject to apply to the RestrictableSingleEventProxyEmitter.ReceiveValidity.")]
+        [SerializeField]
+        private RuleSourceType ruleSource;
         /// <summary>
         /// The source <see cref="GameObject"/> to apply to the <see cref="RestrictableSingleEventProxyEmitter.ReceiveValidity"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RuleSourceType RuleSource { get; set; }
+        public RuleSourceType RuleSource
+        {
+            get
+            {
+                return ruleSource;
+            }
+            set
+            {
+                ruleSource = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="RuleSource"/>.

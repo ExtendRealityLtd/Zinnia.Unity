@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Tracking.Collision.Active
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -21,18 +17,56 @@
         [Serializable]
         public class EventData
         {
+            [Tooltip("The publisher payload data that is being pushed to the consumer.")]
+            [SerializeField]
+            private ActiveCollisionPublisher.PayloadData publisher;
             /// <summary>
             /// The publisher payload data that is being pushed to the consumer.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public ActiveCollisionPublisher.PayloadData Publisher { get; set; }
+            public ActiveCollisionPublisher.PayloadData Publisher
+            {
+                get
+                {
+                    return publisher;
+                }
+                set
+                {
+                    publisher = value;
+                }
+            }
+            [Tooltip("The current collision data.")]
+            [SerializeField]
+            private CollisionNotifier.EventData currentCollision;
             /// <summary>
             /// The current collision data.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public CollisionNotifier.EventData CurrentCollision { get; set; }
+            public CollisionNotifier.EventData CurrentCollision
+            {
+                get
+                {
+                    return currentCollision;
+                }
+                set
+                {
+                    currentCollision = value;
+                }
+            }
+
+            /// <summary>
+            /// Clears <see cref="Publisher"/>.
+            /// </summary>
+            public virtual void ClearPublisher()
+            {
+                Publisher = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="CurrentCollision"/>.
+            /// </summary>
+            public virtual void ClearCurrentCollision()
+            {
+                CurrentCollision = default;
+            }
 
             public EventData Set(EventData source)
             {
@@ -76,19 +110,41 @@
         [Serializable]
         public class UnityEvent : UnityEvent<EventData> { }
 
+        [Tooltip("The highest level container of the consumer to allow for nested consumers.")]
+        [SerializeField]
+        private GameObject container;
         /// <summary>
         /// The highest level container of the consumer to allow for nested consumers.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Container { get; set; }
+        public GameObject Container
+        {
+            get
+            {
+                return container;
+            }
+            set
+            {
+                container = value;
+            }
+        }
 
+        [Tooltip("Determines whether to consume the received call from specific publishers.")]
+        [SerializeField]
+        private RuleContainer publisherValidity;
         /// <summary>
         /// Determines whether to consume the received call from specific publishers.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public RuleContainer PublisherValidity { get; set; }
+        public RuleContainer PublisherValidity
+        {
+            get
+            {
+                return publisherValidity;
+            }
+            set
+            {
+                publisherValidity = value;
+            }
+        }
 
         /// <summary>
         /// The publisher payload that was last received from.
@@ -107,12 +163,10 @@
         /// <summary>
         /// Emitted when the publisher call has been consumed.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Consumed = new UnityEvent();
         /// <summary>
         /// Emitted when the consumer is cleared.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Cleared = new UnityEvent();
 
         /// <summary>
@@ -121,15 +175,40 @@
         protected readonly EventData eventData = new EventData();
 
         /// <summary>
+        /// Clears <see cref="Container"/>.
+        /// </summary>
+        public virtual void ClearContainer()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Container = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PublisherValidity"/>.
+        /// </summary>
+        public virtual void ClearPublisherValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PublisherValidity = default;
+        }
+
+        /// <summary>
         /// Consumes data from a from a <see cref="ActiveCollisionPublisher"/>.
         /// </summary>
         /// <param name="publisherPayload">The publisher payload data.</param>
         /// <param name="currentCollision">The current collision within published data.</param>
         /// <returns>Whether the consumption was allowed and successful.</returns>
-        [RequiresBehaviourState]
         public virtual bool Consume(ActiveCollisionPublisher.PayloadData publisherPayload, CollisionNotifier.EventData currentCollision)
         {
-            if (!PublisherValidity.Accepts(publisherPayload.PublisherContainer))
+            if (!this.IsValidState() || !PublisherValidity.Accepts(publisherPayload.PublisherContainer))
             {
                 return false;
             }
@@ -144,9 +223,13 @@
         /// <summary>
         /// Clears the previously consumed data.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Clear()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (PublisherSource != null && PublisherSource.Publisher != null)
             {
                 PublisherSource.Publisher.UnregisterRegisteredConsumer(this);

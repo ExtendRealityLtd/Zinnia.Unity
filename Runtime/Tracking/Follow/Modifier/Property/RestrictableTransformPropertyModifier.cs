@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
 
@@ -10,17 +8,28 @@
     /// </summary>
     public abstract class RestrictableTransformPropertyModifier : PropertyModifier
     {
+        [Tooltip("Determines which axes to apply the modification on>.")]
+        [SerializeField]
+        private Vector3State applyModificationOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to apply the modification on>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State ApplyModificationOnAxis { get; set; } = Vector3State.True;
+        public Vector3State ApplyModificationOnAxis
+        {
+            get
+            {
+                return applyModificationOnAxis;
+            }
+            set
+            {
+                applyModificationOnAxis = value;
+            }
+        }
 
         /// <summary>
         /// Whether the modifier has restrictable axes on.
         /// </summary>
-        public bool HasAxisRestrictions => !ApplyModificationOnAxis.ToVector3().Equals(Vector3.one);
+        public virtual bool HasAxisRestrictions => !ApplyModificationOnAxis.ToVector3().Equals(Vector3.one);
 
         /// <summary>
         /// The original value of the property.

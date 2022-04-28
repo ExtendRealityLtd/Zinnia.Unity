@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Association
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
 
@@ -10,12 +8,23 @@
     /// </summary>
     public abstract class GameObjectsAssociation : MonoBehaviour
     {
+        [Tooltip("The GameObjects to (de)activate.")]
+        [SerializeField]
+        private GameObjectObservableList gameObjects;
         /// <summary>
         /// The <see cref="GameObject"/>s to (de)activate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectObservableList GameObjects { get; set; }
+        public GameObjectObservableList GameObjects
+        {
+            get
+            {
+                return gameObjects;
+            }
+            set
+            {
+                gameObjects = value;
+            }
+        }
 
         /// <summary>
         /// Whether the <see cref="GameObjects"/> should be activated.

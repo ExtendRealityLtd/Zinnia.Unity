@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
 
     /// <summary>
@@ -9,12 +7,23 @@
     /// </summary>
     public class AnyLayerRule : GameObjectRule
     {
+        [Tooltip("The layers to check against.")]
+        [SerializeField]
+        private LayerMask layerMask;
         /// <summary>
         /// The layers to check against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public LayerMask LayerMask { get; set; }
+        public LayerMask LayerMask
+        {
+            get
+            {
+                return layerMask;
+            }
+            set
+            {
+                layerMask = value;
+            }
+        }
 
         /// <inheritdoc />
         protected override bool Accepts(GameObject targetGameObject)

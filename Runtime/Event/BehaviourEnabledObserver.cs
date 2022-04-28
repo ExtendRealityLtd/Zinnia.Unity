@@ -1,42 +1,80 @@
 ﻿namespace Zinnia.Event
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Emits an event once a list of <see cref="Behaviour"/>s all are <see cref="Behaviour.isActiveAndEnabled"/>.
     /// </summary>
     public class BehaviourEnabledObserver : MonoBehaviour
     {
+        [Tooltip("The time between each Behaviour.enabled check.")]
+        [SerializeField]
+        private float checkDelay = 0.000011f;
         /// <summary>
         /// The time between each <see cref="Behaviour.enabled"/> check.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float CheckDelay { get; set; } = 0.000011f;
+        public float CheckDelay
+        {
+            get
+            {
+                return checkDelay;
+            }
+            set
+            {
+                checkDelay = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterCheckDelayChange();
+                }
+            }
+        }
+        [Tooltip("The maximum amount of time to perform the Behaviour.enabled check before ending.")]
+        [SerializeField]
+        private float maximumRunTime = float.PositiveInfinity;
         /// <summary>
         /// The maximum amount of time to perform the <see cref="Behaviour.enabled"/> check before ending.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float MaximumRunTime { get; set; } = float.PositiveInfinity;
+        public float MaximumRunTime
+        {
+            get
+            {
+                return maximumRunTime;
+            }
+            set
+            {
+                maximumRunTime = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterMaximumRunTimeChange();
+                }
+            }
+        }
 
+        [Tooltip("The Behaviours to observe.")]
+        [SerializeField]
+        private BehaviourObservableList behaviours;
         /// <summary>
         /// The <see cref="Behaviour"/>s to observe.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public BehaviourObservableList Behaviours { get; set; }
+        public BehaviourObservableList Behaviours
+        {
+            get
+            {
+                return behaviours;
+            }
+            set
+            {
+                behaviours = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when all <see cref="Behaviours"/> are <see cref="Behaviour.isActiveAndEnabled"/>.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent ActiveAndEnabled = new UnityEvent();
 
         /// <summary>
@@ -133,7 +171,6 @@
         /// <summary>
         /// Called after <see cref="CheckDelay"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(CheckDelay))]
         protected virtual void OnAfterCheckDelayChange()
         {
             checkDelayYieldInstruction = new WaitForSeconds(CheckDelay);
@@ -142,7 +179,6 @@
         /// <summary>
         /// Called after <see cref="MaximumRunTime"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(MaximumRunTime))]
         protected virtual void OnAfterMaximumRunTimeChange()
         {
             float remainingRunTime = timeUntilCheckIsCancelled - Time.time;

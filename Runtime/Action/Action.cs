@@ -1,15 +1,11 @@
 ﻿namespace Zinnia.Action
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
-    using Zinnia.Data.Attribute;
     using Zinnia.Data.Type;
+    using Zinnia.Extension;
 
     /// <summary>
     /// The basis for all action types.
@@ -25,13 +21,16 @@
         /// <summary>
         /// Emitted when <see cref="IsActivated"/> changes.
         /// </summary>
-        [DocumentedByXml]
         public BooleanUnityEvent ActivationStateChanged = new BooleanUnityEvent();
 
         /// <summary>
+        /// The backing field for holding the value of <see cref="IsActivated"/>.
+        /// </summary>
+        private bool isActivated;
+        /// <summary>
         /// Whether the action is currently activated.
         /// </summary>
-        public bool IsActivated
+        public virtual bool IsActivated
         {
             get => isActivated;
             protected set
@@ -45,7 +44,6 @@
                 ActivationStateChanged?.Invoke(value);
             }
         }
-        private bool isActivated;
 
         /// <summary>
         /// Adds a given action to the sources collection.
@@ -92,60 +90,113 @@
     /// <typeparam name="TEvent">The <see cref="UnityEvent"/> type the action will be utilizing.</typeparam>
     public abstract class Action<TSelf, TValue, TEvent> : Action where TSelf : Action<TSelf, TValue, TEvent> where TEvent : UnityEvent<TValue>, new()
     {
+        [Tooltip("The initial value upon creation of the component.")]
+        [SerializeField]
+        private TValue initialValue;
         /// <summary>
         /// The initial value upon creation of the component.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, Restricted(RestrictedAttribute.Restrictions.ReadOnlyAtRunTime)]
-        public TValue InitialValue { get; protected set; }
+        public TValue InitialValue
+        {
+            get
+            {
+                return initialValue;
+            }
+            set
+            {
+                initialValue = value;
+            }
+        }
+        [Tooltip("The value that is considered the inactive value.")]
+        [SerializeField]
+        private TValue defaultValue;
         /// <summary>
         /// The value that is considered the inactive value.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public TValue DefaultValue { get; set; }
+        public TValue DefaultValue
+        {
+            get
+            {
+                return defaultValue;
+            }
+            set
+            {
+                defaultValue = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterDefaultValueChange();
+                }
+            }
+        }
+        [Tooltip("Actions to subscribe to when this action is Behaviour.enabled. Allows chaining the source actions to this action.")]
+        [SerializeField]
+        private List<TSelf> sources = new List<TSelf>();
         /// <summary>
         /// Actions to subscribe to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        protected List<TSelf> Sources { get; set; } = new List<TSelf>();
+        protected List<TSelf> Sources
+        {
+            get
+            {
+                return sources;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeSourcesChange();
+                }
+                sources = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSourcesChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Emitted when the action becomes active.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Activated = new TEvent();
         /// <summary>
         /// Emitted when the <see cref="Value"/> of the action changes.
         /// </summary>
-        [DocumentedByXml]
         public TEvent ValueChanged = new TEvent();
         /// <summary>
         /// Emitted when the <see cref="Value"/> of the action remains unchanged.
         /// </summary>
-        [DocumentedByXml]
         public TEvent ValueUnchanged = new TEvent();
         /// <summary>
         /// Emitted when the action becomes deactivated.
         /// </summary>
-        [DocumentedByXml]
         public TEvent Deactivated = new TEvent();
 
+        [Tooltip("Actions to subscribe to when this action is Behaviour.enabled. Allows chaining the source actions to this action.")]
+        [SerializeField]
+        private TValue value;
         /// <summary>
         /// The value of the action.
         /// </summary>
-        public TValue Value { get; protected set; }
+        public TValue Value
+        {
+            get
+            {
+                return value;
+            }
+            set
+            {
+                this.value = value;
+            }
+        }
         /// <summary>
         /// Actions subscribed to when this action is <see cref="Behaviour.enabled"/>. Allows chaining the source actions to this action.
         /// </summary>
-        public HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => Sources;
+        public virtual HeapAllocationFreeReadOnlyList<TSelf> ReadOnlySources => sources;
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void AddSource(Action action)
         {
-            if (action == null)
+            if (!this.IsValidState() || action == null)
             {
                 return;
             }
@@ -155,10 +206,9 @@
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void RemoveSource(Action action)
         {
-            if (action == null)
+            if (!this.IsValidState() || action == null)
             {
                 return;
             }
@@ -168,17 +218,25 @@
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void ClearSources()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             UnsubscribeFromSources();
             Sources.Clear();
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void EmitActivationState()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (IsActivated)
             {
                 Activated?.Invoke(Value);
@@ -192,16 +250,24 @@
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void ReceiveInitialValue()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Receive(InitialValue);
         }
 
         /// <inheritdoc />
-        [RequiresBehaviourState]
         public override void ReceiveDefaultValue()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Receive(DefaultValue);
         }
 
@@ -209,9 +275,13 @@
         /// Acts on the value.
         /// </summary>
         /// <param name="value">The value to act on.</param>
-        [RequiresBehaviourState]
         public virtual void Receive(TValue value)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (IsValueEqual(value))
             {
                 ValueUnchanged?.Invoke(Value);
@@ -348,7 +418,6 @@
         /// <summary>
         /// Called after <see cref="DefaultValue"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(DefaultValue))]
         protected virtual void OnAfterDefaultValueChange()
         {
             bool shouldActivate = ShouldActivate(Value);
@@ -364,7 +433,6 @@
         /// <summary>
         /// Called before <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Sources))]
         protected virtual void OnBeforeSourcesChange()
         {
             UnsubscribeFromSources();
@@ -373,7 +441,6 @@
         /// <summary>
         /// Called after <see cref="Sources"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Sources))]
         protected virtual void OnAfterSourcesChange()
         {
             SubscribeToSources();

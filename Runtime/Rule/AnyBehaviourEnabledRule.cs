@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
     using Zinnia.Data.Type;
@@ -12,12 +10,23 @@
     /// </summary>
     public class AnyBehaviourEnabledRule : GameObjectRule
     {
+        [Tooltip("The behaviour types to look for.")]
+        [SerializeField]
+        private SerializableTypeBehaviourObservableList behaviourTypes;
         /// <summary>
         /// The behaviour types to look for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public SerializableTypeBehaviourObservableList BehaviourTypes { get; set; }
+        public SerializableTypeBehaviourObservableList BehaviourTypes
+        {
+            get
+            {
+                return behaviourTypes;
+            }
+            set
+            {
+                behaviourTypes = value;
+            }
+        }
 
         /// <inheritdoc/>
         protected override bool Accepts(GameObject targetGameObject)

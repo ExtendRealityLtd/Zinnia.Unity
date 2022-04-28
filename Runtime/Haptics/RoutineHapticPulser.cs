@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using UnityEngine;
 
@@ -10,18 +8,40 @@
     /// </summary>
     public abstract class RoutineHapticPulser : HapticProcess
     {
+        [Tooltip("The pulse process to utilize.")]
+        [SerializeField]
+        private HapticPulser hapticPulser;
         /// <summary>
         /// The pulse process to utilize.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public HapticPulser HapticPulser { get; set; }
+        public HapticPulser HapticPulser
+        {
+            get
+            {
+                return hapticPulser;
+            }
+            set
+            {
+                hapticPulser = value;
+            }
+        }
+        [Tooltip("Multiplies the current audio peak to affect the wave intensity.")]
+        [SerializeField]
+        private float intensityMultiplier = 1f;
         /// <summary>
         /// Multiplies the current audio peak to affect the wave intensity.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float IntensityMultiplier { get; set; } = 1f;
+        public float IntensityMultiplier
+        {
+            get
+            {
+                return intensityMultiplier;
+            }
+            set
+            {
+                intensityMultiplier = value;
+            }
+        }
 
         /// <summary>
         /// A reference to the started routine.

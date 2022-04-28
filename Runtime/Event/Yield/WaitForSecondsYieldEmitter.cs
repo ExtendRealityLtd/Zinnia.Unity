@@ -1,22 +1,35 @@
 ﻿namespace Zinnia.Event.Yield
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Yields after the <see cref="SecondsToWait"/> have passed in scaled time by <see cref="Time.timeScale"/>.
     /// </summary>
     public class WaitForSecondsYieldEmitter : YieldEmitter
     {
+        [Tooltip("The number of seconds to wait before yielding.")]
+        [SerializeField]
+        private float secondsToWait;
         /// <summary>
         /// The number of seconds to wait before yielding.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float SecondsToWait { get; set; }
+        public float SecondsToWait
+        {
+            get
+            {
+                return secondsToWait;
+            }
+            set
+            {
+                secondsToWait = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterSecondsToWaitChange();
+                }
+            }
+        }
 
         /// <summary>
         /// The instruction to yield upon.
@@ -37,7 +50,6 @@
         /// <summary>
         /// Called after <see cref="SecondsToWait"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(SecondsToWait))]
         protected virtual void OnAfterSecondsToWaitChange()
         {
             yieldInstruction = new WaitForSeconds(SecondsToWait);

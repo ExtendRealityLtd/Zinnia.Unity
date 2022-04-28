@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Rule
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
 
@@ -10,12 +8,23 @@
     /// </summary>
     public class ListContainsRule : Rule
     {
+        [Tooltip("The objects to check against.")]
+        [SerializeField]
+        private UnityObjectObservableList objects;
         /// <summary>
         /// The objects to check against.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public UnityObjectObservableList Objects { get; set; }
+        public UnityObjectObservableList Objects
+        {
+            get
+            {
+                return objects;
+            }
+            set
+            {
+                objects = value;
+            }
+        }
 
         /// <inheritdoc />
         public override bool Accepts(object target)

@@ -1,8 +1,5 @@
 namespace Zinnia.Data.Collection.List
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -20,18 +17,56 @@ namespace Zinnia.Data.Collection.List
         [Serializable]
         public class MultiRelation
         {
+            [Tooltip("The GameObject acting as the key.")]
+            [SerializeField]
+            private GameObject key;
             /// <summary>
             /// The <see cref="GameObject"/> acting as the key.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public GameObject Key { get; set; }
+            public GameObject Key
+            {
+                get
+                {
+                    return key;
+                }
+                set
+                {
+                    key = value;
+                }
+            }
+            [Tooltip("The GameObject collection of relation values.")]
+            [SerializeField]
+            private List<GameObject> values;
             /// <summary>
             /// The <see cref="GameObject"/> collection of relation values.
             /// </summary>
-            [Serialized, Cleared]
-            [field: DocumentedByXml]
-            public List<GameObject> Values { get; set; }
+            public List<GameObject> Values
+            {
+                get
+                {
+                    return values;
+                }
+                set
+                {
+                    values = value;
+                }
+            }
+
+            /// <summary>
+            /// Clears <see cref="Key"/>.
+            /// </summary>
+            public virtual void ClearKey()
+            {
+                Key = default;
+            }
+
+            /// <summary>
+            /// Clears <see cref="Values"/>.
+            /// </summary>
+            public virtual void ClearValues()
+            {
+                Values.Clear();
+            }
         }
 
         /// <summary>
@@ -50,12 +85,11 @@ namespace Zinnia.Data.Collection.List
         /// <summary>
         /// Emitted when the given key is matched with a relationship.
         /// </summary>
-        [Header("Relationship Events"), DocumentedByXml]
+        [Header("Relationship Events")]
         public ListUnityEvent RelationshipFound = new ListUnityEvent();
         /// <summary>
         /// Emitted when the given key not is matched with a relationship.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent RelationshipNotFound = new UnityEvent();
         #endregion
 

@@ -1,34 +1,70 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using System;
     using System.Collections;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Processes a given <see cref="Haptics.HapticProcess"/> repeatedly for a given duration and with a pause interval between each process.
     /// </summary>
     public class TimedHapticProcess : HapticProcess
     {
+        [Tooltip("The process to utilize.")]
+        [SerializeField]
+        private HapticProcess hapticProcess;
         /// <summary>
         /// The process to utilize.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public HapticProcess HapticProcess { get; set; }
+        public HapticProcess HapticProcess
+        {
+            get
+            {
+                return hapticProcess;
+            }
+            set
+            {
+                hapticProcess = value;
+            }
+        }
+        [Tooltip("The amount of time to keep repeating the process for.")]
+        [SerializeField]
+        private float duration = 1f;
         /// <summary>
         /// The amount of time to keep repeating the process for.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Duration { get; set; } = 1f;
+        public float Duration
+        {
+            get
+            {
+                return duration;
+            }
+            set
+            {
+                duration = value;
+            }
+        }
+        [Tooltip("The amount of time to pause after each process iteration.")]
+        [SerializeField]
+        private float interval = 0.1f;
         /// <summary>
         /// The amount of time to pause after each process iteration.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Interval { get; set; } = 0.1f;
+        public float Interval
+        {
+            get
+            {
+                return interval;
+            }
+            set
+            {
+                interval = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterIntervalChange();
+                }
+            }
+        }
 
         /// <summary>
         /// A reference to the started routine.
@@ -47,7 +83,7 @@
 
         protected virtual void OnEnable()
         {
-            OnAfterCheckDelayChange();
+            OnAfterIntervalChange();
         }
 
         /// <summary>
@@ -97,10 +133,15 @@
         /// <summary>
         /// Called after <see cref="Interval"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Interval))]
-        protected virtual void OnAfterCheckDelayChange()
+        protected virtual void OnAfterIntervalChange()
         {
             delayYieldInstruction = new WaitForSeconds(Interval);
+        }
+
+        [Obsolete("Use `OnAfterIntervalChange` instead.")]
+        protected virtual void OnAfterCheckDelayChange()
+        {
+            OnAfterIntervalChange();
         }
     }
 }

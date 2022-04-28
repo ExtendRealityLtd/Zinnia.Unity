@@ -291,6 +291,111 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(offset);
         }
+
+        [Test]
+        public void ClearScaleModifier()
+        {
+            Assert.IsNull(subject.ScaleModifier);
+            PropertyModifierMock modifier = containingObject.AddComponent<PropertyModifierMock>();
+            subject.ScaleModifier = modifier;
+            Assert.AreEqual(modifier, subject.ScaleModifier);
+            subject.ClearScaleModifier();
+            Assert.IsNull(subject.ScaleModifier);
+        }
+
+        [Test]
+        public void ClearScaleModifierInactiveGameObject()
+        {
+            Assert.IsNull(subject.ScaleModifier);
+            PropertyModifierMock modifier = containingObject.AddComponent<PropertyModifierMock>();
+            subject.ScaleModifier = modifier;
+            Assert.AreEqual(modifier, subject.ScaleModifier);
+            subject.gameObject.SetActive(false);
+            subject.ClearScaleModifier();
+            Assert.AreEqual(modifier, subject.ScaleModifier);
+        }
+
+        [Test]
+        public void ClearScaleModifierInactiveComponent()
+        {
+            Assert.IsNull(subject.ScaleModifier);
+            PropertyModifierMock modifier = containingObject.AddComponent<PropertyModifierMock>();
+            subject.ScaleModifier = modifier;
+            Assert.AreEqual(modifier, subject.ScaleModifier);
+            subject.enabled = false;
+            subject.ClearScaleModifier();
+            Assert.AreEqual(modifier, subject.ScaleModifier);
+        }
+
+        [Test]
+        public void ClearRotationModifier()
+        {
+            Assert.IsNull(subject.RotationModifier);
+            PropertyModifierMock modifier = containingObject.AddComponent<PropertyModifierMock>();
+            subject.RotationModifier = modifier;
+            Assert.AreEqual(modifier, subject.RotationModifier);
+            subject.ClearRotationModifier();
+            Assert.IsNull(subject.RotationModifier);
+        }
+
+        [Test]
+        public void ClearRotationModifierInactiveGameObject()
+        {
+            Assert.IsNull(subject.RotationModifier);
+            PropertyModifierMock modifier = containingObject.AddComponent<PropertyModifierMock>();
+            subject.RotationModifier = modifier;
+            Assert.AreEqual(modifier, subject.RotationModifier);
+            subject.gameObject.SetActive(false);
+            subject.ClearRotationModifier();
+            Assert.AreEqual(modifier, subject.RotationModifier);
+        }
+
+        [Test]
+        public void ClearRotationModifierInactiveComponent()
+        {
+            Assert.IsNull(subject.RotationModifier);
+            PropertyModifierMock modifier = containingObject.AddComponent<PropertyModifierMock>();
+            subject.RotationModifier = modifier;
+            Assert.AreEqual(modifier, subject.RotationModifier);
+            subject.enabled = false;
+            subject.ClearRotationModifier();
+            Assert.AreEqual(modifier, subject.RotationModifier);
+        }
+
+        [Test]
+        public void ClearPositionModifier()
+        {
+            Assert.IsNull(subject.PositionModifier);
+            PropertyModifierMock modifier = containingObject.AddComponent<PropertyModifierMock>();
+            subject.PositionModifier = modifier;
+            Assert.AreEqual(modifier, subject.PositionModifier);
+            subject.ClearPositionModifier();
+            Assert.IsNull(subject.PositionModifier);
+        }
+
+        [Test]
+        public void ClearPositionModifierInactiveGameObject()
+        {
+            Assert.IsNull(subject.PositionModifier);
+            PropertyModifierMock modifier = containingObject.AddComponent<PropertyModifierMock>();
+            subject.PositionModifier = modifier;
+            Assert.AreEqual(modifier, subject.PositionModifier);
+            subject.gameObject.SetActive(false);
+            subject.ClearPositionModifier();
+            Assert.AreEqual(modifier, subject.PositionModifier);
+        }
+
+        [Test]
+        public void ClearPositionModifierInactiveComponent()
+        {
+            Assert.IsNull(subject.PositionModifier);
+            PropertyModifierMock modifier = containingObject.AddComponent<PropertyModifierMock>();
+            subject.PositionModifier = modifier;
+            Assert.AreEqual(modifier, subject.PositionModifier);
+            subject.enabled = false;
+            subject.ClearPositionModifier();
+            Assert.AreEqual(modifier, subject.PositionModifier);
+        }
     }
 
     public class PropertyModifierMock : PropertyModifier

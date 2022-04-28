@@ -1,13 +1,13 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using UnityEngine;
-    using UnityEditor;
-    using UnityEditorInternal;
-    using UnityEngine.Events;
-    using UnityEngine.EventSystems;
+    using System.Collections;
     using System.Linq;
     using System.Reflection;
-    using System.Collections;
+    using UnityEditor;
+    using UnityEditorInternal;
+    using UnityEngine;
+    using UnityEngine.Events;
+    using UnityEngine.EventSystems;
 
     /// <summary>
     /// Displays a custom inspector collection in a collapsible drawer.

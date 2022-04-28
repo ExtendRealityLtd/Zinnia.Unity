@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -13,19 +10,68 @@
     public class TransformPositionMutator : TransformPropertyMutator
     {
         #region Position Settings
+        [Header("Position Settings")]
+        [Tooltip("Determines the facing direction when mutating the position.")]
+        [SerializeField]
+        private GameObject facingDirection;
         /// <summary>
         /// Determines the facing direction when mutating the position.
         /// </summary>
-        [Serialized, Cleared]
-        [field: Header("Position Settings"), DocumentedByXml]
-        public GameObject FacingDirection { get; set; }
+        public GameObject FacingDirection
+        {
+            get
+            {
+                return facingDirection;
+            }
+            set
+            {
+                facingDirection = value;
+            }
+        }
+        [Tooltip("Determines which axes to take from the FacingDirection.")]
+        [SerializeField]
+        private Vector3State applyFacingDirectionOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to take from the <see cref="FacingDirection"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State ApplyFacingDirectionOnAxis { get; set; } = Vector3State.True;
+        public Vector3State ApplyFacingDirectionOnAxis
+        {
+            get
+            {
+                return applyFacingDirectionOnAxis;
+            }
+            set
+            {
+                applyFacingDirectionOnAxis = value;
+            }
+        }
         #endregion
+
+        /// <summary>
+        /// Clears <see cref="FacingDirection"/>.
+        /// </summary>
+        public virtual void ClearFacingDirection()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            FacingDirection = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="ApplyFacingDirectionOnAxis"/>.
+        /// </summary>
+        public virtual void ClearApplyFacingDirectionOnAxis()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            ApplyFacingDirectionOnAxis = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="ApplyFacingDirectionOnAxis"/> x value.

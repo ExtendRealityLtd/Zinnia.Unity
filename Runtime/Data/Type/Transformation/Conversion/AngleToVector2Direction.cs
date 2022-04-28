@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -17,12 +15,23 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector2> { }
 
+        [Tooltip("The current Vector2 representing the direction.")]
+        [SerializeField]
+        private Vector2 direction = new Vector2(0f, 1f);
         /// <summary>
         /// The current <see cref="Vector2"/> representing the direction.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector2 Direction { get; set; } = new Vector2(0f, 1f);
+        public Vector2 Direction
+        {
+            get
+            {
+                return direction;
+            }
+            set
+            {
+                direction = value;
+            }
+        }
 
         /// <summary>
         /// The current angle.

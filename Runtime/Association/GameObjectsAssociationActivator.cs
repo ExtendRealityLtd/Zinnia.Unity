@@ -1,10 +1,8 @@
 ﻿namespace Zinnia.Association
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Association.Collection;
+    using Zinnia.Extension;
     using Zinnia.Process;
 
     /// <summary>
@@ -12,12 +10,31 @@
     /// </summary>
     public class GameObjectsAssociationActivator : MonoBehaviour, IProcessable
     {
+        [Tooltip("The associations in order they will be activated if they match the currently expected state.")]
+        [SerializeField]
+        private GameObjectsAssociationObservableList associations;
         /// <summary>
         /// The associations in order they will be activated if they match the currently expected state.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public GameObjectsAssociationObservableList Associations { get; set; }
+        public GameObjectsAssociationObservableList Associations
+        {
+            get
+            {
+                return associations;
+            }
+            set
+            {
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnBeforeAssociationsChange();
+                }
+                associations = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterAssociationsChange();
+                }
+            }
+        }
 
         /// <summary>
         /// The currently activated association, or <see langword="null"/> if no association is activated.
@@ -176,7 +193,6 @@
         /// <summary>
         /// Called before <see cref="Associations"/> has been changed.
         /// </summary>
-        [CalledBeforeChangeOf(nameof(Associations))]
         protected virtual void OnBeforeAssociationsChange()
         {
             Deactivate(Associations);
@@ -185,7 +201,6 @@
         /// <summary>
         /// Called after <see cref="Associations"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Associations))]
         protected virtual void OnAfterAssociationsChange()
         {
             Activate();

@@ -1,9 +1,5 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Process;
@@ -13,54 +9,125 @@
     /// </summary>
     public class ArtificialVelocityApplierProcess : MonoBehaviour, IProcessable
     {
+        [Tooltip("The object to apply the artificial velocities to.")]
+        [SerializeField]
+        private GameObject target;
         /// <summary>
         /// The object to apply the artificial velocities to.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Target { get; set; }
-
+        public GameObject Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                target = value;
+            }
+        }
+        [Tooltip("The velocity to apply.")]
+        [SerializeField]
+        private Vector3 velocity;
         /// <summary>
         /// The velocity to apply.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 Velocity { get; set; }
-
+        public Vector3 Velocity
+        {
+            get
+            {
+                return velocity;
+            }
+            set
+            {
+                velocity = value;
+            }
+        }
+        [Tooltip("The angular velocity to apply.")]
+        [SerializeField]
+        private Vector3 angularVelocity;
         /// <summary>
         /// The angular velocity to apply.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3 AngularVelocity { get; set; }
-
+        public Vector3 AngularVelocity
+        {
+            get
+            {
+                return angularVelocity;
+            }
+            set
+            {
+                angularVelocity = value;
+            }
+        }
+        [Tooltip("The drag to apply to reduce the directional velocity over time and to slow down Target.")]
+        [SerializeField]
+        private float drag = 1f;
         /// <summary>
         /// The drag to apply to reduce the directional velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float Drag { get; set; } = 1f;
-
+        public float Drag
+        {
+            get
+            {
+                return drag;
+            }
+            set
+            {
+                drag = value;
+            }
+        }
+        [Tooltip("The angular drag to apply to reduce the rotational velocity over time and to slow down Target.")]
+        [SerializeField]
+        private float angularDrag = 0.5f;
         /// <summary>
         /// The angular drag to apply to reduce the rotational velocity over time and to slow down <see cref="Target"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float AngularDrag { get; set; } = 0.5f;
-
+        public float AngularDrag
+        {
+            get
+            {
+                return angularDrag;
+            }
+            set
+            {
+                angularDrag = value;
+            }
+        }
+        [Tooltip("The tolerance the velocity can be within zero to be considered nil.")]
+        [SerializeField]
+        private float nilVelocityTolerance = 0.001f;
         /// <summary>
         /// The tolerance the velocity can be within zero to be considered nil.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float NilVelocityTolerance { get; set; } = 0.001f;
-
+        public float NilVelocityTolerance
+        {
+            get
+            {
+                return nilVelocityTolerance;
+            }
+            set
+            {
+                nilVelocityTolerance = value;
+            }
+        }
+        [Tooltip("The tolerance the angular velocity can be within zero to be considered nil.")]
+        [SerializeField]
+        private float nilAngularVelocityTolerance = 0.001f;
         /// <summary>
         /// The tolerance the angular velocity can be within zero to be considered nil.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float NilAngularVelocityTolerance { get; set; } = 0.001f;
+        public float NilAngularVelocityTolerance
+        {
+            get
+            {
+                return nilAngularVelocityTolerance;
+            }
+            set
+            {
+                nilAngularVelocityTolerance = value;
+            }
+        }
 
         /// <summary>
         /// Determine if we can process.
@@ -68,12 +135,16 @@
         protected bool canProcess = false;
 
         /// <summary>
-        /// Applies the velocity data to the <see cref="Target"/>.
+        /// Clears <see cref="Target"/>.
         /// </summary>
-        [RequiresBehaviourState]
-        public virtual void Apply()
+        public virtual void ClearTarget()
         {
-            canProcess = true;
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
         }
 
         /// <summary>
@@ -164,9 +235,17 @@
             AngularVelocity = Vector3.zero;
         }
 
-        protected virtual void OnDisable()
+        /// <summary>
+        /// Applies the velocity data to the <see cref="Target"/>.
+        /// </summary>
+        public virtual void Apply()
         {
-            CancelDeceleration();
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            canProcess = true;
         }
 
         /// <inheritdoc />
@@ -196,9 +275,14 @@
         /// <summary>
         /// Cancels the <see cref="decelerationRoutine"/>.
         /// </summary>
-        protected virtual void CancelDeceleration()
+        public virtual void CancelDeceleration()
         {
             canProcess = false;
+        }
+
+        protected virtual void OnDisable()
+        {
+            CancelDeceleration();
         }
     }
 }

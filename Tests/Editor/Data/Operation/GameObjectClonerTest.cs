@@ -125,5 +125,69 @@ namespace Test.Zinnia.Data.Operation
             Object.DestroyImmediate(actual);
             Object.DestroyImmediate(gameObject);
         }
+
+        [Test]
+        public void ClearSource()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.ClearSource();
+            Assert.IsNull(subject.Source);
+        }
+
+        [Test]
+        public void ClearSourceInactiveGameObject()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.gameObject.SetActive(false);
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearOriginInactiveComponent()
+        {
+            Assert.IsNull(subject.Source);
+            subject.Source = containingObject;
+            Assert.AreEqual(containingObject, subject.Source);
+            subject.enabled = false;
+            subject.ClearSource();
+            Assert.AreEqual(containingObject, subject.Source);
+        }
+
+        [Test]
+        public void ClearParent()
+        {
+            Assert.IsNull(subject.Parent);
+            subject.Parent = containingObject;
+            Assert.AreEqual(containingObject, subject.Parent);
+            subject.ClearParent();
+            Assert.IsNull(subject.Parent);
+        }
+
+        [Test]
+        public void ClearParentInactiveGameObject()
+        {
+            Assert.IsNull(subject.Parent);
+            subject.Parent = containingObject;
+            Assert.AreEqual(containingObject, subject.Parent);
+            subject.gameObject.SetActive(false);
+            subject.ClearParent();
+            Assert.AreEqual(containingObject, subject.Parent);
+        }
+
+        [Test]
+        public void ClearParentInactiveComponent()
+        {
+            Assert.IsNull(subject.Parent);
+            subject.Parent = containingObject;
+            Assert.AreEqual(containingObject, subject.Parent);
+            subject.enabled = false;
+            subject.ClearParent();
+            Assert.AreEqual(containingObject, subject.Parent);
+        }
     }
 }

@@ -1,29 +1,41 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Creates a single pulse on a haptic device for a given intensity.
     /// </summary>
     public abstract class HapticPulser : HapticProcess
     {
+        [Tooltip("The intensity of the haptic rumble.")]
+        [SerializeField]
+        private float intensity = 1f;
         /// <summary>
         /// The intensity of the haptic rumble.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml, Range(0f, 1f)]
-        public float Intensity { get; set; } = 1f;
+        public float Intensity
+        {
+            get
+            {
+                return intensity;
+            }
+            set
+            {
+                intensity = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterIntensityChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Called after <see cref="Intensity"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Intensity))]
         protected virtual void OnAfterIntensityChange()
         {
-            Intensity = Mathf.Clamp01(Intensity);
+            intensity = Mathf.Clamp01(Intensity);
         }
     }
 }

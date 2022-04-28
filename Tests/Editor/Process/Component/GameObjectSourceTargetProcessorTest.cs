@@ -31,6 +31,76 @@ namespace Test.Zinnia.Process.Component
             Object.DestroyImmediate(containingObject);
         }
 
+        [Test]
+        public void ClearSourceValidity()
+        {
+            Assert.IsNull(subject.SourceValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.SourceValidity = rule;
+            Assert.AreEqual(rule, subject.SourceValidity);
+            subject.ClearSourceValidity();
+            Assert.IsNull(subject.SourceValidity);
+        }
+
+        [Test]
+        public void ClearSourceValidityInactiveGameObject()
+        {
+            Assert.IsNull(subject.SourceValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.SourceValidity = rule;
+            Assert.AreEqual(rule, subject.SourceValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearSourceValidity();
+            Assert.AreEqual(rule, subject.SourceValidity);
+        }
+
+        [Test]
+        public void ClearSourceValidityInactiveComponent()
+        {
+            Assert.IsNull(subject.SourceValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.SourceValidity = rule;
+            Assert.AreEqual(rule, subject.SourceValidity);
+            subject.enabled = false;
+            subject.ClearSourceValidity();
+            Assert.AreEqual(rule, subject.SourceValidity);
+        }
+
+        [Test]
+        public void ClearTargetValidity()
+        {
+            Assert.IsNull(subject.TargetValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.TargetValidity = rule;
+            Assert.AreEqual(rule, subject.TargetValidity);
+            subject.ClearTargetValidity();
+            Assert.IsNull(subject.TargetValidity);
+        }
+
+        [Test]
+        public void ClearTargetValidityInactiveGameObject()
+        {
+            Assert.IsNull(subject.TargetValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.TargetValidity = rule;
+            Assert.AreEqual(rule, subject.TargetValidity);
+            subject.gameObject.SetActive(false);
+            subject.ClearTargetValidity();
+            Assert.AreEqual(rule, subject.TargetValidity);
+        }
+
+        [Test]
+        public void ClearTargetValidityInactiveComponent()
+        {
+            Assert.IsNull(subject.TargetValidity);
+            RuleContainer rule = new RuleContainer();
+            subject.TargetValidity = rule;
+            Assert.AreEqual(rule, subject.TargetValidity);
+            subject.enabled = false;
+            subject.ClearTargetValidity();
+            Assert.AreEqual(rule, subject.TargetValidity);
+        }
+
         [UnityTest]
         public IEnumerator AddSource()
         {

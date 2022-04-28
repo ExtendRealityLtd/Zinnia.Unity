@@ -1,12 +1,9 @@
 ﻿namespace Zinnia.Utility
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Counts down from a given start time until zero and emits appropriate events throughout the process.
@@ -19,57 +16,61 @@
         [Serializable]
         public class FloatUnityEvent : UnityEvent<float> { }
 
+        [Tooltip("The time to start the countdown at.")]
+        [SerializeField]
+        private float startTime = 1f;
         /// <summary>
         /// The time to start the countdown at.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float StartTime { get; set; } = 1f;
+        public float StartTime
+        {
+            get
+            {
+                return startTime;
+            }
+            set
+            {
+                startTime = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterStartTimeChange();
+                }
+            }
+        }
 
         /// <summary>
         /// Emitted when the countdown starts.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Started = new UnityEvent();
         /// <summary>
         /// Emitted when the countdown is canceled.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Cancelled = new UnityEvent();
         /// <summary>
         /// Emitted when the countdown completes.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent Completed = new UnityEvent();
         /// <summary>
         /// Emitted when the status of the countdown is checked and is still running.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent StillRunning = new UnityEvent();
         /// <summary>
         /// Emitted when the status of the countdown is checked and is not running.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent NotRunning = new UnityEvent();
         /// <summary>
         /// Emitted when the elapsed time is checked.
         /// </summary>
-        [DocumentedByXml]
         public FloatUnityEvent ElapsedTimeEmitted = new FloatUnityEvent();
         /// <summary>
         /// Emitted when the remaining time is checked.
         /// </summary>
-        [DocumentedByXml]
         public FloatUnityEvent RemainingTimeEmitted = new FloatUnityEvent();
 
         /// <summary>
         /// Determines if the countdown is still running.
         /// </summary>
-        public bool IsRunning
-        {
-            get;
-            protected set;
-        }
+        public bool IsRunning { get; protected set; }
 
         /// <summary>
         /// Elapsed time of the timer.
@@ -113,9 +114,13 @@
         /// <summary>
         /// Starts the timer counting down.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Begin()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             IsRunning = true;
             SetInternalStates();
             Invoke(nameof(Complete), StartTime);
@@ -139,9 +144,13 @@
         /// <summary>
         /// Emits the current running status of the timer.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitStatus()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             if (IsRunning)
             {
                 StillRunning?.Invoke();
@@ -155,18 +164,26 @@
         /// <summary>
         /// Emits the elapsed time of the timer.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitElapsedTime()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             ElapsedTimeEmitted?.Invoke(ElapsedTime);
         }
 
         /// <summary>
         /// Emits the remaining time of the timer.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void EmitRemainingTime()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             RemainingTimeEmitted?.Invoke(RemainingTime);
         }
 
@@ -202,7 +219,6 @@
         /// <summary>
         /// Called after <see cref="StartTime"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(StartTime))]
         protected virtual void OnAfterStartTimeChange()
         {
             SetInternalStates();

@@ -1,10 +1,5 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
@@ -36,69 +31,162 @@
         }
 
         #region Reference Settings
+        [Header("Reference Settings")]
+        [Tooltip("The target to rotate.")]
+        [SerializeField]
+        private GameObject target;
         /// <summary>
         /// The target to rotate.
         /// </summary>
-        [Serialized, Cleared]
-        [field: Header("Reference Settings"), DocumentedByXml]
-        public GameObject Target { get; set; }
+        public GameObject Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                target = value;
+            }
+        }
+        [Tooltip("The object to look at when affecting rotation.")]
+        [SerializeField]
+        private GameObject lookAt;
         /// <summary>
         /// The object to look at when affecting rotation.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject LookAt { get; set; }
+        public GameObject LookAt
+        {
+            get
+            {
+                return lookAt;
+            }
+            set
+            {
+                lookAt = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterLookAtChange();
+                }
+            }
+        }
+        [Tooltip("The object to be used as the pivot point for rotation.")]
+        [SerializeField]
+        private GameObject pivot;
         /// <summary>
         /// The object to be used as the pivot point for rotation.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Pivot { get; set; }
+        public GameObject Pivot
+        {
+            get
+            {
+                return pivot;
+            }
+            set
+            {
+                pivot = value;
+            }
+        }
+        [Tooltip("The object providing a rotational offset for the Target.")]
+        [SerializeField]
+        private GameObject targetOffset;
         /// <summary>
         /// The object providing a rotational offset for the <see cref="Target"/>.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject TargetOffset { get; set; }
+        public GameObject TargetOffset
+        {
+            get
+            {
+                return targetOffset;
+            }
+            set
+            {
+                targetOffset = value;
+            }
+        }
+        [Tooltip("The object providing a rotational offset for the Pivot.")]
+        [SerializeField]
+        private GameObject pivotOffset;
         /// <summary>
         /// The object providing a rotational offset for the <see cref="Pivot"/>.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject PivotOffset { get; set; }
+        public GameObject PivotOffset
+        {
+            get
+            {
+                return pivotOffset;
+            }
+            set
+            {
+                pivotOffset = value;
+            }
+        }
         #endregion
 
         #region Control Settings
+        [Header("Control Settings")]
+        [Tooltip("The target object to use for setting the world up during the rotation process.")]
+        [SerializeField]
+        private RotationTargetType rotationUpTarget = RotationTargetType.UsePivotAsTarget;
         /// <summary>
         /// The target object to use for setting the world up during the rotation process.
         /// </summary>
-        [Serialized]
-        [field: Header("Control Settings"), DocumentedByXml]
-        public RotationTargetType RotationUpTarget { get; set; } = RotationTargetType.UsePivotAsTarget;
+        public RotationTargetType RotationUpTarget
+        {
+            get
+            {
+                return rotationUpTarget;
+            }
+            set
+            {
+                rotationUpTarget = value;
+            }
+        }
+        [Tooltip("Whether to snap the Target origin to the LookAt origin.")]
+        [SerializeField]
+        private bool snapToLookAt = true;
         /// <summary>
         /// Whether to snap the <see cref="Target"/> origin to the <see cref="LookAt"/> origin.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool SnapToLookAt { get; set; } = true;
+        public bool SnapToLookAt
+        {
+            get
+            {
+                return snapToLookAt;
+            }
+            set
+            {
+                snapToLookAt = value;
+            }
+        }
+        [Tooltip("The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.")]
+        [SerializeField]
+        private float resetOrientationSpeed = 0.1f;
         /// <summary>
         /// The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float ResetOrientationSpeed { get; set; } = 0.1f;
+        public float ResetOrientationSpeed
+        {
+            get
+            {
+                return resetOrientationSpeed;
+            }
+            set
+            {
+                resetOrientationSpeed = value;
+            }
+        }
         #endregion
 
         #region Orientation Events
         /// <summary>
         /// Emitted when the orientation is reset.
         /// </summary>
-        [Header("Orientation Events"), DocumentedByXml]
+        [Header("Orientation Events")]
         public UnityEvent OrientationReset = new UnityEvent();
         /// <summary>
         /// Emitted when the orientation reset action is canceled.
         /// </summary>
-        [DocumentedByXml]
         public UnityEvent OrientationResetCancelled = new UnityEvent();
         #endregion
 
@@ -129,19 +217,88 @@
         /// <summary>
         /// Determines whether the <see cref="LookAt"/> is in front of the <see cref="Pivot"/> within the <see cref="Target"/> local space.
         /// </summary>
-        protected bool IsLookAtInFrontOfPivot => Target != null && Pivot != null && LookAt != null ? Target.transform.InverseTransformPoint(LookAt.transform.position).z > Target.transform.InverseTransformPoint(Pivot.transform.position).z : false;
+        protected virtual bool IsLookAtInFrontOfPivot => Target != null && Pivot != null && LookAt != null ? Target.transform.InverseTransformPoint(LookAt.transform.position).z > Target.transform.InverseTransformPoint(Pivot.transform.position).z : false;
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="LookAt"/>.
+        /// </summary>
+        public virtual void ClearLookAt()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            LookAt = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Pivot"/>.
+        /// </summary>
+        public virtual void ClearPivotProperty()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Pivot = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetOffset"/>.
+        /// </summary>
+        public virtual void ClearTargetOffset()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetOffset = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PivotOffset"/>.
+        /// </summary>
+        public virtual void ClearPivotOffset()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PivotOffset = default;
+        }
 
         /// <summary>
         /// Processes the current direction modification.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void Process()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             SetTargetRotation();
         }
 
         /// <summary>
-        /// Clears the existing pivot.
+        /// Clears the existing created pivot point.
         /// </summary>
         public virtual void ClearPivot()
         {
@@ -152,9 +309,13 @@
         /// Saves the existing orientation of the target.
         /// </summary>
         /// <param name="cancelResetOrientation">Determines whether to cancel any existing orientation reset process.</param>
-        [RequiresBehaviourState]
         public virtual void SaveOrientation(bool cancelResetOrientation = true)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             targetInitialRotation = Target != null ? Target.transform.rotation : Quaternion.identity;
             pivotInitialRotation = Pivot != null ? Pivot.transform.rotation : Quaternion.identity;
             if (cancelResetOrientation)
@@ -166,9 +327,13 @@
         /// <summary>
         /// Resets the orientation of the target to it's initial rotation.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void ResetOrientation()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             pivotReleaseRotation = Pivot != null ? Pivot.transform.rotation : pivotReleaseRotation;
 
             if (ResetOrientationSpeed < float.MaxValue && ResetOrientationSpeed > 0f)
@@ -306,7 +471,6 @@
         /// <summary>
         /// Called after <see cref="LookAt"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(LookAt))]
         protected virtual void OnAfterLookAtChange()
         {
             SetOffsetRotation();

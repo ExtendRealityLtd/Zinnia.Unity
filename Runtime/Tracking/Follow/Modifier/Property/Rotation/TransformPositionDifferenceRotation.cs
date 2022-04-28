@@ -1,8 +1,5 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
@@ -12,26 +9,57 @@
     /// </summary>
     public class TransformPositionDifferenceRotation : PropertyModifier
     {
+        [Tooltip("The drag applied to the rotation to slow it down.")]
+        [SerializeField]
+        private float angularDrag = 1f;
         /// <summary>
         /// The drag applied to the rotation to slow it down.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float AngularDrag { get; set; } = 1f;
-
+        public float AngularDrag
+        {
+            get
+            {
+                return angularDrag;
+            }
+            set
+            {
+                angularDrag = value;
+            }
+        }
+        [Tooltip("Determines which axes to rotate.")]
+        [SerializeField]
+        private Vector3State followOnAxis = Vector3State.True;
         /// <summary>
         /// Determines which axes to rotate.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3State FollowOnAxis { get; set; } = Vector3State.True;
-
+        public Vector3State FollowOnAxis
+        {
+            get
+            {
+                return followOnAxis;
+            }
+            set
+            {
+                followOnAxis = value;
+            }
+        }
+        [Tooltip("An optional GameObject that is negated from the calculation if both the source and target are descendants of it.")]
+        [SerializeField]
+        private GameObject ancestor;
         /// <summary>
         /// An optional <see cref="GameObject"/> that is negated from the calculation if both the source and target are descendants of it.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public GameObject Ancestor { get; set; }
+        public GameObject Ancestor
+        {
+            get
+            {
+                return ancestor;
+            }
+            set
+            {
+                ancestor = value;
+            }
+        }
 
         /// <summary>
         /// The current angular velocity the rotation is applying to the target.
@@ -42,6 +70,19 @@
         /// The previous source world position.
         /// </summary>
         protected Vector3? previousSourcePosition;
+
+        /// <summary>
+        /// Clears <see cref="Ancestor"/>.
+        /// </summary>
+        public virtual void ClearAncestor()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Ancestor = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="FollowOnAxis"/> x value.

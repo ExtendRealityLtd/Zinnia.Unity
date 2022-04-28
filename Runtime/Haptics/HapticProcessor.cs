@@ -1,7 +1,6 @@
 ﻿namespace Zinnia.Haptics
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
+    using UnityEngine;
     using Zinnia.Haptics.Collection;
 
     /// <summary>
@@ -9,23 +8,49 @@
     /// </summary>
     public class HapticProcessor : HapticProcess
     {
+        [Tooltip("The HapticProcess collection to attempt to process.")]
+        [SerializeField]
+        private HapticProcessObservableList hapticProcesses;
         /// <summary>
         /// The <see cref="HapticProcess"/> collection to attempt to process.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public HapticProcessObservableList HapticProcesses { get; set; }
+        public HapticProcessObservableList HapticProcesses
+        {
+            get
+            {
+                return hapticProcesses;
+            }
+            set
+            {
+                hapticProcesses = value;
+            }
+        }
+        [Tooltip("Whether to cease the processing of the collection after the first valid HapticProcess is processed.")]
+        [SerializeField]
+        private bool ceaseAfterFirstSourceProcessed = true;
         /// <summary>
         /// Whether to cease the processing of the collection after the first valid <see cref="HapticProcess"/> is processed.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool CeaseAfterFirstSourceProcessed { get; set; } = true;
+        public bool CeaseAfterFirstSourceProcessed
+        {
+            get
+            {
+                return ceaseAfterFirstSourceProcessed;
+            }
+            set
+            {
+                ceaseAfterFirstSourceProcessed = value;
+            }
+        }
 
+        /// <summary>
+        /// The backing field for holding the value of <see cref="ActiveHapticProcess"/>.
+        /// </summary>
+        private HapticProcess activeHapticProcess;
         /// <summary>
         /// The current active <see cref="HapticProcess"/> being utilized.
         /// </summary>
-        public HapticProcess ActiveHapticProcess
+        public virtual HapticProcess ActiveHapticProcess
         {
             get => activeHapticProcess != null && activeHapticProcess.IsActive() ? activeHapticProcess : null;
             protected set
@@ -33,10 +58,6 @@
                 activeHapticProcess = value;
             }
         }
-        /// <summary>
-        /// The backing field for holding the value of <see cref="ActiveHapticProcess"/>.
-        /// </summary>
-        private HapticProcess activeHapticProcess;
 
         /// <summary>
         /// Starts the first active <see cref="HapticProcess"/> found.

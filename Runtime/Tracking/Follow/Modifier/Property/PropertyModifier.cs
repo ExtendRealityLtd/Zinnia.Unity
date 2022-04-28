@@ -1,9 +1,7 @@
 ﻿namespace Zinnia.Tracking.Follow.Modifier.Property
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
+    using Zinnia.Extension;
     using Zinnia.Tracking.Follow;
 
     /// <summary>
@@ -15,22 +13,33 @@
         /// <summary>
         /// Emitted before the property is modified.
         /// </summary>
-        [Header("Modifier Events"), DocumentedByXml]
+        [Header("Modifier Events")]
         public ObjectFollower.FollowEvent Premodified = new ObjectFollower.FollowEvent();
         /// <summary>
         /// Emitted after the property is modified.
         /// </summary>
-        [DocumentedByXml]
         public ObjectFollower.FollowEvent Modified = new ObjectFollower.FollowEvent();
         #endregion
 
         #region Modifier Settings
+        [Header("Modifier Settings")]
+        [Tooltip("Determines whether the offset will be applied on the modification.")]
+        [SerializeField]
+        private bool applyOffset = true;
         /// <summary>
         /// Determines whether the offset will be applied on the modification.
         /// </summary>
-        [Serialized]
-        [field: Header("Modifier Settings"), DocumentedByXml]
-        public bool ApplyOffset { get; set; } = true;
+        public bool ApplyOffset
+        {
+            get
+            {
+                return applyOffset;
+            }
+            set
+            {
+                applyOffset = value;
+            }
+        }
         #endregion
 
         /// <summary>
@@ -42,9 +51,13 @@
         /// Attempts to modify the target.
         /// </summary>
         /// <param name="data">Event data that contains the required modifier properties.</param>
-        [RequiresBehaviourState]
         public virtual void Modifiy(ObjectFollower.EventData data)
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             Modify(data.EventSource, data.EventTarget, data.EventTargetOffset);
         }
 
@@ -54,10 +67,9 @@
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
         /// <param name="offset">The offset of the target against the source when modifying.</param>
-        [RequiresBehaviourState]
         public virtual void Modify(GameObject source, GameObject target, GameObject offset = null)
         {
-            if (source == null || target == null)
+            if (!this.IsValidState() || source == null || target == null)
             {
                 return;
             }

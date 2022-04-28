@@ -1,10 +1,5 @@
 ﻿namespace Zinnia.Cast.Operation.Mutation
 {
-    using Malimbe.BehaviourStateRequirementMethod;
-    using Malimbe.MemberChangeMethod;
-    using Malimbe.MemberClearanceMethod;
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using UnityEngine;
     using Zinnia.Extension;
     using Zinnia.Rule;
@@ -14,42 +9,161 @@
     /// </summary>
     public class PointsCastPropertyMutator : MonoBehaviour
     {
+        [Tooltip("The PointsCast to mutate.")]
+        [SerializeField]
+        private PointsCast target;
         /// <summary>
         /// The <see cref="PointsCast"/> to mutate.
         /// </summary>
-        [Serialized, Cleared]
-        [field: DocumentedByXml]
-        public PointsCast Target { get; set; }
+        public PointsCast Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                target = value;
+            }
+        }
 
         /// <summary>
         /// The origin point for the cast.
         /// </summary>
-        [Cleared]
-        public GameObject Origin { get; set; }
+        private GameObject origin;
+        public GameObject Origin
+        {
+            get
+            {
+                return origin;
+            }
+            set
+            {
+                origin = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterOriginChange();
+                }
+            }
+        }
         /// <summary>
         /// Optionally affects the cast.
         /// </summary>
-        [Cleared]
-        public PhysicsCast PhysicsCast { get; set; }
+        private PhysicsCast physicsCast;
+        public PhysicsCast PhysicsCast
+        {
+            get
+            {
+                return physicsCast;
+            }
+            set
+            {
+                physicsCast = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterPhysicsCastChange();
+                }
+            }
+        }
         /// <summary>
         /// Optionally determines targets based on the set rules.
         /// </summary>
-        [Cleared]
-        public RuleContainer TargetValidity { get; set; }
+        private RuleContainer targetValidity;
+        public RuleContainer TargetValidity
+        {
+            get
+            {
+                return targetValidity;
+            }
+            set
+            {
+                targetValidity = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterTargetValidityChange();
+                }
+            }
+        }
 
         /// <summary>
         /// An override for the destination location point in world space.
         /// </summary>
-        public Vector3? DestinationPointOverride { get; set; }
+        private Vector3? destinationPointOverride;
+        public Vector3? DestinationPointOverride
+        {
+            get
+            {
+                return destinationPointOverride;
+            }
+            protected set
+            {
+                destinationPointOverride = value;
+                if (this.IsMemberChangeAllowed())
+                {
+                    OnAfterDestinationPointOverrideChange();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clears <see cref="Target"/>.
+        /// </summary>
+        public virtual void ClearTarget()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Target = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="Origin"/>.
+        /// </summary>
+        public virtual void ClearOrigin()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            Origin = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="PhysicsCast"/>.
+        /// </summary>
+        public virtual void ClearPhysicsCast()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PhysicsCast = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="TargetValidity"/>.
+        /// </summary>
+        public virtual void ClearTargetValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            TargetValidity = default;
+        }
 
         /// <summary>
         /// Sets the <see cref="Target"/> based on the first found <see cref="PointsCast"/> as either a direct, descendant or ancestor of the given <see cref="GameObject"/>.
         /// </summary>
         /// <param name="target">The <see cref="GameObject"/> to search for a <see cref="PointsCast"/> on.</param>
-        [RequiresBehaviourState]
         public virtual void SetTarget(GameObject target)
         {
-            if (target == null)
+            if (!this.IsValidState() || target == null)
             {
                 return;
             }
@@ -69,21 +183,20 @@
         /// <summary>
         /// Clears the <see cref="DestinationPointOverride"/>.
         /// </summary>
-        [RequiresBehaviourState]
         public virtual void ClearDestinationPointOverride()
         {
-            if (Target == null)
+            if (!this.IsValidState() || Target == null)
             {
                 return;
             }
 
+            DestinationPointOverride = default;
             Target.ClearDestinationPointOverride();
         }
 
         /// <summary>
         /// Called after <see cref="Origin"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(Origin))]
         protected virtual void OnAfterOriginChange()
         {
             if (Target == null)
@@ -97,7 +210,6 @@
         /// <summary>
         /// Called after <see cref="PhysicsCast"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(PhysicsCast))]
         protected virtual void OnAfterPhysicsCastChange()
         {
             if (Target == null)
@@ -111,7 +223,6 @@
         /// <summary>
         /// Called after <see cref="TargetValidity"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(TargetValidity))]
         protected virtual void OnAfterTargetValidityChange()
         {
             if (Target == null)
@@ -125,7 +236,6 @@
         /// <summary>
         /// Called after <see cref="DestinationPointOverride"/> has been changed.
         /// </summary>
-        [CalledAfterChangeOf(nameof(DestinationPointOverride))]
         protected virtual void OnAfterDestinationPointOverrideChange()
         {
             if (Target == null)

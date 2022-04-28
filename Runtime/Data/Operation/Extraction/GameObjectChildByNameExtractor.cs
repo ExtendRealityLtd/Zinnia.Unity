@@ -1,7 +1,5 @@
 namespace Zinnia.Data.Operation.Extraction
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -11,12 +9,23 @@ namespace Zinnia.Data.Operation.Extraction
     /// </summary>
     public class GameObjectChildByNameExtractor : GameObjectExtractor<GameObject, ComponentGameObjectExtractor.UnityEvent>
     {
+        [Tooltip("The path name to the child GameObject.")]
+        [SerializeField]
+        private string childNamePath;
         /// <summary>
         /// The path name to the child <see cref="GameObject"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string ChildNamePath { get; set; }
+        public string ChildNamePath
+        {
+            get
+            {
+                return childNamePath;
+            }
+            set
+            {
+                childNamePath = value;
+            }
+        }
 
         /// <summary>
         /// Defines the event with the specified <see cref="GameObject"/>.

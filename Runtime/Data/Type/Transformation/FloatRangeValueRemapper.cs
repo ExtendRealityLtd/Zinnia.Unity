@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -25,19 +23,41 @@
         [Serializable]
         public class UnityEvent : UnityEvent<float> { }
 
+        [Tooltip("The range of the value from.")]
+        [SerializeField]
+        private FloatRange from = new FloatRange(0f, 1f);
         /// <summary>
         /// The range of the value from.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public FloatRange From { get; set; } = new FloatRange(0f, 1f);
+        public FloatRange From
+        {
+            get
+            {
+                return from;
+            }
+            set
+            {
+                from = value;
+            }
+        }
 
+        [Tooltip("The range of the value remaps to.")]
+        [SerializeField]
+        private FloatRange to = new FloatRange(0f, 1f);
         /// <summary>
         /// The range of the value remaps to.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public FloatRange To { get; set; } = new FloatRange(0f, 1f);
+        public FloatRange To
+        {
+            get
+            {
+                return to;
+            }
+            set
+            {
+                to = value;
+            }
+        }
 
         /// <summary>
         /// The mode to use when remapping.
@@ -54,12 +74,23 @@
             SmoothStep
         }
 
+        [Tooltip("The mode to use when remapping.")]
+        [SerializeField]
+        private OutputMode mode = OutputMode.Lerp;
         /// <summary>
         /// The mode to use when remapping.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public OutputMode Mode { get; set; } = OutputMode.Lerp;
+        public OutputMode Mode
+        {
+            get
+            {
+                return mode;
+            }
+            set
+            {
+                mode = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="Mode"/>.

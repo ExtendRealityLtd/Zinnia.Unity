@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Observer
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -18,12 +16,23 @@
         [Serializable]
         public class UnityEvent : UnityEvent<Vector2> { }
 
+        [Tooltip("The tolerance to consider the current value and the cached value equal.")]
+        [SerializeField]
+        private float equalityTolerance = float.Epsilon;
         /// <summary>
         /// The tolerance to consider the current value and the cached value equal.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public float EqualityTolerance { get; set; } = float.Epsilon;
+        public float EqualityTolerance
+        {
+            get
+            {
+                return equalityTolerance;
+            }
+            set
+            {
+                equalityTolerance = value;
+            }
+        }
 
         /// <inheritdoc/>
         protected override bool Equals(Vector2 a, Vector2 b)

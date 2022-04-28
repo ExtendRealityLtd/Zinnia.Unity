@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Association
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using System.Text.RegularExpressions;
     using UnityEngine;
@@ -13,25 +11,58 @@
     [Obsolete("Use `RuleAssociation` instead.")]
     public class PlatformDeviceAssociation : GameObjectsAssociation
     {
+        [Tooltip("A regular expression to match the name of the current RuntimePlatform.")]
+        [SerializeField]
+        private string platformPattern;
         /// <summary>
         /// A regular expression to match the name of the current <see cref="RuntimePlatform"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string PlatformPattern { get; set; }
+        public string PlatformPattern
+        {
+            get
+            {
+                return platformPattern;
+            }
+            set
+            {
+                platformPattern = value;
+            }
+        }
+        [Tooltip("A regular expression to match the name of the XR device that needs to be loaded.")]
+        [SerializeField]
+        private string xrSdkPattern;
         /// <summary>
         /// A regular expression to match the name of the XR device that needs to be loaded.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string XrSdkPattern { get; set; }
+        public string XrSdkPattern
+        {
+            get
+            {
+                return xrSdkPattern;
+            }
+            set
+            {
+                xrSdkPattern = value;
+            }
+        }
 
+        [Tooltip("A regular expression to match the name of the XR model that is being used.")]
+        [SerializeField]
+        private string xrModelPattern;
         /// <summary>
         /// A regular expression to match the name of the XR model that is being used.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public string XrModelPattern { get; set; }
+        public string XrModelPattern
+        {
+            get
+            {
+                return xrModelPattern;
+            }
+            set
+            {
+                xrModelPattern = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override bool ShouldBeActive()

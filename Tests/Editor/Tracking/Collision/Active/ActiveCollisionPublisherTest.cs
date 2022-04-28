@@ -303,6 +303,73 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Object.DestroyImmediate(oneContainer);
             Object.DestroyImmediate(twoContainer);
         }
+
+        [Test]
+        public void ClearPayload()
+        {
+            ActiveCollisionPublisher.PayloadData payload = new ActiveCollisionPublisher.PayloadData();
+            subject.Payload = payload;
+            Assert.AreEqual(payload, subject.Payload);
+            subject.ClearPayload();
+            Assert.IsNull(subject.Payload);
+        }
+
+        [Test]
+        public void ClearPayloadInactiveGameObject()
+        {
+            ActiveCollisionPublisher.PayloadData payload = new ActiveCollisionPublisher.PayloadData();
+            subject.Payload = payload;
+            Assert.AreEqual(payload, subject.Payload);
+            subject.gameObject.SetActive(false);
+            subject.ClearPayload();
+            Assert.AreEqual(payload, subject.Payload);
+        }
+
+        [Test]
+        public void ClearPayloadInactiveComponent()
+        {
+            ActiveCollisionPublisher.PayloadData payload = new ActiveCollisionPublisher.PayloadData();
+            subject.Payload = payload;
+            Assert.AreEqual(payload, subject.Payload);
+            subject.enabled = false;
+            subject.ClearPayload();
+            Assert.AreEqual(payload, subject.Payload);
+        }
+
+        [Test]
+        public void ClearRegisteredConsumerContainer()
+        {
+            Assert.IsNull(subject.RegisteredConsumerContainer);
+            ActiveCollisionRegisteredConsumerContainerMock reigsteredConsumerContainer = containingObject.AddComponent<ActiveCollisionRegisteredConsumerContainerMock>();
+            subject.RegisteredConsumerContainer = reigsteredConsumerContainer;
+            Assert.AreEqual(reigsteredConsumerContainer, subject.RegisteredConsumerContainer);
+            subject.ClearRegisteredConsumerContainer();
+            Assert.IsNull(subject.RegisteredConsumerContainer);
+        }
+
+        [Test]
+        public void ClearRegisteredConsumerContainerInactiveGameObject()
+        {
+            Assert.IsNull(subject.RegisteredConsumerContainer);
+            ActiveCollisionRegisteredConsumerContainerMock reigsteredConsumerContainer = containingObject.AddComponent<ActiveCollisionRegisteredConsumerContainerMock>();
+            subject.RegisteredConsumerContainer = reigsteredConsumerContainer;
+            Assert.AreEqual(reigsteredConsumerContainer, subject.RegisteredConsumerContainer);
+            subject.gameObject.SetActive(false);
+            subject.ClearRegisteredConsumerContainer();
+            Assert.AreEqual(reigsteredConsumerContainer, subject.RegisteredConsumerContainer);
+        }
+
+        [Test]
+        public void ClearRegisteredConsumerContainerInactiveComponent()
+        {
+            Assert.IsNull(subject.RegisteredConsumerContainer);
+            ActiveCollisionRegisteredConsumerContainerMock reigsteredConsumerContainer = containingObject.AddComponent<ActiveCollisionRegisteredConsumerContainerMock>();
+            subject.RegisteredConsumerContainer = reigsteredConsumerContainer;
+            Assert.AreEqual(reigsteredConsumerContainer, subject.RegisteredConsumerContainer);
+            subject.enabled = false;
+            subject.ClearRegisteredConsumerContainer();
+            Assert.AreEqual(reigsteredConsumerContainer, subject.RegisteredConsumerContainer);
+        }
     }
 
     public class ActiveCollisionRegisteredConsumerContainerMock : ActiveCollisionRegisteredConsumerContainer

@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using UnityEngine.Events;
@@ -41,12 +39,23 @@
             Ceil
         }
 
+        [Tooltip("Determines how to round the float to a whole int.")]
+        [SerializeField]
+        private RoundingType roundBy;
         /// <summary>
         /// Determines how to round the <see cref="float"/> to a whole <see cref="int"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public RoundingType RoundBy { get; set; }
+        public RoundingType RoundBy
+        {
+            get
+            {
+                return roundBy;
+            }
+            set
+            {
+                roundBy = value;
+            }
+        }
 
         /// <summary>
         /// Sets the <see cref="RoundBy"/>.

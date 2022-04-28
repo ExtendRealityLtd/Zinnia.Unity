@@ -1,7 +1,5 @@
 ﻿namespace Zinnia.Data.Type
 {
-    using Malimbe.PropertySerializationAttribute;
-    using Malimbe.XmlDocumentationAttribute;
     using System;
     using UnityEngine;
     using Zinnia.Extension;
@@ -12,56 +10,111 @@
     [Serializable]
     public class TransformData
     {
+        [Tooltip("A reference to the original UnityEngine.Transform.")]
+        [SerializeField]
+        private Transform transform;
         /// <summary>
         /// A reference to the original <see cref="UnityEngine.Transform"/>.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Transform Transform { get; set; }
+        public Transform Transform
+        {
+            get
+            {
+                return transform;
+            }
+            set
+            {
+                transform = value;
+            }
+        }
+        [Tooltip("Determines whether to operate on the local or global values.")]
+        [SerializeField]
+        private bool useLocalValues;
         /// <summary>
         /// Determines whether to operate on the local or global values.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public bool UseLocalValues { get; set; }
+        public bool UseLocalValues
+        {
+            get
+            {
+                return useLocalValues;
+            }
+            set
+            {
+                useLocalValues = value;
+            }
+        }
+        [Tooltip("Position override of the UnityEngine.Transform object.")]
+        [SerializeField]
+        private Vector3? positionOverride;
         /// <summary>
         /// Position override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3? PositionOverride { get; set; }
+        public Vector3? PositionOverride
+        {
+            get
+            {
+                return positionOverride;
+            }
+            set
+            {
+                positionOverride = value;
+            }
+        }
+        [Tooltip("Rotation override of the UnityEngine.Transform object.")]
+        [SerializeField]
+        private Quaternion? rotationOverride;
         /// <summary>
         /// Rotation override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Quaternion? RotationOverride { get; set; }
+        public Quaternion? RotationOverride
+        {
+            get
+            {
+                return rotationOverride;
+            }
+            set
+            {
+                rotationOverride = value;
+            }
+        }
+        [Tooltip("Scale override of the UnityEngine.Transform object.")]
+        [SerializeField]
+        private Vector3? scaleOverride;
         /// <summary>
         /// Scale override of the <see cref="UnityEngine.Transform"/> object.
         /// </summary>
-        [Serialized]
-        [field: DocumentedByXml]
-        public Vector3? ScaleOverride { get; set; }
+        public Vector3? ScaleOverride
+        {
+            get
+            {
+                return scaleOverride;
+            }
+            set
+            {
+                scaleOverride = value;
+            }
+        }
 
         /// <summary>
         /// The position of the <see cref="UnityEngine.Transform"/> or the <see cref="PositionOverride"/> if it is set.
         /// </summary>
-        public Vector3 Position => PositionOverride ?? (UseLocalValues ? Transform.localPosition : Transform.position);
+        public virtual Vector3 Position => PositionOverride ?? (UseLocalValues ? Transform.localPosition : Transform.position);
 
         /// <summary>
         /// The rotation of the <see cref="UnityEngine.Transform"/> or the <see cref="RotationOverride"/> if it is set.
         /// </summary>
-        public Quaternion Rotation => RotationOverride ?? (UseLocalValues ? Transform.localRotation : Transform.rotation);
+        public virtual Quaternion Rotation => RotationOverride ?? (UseLocalValues ? Transform.localRotation : Transform.rotation);
 
         /// <summary>
         /// The scale of the <see cref="UnityEngine.Transform"/> or the <see cref="ScaleOverride"/> if it is set.
         /// </summary>
-        public Vector3 Scale => ScaleOverride ?? (UseLocalValues ? Transform.localScale : Transform.lossyScale);
+        public virtual Vector3 Scale => ScaleOverride ?? (UseLocalValues ? Transform.localScale : Transform.lossyScale);
 
         /// <summary>
         /// The state of whether the <see cref="TransformData"/> is valid.
         /// </summary>
-        public bool IsValid => Transform != null;
+        public virtual bool IsValid => Transform != null;
 
         /// <summary>
         /// Creates a new <see cref="TransformData"/> for an empty <see cref="UnityEngine.Transform"/>.
