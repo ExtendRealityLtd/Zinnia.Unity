@@ -37,7 +37,17 @@
                 return;
             }
 
-            ProcessObjectProperties(serializedProperty);
+            try
+            {
+                ProcessObjectProperties(serializedProperty);
+            }
+            catch (Exception exception)
+            {
+                if (exception.GetType() != typeof(ExitGUIException) && exception.GetType() != typeof(ArgumentException))
+                {
+                    Debug.LogError(exception);
+                }
+            }
         }
 
         protected virtual void DrawProperty(SerializedProperty property) => EditorGUILayout.PropertyField(property, true);
