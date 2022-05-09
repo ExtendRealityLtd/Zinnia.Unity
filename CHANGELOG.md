@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.1.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.0.0...v2.1.0) (2022-05-09)
+
+#### Features
+
+* **Data:** set custom true and false values for boolean to float ([d05c220](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d05c2200c4856b73bb6e62af79c934f2bf270bc7))
+  > The BooleanToFloat component now has the ability to set the false and true float value rather than it just being hard coded to 0f for false and 1f for true.
+  > 
+  > The FloatToBoolean PositiveBounds property has also been made public as it should be so it can be set via code if required.
+* **Utility:** add stub component to allow gameobject selection ([7f1afbe](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/7f1afbe969e934cc093ab1a88a0fdc33dfefbc36))
+  > The BaseGameObjectSelector component is an empty component that contains the `[SelectionBase]` Unity tag, so when the GameObject that has this component on it is clicked in the Unity scene view then it will select this specific GameObject and not the one that contains the mesh as this is not always the desired result.
+
+#### Bug Fixes
+
+* **Data:** ensure float range drawer indents correctly ([3d4c658](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/3d4c6588372014ecabf3f852b768fabe63214a38))
+  > The indent on the FloatRangeDrawer was in the wrong place causing incorrect indentation when the property was being used in an already indented collection.
+* **ZinniaInspector:** catch unwanted exceptions from Unity ([e2c3e09](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/e2c3e09cef4078902b05f7e40be9a19caa162176))
+  > There are a couple of oddities where Unity will thrown an exception using the custom editor if a Horizontal or Vertical group is started and then another Unity inspector element is opened it seems not to close the previous opened group causing a mismatch somewhere.
+  > 
+  > This isn't technically a fix for the problem but just a way of removing the error for now.
+
 ## [2.0.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v1.47.1...v2.0.0) (2022-04-28)
 
 #### :warning: BREAKING CHANGES :warning:
