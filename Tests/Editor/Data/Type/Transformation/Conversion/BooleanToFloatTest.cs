@@ -59,6 +59,40 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
         }
 
         [Test]
+        public void TransformTrueCustomValue()
+        {
+            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            subject.Transformed.AddListener(transformedListenerMock.Listen);
+
+            Assert.AreEqual(0f, subject.Result);
+            Assert.IsFalse(transformedListenerMock.Received);
+
+            subject.TrueValue = 2f;
+            float result = subject.Transform(true);
+
+            Assert.AreEqual(2f, result);
+            Assert.AreEqual(2f, subject.Result);
+            Assert.IsTrue(transformedListenerMock.Received);
+        }
+
+        [Test]
+        public void TransformFalseCustomValue()
+        {
+            UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
+            subject.Transformed.AddListener(transformedListenerMock.Listen);
+
+            Assert.AreEqual(0f, subject.Result);
+            Assert.IsFalse(transformedListenerMock.Received);
+
+            subject.FalseValue = -2f;
+            float result = subject.Transform(false);
+
+            Assert.AreEqual(-2f, result);
+            Assert.AreEqual(-2f, subject.Result);
+            Assert.IsTrue(transformedListenerMock.Received);
+        }
+
+        [Test]
         public void TransformInactiveGameObject()
         {
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
