@@ -26,7 +26,7 @@
         /// <summary>
         /// The bounds in which the <see cref="float"/> must be to be considered a positive boolean.
         /// </summary>
-        protected FloatRange PositiveBounds
+        public FloatRange PositiveBounds
         {
             get
             {

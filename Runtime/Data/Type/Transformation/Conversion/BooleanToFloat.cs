@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Data.Type.Transformation.Conversion
 {
     using System;
+    using UnityEngine;
     using UnityEngine.Events;
 
     /// <summary>
@@ -18,6 +19,41 @@
         [Serializable]
         public class UnityEvent : UnityEvent<float> { }
 
+        [Tooltip("The value to use if the boolean is false.")]
+        [SerializeField]
+        private float falseValue = 0f;
+        /// <summary>
+        /// The value to use if the boolean is false.
+        /// </summary>
+        public float FalseValue
+        {
+            get
+            {
+                return falseValue;
+            }
+            set
+            {
+                falseValue = value;
+            }
+        }
+        [Tooltip("The value to use if the boolean is true.")]
+        [SerializeField]
+        private float trueValue = 1f;
+        /// <summary>
+        /// The value to use if the boolean is true.
+        /// </summary>
+        public float TrueValue
+        {
+            get
+            {
+                return trueValue;
+            }
+            set
+            {
+                trueValue = value;
+            }
+        }
+
         /// <summary>
         /// Transforms the given input <see cref="bool"/> to the <see cref="float"/> equivalent value.
         /// </summary>
@@ -25,7 +61,7 @@
         /// <returns>The transformed value.</returns>
         protected override float Process(bool input)
         {
-            return input ? 1f : 0f;
+            return input ? TrueValue : FalseValue;
         }
     }
 }
