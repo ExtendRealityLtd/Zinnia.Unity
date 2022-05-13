@@ -285,6 +285,15 @@
         }
 
         /// <summary>
+        /// Sets the <see cref="RotationUpTarget"/>.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="RotationTargetType"/>.</param>
+        public virtual void SetRotationUpTarget(int index)
+        {
+            RotationUpTarget = EnumExtensions.GetByIndex<RotationTargetType>(index);
+        }
+
+        /// <summary>
         /// Processes the current direction modification.
         /// </summary>
         public virtual void Process()
