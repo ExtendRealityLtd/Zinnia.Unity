@@ -51,5 +51,15 @@
         {
             return a.x.ApproxEquals(b.x, tolerance.x) && a.y.ApproxEquals(b.y, tolerance.y);
         }
+
+        /// <summary>
+        /// Converts an unsigned Euler angle into a signed Euler angle.
+        /// </summary>
+        /// <param name="eulerAngles">The unsigned Euler angle to convert.</param>
+        /// <returns>The converted signed Euler angle.</returns>
+        public static Vector2 UnsignedEulerToSignedEuler(this Vector2 eulerAngles)
+        {
+            return new Vector2(eulerAngles.x.GetSignedDegree(), eulerAngles.y.GetSignedDegree());
+        }
     }
 }
