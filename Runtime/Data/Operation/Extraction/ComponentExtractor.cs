@@ -9,6 +9,9 @@
     /// <summary>
     /// Extracts and emits the <see cref="Component"/> found in relation to the <see cref="Source"/>.
     /// </summary>
+    /// <typeparam name="TResultElement">The result type.</typeparam>
+    /// <typeparam name="TEvent">The unity event to emit.</typeparam>
+    /// <typeparam name="TEventElement">The event element type.</typeparam>
     public abstract class ComponentExtractor<TResultElement, TEvent, TEventElement> : ValueExtractor<TResultElement, Component, TEvent, TEventElement> where TEvent : UnityEvent<TEventElement>, new()
     {
         /// <summary>
