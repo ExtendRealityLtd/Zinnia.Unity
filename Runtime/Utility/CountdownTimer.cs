@@ -16,6 +16,8 @@
         [Serializable]
         public class FloatUnityEvent : UnityEvent<float> { }
 
+        #region Timer Settings
+        [Header("Timer Settings")]
         [Tooltip("The time to start the countdown at.")]
         [SerializeField]
         private float startTime = 1f;
@@ -37,10 +39,30 @@
                 }
             }
         }
+        [Tooltip("Whether to start the countdown timer when the component becomes enabled.")]
+        [SerializeField]
+        private bool beginOnEnable;
+        /// <summary>
+        /// Whether to start the countdown timer when the component becomes enabled.
+        /// </summary>
+        public bool BeginOnEnable
+        {
+            get
+            {
+                return beginOnEnable;
+            }
+            set
+            {
+                beginOnEnable = value;
+            }
+        }
+        #endregion
 
+        #region Timer Events
         /// <summary>
         /// Emitted when the countdown starts.
         /// </summary>
+        [Header("Timer Events")]
         public UnityEvent Started = new UnityEvent();
         /// <summary>
         /// Emitted when the countdown is canceled.
@@ -66,6 +88,7 @@
         /// Emitted when the remaining time is checked.
         /// </summary>
         public FloatUnityEvent RemainingTimeEmitted = new FloatUnityEvent();
+        #endregion
 
         /// <summary>
         /// Determines if the countdown is still running.
@@ -190,6 +213,10 @@
         protected virtual void OnEnable()
         {
             SetInternalStates();
+            if (BeginOnEnable)
+            {
+                Begin();
+            }
         }
 
         protected virtual void OnDisable()
