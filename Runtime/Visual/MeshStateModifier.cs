@@ -4,6 +4,7 @@ namespace Zinnia.Visual
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Data.Attribute;
     using Zinnia.Data.Collection.List;
     using Zinnia.Extension;
 
@@ -38,6 +39,7 @@ namespace Zinnia.Visual
         [Header("Mesh Settings")]
         [Tooltip("The mesh components to modify.")]
         [SerializeField]
+        [UnityFlags]
         private MeshTypes meshesToModifiy = (MeshTypes)(-1);
         /// <summary>
         /// The mesh components to modify.

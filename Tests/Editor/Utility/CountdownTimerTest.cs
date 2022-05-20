@@ -19,6 +19,7 @@ namespace Test.Zinnia.Utility
         public void SetUp()
         {
             containingObject = new GameObject();
+            containingObject.SetActive(false);
             subject = containingObject.AddComponent<CountdownTimer>();
         }
 
@@ -31,6 +32,7 @@ namespace Test.Zinnia.Utility
         [UnityTest]
         public IEnumerator TimerComplete()
         {
+            containingObject.SetActive(true);
             UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
@@ -77,8 +79,58 @@ namespace Test.Zinnia.Utility
         }
 
         [UnityTest]
+        public IEnumerator TimerRunsOnEnable()
+        {
+            UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerStillRunningMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerNotRunningMock = new UnityEventListenerMock();
+
+            subject.Started.AddListener(timerStartedMock.Listen);
+            subject.Cancelled.AddListener(timerCancelledMock.Listen);
+            subject.Completed.AddListener(timerCompleteMock.Listen);
+            subject.StillRunning.AddListener(timerStillRunningMock.Listen);
+            subject.NotRunning.AddListener(timerNotRunningMock.Listen);
+
+            subject.StartTime = 0.1f;
+            subject.BeginOnEnable = true;
+
+            Assert.IsFalse(timerStartedMock.Received);
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerStillRunningMock.Received);
+            Assert.IsFalse(timerNotRunningMock.Received);
+
+            containingObject.SetActive(true);
+
+            Assert.IsTrue(timerStartedMock.Received);
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsFalse(timerCompleteMock.Received);
+
+            subject.EmitStatus();
+
+            Assert.IsTrue(timerStillRunningMock.Received);
+            Assert.IsFalse(timerNotRunningMock.Received);
+
+            yield return new WaitForSeconds(0.1f);
+
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsTrue(timerCompleteMock.Received);
+
+            timerStillRunningMock.Reset();
+            timerNotRunningMock.Reset();
+
+            subject.EmitStatus();
+
+            Assert.IsFalse(timerStillRunningMock.Received);
+            Assert.IsTrue(timerNotRunningMock.Received);
+        }
+
+        [UnityTest]
         public IEnumerator TimerCancelled()
         {
+            containingObject.SetActive(true);
             UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
@@ -127,6 +179,7 @@ namespace Test.Zinnia.Utility
         [UnityTest]
         public IEnumerator TimerDoesNotCompleteOnInactiveGameObject()
         {
+            containingObject.SetActive(true);
             UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
@@ -177,6 +230,7 @@ namespace Test.Zinnia.Utility
         [UnityTest]
         public IEnumerator TimerDoesNotCompleteOnInactiveComponent()
         {
+            containingObject.SetActive(true);
             UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
@@ -227,6 +281,7 @@ namespace Test.Zinnia.Utility
         [UnityTest]
         public IEnumerator TimerCancelledOnDisableGameObject()
         {
+            containingObject.SetActive(true);
             UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
@@ -275,6 +330,7 @@ namespace Test.Zinnia.Utility
         [UnityTest]
         public IEnumerator TimerCancelledOnDisableComponent()
         {
+            containingObject.SetActive(true);
             UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
@@ -323,6 +379,7 @@ namespace Test.Zinnia.Utility
         [UnityTest]
         public IEnumerator TimerEmitTime()
         {
+            containingObject.SetActive(true);
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
             UnityEventValueListenerMock<float> timerElapsedTimeMock = new UnityEventValueListenerMock<float>();
             UnityEventValueListenerMock<float> timerRemainingTimeMock = new UnityEventValueListenerMock<float>();
@@ -397,6 +454,7 @@ namespace Test.Zinnia.Utility
         [UnityTest]
         public IEnumerator TimerEmitTimeUnchangedAfterComplete()
         {
+            containingObject.SetActive(true);
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
             UnityEventValueListenerMock<float> timerElapsedTimeMock = new UnityEventValueListenerMock<float>();
             UnityEventValueListenerMock<float> timerRemainingTimeMock = new UnityEventValueListenerMock<float>();
@@ -467,6 +525,7 @@ namespace Test.Zinnia.Utility
         [UnityTest]
         public IEnumerator TimerEmitTimeUnchangedAfterCancelled()
         {
+            containingObject.SetActive(true);
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
             UnityEventValueListenerMock<float> timerElapsedTimeMock = new UnityEventValueListenerMock<float>();

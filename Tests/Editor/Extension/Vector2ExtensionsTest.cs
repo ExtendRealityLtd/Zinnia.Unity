@@ -74,5 +74,17 @@ namespace Test.Zinnia.Extension
             b = new Vector2(0.3f, 0.4f);
             Assert.IsFalse(a.WithinDistance(b, tolerance));
         }
+
+        [Test]
+        public void UnsignedEulerToSignedEuler()
+        {
+            Assert.AreEqual(new Vector2(0f, 0f), new Vector2(0f, 0f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector2(90f, 90f), new Vector2(90f, 90f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector2(179f, 179f), new Vector2(179f, 179f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector2(180f, 180f), new Vector2(180f, 180f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector2(-179f, -179f), new Vector2(181f, 181f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector2(-90f, -90f), new Vector2(270f, 270f).UnsignedEulerToSignedEuler());
+            Assert.AreEqual(new Vector2(0f, 0f), new Vector2(360f, 360f).UnsignedEulerToSignedEuler());
+        }
     }
 }
