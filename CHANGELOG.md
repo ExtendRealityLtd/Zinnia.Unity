@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.2.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.1.0...v2.2.0) (2022-05-20)
+
+#### Features
+
+* **Cast:** add event data raycast hit extractor ([fd44cce](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/fd44cce20c9603c620ae7fcd3b97bbd75d1bc8d8))
+  > The PointsCast.EventData contains RaycastHit information that may be useful to be extracted and then worked upon elsewhere, so this new extractor simply extracts the RaycastHit from the PointsCast EventData.
+* **Data:** add GameObject destroyer ([d20fce6](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d20fce68bd89a4dcc003a41fa0718202ec0f52da))
+  > The GameObjectDestroyer component allows a specified GameObject to be destroyed either immediately or at the end of the frame.
+* **Extension:** add unsigned euler to signed for Vector2 ([9faa375](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/9faa375b3bedf7d07dece755bd631e6e4b72e1f6))
+  > The UnsignedEulerToSignedEuler method was only on the Vector3 extension but it really should be on Vector2 extension as well for completeness as these two extension classes have the same matching methods.
+* **Rule:** add rule based on action activated state ([52217a4](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/52217a48732012a52968bbd15b895e280ab113d4))
+  > The ActionRule will return true if the set (or given) action is currently activated and will return false if the action is in the deactivated state.
+* **Utility:** add ability for countdown timer to start on enabled ([bab96b0](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/bab96b0f92079262852acf2b640427c71a5f8ce1))
+  > Previously, the CountdownTimer component would rely on the BehaviourEnabledObserver component to let it start the timer when the component became enabled. But the use case for wanting a timer to start when the component is enabled is so common that it may as well simply be an option on the CountdownTimer component itself.
+  > 
+  > This makes it easier to simply start a timer, but it can also be disabled so the use of the BehaviourEnabledObserver can still be used if required. It is also set to false by default so will not cause any breaking changes.
+
+#### Bug Fixes
+
+* **DirectionModifier:** allow RotationUpTarget to be set by method ([fd20d38](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/fd20d38860a879284c9a8c904806b77eb27f17ec))
+  > The RotationUpTarget property can now be set via a method passing the enum index in as the parameter.
+* **Visual:** add UnityFlag attribute to meshesToModify field ([3676613](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/36766135fb2efe2ce999e6dbbf4df19e76649a4b))
+  > The meshesToModify field needs to have the UnityFlag attribute on it otherwise it won't show up the multiple choice enum drop down.
+
 ## [2.1.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.0.0...v2.1.0) (2022-05-09)
 
 #### Features
