@@ -254,6 +254,10 @@
         /// </summary>
         protected readonly EventData eventData = new EventData();
         /// <summary>
+        /// The last used camera in the fade routine.
+        /// </summary>
+        protected Camera lastUsedCamera;
+        /// <summary>
         /// A container for holding the Universal Render Pipeline fade overlay mesh.
         /// </summary>
         protected GameObject urpFadeOverlay;
@@ -262,9 +266,21 @@
         /// </summary>
         protected MeshRenderer fadeRenderer;
         /// <summary>
-        /// The last used camera in the fade routine.
+        /// The dimensions of the fade mesh used with the Universal Render Pipeline fade overlay.
         /// </summary>
-        protected Camera lastUsedCamera;
+        protected virtual Vector3 FadeMeshDimensions { get; set; } = new Vector3(10f, 10f, 1f);
+        /// <summary>
+        /// The triganles of the fade mesh used with the Universal Render Pipeline fade overlay.
+        /// </summary>
+        protected virtual int[] FadeMeshTriangles { get; set; } = new int[6] { 0, 2, 1, 2, 3, 1 };
+        /// <summary>
+        /// The normals of the fade mesh used with the Universal Render Pipeline fade overlay.
+        /// </summary>
+        protected virtual Vector3[] FadeMeshNormals { get; set; } = new Vector3[4] { -Vector3.forward, -Vector3.forward, -Vector3.forward, -Vector3.forward };
+        /// <summary>
+        /// The texture UV of the fade mesh used with the Universal Render Pipeline fade overlay.
+        /// </summary>
+        protected virtual Vector2[] FadeMeshUV { get; set; } = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1) };
 
         /// <summary>
         /// Sets the current <see cref="OverlayColor"/> and <see cref="AddDuration"/> with the given parameters and applies the <see cref="OverlayColor"/> to the cameras via <see cref="CameraValidity"/> over the given <see cref="AddDuration"/>.
@@ -376,6 +392,22 @@
         }
 
         /// <summary>
+        /// Generates the fade mesh vertices.
+        /// </summary>
+        /// <returns>The fade mesh vertices</returns>
+        protected virtual Vector3[] GenerateFadeMeshVertices()
+        {
+            Vector3[] vertices = new Vector3[]
+            {
+                new Vector3(-FadeMeshDimensions.x, -FadeMeshDimensions.y, FadeMeshDimensions.z),
+                new Vector3(FadeMeshDimensions.x, -FadeMeshDimensions.y, FadeMeshDimensions.z),
+                new Vector3(-FadeMeshDimensions.x, FadeMeshDimensions.y, FadeMeshDimensions.z),
+                new Vector3(FadeMeshDimensions.x, FadeMeshDimensions.y, FadeMeshDimensions.z)
+            };
+            return vertices;
+        }
+
+        /// <summary>
         /// Creates the fade mesh used in the Universal Render Pipeline.
         /// </summary>
         protected virtual void CreateFadeMesh()
@@ -390,36 +422,10 @@
             fadeRenderer = urpFadeOverlay.AddComponent<MeshRenderer>();
             Mesh mesh = new Mesh();
             fadeMesh.mesh = mesh;
-
-            Vector3[] vertices = new Vector3[4];
-
-            float width = 2f;
-            float height = 2f;
-            float depth = 1f;
-
-            vertices[0] = new Vector3(-width, -height, depth);
-            vertices[1] = new Vector3(width, -height, depth);
-            vertices[2] = new Vector3(-width, height, depth);
-            vertices[3] = new Vector3(width, height, depth);
-
-            mesh.vertices = vertices;
-
-            int[] tri = new int[6] { 0, 2, 1, 2, 3, 1 };
-
-            mesh.triangles = tri;
-
-            Vector3[] normals = new Vector3[4] { -Vector3.forward, -Vector3.forward, -Vector3.forward, -Vector3.forward };
-
-            mesh.normals = normals;
-
-            Vector2[] uv = new Vector2[4];
-
-            uv[0] = new Vector2(0, 0);
-            uv[1] = new Vector2(1, 0);
-            uv[2] = new Vector2(0, 1);
-            uv[3] = new Vector2(1, 1);
-
-            mesh.uv = uv;
+            mesh.vertices = GenerateFadeMeshVertices();
+            mesh.triangles = FadeMeshTriangles;
+            mesh.normals = FadeMeshNormals;
+            mesh.uv = FadeMeshUV;
         }
 
         /// <summary>
