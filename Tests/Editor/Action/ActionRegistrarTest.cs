@@ -6,6 +6,7 @@ namespace Test.Zinnia.Action
 {
     using NUnit.Framework;
     using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
     using Assert = UnityEngine.Assertions.Assert;
@@ -177,6 +178,16 @@ namespace Test.Zinnia.Action
         [UnityTest]
         public IEnumerator Unregister()
         {
+            UnityEventListenerMock actionAddedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock actionRemovedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock limitRegisteredListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock limitUnregisteredListenerMock = new UnityEventListenerMock();
+
+            subject.ActionAdded.AddListener(actionAddedListenerMock.Listen);
+            subject.ActionRemoved.AddListener(actionRemovedListenerMock.Listen);
+            subject.LimitRegistered.AddListener(limitRegisteredListenerMock.Listen);
+            subject.LimitUnregistered.AddListener(limitUnregisteredListenerMock.Listen);
+
             subject.enabled = true;
             yield return null;
 
@@ -203,15 +214,36 @@ namespace Test.Zinnia.Action
                 Action = twoSourceAction
             };
 
+            Assert.IsFalse(actionAddedListenerMock.Received);
+            Assert.IsFalse(actionRemovedListenerMock.Received);
+            Assert.IsFalse(limitRegisteredListenerMock.Received);
+            Assert.IsFalse(limitUnregisteredListenerMock.Received);
+
             subject.Target = targetAction;
             subject.Sources.Add(oneActionSource);
             subject.Sources.Add(twoActionSource);
+
             subject.SourceLimits.Add(oneSourceActionObject);
             subject.SourceLimits.Add(twoSourceActionObject);
+
+            Assert.IsTrue(actionAddedListenerMock.Received);
+            Assert.IsFalse(actionRemovedListenerMock.Received);
+            Assert.IsTrue(limitRegisteredListenerMock.Received);
+            Assert.IsFalse(limitUnregisteredListenerMock.Received);
+
+            actionAddedListenerMock.Reset();
+            actionRemovedListenerMock.Reset();
+            limitRegisteredListenerMock.Reset();
+            limitUnregisteredListenerMock.Reset();
 
             Assert.AreEqual(2, targetAction.ReadOnlySources.Count);
 
             subject.SourceLimits.Remove(oneSourceActionObject);
+
+            Assert.IsFalse(actionAddedListenerMock.Received);
+            Assert.IsTrue(actionRemovedListenerMock.Received);
+            Assert.IsFalse(limitRegisteredListenerMock.Received);
+            Assert.IsTrue(limitUnregisteredListenerMock.Received);
 
             Assert.AreEqual(1, targetAction.ReadOnlySources.Count);
             Assert.AreEqual(twoSourceAction, targetAction.ReadOnlySources[0]);
