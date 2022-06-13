@@ -417,7 +417,7 @@ namespace Test.Zinnia.Action
             Assert.IsTrue(changedListenerMock.Received);
             Assert.IsFalse(unchangedListenerMock.Received);
 
-            subject.RemoveSource(sourceMock);
+            Assert.IsTrue(subject.RemoveSource(sourceMock));
 
             sourceMock.SetIsActivated(false);
             sourceMock.SetValue(false);
@@ -434,6 +434,8 @@ namespace Test.Zinnia.Action
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
             Assert.IsFalse(unchangedListenerMock.Received);
+
+            Assert.IsFalse(subject.RemoveSource(sourceMock));
 
             Object.DestroyImmediate(sourceObject);
         }
@@ -482,6 +484,25 @@ namespace Test.Zinnia.Action
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
             Assert.IsFalse(unchangedListenerMock.Received);
+
+            Object.DestroyImmediate(sourceObject);
+        }
+
+        [Test]
+        public void SourcesContains()
+        {
+            GameObject sourceObject = new GameObject();
+            BooleanActionMock sourceMock = sourceObject.AddComponent<BooleanActionMock>();
+
+            Assert.IsFalse(subject.SourcesContains(sourceMock));
+
+            subject.AddSource(sourceMock);
+
+            Assert.IsTrue(subject.SourcesContains(sourceMock));
+
+            subject.RemoveSource(sourceMock);
+
+            Assert.IsFalse(subject.SourcesContains(sourceMock));
 
             Object.DestroyImmediate(sourceObject);
         }

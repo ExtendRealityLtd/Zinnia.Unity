@@ -54,11 +54,18 @@
         /// Removes the given action from the sources collection.
         /// </summary>
         /// <param name="action">The action to remove.</param>
-        public abstract void RemoveSource(Action action);
+        /// <returns>Whether the remove was successful.</returns>
+        public abstract bool RemoveSource(Action action);
         /// <summary>
         /// Clears all sources.
         /// </summary>
         public abstract void ClearSources();
+        /// <summary>
+        /// Determines whether the sources collection contains an action.
+        /// </summary>
+        /// <param name="action">The action to check.</param>
+        /// <returns>Whether it contains the given action.</returns>
+        public abstract bool SourcesContains(Action action);
         /// <summary>
         /// Emits the appropriate event for when the activation state changes from Activated or Deactivated.
         /// </summary>
@@ -206,15 +213,15 @@
         }
 
         /// <inheritdoc />
-        public override void RemoveSource(Action action)
+        public override bool RemoveSource(Action action)
         {
             if (!this.IsValidState() || action == null)
             {
-                return;
+                return false;
             }
 
             UnsubscribeFromSource((TSelf)action);
-            Sources.Remove((TSelf)action);
+            return Sources.Remove((TSelf)action);
         }
 
         /// <inheritdoc />
@@ -227,6 +234,17 @@
 
             UnsubscribeFromSources();
             Sources.Clear();
+        }
+
+        /// <inheritdoc />
+        public override bool SourcesContains(Action action)
+        {
+            if (!this.IsValidState() || action == null)
+            {
+                return false;
+            }
+
+            return Sources.Contains((TSelf)action);
         }
 
         /// <inheritdoc />

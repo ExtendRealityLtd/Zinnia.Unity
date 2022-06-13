@@ -82,6 +82,8 @@
         [Serializable]
         public class GameObjectUnityEvent : UnityEvent<GameObject> { }
 
+        #region Resgistrar Settings
+        [Header("Resgistrar Settings")]
         [Tooltip("The action that will have the sources populated by the given Sources.")]
         [SerializeField]
         private Action target;
@@ -157,7 +159,9 @@
                 }
             }
         }
+        #endregion
 
+        #region Action Events
         /// <summary>
         /// Emitted when the Action is added to the target.
         /// </summary>
@@ -167,6 +171,9 @@
         /// Emitted when the Action is removed from the target.
         /// </summary>
         public ActionUnityEvent ActionRemoved = new ActionUnityEvent();
+        #endregion
+
+        #region Limit Events
         /// <summary>
         /// Emitted when the Action is registered against the given limit.
         /// </summary>
@@ -176,6 +183,7 @@
         /// Emitted when the Action is unregistered from the given limit.
         /// </summary>
         public GameObjectUnityEvent LimitUnregistered = new GameObjectUnityEvent();
+        #endregion
 
         protected virtual void OnEnable()
         {
@@ -302,9 +310,11 @@
         {
             if (limit == source.Container)
             {
-                Target.RemoveSource(source.Action);
-                ActionRemoved?.Invoke(source.Action);
-                LimitUnregistered?.Invoke(limit);
+                if (Target.RemoveSource(source.Action))
+                {
+                    ActionRemoved?.Invoke(source.Action);
+                    LimitUnregistered?.Invoke(limit);
+                }
             }
         }
 

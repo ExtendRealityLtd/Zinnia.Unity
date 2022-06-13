@@ -288,7 +288,9 @@ namespace Test.Zinnia.Action
 
         public override void ClearSources() { }
 
-        public override void RemoveSource(ZinniaAction.Action action) { }
+        public override bool RemoveSource(ZinniaAction.Action action) { return true; }
+
+        public override bool SourcesContains(ZinniaAction.Action action) { return true; }
 
         public override void EmitActivationState() { }
 
