@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.3.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.2.0...v2.3.0) (2022-06-16)
+
+#### Features
+
+* **Action:** add events to action registrar ([321749d](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/321749db700b2fe1ff5ebd621e8e93f768cde253))
+  > The ActionRegistrar now has some events that emit when an Action is added/removed to/from the Target Action sources and an event that denotes the SourceLimit that was used when the Action was added/removed.
+* **Action:** add sources contains method ([3dab887](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/3dab887ca4907331c7a6707058cb6ed6fb0ce17d))
+  > The Action now has a SourcesContains method that allows a generic action to be checked if its sources contain a given action.
+  > 
+  > This is on the base class so can be used regardless of any action typing.
+  > 
+  > The RemoveSource method also now returns a bool based on the results of the internal `List.Remove` call. This is also now used in the ActionRegistrar to determine if the remove/unregister events should be raised as if no source is removed then no event should be raised.
+
+#### Bug Fixes
+
+* **Haptics:** add range back to intensity ([3263007](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/3263007d270c7b39be66e4b54d076e9b6c070277))
+  > The Range attribute was missing from the Intensity as it wasn't copied over when the Malimbe removal was done. It has now been readded back.
+* **Visual:** increase URP mesh size ([b99cfed](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/b99cfed6a298e2213053bc95dfcd188a8ce98479))
+  > The size the mesh that is generated for the URP fade was too small causing the edges of the mesh to show the scene behind it.
+  > 
+  > This has been fixed by making the mesh size much larger.
+  > 
+  > The code has also been refactored to make it cleaner.
+
 ## [2.2.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.1.0...v2.2.0) (2022-05-20)
 
 #### Features
