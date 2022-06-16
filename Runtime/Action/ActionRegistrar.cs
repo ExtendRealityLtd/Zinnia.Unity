@@ -2,6 +2,7 @@
 {
     using System;
     using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Action.Collection;
     using Zinnia.Data.Collection.List;
     using Zinnia.Extension;
@@ -70,6 +71,19 @@
             }
         }
 
+        /// <summary>
+        /// Defines the event with the <see cref="Action"/>.
+        /// </summary>
+        [Serializable]
+        public class ActionUnityEvent : UnityEvent<Action> { }
+        /// <summary>
+        /// Defines the event with the <see cref="GameObject"/>.
+        /// </summary>
+        [Serializable]
+        public class GameObjectUnityEvent : UnityEvent<GameObject> { }
+
+        #region Resgistrar Settings
+        [Header("Resgistrar Settings")]
         [Tooltip("The action that will have the sources populated by the given Sources.")]
         [SerializeField]
         private Action target;
@@ -145,6 +159,31 @@
                 }
             }
         }
+        #endregion
+
+        #region Action Events
+        /// <summary>
+        /// Emitted when the Action is added to the target.
+        /// </summary>
+        [Header("Action Events")]
+        public ActionUnityEvent ActionAdded = new ActionUnityEvent();
+        /// <summary>
+        /// Emitted when the Action is removed from the target.
+        /// </summary>
+        public ActionUnityEvent ActionRemoved = new ActionUnityEvent();
+        #endregion
+
+        #region Limit Events
+        /// <summary>
+        /// Emitted when the Action is registered against the given limit.
+        /// </summary>
+        [Header("Limit Events")]
+        public GameObjectUnityEvent LimitRegistered = new GameObjectUnityEvent();
+        /// <summary>
+        /// Emitted when the Action is unregistered from the given limit.
+        /// </summary>
+        public GameObjectUnityEvent LimitUnregistered = new GameObjectUnityEvent();
+        #endregion
 
         protected virtual void OnEnable()
         {
@@ -257,6 +296,8 @@
             if (source.Enabled && (limit == null || limit == source.Container))
             {
                 Target.AddSource(source.Action);
+                ActionAdded?.Invoke(source.Action);
+                LimitRegistered?.Invoke(limit);
             }
         }
 
@@ -269,7 +310,11 @@
         {
             if (limit == source.Container)
             {
-                Target.RemoveSource(source.Action);
+                if (Target.RemoveSource(source.Action))
+                {
+                    ActionRemoved?.Invoke(source.Action);
+                    LimitUnregistered?.Invoke(limit);
+                }
             }
         }
 

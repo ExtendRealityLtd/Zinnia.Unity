@@ -10,6 +10,7 @@
     {
         [Tooltip("The intensity of the haptic rumble.")]
         [SerializeField]
+        [Range(0f, 1f)]
         private float intensity = 1f;
         /// <summary>
         /// The intensity of the haptic rumble.
