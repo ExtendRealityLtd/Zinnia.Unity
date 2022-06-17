@@ -331,6 +331,11 @@
         {
             get
             {
+                if (ValidatePointerElements() == false)
+                {
+                    return false;
+                }
+                
                 if (!enabled)
                 {
                     return false;
@@ -534,6 +539,11 @@
 
         protected virtual void OnEnable()
         {
+            if (ValidatePointerElements() == false)
+            {
+                return;
+            }
+            
             TryEmitVisibilityEvent();
             UpdateRenderData();
         }
@@ -548,6 +558,11 @@
         /// </summary>
         protected virtual void UpdateRenderData()
         {
+            if (ValidatePointerElements() == false)
+            {
+                return;
+            }
+            
             pointsData.Points = activePointsCastData.Points;
 
             pointsData.StartPoint = GetElementRepresentation(Origin);
@@ -611,7 +626,7 @@
         /// </summary>
         protected virtual void TryEmitVisibilityEvent()
         {
-            if (IsVisible == wasPreviouslyVisible)
+            if (IsVisible == wasPreviouslyVisible || ValidatePointerElements() == false)
             {
                 return;
             }
@@ -699,6 +714,11 @@
             eventData.Direction = pointerTransform.forward;
             eventData.CollisionData = data?.HitData ?? default;
             return eventData.Set(IsActivated, IsHovering, HoverDuration, data);
+        }
+
+        private bool ValidatePointerElements()
+        {
+            return Origin != null && RepeatedSegment != null && Destination != null;
         }
     }
 }
