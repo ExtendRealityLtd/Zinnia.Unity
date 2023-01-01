@@ -611,5 +611,66 @@ namespace Test.Zinnia.Utility
             Assert.IsTrue(timerRemainingTimeMock.Received);
             Assert.AreEqual(timerRemainingTimeMock.Value, remainingTime);
         }
+
+        [UnityTest]
+        public IEnumerator PauseResumeTimer()
+        {
+            containingObject.SetActive(true);
+
+            UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerPausedMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerResumedMock = new UnityEventListenerMock();
+            subject.Completed.AddListener(timerCompleteMock.Listen);
+            subject.Paused.AddListener(timerPausedMock.Listen);
+            subject.Resumed.AddListener(timerResumedMock.Listen);
+
+            float beginTime = Time.time;
+            float startTime = 1f;
+            float equalityTolerance = 0.01f;
+            subject.StartTime = startTime;
+
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerPausedMock.Received);
+            Assert.IsFalse(timerResumedMock.Received);
+            Assert.AreEqual(0f, subject.ElapsedTime);
+            Assert.AreEqual(startTime, subject.RemainingTime);
+
+            subject.Begin();
+
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerPausedMock.Received);
+            Assert.IsFalse(timerResumedMock.Received);
+
+            float timeDelay = startTime * 0.5f;
+
+            yield return new WaitForSeconds(timeDelay);
+
+            Assert.AreApproximatelyEqual(timeDelay, subject.ElapsedTime, equalityTolerance);
+            Assert.AreApproximatelyEqual(timeDelay, subject.RemainingTime, equalityTolerance);
+
+            subject.Pause();
+
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsTrue(timerPausedMock.Received);
+            Assert.IsFalse(timerResumedMock.Received);
+            timerPausedMock.Reset();
+
+            yield return new WaitForSeconds(timeDelay);
+
+            Assert.AreApproximatelyEqual(timeDelay, subject.ElapsedTime, equalityTolerance);
+            Assert.AreApproximatelyEqual(timeDelay, subject.RemainingTime, equalityTolerance);
+
+            subject.Resume();
+
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerPausedMock.Received);
+            Assert.IsTrue(timerResumedMock.Received);
+
+            yield return new WaitForSeconds(timeDelay);
+
+            Assert.IsTrue(timerCompleteMock.Received);
+            Assert.AreApproximatelyEqual(startTime, subject.ElapsedTime, equalityTolerance);
+            Assert.AreApproximatelyEqual(0f, subject.RemainingTime, equalityTolerance);
+        }
     }
 }

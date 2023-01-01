@@ -69,6 +69,14 @@
         /// </summary>
         public UnityEvent Cancelled = new UnityEvent();
         /// <summary>
+        /// Emitted when the countdown is paused.
+        /// </summary>
+        public UnityEvent Paused = new UnityEvent();
+        /// <summary>
+        /// Emitted when the countdown is resumed.
+        /// </summary>
+        public UnityEvent Resumed = new UnityEvent();
+        /// <summary>
         /// Emitted when the countdown completes.
         /// </summary>
         public UnityEvent Completed = new UnityEvent();
@@ -94,6 +102,10 @@
         /// Determines if the countdown is still running.
         /// </summary>
         public bool IsRunning { get; protected set; }
+        /// <summary>
+        /// Determines if the countdown is currently paused.
+        /// </summary>
+        public bool IsPaused { get; protected set; }
 
         /// <summary>
         /// Elapsed time of the timer.
@@ -102,7 +114,7 @@
         {
             get
             {
-                if (IsRunning)
+                if (IsRunning && !IsPaused)
                 {
                     currentTime = Time.time;
                 }
@@ -117,7 +129,7 @@
         {
             get
             {
-                if (IsRunning)
+                if (IsRunning && !IsPaused)
                 {
                     currentTime = Time.time;
                 }
@@ -135,6 +147,11 @@
         protected float currentTime;
 
         /// <summary>
+        /// The <see cref="RemainingTime"/> at the point of calling <see cref="Pause"/>.
+        /// </summary>
+        protected float remainingAtPauseTime;
+
+        /// <summary>
         /// Starts the timer counting down.
         /// </summary>
         public virtual void Begin()
@@ -145,8 +162,7 @@
             }
 
             IsRunning = true;
-            SetInternalStates();
-            Invoke(nameof(Complete), StartTime);
+            StartTimer(StartTime);
             Started?.Invoke();
         }
 
@@ -161,7 +177,40 @@
                 currentTime = Time.time;
                 Cancelled?.Invoke();
                 IsRunning = false;
+                IsPaused = false;
+                remainingAtPauseTime = 0f;
             }
+        }
+
+        /// <summary>
+        /// Pauses the current countdown timer.
+        /// </summary>
+        public virtual void Pause()
+        {
+            if (!IsRunning || IsPaused)
+            {
+                return;
+            }
+
+            remainingAtPauseTime = RemainingTime;
+            IsPaused = true;
+            CancelInvoke(nameof(Complete));
+            Paused?.Invoke();
+        }
+
+        /// <summary>
+        /// resumes the current countdown timer from pause.
+        /// </summary>
+        public virtual void Resume()
+        {
+            if (!IsRunning || !IsPaused)
+            {
+                return;
+            }
+
+            StartTimer(remainingAtPauseTime);
+            IsPaused = false;
+            Resumed?.Invoke();
         }
 
         /// <summary>
@@ -222,6 +271,16 @@
         protected virtual void OnDisable()
         {
             Cancel();
+        }
+
+        /// <summary>
+        /// Starts the countdown timer.
+        /// </summary>
+        /// <param name="invokeTime">The time to delay until the invoke is executed.</param>
+        protected virtual void StartTimer(float invokeTime)
+        {
+            SetInternalStates();
+            Invoke(nameof(Complete), invokeTime);
         }
 
         /// <summary>
