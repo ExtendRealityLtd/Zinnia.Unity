@@ -1,11 +1,15 @@
 ﻿using Zinnia.Data.Type;
+using Zinnia.Extension;
 using Zinnia.Tracking.Follow.Modifier.Property.Scale;
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
 {
     using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformScaleTest
     {
@@ -38,6 +42,46 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
 
             Assert.AreEqual(Vector3.one, source.transform.localScale);
             Assert.AreEqual(Vector3.one, target.transform.localScale);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
+        }
+
+        [UnityTest]
+        public IEnumerator ModifySmoothed()
+        {
+            UnityEventListenerMock transitionedMock = new UnityEventListenerMock();
+
+            subject.Transitioned.AddListener(transitionedMock.Listen);
+            subject.TransitionDuration = 0.1f;
+            subject.EqualityTolerance = 0.01f;
+
+            GameObject source = new GameObject("source");
+            GameObject target = new GameObject("target");
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(10e-6f);
+
+            Vector3 sourceScale = Vector3.one;
+            Vector3 expectedScale = Vector3.zero;
+
+            source.transform.localScale = sourceScale;
+            target.transform.localScale = Vector3.zero;
+
+            Assert.That(source.transform.localScale, Is.EqualTo(sourceScale).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(expectedScale).Using(comparer));
+            Assert.IsFalse(transitionedMock.Received);
+
+            do
+            {
+                subject.Modify(source, target);
+                yield return null;
+            }
+            while (!target.transform.localScale.ApproxEquals(source.transform.localScale));
+
+            expectedScale = source.transform.localScale;
+
+            Assert.That(source.transform.localScale, Is.EqualTo(sourceScale).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(expectedScale).Using(comparer));
+            Assert.IsTrue(transitionedMock.Received);
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);

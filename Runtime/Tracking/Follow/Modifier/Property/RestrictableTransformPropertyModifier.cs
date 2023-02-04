@@ -8,6 +8,7 @@
     /// </summary>
     public abstract class RestrictableTransformPropertyModifier : PropertyModifier
     {
+        [Header("Restriction Settings")]
         [Tooltip("Determines which axes to apply the modification on>.")]
         [SerializeField]
         private Vector3State applyModificationOnAxis = Vector3State.True;

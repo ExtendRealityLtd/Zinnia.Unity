@@ -1,11 +1,15 @@
 ﻿using Zinnia.Data.Type;
+using Zinnia.Extension;
 using Zinnia.Tracking.Follow.Modifier.Property.Rotation;
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
     using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformRotationTest
     {
@@ -41,6 +45,46 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 
             Assert.AreEqual(sourceRotation, source.transform.rotation);
             Assert.AreEqual(sourceRotation, target.transform.rotation);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
+        }
+
+        [UnityTest]
+        public IEnumerator ModifySmoothed()
+        {
+            UnityEventListenerMock transitionedMock = new UnityEventListenerMock();
+
+            subject.Transitioned.AddListener(transitionedMock.Listen);
+            subject.TransitionDuration = 0.1f;
+            subject.EqualityTolerance = 0.01f;
+
+            GameObject source = new GameObject("source");
+            GameObject target = new GameObject("target");
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(10e-6f);
+
+            Quaternion sourceRotation = new Quaternion(1f, 1f, 1f, 1f);
+            Quaternion expectedRotation = Quaternion.identity;
+
+            source.transform.rotation = sourceRotation;
+            target.transform.rotation = Quaternion.identity;
+
+            Assert.That(source.transform.rotation, Is.EqualTo(sourceRotation).Using(comparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(expectedRotation).Using(comparer));
+            Assert.IsFalse(transitionedMock.Received);
+
+            do
+            {
+                subject.Modify(source, target);
+                yield return null;
+            }
+            while (!target.transform.rotation.ApproxEquals(source.transform.rotation));
+
+            expectedRotation = source.transform.rotation;
+
+            Assert.That(source.transform.rotation, Is.EqualTo(sourceRotation).Using(comparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(expectedRotation).Using(comparer));
+            Assert.IsTrue(transitionedMock.Received);
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);

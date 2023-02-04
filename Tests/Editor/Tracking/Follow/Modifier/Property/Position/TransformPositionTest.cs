@@ -1,11 +1,15 @@
 ﻿using Zinnia.Data.Type;
+using Zinnia.Extension;
 using Zinnia.Tracking.Follow.Modifier.Property.Position;
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
 {
     using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformPositionTest
     {
@@ -39,6 +43,46 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
 
             Assert.AreEqual(Vector3.one, source.transform.position);
             Assert.AreEqual(Vector3.one, target.transform.position);
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
+        }
+
+        [UnityTest]
+        public IEnumerator ModifySmoothed()
+        {
+            UnityEventListenerMock transitionedMock = new UnityEventListenerMock();
+
+            subject.Transitioned.AddListener(transitionedMock.Listen);
+            subject.TransitionDuration = 0.1f;
+            subject.EqualityTolerance = 0.01f;
+
+            GameObject source = new GameObject("source");
+            GameObject target = new GameObject("target");
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(10e-6f);
+
+            Vector3 sourcePosition = Vector3.one;
+            Vector3 expectedPosition = Vector3.zero;
+
+            source.transform.position = sourcePosition;
+            target.transform.position = Vector3.zero;
+
+            Assert.That(source.transform.position, Is.EqualTo(sourcePosition).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(expectedPosition).Using(comparer));
+            Assert.IsFalse(transitionedMock.Received);
+
+            do
+            {
+                subject.Modify(source, target);
+                yield return null;
+            }
+            while (!target.transform.position.ApproxEquals(source.transform.position));
+
+            expectedPosition = source.transform.position;
+
+            Assert.That(source.transform.position, Is.EqualTo(sourcePosition).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(expectedPosition).Using(comparer));
+            Assert.IsTrue(transitionedMock.Received);
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
