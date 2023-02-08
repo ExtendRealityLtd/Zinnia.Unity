@@ -1,5 +1,35 @@
 # Changelog
 
+## [2.4.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.3.0...v2.4.0) (2023-02-08)
+
+#### Features
+
+* **Data:** allow optional name for cloned gameobejct ([8211ff7](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/8211ff78ed6c8e7682a6cddde3f354585a440931))
+  > There is a new property on the GameObjectCloner that allows defining the name of the cloned object as by default it just gets named as `<current_object_name>(Clone)` which may not be desirable so this allows a simple way of just setting the name at edit time without need for any code.
+* **Event:** allow frame yield emitters to run multiple frames ([d443977](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d4439778a747705264729b0198de1aba23dc9933))
+  > Previously, the WaitForEndOfFrame and WaitForFixedUpdate YieldEmitters would only yield after one instruction by yielding immediately after the current frame/fixed update.
+  > 
+  > This feature allows a number of frames to wait before actually calling yield, meaning it is possible to wait n frames or n fixed update loops before yielding.
+* **Tracking:** add smoothable transform property modifier ([a1f5204](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/a1f520426a95928197b3598d81d57dd44ebc1460))
+  > The ability to provide smoothing data to the TransformPosition/Rotation/Scale property modifiers has now been added by providing a new abstract class that extends the restrictable modifier and provides smoothing settings using SmoothDamp.
+  > 
+  > A custom Quaternion SmoothDamp algorithm has been added into the Extension namespace to handle smoothing on rotations.
+* **Utility:** add pause/resume methods for countdown timer. ([ec1cdff](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/ec1cdff498ed87fa3db37b7df8a53f27e0bbc054))
+  > The CountdownTimer component now has a Pause and a Resume method allowing the timer to be paused and then resumed. There are additional events to notify when the timer is paused and resumed.
+
+#### Bug Fixes
+
+* **CameraOverlay:** change scaled time to unscaled time ([75c14f5](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/75c14f5570878adbd5f56ce19a80ac65cd6c67b7))
+  > The deltaTime and WaitForSeconds gets effected by the time scale which can cause the overlay to never fade in or out when timescale is set to approximately 0. Switching to unscaledDeltaTime and WaitForSecondsRealtime will always fade in and out no matter the time scale.
+* **Tests:** ensure all quaternion and vectors use comparators ([cbafc35](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/cbafc35e834de405ef2a4b3ab7001464c640a70b))
+  > All of the tests that compare vectors or quaternions have now been updated so they no longer use ToString to compare in the Assert.AreEqual as this is not robust enough to always work. Instead they all now use equality comparators.
+  > 
+  > All of the gameobjects created by the tests now also are named so it is easier to see which test is running and where any cleanup issues may be occurring.
+  > 
+  > The `UnityEngine.Assertions.Assert` has also been removed from the tests as it is not required.
+  > 
+  > Any test that destroys the `subject` object on teardown has also been updated to not do this as the subject gets destroyed automatically when the `containingObject` GameObject gets destroyed.
+
 ## [2.3.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.2.0...v2.3.0) (2022-06-16)
 
 #### Features
