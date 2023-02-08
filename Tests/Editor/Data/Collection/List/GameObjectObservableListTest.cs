@@ -7,7 +7,6 @@ namespace Test.Zinnia.Data.Collection.List
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectObservableListTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Data.Collection.List
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectObservableListTest");
             subject = containingObject.AddComponent<GameObjectObservableList>();
         }
 
@@ -33,9 +32,9 @@ namespace Test.Zinnia.Data.Collection.List
             UnityEventListenerMock elementObtainedMock = new UnityEventListenerMock();
             subject.Obtained.AddListener(elementObtainedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
-            GameObject elementThree = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
+            GameObject elementThree = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
@@ -96,7 +95,7 @@ namespace Test.Zinnia.Data.Collection.List
 
             Assert.IsFalse(elementObtainedMock.Received);
 
-            NUnit.Framework.Assert.Throws<System.ArgumentOutOfRangeException>(() => subject.Get(0));
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => subject.Get(0));
             Assert.IsFalse(elementObtainedMock.Received);
         }
 
@@ -106,7 +105,7 @@ namespace Test.Zinnia.Data.Collection.List
             UnityEventListenerMock elementObtainedMock = new UnityEventListenerMock();
             subject.Obtained.AddListener(elementObtainedMock.Listen);
 
-            GameObject elementOne = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
             subject.gameObject.SetActive(false);
@@ -127,7 +126,7 @@ namespace Test.Zinnia.Data.Collection.List
             UnityEventListenerMock elementObtainedMock = new UnityEventListenerMock();
             subject.Obtained.AddListener(elementObtainedMock.Listen);
 
-            GameObject elementOne = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
             subject.enabled = false;
@@ -150,7 +149,7 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Found.AddListener(elementFoundMock.Listen);
             subject.NotFound.AddListener(elementNotFoundMock.Listen);
 
-            GameObject elementOne = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
 
@@ -173,8 +172,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Found.AddListener(elementFoundMock.Listen);
             subject.NotFound.AddListener(elementNotFoundMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
 
@@ -215,7 +214,7 @@ namespace Test.Zinnia.Data.Collection.List
             subject.IsEmpty.AddListener(listIsEmpty.Listen);
             subject.IsPopulated.AddListener(listIsPopulated.Listen);
 
-            GameObject elementOne = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
 
@@ -242,8 +241,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             yield return null;
 
@@ -288,8 +287,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             yield return null;
 
@@ -349,8 +348,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             yield return null;
 
@@ -395,11 +394,11 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
-            GameObject elementThree = new GameObject();
-            GameObject elementFour = new GameObject();
-            GameObject elementFive = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
+            GameObject elementThree = new GameObject("GameObjectObservableListTest");
+            GameObject elementFour = new GameObject("GameObjectObservableListTest");
+            GameObject elementFive = new GameObject("GameObjectObservableListTest");
 
             yield return null;
 
@@ -481,8 +480,8 @@ namespace Test.Zinnia.Data.Collection.List
 
             yield return null;
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -544,8 +543,8 @@ namespace Test.Zinnia.Data.Collection.List
 
             subject.CurrentIndex = 0;
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -591,8 +590,8 @@ namespace Test.Zinnia.Data.Collection.List
 
             subject.CurrentIndex = 0;
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -731,9 +730,9 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Added.AddListener(addedMock.Listen);
             subject.Removed.AddListener(removedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
-            GameObject elementThree = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
+            GameObject elementThree = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
@@ -772,10 +771,10 @@ namespace Test.Zinnia.Data.Collection.List
 
             subject.CurrentIndex = 1;
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
-            GameObject elementThree = new GameObject();
-            GameObject elementFour = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
+            GameObject elementThree = new GameObject("GameObjectObservableListTest");
+            GameObject elementFour = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
@@ -813,9 +812,9 @@ namespace Test.Zinnia.Data.Collection.List
 
             subject.CurrentIndex = 1;
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
-            GameObject elementThree = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
+            GameObject elementThree = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
             subject.Add(elementTwo);
@@ -854,8 +853,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             subject.Remove(elementOne);
 
@@ -936,8 +935,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             subject.RemoveLastOccurrence(elementOne);
 
@@ -1018,9 +1017,9 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
-            GameObject elementThree = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
+            GameObject elementThree = new GameObject("GameObjectObservableListTest");
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -1075,9 +1074,9 @@ namespace Test.Zinnia.Data.Collection.List
 
             subject.CurrentIndex = 1;
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
-            GameObject elementThree = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
+            GameObject elementThree = new GameObject("GameObjectObservableListTest");
 
             Assert.AreEqual(0, subject.NonSubscribableElements.Count);
 
@@ -1130,8 +1129,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             subject.Clear(true);
 
@@ -1176,8 +1175,8 @@ namespace Test.Zinnia.Data.Collection.List
             subject.Removed.AddListener(removedMock.Listen);
             subject.Emptied.AddListener(emptiedMock.Listen);
 
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
 
             subject.Clear();
 
@@ -1214,8 +1213,8 @@ namespace Test.Zinnia.Data.Collection.List
         public void EmitsOnStart()
         {
             GameObjectObservableListMock mock = containingObject.AddComponent<GameObjectObservableListMock>();
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
             mock.Add(elementOne);
             mock.Add(elementTwo);
 
@@ -1247,10 +1246,10 @@ namespace Test.Zinnia.Data.Collection.List
         [Test]
         public void IndexOf()
         {
-            GameObject elementOne = new GameObject();
-            GameObject elementTwo = new GameObject();
-            GameObject elementThree = new GameObject();
-            GameObject elementNA = new GameObject();
+            GameObject elementOne = new GameObject("GameObjectObservableListTest");
+            GameObject elementTwo = new GameObject("GameObjectObservableListTest");
+            GameObject elementThree = new GameObject("GameObjectObservableListTest");
+            GameObject elementNA = new GameObject("GameObjectObservableListTest");
 
             subject.Add(elementOne);
             subject.Add(elementTwo);

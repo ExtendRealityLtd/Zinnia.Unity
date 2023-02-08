@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Collection.Stack
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectEventObservableTest
     {
@@ -15,14 +14,13 @@ namespace Test.Zinnia.Data.Collection.Stack
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectEventObservableTest");
             subject = containingObject.AddComponent<GameObjectObservableStack>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -53,9 +51,9 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsThree.Popped.AddListener(elementThreePoppedMock.Listen);
             eventsThree.ForcePopped.AddListener(elementThreeForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
-            GameObject objectThree = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
+            GameObject objectThree = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.ElementEvents.Add(eventsTwo);
@@ -151,7 +149,7 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsTwo.Popped.AddListener(elementTwoPoppedMock.Listen);
             eventsTwo.ForcePopped.AddListener(elementTwoForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.ElementEvents.Add(eventsTwo);
@@ -202,8 +200,8 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
             eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
 
@@ -242,7 +240,7 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
             eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.gameObject.SetActive(false);
@@ -266,7 +264,7 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
             eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.enabled = false;
@@ -306,9 +304,9 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsThree.Popped.AddListener(elementThreePoppedMock.Listen);
             eventsThree.ForcePopped.AddListener(elementThreeForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
-            GameObject objectThree = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
+            GameObject objectThree = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.ElementEvents.Add(eventsTwo);
@@ -382,9 +380,9 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsThree.Popped.AddListener(elementThreePoppedMock.Listen);
             eventsThree.ForcePopped.AddListener(elementThreeForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
-            GameObject objectThree = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
+            GameObject objectThree = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.ElementEvents.Add(eventsTwo);
@@ -458,9 +456,9 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsThree.Popped.AddListener(elementThreePoppedMock.Listen);
             eventsThree.ForcePopped.AddListener(elementThreeForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
-            GameObject objectThree = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
+            GameObject objectThree = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.ElementEvents.Add(eventsTwo);
@@ -535,9 +533,9 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsThree.Popped.AddListener(elementThreePoppedMock.Listen);
             eventsThree.ForcePopped.AddListener(elementThreeForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
-            GameObject objectThree = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
+            GameObject objectThree = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.ElementEvents.Add(eventsTwo);
@@ -595,8 +593,8 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
             eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
 
@@ -631,8 +629,8 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
             eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
 
@@ -665,7 +663,7 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
             eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
 
@@ -694,7 +692,7 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
             eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
 
@@ -745,9 +743,9 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsThree.ForcePopped.AddListener(elementThreeForcePoppedMock.Listen);
             eventsThree.Restored.AddListener(elementThreeRestoredMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
-            GameObject objectThree = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
+            GameObject objectThree = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.ElementEvents.Add(eventsTwo);
@@ -811,7 +809,7 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsOne.Popped.AddListener(elementOnePoppedMock.Listen);
             eventsOne.ForcePopped.AddListener(elementOneForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
 
@@ -861,9 +859,9 @@ namespace Test.Zinnia.Data.Collection.Stack
             eventsThree.Popped.AddListener(elementThreePoppedMock.Listen);
             eventsThree.ForcePopped.AddListener(elementThreeForcePoppedMock.Listen);
 
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
-            GameObject objectThree = new GameObject();
+            GameObject objectOne = new GameObject("GameObjectEventObservableTest");
+            GameObject objectTwo = new GameObject("GameObjectEventObservableTest");
+            GameObject objectThree = new GameObject("GameObjectEventObservableTest");
 
             subject.ElementEvents.Add(eventsOne);
             subject.ElementEvents.Add(eventsTwo);

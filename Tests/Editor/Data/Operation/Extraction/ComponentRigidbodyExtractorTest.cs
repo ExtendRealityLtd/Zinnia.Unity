@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
     public class ComponentRigidbodyExtractorTest
     {
         private GameObject containingObject;
@@ -14,7 +13,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ComponentRigidbodyExtractorTest");
             subject = containingObject.AddComponent<ComponentRigidbodyExtractor>();
         }
 
@@ -28,7 +27,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractFromSelf()
         {
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ComponentRigidbodyExtractorTest");
             Rigidbody target = source.AddComponent<Rigidbody>();
 
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
@@ -50,9 +49,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractFromDescendant()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject child = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject grandchild = new GameObject("ComponentRigidbodyExtractorTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
             Rigidbody target = grandchild.AddComponent<Rigidbody>();
@@ -77,9 +76,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractFromAncestor()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject child = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject grandchild = new GameObject("ComponentRigidbodyExtractorTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
             Rigidbody target = parent.AddComponent<Rigidbody>();
@@ -104,9 +103,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractFromDescendantOrAncestorOnAncestor()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject child = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject grandchild = new GameObject("ComponentRigidbodyExtractorTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
             Rigidbody target = parent.AddComponent<Rigidbody>();
@@ -131,9 +130,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractFromDescendantOrAncestorOnDescendant()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject child = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject grandchild = new GameObject("ComponentRigidbodyExtractorTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
             Rigidbody target = grandchild.AddComponent<Rigidbody>();
@@ -158,7 +157,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractFromSelfGameObject()
         {
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ComponentRigidbodyExtractorTest");
             Rigidbody target = source.AddComponent<Rigidbody>();
 
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
@@ -180,9 +179,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void InvalidExtractFromDescendant()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject child = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject grandchild = new GameObject("ComponentRigidbodyExtractorTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
             Rigidbody target = parent.AddComponent<Rigidbody>();
@@ -207,9 +206,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void InvalidExtractFromAncestor()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject child = new GameObject("ComponentRigidbodyExtractorTest");
+            GameObject grandchild = new GameObject("ComponentRigidbodyExtractorTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
             Rigidbody target = grandchild.AddComponent<Rigidbody>();
@@ -234,7 +233,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void InvalidExtractInactiveGameObject()
         {
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ComponentRigidbodyExtractorTest");
             Rigidbody target = source.AddComponent<Rigidbody>();
 
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
@@ -257,7 +256,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void InvalidExtractInactiveComponent()
         {
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ComponentRigidbodyExtractorTest");
             Rigidbody target = source.AddComponent<Rigidbody>();
 
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();

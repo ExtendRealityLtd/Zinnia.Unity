@@ -6,7 +6,6 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class FloatMeanFinderTest
     {
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("FloatMeanFinderTest");
             subject = containingObject.AddComponent<FloatMeanFinder>();
         }
 

@@ -15,7 +15,7 @@ namespace Test.Zinnia.Data.Operation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectDestroyerTest");
             subject = containingObject.AddComponent<GameObjectDestroyer>();
         }
 
@@ -28,7 +28,7 @@ namespace Test.Zinnia.Data.Operation
         [UnityTest]
         public IEnumerator DestroyGameObject()
         {
-            GameObject test = new GameObject();
+            GameObject test = new GameObject("GameObjectDestroyerTest");
             Assert.IsFalse(test == null);
             subject.DoDestroy(test);
             yield return new WaitForEndOfFrame();
@@ -38,7 +38,7 @@ namespace Test.Zinnia.Data.Operation
         [UnityTest]
         public IEnumerator DestroyTarget()
         {
-            GameObject test = new GameObject();
+            GameObject test = new GameObject("GameObjectDestroyerTest");
             Assert.IsFalse(test == null);
             subject.Target = test;
             subject.DoDestroy();
@@ -49,7 +49,7 @@ namespace Test.Zinnia.Data.Operation
         [Test]
         public void DestroyGameObjectImmediately()
         {
-            GameObject test = new GameObject();
+            GameObject test = new GameObject("GameObjectDestroyerTest");
             Assert.IsFalse(test == null);
             subject.DestroyAtEndOfFrame = false;
             subject.DoDestroy(test);
@@ -59,7 +59,7 @@ namespace Test.Zinnia.Data.Operation
         [Test]
         public void DestroyTargetImmediately()
         {
-            GameObject test = new GameObject();
+            GameObject test = new GameObject("GameObjectDestroyerTest");
             Assert.IsFalse(test == null);
             subject.Target = test;
             subject.DestroyAtEndOfFrame = false;
@@ -70,45 +70,49 @@ namespace Test.Zinnia.Data.Operation
         [UnityTest]
         public IEnumerator DestroyInactiveGameObject()
         {
-            GameObject test = new GameObject();
+            GameObject test = new GameObject("GameObjectDestroyerTest");
             Assert.IsFalse(test == null);
             subject.gameObject.SetActive(false);
             subject.DoDestroy(test);
             yield return new WaitForEndOfFrame();
             Assert.IsFalse(test == null);
+            Object.DestroyImmediate(test);
         }
 
         [UnityTest]
         public IEnumerator DestroyInactiveComponent()
         {
-            GameObject test = new GameObject();
+            GameObject test = new GameObject("GameObjectDestroyerTest");
             Assert.IsFalse(test == null);
             subject.enabled = false;
             subject.DoDestroy(test);
             yield return new WaitForEndOfFrame();
             Assert.IsFalse(test == null);
+            Object.DestroyImmediate(test);
         }
 
         [Test]
         public void DestroyImmediatelyInactiveGameObject()
         {
-            GameObject test = new GameObject();
+            GameObject test = new GameObject("GameObjectDestroyerTest");
             Assert.IsFalse(test == null);
             subject.DestroyAtEndOfFrame = false;
             subject.gameObject.SetActive(false);
             subject.DoDestroy(test);
             Assert.IsFalse(test == null);
+            Object.DestroyImmediate(test);
         }
 
         [Test]
         public void DestroyImmediatelyInactiveComponent()
         {
-            GameObject test = new GameObject();
+            GameObject test = new GameObject("GameObjectDestroyerTest");
             Assert.IsFalse(test == null);
             subject.DestroyAtEndOfFrame = false;
             subject.enabled = false;
             subject.DoDestroy(test);
             Assert.IsFalse(test == null);
+            Object.DestroyImmediate(test);
         }
     }
 }

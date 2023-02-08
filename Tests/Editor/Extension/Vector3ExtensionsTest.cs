@@ -4,7 +4,7 @@ namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class Vector3ExtensionsTest
     {
@@ -35,19 +35,21 @@ namespace Test.Zinnia.Extension
         [Test]
         public void DivideWithFloat()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 a = Vector3.one * 10f;
-            Assert.AreEqual(Vector3.one * 0.2f, Vector3Extensions.Divide(2f, a));
-            Assert.AreEqual(Vector3.one * 0.5f, Vector3Extensions.Divide(5f, a));
-            Assert.AreEqual(Vector3.one, Vector3Extensions.Divide(10f, a));
-            Assert.AreEqual(Vector3.zero, Vector3Extensions.Divide(0f, a));
+            Assert.That(Vector3Extensions.Divide(2f, a), Is.EqualTo(Vector3.one * 0.2f).Using(comparer));
+            Assert.That(Vector3Extensions.Divide(5f, a), Is.EqualTo(Vector3.one * 0.5f).Using(comparer));
+            Assert.That(Vector3Extensions.Divide(10f, a), Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(Vector3Extensions.Divide(0f, a), Is.EqualTo(Vector3.zero).Using(comparer));
         }
 
         [Test]
         public void DivideByVector()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 a = Vector3.one * 10f;
             Vector3 b = Vector3.one * 2f;
-            Assert.AreEqual(Vector3.one * 5f, a.Divide(b));
+            Assert.That(a.Divide(b), Is.EqualTo(Vector3.one * 5f).Using(comparer));
         }
 
         [Test]
@@ -81,13 +83,15 @@ namespace Test.Zinnia.Extension
         [Test]
         public void UnsignedEulerToSignedEuler()
         {
-            Assert.AreEqual(new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f).UnsignedEulerToSignedEuler());
-            Assert.AreEqual(new Vector3(90f, 90f, 90f), new Vector3(90f, 90f, 90f).UnsignedEulerToSignedEuler());
-            Assert.AreEqual(new Vector3(179f, 179f, 179f), new Vector3(179f, 179f, 179f).UnsignedEulerToSignedEuler());
-            Assert.AreEqual(new Vector3(180f, 180f, 180f), new Vector3(180f, 180f, 180f).UnsignedEulerToSignedEuler());
-            Assert.AreEqual(new Vector3(-179f, -179f, -179f), new Vector3(181f, 181f, 181f).UnsignedEulerToSignedEuler());
-            Assert.AreEqual(new Vector3(-90f, -90f, -90f), new Vector3(270f, 270f, 270f).UnsignedEulerToSignedEuler());
-            Assert.AreEqual(new Vector3(0f, 0f, 0f), new Vector3(360f, 360f, 360f).UnsignedEulerToSignedEuler());
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
+            Assert.That(new Vector3(0f, 0f, 0f).UnsignedEulerToSignedEuler(), Is.EqualTo(new Vector3(0f, 0f, 0f)).Using(comparer));
+            Assert.That(new Vector3(90f, 90f, 90f).UnsignedEulerToSignedEuler(), Is.EqualTo(new Vector3(90f, 90f, 90f)).Using(comparer));
+            Assert.That(new Vector3(179f, 179f, 179f).UnsignedEulerToSignedEuler(), Is.EqualTo(new Vector3(179f, 179f, 179f)).Using(comparer));
+            Assert.That(new Vector3(180f, 180f, 180f).UnsignedEulerToSignedEuler(), Is.EqualTo(new Vector3(180f, 180f, 180f)).Using(comparer));
+            Assert.That(new Vector3(181f, 181f, 181f).UnsignedEulerToSignedEuler(), Is.EqualTo(new Vector3(-179f, -179f, -179f)).Using(comparer));
+            Assert.That(new Vector3(270f, 270f, 270f).UnsignedEulerToSignedEuler(), Is.EqualTo(new Vector3(-90f, -90f, -90f)).Using(comparer));
+            Assert.That(new Vector3(360f, 360f, 360f).UnsignedEulerToSignedEuler(), Is.EqualTo(new Vector3(0f, 0f, 0f)).Using(comparer));
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Test.Zinnia.Tracking.Modification
     using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectStateSwitcherTest
     {
@@ -17,23 +16,22 @@ namespace Test.Zinnia.Tracking.Modification
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectStateSwitcherTest");
             subject = containingObject.AddComponent<GameObjectStateSwitcher>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [UnityTest]
         public IEnumerator SwitchNext()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -78,9 +76,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchPrevious()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -125,9 +123,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchTo()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -184,9 +182,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchFalseState()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -219,9 +217,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchNextStartAt1()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -254,9 +252,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchNextStartAt2()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -289,9 +287,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchNotOnEnableStartAt0()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -322,9 +320,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchNotOnEnableStartAt1()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -355,9 +353,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchNotOnEnableStartAt2()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -388,9 +386,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchInactiveGameObject()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;
@@ -423,9 +421,9 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator SwitchInactiveComponent()
         {
-            GameObject objectA = new GameObject();
-            GameObject objectB = new GameObject();
-            GameObject objectC = new GameObject();
+            GameObject objectA = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectB = new GameObject("GameObjectStateSwitcherTest");
+            GameObject objectC = new GameObject("GameObjectStateSwitcherTest");
 
             GameObjectObservableList targets = containingObject.AddComponent<GameObjectObservableList>();
             yield return null;

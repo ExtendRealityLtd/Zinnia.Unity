@@ -5,7 +5,7 @@ namespace Test.Zinnia.Data.Operation.Cache
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class Vector2CacheTest
     {
@@ -17,7 +17,7 @@ namespace Test.Zinnia.Data.Operation.Cache
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("Vector2CacheTest");
 #pragma warning disable 0618
             subject = containingObject.AddComponent<Vector2Cache>();
 #pragma warning restore 0618
@@ -26,13 +26,13 @@ namespace Test.Zinnia.Data.Operation.Cache
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void CacheChanged()
         {
+            Vector2EqualityComparer comparer = new Vector2EqualityComparer(0.1f);
             UnityEventListenerMock modifiedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock unmodifiedListenerMock = new UnityEventListenerMock();
             subject.Modified.AddListener(modifiedListenerMock.Listen);
@@ -40,13 +40,13 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.That(subject.Data, Is.EqualTo(Vector2.zero).Using(comparer));
 
             subject.Data = Vector2.one;
 
             Assert.IsTrue(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(Vector2.one, subject.Data);
+            Assert.That(subject.Data, Is.EqualTo(Vector2.one).Using(comparer));
 
             modifiedListenerMock.Reset();
             unmodifiedListenerMock.Reset();
@@ -55,7 +55,7 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsTrue(unmodifiedListenerMock.Received);
-            Assert.AreEqual(Vector2.one, subject.Data);
+            Assert.That(subject.Data, Is.EqualTo(Vector2.one).Using(comparer));
 
             modifiedListenerMock.Reset();
             unmodifiedListenerMock.Reset();
@@ -64,7 +64,7 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsTrue(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(Vector2.one * 2f, subject.Data);
+            Assert.That(subject.Data, Is.EqualTo(Vector2.one * 2f).Using(comparer));
 
             modifiedListenerMock.Reset();
             unmodifiedListenerMock.Reset();
@@ -73,12 +73,13 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsTrue(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.That(subject.Data, Is.EqualTo(Vector2.zero).Using(comparer));
         }
 
         [Test]
         public void CacheChangedInactiveGameObject()
         {
+            Vector2EqualityComparer comparer = new Vector2EqualityComparer(0.1f);
             UnityEventListenerMock modifiedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock unmodifiedListenerMock = new UnityEventListenerMock();
             subject.Modified.AddListener(modifiedListenerMock.Listen);
@@ -86,19 +87,20 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.That(subject.Data, Is.EqualTo(Vector2.zero).Using(comparer));
 
             subject.gameObject.SetActive(false);
             subject.Data = Vector2.one;
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.That(subject.Data, Is.EqualTo(Vector2.zero).Using(comparer));
         }
 
         [Test]
         public void CacheChangedInactiveComponent()
         {
+            Vector2EqualityComparer comparer = new Vector2EqualityComparer(0.1f);
             UnityEventListenerMock modifiedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock unmodifiedListenerMock = new UnityEventListenerMock();
             subject.Modified.AddListener(modifiedListenerMock.Listen);
@@ -106,14 +108,14 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.That(subject.Data, Is.EqualTo(Vector2.zero).Using(comparer));
 
             subject.enabled = false;
             subject.Data = Vector2.one;
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.That(subject.Data, Is.EqualTo(Vector2.zero).Using(comparer));
         }
     }
 }

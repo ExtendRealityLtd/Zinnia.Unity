@@ -11,7 +11,6 @@ namespace Test.Zinnia.Rule
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyTagRuleTest
     {
@@ -46,6 +45,7 @@ namespace Test.Zinnia.Rule
         {
             containingObject = new GameObject
             {
+                name = "AnyTagRuleTest",
                 tag = validTag
             };
             container = new RuleContainer();

@@ -8,7 +8,7 @@ namespace Test.Zinnia.Tracking.Velocity
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class VelocityTrackerProcessorTest
     {
@@ -18,20 +18,20 @@ namespace Test.Zinnia.Tracking.Velocity
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("VelocityTrackerProcessorTest");
             subject = containingObject.AddComponent<VelocityTrackerProcessor>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [UnityTest]
         public IEnumerator GetVelocityFromFirstActive()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(true, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -48,8 +48,8 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
             Vector3 actualResult = subject.GetVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -59,6 +59,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [UnityTest]
         public IEnumerator GetVelocityFromSecondActive()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -75,8 +76,8 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
             Vector3 actualResult = subject.GetVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -86,6 +87,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [UnityTest]
         public IEnumerator GetVelocityFromThirdActive()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -102,8 +104,8 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
             Vector3 actualResult = subject.GetVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -113,6 +115,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [UnityTest]
         public IEnumerator GetVelocityFromNoneActive()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -129,8 +132,8 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);
             Vector3 actualResult = subject.GetVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -140,17 +143,19 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void GetVelocityWithoutTrackers()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);
             Vector3 actualResult = subject.GetVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [UnityTest]
         public IEnumerator GetActiveVelocityTrackerAfterGetVelocity()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -169,8 +174,8 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock unexpectedResult = trackerOne;
             VelocityTrackerMock actualResult = (VelocityTrackerMock)subject.ActiveVelocityTracker;
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -180,6 +185,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [UnityTest]
         public IEnumerator GetActiveVelocityTrackerAfterGetAngularVelocity()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -198,8 +204,8 @@ namespace Test.Zinnia.Tracking.Velocity
             VelocityTrackerMock unexpectedResult = trackerOne;
             VelocityTrackerMock actualResult = (VelocityTrackerMock)subject.ActiveVelocityTracker;
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -209,6 +215,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [UnityTest]
         public IEnumerator GetAngularVelocityFromFirstActive()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(true, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -225,8 +232,8 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
             Vector3 actualResult = subject.GetAngularVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -236,6 +243,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [UnityTest]
         public IEnumerator GetAngularVelocityFromSecondActive()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(true, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -252,8 +260,8 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
             Vector3 actualResult = subject.GetAngularVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -263,6 +271,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [UnityTest]
         public IEnumerator GetAngularVelocityFromThirdActive()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(true, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -279,8 +288,8 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(0f, 0f, 0f);
             Vector3 actualResult = subject.GetAngularVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -290,6 +299,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [UnityTest]
         public IEnumerator GetAngularVelocityFromNoneActive()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock trackerOne = VelocityTrackerMock.Generate(false, new Vector3(1f, 1f, 1f), new Vector3(1f, 1f, 1f));
             VelocityTrackerMock trackerTwo = VelocityTrackerMock.Generate(false, new Vector3(2f, 2f, 2f), new Vector3(2f, 2f, 2f));
             VelocityTrackerMock trackerThree = VelocityTrackerMock.Generate(false, new Vector3(3f, 3f, 3f), new Vector3(3f, 3f, 3f));
@@ -306,8 +316,8 @@ namespace Test.Zinnia.Tracking.Velocity
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);
             Vector3 actualResult = subject.GetAngularVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
 
             Object.DestroyImmediate(trackerOne.gameObject);
             Object.DestroyImmediate(trackerTwo.gameObject);
@@ -317,12 +327,13 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void GetAngularVelocityWithoutTrackers()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1f, 1f, 1f);
             Vector3 actualResult = subject.GetAngularVelocity();
 
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
     }
 }

@@ -8,7 +8,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class RaycastHitRigidbodyExtractorTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("RaycastHitRigidbodyExtractorTest");
             subject = containingObject.AddComponent<RaycastHitRigidbodyExtractor>();
         }
 
@@ -33,7 +32,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
-            GameObject blocker = RaycastHitHelper.CreateBlocker();
+            GameObject blocker = RaycastHitHelper.CreateBlocker("RaycastHitRigidbodyExtractorTest");
             Rigidbody target = blocker.AddComponent<Rigidbody>();
             RaycastHit hitData = RaycastHitHelper.GetRaycastHit(blocker);
 
@@ -46,8 +45,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.IsTrue(extractedMock.Received);
             Assert.AreEqual(target, subject.Result);
-
-            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
@@ -73,7 +70,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             yield return null;
 
-            GameObject blocker = RaycastHitHelper.CreateBlocker();
+            GameObject blocker = RaycastHitHelper.CreateBlocker("RaycastHitRigidbodyExtractorTest");
             Rigidbody target = blocker.AddComponent<Rigidbody>();
             blocker.SetActive(false);
             RaycastHit hitData = RaycastHitHelper.GetRaycastHit(blocker);
@@ -87,8 +84,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsNull(subject.Result);
-
-            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
@@ -96,7 +91,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
-            GameObject blocker = RaycastHitHelper.CreateBlocker();
+            GameObject blocker = RaycastHitHelper.CreateBlocker("RaycastHitRigidbodyExtractorTest");
             Rigidbody target = blocker.AddComponent<Rigidbody>();
             RaycastHit hitData = RaycastHitHelper.GetRaycastHit(blocker);
 
@@ -110,8 +105,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsNull(subject.Result);
-
-            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
@@ -119,7 +112,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
-            GameObject blocker = RaycastHitHelper.CreateBlocker();
+            GameObject blocker = RaycastHitHelper.CreateBlocker("RaycastHitRigidbodyExtractorTest");
             Rigidbody target = blocker.AddComponent<Rigidbody>();
             RaycastHit hitData = RaycastHitHelper.GetRaycastHit(blocker);
 
@@ -133,8 +126,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsNull(subject.Result);
-
-            Object.DestroyImmediate(containingObject);
         }
     }
 }

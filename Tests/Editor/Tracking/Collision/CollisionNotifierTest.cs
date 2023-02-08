@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Collision
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class CollisionNotifierTest
     {
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Tracking.Collision
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("CollisionNotifierTest");
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<CollisionNotifierMock>();
         }
@@ -51,7 +50,7 @@ namespace Test.Zinnia.Tracking.Collision
             Assert.IsTrue(linkedCollisionStartedListenerMock.Received);
             Assert.IsFalse(unlinkedCollisionStartedListenerMock.Received);
 
-            Assert.AreEqual("{ ForwardSource = New Game Object (Test.Zinnia.Tracking.Collision.CollisionNotifierTest/CollisionNotifierMock) | IsTrigger = False | CollisionData = [null] | ColliderData = Cube (UnityEngine.BoxCollider) }", subject.GetEventData().ToString());
+            Assert.AreEqual("{ ForwardSource = CollisionNotifierTest (Test.Zinnia.Tracking.Collision.CollisionNotifierTest/CollisionNotifierMock) | IsTrigger = False | CollisionData = [null] | ColliderData = Cube (UnityEngine.BoxCollider) }", subject.GetEventData().ToString());
 
             Object.DestroyImmediate(linkedContainer);
             Object.DestroyImmediate(unlinkedContainer);

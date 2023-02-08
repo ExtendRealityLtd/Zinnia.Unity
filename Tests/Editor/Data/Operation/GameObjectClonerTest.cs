@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Operation
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectClonerTest
     {
@@ -15,7 +14,7 @@ namespace Test.Zinnia.Data.Operation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectClonerTest");
             subject = containingObject.AddComponent<GameObjectCloner>();
         }
 
@@ -54,7 +53,7 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventValueListenerMock<GameObject> clonedMock = new UnityEventValueListenerMock<GameObject>();
             subject.Cloned.AddListener(clonedMock.Listen);
-            GameObject expected = new GameObject();
+            GameObject expected = new GameObject("GameObjectClonerTest");
 
             subject.Source = expected;
             GameObject actual = subject.Clone();
@@ -84,8 +83,8 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventValueListenerMock<GameObject> clonedMock = new UnityEventValueListenerMock<GameObject>();
             subject.Cloned.AddListener(clonedMock.Listen);
-            GameObject source = new GameObject();
-            GameObject expected = new GameObject();
+            GameObject source = new GameObject("GameObjectClonerTest");
+            GameObject expected = new GameObject("GameObjectClonerTest");
             subject.Parent = expected;
 
             subject.Source = source;
@@ -109,21 +108,21 @@ namespace Test.Zinnia.Data.Operation
         {
             UnityEventValueListenerMock<GameObject> clonedMock = new UnityEventValueListenerMock<GameObject>();
             subject.Cloned.AddListener(clonedMock.Listen);
-            GameObject gameObject = new GameObject();
+            GameObject other = new GameObject("GameObjectClonerTest");
 
-            subject.Source = gameObject;
+            subject.Source = other;
             GameObject actual = subject.Clone();
-            Assert.AreEqual(gameObject, subject.Source);
+            Assert.AreEqual(other, subject.Source);
 
             clonedMock.Reset();
             Object.DestroyImmediate(actual);
 
             subject.Source = null;
-            actual = subject.Clone(gameObject);
+            actual = subject.Clone(other);
             Assert.AreEqual(null, subject.Source);
 
             Object.DestroyImmediate(actual);
-            Object.DestroyImmediate(gameObject);
+            Object.DestroyImmediate(other);
         }
 
         [Test]

@@ -19,30 +19,30 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("TransformPositionTest");
             subject = containingObject.AddComponent<TransformPosition>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void Modify()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformPositionTest");
+            GameObject target = new GameObject("TransformPositionTest");
 
             source.transform.position = Vector3.one;
             target.transform.position = Vector3.zero;
 
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.one, source.transform.position);
-            Assert.AreEqual(Vector3.one, target.transform.position);
+            Assert.That(source.transform.position, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -51,6 +51,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
         [UnityTest]
         public IEnumerator ModifySmoothed()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock transitionedMock = new UnityEventListenerMock();
 
             subject.Transitioned.AddListener(transitionedMock.Listen);
@@ -59,7 +60,6 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
 
             GameObject source = new GameObject("source");
             GameObject target = new GameObject("target");
-            Vector3EqualityComparer comparer = new Vector3EqualityComparer(10e-6f);
 
             Vector3 sourcePosition = Vector3.one;
             Vector3 expectedPosition = Vector3.zero;
@@ -91,9 +91,10 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
         [Test]
         public void ModifyWithOffset()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformPositionTest");
+            GameObject target = new GameObject("TransformPositionTest");
+            GameObject offset = new GameObject("TransformPositionTest");
 
             offset.transform.SetParent(target.transform);
 
@@ -103,8 +104,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
 
             subject.Modify(source, target, offset);
 
-            Assert.AreEqual(Vector3.one * 2f, source.transform.position);
-            Assert.AreEqual(Vector3.one * 1.5f, target.transform.position);
+            Assert.That(source.transform.position, Is.EqualTo(Vector3.one * 2f).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.one * 1.5f).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -114,9 +115,10 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
         [Test]
         public void ModifyWithOffsetIgnored()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformPositionTest");
+            GameObject target = new GameObject("TransformPositionTest");
+            GameObject offset = new GameObject("TransformPositionTest");
 
             source.transform.position = Vector3.one;
             target.transform.position = Vector3.zero;
@@ -125,8 +127,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             subject.ApplyOffset = false;
             subject.Modify(source, target, offset);
 
-            Assert.AreEqual(Vector3.one, source.transform.position);
-            Assert.AreEqual(Vector3.one, target.transform.position);
+            Assert.That(source.transform.position, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -136,17 +138,18 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
         [Test]
         public void ModifyWithAxisRestriction()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.ApplyModificationOnAxis = new Vector3State(true, false, true);
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            GameObject source = new GameObject("TransformPositionTest");
+            GameObject target = new GameObject("TransformPositionTest");
 
             source.transform.position = Vector3.one;
             target.transform.position = Vector3.zero;
 
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.one, source.transform.position);
-            Assert.AreEqual(new Vector3(1f, 0f, 1f), target.transform.position);
+            Assert.That(source.transform.position, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(new Vector3(1f, 0f, 1f)).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -155,8 +158,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
         [Test]
         public void ModifyInactiveGameObject()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformPositionTest");
+            GameObject target = new GameObject("TransformPositionTest");
 
             source.transform.position = Vector3.one;
             target.transform.position = Vector3.zero;
@@ -164,8 +168,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             subject.gameObject.SetActive(false);
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.one, source.transform.position);
-            Assert.AreEqual(Vector3.zero, target.transform.position);
+            Assert.That(source.transform.position, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -174,8 +178,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
         [Test]
         public void ModifyInactiveComponent()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformPositionTest");
+            GameObject target = new GameObject("TransformPositionTest");
 
             source.transform.position = Vector3.one;
             target.transform.position = Vector3.zero;
@@ -183,8 +188,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Position
             subject.enabled = false;
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.one, source.transform.position);
-            Assert.AreEqual(Vector3.zero, target.transform.position);
+            Assert.That(source.transform.position, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);

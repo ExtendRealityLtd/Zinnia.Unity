@@ -7,7 +7,6 @@ namespace Test.Zinnia.Rule
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class NegationRuleTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("NegationRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<NegationRule>();
             container.Interface = subject;

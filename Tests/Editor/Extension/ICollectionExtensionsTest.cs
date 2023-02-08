@@ -4,7 +4,6 @@ namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
     using System.Collections.Generic;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ICollectionExtensionsTest
     {

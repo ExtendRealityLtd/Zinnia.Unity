@@ -6,7 +6,6 @@ namespace Test.Zinnia.Process.Moment
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class CompositeProcessTest
     {
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Process.Moment
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("CompositeProcessTest");
 
             subject = containingObject.AddComponent<CompositeProcess>();
             subject.Processes = containingObject.AddComponent<MomentProcessObservableList>();
@@ -71,7 +70,7 @@ namespace Test.Zinnia.Process.Moment
             subject.Processes.Add(momentProcess1);
             subject.Processes.Add(momentProcess2);
 
-            GameObject anotherObject = new GameObject();
+            GameObject anotherObject = new GameObject("CompositeProcessTest");
             CompositeProcess anotherCompositeProcess = anotherObject.AddComponent<CompositeProcess>();
             anotherCompositeProcess.Processes = anotherObject.AddComponent<MomentProcessObservableList>();
 

@@ -6,27 +6,30 @@ namespace Test.Zinnia.Tracking.Follow.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class ObjectDistanceComparatorEventDataExtractorTest
     {
+        private GameObject containingObject;
         private ObjectDistanceComparatorEventDataExtractor subject;
 
         [SetUp]
         public void SetUp()
         {
-            subject = new GameObject().AddComponent<ObjectDistanceComparatorEventDataExtractor>();
+            containingObject = new GameObject("ObjectDistanceComparatorEventDataExtractorTest");
+            subject = containingObject.AddComponent<ObjectDistanceComparatorEventDataExtractor>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject.gameObject);
+            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void Extract()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventValueListenerMock<Vector3> differenceExtractedMock = new UnityEventValueListenerMock<Vector3>();
             subject.DifferenceExtracted.AddListener(differenceExtractedMock.Listen);
             UnityEventValueListenerMock<float> distanceExtractedMock = new UnityEventValueListenerMock<float>();
@@ -43,8 +46,8 @@ namespace Test.Zinnia.Tracking.Follow.Operation.Extraction
 
             subject.Extract(eventData);
 
-            Assert.AreEqual(eventData.CurrentDifference, differenceExtractedMock.Value);
-            Assert.AreEqual(eventData.CurrentDistance, distanceExtractedMock.Value);
+            Assert.That(eventData.CurrentDifference, Is.EqualTo(differenceExtractedMock.Value).Using(comparer));
+            Assert.That(eventData.CurrentDistance, Is.EqualTo(distanceExtractedMock.Value).Using(comparer));
         }
     }
 }

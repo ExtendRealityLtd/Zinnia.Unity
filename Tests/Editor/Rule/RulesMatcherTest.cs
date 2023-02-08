@@ -9,7 +9,6 @@ namespace Test.Zinnia.Rule
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class RulesMatcherTest
     {
@@ -19,7 +18,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("RulesMatcherTest");
             subject = containingObject.AddComponent<RulesMatcher>();
         }
 
@@ -32,8 +31,8 @@ namespace Test.Zinnia.Rule
         [UnityTest]
         public IEnumerator Match()
         {
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
+            GameObject objectOne = new GameObject("RulesMatcherTest");
+            GameObject objectTwo = new GameObject("RulesMatcherTest");
             UnityEventListenerMock ruleOneMatched = new UnityEventListenerMock();
             UnityEventListenerMock ruleTwoMatched = new UnityEventListenerMock();
 
@@ -73,8 +72,8 @@ namespace Test.Zinnia.Rule
         [UnityTest]
         public IEnumerator MatchMultiple()
         {
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
+            GameObject objectOne = new GameObject("RulesMatcherTest");
+            GameObject objectTwo = new GameObject("RulesMatcherTest");
             UnityEventListenerMock ruleOneMatched = new UnityEventListenerMock();
             UnityEventListenerMock ruleTwoMatched = new UnityEventListenerMock();
             UnityEventListenerMock ruleThreeMatched = new UnityEventListenerMock();
@@ -112,8 +111,8 @@ namespace Test.Zinnia.Rule
         [UnityTest]
         public IEnumerator MatchInactiveGameObject()
         {
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
+            GameObject objectOne = new GameObject("RulesMatcherTest");
+            GameObject objectTwo = new GameObject("RulesMatcherTest");
             UnityEventListenerMock ruleOneMatched = new UnityEventListenerMock();
             UnityEventListenerMock ruleTwoMatched = new UnityEventListenerMock();
 
@@ -147,8 +146,8 @@ namespace Test.Zinnia.Rule
         [UnityTest]
         public IEnumerator MatchInactiveComponent()
         {
-            GameObject objectOne = new GameObject();
-            GameObject objectTwo = new GameObject();
+            GameObject objectOne = new GameObject("RulesMatcherTest");
+            GameObject objectTwo = new GameObject("RulesMatcherTest");
             UnityEventListenerMock ruleOneMatched = new UnityEventListenerMock();
             UnityEventListenerMock ruleTwoMatched = new UnityEventListenerMock();
 

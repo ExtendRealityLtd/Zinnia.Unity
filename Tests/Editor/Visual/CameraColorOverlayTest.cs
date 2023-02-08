@@ -5,7 +5,6 @@ namespace Test.Zinnia.Visual
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class CameraColorOverlayTest
     {
@@ -15,14 +14,13 @@ namespace Test.Zinnia.Visual
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("CameraColorOverlayTest");
             subject = containingObject.AddComponent<CameraColorOverlayMock>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 

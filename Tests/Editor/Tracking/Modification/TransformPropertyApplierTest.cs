@@ -9,7 +9,7 @@ namespace Test.Zinnia.Tracking.Modification
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformPropertyApplierTest
     {
@@ -24,21 +24,19 @@ namespace Test.Zinnia.Tracking.Modification
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("TransformPropertyApplierTest");
             subject = containingObject.AddComponent<TransformPropertyApplier>();
 
-            sourceObject = new GameObject();
-            offsetObject = new GameObject();
-            targetObject = new GameObject();
+            sourceObject = new GameObject("TransformPropertyApplierTest");
+            offsetObject = new GameObject("TransformPropertyApplierTest");
+            targetObject = new GameObject("TransformPropertyApplierTest");
             sourceTransformData = new TransformData(sourceObject.transform);
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
-
             Object.DestroyImmediate(sourceObject);
             Object.DestroyImmediate(offsetObject);
             Object.DestroyImmediate(targetObject);
@@ -101,49 +99,55 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ModifyPositionNoOffsetInstantTransition()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.ApplyTransformations = TransformProperties.Position;
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 finalPosition = Vector3.one + Vector3.forward;
             sourceTransformData.Transform.position = finalPosition;
 
             subject.Apply();
 
-            Assert.AreEqual(finalPosition, targetObject.transform.position);
+            Assert.That(targetObject.transform.position, Is.EqualTo(finalPosition).Using(comparer));
         }
 
         [Test]
         public void ModifyRotationNoOffsetInstantTransition()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
+
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.ApplyTransformations = TransformProperties.Rotation;
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             Quaternion finalRotation = new Quaternion(1f, 0f, 0f, 0f);
             sourceTransformData.Transform.position = Vector3.one;
             sourceTransformData.Transform.rotation = finalRotation;
             subject.Apply();
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(finalRotation, targetObject.transform.rotation);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(finalRotation).Using(quaternionComparer));
         }
 
         [Test]
         public void ModifyScaleNoOffsetInstantTransition()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.ApplyTransformations = TransformProperties.Scale;
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(Vector3.one).Using(vectorComparer));
 
             Vector3 finalScale = (Vector3.one * 2f) + Vector3.forward;
             sourceTransformData.Transform.position = Vector3.one;
@@ -152,20 +156,21 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Apply();
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual(finalScale, targetObject.transform.localScale);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(finalScale).Using(vectorComparer));
         }
 
         [UnityTest]
         public IEnumerator ModifyPositionNoOffsetOneSecondTransition()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.TransitionDuration = 1f;
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.ApplyTransformations = TransformProperties.Position;
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 finalPosition = Vector3.one + Vector3.forward;
             sourceTransformData.Transform.position = finalPosition;
@@ -174,20 +179,21 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Apply();
             yield return new WaitForSeconds(1f);
 
-            Assert.AreEqual(finalPosition, targetObject.transform.position);
-            Assert.AreEqual(Vector3.zero, targetObject.transform.eulerAngles);
+            Assert.That(targetObject.transform.position, Is.EqualTo(finalPosition).Using(comparer));
+            Assert.That(targetObject.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
         }
 
         [UnityTest]
         public IEnumerator ModifyPositionNoOffsetOneSecondDynamicTransition()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.TransitionDuration = 1f;
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.ApplyTransformations = TransformProperties.Position;
             subject.IsTransitionDestinationDynamic = true;
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 finalPosition = Vector3.one + Vector3.forward;
             sourceTransformData.Transform.position = finalPosition;
@@ -196,21 +202,24 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Apply();
             yield return new WaitForSeconds(1f);
 
-            Assert.AreEqual(finalPosition, targetObject.transform.position);
-            Assert.AreEqual(Vector3.zero, targetObject.transform.eulerAngles);
+            Assert.That(targetObject.transform.position, Is.EqualTo(finalPosition).Using(comparer));
+            Assert.That(targetObject.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
         }
 
         [Test]
         public void ModifyTransformWithOffset()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
+
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.Offset = offsetObject;
             subject.ApplyTransformations = TransformProperties.Position | TransformProperties.Rotation | TransformProperties.Scale;
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(Vector3.one).Using(vectorComparer));
 
             sourceTransformData.Transform.position = Vector3.one * 2f;
             sourceTransformData.Transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
@@ -221,22 +230,25 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Apply();
 
-            Assert.AreEqual(new Vector3(5f, -1f, 5f).ToString(), targetObject.transform.position.ToString());
-            Assert.AreEqual(new Quaternion(0.5f, -0.5f, -0.5f, -0.5f).ToString(), targetObject.transform.rotation.ToString());
-            Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
+            Assert.That(targetObject.transform.position, Is.EqualTo(new Vector3(5f, -1f, 5f)).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(new Quaternion(0.5f, -0.5f, -0.5f, -0.5f)).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(Vector3.one * 3f).Using(vectorComparer));
         }
 
         [Test]
         public void ModifyTransformWithOffsetNoRotation()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
+
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.Offset = offsetObject;
             subject.ApplyTransformations = TransformProperties.Position | TransformProperties.Scale;
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(Vector3.one).Using(vectorComparer));
 
             sourceTransformData.Transform.position = Vector3.one * 2f;
             sourceTransformData.Transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
@@ -247,14 +259,17 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Apply();
 
-            Assert.AreEqual(new Vector3(1f, 1f, 1f).ToString(), targetObject.transform.position.ToString());
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
+            Assert.That(targetObject.transform.position, Is.EqualTo(new Vector3(1f, 1f, 1f)).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(Vector3.one * 3f).Using(vectorComparer));
         }
 
         [Test]
         public void ModifyTransformWithXOffsetOnly()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
+
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.Offset = offsetObject;
@@ -269,28 +284,34 @@ namespace Test.Zinnia.Tracking.Modification
             offsetObject.transform.rotation = new Quaternion(0.5f, 0f, 0.5f, 0f);
 
             subject.Apply();
-            Assert.AreEqual(new Vector3(2f, 2f, 5f).ToString(), targetObject.transform.position.ToString());
-            Assert.AreEqual(new Quaternion(0.5f, -0.5f, -0.5f, -0.5f).ToString(), targetObject.transform.rotation.ToString());
-            Assert.AreEqual((Vector3.one * 3f).ToString(), targetObject.transform.localScale.ToString());
+
+            Assert.That(targetObject.transform.position, Is.EqualTo(new Vector3(2f, 2f, 5f)).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(new Quaternion(0.5f, -0.5f, -0.5f, -0.5f)).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(Vector3.one * 3f).Using(vectorComparer));
         }
 
         [Test]
         public void ModifyTransformNoSourceOrTarget()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
+
             sourceTransformData.Transform.position = Vector3.one * 2f;
             sourceTransformData.Transform.rotation = new Quaternion(1f, 1f, 0f, 0f);
             sourceTransformData.Transform.localScale = Vector3.one * 3f;
 
             subject.Apply();
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(Vector3.one).Using(vectorComparer));
         }
 
         [Test]
         public void ModifyTransformNoSource()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             subject.Target = targetObject;
 
             sourceTransformData.Transform.position = Vector3.one * 2f;
@@ -299,14 +320,16 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Apply();
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(Vector3.one).Using(vectorComparer));
         }
 
         [Test]
         public void ModifyTransformNoTarget()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             subject.Source = new TransformData(sourceObject);
 
             sourceTransformData.Transform.position = Vector3.one * 2f;
@@ -315,9 +338,9 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.Apply();
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
-            Assert.AreEqual(Quaternion.identity, targetObject.transform.rotation);
-            Assert.AreEqual(Vector3.one, targetObject.transform.localScale);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(targetObject.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
+            Assert.That(targetObject.transform.localScale, Is.EqualTo(Vector3.one).Using(vectorComparer));
         }
 
         [Test]
@@ -408,6 +431,7 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void NoModifyPositionOnInactiveGameObject()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             sourceTransformData.Transform.position = Vector3.one;
 
             subject.Source = new TransformData(sourceObject);
@@ -416,14 +440,15 @@ namespace Test.Zinnia.Tracking.Modification
             sourceTransformData.Transform.position = Vector3.one;
             subject.gameObject.SetActive(false);
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.Apply();
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
         }
 
         [Test]
         public void NoModifyPositionOnDisabledComponent()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             sourceTransformData.Transform.position = Vector3.one;
 
             subject.Source = new TransformData(sourceObject);
@@ -432,9 +457,9 @@ namespace Test.Zinnia.Tracking.Modification
             sourceTransformData.Transform.position = Vector3.one;
             subject.enabled = false;
 
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.Apply();
-            Assert.AreEqual(Vector3.zero, targetObject.transform.position);
+            Assert.That(targetObject.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
         }
 
         [Test]

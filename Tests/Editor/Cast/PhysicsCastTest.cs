@@ -16,8 +16,12 @@ namespace Test.Zinnia.Cast
         [SetUp]
         public void SetUp()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
-            containingObject = new GameObject();
+#endif
+            containingObject = new GameObject("PhysicsCastTest");
             subject = containingObject.AddComponent<PhysicsCast>();
             validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
         }
@@ -27,7 +31,11 @@ namespace Test.Zinnia.Cast
         {
             Object.DestroyImmediate(containingObject);
             Object.DestroyImmediate(validSurface);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
         }
 
         [Test]

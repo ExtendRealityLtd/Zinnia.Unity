@@ -6,7 +6,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class Vector2MultiplierTest
     {
@@ -16,7 +16,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("Vector2MultiplierTest");
             subject = containingObject.AddComponent<Vector2Multiplier>();
         }
 
@@ -29,6 +29,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void Transform()
         {
+            Vector2EqualityComparer comparer = new Vector2EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -42,7 +43,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.SetComponentY(4f, 0);
             subject.Collection.CurrentIndex = 1;
 
-            Assert.AreEqual(Vector2.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector2.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
@@ -50,8 +51,8 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             Vector2 result = subject.Transform(input);
             Vector2 expectedResult = new Vector2(6f, 12f);
 
-            Assert.AreEqual(expectedResult, result);
-            Assert.AreEqual(expectedResult, subject.Result);
+            Assert.That(result, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(expectedResult).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
         }
@@ -59,6 +60,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void TransformEmptyCollection()
         {
+            Vector2EqualityComparer comparer = new Vector2EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -66,14 +68,14 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             Vector2ObservableList collection = containingObject.AddComponent<Vector2ObservableList>();
             subject.Collection = collection;
 
-            Assert.AreEqual(Vector2.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector2.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
             Vector2 result = subject.Transform();
 
-            Assert.AreEqual(Vector2.zero, result);
-            Assert.AreEqual(Vector2.zero, subject.Result);
+            Assert.That(result, Is.EqualTo(Vector2.zero).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(Vector2.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsTrue(failedListenerMock.Received);
         }
@@ -81,6 +83,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void TransformInactiveGameObject()
         {
+            Vector2EqualityComparer comparer = new Vector2EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -96,15 +99,15 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
 
             subject.gameObject.SetActive(false);
 
-            Assert.AreEqual(Vector2.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector2.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
             Vector2 input = new Vector2(2f, 3f);
             Vector2 result = subject.Transform(input);
 
-            Assert.AreEqual(Vector2.zero, result);
-            Assert.AreEqual(Vector2.zero, subject.Result);
+            Assert.That(result, Is.EqualTo(Vector2.zero).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(Vector2.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
         }
@@ -112,6 +115,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void TransformInactiveComponent()
         {
+            Vector2EqualityComparer comparer = new Vector2EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -127,15 +131,15 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
 
             subject.enabled = false;
 
-            Assert.AreEqual(Vector2.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector2.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
             Vector2 input = new Vector2(2f, 3f);
             Vector2 result = subject.Transform(input);
 
-            Assert.AreEqual(Vector2.zero, result);
-            Assert.AreEqual(Vector2.zero, subject.Result);
+            Assert.That(result, Is.EqualTo(Vector2.zero).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(Vector2.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
         }

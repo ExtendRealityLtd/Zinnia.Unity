@@ -8,7 +8,6 @@ namespace Test.Zinnia.Association
     using System.Text.RegularExpressions;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectsAssociationActivatorTest
     {
@@ -19,7 +18,7 @@ namespace Test.Zinnia.Association
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectsAssociationActivatorTest");
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<GameObjectsAssociationActivatorMock>();
             associations = containingObject.AddComponent<GameObjectsAssociationObservableList>();
@@ -52,7 +51,7 @@ namespace Test.Zinnia.Association
         [Test]
         public void SetsGameObjectsActivationState()
         {
-            GameObject gameObject = new GameObject();
+            GameObject gameObject = new GameObject("GameObjectsAssociationActivatorTest");
             gameObject.SetActive(false);
 
             GameObjectsAssociationMock associationMock = containingObject.AddComponent<GameObjectsAssociationMock>();
@@ -92,15 +91,15 @@ namespace Test.Zinnia.Association
         {
             GameObjectsAssociationMock associationMock = containingObject.AddComponent<GameObjectsAssociationMock>();
             associationMock.GameObjects = containingObject.AddComponent<GameObjectObservableList>();
-            associationMock.GameObjects.Add(new GameObject());
-            associationMock.GameObjects.Add(new GameObject());
+            associationMock.GameObjects.Add(new GameObject("GameObjectsAssociationActivatorTest"));
+            associationMock.GameObjects.Add(new GameObject("GameObjectsAssociationActivatorTest"));
 
             subject.Associations.Add(associationMock);
 
-            Debug.Log("This test is expecting a warning to be logged next.");
+            Debug.Log("~~~ This test is expecting a warning to be logged next.");
             LogAssert.Expect(LogType.Warning, new Regex("multiple association"));
             subject.ManualAwake();
-            Debug.Log("Warning log recognized, the test is successful.");
+            Debug.Log("~~~ Warning log recognized, the test is successful.");
         }
 
         [Test]

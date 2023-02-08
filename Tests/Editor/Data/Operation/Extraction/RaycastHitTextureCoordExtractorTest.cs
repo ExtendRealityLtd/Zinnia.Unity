@@ -8,7 +8,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class RaycastHitTextureCoordExtractorTest
     {
@@ -18,7 +18,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("RaycastHitTextureCoordExtractorTest");
             subject = containingObject.AddComponent<RaycastHitTextureCoordExtractor>();
         }
 
@@ -31,6 +31,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void Extract()
         {
+            Vector2EqualityComparer comparer = new Vector2EqualityComparer(0.1f);
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
             RaycastHit hitData = RaycastHitHelper.GetRaycastHit();
@@ -42,9 +43,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Extract();
 
             Assert.IsTrue(extractedMock.Received);
-            Assert.AreEqual(Vector3.zero, subject.Result);
-
-            Object.DestroyImmediate(containingObject);
+            Assert.That(subject.Result, Is.EqualTo(Vector2.zero).Using(comparer));
         }
 
         [Test]
@@ -70,7 +69,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             yield return null;
 
-            GameObject blocker = RaycastHitHelper.CreateBlocker();
+            GameObject blocker = RaycastHitHelper.CreateBlocker("RaycastHitTextureCoordExtractorTest");
             blocker.SetActive(false);
             RaycastHit hitData = RaycastHitHelper.GetRaycastHit(blocker);
 

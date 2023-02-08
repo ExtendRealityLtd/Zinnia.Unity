@@ -4,7 +4,6 @@ namespace Test.Zinnia.Data.Type
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class FloatRangeTest
     {

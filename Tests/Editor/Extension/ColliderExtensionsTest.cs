@@ -4,15 +4,14 @@ namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ColliderExtensionsTest
     {
         [Test]
         public void GetContainingTransformWithRigidbody()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
+            GameObject parent = new GameObject("ColliderExtensionsTest");
+            GameObject child = new GameObject("ColliderExtensionsTest");
             child.transform.SetParent(parent.transform);
 
             parent.AddComponent<Rigidbody>();
@@ -27,8 +26,8 @@ namespace Test.Zinnia.Extension
         [Test]
         public void GetContainingTransformWithoutRigidbody()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
+            GameObject parent = new GameObject("ColliderExtensionsTest");
+            GameObject child = new GameObject("ColliderExtensionsTest");
             child.transform.SetParent(parent.transform);
 
             BoxCollider collider = child.AddComponent<BoxCollider>();
@@ -42,8 +41,8 @@ namespace Test.Zinnia.Extension
         [Test]
         public void GetContainingTransformNull()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
+            GameObject parent = new GameObject("ColliderExtensionsTest");
+            GameObject child = new GameObject("ColliderExtensionsTest");
             child.transform.SetParent(parent.transform);
 
             BoxCollider collider = null;

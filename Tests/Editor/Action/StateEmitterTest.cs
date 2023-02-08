@@ -5,7 +5,6 @@ namespace Test.Zinnia.Action
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class StateEmitterTest
     {
@@ -17,9 +16,9 @@ namespace Test.Zinnia.Action
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("StateEmitterTest");
             subject = containingObject.AddComponent<StateEmitter>();
-            actionObject = new GameObject();
+            actionObject = new GameObject("StateEmitterTest");
             action = actionObject.AddComponent<BooleanAction>();
         }
 

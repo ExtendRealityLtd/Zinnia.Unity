@@ -4,25 +4,26 @@ namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformExtensionsTest
     {
         [Test]
         public void SetGlobalScaleValid()
         {
-            Transform parent = new GameObject().transform;
-            Transform child = new GameObject().transform;
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Transform parent = new GameObject("TransformExtensionsTest").transform;
+            Transform child = new GameObject("TransformExtensionsTest").transform;
             child.SetParent(parent);
             Vector3 newScale = Vector3.one * 2f;
 
-            Assert.AreEqual(Vector3.one, child.localScale);
-            Assert.AreEqual(Vector3.one, child.lossyScale);
+            Assert.That(child.localScale, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(child.lossyScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             child.SetGlobalScale(newScale);
 
-            Assert.AreEqual(newScale, child.localScale);
-            Assert.AreEqual(newScale, child.lossyScale);
+            Assert.That(child.localScale, Is.EqualTo(newScale).Using(comparer));
+            Assert.That(child.lossyScale, Is.EqualTo(newScale).Using(comparer));
 
             Object.DestroyImmediate(child.gameObject);
             Object.DestroyImmediate(parent.gameObject);
@@ -31,27 +32,28 @@ namespace Test.Zinnia.Extension
         [Test]
         public void SignedEulerAngles()
         {
-            Transform subject = new GameObject().transform;
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Transform subject = new GameObject("TransformExtensionsTest").transform;
 
-            Assert.AreEqual(new Vector3(0f, 0f, 0f).ToString(), subject.SignedEulerAngles().ToString());
+            Assert.That(subject.SignedEulerAngles(), Is.EqualTo(new Vector3(0f, 0f, 0f)).Using(comparer));
 
             subject.eulerAngles = new Vector3(0f, 90f, 90f);
-            Assert.AreEqual(new Vector3(0f, 90f, 90f).ToString(), subject.SignedEulerAngles().ToString());
+            Assert.That(subject.SignedEulerAngles(), Is.EqualTo(new Vector3(0f, 90f, 90f)).Using(comparer));
 
             subject.eulerAngles = new Vector3(0f, 179f, 90f);
-            Assert.AreEqual(new Vector3(0f, 179f, 90f).ToString(), subject.SignedEulerAngles().ToString());
+            Assert.That(subject.SignedEulerAngles(), Is.EqualTo(new Vector3(0f, 179f, 90f)).Using(comparer));
 
             subject.eulerAngles = new Vector3(0f, 180f, 90f);
-            Assert.AreEqual(new Vector3(0f, 180f, 90f).ToString(), subject.SignedEulerAngles().ToString());
+            Assert.That(subject.SignedEulerAngles(), Is.EqualTo(new Vector3(0f, 180f, 90f)).Using(comparer));
 
             subject.eulerAngles = new Vector3(0f, 181f, 90f);
-            Assert.AreEqual(new Vector3(0f, -179f, 90f).ToString(), subject.SignedEulerAngles().ToString());
+            Assert.That(subject.SignedEulerAngles(), Is.EqualTo(new Vector3(0f, -179f, 90f)).Using(comparer));
 
             subject.eulerAngles = new Vector3(0f, 270f, 90f);
-            Assert.AreEqual(new Vector3(0f, -90f, 90f).ToString(), subject.SignedEulerAngles().ToString());
+            Assert.That(subject.SignedEulerAngles(), Is.EqualTo(new Vector3(0f, -90f, 90f)).Using(comparer));
 
             subject.eulerAngles = new Vector3(0f, 360f, 90f);
-            Assert.AreEqual(new Vector3(0f, 0f, 90f).ToString(), subject.SignedEulerAngles().ToString());
+            Assert.That(subject.SignedEulerAngles(), Is.EqualTo(new Vector3(0f, 0f, 90f)).Using(comparer));
 
             Object.DestroyImmediate(subject.gameObject);
         }
@@ -59,27 +61,28 @@ namespace Test.Zinnia.Extension
         [Test]
         public void SignedLocalEulerAngles()
         {
-            Transform subject = new GameObject().transform;
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Transform subject = new GameObject("TransformExtensionsTest").transform;
 
-            Assert.AreEqual(new Vector3(0f, 0f, 0f).ToString(), subject.SignedLocalEulerAngles().ToString());
+            Assert.That(subject.SignedLocalEulerAngles(), Is.EqualTo(new Vector3(0f, 0f, 0f)).Using(comparer));
 
             subject.localEulerAngles = new Vector3(0f, 90f, 90f);
-            Assert.AreEqual(new Vector3(0f, 90f, 90f).ToString(), subject.SignedLocalEulerAngles().ToString());
+            Assert.That(subject.SignedLocalEulerAngles(), Is.EqualTo(new Vector3(0f, 90f, 90f)).Using(comparer));
 
             subject.localEulerAngles = new Vector3(0f, 179f, 90f);
-            Assert.AreEqual(new Vector3(0f, 179f, 90f).ToString(), subject.SignedLocalEulerAngles().ToString());
+            Assert.That(subject.SignedLocalEulerAngles(), Is.EqualTo(new Vector3(0f, 179f, 90f)).Using(comparer));
 
             subject.localEulerAngles = new Vector3(0f, 180f, 90f);
-            Assert.AreEqual(new Vector3(0f, 180f, 90f).ToString(), subject.SignedLocalEulerAngles().ToString());
+            Assert.That(subject.SignedLocalEulerAngles(), Is.EqualTo(new Vector3(0f, 180f, 90f)).Using(comparer));
 
             subject.localEulerAngles = new Vector3(0f, 181f, 90f);
-            Assert.AreEqual(new Vector3(0f, -179f, 90f).ToString(), subject.SignedLocalEulerAngles().ToString());
+            Assert.That(subject.SignedLocalEulerAngles(), Is.EqualTo(new Vector3(0f, -179f, 90f)).Using(comparer));
 
             subject.localEulerAngles = new Vector3(0f, 270f, 90f);
-            Assert.AreEqual(new Vector3(0f, -90f, 90f).ToString(), subject.SignedLocalEulerAngles().ToString());
+            Assert.That(subject.SignedLocalEulerAngles(), Is.EqualTo(new Vector3(0f, -90f, 90f)).Using(comparer));
 
             subject.localEulerAngles = new Vector3(0f, 360f, 90f);
-            Assert.AreEqual(new Vector3(0f, 0f, 90f).ToString(), subject.SignedLocalEulerAngles().ToString());
+            Assert.That(subject.SignedLocalEulerAngles(), Is.EqualTo(new Vector3(0f, 0f, 90f)).Using(comparer));
 
             Object.DestroyImmediate(subject.gameObject);
         }

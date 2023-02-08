@@ -356,7 +356,7 @@
         /// </summary>
         protected virtual void OnAfterVelocityChange()
         {
-            if (Target == null)
+            if (Target == null || Target.isKinematic)
             {
                 return;
             }
@@ -369,7 +369,7 @@
         /// </summary>
         protected virtual void OnAfterAngularVelocityChange()
         {
-            if (Target == null)
+            if (Target == null || Target.isKinematic)
             {
                 return;
             }

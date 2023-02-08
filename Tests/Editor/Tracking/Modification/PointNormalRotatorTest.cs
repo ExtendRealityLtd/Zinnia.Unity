@@ -5,7 +5,7 @@ namespace Test.Zinnia.Tracking.Modification
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class PointNormalRotatorTest
     {
@@ -15,25 +15,25 @@ namespace Test.Zinnia.Tracking.Modification
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("PointNormalRotatorTest");
             subject = containingObject.AddComponent<PointNormalRotator>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void HandleData()
         {
-            GameObject target = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject target = new GameObject("PointNormalRotatorTest");
 
             subject.Target = target;
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             RaycastHit cast = new RaycastHit
             {
@@ -47,7 +47,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             subject.HandleData(data);
 
-            Assert.AreEqual(Quaternion.Euler(90f, 0f, 0f).ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.Euler(90f, 0f, 0f)).Using(comparer));
 
             Object.DestroyImmediate(target.gameObject);
         }
@@ -55,11 +55,12 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void NoHandleDataOnDisabledComponent()
         {
-            GameObject target = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject target = new GameObject("PointNormalRotatorTest");
 
             subject.Target = target;
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             RaycastHit cast = new RaycastHit
             {
@@ -74,7 +75,7 @@ namespace Test.Zinnia.Tracking.Modification
             subject.enabled = false;
             subject.HandleData(data);
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             Object.DestroyImmediate(target.gameObject);
         }

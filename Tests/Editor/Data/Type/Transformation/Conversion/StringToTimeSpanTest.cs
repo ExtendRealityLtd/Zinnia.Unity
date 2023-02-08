@@ -7,7 +7,6 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
     using System.Threading;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
     using SystemTimeSpan = System.TimeSpan;
 
     public class StringToTimeSpanTest
@@ -21,7 +20,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
         {
             cachedCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-            containingObject = new GameObject();
+            containingObject = new GameObject("StringToTimeSpanTest");
             subject = containingObject.AddComponent<StringToTimeSpan>();
         }
 

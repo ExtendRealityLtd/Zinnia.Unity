@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class Vector2ComponentExtractorTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("Vector2ComponentExtractorTest");
 #pragma warning disable 0618
             subject = containingObject.AddComponent<Vector2ComponentExtractor>();
 #pragma warning restore 0618

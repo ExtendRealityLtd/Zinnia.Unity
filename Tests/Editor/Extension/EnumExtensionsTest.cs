@@ -3,7 +3,6 @@
 namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class EnumExtensionsTest
     {
@@ -33,7 +32,7 @@ namespace Test.Zinnia.Extension
             Assert.AreEqual(Test.Second, EnumExtensions.GetByString<Test>("Second"));
             Assert.AreEqual(Test.Third, EnumExtensions.GetByString<Test>("third"));
             Assert.AreEqual(Test.Third, EnumExtensions.GetByString<Test>("Third"));
-            NUnit.Framework.Assert.Throws<System.ArgumentException>(() => EnumExtensions.GetByString<Test>("Fourth"));
+            Assert.Throws<System.ArgumentException>(() => EnumExtensions.GetByString<Test>("Fourth"));
         }
     }
 }

@@ -8,7 +8,6 @@ namespace Test.Zinnia.Action
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyActionTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Action
         [UnitySetUp]
         public IEnumerator SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("AnyActionTest");
             ActionObservableList actions = containingObject.AddComponent<ActionObservableList>();
 
             subject = containingObject.AddComponent<AnyActionMock>();
@@ -251,7 +250,7 @@ namespace Test.Zinnia.Action
         {
             subject.enabled = false;
 
-            GameObject otherObject = new GameObject();
+            GameObject otherObject = new GameObject("AnyActionTest");
             MockAction actionA = otherObject.AddComponent<MockAction>();
             MockAction actionB = otherObject.AddComponent<MockAction>();
 

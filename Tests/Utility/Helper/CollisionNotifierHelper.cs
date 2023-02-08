@@ -8,7 +8,7 @@ namespace Test.Zinnia.Utility.Helper
     {
         public static CollisionNotifier.EventData GetEventData(out GameObject container, Vector3 position = default)
         {
-            container = new GameObject();
+            container = new GameObject("CollisionNotifierHelper");
             BoxCollider collider = container.AddComponent<BoxCollider>();
             collider.transform.position = position;
 

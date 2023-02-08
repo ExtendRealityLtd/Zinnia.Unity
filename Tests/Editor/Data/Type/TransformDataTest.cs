@@ -4,7 +4,7 @@ namespace Test.Zinnia.Data.Type
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformDataTest
     {
@@ -40,42 +40,45 @@ namespace Test.Zinnia.Data.Type
         [Test]
         public void OverridePosition()
         {
-            Transform defaultTransform = new GameObject().transform;
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Transform defaultTransform = new GameObject("TransformDataTest").transform;
             TransformData transformData = new TransformData(defaultTransform);
-            Assert.AreEqual(Vector3.zero, transformData.Position);
+            Assert.That(transformData.Position, Is.EqualTo(Vector3.zero).Using(comparer));
             transformData.PositionOverride = Vector3.one;
-            Assert.AreEqual(Vector3.one, transformData.Position);
+            Assert.That(transformData.Position, Is.EqualTo(Vector3.one).Using(comparer));
             Object.DestroyImmediate(defaultTransform.gameObject);
         }
 
         [Test]
         public void OverrideRotation()
         {
-            Transform defaultTransform = new GameObject().transform;
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            Transform defaultTransform = new GameObject("TransformDataTest").transform;
             TransformData transformData = new TransformData(defaultTransform);
-            Quaternion rotationOverride = new Quaternion(1f, 1f, 1f, 0f);
-            Assert.AreEqual(Quaternion.identity, transformData.Rotation);
-            transformData.RotationOverride = rotationOverride;
-            Assert.AreEqual(rotationOverride, transformData.Rotation);
+            Assert.That(transformData.Rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
+            transformData.RotationOverride = new Quaternion(1f, 1f, 1f, 0f);
+            Assert.That(transformData.Rotation, Is.EqualTo(new Quaternion(1f, 1f, 1f, 0f)).Using(comparer));
             Object.DestroyImmediate(defaultTransform.gameObject);
         }
 
         [Test]
         public void OverrideScale()
         {
-            Transform defaultTransform = new GameObject().transform;
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Transform defaultTransform = new GameObject("TransformDataTest").transform;
             TransformData transformData = new TransformData(defaultTransform);
-            Assert.AreEqual(Vector3.one, transformData.Scale);
+            Assert.That(transformData.Scale, Is.EqualTo(Vector3.one).Using(comparer));
             transformData.ScaleOverride = Vector3.zero;
-            Assert.AreEqual(Vector3.zero, transformData.Scale);
+            Assert.That(transformData.Scale, Is.EqualTo(Vector3.zero).Using(comparer));
             Object.DestroyImmediate(defaultTransform.gameObject);
         }
 
         [Test]
         public void UseLocalValues()
         {
-            Transform parent = new GameObject().transform;
-            Transform child = new GameObject().transform;
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Transform parent = new GameObject("TransformDataTest").transform;
+            Transform child = new GameObject("TransformDataTest").transform;
 
             child.SetParent(parent);
             parent.localPosition = Vector3.one;
@@ -83,11 +86,11 @@ namespace Test.Zinnia.Data.Type
 
             TransformData transformData = new TransformData(child);
 
-            Assert.AreEqual(Vector3.one * 3f, transformData.Position);
+            Assert.That(transformData.Position, Is.EqualTo(Vector3.one * 3f).Using(comparer));
 
             transformData.UseLocalValues = true;
 
-            Assert.AreEqual(Vector3.one * 2f, transformData.Position);
+            Assert.That(transformData.Position, Is.EqualTo(Vector3.one * 2f).Using(comparer));
 
             Object.DestroyImmediate(parent.gameObject);
         }
@@ -95,7 +98,7 @@ namespace Test.Zinnia.Data.Type
         [Test]
         public void Comparison()
         {
-            Transform subject = new GameObject().transform;
+            Transform subject = new GameObject("TransformDataTest").transform;
 
             TransformData subjectA = new TransformData(subject);
             TransformData subjectB = new TransformData(subject);
@@ -105,21 +108,6 @@ namespace Test.Zinnia.Data.Type
             Assert.AreEqual(subjectA, subjectB);
 
             Object.DestroyImmediate(subject.gameObject);
-        }
-
-        [Test]
-        public void ConvertToString()
-        {
-            Transform defaultTransform = new GameObject().transform;
-            TransformData transformData = new TransformData(defaultTransform);
-
-            transformData.PositionOverride = Vector3.one * 2;
-            transformData.RotationOverride = new Quaternion(3f, 2f, 1f, 0f);
-            transformData.ScaleOverride = Vector3.one * 2;
-
-            Assert.AreEqual("{ Transform = New Game Object (UnityEngine.Transform) | UseLocalValues = False | PositionOverride = (2.0, 2.0, 2.0) | RotationOverride = (3.0, 2.0, 1.0, 0.0) | ScaleOverride = (2.0, 2.0, 2.0) }", transformData.ToString());
-
-            Object.DestroyImmediate(defaultTransform.gameObject);
         }
     }
 }

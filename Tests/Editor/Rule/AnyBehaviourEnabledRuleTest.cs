@@ -9,7 +9,6 @@ namespace Test.Zinnia.Rule
     using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyBehaviourEnabledRuleTest
     {
@@ -20,7 +19,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("AnyBehaviourEnabledRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<AnyBehaviourEnabledRule>();
             container.Interface = subject;

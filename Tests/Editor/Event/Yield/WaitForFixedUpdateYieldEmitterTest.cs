@@ -7,7 +7,6 @@ namespace Test.Zinnia.Event.Yield
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class WaitForFixedUpdateYieldEmitterTest
     {
@@ -17,14 +16,13 @@ namespace Test.Zinnia.Event.Yield
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("WaitForFixedUpdateYieldEmitterTest");
             subject = containingObject.AddComponent<WaitForFixedUpdateYieldEmitter>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 

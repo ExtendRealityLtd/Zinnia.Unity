@@ -7,7 +7,6 @@ namespace Test.Zinnia.Tracking.Collision.Active
     using Test.Zinnia.Utility.Helper;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class CollisionPointContainerTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("CollisionPointContainerTest");
             subject = containingObject.AddComponent<CollisionPointContainer>();
         }
 
@@ -25,7 +24,6 @@ namespace Test.Zinnia.Tracking.Collision.Active
         public void TearDown()
         {
             Object.DestroyImmediate(subject.Container);
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -37,12 +35,13 @@ namespace Test.Zinnia.Tracking.Collision.Active
             subject.PointSet.AddListener(createdMock.Listen);
             subject.PointUnset.AddListener(clearedMock.Listen);
 
-            GameObject publisherObject = new GameObject();
+            GameObject publisherObject = new GameObject("CollisionPointContainerTest");
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.SourceContainer = publisherObject;
             publisherObject.transform.position = Vector3.one;
 
             CollisionNotifier.EventData collisionNotifierEventData = CollisionNotifierHelper.GetEventData(out GameObject collisionNotifierContainer);
+            collisionNotifierContainer.name = "collisionNotifierContainer";
             collisionNotifierContainer.transform.position = Vector3.one * 2f;
             collisionNotifierContainer.transform.rotation = Quaternion.Euler(Vector3.forward * 90f);
 
@@ -84,24 +83,26 @@ namespace Test.Zinnia.Tracking.Collision.Active
             subject.PointSet.AddListener(createdMock.Listen);
             subject.PointUnset.AddListener(clearedMock.Listen);
 
-            GameObject publisherObject = new GameObject();
+            GameObject publisherObject = new GameObject("CollisionPointContainerTest");
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.SourceContainer = publisherObject;
             publisherObject.transform.position = Vector3.one;
 
             CollisionNotifier.EventData collisionNotifierEventData = CollisionNotifierHelper.GetEventData(out GameObject collisionNotifierContainer);
+            collisionNotifierContainer.name = "collisionNotifierContainer";
             collisionNotifierContainer.transform.position = Vector3.one * 2f;
             collisionNotifierContainer.transform.rotation = Quaternion.Euler(Vector3.forward * 90f);
 
             ActiveCollisionConsumer.EventData eventData = new ActiveCollisionConsumer.EventData();
             eventData.Set(publisher, collisionNotifierEventData);
 
-            GameObject publisherObjectAlt = new GameObject();
+            GameObject publisherObjectAlt = new GameObject("CollisionPointContainerTest");
             ActiveCollisionPublisher.PayloadData publisherAlt = new ActiveCollisionPublisher.PayloadData();
             publisherAlt.SourceContainer = publisherObjectAlt;
             publisherObjectAlt.transform.position = Vector3.one;
 
             CollisionNotifier.EventData collisionNotifierEventDataAlt = CollisionNotifierHelper.GetEventData(out GameObject collisionNotifierContainerAlt);
+            collisionNotifierContainerAlt.name = "collisionNotifierContainerAlt";
             collisionNotifierContainerAlt.transform.position = Vector3.one * 4f;
             collisionNotifierContainerAlt.transform.rotation = Quaternion.Euler(Vector3.up * 90f);
 

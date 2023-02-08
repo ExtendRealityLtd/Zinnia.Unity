@@ -6,7 +6,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformDataGameObjectExtractorTest
     {
@@ -17,9 +16,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("TransformDataGameObjectExtractorTest");
             subject = containingObject.AddComponent<TransformDataGameObjectExtractor>();
-            transformData = new GameObject();
+            transformData = new GameObject("TransformDataGameObjectExtractorTest");
         }
 
         [TearDown]

@@ -5,7 +5,7 @@ namespace Test.Zinnia.Cast
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class FixedLineCastTest
     {
@@ -15,7 +15,7 @@ namespace Test.Zinnia.Cast
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("FixedLineCastTest");
             subject = containingObject.AddComponent<FixedLineCastMock>();
         }
 
@@ -28,6 +28,7 @@ namespace Test.Zinnia.Cast
         [Test]
         public void CastPoints()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.Origin = subject.gameObject;
@@ -39,8 +40,9 @@ namespace Test.Zinnia.Cast
             Vector3 expectedStart = Vector3.zero;
             Vector3 expectedEnd = new Vector3(0f, 0f, 10f);
 
-            Assert.AreEqual(expectedStart, subject.Points[0]);
-            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
+
             Assert.IsTrue(castResultsChangedMock.Received);
         }
     }

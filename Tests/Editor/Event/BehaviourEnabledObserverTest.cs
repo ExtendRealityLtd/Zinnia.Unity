@@ -8,7 +8,6 @@ namespace Test.Zinnia.Event
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class BehaviourEnabledObserverTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Event
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("BehaviourEnabledObserverTest");
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<BehaviourEnabledObserver>();
         }

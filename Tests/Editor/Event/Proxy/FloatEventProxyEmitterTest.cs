@@ -7,7 +7,6 @@ namespace Test.Zinnia.Event.Proxy
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class FloatEventProxyEmitterTest
     {
@@ -17,14 +16,13 @@ namespace Test.Zinnia.Event.Proxy
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("FloatEventProxyEmitterTest");
             subject = containingObject.AddComponent<FloatEventProxyEmitter>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 

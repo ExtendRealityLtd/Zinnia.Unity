@@ -4,14 +4,13 @@ namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ComponentExtensionsTest
     {
         [Test]
         public void TryGetTransformValid()
         {
-            Component valid = new GameObject().transform;
+            Component valid = new GameObject("ComponentExtensionsTest").transform;
             Assert.IsNotNull(valid.TryGetTransform());
             Object.DestroyImmediate(valid.gameObject);
         }
@@ -27,7 +26,7 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TryGetGameObjectValid()
         {
-            Component valid = new GameObject().GetComponent<Component>();
+            Component valid = new GameObject("ComponentExtensionsTest").GetComponent<Component>();
             Assert.IsNotNull(valid.TryGetGameObject());
             Object.DestroyImmediate(valid.gameObject);
         }

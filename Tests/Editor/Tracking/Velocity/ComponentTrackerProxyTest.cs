@@ -5,7 +5,7 @@ namespace Test.Zinnia.Tracking.Velocity
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class ComponentTrackerProxyTest
     {
@@ -15,25 +15,25 @@ namespace Test.Zinnia.Tracking.Velocity
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ComponentTrackerProxyTest");
             subject = containingObject.AddComponent<ComponentTrackerProxy>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void GetVelocity()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject sourceObject;
             VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
 
             subject.ProxySource = sourceObject;
-            Assert.AreEqual(Vector3.one, subject.GetVelocity());
+            Assert.That(subject.GetVelocity(), Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(sourceObject);
         }
@@ -41,11 +41,12 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void GetAngularVelocity()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject sourceObject;
             VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
 
             subject.ProxySource = sourceObject;
-            Assert.AreEqual(Vector3.one, subject.GetAngularVelocity());
+            Assert.That(subject.GetAngularVelocity(), Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(sourceObject);
         }
@@ -66,20 +67,22 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void SourceInvalid()
         {
-            Assert.AreEqual(Vector3.zero, subject.GetVelocity());
-            Assert.AreEqual(Vector3.zero, subject.GetAngularVelocity());
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(subject.GetVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subject.GetAngularVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
         }
 
         [Test]
         public void SourceInactiveGameObject()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject sourceObject;
             VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
             sourceObject.SetActive(false);
 
             subject.ProxySource = sourceObject;
-            Assert.AreEqual(Vector3.zero, subject.GetVelocity());
-            Assert.AreEqual(Vector3.zero, subject.GetAngularVelocity());
+            Assert.That(subject.GetVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subject.GetAngularVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(sourceObject);
         }
@@ -87,13 +90,14 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void SourceInactiveComponent()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject sourceObject;
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
             tracker.enabled = false;
 
             subject.ProxySource = sourceObject;
-            Assert.AreEqual(Vector3.zero, subject.GetVelocity());
-            Assert.AreEqual(Vector3.zero, subject.GetAngularVelocity());
+            Assert.That(subject.GetVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subject.GetAngularVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(sourceObject);
         }
@@ -101,13 +105,14 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void InactiveGameObject()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject sourceObject;
             VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
             subject.gameObject.SetActive(false);
 
             subject.ProxySource = sourceObject;
-            Assert.AreEqual(Vector3.zero, subject.GetVelocity());
-            Assert.AreEqual(Vector3.zero, subject.GetAngularVelocity());
+            Assert.That(subject.GetVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subject.GetAngularVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(sourceObject);
         }
@@ -115,13 +120,14 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void InactiveComponent()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject sourceObject;
             VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one, out sourceObject);
             subject.enabled = false;
 
             subject.ProxySource = sourceObject;
-            Assert.AreEqual(Vector3.zero, subject.GetVelocity());
-            Assert.AreEqual(Vector3.zero, subject.GetAngularVelocity());
+            Assert.That(subject.GetVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subject.GetAngularVelocity(), Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(sourceObject);
         }

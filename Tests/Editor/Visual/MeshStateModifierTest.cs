@@ -16,7 +16,7 @@ namespace Test.Zinnia.Visual
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("MeshStateModifierTest");
             subject = containingObject.AddComponent<MeshStateModifier>();
         }
 

@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Operation.Cache
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class IntCacheTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Data.Operation.Cache
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("IntCacheTest");
 #pragma warning disable 0618
             subject = containingObject.AddComponent<IntCache>();
 #pragma warning restore 0618
@@ -26,7 +25,6 @@ namespace Test.Zinnia.Data.Operation.Cache
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -40,7 +38,7 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.AreEqual(0, subject.Data);
 
             subject.Data = 1;
 
@@ -73,7 +71,7 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsTrue(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.AreEqual(0, subject.Data);
         }
 
         [Test]
@@ -86,14 +84,14 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.AreEqual(0, subject.Data);
 
             subject.gameObject.SetActive(false);
             subject.Data = 1;
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.AreEqual(0, subject.Data);
         }
 
         [Test]
@@ -106,14 +104,14 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.AreEqual(0, subject.Data);
 
             subject.enabled = false;
             subject.Data = 1;
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.AreEqual(0, subject.Data);
         }
     }
 }

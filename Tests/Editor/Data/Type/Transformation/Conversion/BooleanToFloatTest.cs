@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class BooleanToFloatTest
     {
@@ -15,7 +14,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("BooleanToFloatTest");
             subject = containingObject.AddComponent<BooleanToFloat>();
         }
 

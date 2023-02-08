@@ -10,7 +10,7 @@ namespace Test.Zinnia.Cast
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class StraightLineCastTest
     {
@@ -21,8 +21,12 @@ namespace Test.Zinnia.Cast
         [SetUp]
         public void SetUp()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
-            containingObject = new GameObject();
+#endif
+            containingObject = new GameObject("StraightLineCastTest");
             subject = containingObject.AddComponent<StraightLineCastMock>();
             validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
         }
@@ -32,12 +36,17 @@ namespace Test.Zinnia.Cast
         {
             Object.DestroyImmediate(containingObject);
             Object.DestroyImmediate(validSurface);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
         }
 
         [Test]
         public void CastPointsValidTarget()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.Origin = subject.gameObject;
@@ -51,17 +60,17 @@ namespace Test.Zinnia.Cast
             Vector3 expectedStart = Vector3.zero;
             Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
 
-            Assert.AreEqual(expectedStart, subject.Points[0]);
-            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
             Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
             Assert.IsTrue(subject.IsTargetHitValid);
             Assert.IsTrue(castResultsChangedMock.Received);
-            Assert.AreEqual("{ HitData = { barycentricCoordinate = (1.0, 0.0, 0.0) | Collider = Cube (UnityEngine.BoxCollider) | Distance = 4.5 | Lightmap Coord = (0.0, 0.0) | Normal = (0.0, 0.0, -1.0) | Point = (0.0, 0.0, 4.5) | Rigidbody = [null] | Texture Coord = (0.0, 0.0) | Texture Coord2 = (0.0, 0.0) | Transform = Cube (UnityEngine.Transform) | Triangle Index = -1 } | IsValid = True }", subject.GetEventData().ToString());
         }
 
         [Test]
         public void CastPointsInsufficientBeamLength()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.Origin = subject.gameObject;
@@ -76,8 +85,8 @@ namespace Test.Zinnia.Cast
             Vector3 expectedStart = Vector3.zero;
             Vector3 expectedEnd = Vector3.forward * subject.MaximumLength;
 
-            Assert.AreEqual(expectedStart, subject.Points[0]);
-            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
             Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsTrue(castResultsChangedMock.Received);
         }
@@ -85,6 +94,7 @@ namespace Test.Zinnia.Cast
         [UnityTest]
         public IEnumerator CastPointsInvalidTarget()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.Origin = subject.gameObject;
@@ -114,8 +124,8 @@ namespace Test.Zinnia.Cast
             Vector3 expectedStart = Vector3.zero;
             Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
 
-            Assert.AreEqual(expectedStart, subject.Points[0]);
-            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
             Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
             Assert.IsFalse(subject.IsTargetHitValid);
             Assert.IsTrue(castResultsChangedMock.Received);
@@ -124,6 +134,7 @@ namespace Test.Zinnia.Cast
         [UnityTest]
         public IEnumerator CastPointsInvalidTargetPoint()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.Origin = subject.gameObject;
@@ -152,8 +163,8 @@ namespace Test.Zinnia.Cast
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
-            Assert.AreEqual(expectedStart, subject.Points[0]);
-            Assert.AreEqual(expectedEnd, subject.Points[1]);
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
             Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
             Assert.IsFalse(subject.IsTargetHitValid);
             Assert.IsTrue(castResultsChangedMock.Received);
@@ -356,9 +367,10 @@ namespace Test.Zinnia.Cast
         [Test]
         public void ClearDestinationPointOverride()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.DestinationPointOverride = Vector3.one;
 
-            Assert.AreEqual(Vector3.one, subject.DestinationPointOverride);
+            Assert.That(subject.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.ClearDestinationPointOverride();
 

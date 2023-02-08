@@ -8,9 +8,10 @@
         /// Creates a blocker <see cref="GameObject"/> at a default position.
         /// </summary>
         /// <returns>The blocker.</returns>
-        public static GameObject CreateBlocker()
+        public static GameObject CreateBlocker(string name)
         {
             GameObject blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            blocker.name = name;
             blocker.transform.position = Vector3.forward * 2f;
             return blocker;
         }
@@ -27,7 +28,7 @@
         {
             if (blocker == null)
             {
-                blocker = CreateBlocker();
+                blocker = CreateBlocker("RaycastHitHelper");
             }
 
             if (rayDirection == null)
@@ -35,10 +36,18 @@
                 rayDirection = Vector3.forward;
             }
 
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
+#endif
             Physics.Simulate(Time.fixedDeltaTime);
             Physics.Raycast(rayOrigin.GetValueOrDefault(), rayDirection.GetValueOrDefault(), out RaycastHit hitData);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
             if (cleanUpBlocker)
             {
                 Object.Destroy(blocker);

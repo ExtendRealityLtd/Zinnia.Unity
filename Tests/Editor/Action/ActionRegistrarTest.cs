@@ -9,7 +9,6 @@ namespace Test.Zinnia.Action
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ActionRegistrarTest
     {
@@ -19,7 +18,7 @@ namespace Test.Zinnia.Action
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ActionRegistrarTest");
             containingObject.SetActive(false);
 
             ActionRegistrarSourceObservableList sources = containingObject.AddComponent<ActionRegistrarSourceObservableList>();
@@ -42,13 +41,13 @@ namespace Test.Zinnia.Action
         [UnityTest]
         public IEnumerator RegisterOnEnable()
         {
-            GameObject targetActionObject = new GameObject();
+            GameObject targetActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
 
-            GameObject oneSourceActionObject = new GameObject();
+            GameObject oneSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
-            GameObject twoSourceActionObject = new GameObject();
+            GameObject twoSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
@@ -90,13 +89,13 @@ namespace Test.Zinnia.Action
             subject.enabled = true;
             yield return null;
 
-            GameObject targetActionObject = new GameObject();
+            GameObject targetActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
 
-            GameObject oneSourceActionObject = new GameObject();
+            GameObject oneSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
-            GameObject twoSourceActionObject = new GameObject();
+            GameObject twoSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
@@ -133,13 +132,13 @@ namespace Test.Zinnia.Action
         [UnityTest]
         public IEnumerator RegisterOnlyEnabled()
         {
-            GameObject targetActionObject = new GameObject();
+            GameObject targetActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
 
-            GameObject oneSourceActionObject = new GameObject();
+            GameObject oneSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
-            GameObject twoSourceActionObject = new GameObject();
+            GameObject twoSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
@@ -191,13 +190,13 @@ namespace Test.Zinnia.Action
             subject.enabled = true;
             yield return null;
 
-            GameObject targetActionObject = new GameObject();
+            GameObject targetActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
 
-            GameObject oneSourceActionObject = new GameObject();
+            GameObject oneSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
-            GameObject twoSourceActionObject = new GameObject();
+            GameObject twoSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource
@@ -259,13 +258,13 @@ namespace Test.Zinnia.Action
             subject.enabled = true;
             yield return null;
 
-            GameObject targetActionObject = new GameObject();
+            GameObject targetActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction targetAction = targetActionObject.AddComponent<BooleanAction>();
 
-            GameObject oneSourceActionObject = new GameObject();
+            GameObject oneSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction oneSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
-            GameObject twoSourceActionObject = new GameObject();
+            GameObject twoSourceActionObject = new GameObject("ActionRegistrarTest");
             BooleanAction twoSourceAction = oneSourceActionObject.AddComponent<BooleanAction>();
 
             ActionRegistrar.ActionSource oneActionSource = new ActionRegistrar.ActionSource

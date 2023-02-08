@@ -5,7 +5,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class Vector2ToAngleTest
     {
@@ -15,7 +15,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("Vector2ToAngleTest");
             subject = containingObject.AddComponent<Vector2ToAngle>();
         }
 
@@ -98,61 +98,62 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
         [Test]
         public void TransformToRadians()
         {
+            FloatEqualityComparer comparer = new FloatEqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
             subject.Unit = Vector2ToAngle.AngleUnit.Radians;
 
             subject.Origin = new Vector2(0f, 1f);
 
-            Assert.AreApproximatelyEqual(0f, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(0f).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
 
             float result = subject.Transform(new Vector2(0f, 0f));
 
-            Assert.AreApproximatelyEqual(0f, result);
-            Assert.AreApproximatelyEqual(0f, subject.Result);
+            Assert.That(result, Is.EqualTo(0f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(0f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(0f, 1f));
-            Assert.AreApproximatelyEqual(0f, result);
-            Assert.AreApproximatelyEqual(0f, subject.Result);
+            Assert.That(result, Is.EqualTo(0f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(0f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(1f, 1f));
-            Assert.AreApproximatelyEqual(0.785398185f, result);
-            Assert.AreApproximatelyEqual(0.785398185f, subject.Result);
+            Assert.That(result, Is.EqualTo(0.785398185f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(0.785398185f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(1f, 0f));
-            Assert.AreApproximatelyEqual(1.57079637f, result);
-            Assert.AreApproximatelyEqual(1.57079637f, subject.Result);
+            Assert.That(result, Is.EqualTo(1.57079637f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(1.57079637f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(0f, -1f));
-            Assert.AreApproximatelyEqual(3.14159274f, result);
-            Assert.AreApproximatelyEqual(3.14159274f, subject.Result);
+            Assert.That(result, Is.EqualTo(3.14159274f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(3.14159274f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(-1f, -1f));
-            Assert.AreApproximatelyEqual(3.92699075f, result);
-            Assert.AreApproximatelyEqual(3.92699075f, subject.Result);
+            Assert.That(result, Is.EqualTo(3.92699075f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(3.92699075f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(-1f, 0f));
-            Assert.AreApproximatelyEqual(4.71238899f, result);
-            Assert.AreApproximatelyEqual(4.71238899f, subject.Result);
+            Assert.That(result, Is.EqualTo(4.71238899f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(4.71238899f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
@@ -160,8 +161,8 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             subject.Origin = new Vector2(-1f, 0f);
 
             result = subject.Transform(new Vector2(0f, -1f));
-            Assert.AreApproximatelyEqual(4.71238899f, result);
-            Assert.AreApproximatelyEqual(4.71238899f, subject.Result);
+            Assert.That(result, Is.EqualTo(4.71238899f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(4.71238899f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
         }
 
@@ -237,61 +238,62 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
         [Test]
         public void TransformToSignedRadians()
         {
+            FloatEqualityComparer comparer = new FloatEqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
             subject.Unit = Vector2ToAngle.AngleUnit.SignedRadians;
 
             subject.Origin = new Vector2(0f, 1f);
 
-            Assert.AreApproximatelyEqual(0f, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(0f).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
 
             float result = subject.Transform(new Vector2(0f, 0f));
 
-            Assert.AreApproximatelyEqual(0f, result);
-            Assert.AreApproximatelyEqual(0f, subject.Result);
+            Assert.That(result, Is.EqualTo(0f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(0f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(0f, 1f));
-            Assert.AreApproximatelyEqual(0f, result);
-            Assert.AreApproximatelyEqual(0f, subject.Result);
+            Assert.That(result, Is.EqualTo(0f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(0f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(1f, 1f));
-            Assert.AreApproximatelyEqual(0.785398185f, result);
-            Assert.AreApproximatelyEqual(0.785398185f, subject.Result);
+            Assert.That(result, Is.EqualTo(0.785398185f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(0.785398185f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(1f, 0f));
-            Assert.AreApproximatelyEqual(1.57079637f, result);
-            Assert.AreApproximatelyEqual(1.57079637f, subject.Result);
+            Assert.That(result, Is.EqualTo(1.57079637f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(1.57079637f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(0f, -1f));
-            Assert.AreApproximatelyEqual(3.141593f, result);
-            Assert.AreApproximatelyEqual(3.141593f, subject.Result);
+            Assert.That(result, Is.EqualTo(3.141593f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(3.141593f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(-1f, -1f));
-            Assert.AreApproximatelyEqual(-2.356194f, result);
-            Assert.AreApproximatelyEqual(-2.356194f, subject.Result);
+            Assert.That(result, Is.EqualTo(-2.356194f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(-2.356194f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
 
             result = subject.Transform(new Vector2(-1f, 0f));
-            Assert.AreApproximatelyEqual(-1.570796f, result);
-            Assert.AreApproximatelyEqual(-1.570796f, subject.Result);
+            Assert.That(result, Is.EqualTo(-1.570796f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(-1.570796f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
 
             transformedListenerMock.Reset();
@@ -299,8 +301,8 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             subject.Origin = new Vector2(-1f, 0f);
 
             result = subject.Transform(new Vector2(0f, -1f));
-            Assert.AreApproximatelyEqual(-1.570796f, result);
-            Assert.AreApproximatelyEqual(-1.570796f, subject.Result);
+            Assert.That(result, Is.EqualTo(-1.570796f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(-1.570796f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
         }
 

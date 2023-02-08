@@ -11,7 +11,7 @@ namespace Test.Zinnia.Tracking.Follow
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class ObjectFollowerTest
     {
@@ -21,14 +21,13 @@ namespace Test.Zinnia.Tracking.Follow
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ObjectFollowerTest");
             subject = containingObject.AddComponent<ObjectFollower>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -110,7 +109,7 @@ namespace Test.Zinnia.Tracking.Follow
         public IEnumerator AllTargetsFollowSourceNoOffsets()
         {
             // The play area alias moves and all SDK play areas follow it.
-
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
             UnityEventListenerMock processedMock = new UnityEventListenerMock();
             subject.Preprocessed.AddListener(preprocessedMock.Listen);
@@ -144,9 +143,9 @@ namespace Test.Zinnia.Tracking.Follow
 
             Assert.IsTrue(preprocessedMock.Received);
             Assert.IsTrue(processedMock.Received);
-            Assert.AreEqual(source.transform.position, target1.transform.position);
-            Assert.AreEqual(source.transform.position, target2.transform.position);
-            Assert.AreEqual(source.transform.position, target3.transform.position);
+            Assert.That(target1.transform.position, Is.EqualTo(source.transform.position).Using(comparer));
+            Assert.That(target2.transform.position, Is.EqualTo(source.transform.position).Using(comparer));
+            Assert.That(target3.transform.position, Is.EqualTo(source.transform.position).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target1);
@@ -158,7 +157,7 @@ namespace Test.Zinnia.Tracking.Follow
         public IEnumerator TargetFollowsFirstActiveSourceNoOffsets()
         {
             // The first active SDK HMD moves and the target HMD alias follows
-
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
             UnityEventListenerMock processedMock = new UnityEventListenerMock();
             subject.Preprocessed.AddListener(preprocessedMock.Listen);
@@ -204,9 +203,9 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.IsTrue(preprocessedMock.Received);
             Assert.IsTrue(processedMock.Received);
 
-            Assert.AreNotEqual(source1.transform.position, target.transform.position);
-            Assert.AreEqual(source2.transform.position, target.transform.position);
-            Assert.AreNotEqual(source3.transform.position, target.transform.position);
+            Assert.That(target.transform.position, Is.Not.EqualTo(source1.transform.position).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(source2.transform.position).Using(comparer));
+            Assert.That(target.transform.position, Is.Not.EqualTo(source3.transform.position).Using(comparer));
 
             Object.DestroyImmediate(source1);
             Object.DestroyImmediate(source2);
@@ -217,6 +216,7 @@ namespace Test.Zinnia.Tracking.Follow
         [UnityTest]
         public IEnumerator OnlActiveTargetsFollowSourceNoOffsets()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
             UnityEventListenerMock processedMock = new UnityEventListenerMock();
             subject.Preprocessed.AddListener(preprocessedMock.Listen);
@@ -261,9 +261,9 @@ namespace Test.Zinnia.Tracking.Follow
 
             Assert.IsTrue(preprocessedMock.Received);
             Assert.IsTrue(processedMock.Received);
-            Assert.AreNotEqual(source.transform.position, target1.transform.position);
-            Assert.AreEqual(source.transform.position, target2.transform.position);
-            Assert.AreEqual(source.transform.position, target3.transform.position);
+            Assert.That(target1.transform.position, Is.Not.EqualTo(source.transform.position).Using(comparer));
+            Assert.That(target2.transform.position, Is.EqualTo(source.transform.position).Using(comparer));
+            Assert.That(target3.transform.position, Is.EqualTo(source.transform.position).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target1);
@@ -274,6 +274,7 @@ namespace Test.Zinnia.Tracking.Follow
         [UnityTest]
         public IEnumerator AllTargetsFollowSourceWithOffsets()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock preprocessedMock = new UnityEventListenerMock();
             UnityEventListenerMock processedMock = new UnityEventListenerMock();
             subject.Preprocessed.AddListener(preprocessedMock.Listen);
@@ -324,10 +325,9 @@ namespace Test.Zinnia.Tracking.Follow
 
             Assert.IsTrue(preprocessedMock.Received);
             Assert.IsTrue(processedMock.Received);
-
-            Assert.AreEqual(source.transform.position - targetOffset1.transform.localPosition, target1.transform.position);
-            Assert.AreEqual(source.transform.position - targetOffset2.transform.localPosition, target2.transform.position);
-            Assert.AreEqual(source.transform.position - targetOffset3.transform.localPosition, target3.transform.position);
+            Assert.That(target1.transform.position, Is.EqualTo(source.transform.position - targetOffset1.transform.localPosition).Using(comparer));
+            Assert.That(target2.transform.position, Is.EqualTo(source.transform.position - targetOffset2.transform.localPosition).Using(comparer));
+            Assert.That(target3.transform.position, Is.EqualTo(source.transform.position - targetOffset3.transform.localPosition).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target1);
@@ -373,7 +373,7 @@ namespace Test.Zinnia.Tracking.Follow
             FollowModifierMock followModifierMock = containingObject.AddComponent<FollowModifierMock>();
             subject.FollowModifier = followModifierMock;
 
-            NUnit.Framework.Assert.Throws<System.ArgumentException>(() => subject.Process());
+            Assert.Throws<System.ArgumentException>(() => subject.Process());
 
             Assert.IsTrue(preprocessedMock.Received);
             Assert.IsFalse(processedMock.Received);

@@ -5,7 +5,7 @@ namespace Test.Zinnia.Tracking.Velocity
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class VelocityApplierTest
     {
@@ -15,26 +15,26 @@ namespace Test.Zinnia.Tracking.Velocity
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("VelocityApplierTest");
             subject = containingObject.AddComponent<VelocityApplier>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void Apply()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             VelocityTrackerMock tracker = VelocityTrackerMock.Generate(true, Vector3.one, Vector3.one);
             subject.Source = tracker;
             subject.Target = containingObject.AddComponent<Rigidbody>();
             subject.Apply();
-            Assert.AreEqual(tracker.GetVelocity(), subject.Target.velocity);
-            Assert.AreEqual(tracker.GetAngularVelocity(), subject.Target.angularVelocity);
+            Assert.That(subject.Target.velocity, Is.EqualTo(tracker.GetVelocity()).Using(comparer));
+            Assert.That(subject.Target.angularVelocity, Is.EqualTo(tracker.GetAngularVelocity()).Using(comparer));
 
             Object.DestroyImmediate(tracker.gameObject);
         }
@@ -42,17 +42,19 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void ApplyNoSource()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.Target = containingObject.AddComponent<Rigidbody>();
 
             Vector3 originalVelocity = subject.Target.velocity;
             Vector3 originalAngularVelocity = subject.Target.angularVelocity;
 
-            Assert.AreEqual(Vector3.zero, originalVelocity);
-            Assert.AreEqual(Vector3.zero, originalAngularVelocity);
+            Assert.That(originalVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(originalAngularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
 
             subject.Apply();
-            Assert.AreEqual(originalVelocity, subject.Target.velocity);
-            Assert.AreEqual(originalAngularVelocity, subject.Target.angularVelocity);
+
+            Assert.That(subject.Target.velocity, Is.EqualTo(originalVelocity).Using(comparer));
+            Assert.That(subject.Target.angularVelocity, Is.EqualTo(originalAngularVelocity).Using(comparer));
         }
 
         [Test]
@@ -67,6 +69,7 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.ClearSource();
 
             Assert.IsNull(subject.Source);
+            Object.DestroyImmediate(tracker.gameObject);
         }
 
         [Test]
@@ -82,6 +85,7 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.ClearSource();
 
             Assert.AreEqual(tracker, subject.Source);
+            Object.DestroyImmediate(tracker.gameObject);
         }
 
         [Test]
@@ -97,6 +101,7 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.ClearSource();
 
             Assert.AreEqual(tracker, subject.Source);
+            Object.DestroyImmediate(tracker.gameObject);
         }
 
         [Test]

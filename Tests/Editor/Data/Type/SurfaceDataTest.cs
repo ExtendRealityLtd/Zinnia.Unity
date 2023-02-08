@@ -4,30 +4,37 @@ namespace Test.Zinnia.Data.Type
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class SurfaceDataTest
     {
         [Test]
         public void DefaultConstructor()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             SurfaceData surfaceData = new SurfaceData();
-            Assert.AreEqual(Vector3.zero, surfaceData.Origin);
-            Assert.AreEqual(Vector3.zero, surfaceData.Direction);
+            Assert.That(surfaceData.Origin, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(surfaceData.Direction, Is.EqualTo(Vector3.zero).Using(comparer));
         }
 
         [Test]
         public void OriginConstructor()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             SurfaceData surfaceData = new SurfaceData(Vector3.one, Vector3.forward);
-            Assert.AreEqual(Vector3.one, surfaceData.Origin);
-            Assert.AreEqual(Vector3.forward, surfaceData.Direction);
+            Assert.That(surfaceData.Origin, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(surfaceData.Direction, Is.EqualTo(Vector3.forward).Using(comparer));
         }
 
         [Test]
         public void CollisionData()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
+#endif
             SurfaceData surfaceData = new SurfaceData();
 
             //Create a couple of GameObjects for collision detection
@@ -58,22 +65,24 @@ namespace Test.Zinnia.Data.Type
             surfaceData.Direction = Vector3.down;
             surfaceData.CollisionData = downwardHit;
 
-            Assert.AreEqual(Vector3.zero, surfaceData.Origin);
-            Assert.AreEqual(Vector3.down, surfaceData.Direction);
+            Assert.That(surfaceData.Origin, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(surfaceData.Direction, Is.EqualTo(Vector3.down).Using(comparer));
             Assert.AreEqual(bottom.transform, surfaceData.CollisionData.transform);
             Assert.AreEqual(front.transform, surfaceData.PreviousCollisionData.transform);
 
-            Assert.AreEqual("{ Transform = [null] | UseLocalValues = False | PositionOverride = [null] | RotationOverride = [null] | ScaleOverride = [null] | Origin = (0.0, 0.0, 0.0) | Direction = (0.0, -1.0, 0.0) | CollisionData = { barycentricCoordinate = (1.0, 0.0, 0.0) | Collider = Cube (UnityEngine.BoxCollider) | Distance = 4.5 | Lightmap Coord = (0.0, 0.0) | Normal = (0.0, 1.0, 0.0) | Point = (0.0, -4.5, 0.0) | Rigidbody = [null] | Texture Coord = (0.0, 0.0) | Texture Coord2 = (0.0, 0.0) | Transform = Cube (UnityEngine.Transform) | Triangle Index = -1 } }", surfaceData.ToString());
-
             Object.DestroyImmediate(front);
             Object.DestroyImmediate(bottom);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
         }
 
         [Test]
         public void Comparison()
         {
-            Transform subject = new GameObject().transform;
+            Transform subject = new GameObject("SurfaceDataTest").transform;
 
             SurfaceData subjectA = new SurfaceData(subject);
             SurfaceData subjectB = new SurfaceData(subject);

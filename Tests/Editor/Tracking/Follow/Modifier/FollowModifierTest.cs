@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class FollowModifierTest
     {
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("FollowModifierTest");
             subject = containingObject.AddComponent<FollowModifier>();
         }
 
@@ -34,9 +33,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             subject.Premodified.AddListener(premodifiedMock.Listen);
             subject.Modified.AddListener(modifiedMock.Listen);
 
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            GameObject source = new GameObject("FollowModifierTest");
+            GameObject target = new GameObject("FollowModifierTest");
+            GameObject offset = new GameObject("FollowModifierTest");
 
             PropertyModifierMock positionMock = source.AddComponent<PropertyModifierMock>();
             PropertyModifierMock rotationMock = source.AddComponent<PropertyModifierMock>();
@@ -79,8 +78,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             subject.Premodified.AddListener(premodifiedMock.Listen);
             subject.Modified.AddListener(modifiedMock.Listen);
 
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            GameObject source = new GameObject("FollowModifierTest");
+            GameObject target = new GameObject("FollowModifierTest");
 
             PropertyModifierMock positionMock = source.AddComponent<PropertyModifierMock>();
             PropertyModifierMock rotationMock = source.AddComponent<PropertyModifierMock>();
@@ -122,8 +121,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             subject.Premodified.AddListener(premodifiedMock.Listen);
             subject.Modified.AddListener(modifiedMock.Listen);
 
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            GameObject target = new GameObject("FollowModifierTest");
+            GameObject offset = new GameObject("FollowModifierTest");
 
             PropertyModifierMock positionMock = target.AddComponent<PropertyModifierMock>();
             PropertyModifierMock rotationMock = target.AddComponent<PropertyModifierMock>();
@@ -165,8 +164,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             subject.Premodified.AddListener(premodifiedMock.Listen);
             subject.Modified.AddListener(modifiedMock.Listen);
 
-            GameObject source = new GameObject();
-            GameObject offset = new GameObject();
+            GameObject source = new GameObject("FollowModifierTest");
+            GameObject offset = new GameObject("FollowModifierTest");
 
             PropertyModifierMock positionMock = source.AddComponent<PropertyModifierMock>();
             PropertyModifierMock rotationMock = source.AddComponent<PropertyModifierMock>();
@@ -208,9 +207,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             subject.Premodified.AddListener(premodifiedMock.Listen);
             subject.Modified.AddListener(modifiedMock.Listen);
 
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            GameObject source = new GameObject("FollowModifierTest");
+            GameObject target = new GameObject("FollowModifierTest");
+            GameObject offset = new GameObject("FollowModifierTest");
 
             PropertyModifierMock positionMock = source.AddComponent<PropertyModifierMock>();
             PropertyModifierMock rotationMock = source.AddComponent<PropertyModifierMock>();
@@ -254,9 +253,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier
             subject.Premodified.AddListener(premodifiedMock.Listen);
             subject.Modified.AddListener(modifiedMock.Listen);
 
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            GameObject source = new GameObject("FollowModifierTest");
+            GameObject target = new GameObject("FollowModifierTest");
+            GameObject offset = new GameObject("FollowModifierTest");
 
             PropertyModifierMock positionMock = source.AddComponent<PropertyModifierMock>();
             PropertyModifierMock rotationMock = source.AddComponent<PropertyModifierMock>();

@@ -7,7 +7,6 @@ namespace Test.Zinnia.Action
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class BooleanActionTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Action
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("BooleanActionTest");
             subject = containingObject.AddComponent<BooleanActionMock>();
         }
 
@@ -361,7 +360,7 @@ namespace Test.Zinnia.Action
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
             subject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
 
-            GameObject sourceObject = new GameObject();
+            GameObject sourceObject = new GameObject("BooleanActionTest");
             BooleanActionMock sourceMock = sourceObject.AddComponent<BooleanActionMock>();
 
             Assert.AreEqual(0, subject.ReadOnlySources.Count);
@@ -403,7 +402,7 @@ namespace Test.Zinnia.Action
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
             subject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
 
-            GameObject sourceObject = new GameObject();
+            GameObject sourceObject = new GameObject("BooleanActionTest");
             BooleanActionMock sourceMock = sourceObject.AddComponent<BooleanActionMock>();
 
             subject.AddSource(sourceMock);
@@ -453,7 +452,7 @@ namespace Test.Zinnia.Action
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
             subject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
 
-            GameObject sourceObject = new GameObject();
+            GameObject sourceObject = new GameObject("BooleanActionTest");
             BooleanActionMock sourceMock = sourceObject.AddComponent<BooleanActionMock>();
 
             subject.AddSource(sourceMock);
@@ -491,7 +490,7 @@ namespace Test.Zinnia.Action
         [Test]
         public void SourcesContains()
         {
-            GameObject sourceObject = new GameObject();
+            GameObject sourceObject = new GameObject("BooleanActionTest");
             BooleanActionMock sourceMock = sourceObject.AddComponent<BooleanActionMock>();
 
             Assert.IsFalse(subject.SourcesContains(sourceMock));

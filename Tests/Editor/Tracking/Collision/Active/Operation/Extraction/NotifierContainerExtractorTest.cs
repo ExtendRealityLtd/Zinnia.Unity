@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class NotifierContainerExtractorTest
     {
@@ -16,14 +15,13 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("NotifierContainerExtractorTest");
             subject = containingObject.AddComponent<NotifierContainerExtractor>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -33,7 +31,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            GameObject forwardSource = new GameObject();
+            GameObject forwardSource = new GameObject("NotifierContainerExtractorTest");
             CollisionNotifier.EventData notifier = new CollisionNotifier.EventData();
             notifier.ForwardSource = forwardSource.GetComponent<Component>();
 
@@ -54,7 +52,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            GameObject forwardSource = new GameObject();
+            GameObject forwardSource = new GameObject("NotifierContainerExtractorTest");
             CollisionNotifier.EventData notifier = new CollisionNotifier.EventData();
             notifier.ForwardSource = forwardSource.GetComponent<Component>();
 
@@ -76,7 +74,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            GameObject forwardSource = new GameObject();
+            GameObject forwardSource = new GameObject("NotifierContainerExtractorTest");
             CollisionNotifier.EventData notifier = new CollisionNotifier.EventData();
             notifier.ForwardSource = forwardSource.GetComponent<Component>();
 
@@ -98,7 +96,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            GameObject forwardSource = new GameObject();
+            GameObject forwardSource = new GameObject("NotifierContainerExtractorTest");
             CollisionNotifier.EventData notifier = null;
 
             Assert.IsNull(subject.Result);

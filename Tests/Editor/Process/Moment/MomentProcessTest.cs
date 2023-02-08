@@ -5,7 +5,6 @@ namespace Test.Zinnia.Process.Moment
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class MomentProcessTest
     {
@@ -15,7 +14,7 @@ namespace Test.Zinnia.Process.Moment
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("MomentProcessTest");
             containingObject.SetActive(false);
 
             subject = containingObject.AddComponent<MomentProcess>();

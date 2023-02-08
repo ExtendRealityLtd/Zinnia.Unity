@@ -4,7 +4,6 @@ using Zinnia.Rule;
 namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class RuleContainerExtensionsTest
     {

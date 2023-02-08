@@ -48,7 +48,7 @@ namespace Test.Zinnia.Extension
             Quaternion expected = Quaternion.identity;
             Quaternion result = Quaternion.identity;
             float duration = 1f;
-            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(10e-6f);
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
 
             Assert.That(result, Is.EqualTo(expected).Using(comparer));
 

@@ -8,7 +8,6 @@ namespace Test.Zinnia.Rule
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class PatternMatcherRuleTest
     {
@@ -20,7 +19,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("PatternMatcherRuleTest");
             containingObject.SetActive(false);
             container = new RuleContainer();
             subject = containingObject.AddComponent<PatternMatcherRule>();

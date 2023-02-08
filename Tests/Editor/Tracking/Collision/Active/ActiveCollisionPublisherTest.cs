@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Collision.Active
     using NUnit.Framework;
     using Test.Zinnia.Utility.Helper;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveCollisionPublisherTest
     {
@@ -16,14 +15,13 @@ namespace Test.Zinnia.Tracking.Collision.Active
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ActiveCollisionPublisherTest");
             subject = containingObject.AddComponent<ActiveCollisionPublisher>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -67,8 +65,10 @@ namespace Test.Zinnia.Tracking.Collision.Active
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
             eventData.ActiveCollisions.Add(oneData);
             eventData.ActiveCollisions.Add(twoData);
 
@@ -87,8 +87,10 @@ namespace Test.Zinnia.Tracking.Collision.Active
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
             eventData.ActiveCollisions.Add(oneData);
             eventData.ActiveCollisions.Add(twoData);
 
@@ -107,9 +109,11 @@ namespace Test.Zinnia.Tracking.Collision.Active
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             ActiveCollisionConsumerMock oneConsumer = oneContainer.AddComponent<ActiveCollisionConsumerMock>();
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
             ActiveCollisionConsumerMock twoConsumer = twoContainer.AddComponent<ActiveCollisionConsumerMock>();
             eventData.ActiveCollisions.Add(oneData);
             eventData.ActiveCollisions.Add(twoData);
@@ -122,7 +126,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             Assert.IsTrue(oneConsumer.received);
             Assert.IsTrue(twoConsumer.received);
-            Assert.AreEqual("{ SourceContainer = [null] | PublisherContainer = New Game Object (UnityEngine.GameObject) }", subject.Payload.ToString());
+            Assert.AreEqual("{ SourceContainer = [null] | PublisherContainer = ActiveCollisionPublisherTest (UnityEngine.GameObject) }", subject.Payload.ToString());
 
             Object.DestroyImmediate(oneContainer);
             Object.DestroyImmediate(twoContainer);
@@ -134,9 +138,11 @@ namespace Test.Zinnia.Tracking.Collision.Active
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             ActiveCollisionConsumerMock oneConsumer = oneContainer.AddComponent<ActiveCollisionConsumerMock>();
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
             ActiveCollisionConsumerMock twoConsumer = twoContainer.AddComponent<ActiveCollisionConsumerMock>();
             ActiveCollisionConsumerMock threeConsumer = twoContainer.AddComponent<ActiveCollisionConsumerMock>();
             eventData.ActiveCollisions.Add(oneData);
@@ -164,8 +170,10 @@ namespace Test.Zinnia.Tracking.Collision.Active
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
             ActiveCollisionConsumerMock oneConsumer = oneContainer.AddComponent<ActiveCollisionConsumerMock>();
+            oneContainer.name = "one";
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
             ActiveCollisionConsumerMock twoConsumer = twoContainer.AddComponent<ActiveCollisionConsumerMock>();
             eventData.ActiveCollisions.Add(oneData);
             eventData.ActiveCollisions.Add(twoData);
@@ -202,9 +210,11 @@ namespace Test.Zinnia.Tracking.Collision.Active
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             ActiveCollisionConsumerMock oneConsumer = oneContainer.AddComponent<ActiveCollisionConsumerMock>();
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
             ActiveCollisionConsumerMock twoConsumer = twoContainer.AddComponent<ActiveCollisionConsumerMock>();
             eventData.ActiveCollisions.Add(oneData);
             eventData.ActiveCollisions.Add(twoData);
@@ -229,9 +239,11 @@ namespace Test.Zinnia.Tracking.Collision.Active
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             ActiveCollisionConsumerMock oneConsumer = oneContainer.AddComponent<ActiveCollisionConsumerMock>();
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
             ActiveCollisionConsumerMock twoConsumer = twoContainer.AddComponent<ActiveCollisionConsumerMock>();
             eventData.ActiveCollisions.Add(oneData);
             eventData.ActiveCollisions.Add(twoData);
@@ -256,9 +268,11 @@ namespace Test.Zinnia.Tracking.Collision.Active
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             ActiveCollisionConsumerMock oneConsumer = oneContainer.AddComponent<ActiveCollisionConsumerMock>();
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
             ActiveCollisionConsumerMock twoConsumer = twoContainer.AddComponent<ActiveCollisionConsumerMock>();
             twoContainer.SetActive(false);
             eventData.ActiveCollisions.Add(oneData);
@@ -283,9 +297,11 @@ namespace Test.Zinnia.Tracking.Collision.Active
             ActiveCollisionsContainer.EventData eventData = new ActiveCollisionsContainer.EventData();
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             ActiveCollisionConsumerMock oneConsumer = oneContainer.AddComponent<ActiveCollisionConsumerMock>();
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
             ActiveCollisionConsumerMock twoConsumer = twoContainer.AddComponent<ActiveCollisionConsumerMock>();
             twoConsumer.enabled = false;
             eventData.ActiveCollisions.Add(oneData);

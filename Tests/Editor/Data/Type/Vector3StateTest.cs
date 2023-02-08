@@ -4,7 +4,7 @@ namespace Test.Zinnia.Data.Type
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class Vector3StateTest
     {
@@ -65,10 +65,11 @@ namespace Test.Zinnia.Data.Type
         [Test]
         public void ToVector3()
         {
-            Assert.AreEqual(new Vector3(0f, 0f, 0f), new Vector3State(false, false, false).ToVector3());
-            Assert.AreEqual(new Vector3(1f, 1f, 1f), new Vector3State(true, true, true).ToVector3());
-            Assert.AreEqual(new Vector3(1f, 0f, 1f), new Vector3State(true, false, true).ToVector3());
-            Assert.AreEqual(new Vector3(0f, 1f, 0f), new Vector3State(false, true, false).ToVector3());
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(new Vector3State(false, false, false).ToVector3(), Is.EqualTo(new Vector3(0f, 0f, 0f)).Using(comparer));
+            Assert.That(new Vector3State(true, true, true).ToVector3(), Is.EqualTo(new Vector3(1f, 1f, 1f)).Using(comparer));
+            Assert.That(new Vector3State(true, false, true).ToVector3(), Is.EqualTo(new Vector3(1f, 0f, 1f)).Using(comparer));
+            Assert.That(new Vector3State(false, true, false).ToVector3(), Is.EqualTo(new Vector3(0f, 1f, 0f)).Using(comparer));
         }
 
         [Test]

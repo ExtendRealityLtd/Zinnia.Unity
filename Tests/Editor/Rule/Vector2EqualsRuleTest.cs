@@ -6,7 +6,6 @@ namespace Test.Zinnia.Rule
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class Vector2EqualsRuleTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("Vector2EqualsRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<Vector2EqualsRule>();
             container.Interface = subject;

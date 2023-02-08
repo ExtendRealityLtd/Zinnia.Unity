@@ -7,7 +7,6 @@ namespace Test.Zinnia.Tracking.Collision
     using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class CollisionIgnorerTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Tracking.Collision
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("CollisionIgnorerTest");
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<CollisionIgnorer>();
         }

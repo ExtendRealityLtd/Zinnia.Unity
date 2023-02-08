@@ -5,7 +5,7 @@ namespace Test.Zinnia.Tracking.Follow
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class ObjectDistanceComparatorTest
     {
@@ -15,27 +15,27 @@ namespace Test.Zinnia.Tracking.Follow
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ObjectDistanceComparatorTest");
             subject = containingObject.AddComponent<ObjectDistanceComparator>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void Process()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock thresholdExceededMock = new UnityEventListenerMock();
             UnityEventListenerMock thresholdResumedMock = new UnityEventListenerMock();
             subject.ThresholdExceeded.AddListener(thresholdExceededMock.Listen);
             subject.ThresholdResumed.AddListener(thresholdResumedMock.Listen);
 
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            GameObject source = new GameObject("ObjectDistanceComparatorTest");
+            GameObject target = new GameObject("ObjectDistanceComparatorTest");
 
             subject.Source = source;
             subject.Target = target;
@@ -49,17 +49,17 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
-            Assert.AreEqual(Vector3.zero, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.AreEqual(0f, subject.Distance);
 
-            target.transform.position = Vector3.forward * 1f;
+            target.transform.position = Vector3.forward;
 
             subject.Process();
 
             Assert.IsTrue(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsTrue(subject.Exceeding);
-            Assert.AreEqual(Vector3.forward * 1f, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.forward).Using(comparer));
             Assert.AreEqual(1f, subject.Distance);
 
             thresholdExceededMock.Reset();
@@ -72,7 +72,7 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsTrue(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
-            Assert.AreEqual(Vector3.zero, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(source);
@@ -82,12 +82,13 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void ProcessSourceTargetEquals()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock thresholdExceededMock = new UnityEventListenerMock();
             UnityEventListenerMock thresholdResumedMock = new UnityEventListenerMock();
             subject.ThresholdExceeded.AddListener(thresholdExceededMock.Listen);
             subject.ThresholdResumed.AddListener(thresholdResumedMock.Listen);
 
-            GameObject target = new GameObject();
+            GameObject target = new GameObject("ObjectDistanceComparatorTest");
 
             subject.Source = target;
             subject.Target = target;
@@ -100,17 +101,17 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
-            Assert.AreEqual(Vector3.zero, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.AreEqual(0f, subject.Distance);
 
-            target.transform.position = Vector3.forward * 1f;
+            target.transform.position = Vector3.forward;
 
             subject.Process();
 
             Assert.IsTrue(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsTrue(subject.Exceeding);
-            Assert.AreEqual(Vector3.forward * 1f, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.forward).Using(comparer));
             Assert.AreEqual(1f, subject.Distance);
 
             thresholdExceededMock.Reset();
@@ -124,7 +125,7 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.IsTrue(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsTrue(subject.Exceeding);
-            Assert.AreEqual(Vector3.forward * -1f, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.forward * -1f).Using(comparer));
             Assert.AreEqual(1f, subject.Distance);
 
             Object.DestroyImmediate(target);
@@ -133,24 +134,25 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void ProcessNoSource()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock thresholdExceededMock = new UnityEventListenerMock();
             UnityEventListenerMock thresholdResumedMock = new UnityEventListenerMock();
             subject.ThresholdExceeded.AddListener(thresholdExceededMock.Listen);
             subject.ThresholdResumed.AddListener(thresholdResumedMock.Listen);
 
-            GameObject target = new GameObject();
+            GameObject target = new GameObject("ObjectDistanceComparatorTest");
 
             subject.Target = target;
             subject.DistanceThreshold = 0.5f;
 
-            target.transform.position = Vector3.forward * 1f;
+            target.transform.position = Vector3.forward;
 
             subject.Process();
 
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
-            Assert.AreEqual(Vector3.zero, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(target);
@@ -159,12 +161,13 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void ProcessNoTarget()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock thresholdExceededMock = new UnityEventListenerMock();
             UnityEventListenerMock thresholdResumedMock = new UnityEventListenerMock();
             subject.ThresholdExceeded.AddListener(thresholdExceededMock.Listen);
             subject.ThresholdResumed.AddListener(thresholdResumedMock.Listen);
 
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ObjectDistanceComparatorTest");
 
             subject.Source = source;
             subject.DistanceThreshold = 0.5f;
@@ -174,7 +177,7 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
-            Assert.AreEqual(Vector3.zero, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(source);
@@ -183,13 +186,14 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void ProcessInactiveGameObject()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock thresholdExceededMock = new UnityEventListenerMock();
             UnityEventListenerMock thresholdResumedMock = new UnityEventListenerMock();
             subject.ThresholdExceeded.AddListener(thresholdExceededMock.Listen);
             subject.ThresholdResumed.AddListener(thresholdResumedMock.Listen);
 
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            GameObject source = new GameObject("ObjectDistanceComparatorTest");
+            GameObject target = new GameObject("ObjectDistanceComparatorTest");
 
             subject.Source = source;
             subject.Target = target;
@@ -205,7 +209,7 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
-            Assert.AreEqual(Vector3.zero, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(source);
@@ -215,13 +219,14 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void ProcessInactiveComponent()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock thresholdExceededMock = new UnityEventListenerMock();
             UnityEventListenerMock thresholdResumedMock = new UnityEventListenerMock();
             subject.ThresholdExceeded.AddListener(thresholdExceededMock.Listen);
             subject.ThresholdResumed.AddListener(thresholdResumedMock.Listen);
 
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            GameObject source = new GameObject("ObjectDistanceComparatorTest");
+            GameObject target = new GameObject("ObjectDistanceComparatorTest");
 
             subject.Source = source;
             subject.Target = target;
@@ -237,7 +242,7 @@ namespace Test.Zinnia.Tracking.Follow
             Assert.IsFalse(thresholdExceededMock.Received);
             Assert.IsFalse(thresholdResumedMock.Received);
             Assert.IsFalse(subject.Exceeding);
-            Assert.AreEqual(Vector3.zero, subject.Difference);
+            Assert.That(subject.Difference, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.AreEqual(0f, subject.Distance);
 
             Object.DestroyImmediate(source);
@@ -311,13 +316,14 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void SavePosition()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             ObjectDistanceComparatorMock subjectMock = containingObject.AddComponent<ObjectDistanceComparatorMock>();
             GameObject source = new GameObject("Source");
 
             subjectMock.Source = source;
             subjectMock.Target = source;
 
-            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.That(subjectMock.GetTheSourcePosition(), Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(subjectMock.GetPreviousState());
 
             source.transform.position = Vector3.one;
@@ -325,7 +331,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subjectMock.SavePosition();
 
-            Assert.AreEqual(Vector3.one, subjectMock.GetTheSourcePosition());
+            Assert.That(subjectMock.GetTheSourcePosition(), Is.EqualTo(Vector3.one).Using(comparer));
             Assert.IsFalse(subjectMock.GetPreviousState());
 
             Object.DestroyImmediate(source);
@@ -334,12 +340,13 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void SavePositionNullSource()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             ObjectDistanceComparatorMock subjectMock = containingObject.AddComponent<ObjectDistanceComparatorMock>();
             GameObject source = new GameObject("Source");
 
             subjectMock.Target = source;
 
-            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.That(subjectMock.GetTheSourcePosition(), Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(subjectMock.GetPreviousState());
 
             source.transform.position = Vector3.one;
@@ -347,7 +354,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subjectMock.SavePosition();
 
-            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.That(subjectMock.GetTheSourcePosition(), Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsTrue(subjectMock.GetPreviousState());
 
             Object.DestroyImmediate(source);
@@ -356,6 +363,7 @@ namespace Test.Zinnia.Tracking.Follow
         [Test]
         public void SavePositionSourceNotEqualTarget()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             ObjectDistanceComparatorMock subjectMock = containingObject.AddComponent<ObjectDistanceComparatorMock>();
             GameObject source = new GameObject("Source");
             GameObject target = new GameObject("Target");
@@ -363,7 +371,7 @@ namespace Test.Zinnia.Tracking.Follow
             subjectMock.Source = source;
             subjectMock.Target = target;
 
-            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.That(subjectMock.GetTheSourcePosition(), Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(subjectMock.GetPreviousState());
 
             source.transform.position = Vector3.one;
@@ -371,7 +379,7 @@ namespace Test.Zinnia.Tracking.Follow
 
             subjectMock.SavePosition();
 
-            Assert.AreEqual(Vector3.zero, subjectMock.GetTheSourcePosition());
+            Assert.That(subjectMock.GetTheSourcePosition(), Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsTrue(subjectMock.GetPreviousState());
 
             Object.DestroyImmediate(source);

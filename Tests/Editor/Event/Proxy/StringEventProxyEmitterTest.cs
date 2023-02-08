@@ -6,7 +6,6 @@ namespace Test.Zinnia.Event.Proxy
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class StringEventProxyEmitterTest
     {
@@ -16,14 +15,13 @@ namespace Test.Zinnia.Event.Proxy
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("StringEventProxyEmitterTest");
             subject = containingObject.AddComponent<StringEventProxyEmitter>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
