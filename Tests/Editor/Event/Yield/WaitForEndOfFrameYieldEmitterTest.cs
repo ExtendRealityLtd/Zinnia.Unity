@@ -51,6 +51,72 @@ namespace Test.Zinnia.Event.Yield
         }
 
         [UnityTest]
+        public IEnumerator WaitFor2Frames()
+        {
+            UnityEventListenerMock yieldedMock = new UnityEventListenerMock();
+            UnityEventListenerMock cancelledMock = new UnityEventListenerMock();
+            subject.Yielded.AddListener(yieldedMock.Listen);
+            subject.Cancelled.AddListener(cancelledMock.Listen);
+
+            subject.FramesUntilYield = 2;
+
+            yield return null;
+
+            Assert.IsFalse(yieldedMock.Received);
+            Assert.IsFalse(cancelledMock.Received);
+
+            subject.Begin();
+
+            yield return new WaitForEndOfFrame();
+
+            Assert.IsFalse(yieldedMock.Received);
+            Assert.IsFalse(cancelledMock.Received);
+
+            yield return new WaitForEndOfFrame();
+
+            Assert.IsTrue(yieldedMock.Received);
+            Assert.IsFalse(cancelledMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator WaitFor4Frames()
+        {
+            UnityEventListenerMock yieldedMock = new UnityEventListenerMock();
+            UnityEventListenerMock cancelledMock = new UnityEventListenerMock();
+            subject.Yielded.AddListener(yieldedMock.Listen);
+            subject.Cancelled.AddListener(cancelledMock.Listen);
+
+            subject.FramesUntilYield = 4;
+
+            yield return null;
+
+            Assert.IsFalse(yieldedMock.Received);
+            Assert.IsFalse(cancelledMock.Received);
+
+            subject.Begin();
+
+            yield return new WaitForEndOfFrame();
+
+            Assert.IsFalse(yieldedMock.Received);
+            Assert.IsFalse(cancelledMock.Received);
+
+            yield return new WaitForEndOfFrame();
+
+            Assert.IsFalse(yieldedMock.Received);
+            Assert.IsFalse(cancelledMock.Received);
+
+            yield return new WaitForEndOfFrame();
+
+            Assert.IsFalse(yieldedMock.Received);
+            Assert.IsFalse(cancelledMock.Received);
+
+            yield return new WaitForEndOfFrame();
+
+            Assert.IsTrue(yieldedMock.Received);
+            Assert.IsFalse(cancelledMock.Received);
+        }
+
+        [UnityTest]
         public IEnumerator Cancelled()
         {
             UnityEventListenerMock yieldedMock = new UnityEventListenerMock();
