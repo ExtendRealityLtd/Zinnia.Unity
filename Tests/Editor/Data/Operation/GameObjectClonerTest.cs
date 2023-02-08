@@ -25,30 +25,6 @@ namespace Test.Zinnia.Data.Operation
         }
 
         [Test]
-        public void DoesNotCloneNullSource()
-        {
-            UnityEventValueListenerMock<GameObject> clonedMock = new UnityEventValueListenerMock<GameObject>();
-            subject.Cloned.AddListener(clonedMock.Listen);
-
-            subject.Source = null;
-            GameObject actual = subject.Clone();
-
-            Assert.IsNull(actual);
-            Assert.IsFalse(clonedMock.Received);
-            Assert.IsNull(clonedMock.Value);
-
-            clonedMock.Reset();
-
-            actual = subject.Clone(null);
-
-            Assert.IsNull(actual);
-            Assert.IsFalse(clonedMock.Received);
-            Assert.IsNull(clonedMock.Value);
-
-            Object.DestroyImmediate(actual);
-        }
-
-        [Test]
         public void CreatesSourceClone()
         {
             UnityEventValueListenerMock<GameObject> clonedMock = new UnityEventValueListenerMock<GameObject>();
@@ -62,6 +38,7 @@ namespace Test.Zinnia.Data.Operation
             Assert.AreNotEqual(expected, actual);
             Assert.IsTrue(clonedMock.Received);
             Assert.AreEqual(actual, clonedMock.Value);
+            Assert.AreEqual(actual.name, "GameObjectClonerTest(Clone)");
 
             clonedMock.Reset();
             Object.DestroyImmediate(actual);
@@ -73,6 +50,21 @@ namespace Test.Zinnia.Data.Operation
             Assert.AreNotEqual(expected, actual);
             Assert.IsTrue(clonedMock.Received);
             Assert.AreEqual(actual, clonedMock.Value);
+
+            Object.DestroyImmediate(actual);
+            Object.DestroyImmediate(expected);
+        }
+
+        [Test]
+        public void CreatesSourceCloneCustomName()
+        {
+            GameObject expected = new GameObject("GameObjectClonerTest");
+
+            subject.Source = expected;
+            subject.ClonedName = "custom";
+            GameObject actual = subject.Clone();
+
+            Assert.AreEqual(actual.name, "custom");
 
             Object.DestroyImmediate(actual);
             Object.DestroyImmediate(expected);
@@ -101,6 +93,30 @@ namespace Test.Zinnia.Data.Operation
             Object.DestroyImmediate(actual);
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(expected);
+        }
+
+        [Test]
+        public void DoesNotCloneNullSource()
+        {
+            UnityEventValueListenerMock<GameObject> clonedMock = new UnityEventValueListenerMock<GameObject>();
+            subject.Cloned.AddListener(clonedMock.Listen);
+
+            subject.Source = null;
+            GameObject actual = subject.Clone();
+
+            Assert.IsNull(actual);
+            Assert.IsFalse(clonedMock.Received);
+            Assert.IsNull(clonedMock.Value);
+
+            clonedMock.Reset();
+
+            actual = subject.Clone(null);
+
+            Assert.IsNull(actual);
+            Assert.IsFalse(clonedMock.Received);
+            Assert.IsNull(clonedMock.Value);
+
+            Object.DestroyImmediate(actual);
         }
 
         [Test]

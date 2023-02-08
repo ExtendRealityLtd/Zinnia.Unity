@@ -50,6 +50,23 @@
                 parent = value;
             }
         }
+        [Tooltip("An optional string to name the cloned object.")]
+        [SerializeField]
+        private string clonedName;
+        /// <summary>
+        /// An optional <see cref="string"/> to name the cloned object.
+        /// </summary>
+        public string ClonedName
+        {
+            get
+            {
+                return clonedName;
+            }
+            set
+            {
+                clonedName = value;
+            }
+        }
 
         /// <summary>
         /// Emitted when an object has been cloned.
@@ -109,6 +126,10 @@
             }
 
             GameObject clone = Instantiate(source, Parent == null ? null : Parent.transform);
+            if (!string.IsNullOrEmpty(ClonedName))
+            {
+                clone.name = ClonedName;
+            }
             Cloned?.Invoke(clone);
             return clone;
         }
