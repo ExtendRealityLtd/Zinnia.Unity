@@ -248,7 +248,7 @@
         /// <summary>
         /// Delays the reset of <see cref="blinkRoutine"/> by <see cref="AddDuration"/> plus <see cref="AppliedDuration"/> seconds.
         /// </summary>
-        protected WaitForSeconds resetDelayYieldInstruction;
+        protected WaitForSecondsRealtime resetDelayYieldInstruction;
         /// <summary>
         /// The event data to be emitted throughout the process.
         /// </summary>
@@ -492,14 +492,14 @@
         {
             if (currentColor != targetColor)
             {
-                if (Mathf.Abs(currentColor.a - targetColor.a) < Mathf.Abs(deltaColor.a) * Time.deltaTime)
+                if (Mathf.Abs(currentColor.a - targetColor.a) < Mathf.Abs(deltaColor.a) * Time.unscaledDeltaTime)
                 {
                     currentColor = targetColor;
                     deltaColor = new Color(0, 0, 0, 0);
                 }
                 else
                 {
-                    currentColor += deltaColor * Time.deltaTime;
+                    currentColor += deltaColor * Time.unscaledDeltaTime;
                 }
                 Changed?.Invoke(eventData.Set(currentColor));
             }
@@ -620,7 +620,7 @@
         /// </summary>
         protected virtual void SetResetDelayInstruction()
         {
-            resetDelayYieldInstruction = new WaitForSeconds(AddDuration + AppliedDuration);
+            resetDelayYieldInstruction = new WaitForSecondsRealtime(AddDuration + AppliedDuration);
         }
 
         /// <summary>
@@ -650,7 +650,7 @@
         [Obsolete("Use `SetResetDelayInstruction` instead.")]
         protected virtual void OnAfterCheckDelayChange()
         {
-            resetDelayYieldInstruction = new WaitForSeconds(AddDuration + AppliedDuration);
+            resetDelayYieldInstruction = new WaitForSecondsRealtime(AddDuration + AppliedDuration);
         }
     }
 }
