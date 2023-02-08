@@ -5,7 +5,7 @@ namespace Test.Zinnia.Data.Operation.Mutation
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformScaleMutatorTest
     {
@@ -15,32 +15,32 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("TransformScaleMutatorTest");
             subject = containingObject.AddComponent<TransformScaleMutator>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void SetPropertyLocal()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             subject.SetProperty(input);
 
-            Assert.AreEqual(input.ToString(), target.transform.localScale.ToString());
+            Assert.That(target.transform.localScale, Is.EqualTo(input).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -48,18 +48,19 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyGlobal()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = Vector3State.True;
 
-            Assert.AreEqual(Vector3.one, target.transform.lossyScale);
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             subject.SetProperty(input);
 
-            Assert.AreEqual(input.ToString(), target.transform.lossyScale.ToString());
+            Assert.That(target.transform.lossyScale, Is.EqualTo(input).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -67,20 +68,21 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyLocalLockYAxis()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = new Vector3State(true, false, true);
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             Vector3 expected = new Vector3(2f, 1f, 2f);
 
             subject.SetProperty(input);
 
-            Assert.AreEqual(expected.ToString(), target.transform.localScale.ToString());
+            Assert.That(target.transform.localScale, Is.EqualTo(expected).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -88,20 +90,21 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyGlobalLockXZAxis()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = new Vector3State(false, true, false);
 
-            Assert.AreEqual(Vector3.one, target.transform.lossyScale);
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             Vector3 expected = new Vector3(1f, 2f, 1f);
 
             subject.SetProperty(input);
 
-            Assert.AreEqual(expected.ToString(), target.transform.lossyScale.ToString());
+            Assert.That(target.transform.lossyScale, Is.EqualTo(expected).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -109,22 +112,23 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyLocal()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             subject.IncrementProperty(input);
 
-            Assert.AreEqual((Vector3.one * 3f).ToString(), target.transform.localScale.ToString());
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one * 3f).Using(comparer));
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual((Vector3.one * 5f).ToString(), target.transform.localScale.ToString());
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one * 5f).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -132,22 +136,23 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyGlobal()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = Vector3State.True;
 
-            Assert.AreEqual(Vector3.one, target.transform.lossyScale);
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             subject.IncrementProperty(input);
 
-            Assert.AreEqual((Vector3.one * 3f).ToString(), target.transform.lossyScale.ToString());
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one * 3f).Using(comparer));
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual((Vector3.one * 5f).ToString(), target.transform.lossyScale.ToString());
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one * 5f).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -155,13 +160,14 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyLocalLockYAxis()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = new Vector3State(true, false, true);
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             Vector3 expectedA = new Vector3(3f, 1f, 3f);
@@ -169,11 +175,11 @@ namespace Test.Zinnia.Data.Operation.Mutation
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual(expectedA.ToString(), target.transform.localScale.ToString());
+            Assert.That(target.transform.localScale, Is.EqualTo(expectedA).Using(comparer));
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual(expectedB.ToString(), target.transform.localScale.ToString());
+            Assert.That(target.transform.localScale, Is.EqualTo(expectedB).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -181,13 +187,14 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyGlobalLockXZAxis()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = new Vector3State(false, true, false);
 
-            Assert.AreEqual(Vector3.one, target.transform.lossyScale);
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             Vector3 expectedA = new Vector3(1f, 3f, 1f);
@@ -195,11 +202,11 @@ namespace Test.Zinnia.Data.Operation.Mutation
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual(expectedA.ToString(), target.transform.lossyScale.ToString());
+            Assert.That(target.transform.lossyScale, Is.EqualTo(expectedA).Using(comparer));
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual(expectedB.ToString(), target.transform.lossyScale.ToString());
+            Assert.That(target.transform.lossyScale, Is.EqualTo(expectedB).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -207,19 +214,20 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyInactiveGameObject()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
             subject.gameObject.SetActive(false);
 
-            Assert.AreEqual(Vector3.one, target.transform.lossyScale);
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             subject.SetProperty(input);
 
-            Assert.AreEqual(Vector3.one, target.transform.lossyScale);
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -227,19 +235,20 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyInactiveComponent()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformScaleMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
             subject.enabled = false;
 
-            Assert.AreEqual(Vector3.one, target.transform.lossyScale);
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Vector3 input = new Vector3(2f, 2f, 2f);
             subject.SetProperty(input);
 
-            Assert.AreEqual(Vector3.one, target.transform.lossyScale);
+            Assert.That(target.transform.lossyScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(target);
         }

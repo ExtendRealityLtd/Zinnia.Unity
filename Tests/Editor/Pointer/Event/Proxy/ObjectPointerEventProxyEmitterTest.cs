@@ -8,7 +8,6 @@ namespace Test.Zinnia.Pointer.Event.Proxy
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ObjectPointerEventProxyEmitterTest
     {
@@ -18,14 +17,13 @@ namespace Test.Zinnia.Pointer.Event.Proxy
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ObjectPointerEventProxyEmitterTest");
             subject = containingObject.AddComponent<ObjectPointerEventProxyEmitter>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -80,8 +78,8 @@ namespace Test.Zinnia.Pointer.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            GameObject digestValid = new GameObject();
-            GameObject digestInvalid = new GameObject();
+            GameObject digestValid = new GameObject("ObjectPointerEventProxyEmitterTest");
+            GameObject digestInvalid = new GameObject("ObjectPointerEventProxyEmitterTest");
             ObjectPointer.EventData validData = new ObjectPointer.EventData(digestValid.transform);
             ObjectPointer.EventData invalidData = new ObjectPointer.EventData(digestInvalid.transform);
 

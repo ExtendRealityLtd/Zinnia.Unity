@@ -6,7 +6,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class Vector3AdderTest
     {
@@ -16,7 +16,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("Vector3AdderTest");
             subject = containingObject.AddComponent<Vector3Adder>();
         }
 
@@ -29,6 +29,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void Transform()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -39,7 +40,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.Collection.Add(Vector3.zero);
             subject.Collection.Add(Vector3.zero);
 
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
@@ -48,8 +49,9 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.Collection.CurrentIndex = 2;
             Vector3 result = subject.Transform(Vector3.one);
 
-            Assert.AreEqual(Vector3.one * 6f, result);
-            Assert.AreEqual(Vector3.one * 6f, subject.Result);
+            Assert.That(result, Is.EqualTo(Vector3.one * 6f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(Vector3.one * 6f).Using(comparer));
+
             Assert.IsTrue(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
         }
@@ -57,6 +59,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void TransformWithIndex()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -67,7 +70,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.Collection.Add(Vector3.zero);
             subject.Collection.Add(Vector3.zero);
 
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
@@ -75,8 +78,8 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.Collection.SetAt(Vector3.one * 2f, 1);
             Vector3 result = subject.Transform(Vector3.one, 2);
 
-            Assert.AreEqual(Vector3.one * 6f, result);
-            Assert.AreEqual(Vector3.one * 6f, subject.Result);
+            Assert.That(result, Is.EqualTo(Vector3.one * 6f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(Vector3.one * 6f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
         }
@@ -84,6 +87,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void TransformEmptyCollection()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -91,14 +95,14 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             Vector3ObservableList collection = containingObject.AddComponent<Vector3ObservableList>();
             subject.Collection = collection;
 
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
             Vector3 result = subject.Transform();
 
-            Assert.AreEqual(Vector3.zero, result);
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(result, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsTrue(failedListenerMock.Received);
         }
@@ -106,6 +110,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void TransformExceedingIndex()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -115,7 +120,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.Collection.Add(Vector3.zero);
             subject.Collection.Add(Vector3.zero);
 
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
@@ -126,8 +131,8 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
             subject.Collection.SetAt(Vector3.one * 2f, 1);
             Vector3 result = subject.Transform(Vector3.one, 2);
 
-            Assert.AreEqual(Vector3.one * 4f, result);
-            Assert.AreEqual(Vector3.one * 4f, subject.Result);
+            Assert.That(result, Is.EqualTo(Vector3.one * 4f).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(Vector3.one * 4f).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
         }
@@ -135,6 +140,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void TransformInactiveGameObject()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -146,15 +152,15 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
 
             subject.gameObject.SetActive(false);
 
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
             subject.Collection.SetAt(Vector3.one * 3f, 0);
             Vector3 result = subject.Transform(Vector3.one, 1);
 
-            Assert.AreEqual(Vector3.zero, result);
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(result, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
         }
@@ -162,6 +168,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
         [Test]
         public void TransformInactiveComponent()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock failedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
@@ -173,15 +180,15 @@ namespace Test.Zinnia.Data.Type.Transformation.Aggregation
 
             subject.enabled = false;
 
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
 
             subject.Collection.SetAt(Vector3.one * 3f, 0);
             Vector3 result = subject.Transform(Vector3.one, 1);
 
-            Assert.AreEqual(Vector3.zero, result);
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(result, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
             Assert.IsFalse(failedListenerMock.Received);
         }

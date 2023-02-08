@@ -5,7 +5,7 @@ namespace Test.Zinnia.Tracking.Modification
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class DirectionModifierTest
     {
@@ -15,23 +15,23 @@ namespace Test.Zinnia.Tracking.Modification
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("DirectionModifierTest");
             subject = containingObject.AddComponent<DirectionModifier>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void Process()
         {
-            GameObject target = new GameObject();
-            GameObject lookAt = new GameObject();
-            GameObject pivot = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject target = new GameObject("DirectionModifierTest");
+            GameObject lookAt = new GameObject("DirectionModifierTest");
+            GameObject pivot = new GameObject("DirectionModifierTest");
 
             subject.Target = target;
             subject.LookAt = lookAt;
@@ -40,11 +40,11 @@ namespace Test.Zinnia.Tracking.Modification
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             subject.Process();
 
-            Assert.AreEqual(new Quaternion(-0.6f, 0.0f, 0.0f, 0.8f).ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.rotation, Is.EqualTo(new Quaternion(-0.6f, 0.0f, 0.0f, 0.8f)).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(lookAt);
@@ -54,19 +54,20 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ProcessNoLookAt()
         {
-            GameObject target = new GameObject();
-            GameObject pivot = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject target = new GameObject("DirectionModifierTest");
+            GameObject pivot = new GameObject("DirectionModifierTest");
 
             subject.Target = target;
             subject.Pivot = pivot;
 
             pivot.transform.position = Vector3.back * 0.5f;
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             subject.Process();
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(pivot);
@@ -75,19 +76,20 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ProcessNoPivot()
         {
-            GameObject target = new GameObject();
-            GameObject lookAt = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject target = new GameObject("DirectionModifierTest");
+            GameObject lookAt = new GameObject("DirectionModifierTest");
 
             subject.Target = target;
             subject.LookAt = lookAt;
 
             lookAt.transform.position = Vector3.up * 2f;
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             subject.Process();
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(lookAt);
@@ -96,9 +98,10 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ProcessInactiveGameObject()
         {
-            GameObject target = new GameObject();
-            GameObject lookAt = new GameObject();
-            GameObject pivot = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject target = new GameObject("DirectionModifierTest");
+            GameObject lookAt = new GameObject("DirectionModifierTest");
+            GameObject pivot = new GameObject("DirectionModifierTest");
 
             subject.Target = target;
             subject.LookAt = lookAt;
@@ -108,11 +111,11 @@ namespace Test.Zinnia.Tracking.Modification
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             subject.Process();
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(lookAt);
@@ -122,9 +125,10 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ProcessInactiveComponent()
         {
-            GameObject target = new GameObject();
-            GameObject lookAt = new GameObject();
-            GameObject pivot = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject target = new GameObject("DirectionModifierTest");
+            GameObject lookAt = new GameObject("DirectionModifierTest");
+            GameObject pivot = new GameObject("DirectionModifierTest");
 
             subject.Target = target;
             subject.LookAt = lookAt;
@@ -134,11 +138,11 @@ namespace Test.Zinnia.Tracking.Modification
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             subject.Process();
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(lookAt);
@@ -148,12 +152,13 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ResetOrientation()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             UnityEventListenerMock orientationResetMock = new UnityEventListenerMock();
             subject.OrientationReset.AddListener(orientationResetMock.Listen);
 
-            GameObject target = new GameObject();
-            GameObject lookAt = new GameObject();
-            GameObject pivot = new GameObject();
+            GameObject target = new GameObject("DirectionModifierTest");
+            GameObject lookAt = new GameObject("DirectionModifierTest");
+            GameObject pivot = new GameObject("DirectionModifierTest");
 
             subject.Target = target;
             subject.LookAt = lookAt;
@@ -163,15 +168,15 @@ namespace Test.Zinnia.Tracking.Modification
             lookAt.transform.position = Vector3.up * 2f;
             pivot.transform.position = Vector3.back * 0.5f;
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             subject.Process();
 
-            Assert.AreEqual(new Quaternion(-0.6f, 0.0f, 0f, 0.8f).ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.rotation, Is.EqualTo(new Quaternion(-0.6f, 0.0f, 0f, 0.8f)).Using(comparer));
 
             subject.ResetOrientation();
 
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(comparer));
             Assert.IsTrue(orientationResetMock.Received);
 
             Object.DestroyImmediate(target);
@@ -351,30 +356,32 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ClearPivotNullPivot()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
             subjectMock.PivotReleaseRotation = Quaternion.Euler(1f, 1f, 1f);
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
 
             subjectMock.ClearPivot();
 
-            Assert.AreEqual(Quaternion.identity, subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.identity).Using(comparer));
         }
 
         [Test]
         public void ClearPivotWithPivot()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
             subjectMock.PivotReleaseRotation = Quaternion.Euler(1f, 1f, 1f);
             GameObject pivotPoint = new GameObject("pivotPoint");
             pivotPoint.transform.eulerAngles = Vector3.one * 2f;
             subjectMock.Pivot = pivotPoint;
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
 
             subjectMock.ClearPivot();
 
-            Assert.AreEqual(Quaternion.Euler(2f, 2f, 2f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(2f, 2f, 2f)).Using(comparer));
 
             Object.DestroyImmediate(pivotPoint);
         }
@@ -382,6 +389,7 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void SaveOrientationWithTargetWithPivotDoCancelReset()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
 
             UnityEventListenerMock orientationResetCancelledMock = new UnityEventListenerMock();
@@ -399,14 +407,15 @@ namespace Test.Zinnia.Tracking.Modification
             subjectMock.Target = target;
             subjectMock.Pivot = pivot;
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+
             Assert.IsFalse(orientationResetCancelledMock.Received);
 
             subjectMock.SaveOrientation();
 
-            Assert.AreEqual(Quaternion.Euler(2f, 2f, 2f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(2f, 2f, 2f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(2f, 2f, 2f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(2f, 2f, 2f)).Using(comparer));
             Assert.IsTrue(orientationResetCancelledMock.Received);
 
             Object.DestroyImmediate(target);
@@ -416,6 +425,7 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void SaveOrientationWithTargetWithNoPivotDoCancelReset()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
 
             UnityEventListenerMock orientationResetCancelledMock = new UnityEventListenerMock();
@@ -430,14 +440,14 @@ namespace Test.Zinnia.Tracking.Modification
 
             subjectMock.Target = target;
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
             Assert.IsFalse(orientationResetCancelledMock.Received);
 
             subjectMock.SaveOrientation();
 
-            Assert.AreEqual(Quaternion.Euler(2f, 2f, 2f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.identity, subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(2f, 2f, 2f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.identity).Using(comparer));
             Assert.IsTrue(orientationResetCancelledMock.Received);
 
             Object.DestroyImmediate(target);
@@ -446,6 +456,7 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void SaveOrientationWithNoTargetWithPivotDoCancelReset()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
 
             UnityEventListenerMock orientationResetCancelledMock = new UnityEventListenerMock();
@@ -460,14 +471,14 @@ namespace Test.Zinnia.Tracking.Modification
 
             subjectMock.Pivot = pivot;
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
             Assert.IsFalse(orientationResetCancelledMock.Received);
 
             subjectMock.SaveOrientation();
 
-            Assert.AreEqual(Quaternion.identity, subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(2f, 2f, 2f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.identity).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(2f, 2f, 2f)).Using(comparer));
             Assert.IsTrue(orientationResetCancelledMock.Received);
 
             Object.DestroyImmediate(pivot);
@@ -476,6 +487,7 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void SaveOrientationWithNoTargetWithNoPivotDoCancelReset()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
 
             UnityEventListenerMock orientationResetCancelledMock = new UnityEventListenerMock();
@@ -484,20 +496,21 @@ namespace Test.Zinnia.Tracking.Modification
             subjectMock.TargetInitialRotation = Quaternion.Euler(1f, 1f, 1f);
             subjectMock.PivotInitialRotation = Quaternion.Euler(1f, 1f, 1f);
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
             Assert.IsFalse(orientationResetCancelledMock.Received);
 
             subjectMock.SaveOrientation();
 
-            Assert.AreEqual(Quaternion.identity, subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.identity, subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.identity).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.identity).Using(comparer));
             Assert.IsTrue(orientationResetCancelledMock.Received);
         }
 
         [Test]
         public void SaveOrientationWithNoTargetWithNoPivotDontCancelReset()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
 
             UnityEventListenerMock orientationResetCancelledMock = new UnityEventListenerMock();
@@ -506,20 +519,21 @@ namespace Test.Zinnia.Tracking.Modification
             subjectMock.TargetInitialRotation = Quaternion.Euler(1f, 1f, 1f);
             subjectMock.PivotInitialRotation = Quaternion.Euler(1f, 1f, 1f);
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
             Assert.IsFalse(orientationResetCancelledMock.Received);
 
             subjectMock.SaveOrientation(false);
 
-            Assert.AreEqual(Quaternion.identity, subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.identity, subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.identity).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.identity).Using(comparer));
             Assert.IsFalse(orientationResetCancelledMock.Received);
         }
 
         [Test]
         public void SaveOrientationInactiveGameObject()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
 
             UnityEventListenerMock orientationResetCancelledMock = new UnityEventListenerMock();
@@ -528,22 +542,23 @@ namespace Test.Zinnia.Tracking.Modification
             subjectMock.TargetInitialRotation = Quaternion.Euler(1f, 1f, 1f);
             subjectMock.PivotInitialRotation = Quaternion.Euler(1f, 1f, 1f);
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
             Assert.IsFalse(orientationResetCancelledMock.Received);
 
             subjectMock.ignoreOnDisable = true;
             subjectMock.gameObject.SetActive(false);
             subjectMock.SaveOrientation();
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
             Assert.IsFalse(orientationResetCancelledMock.Received);
         }
 
         [Test]
         public void SaveOrientationInactiveComponent()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
 
             UnityEventListenerMock orientationResetCancelledMock = new UnityEventListenerMock();
@@ -552,33 +567,34 @@ namespace Test.Zinnia.Tracking.Modification
             subjectMock.TargetInitialRotation = Quaternion.Euler(1f, 1f, 1f);
             subjectMock.PivotInitialRotation = Quaternion.Euler(1f, 1f, 1f);
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
             Assert.IsFalse(orientationResetCancelledMock.Received);
 
             subjectMock.ignoreOnDisable = true;
             subjectMock.enabled = false;
             subjectMock.SaveOrientation();
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.TargetInitialRotation);
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotInitialRotation);
+            Assert.That(subjectMock.TargetInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
+            Assert.That(subjectMock.PivotInitialRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
             Assert.IsFalse(orientationResetCancelledMock.Received);
         }
 
         [Test]
         public void ResetOrientationWithPivot()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
             subjectMock.PivotReleaseRotation = Quaternion.Euler(1f, 1f, 1f);
             GameObject pivotPoint = new GameObject("pivotPoint");
             pivotPoint.transform.eulerAngles = Vector3.one * 2f;
             subjectMock.Pivot = pivotPoint;
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
 
             subjectMock.ResetOrientation();
 
-            Assert.AreEqual(Quaternion.Euler(2f, 2f, 2f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(2f, 2f, 2f)).Using(comparer));
 
             Object.DestroyImmediate(pivotPoint);
         }
@@ -586,31 +602,33 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ResetOrientationNullPivot()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
             subjectMock.PivotReleaseRotation = Quaternion.Euler(1f, 1f, 1f);
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
 
             subjectMock.ResetOrientation();
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
         }
 
         [Test]
         public void ResetOrientationInactiveGameObject()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
             subjectMock.PivotReleaseRotation = Quaternion.Euler(1f, 1f, 1f);
             GameObject pivotPoint = new GameObject("pivotPoint");
             pivotPoint.transform.eulerAngles = Vector3.one * 2f;
             subjectMock.Pivot = pivotPoint;
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
 
             subjectMock.gameObject.SetActive(false);
             subjectMock.ResetOrientation();
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
 
             Object.DestroyImmediate(pivotPoint);
         }
@@ -618,18 +636,19 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ResetOrientationInactiveComponent()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             DirectionModifierMock subjectMock = containingObject.AddComponent<DirectionModifierMock>();
             subjectMock.PivotReleaseRotation = Quaternion.Euler(1f, 1f, 1f);
             GameObject pivotPoint = new GameObject("pivotPoint");
             pivotPoint.transform.eulerAngles = Vector3.one * 2f;
             subjectMock.Pivot = pivotPoint;
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
 
             subjectMock.enabled = false;
             subjectMock.ResetOrientation();
 
-            Assert.AreEqual(Quaternion.Euler(1f, 1f, 1f), subjectMock.PivotReleaseRotation);
+            Assert.That(subjectMock.PivotReleaseRotation, Is.EqualTo(Quaternion.Euler(1f, 1f, 1f)).Using(comparer));
 
             Object.DestroyImmediate(pivotPoint);
         }

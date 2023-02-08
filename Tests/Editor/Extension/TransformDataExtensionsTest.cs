@@ -5,14 +5,13 @@ namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformDataExtensionsTest
     {
         [Test]
         public void TryGetGameObjectValid()
         {
-            TransformData valid = new TransformData(new GameObject());
+            TransformData valid = new TransformData(new GameObject("TransformDataExtensionsTest"));
             Assert.IsNotNull(valid.TryGetGameObject());
             Object.DestroyImmediate(valid.Transform.gameObject);
         }

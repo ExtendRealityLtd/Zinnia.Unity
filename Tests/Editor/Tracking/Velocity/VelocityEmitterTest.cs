@@ -5,7 +5,6 @@ namespace Test.Zinnia.Tracking.Velocity
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class VelocityEmitterTest
     {
@@ -15,14 +14,13 @@ namespace Test.Zinnia.Tracking.Velocity
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("VelocityEmitterTest");
             subject = containingObject.AddComponent<VelocityEmitter>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -118,6 +116,7 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.ClearSource();
 
             Assert.IsNull(subject.Source);
+            Object.DestroyImmediate(tracker.gameObject);
         }
 
         [Test]
@@ -133,6 +132,7 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.ClearSource();
 
             Assert.AreEqual(tracker, subject.Source);
+            Object.DestroyImmediate(tracker.gameObject);
         }
 
         [Test]
@@ -148,6 +148,7 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.ClearSource();
 
             Assert.AreEqual(tracker, subject.Source);
+            Object.DestroyImmediate(tracker.gameObject);
         }
     }
 }

@@ -10,7 +10,6 @@ namespace Test.Zinnia.Tracking.Collision.Active
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveCollisionConsumerTest
     {
@@ -20,14 +19,13 @@ namespace Test.Zinnia.Tracking.Collision.Active
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ActiveCollisionConsumerTest");
             subject = containingObject.AddComponent<ActiveCollisionConsumer>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -40,7 +38,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             subject.Consumed.AddListener(consumedMock.Listen);
             subject.Cleared.AddListener(clearedMock.Listen);
 
-            GameObject publisherObject = new GameObject();
+            GameObject publisherObject = new GameObject("ActiveCollisionConsumerTest");
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.SourceContainer = publisherObject;
 
@@ -68,7 +66,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             subject.Consumed.AddListener(consumedMock.Listen);
             subject.Cleared.AddListener(clearedMock.Listen);
 
-            GameObject publisherObject = new GameObject();
+            GameObject publisherObject = new GameObject("ActiveCollisionConsumerTest");
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.PublisherContainer = publisherObject;
 
@@ -114,7 +112,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             subject.Consumed.AddListener(consumedMock.Listen);
             subject.Cleared.AddListener(clearedMock.Listen);
 
-            GameObject publisherObject = new GameObject();
+            GameObject publisherObject = new GameObject("ActiveCollisionConsumerTest");
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.SourceContainer = publisherObject;
 
@@ -138,7 +136,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             subject.Consumed.AddListener(consumedMock.Listen);
             subject.Cleared.AddListener(clearedMock.Listen);
 
-            GameObject publisherObject = new GameObject();
+            GameObject publisherObject = new GameObject("ActiveCollisionConsumerTest");
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
             publisher.SourceContainer = publisherObject;
 

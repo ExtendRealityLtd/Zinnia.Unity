@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Collision.Active.Event.Proxy
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveCollisionsContainerEventProxyEmitterTest
     {
@@ -16,14 +15,13 @@ namespace Test.Zinnia.Tracking.Collision.Active.Event.Proxy
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ActiveCollisionsContainerEventProxyEmitterTest");
             subject = containingObject.AddComponent<ActiveCollisionsContainerEventProxyEmitter>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 

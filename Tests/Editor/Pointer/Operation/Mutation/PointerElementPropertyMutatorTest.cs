@@ -14,7 +14,7 @@ namespace Test.Zinnia.Pointer.Operation.Mutation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("PointerElementPropertyMutatorTest");
             subject = containingObject.AddComponent<PointerElementPropertyMutator>();
 
         }
@@ -159,7 +159,7 @@ namespace Test.Zinnia.Pointer.Operation.Mutation
         [Test]
         public void SetTarget()
         {
-            GameObject pointerContainer = new GameObject();
+            GameObject pointerContainer = new GameObject("PointerElementPropertyMutatorTest");
             PointerElement pointer = pointerContainer.AddComponent<PointerElement>();
 
             Assert.IsNull(subject.Target);
@@ -174,8 +174,8 @@ namespace Test.Zinnia.Pointer.Operation.Mutation
         [Test]
         public void SetTargetInChild()
         {
-            GameObject pointerParent = new GameObject();
-            GameObject pointerContainer = new GameObject();
+            GameObject pointerParent = new GameObject("PointerElementPropertyMutatorTest");
+            GameObject pointerContainer = new GameObject("PointerElementPropertyMutatorTest");
             PointerElement pointer = pointerContainer.AddComponent<PointerElement>();
             pointerContainer.transform.SetParent(pointerParent.transform);
 
@@ -192,8 +192,8 @@ namespace Test.Zinnia.Pointer.Operation.Mutation
         [Test]
         public void SetTargetInParent()
         {
-            GameObject pointerContainer = new GameObject();
-            GameObject pointerChild = new GameObject();
+            GameObject pointerContainer = new GameObject("PointerElementPropertyMutatorTest");
+            GameObject pointerChild = new GameObject("PointerElementPropertyMutatorTest");
             PointerElement pointer = pointerContainer.AddComponent<PointerElement>();
             pointerChild.transform.SetParent(pointerContainer.transform);
 
@@ -210,7 +210,7 @@ namespace Test.Zinnia.Pointer.Operation.Mutation
         [Test]
         public void SetTargetInactiveGameObject()
         {
-            GameObject pointerContainer = new GameObject();
+            GameObject pointerContainer = new GameObject("PointerElementPropertyMutatorTest");
             PointerElement pointer = pointerContainer.AddComponent<PointerElement>();
 
             Assert.IsNull(subject.Target);
@@ -226,7 +226,7 @@ namespace Test.Zinnia.Pointer.Operation.Mutation
         [Test]
         public void SetTargetInactiveComponent()
         {
-            GameObject pointerContainer = new GameObject();
+            GameObject pointerContainer = new GameObject("PointerElementPropertyMutatorTest");
             PointerElement pointer = pointerContainer.AddComponent<PointerElement>();
 
             Assert.IsNull(subject.Target);
@@ -242,7 +242,7 @@ namespace Test.Zinnia.Pointer.Operation.Mutation
         [Test]
         public void SetTargetNullParameter()
         {
-            GameObject pointerContainer = new GameObject();
+            GameObject pointerContainer = new GameObject("PointerElementPropertyMutatorTest");
             PointerElement pointer = pointerContainer.AddComponent<PointerElement>();
 
             Assert.IsNull(subject.Target);

@@ -6,14 +6,13 @@ namespace Test.Zinnia.Extension
     using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class BehaviourExtensionsTest
     {
         [UnityTest]
         public IEnumerator RunWhenActiveAndEnabled()
         {
-            GameObject container = new GameObject();
+            GameObject container = new GameObject("BehaviourExtensionsTest");
             container.SetActive(false);
             MockBehaviour mockBehaviour = container.AddComponent<MockBehaviour>();
             yield return null;
@@ -49,8 +48,8 @@ namespace Test.Zinnia.Extension
         [Test]
         public void IsValidState()
         {
-            GameObject parent = new GameObject();
-            GameObject container = new GameObject();
+            GameObject parent = new GameObject("BehaviourExtensionsTest");
+            GameObject container = new GameObject("BehaviourExtensionsTest");
             container.transform.SetParent(parent.transform);
             MockBehaviour mockBehaviour = container.AddComponent<MockBehaviour>();
 
@@ -82,7 +81,7 @@ namespace Test.Zinnia.Extension
         [Test]
         public void IsMemberChangeAllowed()
         {
-            GameObject container = new GameObject();
+            GameObject container = new GameObject("BehaviourExtensionsTest");
             MockBehaviour mockBehaviour = container.AddComponent<MockBehaviour>();
 
             Assert.IsTrue(mockBehaviour.IsMemberChangeAllowed());
@@ -98,7 +97,7 @@ namespace Test.Zinnia.Extension
             mockBehaviour.gameObject.SetActive(false);
 
             Assert.IsFalse(mockBehaviour.IsMemberChangeAllowed());
-
+            Object.DestroyImmediate(container);
         }
     }
 

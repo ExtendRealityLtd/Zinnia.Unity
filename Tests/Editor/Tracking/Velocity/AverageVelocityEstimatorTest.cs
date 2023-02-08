@@ -4,7 +4,7 @@ namespace Test.Zinnia.Tracking.Velocity
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class AverageVelocityEstimatorTest
     {
@@ -33,7 +33,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("AverageVelocityEstimatorTest");
             source = containingObject;
             subject = containingObject.AddComponent<AverageVelocityEstimatorMock>();
         }
@@ -41,7 +41,6 @@ namespace Test.Zinnia.Tracking.Velocity
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -74,6 +73,7 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void GetVelocityAutoStartEstimating()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(1.6f, 1.6f, 1.6f);
             Vector3 unexpectedResult = Vector3.zero;
 
@@ -85,13 +85,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessPositions(exampleSourcePositions);
 
             Vector3 actualResult = subject.GetVelocity();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetVelocityOver0Frames()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
@@ -105,13 +106,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessPositions(exampleSourcePositions);
 
             Vector3 actualResult = subject.GetVelocity();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetVelocityOver4Frames()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(2f, 2f, 2f);
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
@@ -125,13 +127,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessPositions(exampleSourcePositions);
 
             Vector3 actualResult = subject.GetVelocity();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetVelocityOver5Frames()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(1.6f, 1.6f, 1.6f);
             Vector3 unexpectedResult = Vector3.zero;
 
@@ -145,13 +148,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessPositions(exampleSourcePositions);
 
             Vector3 actualResult = subject.GetVelocity();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetVelocityWhenNotEstimating()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
@@ -165,13 +169,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessPositions(exampleSourcePositions);
 
             Vector3 actualResult = subject.GetVelocity();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetVelocityWithoutSource()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
@@ -181,13 +186,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessPositions(exampleSourcePositions);
 
             Vector3 actualResult = subject.GetVelocity();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetAngularVelocityAutoStartEstimating()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0.4172499f, -0.5427582f, -0.36673f);
             Vector3 unexpectedResult = Vector3.zero;
 
@@ -200,13 +206,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessRotations(exampleSourceRotations);
 
             Vector3 actualResult = subject.GetAngularVelocity();
-            Assert.AreEqual(expectedResult.ToString(), actualResult.ToString());
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetAngularVelocityOver0Frames()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
@@ -220,13 +227,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessRotations(exampleSourceRotations);
 
             Vector3 actualResult = subject.GetAngularVelocity();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetAngularVelocityOver4Frames()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(-0.2638358f, -0.6784477f, -0.4584125f);
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
@@ -240,13 +248,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessRotations(exampleSourceRotations);
 
             Vector3 actualResult = subject.GetAngularVelocity();
-            Assert.AreEqual(expectedResult.ToString(), actualResult.ToString());
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetAngularVelocityOver5Frames()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0.4172499f, -0.5427582f, -0.36673f);
             Vector3 unexpectedResult = Vector3.zero;
 
@@ -260,13 +269,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessRotations(exampleSourceRotations);
 
             Vector3 actualResult = subject.GetAngularVelocity();
-            Assert.AreEqual(expectedResult.ToString(), actualResult.ToString());
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetAngularVelocityWhenNotEstimating()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
@@ -280,13 +290,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessRotations(exampleSourceRotations);
 
             Vector3 actualResult = subject.GetAngularVelocity();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetAngularVelocityWithoutSource()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(0f, 0f, 0f);
             Vector3 unexpectedResult = new Vector3(1.6f, 1.6f, 1.6f);
 
@@ -296,13 +307,14 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessRotations(exampleSourceRotations);
 
             Vector3 actualResult = subject.GetAngularVelocity();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]
         public void GetAccelerationOver5Frames()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 expectedResult = new Vector3(3f, 3f, 3f);
             Vector3 unexpectedResult = Vector3.zero;
 
@@ -316,8 +328,8 @@ namespace Test.Zinnia.Tracking.Velocity
             ProcessPositions(exampleSourcePositions);
 
             Vector3 actualResult = subject.GetAcceleration();
-            Assert.AreEqual(expectedResult, actualResult);
-            Assert.AreNotEqual(unexpectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(actualResult, Is.Not.EqualTo(unexpectedResult).Using(comparer));
         }
 
         [Test]

@@ -16,14 +16,13 @@ namespace Test.Zinnia.Tracking.CameraRig
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject("ContainingObject");
+            containingObject = new GameObject("LinkedAliasAssociationCollectionTest");
             subject = containingObject.AddComponent<LinkedAliasAssociationCollection>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 

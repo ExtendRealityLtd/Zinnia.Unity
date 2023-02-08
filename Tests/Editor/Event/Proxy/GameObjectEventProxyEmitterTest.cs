@@ -7,7 +7,6 @@ namespace Test.Zinnia.Event.Proxy
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectEventProxyEmitterTest
     {
@@ -17,14 +16,13 @@ namespace Test.Zinnia.Event.Proxy
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectEventProxyEmitterTest");
             subject = containingObject.AddComponent<GameObjectEventProxyEmitter>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -33,7 +31,7 @@ namespace Test.Zinnia.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            GameObject digest = new GameObject();
+            GameObject digest = new GameObject("GameObjectEventProxyEmitterTest");
 
             Assert.IsFalse(emittedMock.Received);
             subject.Receive(digest);
@@ -48,8 +46,8 @@ namespace Test.Zinnia.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            GameObject digestValid = new GameObject();
-            GameObject digestInvalid = new GameObject();
+            GameObject digestValid = new GameObject("GameObjectEventProxyEmitterTest");
+            GameObject digestInvalid = new GameObject("GameObjectEventProxyEmitterTest");
 
             ListContainsRule rule = subject.gameObject.AddComponent<ListContainsRule>();
             UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
@@ -87,7 +85,7 @@ namespace Test.Zinnia.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            GameObject digest = new GameObject();
+            GameObject digest = new GameObject("GameObjectEventProxyEmitterTest");
 
             subject.gameObject.SetActive(false);
 
@@ -107,7 +105,7 @@ namespace Test.Zinnia.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            GameObject digest = new GameObject();
+            GameObject digest = new GameObject("GameObjectEventProxyEmitterTest");
 
             subject.enabled = false;
 

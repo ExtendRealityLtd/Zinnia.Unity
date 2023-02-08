@@ -8,7 +8,6 @@ namespace Test.Zinnia.Event.Proxy
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class TransformDataProxyEmitterTest
     {
@@ -18,14 +17,13 @@ namespace Test.Zinnia.Event.Proxy
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("TransformDataProxyEmitterTest");
             subject = containingObject.AddComponent<TransformDataProxyEmitter>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -80,8 +78,8 @@ namespace Test.Zinnia.Event.Proxy
         {
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
             subject.Emitted.AddListener(emittedMock.Listen);
-            GameObject digestValid = new GameObject();
-            GameObject digestInvalid = new GameObject();
+            GameObject digestValid = new GameObject("TransformDataProxyEmitterTest");
+            GameObject digestInvalid = new GameObject("TransformDataProxyEmitterTest");
             TransformData validData = new TransformData(digestValid.transform);
             TransformData invalidData = new TransformData(digestInvalid.transform);
 

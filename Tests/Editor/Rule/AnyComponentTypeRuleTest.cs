@@ -9,7 +9,6 @@ namespace Test.Zinnia.Rule
     using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyComponentTypeRuleTest
     {
@@ -20,7 +19,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("AnyComponentTypeRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<AnyComponentTypeRule>();
             container.Interface = subject;

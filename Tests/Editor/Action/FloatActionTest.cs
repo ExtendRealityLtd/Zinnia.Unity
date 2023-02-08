@@ -7,7 +7,6 @@ namespace Test.Zinnia.Action
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class FloatActionTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Action
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("FloatActionTest");
             subject = containingObject.AddComponent<FloatActionMock>();
         }
 

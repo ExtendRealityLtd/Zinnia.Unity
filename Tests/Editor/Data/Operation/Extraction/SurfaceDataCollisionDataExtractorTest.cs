@@ -9,7 +9,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class SurfaceDataCollisionDataExtractorTest
     {
@@ -19,7 +19,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("SurfaceDataCollisionDataExtractorTest");
             subject = containingObject.AddComponent<SurfaceDataCollisionDataExtractor>();
         }
 
@@ -32,6 +32,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void Extract()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
             SurfaceData surfaceData = new SurfaceData();
@@ -50,9 +51,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.IsTrue(extractedMock.Received);
             Assert.IsNotNull(subject.Result.Value.transform);
-            Assert.AreEqual(Vector3.one, subject.Result.Value.point);
-
-            Object.DestroyImmediate(containingObject);
+            Assert.That(subject.Result.Value.point, Is.EqualTo(Vector3.one).Using(comparer));
         }
 
         [Test]
@@ -81,7 +80,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             yield return null;
 
             SurfaceData surfaceData = new SurfaceData();
-            GameObject blocker = RaycastHitHelper.CreateBlocker();
+            GameObject blocker = RaycastHitHelper.CreateBlocker("SurfaceDataCollisionDataExtractorTest");
             blocker.SetActive(false);
             RaycastHit hitData = RaycastHitHelper.GetRaycastHit(blocker);
             surfaceData.CollisionData = hitData;

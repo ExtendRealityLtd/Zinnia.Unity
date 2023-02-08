@@ -4,7 +4,7 @@ namespace Test.Zinnia.Tracking.Modification
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class PinchScalerTest
     {
@@ -14,7 +14,7 @@ namespace Test.Zinnia.Tracking.Modification
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("PinchScalerTest");
             subject = containingObject.AddComponent<PinchScaler>();
         }
 
@@ -27,22 +27,23 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void Process()
         {
-            GameObject target = new GameObject();
-            GameObject primaryPoint = new GameObject();
-            GameObject secondaryPoint = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("PinchScalerTest");
+            GameObject primaryPoint = new GameObject("PinchScalerTest");
+            GameObject secondaryPoint = new GameObject("PinchScalerTest");
 
             subject.Target = target;
             subject.PrimaryPoint = primaryPoint;
             subject.SecondaryPoint = secondaryPoint;
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.Process();
             primaryPoint.transform.position = Vector3.forward * 1f;
             secondaryPoint.transform.position = Vector3.forward * -1f;
             subject.Process();
 
-            Assert.AreEqual(Vector3.one * 3f, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one * 3f).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(primaryPoint);
@@ -52,23 +53,24 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ProcessWithMultiplier()
         {
-            GameObject target = new GameObject();
-            GameObject primaryPoint = new GameObject();
-            GameObject secondaryPoint = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("PinchScalerTest");
+            GameObject primaryPoint = new GameObject("PinchScalerTest");
+            GameObject secondaryPoint = new GameObject("PinchScalerTest");
 
             subject.Target = target;
             subject.PrimaryPoint = primaryPoint;
             subject.SecondaryPoint = secondaryPoint;
             subject.Multiplier = 2f;
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.Process();
             primaryPoint.transform.position = Vector3.forward * 1f;
             secondaryPoint.transform.position = Vector3.forward * -1f;
             subject.Process();
 
-            Assert.AreEqual(Vector3.one * 5f, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one * 5f).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(primaryPoint);
@@ -78,19 +80,20 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ProcessNoPrimaryPoint()
         {
-            GameObject target = new GameObject();
-            GameObject secondaryPoint = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("PinchScalerTest");
+            GameObject secondaryPoint = new GameObject("PinchScalerTest");
 
             subject.Target = target;
             subject.SecondaryPoint = secondaryPoint;
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.Process();
             secondaryPoint.transform.position = Vector3.forward * -1f;
             subject.Process();
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(secondaryPoint);
@@ -99,19 +102,20 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ProcessNoSecondaryPoint()
         {
-            GameObject target = new GameObject();
-            GameObject primaryPoint = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("PinchScalerTest");
+            GameObject primaryPoint = new GameObject("PinchScalerTest");
 
             subject.Target = target;
             subject.PrimaryPoint = primaryPoint;
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.Process();
             primaryPoint.transform.position = Vector3.forward * 1f;
             subject.Process();
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(primaryPoint);
@@ -120,23 +124,24 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ProcessInactiveGameObject()
         {
-            GameObject target = new GameObject();
-            GameObject primaryPoint = new GameObject();
-            GameObject secondaryPoint = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("PinchScalerTest");
+            GameObject primaryPoint = new GameObject("PinchScalerTest");
+            GameObject secondaryPoint = new GameObject("PinchScalerTest");
 
             subject.Target = target;
             subject.PrimaryPoint = primaryPoint;
             subject.SecondaryPoint = secondaryPoint;
             subject.gameObject.SetActive(false);
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.Process();
             primaryPoint.transform.position = Vector3.forward * 1f;
             secondaryPoint.transform.position = Vector3.forward * -1f;
             subject.Process();
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(primaryPoint);
@@ -146,23 +151,24 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void ProcessInactiveComponent()
         {
-            GameObject target = new GameObject();
-            GameObject primaryPoint = new GameObject();
-            GameObject secondaryPoint = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("PinchScalerTest");
+            GameObject primaryPoint = new GameObject("PinchScalerTest");
+            GameObject secondaryPoint = new GameObject("PinchScalerTest");
 
             subject.Target = target;
             subject.PrimaryPoint = primaryPoint;
             subject.SecondaryPoint = secondaryPoint;
             subject.enabled = false;
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.Process();
             primaryPoint.transform.position = Vector3.forward * 1f;
             secondaryPoint.transform.position = Vector3.forward * -1f;
             subject.Process();
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(primaryPoint);
@@ -172,15 +178,16 @@ namespace Test.Zinnia.Tracking.Modification
         [Test]
         public void SaveAndRestoreScale()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("PinchScalerTest");
             subject.Target = target;
 
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
             subject.SaveCurrentScale();
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
             target.transform.localScale = Vector3.one * 2f;
             subject.RestoreSavedScale();
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(target);
         }

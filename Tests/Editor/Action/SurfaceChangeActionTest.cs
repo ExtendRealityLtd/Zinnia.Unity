@@ -6,7 +6,6 @@ namespace Test.Zinnia.Action
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class SurfaceChangeActionTest
     {
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Action
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("SurfaceChangeActionTest");
             subject = containingObject.AddComponent<SurfaceChangeActionMock>();
         }
 

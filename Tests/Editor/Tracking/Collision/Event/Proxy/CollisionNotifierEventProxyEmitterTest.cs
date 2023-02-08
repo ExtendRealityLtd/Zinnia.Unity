@@ -8,7 +8,6 @@ namespace Test.Zinnia.Tracking.Collision.Event.Proxy
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class CollisionNotifierEventProxyEmitterTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Tracking.Collision.Event.Proxy
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("CollisionNotifierEventProxyEmitterTest");
             subject = containingObject.AddComponent<CollisionNotifierEventProxyEmitter>();
         }
 
@@ -31,8 +30,8 @@ namespace Test.Zinnia.Tracking.Collision.Event.Proxy
         [Test]
         public void Receive()
         {
-            GameObject forwardSource = new GameObject();
-            GameObject collisionSource = new GameObject();
+            GameObject forwardSource = new GameObject("CollisionNotifierEventProxyEmitterTest");
+            GameObject collisionSource = new GameObject("CollisionNotifierEventProxyEmitterTest");
             Collider collider = collisionSource.AddComponent<BoxCollider>();
 
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
@@ -56,9 +55,9 @@ namespace Test.Zinnia.Tracking.Collision.Event.Proxy
         [Test]
         public void ReceiveWithRuleRestrictionsOnForwardSource()
         {
-            GameObject forwardSourceValid = new GameObject();
-            GameObject forwardSourceInvalid = new GameObject();
-            GameObject collisionSource = new GameObject();
+            GameObject forwardSourceValid = new GameObject("CollisionNotifierEventProxyEmitterTest");
+            GameObject forwardSourceInvalid = new GameObject("CollisionNotifierEventProxyEmitterTest");
+            GameObject collisionSource = new GameObject("CollisionNotifierEventProxyEmitterTest");
             Collider collider = collisionSource.AddComponent<BoxCollider>();
 
             ListContainsRule rule = subject.gameObject.AddComponent<ListContainsRule>();
@@ -104,10 +103,10 @@ namespace Test.Zinnia.Tracking.Collision.Event.Proxy
         [Test]
         public void ReceiveWithRuleRestrictionsOnCollisionSource()
         {
-            GameObject forwardSource = new GameObject();
-            GameObject collisionSourceValid = new GameObject();
+            GameObject forwardSource = new GameObject("CollisionNotifierEventProxyEmitterTest");
+            GameObject collisionSourceValid = new GameObject("CollisionNotifierEventProxyEmitterTest");
             Collider colliderValid = collisionSourceValid.AddComponent<BoxCollider>();
-            GameObject collisionSourceInvalid = new GameObject();
+            GameObject collisionSourceInvalid = new GameObject("CollisionNotifierEventProxyEmitterTest");
             Collider colliderInvalid = collisionSourceInvalid.AddComponent<BoxCollider>();
 
             ListContainsRule rule = subject.gameObject.AddComponent<ListContainsRule>();
@@ -153,8 +152,8 @@ namespace Test.Zinnia.Tracking.Collision.Event.Proxy
         [Test]
         public void ReceiveInactiveGameObject()
         {
-            GameObject forwardSource = new GameObject();
-            GameObject collisionSource = new GameObject();
+            GameObject forwardSource = new GameObject("CollisionNotifierEventProxyEmitterTest");
+            GameObject collisionSource = new GameObject("CollisionNotifierEventProxyEmitterTest");
             Collider collider = collisionSource.AddComponent<BoxCollider>();
 
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();
@@ -180,8 +179,8 @@ namespace Test.Zinnia.Tracking.Collision.Event.Proxy
         [Test]
         public void ReceiveInactiveComponent()
         {
-            GameObject forwardSource = new GameObject();
-            GameObject collisionSource = new GameObject();
+            GameObject forwardSource = new GameObject("CollisionNotifierEventProxyEmitterTest");
+            GameObject collisionSource = new GameObject("CollisionNotifierEventProxyEmitterTest");
             Collider collider = collisionSource.AddComponent<BoxCollider>();
 
             UnityEventListenerMock emittedMock = new UnityEventListenerMock();

@@ -8,7 +8,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class RigidbodyAngularVelocityTest
     {
@@ -22,7 +22,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         {
             timeOverride = new TimeSettingOverride(0.02f, 0.3333333f, 1f, 0.03f);
 
-            containingObject = new GameObject();
+            containingObject = new GameObject("RigidbodyAngularVelocityTest");
             subject = containingObject.AddComponent<RigidbodyAngularVelocity>();
             subjectRigidbody = containingObject.AddComponent<Rigidbody>();
             subjectRigidbody.useGravity = false;
@@ -38,7 +38,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void Modify()
         {
-            GameObject source = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("RigidbodyAngularVelocityTest");
             GameObject target = subject.gameObject;
 
             source.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
@@ -47,13 +48,13 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             Vector3 expectedVelocity = Vector3.zero;
             Vector3 expectedAngularVelocity = Vector3.right * 10f;
 
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
 
             subject.Modify(source, target);
 
-            Assert.AreEqual(expectedVelocity.ToString(), subjectRigidbody.velocity.ToString());
-            Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(expectedVelocity).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(expectedAngularVelocity).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -63,7 +64,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         public IEnumerator ModifyAndDiverge()
         {
             subject.TrackDivergence = true;
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("RigidbodyAngularVelocityTest");
             GameObject target = subject.gameObject;
 
             UnityEventListenerMock convergedListenerMock = new UnityEventListenerMock();
@@ -109,9 +110,10 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyWithOffset()
         {
-            GameObject source = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("RigidbodyAngularVelocityTest");
             GameObject target = subject.gameObject;
-            GameObject offset = new GameObject();
+            GameObject offset = new GameObject("RigidbodyAngularVelocityTest");
 
             offset.transform.SetParent(target.transform);
 
@@ -122,13 +124,13 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             Vector3 expectedVelocity = Vector3.zero;
             Vector3 expectedAngularVelocity = Vector3.right * 10f;
 
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
 
             subject.Modify(source, target, offset);
 
-            Assert.AreEqual(expectedVelocity.ToString(), subjectRigidbody.velocity.ToString());
-            Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(expectedVelocity).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(expectedAngularVelocity).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -139,9 +141,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         public IEnumerator ModifyWithOffsetAndDiverge()
         {
             subject.TrackDivergence = true;
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("RigidbodyAngularVelocityTest");
             GameObject target = subject.gameObject;
-            GameObject offset = new GameObject();
+            GameObject offset = new GameObject("RigidbodyAngularVelocityTest");
 
             UnityEventListenerMock convergedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock divergedListenerMock = new UnityEventListenerMock();
@@ -189,9 +191,10 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyWithOffsetIgnored()
         {
-            GameObject source = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("RigidbodyAngularVelocityTest");
             GameObject target = subject.gameObject;
-            GameObject offset = new GameObject();
+            GameObject offset = new GameObject("RigidbodyAngularVelocityTest");
 
             source.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
             target.transform.rotation = Quaternion.identity;
@@ -200,14 +203,14 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             Vector3 expectedVelocity = Vector3.zero;
             Vector3 expectedAngularVelocity = Vector3.right * 10f;
 
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
 
             subject.ApplyOffset = false;
             subject.Modify(source, target, offset);
 
-            Assert.AreEqual(expectedVelocity.ToString(), subjectRigidbody.velocity.ToString());
-            Assert.AreEqual(expectedAngularVelocity, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(expectedVelocity).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(expectedAngularVelocity).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -217,20 +220,21 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyInactiveGameObject()
         {
-            GameObject source = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("RigidbodyAngularVelocityTest");
             GameObject target = subject.gameObject;
 
             source.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
             target.transform.rotation = Quaternion.identity;
 
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
 
             subject.gameObject.SetActive(false);
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -239,20 +243,21 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyInactiveComponent()
         {
-            GameObject source = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("RigidbodyAngularVelocityTest");
             GameObject target = subject.gameObject;
 
             source.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
             target.transform.rotation = Quaternion.identity;
 
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
 
             subject.enabled = false;
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.velocity);
-            Assert.AreEqual(Vector3.zero, subjectRigidbody.angularVelocity);
+            Assert.That(subjectRigidbody.velocity, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(subjectRigidbody.angularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);

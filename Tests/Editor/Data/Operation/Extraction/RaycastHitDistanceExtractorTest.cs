@@ -8,7 +8,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class RaycastHitDistanceExtractorTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("RaycastHitDistanceExtractorTest");
             subject = containingObject.AddComponent<RaycastHitDistanceExtractor>();
         }
 
@@ -44,8 +43,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.IsTrue(extractedMock.Received);
             Assert.AreEqual(1f, subject.Result);
-
-            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
@@ -71,7 +68,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             yield return null;
 
-            GameObject blocker = RaycastHitHelper.CreateBlocker();
+            GameObject blocker = RaycastHitHelper.CreateBlocker("RaycastHitDistanceExtractorTest");
             blocker.SetActive(false);
             RaycastHit hitData = RaycastHitHelper.GetRaycastHit(blocker);
 

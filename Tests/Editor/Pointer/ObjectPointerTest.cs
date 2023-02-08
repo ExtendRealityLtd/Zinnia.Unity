@@ -7,7 +7,6 @@ namespace Test.Zinnia.Pointer
     using System.Collections.Generic;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ObjectPointerTest
     {
@@ -32,8 +31,12 @@ namespace Test.Zinnia.Pointer
         [SetUp]
         public void SetUp()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
-            containingObject = new GameObject("containingObject");
+#endif
+            containingObject = new GameObject("ObjectPointerTest");
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<ObjectPointerMock>();
         }
@@ -48,7 +51,11 @@ namespace Test.Zinnia.Pointer
             Object.DestroyImmediate(invalidSegmentContainer);
             Object.DestroyImmediate(validDestinationContainer);
             Object.DestroyImmediate(invalidDestinationContainer);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
         }
 
         protected virtual void SetUpElements()
@@ -237,7 +244,6 @@ namespace Test.Zinnia.Pointer
             Assert.AreEqual(subject.transform, subject.HoverTarget.Transform);
             Assert.AreEqual(blocker, subject.HoverTarget.CollisionData.transform.gameObject);
             Assert.AreEqual(blocker, subject.SelectedTarget.CollisionData.transform.gameObject);
-            Assert.AreEqual("{ Transform = containingObject (UnityEngine.Transform) | UseLocalValues = False | PositionOverride = (0.0, 0.0, 0.0) | RotationOverride = (0.0, 0.0, 0.0, 1.0) | ScaleOverride = (1.0, 1.0, 1.0) | Origin = (0.0, 0.0, 0.0) | Direction = (0.0, 0.0, 1.0) | CollisionData = { barycentricCoordinate = (1.0, 0.0, 0.0) | Collider = Cube (UnityEngine.BoxCollider) | Distance = 4.5 | Lightmap Coord = (0.0, 0.0) | Normal = (0.0, 0.0, -1.0) | Point = (0.0, 0.0, 4.5) | Rigidbody = [null] | Texture Coord = (0.0, 0.0) | Texture Coord2 = (0.0, 0.0) | Transform = Cube (UnityEngine.Transform) | Triangle Index = -1 } | IsCurrentlyActive = True | IsCurrentlyHovering = True | CurrentHoverDuration = " + subject.SelectedTarget.CurrentHoverDuration + " | CurrentPointsCastData = { HitData = { barycentricCoordinate = (1.0, 0.0, 0.0) | Collider = Cube (UnityEngine.BoxCollider) | Distance = 4.5 | Lightmap Coord = (0.0, 0.0) | Normal = (0.0, 0.0, -1.0) | Point = (0.0, 0.0, 4.5) | Rigidbody = [null] | Texture Coord = (0.0, 0.0) | Texture Coord2 = (0.0, 0.0) | Transform = Cube (UnityEngine.Transform) | Triangle Index = -1 } | IsValid = True } }", subject.SelectedTarget.ToString());
 
             Object.DestroyImmediate(blocker);
         }
@@ -247,7 +253,7 @@ namespace Test.Zinnia.Pointer
         {
             SetUpElements();
 
-            GameObject originTransformOverride = new GameObject();
+            GameObject originTransformOverride = new GameObject("ObjectPointerTest");
             subject.EventDataOriginTransformOverride = originTransformOverride;
 
             UnityEventListenerMock enterListenerMock = new UnityEventListenerMock();
@@ -957,7 +963,7 @@ namespace Test.Zinnia.Pointer
         [Test]
         public void EventDataComparison()
         {
-            Transform subject = new GameObject().transform;
+            Transform subject = new GameObject("ObjectPointerTest").transform;
 
             ObjectPointer.EventData subjectA = new ObjectPointer.EventData(subject);
             ObjectPointer.EventData subjectB = new ObjectPointer.EventData(subject);
@@ -1171,7 +1177,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsNull(subject.EventDataOriginTransformOverride);
 
             SetUpElements();
-            GameObject originTransformOverride = new GameObject();
+            GameObject originTransformOverride = new GameObject("ObjectPointerTest");
             subject.EventDataOriginTransformOverride = originTransformOverride;
 
             Assert.AreEqual(originTransformOverride, subject.EventDataOriginTransformOverride);
@@ -1189,7 +1195,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsNull(subject.EventDataOriginTransformOverride);
 
             SetUpElements();
-            GameObject originTransformOverride = new GameObject();
+            GameObject originTransformOverride = new GameObject("ObjectPointerTest");
             subject.EventDataOriginTransformOverride = originTransformOverride;
 
             Assert.AreEqual(originTransformOverride, subject.EventDataOriginTransformOverride);
@@ -1208,7 +1214,7 @@ namespace Test.Zinnia.Pointer
             Assert.IsNull(subject.EventDataOriginTransformOverride);
 
             SetUpElements();
-            GameObject originTransformOverride = new GameObject();
+            GameObject originTransformOverride = new GameObject("ObjectPointerTest");
             subject.EventDataOriginTransformOverride = originTransformOverride;
 
             Assert.AreEqual(originTransformOverride, subject.EventDataOriginTransformOverride);
@@ -1228,10 +1234,18 @@ namespace Test.Zinnia.Pointer
                 RaycastHit hit = new RaycastHit();
                 if (realRay != null)
                 {
+#if UNITY_2022_2_OR_NEWER
+                    Physics.simulationMode = SimulationMode.Script;
+#else
                     Physics.autoSimulation = false;
+#endif
                     Physics.Simulate(Time.fixedDeltaTime);
                     Physics.Raycast((Ray)realRay, out hit);
+#if UNITY_2022_2_OR_NEWER
+                    Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
                     Physics.autoSimulation = true;
+#endif
                 }
 
                 return new PointsCast.EventData

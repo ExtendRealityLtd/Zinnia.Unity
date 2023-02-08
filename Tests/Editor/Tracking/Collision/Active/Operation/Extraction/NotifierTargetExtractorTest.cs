@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class NotifierTargetExtractorTest
     {
@@ -16,14 +15,13 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("NotifierTargetExtractorTest");
             subject = containingObject.AddComponent<NotifierTargetExtractor>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -33,7 +31,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            Collider collider = new GameObject().AddComponent<BoxCollider>();
+            Collider collider = new GameObject("NotifierTargetExtractorTest").AddComponent<BoxCollider>();
             CollisionNotifier.EventData eventData = new CollisionNotifier.EventData
             {
                 ColliderData = collider
@@ -56,7 +54,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            Collider collider = new GameObject().AddComponent<BoxCollider>();
+            Collider collider = new GameObject("NotifierTargetExtractorTest").AddComponent<BoxCollider>();
             CollisionNotifier.EventData eventData = new CollisionNotifier.EventData
             {
                 ColliderData = collider
@@ -80,7 +78,7 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            Collider collider = new GameObject().AddComponent<BoxCollider>();
+            Collider collider = new GameObject("NotifierTargetExtractorTest").AddComponent<BoxCollider>();
             CollisionNotifier.EventData eventData = new CollisionNotifier.EventData
             {
                 ColliderData = collider

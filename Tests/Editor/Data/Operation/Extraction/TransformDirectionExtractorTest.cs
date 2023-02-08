@@ -5,7 +5,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformDirectionExtractorTest
     {
@@ -15,20 +15,20 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("TransformDirectionExtractorTest");
             subject = containingObject.AddComponent<TransformDirectionExtractor>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void ExtractRight()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
@@ -39,9 +39,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
             Vector3? result = subject.Extract();
 
             Vector3 expectedResult = new Vector3(0.7f, 0f, -0.7f);
-            Assert.AreEqual(expectedResult.ToString(), result.ToString());
+            Assert.That(result, Is.EqualTo(expectedResult).Using(comparer));
 #pragma warning disable 0618
-            Assert.AreEqual(expectedResult.ToString(), subject.LastExtractedValue.ToString());
+            Assert.That(subject.LastExtractedValue, Is.EqualTo(expectedResult).Using(comparer));
 #pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
         }
@@ -49,6 +49,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractUp()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
@@ -59,9 +60,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
             Vector3? result = subject.Extract();
 
             Vector3 expectedResult = new Vector3(-0.7f, 0.7f, 0f);
-            Assert.AreEqual(expectedResult.ToString(), result.ToString());
+            Assert.That(result, Is.EqualTo(expectedResult).Using(comparer));
 #pragma warning disable 0618
-            Assert.AreEqual(expectedResult.ToString(), subject.LastExtractedValue.ToString());
+            Assert.That(subject.LastExtractedValue, Is.EqualTo(expectedResult).Using(comparer));
 #pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
         }
@@ -69,6 +70,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractForward()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
@@ -79,9 +81,9 @@ namespace Test.Zinnia.Data.Operation.Extraction
             Vector3? result = subject.Extract();
 
             Vector3 expectedResult = new Vector3(0.7f, 0f, 0.7f);
-            Assert.AreEqual(expectedResult.ToString(), result.ToString());
+            Assert.That(result, Is.EqualTo(expectedResult).Using(comparer));
 #pragma warning disable 0618
-            Assert.AreEqual(expectedResult.ToString(), subject.LastExtractedValue.ToString());
+            Assert.That(subject.LastExtractedValue, Is.EqualTo(expectedResult).Using(comparer));
 #pragma warning restore 0618
             Assert.IsTrue(extractedListenerMock.Received);
         }
@@ -89,6 +91,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractForwardGlobalAsChild()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject parent = new GameObject("parent");
             GameObject child = new GameObject("child");
 
@@ -105,7 +108,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             Vector3? result = subject.Extract();
 
             Vector3 expectedResult = Vector3.forward;
-            Assert.AreEqual(expectedResult.ToString(), result.ToString());
+            Assert.That(result, Is.EqualTo(expectedResult).Using(comparer));
             Assert.IsTrue(extractedListenerMock.Received);
 
             Object.DestroyImmediate(child);
@@ -115,6 +118,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractForwardLocalAsChild()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject parent = new GameObject("parent");
             GameObject child = new GameObject("child");
 
@@ -131,7 +135,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
             Vector3? result = subject.Extract();
 
             Vector3 expectedResult = Vector3.back;
-            Assert.AreEqual(expectedResult.ToString(), result.ToString());
+            Assert.That(result, Is.EqualTo(expectedResult).Using(comparer));
             Assert.IsTrue(extractedListenerMock.Received);
 
             Object.DestroyImmediate(child);
@@ -141,6 +145,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractInactiveGameObject()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
@@ -151,7 +156,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.AreEqual(null, result);
 #pragma warning disable 0618
-            Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+            Assert.That(subject.LastExtractedValue, Is.EqualTo(Vector3.zero).Using(comparer));
 #pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
 
@@ -164,7 +169,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.AreEqual(null, result);
 #pragma warning disable 0618
-            Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+            Assert.That(subject.LastExtractedValue, Is.EqualTo(Vector3.zero).Using(comparer));
 #pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
         }
@@ -172,6 +177,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractInactiveComponent()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock extractedListenerMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedListenerMock.Listen);
             subject.Source = containingObject;
@@ -182,7 +188,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.AreEqual(null, result);
 #pragma warning disable 0618
-            Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+            Assert.That(subject.LastExtractedValue, Is.EqualTo(Vector3.zero).Using(comparer));
 #pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
 
@@ -195,7 +201,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.AreEqual(null, result);
 #pragma warning disable 0618
-            Assert.AreEqual(Vector3.zero, subject.LastExtractedValue);
+            Assert.That(subject.LastExtractedValue, Is.EqualTo(Vector3.zero).Using(comparer));
 #pragma warning restore 0618
             Assert.IsFalse(extractedListenerMock.Received);
         }

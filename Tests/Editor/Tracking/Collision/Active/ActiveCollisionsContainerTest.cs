@@ -12,7 +12,6 @@ namespace Test.Zinnia.Tracking.Collision.Active
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveCollisionsContainerTest
     {
@@ -22,7 +21,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ActiveCollisionsContainerTest");
             subject = containingObject.AddComponent<ActiveCollisionsContainerMock>();
         }
 
@@ -47,8 +46,10 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
 
             Assert.AreEqual(0, subject.Elements.Count);
 
@@ -113,6 +114,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             oneContainer.AddComponent<RuleStub>();
             NegationRule negationRule = oneContainer.AddComponent<NegationRule>();
             AnyComponentTypeRule anyComponentTypeRule = oneContainer.AddComponent<AnyComponentTypeRule>();
@@ -165,8 +167,10 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
 
             Assert.IsFalse(firstStartedMock.Received);
             Assert.IsFalse(countChangedMock.Received);
@@ -225,6 +229,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
 
             Assert.IsFalse(firstStartedMock.Received);
             Assert.IsFalse(countChangedMock.Received);
@@ -291,8 +296,10 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
             GameObject twoContainer;
             CollisionNotifier.EventData twoData = CollisionNotifierHelper.GetEventData(out twoContainer);
+            twoContainer.name = "two";
 
             Assert.IsFalse(firstStartedMock.Received);
             Assert.IsFalse(countChangedMock.Received);
@@ -338,6 +345,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             subject.gameObject.SetActive(false);
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
 
             Assert.AreEqual(0, subject.Elements.Count);
 
@@ -374,6 +382,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             subject.enabled = false;
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
 
             Assert.AreEqual(0, subject.Elements.Count);
 
@@ -411,6 +420,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
 
             altSubject.Add(oneData);
             firstStartedMock.Reset();
@@ -456,6 +466,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
 
             GameObject oneContainer;
             CollisionNotifier.EventData oneData = CollisionNotifierHelper.GetEventData(out oneContainer);
+            oneContainer.name = "one";
 
             altSubject.Add(oneData);
             firstStartedMock.Reset();

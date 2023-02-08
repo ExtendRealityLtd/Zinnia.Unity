@@ -15,14 +15,13 @@ namespace Test.Zinnia.Tracking.CameraRig
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject("ContainingObject");
+            containingObject = new GameObject("DominantControllerObserverTest");
             subject = containingObject.AddComponent<DominantControllerObserver>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 

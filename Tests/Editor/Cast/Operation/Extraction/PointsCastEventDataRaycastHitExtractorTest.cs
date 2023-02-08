@@ -16,7 +16,7 @@ namespace Test.Zinnia.Cast.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("PointsCastEventDataRaycastHitExtractorTest");
             subject = containingObject.AddComponent<PointsCastEventDataRaycastHitExtractor>();
 
         }

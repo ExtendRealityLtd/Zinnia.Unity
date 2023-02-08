@@ -7,7 +7,6 @@ namespace Test.Zinnia.Tracking.Modification
     using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ComponentEnabledStateModifierTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Tracking.Modification
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ComponentEnabledStateModifierTest");
             subject = containingObject.AddComponent<ComponentEnabledStateModifier>();
         }
 

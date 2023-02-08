@@ -8,7 +8,6 @@ namespace Test.Zinnia.Tracking.Query
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ObscuranceQueryTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Tracking.Query
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ObscuranceQueryTest");
             subject = containingObject.AddComponent<ObscuranceQuery>();
         }
 
@@ -176,7 +175,7 @@ namespace Test.Zinnia.Tracking.Query
         public void TargetWithoutCollider_ThrowsMissingColliderException()
         {
             GameObject target = new GameObject();
-            NUnit.Framework.Assert.Throws<ObscuranceQuery.MissingColliderException>(() => subject.Target = target);
+            Assert.Throws<ObscuranceQuery.MissingColliderException>(() => subject.Target = target);
             Object.DestroyImmediate(target);
         }
 
@@ -187,7 +186,7 @@ namespace Test.Zinnia.Tracking.Query
             GameObject child = GameObject.CreatePrimitive(PrimitiveType.Cube);
             child.transform.SetParent(target.transform);
 
-            NUnit.Framework.Assert.Throws<ObscuranceQuery.MissingColliderException>(() => subject.Target = target);
+            Assert.Throws<ObscuranceQuery.MissingColliderException>(() => subject.Target = target);
             Object.DestroyImmediate(target);
         }
 
@@ -199,7 +198,7 @@ namespace Test.Zinnia.Tracking.Query
             GameObject child = new GameObject();
             child.transform.SetParent(target.transform);
 
-            NUnit.Framework.Assert.Throws<ObscuranceQuery.MissingColliderException>(() => subject.Target = target);
+            Assert.Throws<ObscuranceQuery.MissingColliderException>(() => subject.Target = target);
             Object.DestroyImmediate(target);
         }
 

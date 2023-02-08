@@ -8,7 +8,6 @@ namespace Test.Zinnia.Tracking.Collision
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class CollisionTrackerTest
     {
@@ -1017,7 +1016,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void ClearColliderValidity()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
 
             Assert.IsNull(subject.ColliderValidity);
@@ -1033,7 +1032,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void ClearColliderValidityInactiveGameObject()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
 
             Assert.IsNull(subject.ColliderValidity);
@@ -1050,7 +1049,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void ClearColliderValidityInactiveComponent()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
 
             Assert.IsNull(subject.ColliderValidity);
@@ -1067,7 +1066,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void ClearContainingTransformValidity()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
 
             Assert.IsNull(subject.ContainingTransformValidity);
@@ -1083,7 +1082,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void ClearContainingTransformValidityInactiveGameObject()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
 
             Assert.IsNull(subject.ContainingTransformValidity);
@@ -1100,7 +1099,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void ClearContainingTransformValidityInactiveComponent()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTracker subject = containingObject.AddComponent<CollisionTracker>();
 
             Assert.IsNull(subject.ContainingTransformValidity);
@@ -1117,7 +1116,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void CollisionTrackerDisabledObserver_ClearSource()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
             CollisionTracker tracker = containingObject.AddComponent<CollisionTracker>();
 
@@ -1133,7 +1132,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void CollisionTrackerDisabledObserver_ClearSourceInactiveGameObject()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
             CollisionTracker tracker = containingObject.AddComponent<CollisionTracker>();
 
@@ -1150,7 +1149,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void CollisionTrackerDisabledObserver_ClearSourceInactiveComponent()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
             CollisionTracker tracker = containingObject.AddComponent<CollisionTracker>();
 
@@ -1167,7 +1166,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void CollisionTrackerDisabledObserver_ClearTarget()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
             BoxCollider collider = containingObject.AddComponent<BoxCollider>();
 
@@ -1183,7 +1182,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void CollisionTrackerDisabledObserver_ClearTargetInactiveGameObject()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
             BoxCollider collider = containingObject.AddComponent<BoxCollider>();
 
@@ -1200,7 +1199,7 @@ namespace Test.Zinnia.Tracking.Collision
         [Test]
         public void CollisionTrackerDisabledObserver_ClearTargetInactiveComponent()
         {
-            GameObject containingObject = new GameObject();
+            GameObject containingObject = new GameObject("CollisionTrackerTest");
             CollisionTrackerDisabledObserver subject = containingObject.AddComponent<CollisionTrackerDisabledObserver>();
             BoxCollider collider = containingObject.AddComponent<BoxCollider>();
 

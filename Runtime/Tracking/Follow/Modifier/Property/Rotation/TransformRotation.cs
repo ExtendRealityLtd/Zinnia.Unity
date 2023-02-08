@@ -5,7 +5,7 @@
     /// <summary>
     /// Updates the transform rotation of the target to match the source.
     /// </summary>
-    public class TransformRotation : RestrictableTransformPropertyModifier
+    public class TransformRotation : SmoothedRestrictableTransformPropertyModifier
     {
         /// <summary>
         /// Modifies the target rotation to match the given source rotation.
@@ -16,14 +16,10 @@
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
             SaveOriginalPropertyValue(target.transform.eulerAngles);
-            if (offset == null)
-            {
-                target.transform.rotation = source.transform.rotation;
-            }
-            else
-            {
-                target.transform.rotation = source.transform.rotation * Quaternion.Inverse(offset.transform.localRotation);
-            }
+
+            Quaternion targetRotation = offset == null ? source.transform.rotation : source.transform.rotation * Quaternion.Inverse(offset.transform.localRotation);
+
+            target.transform.rotation = Smooth(target.transform.rotation, targetRotation);
 
             if (HasAxisRestrictions)
             {

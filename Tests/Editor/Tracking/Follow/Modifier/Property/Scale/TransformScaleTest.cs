@@ -1,11 +1,15 @@
 ﻿using Zinnia.Data.Type;
+using Zinnia.Extension;
 using Zinnia.Tracking.Follow.Modifier.Property.Scale;
 
 namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
 {
     using NUnit.Framework;
+    using System.Collections;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformScaleTest
     {
@@ -15,7 +19,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("TransformScaleTest");
             subject = containingObject.AddComponent<TransformScale>();
         }
 
@@ -28,16 +32,57 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
         [Test]
         public void Modify()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformScaleTest");
+            GameObject target = new GameObject("TransformScaleTest");
 
             target.transform.localScale = Vector3.zero;
             source.transform.localScale = Vector3.one;
 
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.one, source.transform.localScale);
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(source.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
+
+            Object.DestroyImmediate(source);
+            Object.DestroyImmediate(target);
+        }
+
+        [UnityTest]
+        public IEnumerator ModifySmoothed()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            UnityEventListenerMock transitionedMock = new UnityEventListenerMock();
+
+            subject.Transitioned.AddListener(transitionedMock.Listen);
+            subject.TransitionDuration = 0.1f;
+            subject.EqualityTolerance = 0.01f;
+
+            GameObject source = new GameObject("source");
+            GameObject target = new GameObject("target");
+
+            Vector3 sourceScale = Vector3.one;
+            Vector3 expectedScale = Vector3.zero;
+
+            source.transform.localScale = sourceScale;
+            target.transform.localScale = Vector3.zero;
+
+            Assert.That(source.transform.localScale, Is.EqualTo(sourceScale).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(expectedScale).Using(comparer));
+            Assert.IsFalse(transitionedMock.Received);
+
+            do
+            {
+                subject.Modify(source, target);
+                yield return null;
+            }
+            while (!target.transform.localScale.ApproxEquals(source.transform.localScale));
+
+            expectedScale = source.transform.localScale;
+
+            Assert.That(source.transform.localScale, Is.EqualTo(sourceScale).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(expectedScale).Using(comparer));
+            Assert.IsTrue(transitionedMock.Received);
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -46,9 +91,11 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
         [Test]
         public void ModifyWithOffset()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
+            GameObject source = new GameObject("TransformScaleTest");
+            GameObject target = new GameObject("TransformScaleTest");
+            GameObject offset = new GameObject("TransformScaleTest");
 
             offset.transform.SetParent(target.transform);
 
@@ -58,8 +105,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
 
             subject.Modify(source, target, offset);
 
-            Assert.AreEqual(Vector3.one * 4f, source.transform.localScale);
-            Assert.AreEqual(Vector3.one * 2f, target.transform.localScale);
+            Assert.That(source.transform.localScale, Is.EqualTo(Vector3.one * 4f).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one * 2f).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -69,9 +116,11 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
         [Test]
         public void ModifyWithOffsetIgnored()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
+            GameObject source = new GameObject("TransformScaleTest");
+            GameObject target = new GameObject("TransformScaleTest");
+            GameObject offset = new GameObject("TransformScaleTest");
 
             target.transform.localScale = Vector3.zero;
             source.transform.localScale = Vector3.one;
@@ -80,8 +129,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
             subject.ApplyOffset = false;
             subject.Modify(source, target, offset);
 
-            Assert.AreEqual(Vector3.one, source.transform.localScale);
-            Assert.AreEqual(Vector3.one, target.transform.localScale);
+            Assert.That(source.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -91,17 +140,18 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
         [Test]
         public void ModifyWithAxisRestriction()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.ApplyModificationOnAxis = new Vector3State(true, false, true);
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            GameObject source = new GameObject("TransformScaleTest");
+            GameObject target = new GameObject("TransformScaleTest");
 
             target.transform.localScale = Vector3.zero;
             source.transform.localScale = Vector3.one;
 
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.one, source.transform.localScale);
-            Assert.AreEqual(new Vector3(1f, 0f, 1f), target.transform.localScale);
+            Assert.That(source.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(new Vector3(1f, 0f, 1f)).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -110,8 +160,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
         [Test]
         public void ModifyInactiveGameObject()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformScaleTest");
+            GameObject target = new GameObject("TransformScaleTest");
 
             target.transform.localScale = Vector3.zero;
             source.transform.localScale = Vector3.one;
@@ -119,8 +170,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
             subject.gameObject.SetActive(false);
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.one, source.transform.localScale);
-            Assert.AreEqual(Vector3.zero, target.transform.localScale);
+            Assert.That(source.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -129,8 +180,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
         [Test]
         public void ModifyInactiveComponent()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformScaleTest");
+            GameObject target = new GameObject("TransformScaleTest");
 
             target.transform.localScale = Vector3.zero;
             source.transform.localScale = Vector3.one;
@@ -138,8 +190,8 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Scale
             subject.enabled = false;
             subject.Modify(source, target);
 
-            Assert.AreEqual(Vector3.one, source.transform.localScale);
-            Assert.AreEqual(Vector3.zero, target.transform.localScale);
+            Assert.That(source.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);

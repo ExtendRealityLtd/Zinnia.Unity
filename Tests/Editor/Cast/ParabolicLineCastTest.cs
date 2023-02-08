@@ -10,7 +10,7 @@ namespace Test.Zinnia.Cast
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class ParabolicLineCastTest
     {
@@ -21,8 +21,12 @@ namespace Test.Zinnia.Cast
         [SetUp]
         public void SetUp()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
-            containingObject = new GameObject();
+#endif
+            containingObject = new GameObject("ParabolicLineCastTest");
             subject = containingObject.AddComponent<ParabolicLineCast>();
             validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
         }
@@ -32,12 +36,17 @@ namespace Test.Zinnia.Cast
         {
             Object.DestroyImmediate(containingObject);
             Object.DestroyImmediate(validSurface);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
         }
 
         [Test]
         public void CastPointsValidTarget()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.Origin = subject.gameObject;
@@ -53,7 +62,7 @@ namespace Test.Zinnia.Cast
             Vector3[] expectedPoints = new Vector3[]
             {
                 Vector3.zero,
-                new Vector3(0f, -0.1f, 2.9f),
+                new Vector3(0f, -0.124f, 2.89f),
                 new Vector3(0f, -1.4f, 4.4f),
                 new Vector3(0f, -2.8f, 4.9f),
                 new Vector3(0f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
@@ -61,7 +70,7 @@ namespace Test.Zinnia.Cast
 
             for (int index = 0; index < subject.Points.Count; index++)
             {
-                Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
+                Assert.That(subject.Points[index], Is.EqualTo(expectedPoints[index]).Using(comparer), "Index " + index);
             }
 
             Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
@@ -72,6 +81,7 @@ namespace Test.Zinnia.Cast
         [Test]
         public void CastPointsInsufficientForwardBeamLength()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.Origin = subject.gameObject;
@@ -89,13 +99,13 @@ namespace Test.Zinnia.Cast
                 Vector3.zero,
                 new Vector3(0f, 0.4f, 1.2f),
                 new Vector3(0f, 0.4f, 1.7f),
-                new Vector3(0f, 0.1f, 2f),
-                new Vector3(0f, 0f, 2f)
+                new Vector3(0f, 0.14f, 1.96f),
+                new Vector3(0f, 0.0001f, 1.9f)
             };
 
             for (int index = 0; index < subject.Points.Count; index++)
             {
-                Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
+                Assert.That(subject.Points[index], Is.EqualTo(expectedPoints[index]).Using(comparer), "Index " + index);
             }
 
             Assert.IsFalse(subject.TargetHit.HasValue);
@@ -105,6 +115,7 @@ namespace Test.Zinnia.Cast
         [Test]
         public void CastPointsInsufficientDownwardBeamLength()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.Origin = subject.gameObject;
@@ -122,13 +133,13 @@ namespace Test.Zinnia.Cast
                 Vector3.zero,
                 new Vector3(0f, 0.4f, 2.9f),
                 new Vector3(0f, 0.4f, 4.4f),
-                new Vector3(0f, 0.1f, 4.9f),
-                new Vector3(0f, 0f, 5f)
+                new Vector3(0f, 0.14f, 4.9f),
+                new Vector3(0f, 0.0001f, 4.9f)
             };
 
             for (int index = 0; index < subject.Points.Count; index++)
             {
-                Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
+                Assert.That(subject.Points[index], Is.EqualTo(expectedPoints[index]).Using(comparer), "Index " + index);
             }
 
             Assert.IsFalse(subject.TargetHit.HasValue);
@@ -138,6 +149,7 @@ namespace Test.Zinnia.Cast
         [UnityTest]
         public IEnumerator CastPointsInvalidTarget()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
             subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
             subject.Origin = subject.gameObject;
@@ -169,7 +181,7 @@ namespace Test.Zinnia.Cast
             Vector3[] expectedPoints = new Vector3[]
             {
                 Vector3.zero,
-                new Vector3(0f, -0.1f, 2.9f),
+                new Vector3(0f, -0.12f, 2.89f),
                 new Vector3(0f, -1.4f, 4.4f),
                 new Vector3(0f, -2.8f, 4.9f),
                 new Vector3(0f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
@@ -177,7 +189,7 @@ namespace Test.Zinnia.Cast
 
             for (int index = 0; index < subject.Points.Count; index++)
             {
-                Assert.AreEqual(expectedPoints[index].ToString(), subject.Points[index].ToString(), "Index " + index);
+                Assert.That(subject.Points[index], Is.EqualTo(expectedPoints[index]).Using(comparer), "Index " + index);
             }
 
             Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);

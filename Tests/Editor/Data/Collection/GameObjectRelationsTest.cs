@@ -6,7 +6,6 @@ namespace Test.Zinnia.Data.Collection
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectRelationsTest
     {
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Data.Collection
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectRelationsTest");
             subject = containingObject.AddComponent<GameObjectRelations>();
         }
 
@@ -34,12 +33,12 @@ namespace Test.Zinnia.Data.Collection
             subject.ValueRetrieved.AddListener(valueRetrievedListenerMock.Listen);
             subject.KeyNotFound.AddListener(valueNotFoundListenerMock.Listen);
 
-            GameObject keyOne = new GameObject();
-            GameObject valueOne = new GameObject();
-            GameObject keyTwo = new GameObject();
-            GameObject valueTwo = new GameObject();
-            GameObject keyThree = new GameObject();
-            GameObject valueThree = new GameObject();
+            GameObject keyOne = new GameObject("GameObjectRelationsTest");
+            GameObject valueOne = new GameObject("GameObjectRelationsTest");
+            GameObject keyTwo = new GameObject("GameObjectRelationsTest");
+            GameObject valueTwo = new GameObject("GameObjectRelationsTest");
+            GameObject keyThree = new GameObject("GameObjectRelationsTest");
+            GameObject valueThree = new GameObject("GameObjectRelationsTest");
 
             GameObjectRelationObservableList relations = containingObject.AddComponent<GameObjectRelationObservableList>();
             subject.Relations = relations;
@@ -77,12 +76,12 @@ namespace Test.Zinnia.Data.Collection
             subject.ValueRetrieved.AddListener(valueRetrievedListenerMock.Listen);
             subject.KeyNotFound.AddListener(valueNotFoundListenerMock.Listen);
 
-            GameObject keyOne = new GameObject();
-            GameObject valueOne = new GameObject();
-            GameObject keyTwo = new GameObject();
-            GameObject valueTwo = new GameObject();
-            GameObject keyThree = new GameObject();
-            GameObject valueThree = new GameObject();
+            GameObject keyOne = new GameObject("GameObjectRelationsTest");
+            GameObject valueOne = new GameObject("GameObjectRelationsTest");
+            GameObject keyTwo = new GameObject("GameObjectRelationsTest");
+            GameObject valueTwo = new GameObject("GameObjectRelationsTest");
+            GameObject keyThree = new GameObject("GameObjectRelationsTest");
+            GameObject valueThree = new GameObject("GameObjectRelationsTest");
 
             GameObjectRelationObservableList relations = containingObject.AddComponent<GameObjectRelationObservableList>();
             subject.Relations = relations;
@@ -117,12 +116,12 @@ namespace Test.Zinnia.Data.Collection
             subject.ValueRetrieved.AddListener(valueRetrievedListenerMock.Listen);
             subject.KeyNotFound.AddListener(valueNotFoundListenerMock.Listen);
 
-            GameObject keyOne = new GameObject();
-            GameObject valueOne = new GameObject();
-            GameObject keyTwo = new GameObject();
-            GameObject valueTwo = new GameObject();
-            GameObject keyThree = new GameObject();
-            GameObject valueThree = new GameObject();
+            GameObject keyOne = new GameObject("GameObjectRelationsTest");
+            GameObject valueOne = new GameObject("GameObjectRelationsTest");
+            GameObject keyTwo = new GameObject("GameObjectRelationsTest");
+            GameObject valueTwo = new GameObject("GameObjectRelationsTest");
+            GameObject keyThree = new GameObject("GameObjectRelationsTest");
+            GameObject valueThree = new GameObject("GameObjectRelationsTest");
 
             GameObjectRelationObservableList relations = containingObject.AddComponent<GameObjectRelationObservableList>();
             subject.Relations = relations;
@@ -159,12 +158,12 @@ namespace Test.Zinnia.Data.Collection
             subject.ValueRetrieved.AddListener(valueRetrievedListenerMock.Listen);
             subject.KeyNotFound.AddListener(valueNotFoundListenerMock.Listen);
 
-            GameObject keyOne = new GameObject();
-            GameObject valueOne = new GameObject();
-            GameObject keyTwo = new GameObject();
-            GameObject valueTwo = new GameObject();
-            GameObject keyThree = new GameObject();
-            GameObject valueThree = new GameObject();
+            GameObject keyOne = new GameObject("GameObjectRelationsTest");
+            GameObject valueOne = new GameObject("GameObjectRelationsTest");
+            GameObject keyTwo = new GameObject("GameObjectRelationsTest");
+            GameObject valueTwo = new GameObject("GameObjectRelationsTest");
+            GameObject keyThree = new GameObject("GameObjectRelationsTest");
+            GameObject valueThree = new GameObject("GameObjectRelationsTest");
 
             GameObjectRelationObservableList relations = containingObject.AddComponent<GameObjectRelationObservableList>();
             subject.Relations = relations;
@@ -219,12 +218,12 @@ namespace Test.Zinnia.Data.Collection
             subject.ValueRetrieved.AddListener(valueRetrievedListenerMock.Listen);
             subject.KeyNotFound.AddListener(valueNotFoundListenerMock.Listen);
 
-            GameObject keyOne = new GameObject();
-            GameObject valueOne = new GameObject();
-            GameObject keyTwo = new GameObject();
-            GameObject valueTwo = new GameObject();
-            GameObject keyThree = new GameObject();
-            GameObject valueThree = new GameObject();
+            GameObject keyOne = new GameObject("GameObjectRelationsTest");
+            GameObject valueOne = new GameObject("GameObjectRelationsTest");
+            GameObject keyTwo = new GameObject("GameObjectRelationsTest");
+            GameObject valueTwo = new GameObject("GameObjectRelationsTest");
+            GameObject keyThree = new GameObject("GameObjectRelationsTest");
+            GameObject valueThree = new GameObject("GameObjectRelationsTest");
 
             GameObjectRelationObservableList relations = containingObject.AddComponent<GameObjectRelationObservableList>();
             subject.Relations = relations;

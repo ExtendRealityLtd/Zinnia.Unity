@@ -7,7 +7,6 @@ namespace Test.Zinnia.Association
     using NUnit.Framework;
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class RuleAssociationTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Association
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("RuleAssociationTest");
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<RuleAssociation>();
             ruleContainer = new RuleContainer();

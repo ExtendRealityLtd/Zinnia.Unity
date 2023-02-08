@@ -9,7 +9,6 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
     using Test.Zinnia.Utility.Helper;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class OrderReverserTest
     {
@@ -19,14 +18,13 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("OrderReverserTest");
             subject = containingObject.AddComponent<OrderReverser>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 

@@ -4,6 +4,7 @@ namespace Test.Zinnia.Tracking.Velocity
 {
     using NUnit.Framework;
     using UnityEngine;
+    using UnityEngine.TestTools.Utils;
 
     public class ArtificialVelocityApplierProcessTest
     {
@@ -13,14 +14,13 @@ namespace Test.Zinnia.Tracking.Velocity
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ArtificialVelocityApplierProcessTest");
             subject = containingObject.AddComponent<ArtificialVelocityApplierProcess>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -59,91 +59,105 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void SetVelocityX()
         {
-            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetVelocityX(1f);
-            Assert.AreEqual(Vector3.right, subject.Velocity);
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.right).Using(comparer));
         }
 
         [Test]
         public void SetVelocityY()
         {
-            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetVelocityY(1f);
-            Assert.AreEqual(Vector3.up, subject.Velocity);
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.up).Using(comparer));
         }
 
         [Test]
         public void SetVelocityZ()
         {
-            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetVelocityZ(1f);
-            Assert.AreEqual(Vector3.forward, subject.Velocity);
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.forward).Using(comparer));
         }
 
         [Test]
         public void IncrementVelocity()
         {
-            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.IncrementVelocity(Vector3.forward);
-            Assert.AreEqual(Vector3.forward, subject.Velocity);
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.forward).Using(comparer));
         }
 
         [Test]
         public void ClearVelocity()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.Velocity = Vector3.one;
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.one).Using(comparer));
             subject.ClearVelocity();
-            Assert.AreEqual(Vector3.zero, subject.Velocity);
+            Assert.That(subject.Velocity, Is.EqualTo(Vector3.zero).Using(comparer));
         }
 
         [Test]
         public void SetAngularVelocityX()
         {
-            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetAngularVelocityX(1f);
-            Assert.AreEqual(Vector3.right, subject.AngularVelocity);
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.right).Using(comparer));
         }
 
         [Test]
         public void SetAngularVelocityY()
         {
-            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetAngularVelocityY(1f);
-            Assert.AreEqual(Vector3.up, subject.AngularVelocity);
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.up).Using(comparer));
         }
 
         [Test]
         public void SetAngularVelocityZ()
         {
-            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetAngularVelocityZ(1f);
-            Assert.AreEqual(Vector3.forward, subject.AngularVelocity);
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.forward).Using(comparer));
         }
 
         [Test]
         public void IncrementAngularVelocity()
         {
-            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.IncrementAngularVelocity(Vector3.forward);
-            Assert.AreEqual(Vector3.forward, subject.AngularVelocity);
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.forward).Using(comparer));
         }
 
         [Test]
         public void ClearAngularVelocity()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.AngularVelocity = Vector3.one;
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.one).Using(comparer));
             subject.ClearAngularVelocity();
-            Assert.AreEqual(Vector3.zero, subject.AngularVelocity);
+            Assert.That(subject.AngularVelocity, Is.EqualTo(Vector3.zero).Using(comparer));
         }
 
         [Test]
         public void Process()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.000001f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.000001f);
             GameObject target = new GameObject("Target");
             subject.Target = target;
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Velocity = Vector3.forward;
             subject.AngularVelocity = Vector3.forward;
@@ -151,8 +165,8 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.Apply();
             subject.Process();
 
-            Assert.AreNotEqual(Vector3.zero, target.transform.position);
-            Assert.AreNotEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.position, Is.Not.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.Not.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             Object.DestroyImmediate(target);
         }
@@ -160,11 +174,13 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void ProcessInactiveGameObject()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             GameObject target = new GameObject("Target");
             subject.Target = target;
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Velocity = Vector3.forward;
             subject.AngularVelocity = Vector3.forward;
@@ -174,8 +190,8 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.Apply();
             subject.Process();
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             Object.DestroyImmediate(target);
         }
@@ -183,11 +199,13 @@ namespace Test.Zinnia.Tracking.Velocity
         [Test]
         public void ProcessInactiveComponent()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             GameObject target = new GameObject("Target");
             subject.Target = target;
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Velocity = Vector3.forward;
             subject.AngularVelocity = Vector3.forward;
@@ -197,8 +215,8 @@ namespace Test.Zinnia.Tracking.Velocity
             subject.Apply();
             subject.Process();
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity, target.transform.rotation);
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             Object.DestroyImmediate(target);
         }

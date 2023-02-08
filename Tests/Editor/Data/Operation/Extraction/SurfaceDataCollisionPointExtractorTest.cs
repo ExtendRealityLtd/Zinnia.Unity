@@ -6,7 +6,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class SurfaceDataCollisionPointExtractorTest
     {
@@ -19,7 +19,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("SurfaceDataCollisionPointExtractorTest");
 #pragma warning disable 0618
             subject = containingObject.AddComponent<SurfaceDataCollisionPointExtractor>();
 #pragma warning restore 0618
@@ -29,12 +29,12 @@ namespace Test.Zinnia.Data.Operation.Extraction
         public void TearDown()
         {
             Object.DestroyImmediate(containingObject);
-            Object.DestroyImmediate(blocker);
         }
 
         [Test]
         public void Extract()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
             SurfaceData surfaceData = new SurfaceData();
@@ -51,9 +51,8 @@ namespace Test.Zinnia.Data.Operation.Extraction
             subject.Extract();
 
             Assert.IsTrue(extractedMock.Received);
-            Assert.AreEqual(Vector3.one, subject.Result);
-
-            Object.DestroyImmediate(containingObject);
+            Assert.That(subject.Result, Is.EqualTo(Vector3.one).Using(comparer));
+            Object.DestroyImmediate(blocker);
         }
 
         [Test]
@@ -110,6 +109,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsFalse(subject.Result.HasValue);
+            Object.DestroyImmediate(blocker);
         }
 
         [Test]
@@ -133,6 +133,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
 
             Assert.IsFalse(extractedMock.Received);
             Assert.IsFalse(subject.Result.HasValue);
+            Object.DestroyImmediate(blocker);
         }
 
         /// <summary>
@@ -142,11 +143,20 @@ namespace Test.Zinnia.Data.Operation.Extraction
         protected virtual RaycastHit GetRayCastData()
         {
             blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            blocker.name = "SurfaceDataCollisionPointExtractorTest_Blocker";
             blocker.transform.position = Vector3.forward * 2f;
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
+#endif
             Physics.Simulate(Time.fixedDeltaTime);
             Physics.Raycast(Vector3.zero, Vector3.forward, out RaycastHit hitData);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
             return hitData;
         }
     }

@@ -5,7 +5,6 @@ namespace Test.Zinnia.Rule
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveInHierarchyRuleTest
     {
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ActiveInHierarchyRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<ActiveInHierarchyRule>();
             container.Interface = subject;

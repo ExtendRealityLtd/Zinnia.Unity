@@ -5,7 +5,7 @@
     /// <summary>
     /// Updates the transform position of the target to match the source.
     /// </summary>
-    public class TransformPosition : RestrictableTransformPropertyModifier
+    public class TransformPosition : SmoothedRestrictableTransformPropertyModifier
     {
         /// <summary>
         /// Modifies the target position to match the given source position.
@@ -16,14 +16,10 @@
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
             SaveOriginalPropertyValue(target.transform.position);
-            if (offset == null)
-            {
-                target.transform.position = source.transform.position;
-            }
-            else
-            {
-                target.transform.position = source.transform.position - (offset.transform.position - target.transform.position);
-            }
+
+            Vector3 targetPosition = offset == null ? source.transform.position : source.transform.position - (offset.transform.position - target.transform.position);
+
+            target.transform.position = Smooth(target.transform.position, targetPosition);
 
             if (HasAxisRestrictions)
             {

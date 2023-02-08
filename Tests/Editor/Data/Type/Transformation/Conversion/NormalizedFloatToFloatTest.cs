@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class NormalizedFloatToFloatTest
     {
@@ -15,7 +14,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("NormalizedFloatToFloatTest");
             subject = containingObject.AddComponent<NormalizedFloatToFloat>();
         }
 
@@ -33,7 +32,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             subject.Transformed.AddListener(transformedListenerMock.Listen);
             subject.SetRange(new Vector2(0f, 10f));
 
-            Assert.AreEqual(default, subject.Result);
+            Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
             float expected = 5f;
@@ -51,7 +50,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             subject.Transformed.AddListener(transformedListenerMock.Listen);
             subject.SetRange(new Vector2(1f, 10f));
 
-            Assert.AreEqual(default, subject.Result);
+            Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
             float expected = 1f;
@@ -69,7 +68,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             subject.Transformed.AddListener(transformedListenerMock.Listen);
             subject.SetRange(new Vector2(0f, 10f));
 
-            Assert.AreEqual(default, subject.Result);
+            Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
             float expected = 10f;
@@ -88,13 +87,13 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             subject.SetRange(new Vector2(0f, 10f));
             subject.gameObject.SetActive(false);
 
-            Assert.AreEqual(default, subject.Result);
+            Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
             float result = subject.Transform(0.5f);
 
-            Assert.AreEqual(default, result);
-            Assert.AreEqual(default, subject.Result);
+            Assert.AreEqual(0f, result);
+            Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
         }
 
@@ -106,13 +105,13 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             subject.SetRange(new Vector2(0f, 10f));
             subject.enabled = false;
 
-            Assert.AreEqual(default, subject.Result);
+            Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
             float result = subject.Transform(0.5f);
 
-            Assert.AreEqual(default, result);
-            Assert.AreEqual(default, subject.Result);
+            Assert.AreEqual(0f, result);
+            Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
         }
     }

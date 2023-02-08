@@ -4,7 +4,6 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class RigidbodyForceAtPositionTest
     {
@@ -14,14 +13,13 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("RigidbodyForceAtPositionTest");
             subject = containingObject.AddComponent<RigidbodyForceAtPosition>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 

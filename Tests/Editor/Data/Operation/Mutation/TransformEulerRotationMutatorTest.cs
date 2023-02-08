@@ -5,7 +5,7 @@ namespace Test.Zinnia.Data.Operation.Mutation
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformEulerRotationMutatorTest
     {
@@ -15,32 +15,32 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("TransformEulerRotationMutatorTest");
             subject = containingObject.AddComponent<TransformEulerRotationMutator>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void SetPropertyLocal()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
 
-            Assert.AreEqual(Vector3.zero, target.transform.localEulerAngles);
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.SetProperty(input);
 
-            Assert.AreEqual(input.ToString(), target.transform.localEulerAngles.ToString());
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(input).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -48,18 +48,19 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyGlobal()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = Vector3State.True;
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.SetProperty(input);
 
-            Assert.AreEqual(input.ToString(), target.transform.eulerAngles.ToString());
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(input).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -67,20 +68,21 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyLocalLockYAxis()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = new Vector3State(true, false, true);
 
-            Assert.AreEqual(Vector3.zero, target.transform.localEulerAngles);
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             Vector3 expected = new Vector3(10f, 0f, 30f);
 
             subject.SetProperty(input);
 
-            Assert.AreEqual(expected.ToString(), target.transform.localEulerAngles.ToString());
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(expected).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -88,20 +90,21 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyGlobalLockXZAxis()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = new Vector3State(false, true, false);
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             Vector3 expected = new Vector3(0f, 20f, 0f);
 
             subject.SetProperty(input);
 
-            Assert.AreEqual(expected.ToString(), target.transform.eulerAngles.ToString());
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(expected).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -109,8 +112,9 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyWithOrigin()
         {
-            GameObject target = new GameObject();
-            GameObject origin = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
+            GameObject origin = new GameObject("TransformEulerRotationMutatorTest");
             origin.transform.SetParent(target.transform);
 
             subject.Target = target;
@@ -119,7 +123,7 @@ namespace Test.Zinnia.Data.Operation.Mutation
 
             origin.transform.position = new Vector3(1f, 0f, 1f);
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 inputRotation = new Vector3(10f, 20f, 30f);
             Vector3 expectedRotation = new Vector3(0f, 20f, 0f);
@@ -127,8 +131,8 @@ namespace Test.Zinnia.Data.Operation.Mutation
 
             subject.SetProperty(inputRotation);
 
-            Assert.AreEqual(expectedRotation.ToString(), target.transform.eulerAngles.ToString());
-            Assert.AreEqual(expectedPosition.ToString(), target.transform.position.ToString());
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(expectedRotation).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(expectedPosition).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -136,8 +140,9 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyWithOriginIgnoreZ()
         {
-            GameObject target = new GameObject();
-            GameObject origin = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
+            GameObject origin = new GameObject("TransformEulerRotationMutatorTest");
             origin.transform.SetParent(target.transform);
 
             subject.Target = target;
@@ -147,16 +152,16 @@ namespace Test.Zinnia.Data.Operation.Mutation
 
             origin.transform.position = new Vector3(1f, 0f, 1f);
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 inputRotation = new Vector3(10f, 20f, 30f);
             Vector3 expectedRotation = new Vector3(0f, 20f, 0f);
-            Vector3 expectedPosition = new Vector3(0.1f, 0f, 0.3f);
+            Vector3 expectedPosition = new Vector3(0.06f, 0f, 0.34f);
 
             subject.SetProperty(inputRotation);
 
-            Assert.AreEqual(expectedRotation.ToString(), target.transform.eulerAngles.ToString());
-            Assert.AreEqual(expectedPosition.ToString(), target.transform.position.ToString());
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(expectedRotation).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(expectedPosition).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -164,22 +169,23 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyLocal()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
 
-            Assert.AreEqual(Vector3.zero, target.transform.localEulerAngles);
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.IncrementProperty(input);
 
-            Assert.AreEqual(input.ToString(), target.transform.localEulerAngles.ToString());
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(input).Using(comparer));
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual((input * 2f).ToString(), target.transform.localEulerAngles.ToString());
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(input * 2f).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -187,22 +193,23 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyGlobal()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = Vector3State.True;
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.IncrementProperty(input);
 
-            Assert.AreEqual(input.ToString(), target.transform.eulerAngles.ToString());
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(input).Using(comparer));
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual((input * 2f).ToString(), target.transform.eulerAngles.ToString());
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(input * 2f).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -210,24 +217,25 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyLocalLockYAxis()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = new Vector3State(true, false, true);
 
-            Assert.AreEqual(Vector3.zero, target.transform.localEulerAngles);
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             Vector3 expected = new Vector3(10f, 0f, 30f);
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual(expected.ToString(), target.transform.localEulerAngles.ToString());
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(expected).Using(comparer));
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual((expected * 2f).ToString(), target.transform.localEulerAngles.ToString());
+            Assert.That(target.transform.localEulerAngles, Is.EqualTo(expected * 2f).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -235,24 +243,25 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyGlobalLockXZAxis()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = false;
             subject.MutateOnAxis = new Vector3State(false, true, false);
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             Vector3 expected = new Vector3(0f, 20f, 0f);
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual(expected.ToString(), target.transform.eulerAngles.ToString());
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(expected).Using(comparer));
 
             subject.IncrementProperty(input);
 
-            Assert.AreEqual((expected * 2f).ToString(), target.transform.eulerAngles.ToString());
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(expected * 2f).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -260,8 +269,9 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyWithOrigin()
         {
-            GameObject target = new GameObject();
-            GameObject origin = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
+            GameObject origin = new GameObject("TransformEulerRotationMutatorTest");
             origin.transform.SetParent(target.transform);
 
             subject.Target = target;
@@ -270,7 +280,7 @@ namespace Test.Zinnia.Data.Operation.Mutation
 
             origin.transform.position = new Vector3(1f, 0f, 1f);
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 inputRotation = new Vector3(10f, 20f, 30f);
             Vector3 expectedRotation = new Vector3(0f, 20f, 0f);
@@ -278,8 +288,8 @@ namespace Test.Zinnia.Data.Operation.Mutation
 
             subject.IncrementProperty(inputRotation);
 
-            Assert.AreEqual(expectedRotation.ToString(), target.transform.eulerAngles.ToString());
-            Assert.AreEqual(expectedPosition.ToString(), target.transform.position.ToString());
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(expectedRotation).Using(comparer));
+            Assert.That(target.transform.position, Is.EqualTo(expectedPosition).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -287,11 +297,11 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void OriginNotChildException()
         {
-            GameObject target = new GameObject();
-            GameObject origin = new GameObject();
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
+            GameObject origin = new GameObject("TransformEulerRotationMutatorTest");
             subject.Target = target;
 
-            NUnit.Framework.Assert.Throws<System.ArgumentException>(() => subject.Origin = origin);
+            Assert.Throws<System.ArgumentException>(() => subject.Origin = origin);
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(origin);
@@ -300,19 +310,20 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyInactiveGameObject()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
             subject.gameObject.SetActive(false);
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.SetProperty(input);
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -320,19 +331,20 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyInactiveComponent()
         {
-            GameObject target = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformEulerRotationMutatorTest");
 
             subject.Target = target;
             subject.UseLocalValues = true;
             subject.MutateOnAxis = Vector3State.True;
             subject.enabled = false;
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.SetProperty(input);
 
-            Assert.AreEqual(Vector3.zero, target.transform.eulerAngles);
+            Assert.That(target.transform.eulerAngles, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(target);
         }

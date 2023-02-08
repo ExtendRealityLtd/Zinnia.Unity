@@ -5,22 +5,24 @@ namespace Test.Zinnia.Data.Type.Transformation
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class Vector3MagnitudeSetterTest
     {
+        private GameObject containingObject;
         private Vector3MagnitudeSetter subject;
 
         [SetUp]
         public void SetUp()
         {
-            subject = new GameObject().AddComponent<Vector3MagnitudeSetter>();
+            containingObject = new GameObject("Vector3MagnitudeSetterTest");
+            subject = containingObject.AddComponent<Vector3MagnitudeSetter>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject.gameObject);
+            Object.DestroyImmediate(containingObject);
         }
 
         [Test]
@@ -39,10 +41,11 @@ namespace Test.Zinnia.Data.Type.Transformation
         [Test]
         public void Process()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             UnityEventListenerMock transformedListenerMock = new UnityEventListenerMock();
             subject.Transformed.AddListener(transformedListenerMock.Listen);
 
-            Assert.AreEqual(Vector3.zero, subject.Result);
+            Assert.That(subject.Result, Is.EqualTo(Vector3.zero).Using(comparer));
             Assert.IsFalse(transformedListenerMock.Received);
 
             subject.Magnitude = 2f;
@@ -50,8 +53,8 @@ namespace Test.Zinnia.Data.Type.Transformation
             Vector3 result = subject.Transform(input);
             Vector3 expectedResult = new Vector3(0.3651484f, -0.7302967f, 1.825742f);
 
-            Assert.AreEqual(expectedResult.ToString(), result.ToString());
-            Assert.AreEqual(expectedResult.ToString(), subject.Result.ToString());
+            Assert.That(result, Is.EqualTo(expectedResult).Using(comparer));
+            Assert.That(subject.Result, Is.EqualTo(expectedResult).Using(comparer));
             Assert.IsTrue(transformedListenerMock.Received);
         }
     }

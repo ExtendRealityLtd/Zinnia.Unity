@@ -7,7 +7,6 @@ namespace Test.Zinnia.Tracking.Modification
     using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectStateMirrorTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Tracking.Modification
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectStateMirrorTest");
             subject = containingObject.AddComponent<GameObjectStateMirror>();
         }
 
@@ -30,10 +29,10 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator ActivateTargets()
         {
-            GameObject source = new GameObject();
-            GameObject target1 = new GameObject();
-            GameObject target2 = new GameObject();
-            GameObject target3 = new GameObject();
+            GameObject source = new GameObject("GameObjectStateMirrorTest");
+            GameObject target1 = new GameObject("GameObjectStateMirrorTest");
+            GameObject target2 = new GameObject("GameObjectStateMirrorTest");
+            GameObject target3 = new GameObject("GameObjectStateMirrorTest");
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
@@ -71,10 +70,10 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator DeactivateTargets()
         {
-            GameObject source = new GameObject();
-            GameObject target1 = new GameObject();
-            GameObject target2 = new GameObject();
-            GameObject target3 = new GameObject();
+            GameObject source = new GameObject("GameObjectStateMirrorTest");
+            GameObject target1 = new GameObject("GameObjectStateMirrorTest");
+            GameObject target2 = new GameObject("GameObjectStateMirrorTest");
+            GameObject target3 = new GameObject("GameObjectStateMirrorTest");
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();
@@ -112,10 +111,10 @@ namespace Test.Zinnia.Tracking.Modification
         [UnityTest]
         public IEnumerator ActivateThenDeactivateTargets()
         {
-            GameObject source = new GameObject();
-            GameObject target1 = new GameObject();
-            GameObject target2 = new GameObject();
-            GameObject target3 = new GameObject();
+            GameObject source = new GameObject("GameObjectStateMirrorTest");
+            GameObject target1 = new GameObject("GameObjectStateMirrorTest");
+            GameObject target2 = new GameObject("GameObjectStateMirrorTest");
+            GameObject target3 = new GameObject("GameObjectStateMirrorTest");
 
             subject.Sources = containingObject.AddComponent<GameObjectObservableList>();
             subject.Targets = containingObject.AddComponent<GameObjectObservableList>();

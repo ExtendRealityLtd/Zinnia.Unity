@@ -9,7 +9,6 @@ namespace Test.Zinnia.Rule
     using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ListContainsRuleTest
     {
@@ -20,7 +19,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ListContainsRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<ListContainsRule>();
             container.Interface = subject;
@@ -64,7 +63,7 @@ namespace Test.Zinnia.Rule
         [UnityTest]
         public IEnumerator RefusesDifferent()
         {
-            GameObject wrongGameObject = new GameObject();
+            GameObject wrongGameObject = new GameObject("ListContainsRuleTest");
             UnityObjectObservableList objects = containingObject.AddComponent<UnityObjectObservableList>();
             yield return null;
 

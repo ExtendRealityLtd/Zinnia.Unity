@@ -6,7 +6,6 @@ namespace Test.Zinnia.Rule
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class AnyLayerRuleTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("AnyLayerRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<AnyLayerRule>();
             container.Interface = subject;

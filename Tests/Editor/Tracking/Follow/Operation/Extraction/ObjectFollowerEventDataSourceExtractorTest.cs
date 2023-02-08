@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Follow.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ObjectFollowerEventDataSourceExtractorTest
     {
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Tracking.Follow.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ObjectFollowerEventDataSourceExtractorTest");
             subject = containingObject.AddComponent<ObjectFollowerEventDataSourceExtractor>();
         }
 

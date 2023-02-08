@@ -11,7 +11,7 @@ namespace Test.Zinnia.Tracking
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class SurfaceLocatorTest
     {
@@ -22,17 +22,24 @@ namespace Test.Zinnia.Tracking
         [SetUp]
         public void SetUp()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
-            containingObject = new GameObject("ContainingObject");
+#endif
+            containingObject = new GameObject("SurfaceLocatorTest");
             subject = containingObject.AddComponent<SurfaceLocator>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
         }
 
         [Test]
@@ -152,7 +159,11 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator InvalidSurfaceDueToTargetValidity()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
 
             GameObject invalidSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject searchOrigin = new GameObject("SearchOrigin");
@@ -195,7 +206,11 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator ValidSurfaceDueToTargetValidity()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
 
             GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject searchOrigin = new GameObject("SearchOrigin");
@@ -233,7 +248,11 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator ValidSurfaceDueToEventualTargetValidity()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
 
             GameObject invalidSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -279,7 +298,11 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator InvalidSurfaceDueToTargetPointValidity()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
 
             GameObject invalidSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject searchOrigin = new GameObject("SearchOrigin");
@@ -321,7 +344,11 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator ValidSurfaceDueToTargetPointValidity()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
 
             GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject searchOrigin = new GameObject("SearchOrigin");
@@ -355,7 +382,11 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator MissingSurfaceDueToLocatorTermination()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
 
             GameObject terminatingSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject searchOrigin = new GameObject("SearchOrigin");
@@ -394,7 +425,11 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator NoSurfaceDueToLocatorTermination()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
 
             GameObject terminatingSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -436,7 +471,11 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator NoSurfaceDueToLocatorTerminationWithMidInvalidTarget()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
 
             GameObject invalidSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject terminatingSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -547,7 +586,11 @@ namespace Test.Zinnia.Tracking
         [UnityTest]
         public IEnumerator NearestSurface()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
 
             GameObject validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject validSurface2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -766,49 +809,61 @@ namespace Test.Zinnia.Tracking
         [Test]
         public void SetSearchDirectionX()
         {
-            Assert.AreEqual(Vector3.zero, subject.SearchDirection);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
+            Assert.That(subject.SearchDirection, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetSearchDirectionX(1f);
-            Assert.AreEqual(Vector3.right, subject.SearchDirection);
+            Assert.That(subject.SearchDirection, Is.EqualTo(Vector3.right).Using(comparer));
         }
 
         [Test]
         public void SetSearchDirectionY()
         {
-            Assert.AreEqual(Vector3.zero, subject.SearchDirection);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
+            Assert.That(subject.SearchDirection, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetSearchDirectionY(1f);
-            Assert.AreEqual(Vector3.up, subject.SearchDirection);
+            Assert.That(subject.SearchDirection, Is.EqualTo(Vector3.up).Using(comparer));
         }
 
         [Test]
         public void SetSearchDirectionZ()
         {
-            Assert.AreEqual(Vector3.zero, subject.SearchDirection);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
+            Assert.That(subject.SearchDirection, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetSearchDirectionZ(1f);
-            Assert.AreEqual(Vector3.forward, subject.SearchDirection);
+            Assert.That(subject.SearchDirection, Is.EqualTo(Vector3.forward).Using(comparer));
         }
 
         [Test]
         public void SetDestinationOffsetX()
         {
-            Assert.AreEqual(Vector3.zero, subject.DestinationOffset);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
+            Assert.That(subject.DestinationOffset, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetDestinationOffsetX(1f);
-            Assert.AreEqual(Vector3.right, subject.DestinationOffset);
+            Assert.That(subject.DestinationOffset, Is.EqualTo(Vector3.right).Using(comparer));
         }
 
         [Test]
         public void SetDestinationOffsetY()
         {
-            Assert.AreEqual(Vector3.zero, subject.DestinationOffset);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
+            Assert.That(subject.DestinationOffset, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetDestinationOffsetY(1f);
-            Assert.AreEqual(Vector3.up, subject.DestinationOffset);
+            Assert.That(subject.DestinationOffset, Is.EqualTo(Vector3.up).Using(comparer));
         }
 
         [Test]
         public void SetDestinationOffsetZ()
         {
-            Assert.AreEqual(Vector3.zero, subject.DestinationOffset);
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
+            Assert.That(subject.DestinationOffset, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetDestinationOffsetZ(1f);
-            Assert.AreEqual(Vector3.forward, subject.DestinationOffset);
+            Assert.That(subject.DestinationOffset, Is.EqualTo(Vector3.forward).Using(comparer));
         }
     }
 }

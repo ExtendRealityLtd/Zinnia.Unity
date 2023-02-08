@@ -4,14 +4,14 @@ namespace Test.Zinnia.Extension
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class GameObjectExtensionsTest
     {
         [Test]
         public void TryGetComponentValid()
         {
-            GameObject valid = new GameObject();
+            GameObject valid = new GameObject("GameObjectExtensionsTest");
             Assert.AreEqual(valid.GetComponent<Component>(), valid.TryGetComponent<Component>());
             Object.DestroyImmediate(valid);
         }
@@ -26,7 +26,7 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TrySetActive()
         {
-            GameObject valid = new GameObject();
+            GameObject valid = new GameObject("GameObjectExtensionsTest");
             Assert.IsTrue(valid.activeInHierarchy);
             valid.TrySetActive(false);
             Assert.IsFalse(valid.activeInHierarchy);
@@ -38,7 +38,7 @@ namespace Test.Zinnia.Extension
         [Test]
         public void FindRigidbodyOnSameValid()
         {
-            GameObject valid = new GameObject();
+            GameObject valid = new GameObject("GameObjectExtensionsTest");
             Rigidbody rigidbody = valid.AddComponent<Rigidbody>();
 
             Assert.AreEqual(rigidbody, valid.TryGetComponent<Rigidbody>(true));
@@ -56,8 +56,8 @@ namespace Test.Zinnia.Extension
         [Test]
         public void FindRigidbodyOnDescendantValid()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
 
             Rigidbody rigidbody = child.AddComponent<Rigidbody>();
@@ -71,8 +71,8 @@ namespace Test.Zinnia.Extension
         [Test]
         public void FindRigidbodyOnAncestorValid()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
 
             Rigidbody rigidbody = parent.AddComponent<Rigidbody>();
@@ -86,9 +86,9 @@ namespace Test.Zinnia.Extension
         [Test]
         public void FindRigidbodyOnDescendantFirstValid()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
+            GameObject grandchild = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
 
@@ -105,9 +105,9 @@ namespace Test.Zinnia.Extension
         [Test]
         public void FindRigidbodyOnAncestorFirstValid()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
+            GameObject grandchild = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
 
@@ -124,9 +124,9 @@ namespace Test.Zinnia.Extension
         [Test]
         public void FindRigidbodyOnDescendantFirstInvalid()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
+            GameObject grandchild = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
 
@@ -142,9 +142,9 @@ namespace Test.Zinnia.Extension
         [Test]
         public void FindRigidbodyOnAncestorFirstInvalid()
         {
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
-            GameObject grandchild = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
+            GameObject grandchild = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
             grandchild.transform.SetParent(child.transform);
 
@@ -160,11 +160,12 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TryGetPosition()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 destinationPosition = Vector3.one * 2f;
-            GameObject parent = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
             parent.transform.position = destinationPosition;
 
-            Assert.AreEqual(destinationPosition, parent.TryGetPosition());
+            Assert.That(parent.TryGetPosition(), Is.EqualTo(destinationPosition).Using(comparer));
 
             Object.DestroyImmediate(parent);
         }
@@ -172,14 +173,15 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TryGetPositionLocal()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 destinationPosition = Vector3.one * 2f;
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
             child.transform.position = destinationPosition;
             parent.transform.position = destinationPosition * 2f;
 
-            Assert.AreEqual(destinationPosition, child.TryGetPosition(true));
+            Assert.That(child.TryGetPosition(true), Is.EqualTo(destinationPosition).Using(comparer));
 
             Object.DestroyImmediate(parent);
             Object.DestroyImmediate(child);
@@ -188,11 +190,12 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TryGetRotation()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             Quaternion destinationRotation = Quaternion.Euler(Vector3.up * 90f);
-            GameObject parent = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
             parent.transform.rotation = destinationRotation;
 
-            Assert.AreEqual(destinationRotation.ToString(), parent.TryGetRotation().ToString());
+            Assert.That(parent.TryGetRotation(), Is.EqualTo(destinationRotation).Using(comparer));
 
             Object.DestroyImmediate(parent);
         }
@@ -200,14 +203,15 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TryGetRotationLocal()
         {
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
             Quaternion destinationRotation = Quaternion.Euler(Vector3.up * 90f);
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
             child.transform.localRotation = destinationRotation;
             parent.transform.localRotation = Quaternion.Euler(Vector3.up * 145f);
 
-            Assert.AreEqual(destinationRotation.ToString(), child.TryGetRotation(true).ToString());
+            Assert.That(child.TryGetRotation(true), Is.EqualTo(destinationRotation).Using(comparer));
 
             Object.DestroyImmediate(parent);
             Object.DestroyImmediate(child);
@@ -216,11 +220,12 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TryGetEulerRotation()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 destinationEulerRotation = Vector3.up * 90f;
-            GameObject parent = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
             parent.transform.eulerAngles = destinationEulerRotation;
 
-            Assert.AreEqual(destinationEulerRotation, parent.TryGetEulerRotation());
+            Assert.That(parent.TryGetEulerRotation(), Is.EqualTo(destinationEulerRotation).Using(comparer));
 
             Object.DestroyImmediate(parent);
         }
@@ -228,14 +233,15 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TryGetEulerRotationLocal()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 destinationRotation = Vector3.up * 90f;
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
             child.transform.localEulerAngles = destinationRotation;
             parent.transform.localEulerAngles = Vector3.up * 145f;
 
-            Assert.AreEqual(destinationRotation.ToString(), child.TryGetEulerRotation(true).ToString());
+            Assert.That(child.TryGetEulerRotation(true), Is.EqualTo(destinationRotation).Using(comparer));
 
             Object.DestroyImmediate(parent);
             Object.DestroyImmediate(child);
@@ -244,11 +250,12 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TryGetScale()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 destinationScale = Vector3.one * 2f;
-            GameObject parent = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
             parent.transform.SetGlobalScale(destinationScale);
 
-            Assert.AreEqual(destinationScale, parent.TryGetScale());
+            Assert.That(parent.TryGetScale(), Is.EqualTo(destinationScale).Using(comparer));
 
             Object.DestroyImmediate(parent);
         }
@@ -256,14 +263,15 @@ namespace Test.Zinnia.Extension
         [Test]
         public void TryGetScaleLocal()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             Vector3 destinationScale = Vector3.one * 2f;
-            GameObject parent = new GameObject();
-            GameObject child = new GameObject();
+            GameObject parent = new GameObject("GameObjectExtensionsTest");
+            GameObject child = new GameObject("GameObjectExtensionsTest");
             child.transform.SetParent(parent.transform);
             child.transform.localScale = destinationScale;
             parent.transform.SetGlobalScale(destinationScale * 2f);
 
-            Assert.AreEqual(destinationScale, child.TryGetScale(true));
+            Assert.That(child.TryGetScale(true), Is.EqualTo(destinationScale).Using(comparer));
 
             Object.DestroyImmediate(parent);
             Object.DestroyImmediate(child);

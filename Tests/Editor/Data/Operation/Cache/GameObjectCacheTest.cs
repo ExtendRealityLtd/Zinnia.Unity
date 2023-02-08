@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Operation.Cache
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectCacheTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Data.Operation.Cache
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectCacheTest");
 #pragma warning disable 0618
             subject = containingObject.AddComponent<GameObjectCache>();
 #pragma warning restore 0618
@@ -26,15 +25,14 @@ namespace Test.Zinnia.Data.Operation.Cache
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void CacheChanged()
         {
-            GameObject first = new GameObject();
-            GameObject second = new GameObject();
+            GameObject first = new GameObject("GameObjectCacheTest");
+            GameObject second = new GameObject("GameObjectCacheTest");
 
             UnityEventListenerMock modifiedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock unmodifiedListenerMock = new UnityEventListenerMock();
@@ -43,7 +41,7 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.IsNull(subject.Data);
 
             subject.Data = first;
 
@@ -76,7 +74,7 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsTrue(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.IsNull(subject.Data);
 
             Object.DestroyImmediate(first);
             Object.DestroyImmediate(second);
@@ -85,7 +83,7 @@ namespace Test.Zinnia.Data.Operation.Cache
         [Test]
         public void CacheChangedInactiveGameObject()
         {
-            GameObject first = new GameObject();
+            GameObject first = new GameObject("GameObjectCacheTest");
 
             UnityEventListenerMock modifiedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock unmodifiedListenerMock = new UnityEventListenerMock();
@@ -94,14 +92,14 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.IsNull(subject.Data);
 
             subject.gameObject.SetActive(false);
             subject.Data = first;
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.IsNull(subject.Data);
 
             Object.DestroyImmediate(first);
         }
@@ -109,7 +107,7 @@ namespace Test.Zinnia.Data.Operation.Cache
         [Test]
         public void CacheChangedInactiveComponent()
         {
-            GameObject first = new GameObject();
+            GameObject first = new GameObject("GameObjectCacheTest");
 
             UnityEventListenerMock modifiedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock unmodifiedListenerMock = new UnityEventListenerMock();
@@ -118,14 +116,14 @@ namespace Test.Zinnia.Data.Operation.Cache
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.IsNull(subject.Data);
 
             subject.enabled = false;
             subject.Data = first;
 
             Assert.IsFalse(modifiedListenerMock.Received);
             Assert.IsFalse(unmodifiedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.IsNull(subject.Data);
 
             Object.DestroyImmediate(first);
         }

@@ -7,7 +7,6 @@ namespace Test.Zinnia.Rule
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class StringInListRuleTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("StringInListRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<StringInListRule>();
             container.Interface = subject;

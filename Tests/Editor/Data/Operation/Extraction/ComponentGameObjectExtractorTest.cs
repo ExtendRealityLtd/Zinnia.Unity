@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ComponentGameObjectEmitterTest
     {
@@ -15,7 +14,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ComponentGameObjectEmitterTest");
             subject = containingObject.AddComponent<ComponentGameObjectExtractor>();
         }
 
@@ -28,7 +27,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void Extract()
         {
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ComponentGameObjectEmitterTest");
 
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
@@ -49,7 +48,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractInvalidSource()
         {
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ComponentGameObjectEmitterTest");
 
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
@@ -68,7 +67,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractInactiveGameObject()
         {
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ComponentGameObjectEmitterTest");
 
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
@@ -90,7 +89,7 @@ namespace Test.Zinnia.Data.Operation.Extraction
         [Test]
         public void ExtractInactiveComponent()
         {
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ComponentGameObjectEmitterTest");
 
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);

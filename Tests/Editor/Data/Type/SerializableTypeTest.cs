@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Type
     using NUnit.Framework;
     using System;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class SerializableTypeTest
     {

@@ -6,22 +6,23 @@ namespace Test.Zinnia.Data.Type.Transformation
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class FloatRangeValueRemapperTest
     {
+        private GameObject containingObject;
         private FloatRangeValueRemapper subject;
 
         [SetUp]
         public void SetUp()
         {
-            subject = new GameObject().AddComponent<FloatRangeValueRemapper>();
+            containingObject = new GameObject("FloatRangeValueRemapperTest");
+            subject = containingObject.AddComponent<FloatRangeValueRemapper>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject.gameObject);
+            Object.DestroyImmediate(containingObject);
         }
 
         [Test]

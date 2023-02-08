@@ -6,6 +6,7 @@ namespace Test.Zinnia.Cast.Operation.Mutation
 {
     using NUnit.Framework;
     using UnityEngine;
+    using UnityEngine.TestTools.Utils;
 
     public class PointsCastPropertyMutatorTest
     {
@@ -15,8 +16,12 @@ namespace Test.Zinnia.Cast.Operation.Mutation
         [SetUp]
         public void SetUp()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
-            containingObject = new GameObject();
+#endif
+            containingObject = new GameObject("PointsCastPropertyMutatorTest");
             subject = containingObject.AddComponent<PointsCastPropertyMutator>();
 
         }
@@ -25,6 +30,11 @@ namespace Test.Zinnia.Cast.Operation.Mutation
         public void TearDown()
         {
             Object.DestroyImmediate(containingObject);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
+            Physics.autoSimulation = true;
+#endif
         }
 
         [Test]
@@ -177,7 +187,7 @@ namespace Test.Zinnia.Cast.Operation.Mutation
         [Test]
         public void SetTargetInChild()
         {
-            GameObject child = new GameObject();
+            GameObject child = new GameObject("PointsCastPropertyMutatorTest");
             child.transform.SetParent(containingObject.transform);
 
             StraightLineCast cast = child.AddComponent<StraightLineCast>();
@@ -190,7 +200,7 @@ namespace Test.Zinnia.Cast.Operation.Mutation
         [Test]
         public void SetTargetInParent()
         {
-            GameObject parent = new GameObject();
+            GameObject parent = new GameObject("PointsCastPropertyMutatorTest");
             containingObject.transform.SetParent(parent.transform);
 
             StraightLineCast cast = parent.AddComponent<StraightLineCast>();
@@ -204,7 +214,7 @@ namespace Test.Zinnia.Cast.Operation.Mutation
         [Test]
         public void SetTargetInactiveGameObject()
         {
-            StraightLineCast cast = containingObject.AddComponent<StraightLineCast>();
+            containingObject.AddComponent<StraightLineCast>();
 
             Assert.IsNull(subject.Target);
             subject.gameObject.SetActive(false);
@@ -215,7 +225,7 @@ namespace Test.Zinnia.Cast.Operation.Mutation
         [Test]
         public void SetTargetInactiveComponent()
         {
-            StraightLineCast cast = containingObject.AddComponent<StraightLineCast>();
+            containingObject.AddComponent<StraightLineCast>();
 
             Assert.IsNull(subject.Target);
             subject.enabled = false;
@@ -237,20 +247,23 @@ namespace Test.Zinnia.Cast.Operation.Mutation
         [Test]
         public void SetDestinationPointOverride()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
             Assert.IsNull(subject.DestinationPointOverride);
             subject.SetDestinationPointOverride(Vector3.one);
-            Assert.AreEqual(Vector3.one, subject.DestinationPointOverride);
+            Assert.That(subject.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
         }
 
         [Test]
         public void ClearDestinationPointOverride()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             StraightLineCast cast = containingObject.AddComponent<StraightLineCast>();
             subject.Target = cast;
             subject.SetDestinationPointOverride(Vector3.one);
 
-            Assert.AreEqual(Vector3.one, subject.DestinationPointOverride);
-            Assert.AreEqual(Vector3.one, subject.Target.DestinationPointOverride);
+            Assert.That(subject.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(subject.Target.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.ClearDestinationPointOverride();
 
@@ -261,19 +274,20 @@ namespace Test.Zinnia.Cast.Operation.Mutation
         [Test]
         public void ClearDestinationPointOverrideInactiveGameObject()
         {
-            GameObject castObject = new GameObject();
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject castObject = new GameObject("PointsCastPropertyMutatorTest");
             StraightLineCast cast = castObject.AddComponent<StraightLineCast>();
             subject.Target = cast;
             subject.SetDestinationPointOverride(Vector3.one);
 
-            Assert.AreEqual(Vector3.one, subject.DestinationPointOverride);
-            Assert.AreEqual(Vector3.one, subject.Target.DestinationPointOverride);
+            Assert.That(subject.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(subject.Target.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.gameObject.SetActive(false);
             subject.ClearDestinationPointOverride();
 
-            Assert.AreEqual(Vector3.one, subject.DestinationPointOverride);
-            Assert.AreEqual(Vector3.one, subject.Target.DestinationPointOverride);
+            Assert.That(subject.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(subject.Target.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
 
             Object.DestroyImmediate(castObject);
         }
@@ -281,34 +295,36 @@ namespace Test.Zinnia.Cast.Operation.Mutation
         [Test]
         public void ClearDestinationPointOverrideInactiveComponent()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             StraightLineCast cast = containingObject.AddComponent<StraightLineCast>();
             subject.Target = cast;
             subject.SetDestinationPointOverride(Vector3.one);
 
-            Assert.AreEqual(Vector3.one, subject.DestinationPointOverride);
-            Assert.AreEqual(Vector3.one, subject.Target.DestinationPointOverride);
+            Assert.That(subject.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(subject.Target.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.enabled = false;
             subject.ClearDestinationPointOverride();
 
-            Assert.AreEqual(Vector3.one, subject.DestinationPointOverride);
-            Assert.AreEqual(Vector3.one, subject.Target.DestinationPointOverride);
+            Assert.That(subject.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(subject.Target.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
         }
 
         [Test]
         public void ClearDestinationPointOverrideNullTarget()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             StraightLineCast cast = containingObject.AddComponent<StraightLineCast>();
             subject.Target = cast;
             subject.SetDestinationPointOverride(Vector3.one);
 
-            Assert.AreEqual(Vector3.one, subject.DestinationPointOverride);
-            Assert.AreEqual(Vector3.one, subject.Target.DestinationPointOverride);
+            Assert.That(subject.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
+            Assert.That(subject.Target.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
 
             subject.Target = null;
             subject.ClearDestinationPointOverride();
 
-            Assert.AreEqual(Vector3.one, subject.DestinationPointOverride);
+            Assert.That(subject.DestinationPointOverride, Is.EqualTo(Vector3.one).Using(comparer));
         }
     }
 }

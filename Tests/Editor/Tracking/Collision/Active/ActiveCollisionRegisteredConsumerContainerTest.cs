@@ -5,7 +5,6 @@ namespace Test.Zinnia.Tracking.Collision.Active
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ActiveCollisionRegisteredConsumerContainerTest
     {
@@ -15,14 +14,13 @@ namespace Test.Zinnia.Tracking.Collision.Active
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ActiveCollisionRegisteredConsumerContainerTest");
             subject = containingObject.AddComponent<ActiveCollisionRegisteredConsumerContainerExtendedMock>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -65,7 +63,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
             Assert.IsTrue(publishedMock.Received);
             Assert.IsTrue(oneConsumer.received);
             Assert.IsTrue(twoConsumer.received);
-            Assert.AreEqual("{ Consumer = New Game Object (Test.Zinnia.Tracking.Collision.Active.ActiveCollisionConsumerMock) | Payload = [null] }", subject.GetEventData().ToString());
+            Assert.AreEqual("{ Consumer = ActiveCollisionRegisteredConsumerContainerTest (Test.Zinnia.Tracking.Collision.Active.ActiveCollisionConsumerMock) | Payload = [null] }", subject.GetEventData().ToString());
         }
 
         [Test]
@@ -182,8 +180,8 @@ namespace Test.Zinnia.Tracking.Collision.Active
             subject.Registered.AddListener(registeredMock.Listen);
             subject.Unregistered.AddListener(unregisteredMock.Listen);
 
-            GameObject containerOne = new GameObject();
-            GameObject containerTwo = new GameObject();
+            GameObject containerOne = new GameObject("ActiveCollisionRegisteredConsumerContainerTest");
+            GameObject containerTwo = new GameObject("ActiveCollisionRegisteredConsumerContainerTest");
 
             ActiveCollisionConsumerMock oneConsumerA = containerOne.AddComponent<ActiveCollisionConsumerMock>();
             ActiveCollisionConsumerMock oneConsumerB = containerOne.AddComponent<ActiveCollisionConsumerMock>();

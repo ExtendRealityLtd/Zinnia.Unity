@@ -10,7 +10,6 @@ namespace Test.Zinnia.Process.Component
     using Test.Zinnia.Utility.Stub;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class GameObjectSourceTargetProcessorTest
     {
@@ -20,14 +19,13 @@ namespace Test.Zinnia.Process.Component
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("GameObjectSourceTargetProcessorTest");
             subject = containingObject.AddComponent<GameObjectSourceTargetProcessorMock>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 

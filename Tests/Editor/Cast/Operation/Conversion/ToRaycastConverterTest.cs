@@ -16,8 +16,12 @@ namespace Test.Zinnia.Cast.Operation.Conversion
         [SetUp]
         public void SetUp()
         {
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.Script;
+#else
             Physics.autoSimulation = false;
-            containingObject = new GameObject();
+#endif
+            containingObject = new GameObject("ToRaycastConverterTest");
             caster = containingObject.AddComponent<PhysicsCast>();
             subject = containingObject.AddComponent<ToRaycastConverter>();
             validSurface = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -30,7 +34,11 @@ namespace Test.Zinnia.Cast.Operation.Conversion
         {
             Object.DestroyImmediate(containingObject);
             Object.DestroyImmediate(validSurface);
+#if UNITY_2022_2_OR_NEWER
+            Physics.simulationMode = SimulationMode.FixedUpdate;
+#else
             Physics.autoSimulation = true;
+#endif
         }
 
         [Test]

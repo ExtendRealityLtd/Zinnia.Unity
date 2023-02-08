@@ -5,7 +5,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class TransformPositionDifferenceRotationTest
     {
@@ -15,22 +15,22 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("TransformPositionDifferenceRotationTest");
             subject = containingObject.AddComponent<TransformPositionDifferenceRotation>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void Modify()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformPositionDifferenceRotationTest");
+            GameObject target = new GameObject("TransformPositionDifferenceRotationTest");
 
             target.transform.position = new Vector3(0f, 0f, 0f);
             target.transform.localRotation = Quaternion.identity;
@@ -42,7 +42,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             source.transform.position = new Vector3(0.5f, 1f, -0.5f);
             subject.Modify(source, target);
 
-            Assert.AreEqual(new Quaternion(0.3f, -0.1f, 0.3f, 0.9f).ToString(), target.transform.localRotation.ToString());
+            Assert.That(target.transform.localRotation, Is.EqualTo(new Quaternion(0.3f, -0.1f, 0.3f, 0.9f)).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -51,9 +51,10 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyWithAncestor()
         {
-            GameObject ancestor = new GameObject();
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject ancestor = new GameObject("TransformPositionDifferenceRotationTest");
+            GameObject source = new GameObject("TransformPositionDifferenceRotationTest");
+            GameObject target = new GameObject("TransformPositionDifferenceRotationTest");
 
             ancestor.transform.position = new Vector3(0f, 0f, 0f);
             source.transform.SetParent(ancestor.transform);
@@ -72,7 +73,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             source.transform.position = new Vector3(0.5f, 1f, -0.5f);
             subject.Modify(source, target);
 
-            Assert.AreEqual(new Quaternion(0.1f, -0.3f, 0.2f, 0.9f).ToString(), target.transform.localRotation.ToString());
+            Assert.That(target.transform.localRotation, Is.EqualTo(new Quaternion(0.1f, -0.3f, 0.2f, 0.9f)).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -82,8 +83,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyInactiveGameObject()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformPositionDifferenceRotationTest");
+            GameObject target = new GameObject("TransformPositionDifferenceRotationTest");
             subject.gameObject.SetActive(false);
 
             target.transform.position = new Vector3(0f, 0f, 0f);
@@ -96,7 +98,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             source.transform.position = new Vector3(0.5f, 1f, -0.5f);
             subject.Modify(source, target);
 
-            Assert.AreEqual(Quaternion.identity, target.transform.localRotation);
+            Assert.That(target.transform.localRotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);
@@ -106,8 +108,9 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyInactiveComponent()
         {
-            GameObject source = new GameObject();
-            GameObject target = new GameObject();
+            QuaternionEqualityComparer comparer = new QuaternionEqualityComparer(0.1f);
+            GameObject source = new GameObject("TransformPositionDifferenceRotationTest");
+            GameObject target = new GameObject("TransformPositionDifferenceRotationTest");
             subject.enabled = false;
 
             target.transform.position = new Vector3(0f, 0f, 0f);
@@ -120,7 +123,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             source.transform.position = new Vector3(0.5f, 1f, -0.5f);
             subject.Modify(source, target);
 
-            Assert.AreEqual(Quaternion.identity, target.transform.localRotation);
+            Assert.That(target.transform.localRotation, Is.EqualTo(Quaternion.identity).Using(comparer));
 
             Object.DestroyImmediate(source);
             Object.DestroyImmediate(target);

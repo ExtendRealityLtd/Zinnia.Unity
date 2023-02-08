@@ -6,7 +6,7 @@
     /// <summary>
     /// Updates the transform scale of the target to match the source.
     /// </summary>
-    public class TransformScale : RestrictableTransformPropertyModifier
+    public class TransformScale : SmoothedRestrictableTransformPropertyModifier
     {
         /// <summary>
         /// Modifies the target scale to match the given source scale.
@@ -17,14 +17,10 @@
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
             SaveOriginalPropertyValue(target.transform.lossyScale);
-            if (offset == null)
-            {
-                target.transform.SetGlobalScale(source.transform.lossyScale);
-            }
-            else
-            {
-                target.transform.SetGlobalScale(source.transform.lossyScale.Divide(offset.transform.localScale));
-            }
+
+            Vector3 targetScale = offset == null ? source.transform.lossyScale : source.transform.lossyScale.Divide(offset.transform.localScale);
+
+            target.transform.SetGlobalScale(Smooth(target.transform.lossyScale, targetScale));
 
             if (HasAxisRestrictions)
             {

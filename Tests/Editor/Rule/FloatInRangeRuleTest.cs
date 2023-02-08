@@ -7,7 +7,6 @@ namespace Test.Zinnia.Rule
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class FloatInRangeRuleTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("FloatInRangeRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<FloatInRangeRule>();
             container.Interface = subject;

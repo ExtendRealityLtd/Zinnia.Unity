@@ -6,7 +6,7 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class RotateAroundAngularVelocityTest
     {
@@ -16,39 +16,40 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("RotateAroundAngularVelocityTest");
             subject = containingObject.AddComponent<RotateAroundAngularVelocity>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
         [Test]
         public void ModifyRotateAroundXAxis()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
             subject.AngularVelocitySource = source;
             subject.ApplyToAxis = Vector3State.XOnly;
 
-            GameObject unusedSource = new GameObject();
-            GameObject target = new GameObject();
+            GameObject unusedSource = new GameObject("RotateAroundAngularVelocityTest");
+            GameObject target = new GameObject("RotateAroundAngularVelocityTest");
 
             float rotationAngle = 90f;
 
             source.AngularVelocity = Vector3.one * rotationAngle;
             target.transform.rotation = Quaternion.identity;
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity.ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Modify(unusedSource, target);
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.Euler(Vector3.right * rotationAngle).ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.Euler(Vector3.right * rotationAngle)).Using(quaternionComparer));
 
             Object.DestroyImmediate(unusedSource);
             Object.DestroyImmediate(target);
@@ -57,25 +58,27 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyRotateAroundYAxis()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
             subject.AngularVelocitySource = source;
             subject.ApplyToAxis = Vector3State.YOnly;
 
-            GameObject unusedSource = new GameObject();
-            GameObject target = new GameObject();
+            GameObject unusedSource = new GameObject("RotateAroundAngularVelocityTest");
+            GameObject target = new GameObject("RotateAroundAngularVelocityTest");
 
             float rotationAngle = 90f;
 
             source.AngularVelocity = Vector3.one * rotationAngle;
             target.transform.rotation = Quaternion.identity;
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity.ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Modify(unusedSource, target);
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.Euler(Vector3.up * rotationAngle).ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.Euler(Vector3.up * rotationAngle)).Using(quaternionComparer));
 
             Object.DestroyImmediate(unusedSource);
             Object.DestroyImmediate(target);
@@ -84,25 +87,27 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyRotateAroundZAxis()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
             subject.AngularVelocitySource = source;
             subject.ApplyToAxis = Vector3State.ZOnly;
 
-            GameObject unusedSource = new GameObject();
-            GameObject target = new GameObject();
+            GameObject unusedSource = new GameObject("RotateAroundAngularVelocityTest");
+            GameObject target = new GameObject("RotateAroundAngularVelocityTest");
 
             float rotationAngle = 90f;
 
             source.AngularVelocity = Vector3.one * rotationAngle;
             target.transform.rotation = Quaternion.identity;
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity.ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Modify(unusedSource, target);
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.Euler(Vector3.forward * rotationAngle).ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.Euler(Vector3.forward * rotationAngle)).Using(quaternionComparer));
 
             Object.DestroyImmediate(unusedSource);
             Object.DestroyImmediate(target);
@@ -111,14 +116,16 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyRotateAroundXAxisWithOffset()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
             subject.AngularVelocitySource = source;
             subject.ApplyToAxis = Vector3State.XOnly;
             subject.ApplyOffset = true;
 
-            GameObject unusedSource = new GameObject();
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            GameObject unusedSource = new GameObject("RotateAroundAngularVelocityTest");
+            GameObject target = new GameObject("RotateAroundAngularVelocityTest");
+            GameObject offset = new GameObject("RotateAroundAngularVelocityTest");
 
             float rotationAngle = 90f;
 
@@ -126,29 +133,32 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             target.transform.rotation = Quaternion.identity;
             offset.transform.position = new Vector3(0.5f, 0.5f, 0f);
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity.ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Modify(unusedSource, target, offset);
 
-            Assert.AreEqual(new Vector3(0f, 0.5f, -0.5f).ToString(), target.transform.position.ToString());
-            Assert.AreEqual(Quaternion.Euler(Vector3.right * rotationAngle).ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(new Vector3(0f, 0.5f, -0.5f)).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.Euler(Vector3.right * rotationAngle)).Using(quaternionComparer));
 
             Object.DestroyImmediate(unusedSource);
             Object.DestroyImmediate(target);
+            Object.DestroyImmediate(offset);
         }
 
         [Test]
         public void ModifyRotateAroundXAxisWithOffsetIgnored()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
             subject.AngularVelocitySource = source;
             subject.ApplyToAxis = Vector3State.XOnly;
             subject.ApplyOffset = false;
 
-            GameObject unusedSource = new GameObject();
-            GameObject target = new GameObject();
-            GameObject offset = new GameObject();
+            GameObject unusedSource = new GameObject("RotateAroundAngularVelocityTest");
+            GameObject target = new GameObject("RotateAroundAngularVelocityTest");
+            GameObject offset = new GameObject("RotateAroundAngularVelocityTest");
 
             float rotationAngle = 90f;
 
@@ -156,27 +166,30 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
             target.transform.rotation = Quaternion.identity;
             offset.transform.position = new Vector3(0.5f, 0.5f, 0f);
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity.ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Modify(unusedSource, target, offset);
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.Euler(Vector3.right * rotationAngle).ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.Euler(Vector3.right * rotationAngle)).Using(quaternionComparer));
 
             Object.DestroyImmediate(unusedSource);
+            Object.DestroyImmediate(offset);
             Object.DestroyImmediate(target);
         }
 
         [Test]
         public void ModifyInactiveGameObject()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
             subject.AngularVelocitySource = source;
             subject.ApplyToAxis = Vector3State.XOnly;
 
-            GameObject unusedSource = new GameObject();
-            GameObject target = new GameObject();
+            GameObject unusedSource = new GameObject("RotateAroundAngularVelocityTest");
+            GameObject target = new GameObject("RotateAroundAngularVelocityTest");
 
             float rotationAngle = 90f;
 
@@ -185,13 +198,13 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 
             subject.gameObject.SetActive(false);
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity.ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Modify(unusedSource, target);
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity.ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             Object.DestroyImmediate(unusedSource);
             Object.DestroyImmediate(target);
@@ -200,12 +213,14 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void ModifyInactiveComponent()
         {
+            Vector3EqualityComparer vectorComparer = new Vector3EqualityComparer(0.1f);
+            QuaternionEqualityComparer quaternionComparer = new QuaternionEqualityComparer(0.1f);
             MockVelocityTracker source = subject.gameObject.AddComponent<MockVelocityTracker>();
             subject.AngularVelocitySource = source;
             subject.ApplyToAxis = Vector3State.XOnly;
 
-            GameObject unusedSource = new GameObject();
-            GameObject target = new GameObject();
+            GameObject unusedSource = new GameObject("RotateAroundAngularVelocityTest");
+            GameObject target = new GameObject("RotateAroundAngularVelocityTest");
 
             float rotationAngle = 90f;
 
@@ -214,13 +229,13 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
 
             subject.enabled = false;
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity.ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             subject.Modify(unusedSource, target);
 
-            Assert.AreEqual(Vector3.zero, target.transform.position);
-            Assert.AreEqual(Quaternion.identity.ToString(), target.transform.rotation.ToString());
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(vectorComparer));
+            Assert.That(target.transform.rotation, Is.EqualTo(Quaternion.identity).Using(quaternionComparer));
 
             Object.DestroyImmediate(unusedSource);
             Object.DestroyImmediate(target);
@@ -264,28 +279,31 @@ namespace Test.Zinnia.Tracking.Follow.Modifier.Property.Rotation
         [Test]
         public void SetSourceMultiplierX()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.SourceMultiplier = Vector3.zero;
-            Assert.AreEqual(Vector3.zero, subject.SourceMultiplier);
+            Assert.That(subject.SourceMultiplier, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetSourceMultiplierX(1f);
-            Assert.AreEqual(Vector3.right, subject.SourceMultiplier);
+            Assert.That(subject.SourceMultiplier, Is.EqualTo(Vector3.right).Using(comparer));
         }
 
         [Test]
         public void SetSourceMultiplierY()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.SourceMultiplier = Vector3.zero;
-            Assert.AreEqual(Vector3.zero, subject.SourceMultiplier);
+            Assert.That(subject.SourceMultiplier, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetSourceMultiplierY(1f);
-            Assert.AreEqual(Vector3.up, subject.SourceMultiplier);
+            Assert.That(subject.SourceMultiplier, Is.EqualTo(Vector3.up).Using(comparer));
         }
 
         [Test]
         public void SetSourceMultiplierZ()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.SourceMultiplier = Vector3.zero;
-            Assert.AreEqual(Vector3.zero, subject.SourceMultiplier);
+            Assert.That(subject.SourceMultiplier, Is.EqualTo(Vector3.zero).Using(comparer));
             subject.SetSourceMultiplierZ(1f);
-            Assert.AreEqual(Vector3.forward, subject.SourceMultiplier);
+            Assert.That(subject.SourceMultiplier, Is.EqualTo(Vector3.forward).Using(comparer));
         }
 
         [Test]

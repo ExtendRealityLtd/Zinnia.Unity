@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Follow.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class ObjectFollowerEventDataTargetOffsetExtractorTest
     {
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Tracking.Follow.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ObjectFollowerEventDataTargetOffsetExtractorTest");
             subject = containingObject.AddComponent<ObjectFollowerEventDataTargetOffsetExtractor>();
         }
 
@@ -29,7 +28,7 @@ namespace Test.Zinnia.Tracking.Follow.Operation.Extraction
         [Test]
         public void Extract()
         {
-            GameObject source = new GameObject();
+            GameObject source = new GameObject("ObjectFollowerEventDataTargetOffsetExtractorTest");
 
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);

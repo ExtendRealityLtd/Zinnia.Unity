@@ -6,7 +6,6 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class PublisherContainerExtractorTest
     {
@@ -16,14 +15,13 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("PublisherContainerExtractorTest");
             subject = containingObject.AddComponent<PublisherContainerExtractor>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -33,8 +31,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            GameObject publisherSource = new GameObject();
-            GameObject publisherChild = new GameObject();
+            GameObject publisherSource = new GameObject("PublisherContainerExtractorTest");
+            GameObject publisherChild = new GameObject("PublisherContainerExtractorTest");
             publisherChild.transform.SetParent(publisherSource.transform);
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
@@ -58,8 +56,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            GameObject publisherSource = new GameObject();
-            GameObject publisherChild = new GameObject();
+            GameObject publisherSource = new GameObject("PublisherContainerExtractorTest");
+            GameObject publisherChild = new GameObject("PublisherContainerExtractorTest");
             publisherChild.transform.SetParent(publisherSource.transform);
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
@@ -86,8 +84,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            GameObject publisherSource = new GameObject();
-            GameObject publisherChild = new GameObject();
+            GameObject publisherSource = new GameObject("PublisherContainerExtractorTest");
+            GameObject publisherChild = new GameObject("PublisherContainerExtractorTest");
             publisherChild.transform.SetParent(publisherSource.transform);
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 
@@ -112,8 +110,8 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();
             subject.Extracted.AddListener(extractedMock.Listen);
 
-            GameObject publisherSource = new GameObject();
-            GameObject publisherChild = new GameObject();
+            GameObject publisherSource = new GameObject("PublisherContainerExtractorTest");
+            GameObject publisherChild = new GameObject("PublisherContainerExtractorTest");
             publisherChild.transform.SetParent(publisherSource.transform);
             ActiveCollisionPublisher.PayloadData publisher = new ActiveCollisionPublisher.PayloadData();
 

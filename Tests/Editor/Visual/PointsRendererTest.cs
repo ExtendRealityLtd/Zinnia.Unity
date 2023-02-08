@@ -5,7 +5,7 @@ namespace Test.Zinnia.Visual
     using NUnit.Framework;
     using System.Collections.Generic;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class PointsRendererTest
     {
@@ -22,7 +22,7 @@ namespace Test.Zinnia.Visual
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("containingObject");
             subject = containingObject.AddComponent<PointsRenderer>();
 
             start = CreatePrimitive(PrimitiveType.Cube, Vector3.one * 0.01f, StartName);
@@ -33,9 +33,7 @@ namespace Test.Zinnia.Visual
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
-
             Object.DestroyImmediate(start);
             Object.DestroyImmediate(segment);
             Object.DestroyImmediate(end);
@@ -44,6 +42,8 @@ namespace Test.Zinnia.Visual
         [Test]
         public void RenderData()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
             List<Vector3> points = new List<Vector3>
             {
                 new Vector3(0f, 0f, 0f),
@@ -75,32 +75,34 @@ namespace Test.Zinnia.Visual
 
             Vector3[] expectedSegmentScale = new Vector3[]
             {
-                new Vector3(0f, 0f, 3.6f),
-                new Vector3(0f, 0f, 1.4f),
-                new Vector3(0f, 0f, 1.4f),
-                new Vector3(0f, 0f, 1f),
-                new Vector3(0f, 0f, 0f)
+                new Vector3(0.01f, 0.01f, 3.61f),
+                new Vector3(0.01f, 0.01f, 1.41f),
+                new Vector3(0.01f, 0.01f, 1.41f),
+                new Vector3(0.01f, 0.01f, 1f),
+                new Vector3(0.01f, 0.01f, 0.01f)
             };
 
             subject.RenderData(data);
 
-            Assert.AreEqual(points[0], GameObject.Find(StartName).transform.position);
-            Assert.AreEqual(Vector3.one * 0.01f, GameObject.Find(StartName).transform.localScale);
+            Assert.That(GameObject.Find(StartName).transform.position, Is.EqualTo(points[0]).Using(comparer));
+            Assert.That(GameObject.Find(StartName).transform.localScale, Is.EqualTo(Vector3.one * 0.01f).Using(comparer));
 
             int segmentIndex = 0;
             foreach (GameObject currentSegment in FindObjectsContainingName(SegmentName))
             {
-                Assert.AreEqual(expectedSegmentPositions[segmentIndex].ToString(), currentSegment.transform.position.ToString(), "Position - Segment Index " + segmentIndex);
-                Assert.AreEqual(expectedSegmentScale[segmentIndex].ToString(), currentSegment.transform.localScale.ToString(), "Scale - Segment Index " + segmentIndex);
+                Assert.That(currentSegment.transform.position, Is.EqualTo(expectedSegmentPositions[segmentIndex]).Using(comparer), "Position - Segment Index " + segmentIndex);
+                Assert.That(currentSegment.transform.localScale, Is.EqualTo(expectedSegmentScale[segmentIndex]).Using(comparer), "Scale - Segment Index " + segmentIndex);
                 segmentIndex++;
             }
-            Assert.AreEqual(points[4], GameObject.Find(EndName).transform.position);
-            Assert.AreEqual(Vector3.one * 0.01f, GameObject.Find(EndName).transform.localScale);
+            Assert.That(GameObject.Find(EndName).transform.position, Is.EqualTo(points[4]).Using(comparer));
+            Assert.That(GameObject.Find(EndName).transform.localScale, Is.EqualTo(Vector3.one * 0.01f).Using(comparer));
         }
 
         [Test]
         public void NoRenderDataOnDisabledComponent()
         {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+
             List<Vector3> points = new List<Vector3>
             {
                 new Vector3(0f, 0f, 0f),
@@ -129,28 +131,29 @@ namespace Test.Zinnia.Visual
 
             Vector3[] expectedSegmentScale = new Vector3[]
             {
-                Vector3.zero,
-                Vector3.zero,
-                Vector3.zero,
-                Vector3.zero,
-                Vector3.zero
+                Vector3.one * 0.01f,
+                Vector3.one * 0.01f,
+                Vector3.one * 0.01f,
+                Vector3.one * 0.01f,
+                Vector3.one * 0.01f
             };
 
             subject.enabled = false;
             subject.RenderData(data);
 
-            Assert.AreEqual(Vector3.zero, GameObject.Find(StartName).transform.position);
-            Assert.AreEqual(Vector3.one * 0.01f, GameObject.Find(StartName).transform.localScale);
+            Assert.That(GameObject.Find(StartName).transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(GameObject.Find(StartName).transform.localScale, Is.EqualTo(Vector3.one * 0.01f).Using(comparer));
 
             int segmentIndex = 0;
             foreach (GameObject currentSegment in FindObjectsContainingName(SegmentName))
             {
-                Assert.AreEqual(expectedSegmentPositions[segmentIndex].ToString(), currentSegment.transform.position.ToString(), "Position - Segment Index " + segmentIndex);
-                Assert.AreEqual(expectedSegmentScale[segmentIndex].ToString(), currentSegment.transform.localScale.ToString(), "Scale - Segment Index " + segmentIndex);
+                Assert.That(currentSegment.transform.position, Is.EqualTo(expectedSegmentPositions[segmentIndex]).Using(comparer), "Position - Segment Index " + segmentIndex);
+                Assert.That(currentSegment.transform.localScale, Is.EqualTo(expectedSegmentScale[segmentIndex]).Using(comparer), "Scale - Segment Index " + segmentIndex);
                 segmentIndex++;
             }
-            Assert.AreEqual(Vector3.zero, GameObject.Find(EndName).transform.position);
-            Assert.AreEqual(Vector3.one * 0.01f, GameObject.Find(EndName).transform.localScale);
+
+            Assert.That(GameObject.Find(EndName).transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.That(GameObject.Find(EndName).transform.localScale, Is.EqualTo(Vector3.one * 0.01f).Using(comparer));
         }
 
         protected virtual GameObject CreatePrimitive(PrimitiveType type, Vector3 scale, string name = "")

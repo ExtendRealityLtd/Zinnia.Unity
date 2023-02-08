@@ -7,18 +7,17 @@ namespace Test.Zinnia.Utility
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
+    using UnityEngine.TestTools.Utils;
 
     public class CountdownTimerTest
     {
-        private const float Tolerance = 0.01f;
         private GameObject containingObject;
         private CountdownTimer subject;
 
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("CountdownTimerTest");
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<CountdownTimer>();
         }
@@ -379,6 +378,7 @@ namespace Test.Zinnia.Utility
         [UnityTest]
         public IEnumerator TimerEmitTime()
         {
+            FloatEqualityComparer comparer = new FloatEqualityComparer(0.1f);
             containingObject.SetActive(true);
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
             UnityEventValueListenerMock<float> timerElapsedTimeMock = new UnityEventValueListenerMock<float>();
@@ -398,11 +398,11 @@ namespace Test.Zinnia.Utility
 
             subject.EmitElapsedTime();
             Assert.IsTrue(timerElapsedTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerElapsedTimeMock.Value, 0f, Tolerance);
+            Assert.That(timerElapsedTimeMock.Value, Is.EqualTo(0f).Using(comparer));
 
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerRemainingTimeMock.Value, 0.5f, Tolerance);
+            Assert.That(timerRemainingTimeMock.Value, Is.EqualTo(0.5f).Using(comparer));
 
             timerElapsedTimeMock.Reset();
             timerRemainingTimeMock.Reset();
@@ -413,11 +413,11 @@ namespace Test.Zinnia.Utility
 
             subject.EmitElapsedTime();
             Assert.IsTrue(timerElapsedTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerElapsedTimeMock.Value, 0f, Tolerance);
+            Assert.That(timerElapsedTimeMock.Value, Is.EqualTo(0f).Using(comparer));
 
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerRemainingTimeMock.Value, 0.5f, Tolerance);
+            Assert.That(timerRemainingTimeMock.Value, Is.EqualTo(0.5f).Using(comparer));
 
             timerElapsedTimeMock.Reset();
             timerRemainingTimeMock.Reset();
@@ -444,16 +444,17 @@ namespace Test.Zinnia.Utility
 
             subject.EmitElapsedTime();
             Assert.IsTrue(timerElapsedTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerElapsedTimeMock.Value, 0.5f, Tolerance);
+            Assert.That(timerElapsedTimeMock.Value, Is.EqualTo(0.5f).Using(comparer));
 
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerRemainingTimeMock.Value, 0f, Tolerance);
+            Assert.That(timerRemainingTimeMock.Value, Is.EqualTo(0f).Using(comparer));
         }
 
         [UnityTest]
         public IEnumerator TimerEmitTimeUnchangedAfterComplete()
         {
+            FloatEqualityComparer comparer = new FloatEqualityComparer(0.1f);
             containingObject.SetActive(true);
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
             UnityEventValueListenerMock<float> timerElapsedTimeMock = new UnityEventValueListenerMock<float>();
@@ -472,11 +473,11 @@ namespace Test.Zinnia.Utility
 
             subject.EmitElapsedTime();
             Assert.IsTrue(timerElapsedTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerElapsedTimeMock.Value, 0, Tolerance);
+            Assert.That(timerElapsedTimeMock.Value, Is.EqualTo(0f).Using(comparer));
 
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerRemainingTimeMock.Value, 0.5f, Tolerance);
+            Assert.That(timerRemainingTimeMock.Value, Is.EqualTo(0.5f).Using(comparer));
 
             timerElapsedTimeMock.Reset();
             timerRemainingTimeMock.Reset();
@@ -487,11 +488,11 @@ namespace Test.Zinnia.Utility
 
             subject.EmitElapsedTime();
             Assert.IsTrue(timerElapsedTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerElapsedTimeMock.Value, 0, Tolerance);
+            Assert.That(timerElapsedTimeMock.Value, Is.EqualTo(0f).Using(comparer));
 
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerRemainingTimeMock.Value, 0.5f, Tolerance);
+            Assert.That(timerRemainingTimeMock.Value, Is.EqualTo(0.5f).Using(comparer));
 
             timerElapsedTimeMock.Reset();
             timerRemainingTimeMock.Reset();
@@ -502,11 +503,11 @@ namespace Test.Zinnia.Utility
 
             subject.EmitElapsedTime();
             Assert.IsTrue(timerElapsedTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerElapsedTimeMock.Value, 0.5f, Tolerance);
+            Assert.That(timerElapsedTimeMock.Value, Is.EqualTo(0.5f).Using(comparer));
 
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerRemainingTimeMock.Value, 0f, Tolerance);
+            Assert.That(timerRemainingTimeMock.Value, Is.EqualTo(0f).Using(comparer));
 
             timerElapsedTimeMock.Reset();
             timerRemainingTimeMock.Reset();
@@ -515,16 +516,17 @@ namespace Test.Zinnia.Utility
 
             subject.EmitElapsedTime();
             Assert.IsTrue(timerElapsedTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerElapsedTimeMock.Value, 0.5f, Tolerance);
+            Assert.That(timerElapsedTimeMock.Value, Is.EqualTo(0.5f).Using(comparer));
 
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerRemainingTimeMock.Value, 0f, Tolerance);
+            Assert.That(timerRemainingTimeMock.Value, Is.EqualTo(0f).Using(comparer));
         }
 
         [UnityTest]
         public IEnumerator TimerEmitTimeUnchangedAfterCancelled()
         {
+            FloatEqualityComparer comparer = new FloatEqualityComparer(0.1f);
             containingObject.SetActive(true);
             UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
@@ -545,11 +547,11 @@ namespace Test.Zinnia.Utility
 
             subject.EmitElapsedTime();
             Assert.IsTrue(timerElapsedTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerElapsedTimeMock.Value, 0, Tolerance);
+            Assert.That(timerElapsedTimeMock.Value, Is.EqualTo(0f).Using(comparer));
 
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerRemainingTimeMock.Value, 0.5f, Tolerance);
+            Assert.That(timerRemainingTimeMock.Value, Is.EqualTo(0.5f).Using(comparer));
 
             timerElapsedTimeMock.Reset();
             timerRemainingTimeMock.Reset();
@@ -561,11 +563,11 @@ namespace Test.Zinnia.Utility
 
             subject.EmitElapsedTime();
             Assert.IsTrue(timerElapsedTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerElapsedTimeMock.Value, 0, Tolerance);
+            Assert.That(timerElapsedTimeMock.Value, Is.EqualTo(0f).Using(comparer));
 
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
-            Assert.AreApproximatelyEqual(timerRemainingTimeMock.Value, 0.5f, Tolerance);
+            Assert.That(timerRemainingTimeMock.Value, Is.EqualTo(0.5f).Using(comparer));
 
             timerElapsedTimeMock.Reset();
             timerRemainingTimeMock.Reset();
@@ -610,6 +612,67 @@ namespace Test.Zinnia.Utility
             subject.EmitRemainingTime();
             Assert.IsTrue(timerRemainingTimeMock.Received);
             Assert.AreEqual(timerRemainingTimeMock.Value, remainingTime);
+        }
+
+        [UnityTest]
+        public IEnumerator PauseResumeTimer()
+        {
+            FloatEqualityComparer comparer = new FloatEqualityComparer(0.1f);
+            containingObject.SetActive(true);
+
+            UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerPausedMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerResumedMock = new UnityEventListenerMock();
+            subject.Completed.AddListener(timerCompleteMock.Listen);
+            subject.Paused.AddListener(timerPausedMock.Listen);
+            subject.Resumed.AddListener(timerResumedMock.Listen);
+
+            float beginTime = Time.time;
+            float startTime = 1f;
+            subject.StartTime = startTime;
+
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerPausedMock.Received);
+            Assert.IsFalse(timerResumedMock.Received);
+            Assert.AreEqual(0f, subject.ElapsedTime);
+            Assert.AreEqual(startTime, subject.RemainingTime);
+
+            subject.Begin();
+
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerPausedMock.Received);
+            Assert.IsFalse(timerResumedMock.Received);
+
+            float timeDelay = startTime * 0.5f;
+
+            yield return new WaitForSeconds(timeDelay);
+
+            Assert.That(subject.ElapsedTime, Is.EqualTo(timeDelay).Using(comparer));
+            Assert.That(subject.RemainingTime, Is.EqualTo(timeDelay).Using(comparer));
+
+            subject.Pause();
+
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsTrue(timerPausedMock.Received);
+            Assert.IsFalse(timerResumedMock.Received);
+            timerPausedMock.Reset();
+
+            yield return new WaitForSeconds(timeDelay);
+
+            Assert.That(subject.ElapsedTime, Is.EqualTo(timeDelay).Using(comparer));
+            Assert.That(subject.RemainingTime, Is.EqualTo(timeDelay).Using(comparer));
+
+            subject.Resume();
+
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerPausedMock.Received);
+            Assert.IsTrue(timerResumedMock.Received);
+
+            yield return new WaitForSeconds(timeDelay);
+
+            Assert.IsTrue(timerCompleteMock.Received);
+            Assert.That(subject.ElapsedTime, Is.EqualTo(startTime).Using(comparer));
+            Assert.That(subject.RemainingTime, Is.EqualTo(0f).Using(comparer));
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Test.Zinnia.Data.Type.Observer
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class FloatObservablePropertyTest
     {
@@ -17,14 +16,13 @@ namespace Test.Zinnia.Data.Type.Observer
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("FloatObservablePropertyTest");
             subject = containingObject.AddComponent<FloatObservableProperty>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Object.DestroyImmediate(subject);
             Object.DestroyImmediate(containingObject);
         }
 
@@ -46,7 +44,7 @@ namespace Test.Zinnia.Data.Type.Observer
             Assert.IsFalse(unmodifiedListenerMock.Received);
             Assert.IsFalse(defaultedListenerMock.Received);
             Assert.IsFalse(definedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.AreEqual(0f, subject.Data);
 
             modifiedListenerMock.Reset();
             unmodifiedListenerMock.Reset();
@@ -126,7 +124,7 @@ namespace Test.Zinnia.Data.Type.Observer
             Assert.IsFalse(unmodifiedListenerMock.Received);
             Assert.IsFalse(defaultedListenerMock.Received);
             Assert.IsFalse(definedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.AreEqual(0f, subject.Data);
 
             modifiedListenerMock.Reset();
             unmodifiedListenerMock.Reset();
@@ -192,7 +190,7 @@ namespace Test.Zinnia.Data.Type.Observer
             Assert.IsFalse(unmodifiedListenerMock.Received);
             Assert.IsFalse(defaultedListenerMock.Received);
             Assert.IsFalse(definedListenerMock.Received);
-            Assert.AreEqual(default, subject.Data);
+            Assert.AreEqual(0f, subject.Data);
 
             modifiedListenerMock.Reset();
             unmodifiedListenerMock.Reset();

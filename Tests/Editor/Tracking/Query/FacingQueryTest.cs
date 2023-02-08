@@ -7,7 +7,6 @@ namespace Test.Zinnia.Tracking.Query
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class FacingQueryTest
     {
@@ -17,7 +16,7 @@ namespace Test.Zinnia.Tracking.Query
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("FacingQueryTest");
             subject = containingObject.AddComponent<FacingQuery>();
         }
 

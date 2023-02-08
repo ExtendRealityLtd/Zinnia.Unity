@@ -6,7 +6,6 @@ namespace Test.Zinnia.Rule
 {
     using NUnit.Framework;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
     public class ActionRuleTest
     {
         private GameObject containingObject;
@@ -16,7 +15,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("ActionRuleTest");
             container = new RuleContainer();
             subject = containingObject.AddComponent<ActionRule>();
             container.Interface = subject;
@@ -49,7 +48,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesInactiveGameObject()
         {
-            GameObject actionContainer = new GameObject();
+            GameObject actionContainer = new GameObject("ActionRuleTest");
             BooleanAction action = containingObject.AddComponent<BooleanAction>();
             subject.Action = action;
             action.Receive(true);
@@ -61,7 +60,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void RefusesInactiveComponent()
         {
-            GameObject actionContainer = new GameObject();
+            GameObject actionContainer = new GameObject("ActionRuleTest");
             BooleanAction action = containingObject.AddComponent<BooleanAction>();
             subject.Action = action;
             action.Receive(true);
@@ -73,7 +72,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void AcceptInactiveGameObject()
         {
-            GameObject actionContainer = new GameObject();
+            GameObject actionContainer = new GameObject("ActionRuleTest");
             BooleanAction action = actionContainer.AddComponent<BooleanAction>();
             subject.Action = action;
             action.Receive(true);
@@ -92,7 +91,7 @@ namespace Test.Zinnia.Rule
         [Test]
         public void AcceptInactiveComponent()
         {
-            GameObject actionContainer = new GameObject();
+            GameObject actionContainer = new GameObject("ActionRuleTest");
             BooleanAction action = containingObject.AddComponent<BooleanAction>();
             subject.Action = action;
             action.Receive(true);

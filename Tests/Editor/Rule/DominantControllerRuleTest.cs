@@ -7,7 +7,6 @@ namespace Test.Zinnia.Rule
     using NUnit.Framework;
     using UnityEngine;
     using UnityEngine.XR;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class DominantControllerRuleTest
     {
@@ -18,7 +17,7 @@ namespace Test.Zinnia.Rule
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("DominantControllerRuleTest");
             containingObject.SetActive(false);
             container = new RuleContainer();
             subject = containingObject.AddComponent<DominantControllerRule>();

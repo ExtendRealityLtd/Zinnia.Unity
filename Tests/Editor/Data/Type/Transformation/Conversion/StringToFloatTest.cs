@@ -5,7 +5,6 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
     using NUnit.Framework;
     using Test.Zinnia.Utility.Mock;
     using UnityEngine;
-    using Assert = UnityEngine.Assertions.Assert;
 
     public class StringToFloatTest
     {
@@ -15,7 +14,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
         [SetUp]
         public void SetUp()
         {
-            containingObject = new GameObject();
+            containingObject = new GameObject("StringToFloatTest");
             subject = containingObject.AddComponent<StringToFloat>();
         }
 
@@ -51,7 +50,7 @@ namespace Test.Zinnia.Data.Type.Transformation.Conversion
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
 
-            NUnit.Framework.Assert.Throws<System.FormatException>(() => subject.Transform("NotANumber"));
+            Assert.Throws<System.FormatException>(() => subject.Transform("NotANumber"));
 
             Assert.AreEqual(0f, subject.Result);
             Assert.IsFalse(transformedListenerMock.Received);
