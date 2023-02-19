@@ -51,6 +51,9 @@
         }
 
         protected virtual void DrawProperty(SerializedProperty property) => EditorGUILayout.PropertyField(property, true);
+        protected virtual void DrawProperty(SerializedProperty property, bool includeChildren) => EditorGUILayout.PropertyField(property, includeChildren);
+        protected virtual void DrawProperty(SerializedProperty property, GUIContent label) => EditorGUILayout.PropertyField(property, label, true);
+        protected virtual void DrawProperty(SerializedProperty property, GUIContent label, bool includeChildren) => EditorGUILayout.PropertyField(property, label, includeChildren);
 
         protected virtual void ApplyModifiedProperty(SerializedProperty property, bool hasChangeHandlers)
         {
