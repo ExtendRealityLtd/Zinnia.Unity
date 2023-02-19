@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.5.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.4.0...v2.5.0) (2023-02-19)
+
+#### Features
+
+* **Editor:** provide more options for inspector draw property ([1b9db3d](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/1b9db3da648ccbc46f9d210574446f328528decb))
+  > The DrawProperty method in the ZinniaInspector has been updated to allow more options such as a custom label and whether to include children.
+  > 
+  > This has been added as a number of additional methods rather than a single method with overrides to keep compatability.
+* **Tracking:** change smoothed restrictable property order ([aab1b7a](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/aab1b7ad10bc5eb2652cb8859008a1ac1873cfff))
+  > THe Equality Tolereance has been moved to be the first parameter so the Transition Duration can be used in custom editors with a custom label but not pulling in the `[Header]` tag as that is hard associated with the field in Unity and no easy way to remove it so this is a workaround.
+
+#### Bug Fixes
+
+* **Editor:** add missing list components to generator window ([5ceb357](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/5ceb357ca063d0dfdc280fd271bcb764668a13bc))
+  > The List component Generator Window was missing a number of elements that made sense to be in the list. These have now been added.
+
 ## [2.4.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.3.0...v2.4.0) (2023-02-08)
 
 #### Features
