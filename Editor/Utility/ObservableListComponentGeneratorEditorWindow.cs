@@ -45,6 +45,7 @@
             FloatModeFinder,
             FloatMultiplier,
             FloatRangeFinder,
+            FloatSubtractor,
             GameObjectsAssociationActivator,
             GameObjectRelations,
             GameObjectStateSwitcher,
@@ -55,7 +56,10 @@
             PatternMatcherRule,
             RuleAssociation,
             RulesMatcher,
+            Vector2Adder,
             Vector2Multiplier,
+            Vector2Subtractor,
+            Vector3Adder,
             Vector3Multiplier,
             Vector3Subtractor,
             VelocityTrackerProcessor
@@ -256,10 +260,30 @@
                     FloatObservableList floatRangeFinderList = listContainer.AddComponent<FloatObservableList>();
                     floatRangeFinder.Collection = floatRangeFinderList;
                     break;
+                case OptionType.FloatSubtractor:
+                    FloatSubtractor floatSubtractor = componentContainer.AddComponent<FloatSubtractor>();
+                    FloatObservableList floatSubtractorList = listContainer.AddComponent<FloatObservableList>();
+                    floatSubtractor.Collection = floatSubtractorList;
+                    break;
+                case OptionType.Vector2Adder:
+                    Vector2Adder vector2Adder = componentContainer.AddComponent<Vector2Adder>();
+                    Vector2ObservableList vector2AdderList = listContainer.AddComponent<Vector2ObservableList>();
+                    vector2Adder.Collection = vector2AdderList;
+                    break;
                 case OptionType.Vector2Multiplier:
                     Vector2Multiplier vector2Multiplier = componentContainer.AddComponent<Vector2Multiplier>();
                     Vector2ObservableList vector2MultiplierList = listContainer.AddComponent<Vector2ObservableList>();
                     vector2Multiplier.Collection = vector2MultiplierList;
+                    break;
+                case OptionType.Vector2Subtractor:
+                    Vector2Subtractor vector2Subtractor = componentContainer.AddComponent<Vector2Subtractor>();
+                    Vector2ObservableList vector2SubtractorList = listContainer.AddComponent<Vector2ObservableList>();
+                    vector2Subtractor.Collection = vector2SubtractorList;
+                    break;
+                case OptionType.Vector3Adder:
+                    Vector3Adder vector3Adder = componentContainer.AddComponent<Vector3Adder>();
+                    Vector3ObservableList vector3AdderList = listContainer.AddComponent<Vector3ObservableList>();
+                    vector3Adder.Collection = vector3AdderList;
                     break;
                 case OptionType.Vector3Multiplier:
                     Vector3Multiplier vector3Multiplier = componentContainer.AddComponent<Vector3Multiplier>();
