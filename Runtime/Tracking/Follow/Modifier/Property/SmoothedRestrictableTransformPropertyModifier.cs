@@ -7,6 +7,24 @@
     public abstract class SmoothedRestrictableTransformPropertyModifier : RestrictableTransformPropertyModifier
     {
         [Header("Smoothing Settings")]
+        [Tooltip("The tolereance to consider the source and target property equal.")]
+        [SerializeField]
+        private float equalityTolerance = float.Epsilon;
+        /// <summary>
+        /// The tolereance to consider the source and target property equal.
+        /// </summary>
+        public float EqualityTolerance
+        {
+            get
+            {
+                return equalityTolerance;
+            }
+            set
+            {
+                equalityTolerance = value;
+            }
+        }
+
         [Tooltip("The approximate duration of transition for the smoothing operation.")]
         [SerializeField]
         private float transitionDuration = 0f;
@@ -40,24 +58,6 @@
             set
             {
                 maxSpeed = value;
-            }
-        }
-
-        [Tooltip("The tolereance to consider the source and target property equal.")]
-        [SerializeField]
-        private float equalityTolerance = float.Epsilon;
-        /// <summary>
-        /// The tolereance to consider the source and target property equal.
-        /// </summary>
-        public float EqualityTolerance
-        {
-            get
-            {
-                return equalityTolerance;
-            }
-            set
-            {
-                equalityTolerance = value;
             }
         }
 
