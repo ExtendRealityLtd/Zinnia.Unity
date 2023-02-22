@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.6.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.5.0...v2.6.0) (2023-02-22)
+
+#### Features
+
+* **Utility:** add animation helper components ([2ad690f](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/2ad690f546e517585de8739444622731ca02e390))
+  > The AnimatorScrubber component allows an animation timeline to be scrubbed through by providing the exact normalized timestamp to jump the animation to.
+  > 
+  > The AnimatorParameterMutator allows the mutation of parameters assigned to an Animation Controller.
+
 ## [2.5.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.4.0...v2.5.0) (2023-02-19)
 
 #### Features
