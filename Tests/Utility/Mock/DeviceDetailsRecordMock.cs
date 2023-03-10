@@ -52,6 +52,7 @@ namespace Test.Zinnia.Utility.Mock
         public override SpatialTrackingType TrackingType { get; protected set; }
         public override float BatteryLevel { get; protected set; }
         public override BatteryStatus BatteryChargeStatus { get; protected set; }
+        public override bool HasPassThroughCamera { get; protected set; }
 
         protected override bool HasBatteryChargeStatusChanged()
         {
