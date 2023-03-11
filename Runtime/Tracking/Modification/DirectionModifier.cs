@@ -121,6 +121,23 @@
                 pivotOffset = value;
             }
         }
+        [Tooltip("An optional GameObject that will mirror the rotation of the Pivot.")]
+        [SerializeField]
+        private GameObject pivotRotationMirror;
+        /// <summary>
+        /// An optional <see cref="GameObject"/> that will mirror the rotation of the <see cref="Pivot"/>.
+        /// </summary>
+        public GameObject PivotRotationMirror
+        {
+            get
+            {
+                return pivotRotationMirror;
+            }
+            set
+            {
+                pivotRotationMirror = value;
+            }
+        }
         #endregion
 
         #region Control Settings
@@ -159,12 +176,16 @@
                 snapToLookAt = value;
             }
         }
-        [Tooltip("The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.")]
+        [Tooltip("The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.\n\n* `0` resets the rotation immediately.\n* `infinity` ensures the rotation is never reset.")]
         [SerializeField]
         private float resetOrientationSpeed = 0.1f;
         /// <summary>
         /// The speed in which the rotation is reset to the original speed when the orientation is reset. The higher the value the slower the speed.
         /// </summary>
+        /// <remarks>
+        /// * `0` resets the rotation immediately.
+        /// * `infinity` ensures the rotation is never reset.
+        /// </remarks>
         public float ResetOrientationSpeed
         {
             get
@@ -285,6 +306,19 @@
         }
 
         /// <summary>
+        /// Clears <see cref="PivotRotationMirror"/>.
+        /// </summary>
+        public virtual void ClearPivotRotationMirror()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            PivotRotationMirror = default;
+        }
+
+        /// <summary>
         /// Sets the <see cref="RotationUpTarget"/>.
         /// </summary>
         /// <param name="index">The index of the <see cref="RotationTargetType"/>.</param>
@@ -353,6 +387,10 @@
             {
                 SetOrientationToSaved();
             }
+            else
+            {
+                OrientationReset?.Invoke();
+            }
         }
 
         /// <summary>
@@ -402,6 +440,11 @@
             if (!SnapToLookAt)
             {
                 Target.transform.rotation *= offsetInitialRotation;
+            }
+
+            if (PivotRotationMirror != null)
+            {
+                PivotRotationMirror.transform.rotation = Pivot.transform.rotation;
             }
         }
 

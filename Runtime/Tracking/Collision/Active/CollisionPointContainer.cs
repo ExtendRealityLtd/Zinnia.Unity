@@ -46,11 +46,7 @@
         /// <summary>
         /// The created container.
         /// </summary>
-        public GameObject Container
-        {
-            get;
-            protected set;
-        }
+        public GameObject Container { get; protected set; }
         /// <summary>
         /// Whether <see cref="Container"/> is <see cref="Set"/> or <see cref="Unset"/>.
         /// </summary>

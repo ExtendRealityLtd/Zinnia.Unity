@@ -82,11 +82,46 @@
         /// The current battery charge state.
         /// </summary>
         public abstract BatteryStatus BatteryChargeStatus { get; protected set; }
+        /// <summary>
+        /// Whether the device has a pass through camera.
+        /// </summary>
+        public abstract bool HasPassThroughCamera { get; protected set; }
 
         /// <summary>
         /// Whether tracking for this device has begun.
         /// </summary>
         public bool TrackingHasBegun { get; protected set; }
+        /// <summary>
+        /// The backing field for the <see cref="PassThroughCameraEnabled"/> property.
+        /// </summary>
+        private bool passThroughCameraEnabled;
+        /// <summary>
+        /// Whether the headset passthrough camera is enabled or disabled.
+        /// </summary>
+        public bool PassThroughCameraEnabled
+        {
+            get
+            {
+                return passThroughCameraEnabled;
+            }
+            set
+            {
+                if (!HasPassThroughCamera)
+                {
+                    return;
+                }
+
+                passThroughCameraEnabled = value;
+                if (passThroughCameraEnabled)
+                {
+                    EnablePassThrough();
+                }
+                else
+                {
+                    DisablePassThrough();
+                }
+            }
+        }
 
         /// <summary>
         /// Emitted when the device begins tracking.
@@ -104,6 +139,14 @@
         /// Emitted whenever the tracking type changes.
         /// </summary>
         public BatteryStatusUnityEvent BatteryChargeStatusChanged = new BatteryStatusUnityEvent();
+        /// <summary>
+        /// Emitted when the pass through camera is enabled.
+        /// </summary>
+        public UnityEvent PassThroughCameraWasEnabled = new UnityEvent();
+        /// <summary>
+        /// Emitted when the pass through camera is disabled.
+        /// </summary>
+        public UnityEvent PassThroughCameraWasDisabled = new UnityEvent();
 
         /// <summary>
         /// Checks to see if the statues have changed.
@@ -151,6 +194,22 @@
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Enables the pass through on the camera.
+        /// </summary>
+        protected virtual void EnablePassThrough()
+        {
+            PassThroughCameraWasEnabled?.Invoke();
+        }
+
+        /// <summary>
+        /// Disables the pass through on the camera.
+        /// </summary>
+        protected virtual void DisablePassThrough()
+        {
+            PassThroughCameraWasDisabled?.Invoke();
         }
     }
 }

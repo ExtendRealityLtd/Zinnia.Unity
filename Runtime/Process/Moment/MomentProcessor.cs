@@ -8,7 +8,7 @@
     /// <summary>
     /// Iterates through a given <see cref="MomentProcess"/> collection and executes the <see cref="IProcessable.Process"/> method on the given Unity game loop moment.
     /// </summary>
-    public class MomentProcessor : MonoBehaviour
+    public class MomentProcessor : MonoBehaviour, IProcessable
     {
         /// <summary>
         /// The point in the Unity game loop when to execute the processes.
@@ -16,7 +16,7 @@
         public enum Moment
         {
             /// <summary>
-            /// Never execute the processes.
+            /// Executes the processes only when the <see cref="Process"/> method is called.
             /// </summary>
             None,
             /// <summary>
@@ -97,6 +97,12 @@
             ProcessMoment = EnumExtensions.GetByIndex<Moment>(index);
         }
 
+        /// <inheritdoc/>
+        public virtual void Process()
+        {
+            ProcessMoments();
+        }
+
         protected virtual void OnEnable()
         {
             SubscribeMoment();
@@ -111,7 +117,7 @@
         {
             if (ProcessMoment == Moment.FixedUpdate)
             {
-                Process();
+                ProcessMoments();
             }
         }
 
@@ -119,7 +125,7 @@
         {
             if (ProcessMoment == Moment.Update)
             {
-                Process();
+                ProcessMoments();
             }
         }
 
@@ -127,7 +133,7 @@
         {
             if (ProcessMoment == Moment.LateUpdate)
             {
-                Process();
+                ProcessMoments();
             }
         }
 
@@ -140,17 +146,17 @@
 
         protected virtual void OnCameraPreRender(Camera givenCamera)
         {
-            Process();
+            ProcessMoments();
         }
 
         protected virtual void OnCameraPreCull(Camera givenCamera)
         {
-            Process();
+            ProcessMoments();
         }
 
         protected virtual void OnApplicationBeforeRender()
         {
-            Process();
+            ProcessMoments();
         }
 
         /// <summary>
@@ -214,7 +220,7 @@
         /// <summary>
         /// Iterates through the given <see cref="MomentProcess"/> and calls <see cref="MomentProcess.Process"/> on each one.
         /// </summary>
-        protected virtual void Process()
+        protected virtual void ProcessMoments()
         {
             if (Processes == null)
             {
