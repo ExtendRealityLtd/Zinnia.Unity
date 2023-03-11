@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.7.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.6.0...v2.7.0) (2023-03-11)
+
+#### Features
+
+* **Process:** allow moment processor to be processable ([3344928](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/33449281dab6b6e6687ec330526510af0a0eac07))
+  > The MomentProcessor component now also implements the IProcessable interface so it can also be processed with a MomentProcess.
+  > 
+  > This means that multiple MomentProcessors can have their MomentProcess set to `None` meaning they will not be processed in a Unity game moment, but instead can then be added to another MomentProcessor and run in whatever moment that parent processor is using.
+  > 
+  > This allows for greater control over what processes are run amongst different MomentProcessors.
+* **Tracking:** add passthrough camera to device details record ([34fb35f](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/34fb35f68186906b4ae3e6d6cc520dfb1e240046))
+  > The DeviceDetailsRecord now holds status of whether the device has a passthrough camera and the ability to set the enabled state of the passthrough camera (if supported by the underlying SDK).
+* **Tracking:** add pivot rotation mirror to direction modifier ([039dbf7](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/039dbf7663c0432e312d379090814e99ad479937))
+  > The DirectionModifier component now has a new property of PivotRotationMirror which takes a GameObject that will mirror the rotation of the given Pivot GameObject.
+  > 
+  > This is useful if for instance the follow logic is running on a precision point basis and that precision point object needs to replicate the rotation given by the Pivot.
+
 ## [2.6.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.5.0...v2.6.0) (2023-02-22)
 
 #### Features
