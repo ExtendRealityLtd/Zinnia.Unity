@@ -74,7 +74,7 @@
         /// </summary>
         public virtual void Apply()
         {
-            if (!this.IsValidState() || Source == null || Target == null)
+            if (!this.IsValidState() || Source == null || Target == null || Target.isKinematic)
             {
                 return;
             }
