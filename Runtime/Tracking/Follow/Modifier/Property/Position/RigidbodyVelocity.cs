@@ -71,7 +71,7 @@
             Vector3 velocityTarget = positionDelta / deltaTime;
             Vector3 calculatedVelocity = Vector3.MoveTowards(cachedTargetRigidbody.velocity, velocityTarget, MaxDistanceDelta / deltaTime);
 
-            if (calculatedVelocity.sqrMagnitude < VelocityLimit)
+            if (!cachedTargetRigidbody.isKinematic && calculatedVelocity.sqrMagnitude < VelocityLimit)
             {
                 cachedTargetRigidbody.velocity = calculatedVelocity;
             }
