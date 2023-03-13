@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.7.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.7.0...v2.7.1) (2023-03-13)
+
+#### Bug Fixes
+
+* **Tracking:** ensure velocity is not set on kinematic rigidbody ([c588d73](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c588d738a1bd00101c349b7ece2a7b31bd05036a))
+  > Rigidbodies cannot have velocities set on them if they are kinematic as they are not actually part of the physics simulation when kinematic so this fix just ensures the kinematic state is checked before trying to apply a velocity to a rigidbody.
+
 ## [2.7.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.6.0...v2.7.0) (2023-03-11)
 
 #### Features
