@@ -1,5 +1,16 @@
 # Changelog
 
+### [2.7.2](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.7.1...v2.7.2) (2023-03-16)
+
+#### Bug Fixes
+
+* **Tracking:** stop artificial velocity applier running when disabled ([a0d55e2](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/a0d55e2f6853c3e0eab3ba53a1a9c05ffb62eedd))
+  > The ArtificialVelocityApplier was still applying velocity via the `Apply` method even if the component was disabled.
+  > 
+  > This is because originally it used the `[RequiresBehaviourState]` Malimbe tag but when it was separated out from the process parent, this was not updated when malimbe was removed.
+  > 
+  > This has been fixed now by ensuring the valid state of the object is present before running the `Apply` method.
+
 ### [2.7.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.7.0...v2.7.1) (2023-03-13)
 
 #### Bug Fixes
