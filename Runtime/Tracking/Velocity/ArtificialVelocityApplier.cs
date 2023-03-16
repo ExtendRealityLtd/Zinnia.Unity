@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Derived from <see cref="ArtificialVelocityApplierProcess"/> to apply artificial velocities to the <see cref="Target"/> by changing the <see cref="Transform"/> properties.
@@ -19,6 +20,11 @@
         /// <inheritdoc />
         public override void Apply()
         {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
             CancelDeceleration();
             canProcess = true;
             decelerationRoutine = StartCoroutine(BeginDeceleration());
@@ -29,7 +35,7 @@
         /// </summary>
         public override void CancelDeceleration()
         {
-            canProcess = false;
+            base.CancelDeceleration();
             if (decelerationRoutine != null)
             {
                 StopCoroutine(decelerationRoutine);
