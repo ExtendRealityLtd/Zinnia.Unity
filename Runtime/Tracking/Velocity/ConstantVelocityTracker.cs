@@ -64,13 +64,13 @@
         /// <inheritdoc />
         protected override Vector3 DoGetAngularVelocity()
         {
-            return UseLocal ? transform.localRotation * AngularVelocity : AngularVelocity;
+            return UseLocal ? transform.rotation * AngularVelocity : AngularVelocity;
         }
 
         /// <inheritdoc />
         protected override Vector3 DoGetVelocity()
         {
-            return UseLocal ? transform.localRotation * Velocity : Velocity;
+            return UseLocal ? transform.rotation * Velocity : Velocity;
         }
     }
 }
