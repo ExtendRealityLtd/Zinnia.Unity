@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.8.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.7.2...v2.8.0) (2023-03-21)
+
+#### Features
+
+* **Visual:** add ability to mutate cameras background settings ([3fe8ab8](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/3fe8ab8a12f1756de6246c72545652930d0b4010))
+  > The CameraBackgroundMutator allows the ability to mutate a list of cameras clearFlags and backgroundColor state and then to restore the previous data prior to the mutation.
+
+#### Bug Fixes
+
+* **Velocity:** use correct local rotation calculation ([fa0a70e](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/fa0a70ee9bc1bbdb3cf048b98ff23ee9c104de9d))
+  > ConstantVelocityTracker is intended to be like the physics Constant Force component. If UseLocal=false, it should return velocity in absolute world space frame. If UseLocal=true, it should return velocity in attached object reference frame.
+  > 
+  > Co-authored-by: FIGHT4DREAM <admin@fight4dream.com>
+
 ### [2.7.2](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.7.1...v2.7.2) (2023-03-16)
 
 #### Bug Fixes
