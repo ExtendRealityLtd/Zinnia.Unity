@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.9.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.8.0...v2.9.0) (2023-03-28)
+
+#### Features
+
+* **Extension:** provide alternative method for isActiveAndEnabled ([2abbbf4](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/2abbbf4dd6fdddbf58f2cfef5c889d8f510e569c))
+  > It would seem that the behaviour.isActiveAndEnabled property does not always return what is expected. If a GameObject is active and the behaviour is enabled then isActiveAndEnabled can still return false whilst in the OnEnable state.
+  > 
+  > It would seem that isActiveAndEnabled does not return true until all of the relevant initial Unity moments have passed for an Object.
+  > 
+  > To counter this, a new BehaviourExtension has been added called `CheckIsActiveAndEnabled()` that will do an absolute check on the GameObject active state and the behaviour enabled state.
+  > 
+  > If the old isActiveAndEnabled check is still required then it can be switched to by a scripting define symbol of:
+  > 
+  > `ZINNIA_USE_ISACTIVEANDENABLED`
+  > 
+  > All of the relevant files that use `isActiveAndEnabled` have now been updated to use the new `CheckIsActiveAndEnabled()` extension method.
+* **Tracking:** use current property value to set passthrough mode ([d20e1ca](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d20e1cad23634fa69bed80e7774abdec45b7af18))
+  > The new SetPassThrough method will simply call the relevant passthrough method based on the current PassThroughCameraEnabled value.
+  > 
+  > This is useful if the passthrough camera has turned off due to application pause and needs returning back on when the app is unpaused.
+
 ## [2.8.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.7.2...v2.8.0) (2023-03-21)
 
 #### Features
