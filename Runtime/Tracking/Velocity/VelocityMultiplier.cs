@@ -130,7 +130,7 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return base.IsActive() && Source != null && Source.isActiveAndEnabled;
+            return base.IsActive() && Source != null && Source.CheckIsActiveAndEnabled();
         }
 
         /// <inheritdoc />

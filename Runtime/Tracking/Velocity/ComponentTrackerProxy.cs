@@ -56,7 +56,7 @@
         /// <inheritdoc />
         public override bool IsActive()
         {
-            return base.IsActive() && cachedVelocityTracker != null && cachedVelocityTracker.isActiveAndEnabled;
+            return base.IsActive() && cachedVelocityTracker != null && cachedVelocityTracker.CheckIsActiveAndEnabled();
         }
 
         /// <inheritdoc />

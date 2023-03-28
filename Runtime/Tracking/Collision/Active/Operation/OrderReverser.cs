@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Tracking.Collision.Active.Operation
 {
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Reverses the order of the given collision collection.
@@ -33,7 +34,7 @@
         /// <returns>The reversed collision collection.</returns>
         public virtual ActiveCollisionsContainer.EventData Reverse(ActiveCollisionsContainer.EventData originalList)
         {
-            if (!isActiveAndEnabled)
+            if (!this.CheckIsActiveAndEnabled())
             {
                 return originalList;
             }

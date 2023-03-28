@@ -578,7 +578,7 @@
         /// <param name="ignoreBehaviourState">Determines if the events should be emitted based on the <see cref="Behaviour.enabled"/> state.</param>
         protected virtual void TryDeactivate(bool ignoreBehaviourState)
         {
-            if ((!isActiveAndEnabled && !ignoreBehaviourState) || !IsActivated)
+            if ((!this.CheckIsActiveAndEnabled() && !ignoreBehaviourState) || !IsActivated)
             {
                 return;
             }

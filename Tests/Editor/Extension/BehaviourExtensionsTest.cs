@@ -108,7 +108,7 @@ namespace Test.Zinnia.Extension
 
         public void ExecuteOnlyWhenEnabled()
         {
-            if (!isActiveAndEnabled)
+            if (!this.CheckIsActiveAndEnabled())
             {
                 return;
             }

@@ -120,7 +120,7 @@
         /// <returns>The sorted collision collection.</returns>
         public virtual ActiveCollisionsContainer.EventData Sort(ActiveCollisionsContainer.EventData originalList)
         {
-            if (!isActiveAndEnabled || Source == null)
+            if (!this.CheckIsActiveAndEnabled() || Source == null)
             {
                 return originalList;
             }

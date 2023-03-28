@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Tracking.Velocity
 {
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Tracked Velocity information.
@@ -13,7 +14,7 @@
         /// <returns>Whether the <see cref="Behaviour"/> is considered active.</returns>
         public virtual bool IsActive()
         {
-            return isActiveAndEnabled;
+            return this.CheckIsActiveAndEnabled();
         }
 
         /// <summary>

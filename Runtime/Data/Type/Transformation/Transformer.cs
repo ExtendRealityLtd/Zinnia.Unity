@@ -26,7 +26,7 @@
         /// Transforms the given input into the relevant output.
         /// </summary>
         /// <param name="input">The input to transform.</param>
-        /// <returns>The transformed input or the default of <see cref="TOutput"/> if the current component is not <see cref="Behaviour.isActiveAndEnabled"/>.</returns>
+        /// <returns>The transformed input or the default of <see cref="TOutput"/> if the current component is not <see cref="Behaviour.CheckIsActiveAndEnabled()"/>.</returns>
         public virtual TOutput Transform(TInput input)
         {
             if (!this.IsValidState())
