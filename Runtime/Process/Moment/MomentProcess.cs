@@ -97,7 +97,7 @@
         /// </summary>
         public virtual void ProcessNow()
         {
-            if (Source == null || (OnlyProcessOnActiveAndEnabled && !isActiveAndEnabled))
+            if (Source == null || (OnlyProcessOnActiveAndEnabled && !this.CheckIsActiveAndEnabled()))
             {
                 return;
             }

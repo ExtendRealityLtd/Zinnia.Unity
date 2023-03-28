@@ -7,7 +7,7 @@
     using Zinnia.Extension;
 
     /// <summary>
-    /// Emits an event once a list of <see cref="Behaviour"/>s all are <see cref="Behaviour.isActiveAndEnabled"/>.
+    /// Emits an event once a list of <see cref="Behaviour"/>s all are <see cref="Behaviour.CheckIsActiveAndEnabled()"/>.
     /// </summary>
     public class BehaviourEnabledObserver : MonoBehaviour
     {
@@ -73,7 +73,7 @@
         }
 
         /// <summary>
-        /// Emitted when all <see cref="Behaviours"/> are <see cref="Behaviour.isActiveAndEnabled"/>.
+        /// Emitted when all <see cref="Behaviours"/> are <see cref="Behaviour.CheckIsActiveAndEnabled()"/>.
         /// </summary>
         public UnityEvent ActiveAndEnabled = new UnityEvent();
 
@@ -146,7 +146,7 @@
         }
 
         /// <summary>
-        /// Checks whether all <see cref="Behaviours"/> are <see cref="Behaviour.isActiveAndEnabled"/> and emits <see cref="ActiveAndEnabled"/> if they are.
+        /// Checks whether all <see cref="Behaviours"/> are <see cref="Behaviour.CheckIsActiveAndEnabled()"/> and emits <see cref="ActiveAndEnabled"/> if they are.
         /// </summary>
         /// <returns>Whether all <see cref="Behaviours"/> are active and enabled.</returns>
         protected virtual bool AreBehavioursEnabled()
@@ -158,7 +158,7 @@
 
             foreach (Behaviour behaviour in Behaviours.NonSubscribableElements)
             {
-                if (!behaviour.isActiveAndEnabled)
+                if (!behaviour.CheckIsActiveAndEnabled())
                 {
                     return false;
                 }

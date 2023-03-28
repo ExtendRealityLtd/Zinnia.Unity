@@ -85,7 +85,7 @@
         /// <returns><see langword="true"/> if the event should be emitted.</returns>
         protected virtual bool CanEmit()
         {
-            return isActiveAndEnabled;
+            return this.CheckIsActiveAndEnabled();
         }
     }
 

@@ -1,8 +1,8 @@
-﻿using Zinnia.Visual;
+﻿using Zinnia.Data.Collection.List;
+using Zinnia.Visual;
 
 namespace Test.Zinnia.Visual
 {
-    using global::Zinnia.Data.Collection.List;
     using NUnit.Framework;
     using UnityEngine;
 

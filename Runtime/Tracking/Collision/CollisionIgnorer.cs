@@ -214,7 +214,7 @@
         /// <param name="state">Whether to ignore collisions or not.</param>
         protected virtual void ToggleCollisions(GameObject source, GameObjectObservableList sources, GameObjectObservableList targets, bool state)
         {
-            if (source == null || (!state && isActiveAndEnabled && sources.Contains(source)))
+            if (source == null || (!state && this.CheckIsActiveAndEnabled() && sources.Contains(source)))
             {
                 return;
             }

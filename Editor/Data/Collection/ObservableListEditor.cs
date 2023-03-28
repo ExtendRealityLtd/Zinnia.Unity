@@ -12,6 +12,7 @@
     using UnityEditor;
     using UnityEngine;
     using Zinnia.Data.Collection.List;
+    using Zinnia.Extension;
     using Zinnia.Utility;
 
     /// <summary>
@@ -68,7 +69,7 @@
 
             bool drawAsDisabled = Application.isPlaying
                 && property.serializedObject.targetObject is Behaviour behaviour
-                && !behaviour.isActiveAndEnabled;
+                && !behaviour.CheckIsActiveAndEnabled();
             if (drawAsDisabled)
             {
                 EditorGUILayout.HelpBox(

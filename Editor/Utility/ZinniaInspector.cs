@@ -6,6 +6,7 @@
     using System.Reflection;
     using UnityEditor;
     using UnityEngine;
+    using Zinnia.Extension;
     using Object = UnityEngine.Object;
 
     [CustomEditor(typeof(Object), true)]
@@ -108,7 +109,7 @@
 
         protected virtual bool CanApplyChangeHandlers(Object targetObject)
         {
-            return Application.isPlaying && targetObject is Behaviour behaviour && behaviour.isActiveAndEnabled;
+            return Application.isPlaying && targetObject is Behaviour behaviour && behaviour.CheckIsActiveAndEnabled();
         }
 
         protected virtual bool TryApplyChangeHandlersToProperty(Object targetObject, SerializedProperty property)

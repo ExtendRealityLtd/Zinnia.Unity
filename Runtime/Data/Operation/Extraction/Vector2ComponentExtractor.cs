@@ -83,7 +83,7 @@
         /// <returns>The extracted <see cref="float"/>.</returns>
         public virtual float? Extract()
         {
-            if (!isActiveAndEnabled)
+            if (!this.CheckIsActiveAndEnabled())
             {
                 Result = null;
                 return null;

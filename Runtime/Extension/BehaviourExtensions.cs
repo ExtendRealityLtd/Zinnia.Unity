@@ -42,7 +42,7 @@
                     return;
                 }
 
-                if (!behaviour.isActiveAndEnabled)
+                if (!behaviour.CheckIsActiveAndEnabled())
                 {
                     return;
                 }
@@ -51,7 +51,7 @@
                 action();
             }
 
-            if (behaviour.isActiveAndEnabled)
+            if (behaviour.CheckIsActiveAndEnabled())
             {
                 action();
                 return;
@@ -84,7 +84,24 @@
         /// <returns>Whether the member change method is allowed to run.</returns>
         public static bool IsMemberChangeAllowed(this Behaviour behaviour)
         {
-            return Application.isPlaying && behaviour.isActiveAndEnabled;
+            return Application.isPlaying && behaviour.CheckIsActiveAndEnabled();
+        }
+
+        /// <summary>
+        /// Checks to see if the behaviour <see cref="GameObject"/> is active in the hierarchy and whether it's enabled.
+        /// </summary>
+        /// <remarks>
+        /// This is a replacement for <see cref="Behaviour.isActiveAndEnabled"/> as that does not always return the expected result.
+        /// </remarks>
+        /// <param name="behaviour">The <see cref="Behaviour"/> to check against.</param>
+        /// <returns>Whether the gameobject is active and the behaviour is enabled.</returns>
+        public static bool CheckIsActiveAndEnabled(this Behaviour behaviour)
+        {
+#if ZINNIA_USE_ISACTIVEANDENABLED
+            return behaviour.isActiveAndEnabled;
+#else
+            return behaviour.gameObject.activeInHierarchy && behaviour.enabled;
+#endif
         }
     }
 }

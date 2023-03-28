@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Haptics
 {
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// The basis of a haptic process that can be started or cancelled.
@@ -13,7 +14,7 @@
         /// <returns><see langword="true"/> if the <see cref="Component"/> is considered active.</returns>
         public virtual bool IsActive()
         {
-            return isActiveAndEnabled;
+            return this.CheckIsActiveAndEnabled();
         }
 
         /// <summary>

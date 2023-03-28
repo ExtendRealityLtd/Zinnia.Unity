@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Collision;
+﻿using Zinnia.Extension;
+using Zinnia.Tracking.Collision;
 using Zinnia.Tracking.Collision.Active;
 
 namespace Test.Zinnia.Tracking.Collision.Active
@@ -13,7 +14,7 @@ namespace Test.Zinnia.Tracking.Collision.Active
         public override bool Consume(ActiveCollisionPublisher.PayloadData publisher, CollisionNotifier.EventData currentCollision)
         {
             received = false;
-            if (isActiveAndEnabled)
+            if (this.CheckIsActiveAndEnabled())
             {
                 received = true;
             }

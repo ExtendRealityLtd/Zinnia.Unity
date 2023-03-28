@@ -3,6 +3,7 @@
     using System.Linq;
     using UnityEngine;
     using UnityEngine.Events;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Slices a selection of the collection from the given <see cref="StartIndex"/> for the given <see cref="Length"/> and provides the sliced collection and the remaining collection separately.
@@ -116,7 +117,7 @@
             SlicedList.Clear();
             RemainingList.Clear();
 
-            if (!isActiveAndEnabled)
+            if (!this.CheckIsActiveAndEnabled())
             {
                 return SlicedList;
             }
@@ -193,7 +194,7 @@
         public virtual ActiveCollisionsContainer.EventData Slice(ActiveCollisionsContainer.EventData originalList, out ActiveCollisionsContainer.EventData remaining)
         {
             ActiveCollisionsContainer.EventData returnList = Slice(originalList);
-            remaining = (isActiveAndEnabled ? RemainingList : originalList);
+            remaining = (this.CheckIsActiveAndEnabled() ? RemainingList : originalList);
             return returnList;
         }
 

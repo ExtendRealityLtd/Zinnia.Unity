@@ -2,6 +2,7 @@
 {
     using UnityEditor;
     using UnityEngine;
+    using Zinnia.Extension;
 
     /// <summary>
     /// Displays an inspector property drawer with restricted styles.
@@ -45,8 +46,8 @@
             RestrictedAttribute attrib = (RestrictedAttribute)attribute;
             Behaviour behaviour = (Behaviour)property.serializedObject.targetObject;
 
-            bool isPlayingAndActiveAndEnabled = Application.isPlaying && behaviour.isActiveAndEnabled;
-            bool isPlayingAndActiveAndDisabled = Application.isPlaying && !behaviour.isActiveAndEnabled;
+            bool isPlayingAndActiveAndEnabled = Application.isPlaying && behaviour.CheckIsActiveAndEnabled();
+            bool isPlayingAndActiveAndDisabled = Application.isPlaying && !behaviour.CheckIsActiveAndEnabled();
             bool makeReadOnly = (attrib.restrictions & RestrictedAttribute.Restrictions.ReadOnlyAlways) != 0 ||
                 ((attrib.restrictions & RestrictedAttribute.Restrictions.ReadOnlyAtRunTime) != 0 && Application.isPlaying) ||
                 ((attrib.restrictions & RestrictedAttribute.Restrictions.ReadOnlyAtRunTimeAndEnabled) != 0 && isPlayingAndActiveAndEnabled) ||

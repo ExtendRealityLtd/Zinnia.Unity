@@ -121,7 +121,7 @@
         /// Sets the property to the new value.
         /// </summary>
         /// <param name="input">The value to set it to.</param>
-        /// <returns>The mutated value if the current component is <see cref="Behaviour.isActiveAndEnabled"/> and the <see cref="Target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
+        /// <returns>The mutated value if the current component is <see cref="Behaviour.CheckIsActiveAndEnabled()"/> and the <see cref="Target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
         public virtual Vector3 SetProperty(Vector3 input)
         {
             if (!IsValid())
@@ -153,7 +153,7 @@
         /// Increments the property by the given value.
         /// </summary>
         /// <param name="input">The value to increment by.</param>
-        /// <returns>The mutated value if the current component is <see cref="Behaviour.isActiveAndEnabled"/> and the <see cref="Target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
+        /// <returns>The mutated value if the current component is <see cref="Behaviour.CheckIsActiveAndEnabled()"/> and the <see cref="Target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
         public virtual Vector3 IncrementProperty(Vector3 input)
         {
             if (!IsValid())

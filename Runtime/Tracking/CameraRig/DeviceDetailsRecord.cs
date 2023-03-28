@@ -160,6 +160,26 @@
         }
 
         /// <summary>
+        /// Sets the pass through state on the camera based on the current <see cref="PassThroughCameraEnabled"/> state.
+        /// </summary>
+        public virtual void SetPassThrough()
+        {
+            if (!HasPassThroughCamera)
+            {
+                return;
+            }
+
+            if (PassThroughCameraEnabled)
+            {
+                EnablePassThrough();
+            }
+            else
+            {
+                DisablePassThrough();
+            }
+        }
+
+        /// <summary>
         /// Checks to see if the <see cref="BatteryChargeStatus"/> has changed.
         /// </summary>
         /// <returns>Whether the status has changed or not.</returns>
