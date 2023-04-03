@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.10.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.9.0...v2.10.0) (2023-04-03)
+
+#### Features
+
+* **Utility:** add pipeline material applier component ([bf82afb](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/bf82afb2b0b3114f9090f69e5182367420d615fe))
+  > The PipelineMaterialApplier will set the Materials on a given Renderer based on the current render pipeline being used. It gets the materials to apply from a given list of materials that has a string group name that matches the desired render pipeline name.
+  > 
+  > If no render pipeline is provided then the matched name will be:
+  > 
+  > * `default`
+  > 
+  > There is also an editor menu item that will attempt to find all PipelineMaterialApplier components in the scene and run them to ensure all materials on the renderers are updated to match the current render pipeline.
+
 ## [2.9.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.8.0...v2.9.0) (2023-03-28)
 
 #### Features
