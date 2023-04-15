@@ -49,6 +49,60 @@ namespace Test.Zinnia.Tracking.Collision.Active.Operation.Extraction
         }
 
         [Test]
+        public void ExtractCompoundParent()
+        {
+            UnityEventListenerMock extractedMock = new UnityEventListenerMock();
+            subject.Extracted.AddListener(extractedMock.Listen);
+            subject.ExtractCompoundParent = true;
+            GameObject parent = new GameObject("NotifierTargetExtractorTest_Parent");
+            parent.AddComponent<Rigidbody>();
+            GameObject child = new GameObject("NotifierTargetExtractorTest_Child");
+            Collider collider = child.AddComponent<BoxCollider>();
+            child.transform.SetParent(parent.transform);
+            CollisionNotifier.EventData eventData = new CollisionNotifier.EventData
+            {
+                ColliderData = collider
+            };
+
+            Assert.IsNull(subject.Result);
+            Assert.IsFalse(extractedMock.Received);
+
+            subject.Extract(eventData);
+
+            Assert.AreEqual(parent, subject.Result);
+            Assert.IsTrue(extractedMock.Received);
+
+            Object.DestroyImmediate(parent);
+        }
+
+        [Test]
+        public void ExtractIgnoreCompoundParent()
+        {
+            UnityEventListenerMock extractedMock = new UnityEventListenerMock();
+            subject.Extracted.AddListener(extractedMock.Listen);
+            subject.ExtractCompoundParent = false;
+            GameObject parent = new GameObject("NotifierTargetExtractorTest_Parent");
+            parent.AddComponent<Rigidbody>();
+            GameObject child = new GameObject("NotifierTargetExtractorTest_Child");
+            Collider collider = child.AddComponent<BoxCollider>();
+            child.transform.SetParent(parent.transform);
+            CollisionNotifier.EventData eventData = new CollisionNotifier.EventData
+            {
+                ColliderData = collider
+            };
+
+            Assert.IsNull(subject.Result);
+            Assert.IsFalse(extractedMock.Received);
+
+            subject.Extract(eventData);
+
+            Assert.AreEqual(child, subject.Result);
+            Assert.IsTrue(extractedMock.Received);
+
+            Object.DestroyImmediate(parent);
+        }
+
+        [Test]
         public void ExtractInactiveGameObject()
         {
             UnityEventListenerMock extractedMock = new UnityEventListenerMock();

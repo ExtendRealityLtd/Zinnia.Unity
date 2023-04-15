@@ -6,7 +6,7 @@
     using Zinnia.Data.Operation.Extraction;
 
     /// <summary>
-    /// Extracts the source container from a given <see cref="ActiveCollisionPublisher.PayloadData"/>.
+    /// Extracts the source container from a given <see cref="ActiveCollisionPublisher.PayloadData"/> found within a <see cref="ActiveCollisionConsumer.UnityEvent"/>.
     /// </summary>
     public class PublisherContainerExtractor : GameObjectExtractor<ActiveCollisionPublisher.PayloadData, PublisherContainerExtractor.UnityEvent>
     {
