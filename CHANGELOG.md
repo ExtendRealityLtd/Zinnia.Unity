@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.11.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.10.0...v2.11.0) (2023-04-16)
+
+#### Features
+
+* **Tracking:** add active collision consumer collision extractor ([483df69](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/483df69aa8f42010c433ce580c1232a5513b000f))
+  > A new component that allows to extract the collision notifier event data from the event data of the Active Collision Consumer.
+  > 
+  > The Notifier Target Extractor also has the option now to get the absolute collider object or the compound parent (as was the original) functionality.
+
+#### Bug Fixes
+
+* **Utility:** limit pipeline material applier to unity 2020 or above ([c0a0466](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c0a0466399399181b7a26c6f2a25e121d93daaf6))
+  > The mechanism within the ScenePipelineMaterialApplier uses the `FindObjectsOfType` method that in Unity 2019.2 had the additional parameter of `findInactive` added, which is required for this functionality to work.
+  > 
+  > However, in Unity 2019.4 this parameter is randomly removed, probably due to poor quality control from Unity, so this means that this functionality works in 2019.2, 2019.3 but throws an error in 2019.4.
+  > 
+  > The feature is reintroduced in 2020.1, so the fix is just to support this functionality in 2020.1 as Unity won't back port a fix.
+
 ## [2.10.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.9.0...v2.10.0) (2023-04-03)
 
 #### Features
