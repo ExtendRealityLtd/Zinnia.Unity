@@ -90,5 +90,15 @@ namespace Test.Zinnia.Extension
             Assert.That(new Vector2(270f, 270f).UnsignedEulerToSignedEuler(), Is.EqualTo(new Vector2(-90f, -90f)).Using(comparer));
             Assert.That(new Vector2(360f, 360f).UnsignedEulerToSignedEuler(), Is.EqualTo(new Vector2(0f, 0f)).Using(comparer));
         }
+
+        [Test]
+        public void Direction()
+        {
+            Vector2 source = Vector2.zero;
+            Vector2 target = new Vector2(1.234f, 3.23f);
+            Vector2EqualityComparer comparer = new Vector2EqualityComparer(0.1f);
+            Assert.That(Vector2Extensions.Direction(source, target), Is.EqualTo(target).Using(comparer));
+            Assert.That(Vector2Extensions.Direction(source, target, true), Is.EqualTo(target.normalized).Using(comparer));
+        }
     }
 }
