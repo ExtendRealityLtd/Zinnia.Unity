@@ -1,11 +1,13 @@
 namespace Zinnia.Cast
 {
+    using System;
     using UnityEngine;
     using Zinnia.Extension;
 
     /// <summary>
     /// Casts a straight line in the direction of the origin for a fixed length.
     /// </summary>
+    [Obsolete("Use `StraightLineCast.ShouldFixLength` instead.")]
     public class FixedLineCast : StraightLineCast
     {
         [Tooltip("The current length of the cast.")]
@@ -41,6 +43,20 @@ namespace Zinnia.Cast
             {
                 CurrentLength = Vector3.Distance(data.Points[0], data.Points[1]);
             }
+        }
+
+        /// <summary>
+        /// Increments the current length of the cast by the given value.
+        /// </summary>
+        /// <param name="value">The value to increment the length by.</param>
+        public virtual void IncrementCurrentLength(float value)
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            CurrentLength += value;
         }
 
         /// <inheritdoc />

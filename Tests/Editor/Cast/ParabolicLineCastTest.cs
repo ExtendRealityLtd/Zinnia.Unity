@@ -238,5 +238,149 @@ namespace Test.Zinnia.Cast
             Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsFalse(castResultsChangedMock.Received);
         }
+
+        [Test]
+        public void CursorLockDuration()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.Origin = subject.gameObject;
+            subject.CursorLockThreshold = 0.2f;
+
+            validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
+
+            subject.MaximumLength = new Vector2(5f, 5f);
+            subject.SegmentCount = 5;
+
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Vector3[] expectedPoints = new Vector3[]
+            {
+                Vector3.zero,
+                new Vector3(0f, -0.124f, 2.89f),
+                new Vector3(0f, -1.4f, 4.4f),
+                new Vector3(0f, -2.8f, 4.9f),
+                new Vector3(0f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
+            };
+
+            for (int index = 0; index < subject.Points.Count; index++)
+            {
+                Assert.That(subject.Points[index], Is.EqualTo(expectedPoints[index]).Using(comparer), "Index " + index);
+            }
+
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+
+            castResultsChangedMock.Reset();
+
+            subject.gameObject.transform.position = Vector3.right * 0.15f;
+
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            expectedPoints = new Vector3[]
+            {
+                Vector3.right * 0.15f,
+                new Vector3(0.126f, -0.124f, 2.89f),
+                new Vector3(0.075f, -1.4f, 4.4f),
+                new Vector3(0.023f, -2.8f, 4.9f),
+                new Vector3(0f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
+            };
+
+            for (int index = 0; index < subject.Points.Count; index++)
+            {
+                Assert.That(subject.Points[index], Is.EqualTo(expectedPoints[index]).Using(comparer), "Index " + index);
+            }
+
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+
+            castResultsChangedMock.Reset();
+
+            subject.gameObject.transform.position = Vector3.right * 0.25f;
+
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            expectedPoints = new Vector3[]
+            {
+                Vector3.right * 0.25f,
+                new Vector3(0.25f, -0.124f, 2.89f),
+                new Vector3(0.25f, -1.4f, 4.4f),
+                new Vector3(0.25f, -2.8f, 4.9f),
+                new Vector3(0.25f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
+            };
+
+            for (int index = 0; index < subject.Points.Count; index++)
+            {
+                Assert.That(subject.Points[index], Is.EqualTo(expectedPoints[index]).Using(comparer), "Index " + index);
+            }
+
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator TransitionDuration()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            subject.Origin = subject.gameObject;
+            subject.TransitionDuration = 1f;
+
+            validSurface.transform.position = Vector3.forward * 5f + Vector3.down * 4f;
+
+            subject.MaximumLength = new Vector2(5f, 5f);
+            subject.SegmentCount = 5;
+
+            yield return null;
+
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+            yield return null;
+
+            Vector3[] expectedPoints = new Vector3[]
+            {
+                Vector3.zero,
+                new Vector3(0f, -0.124f, 2.89f),
+                new Vector3(0f, -1.4f, 4.4f),
+                new Vector3(0f, -2.8f, 4.9f),
+                new Vector3(0f, validSurface.transform.position.y + (validSurface.transform.localScale.y / 2f), validSurface.transform.position.z)
+            };
+
+            for (int index = 0; index < subject.Points.Count; index++)
+            {
+                Assert.That(subject.Points[index], Is.EqualTo(expectedPoints[index]).Using(comparer), "Index " + index);
+            }
+
+            subject.gameObject.transform.eulerAngles = Vector3.up * 15f;
+
+            float timePassed = 0f;
+            while (timePassed < subject.TransitionDuration)
+            {
+                Physics.Simulate(Time.fixedDeltaTime);
+                subject.Process();
+                yield return new WaitForEndOfFrame();
+                timePassed += Time.deltaTime;
+            }
+
+            expectedPoints = new Vector3[]
+{
+                Vector3.zero,
+                new Vector3(0.450f, 0.421f, 2.855f),
+                new Vector3(0.679f, 0.375f, 4.321f),
+                new Vector3(0.768f, 0.140f, 4.86f),
+                new Vector3(0.779f, 0.0001f, 4.938f)
+};
+
+            for (int index = 0; index < subject.Points.Count; index++)
+            {
+                Assert.That(subject.Points[index], Is.EqualTo(expectedPoints[index]).Using(comparer), "Index " + index + " = " + subject.Points[index].x + ", " + subject.Points[index].y + ", " + subject.Points[index].z);
+            }
+        }
     }
 }

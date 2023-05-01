@@ -111,6 +111,7 @@
         [Serializable]
         public class UnityEvent : UnityEvent<EventData> { }
 
+        [Header("Cast Settings")]
         [Tooltip("The origin point for the cast.")]
         [SerializeField]
         private GameObject origin;
@@ -179,6 +180,40 @@
                 targetPointValidity = value;
             }
         }
+        [Tooltip("The amount of distance the cursor has to move before the destination of the cursor is updated to a new position.")]
+        [SerializeField]
+        private float cursorLockThreshold;
+        /// <summary>
+        /// The amount of distance the cursor has to move before the destination of the cursor is updated to a new position.
+        /// </summary>
+        public float CursorLockThreshold
+        {
+            get
+            {
+                return cursorLockThreshold;
+            }
+            set
+            {
+                cursorLockThreshold = value;
+            }
+        }
+        [Tooltip("The duration it takes to transition previous destination point to the current actual target point.")]
+        [SerializeField]
+        private float transitionDuration;
+        /// <summary>
+        /// The duration it takes to transition previous destination point to the current actual target point.
+        /// </summary>
+        public float TransitionDuration
+        {
+            get
+            {
+                return transitionDuration;
+            }
+            set
+            {
+                transitionDuration = value;
+            }
+        }
 
         /// <summary>
         /// An override for the destination location point in world space.
@@ -188,6 +223,7 @@
         /// <summary>
         /// Emitted whenever the cast result changes.
         /// </summary>
+        [Header("Cast Events")]
         public UnityEvent ResultsChanged = new UnityEvent();
 
         /// <summary>
@@ -226,6 +262,14 @@
         /// The data to emit with an event.
         /// </summary>
         protected readonly EventData eventData = new EventData();
+        /// <summary>
+        /// The origin forward that is being tracked by the drag delay.
+        /// </summary>
+        protected Vector3? trackedOriginForward = null;
+        /// <summary>
+        /// The reference to the output velocity.
+        /// </summary>
+        protected Vector3 outVelocity = Vector3.zero;
 
         /// <summary>
         /// Clears <see cref="Origin"/>.
@@ -313,14 +357,48 @@
 
         protected virtual void OnEnable()
         {
+            points.Clear();
             OnAfterTargetHitChange();
         }
 
         protected virtual void OnDisable()
         {
             TargetHit = null;
+            trackedOriginForward = null;
             IsTargetHitValid = false;
+            points.Clear();
             ClearDestinationPointOverride();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orignForward"></param>
+        protected virtual Vector3 GetTrackedForward(Vector3 orignForward)
+        {
+            trackedOriginForward = TransitionDuration.ApproxEquals(0f) || trackedOriginForward == null ? orignForward : Vector3.SmoothDamp((Vector3)trackedOriginForward, orignForward, ref outVelocity, TransitionDuration, Mathf.Infinity, Time.deltaTime);
+            return (Vector3)trackedOriginForward;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actualHitData"></param>
+        /// <param name="hasCollided"></param>
+        /// <returns></returns>
+        protected virtual RaycastHit GetActualTargetHit(RaycastHit actualHitData, bool hasCollided)
+        {
+            RaycastHit newTargetHit = actualHitData;
+            if (CursorLockThreshold > 0f && TargetHit != null)
+            {
+                RaycastHit existingTargetHit = (RaycastHit)TargetHit;
+                if (Vector3.Distance(actualHitData.point, existingTargetHit.point) <= CursorLockThreshold)
+                {
+                    newTargetHit = existingTargetHit;
+                }
+            }
+            TargetHit = hasCollided ? newTargetHit : (RaycastHit?)null;
+            return newTargetHit;
         }
 
         /// <summary>
