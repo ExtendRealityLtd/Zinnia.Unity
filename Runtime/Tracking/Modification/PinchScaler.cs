@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Tracking.Modification
 {
     using UnityEngine;
+    using Zinnia.Data.Type;
     using Zinnia.Extension;
     using Zinnia.Process;
 
@@ -9,6 +10,7 @@
     /// </summary>
     public class PinchScaler : MonoBehaviour, IProcessable
     {
+        [Header("Scale Settings")]
         [Tooltip("The target to scale.")]
         [SerializeField]
         private GameObject target;
@@ -68,23 +70,6 @@
                 }
             }
         }
-        [Tooltip("A scale factor multiplier.")]
-        [SerializeField]
-        private float multiplier = 1f;
-        /// <summary>
-        /// A scale factor multiplier.
-        /// </summary>
-        public float Multiplier
-        {
-            get
-            {
-                return multiplier;
-            }
-            set
-            {
-                multiplier = value;
-            }
-        }
         [Tooltip("Determines whether to use local or global scale.")]
         [SerializeField]
         private bool useLocalScale = true;
@@ -117,6 +102,76 @@
             set
             {
                 calculateByPower = value;
+            }
+        }
+        [Tooltip("A scale factor multiplier.")]
+        [SerializeField]
+        private float multiplier = 1f;
+        /// <summary>
+        /// A scale factor multiplier.
+        /// </summary>
+        public float Multiplier
+        {
+            get
+            {
+                return multiplier;
+            }
+            set
+            {
+                multiplier = value;
+            }
+        }
+
+        [Header("Restriction Settings")]
+        [Tooltip("Determines which axes to apply the modification on>.")]
+        [SerializeField]
+        private Vector3State applyScaleOnAxis = Vector3State.True;
+        /// <summary>
+        /// Determines which axes to apply the modification on>.
+        /// </summary>
+        public Vector3State ApplyScaleOnAxis
+        {
+            get
+            {
+                return applyScaleOnAxis;
+            }
+            set
+            {
+                applyScaleOnAxis = value;
+            }
+        }
+        [Tooltip("The minimum allowed scale.")]
+        [SerializeField]
+        private Vector3 minimumScaleLimit = Vector3.one * float.NegativeInfinity;
+        /// <summary>
+        /// The minimum allowed scale.
+        /// </summary>
+        public Vector3 MinimumScaleLimit
+        {
+            get
+            {
+                return minimumScaleLimit;
+            }
+            set
+            {
+                minimumScaleLimit = value;
+            }
+        }
+        [Tooltip("The maximum allowed scale.")]
+        [SerializeField]
+        private Vector3 maximumScaleLimit = Vector3.one * float.PositiveInfinity;
+        /// <summary>
+        /// The maximum allowed scale.
+        /// </summary>
+        public Vector3 MaximumScaleLimit
+        {
+            get
+            {
+                return maximumScaleLimit;
+            }
+            set
+            {
+                maximumScaleLimit = value;
             }
         }
 
@@ -233,6 +288,20 @@
         }
 
         /// <summary>
+        /// Applies the scale limits to the given scale value.
+        /// </summary>
+        /// <param name="scale">The scale value to apply limits to.</param>
+        /// <returns>The scale value with limits applied.</returns>
+        protected virtual Vector3 ApplyLimits(Vector3 scale)
+        {
+            return new Vector3(
+                ApplyScaleOnAxis.xState ? Mathf.Clamp(scale.x, minimumScaleLimit.x, maximumScaleLimit.x) : GetTargetScale().x,
+                ApplyScaleOnAxis.yState ? Mathf.Clamp(scale.y, minimumScaleLimit.y, maximumScaleLimit.y) : GetTargetScale().y,
+                ApplyScaleOnAxis.zState ? Mathf.Clamp(scale.z, minimumScaleLimit.z, maximumScaleLimit.z) : GetTargetScale().z
+                );
+        }
+
+        /// <summary>
         /// Scales the object by the distance delta multiplied against the multiplier.
         /// </summary>
         protected virtual void ScaleByMultiplier()
@@ -241,11 +310,11 @@
             Vector3 newScale = Vector3.one * distanceDelta * Multiplier;
             if (UseLocalScale)
             {
-                Target.transform.localScale += newScale;
+                Target.transform.localScale = ApplyLimits(Target.transform.localScale + newScale);
             }
             else
             {
-                Target.transform.SetGlobalScale(Target.transform.lossyScale + newScale);
+                Target.transform.SetGlobalScale(ApplyLimits(Target.transform.lossyScale + newScale));
             }
         }
 
@@ -259,11 +328,11 @@
 
             if (UseLocalScale)
             {
-                Target.transform.localScale = Vector3.Scale(Target.transform.localScale, scaleVector);
+                Target.transform.localScale = ApplyLimits(Vector3.Scale(Target.transform.localScale, scaleVector));
             }
             else
             {
-                Target.transform.SetGlobalScale(Vector3.Scale(Target.transform.lossyScale, scaleVector));
+                Target.transform.SetGlobalScale(ApplyLimits(Vector3.Scale(Target.transform.lossyScale, scaleVector)));
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using Zinnia.Tracking.Modification;
+﻿using Zinnia.Data.Type;
+using Zinnia.Tracking.Modification;
 
 namespace Test.Zinnia.Tracking.Modification
 {
@@ -71,6 +72,49 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Process();
 
             Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one * 5f).Using(comparer));
+
+            Object.DestroyImmediate(target);
+            Object.DestroyImmediate(primaryPoint);
+            Object.DestroyImmediate(secondaryPoint);
+        }
+
+        [Test]
+        public void ProcessWithLimits()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("PinchScalerTest");
+            GameObject primaryPoint = new GameObject("PinchScalerTest");
+            GameObject secondaryPoint = new GameObject("PinchScalerTest");
+
+            subject.Target = target;
+            subject.PrimaryPoint = primaryPoint;
+            subject.SecondaryPoint = secondaryPoint;
+            subject.MinimumScaleLimit = Vector3.one * 0.5f;
+            subject.MaximumScaleLimit = Vector3.one * 2f;
+
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one).Using(comparer));
+
+            subject.Process();
+
+            primaryPoint.transform.position = Vector3.forward * 1f;
+            secondaryPoint.transform.position = Vector3.forward * -1f;
+            subject.Process();
+
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one * 2f).Using(comparer));
+
+            primaryPoint.transform.position = Vector3.forward * 1f;
+            secondaryPoint.transform.position = Vector3.forward * 1f;
+            subject.Process();
+
+            Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one * 0.5f).Using(comparer));
+
+            subject.ApplyScaleOnAxis = Vector3State.XYOnly;
+
+            primaryPoint.transform.position = Vector3.forward * 1f;
+            secondaryPoint.transform.position = Vector3.forward * -1f;
+            subject.Process();
+
+            Assert.That(target.transform.localScale, Is.EqualTo(new Vector3(2f, 2f, 0.5f)).Using(comparer));
 
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(primaryPoint);
