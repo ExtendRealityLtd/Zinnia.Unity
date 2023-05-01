@@ -54,6 +54,33 @@ namespace Test.Zinnia.Data.Type
         }
 
         [Test]
+        public void DefaultStateXYAxis()
+        {
+            Vector3State actualResult = Vector3State.XYOnly;
+            Assert.IsTrue(actualResult.xState);
+            Assert.IsTrue(actualResult.yState);
+            Assert.IsFalse(actualResult.zState);
+        }
+
+        [Test]
+        public void DefaultStateXZAxis()
+        {
+            Vector3State actualResult = Vector3State.XZOnly;
+            Assert.IsTrue(actualResult.xState);
+            Assert.IsFalse(actualResult.yState);
+            Assert.IsTrue(actualResult.zState);
+        }
+
+        [Test]
+        public void DefaultStateYZAxis()
+        {
+            Vector3State actualResult = Vector3State.YZOnly;
+            Assert.IsFalse(actualResult.xState);
+            Assert.IsTrue(actualResult.yState);
+            Assert.IsTrue(actualResult.zState);
+        }
+
+        [Test]
         public void CustomInitialState()
         {
             Vector3State actualResult = new Vector3State(false, true, false);

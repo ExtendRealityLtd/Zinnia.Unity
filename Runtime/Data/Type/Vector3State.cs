@@ -52,6 +52,21 @@
         public static readonly Vector3State ZOnly = new Vector3State(false, false, true);
 
         /// <summary>
+        /// Shorthand for writing <c>Vector3State(true, true, false)</c>.
+        /// </summary>
+        public static readonly Vector3State XYOnly = new Vector3State(true, true, false);
+
+        /// <summary>
+        /// Shorthand for writing <c>Vector3State(true, false, true)</c>.
+        /// </summary>
+        public static readonly Vector3State XZOnly = new Vector3State(true, false, true);
+
+        /// <summary>
+        /// Shorthand for writing <c>Vector3State(false, true, true)</c>.
+        /// </summary>
+        public static readonly Vector3State YZOnly = new Vector3State(false, true, true);
+
+        /// <summary>
         /// The Constructor that allows setting the individual states at instantiation.
         /// </summary>
         /// <param name="x">The X State.</param>
