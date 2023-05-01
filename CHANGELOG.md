@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.12.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.11.0...v2.12.0) (2023-05-01)
+
+#### Features
+
+* **Cast:** add cursor lock and transition duration to points cast ([057201c](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/057201c84986befc9ec61e275253ccb89238a78f))
+  > The PointsCast now has a cursor lock function and a transition duration which allows the cursor to be locked to a location until the pointer moves a certain threshold distance away when the cursor location will then be updated, this can be used to prevent jittering or keep a solid lock on an object. The transition duration allows the pointer destination cursor to transition over time to the new destination providing a smoothing feature for the pointer cursor.
+  > 
+  > The FixedLineCast has now been deprecated as the StraightLineCast now handles the concept of being a fixed line as it's basically the same thing and makes it more complex to implement functionality that is shared between the two concepts.
+  > 
+  > The StraightLineCast now has the ability to fix the line at a set length and optionally ignore any new targets once fixed.
+  > 
+  > Along with the cursor lock and transition duration, it's also possible to apply a drag effect to the straight line where the straight line actually bends to try and keep the straight line from the origin to the offset destination.
+* **Cast:** add points cast event proxy emitter ([24d5c1a](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/24d5c1a2b67ceebda52573c004242cc45c51047a))
+  > The PointsCastEventProxyEmitter allows Points Cast data to be proxied.
+* **Data:** add more shorthand states for Vector3State ([57ac8be](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/57ac8be2a6a949e1776f04fbe5978676acf26649))
+  > The Vector3State type now has additional short hand initialisers like XYOnly, XZOnly and YZOnly.
+* **Event:** add gameobject relations event proxy emitter ([d1d8c2e](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d1d8c2e9f68611b1b1f24cc043c8c50203b410ff))
+  > The GameObjectRelationsEventProxyEmitter makes it possible to proxy events containing the GameObjectRelations Payload.
+* **Extension:** add vector direction extension ([883cf7d](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/883cf7d224d67688e6899096143a4271beaae5c4))
+  > A Direction extension method for Vector2 and Vector3 will get the direction vector between a source point and a target point.
+* **Tracking:** add limits to pinch scaler ([498ff2d](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/498ff2dad80035fbbcf942894c5665585ed76a39))
+  > The PinchScaler component can now have min/max scale limits applied to it as well as limiting the axes that will be scaled.
+
 ## [2.11.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.10.0...v2.11.0) (2023-04-16)
 
 #### Features
