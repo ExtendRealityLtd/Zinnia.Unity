@@ -124,21 +124,6 @@
             MaximumLength = new Vector2(MaximumLength.x, value);
         }
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            curvePoints.Add(default);
-            curvePoints.Add(default);
-            curvePoints.Add(default);
-            curvePoints.Add(default);
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            curvePoints.Clear();
-        }
-
         /// <inheritdoc />
         protected override void DoCastPoints()
         {
@@ -153,7 +138,8 @@
         /// <returns>The collision point or the point being the furthest away on the cast line if nothing is hit.</returns>
         protected virtual Vector3 ProjectForward()
         {
-            float rotation = Vector3.Dot(Vector3.up, Origin.transform.forward.normalized);
+            Vector3 actualForward = GetTrackedForward(Origin.transform.forward);
+            float rotation = Vector3.Dot(Vector3.up, actualForward.normalized);
             float length = MaximumLength.x;
 
             if ((rotation * 100f) > HeightLimitAngle)
@@ -162,7 +148,7 @@
                 length = MaximumLength.x * controllerRotationOffset * controllerRotationOffset;
             }
 
-            Ray ray = new Ray(Origin.transform.position, Origin.transform.forward);
+            Ray ray = new Ray(Origin.transform.position, actualForward);
             bool hasCollided = PhysicsCast.Raycast(PhysicsCast, ray, out RaycastHit hitData, length, Physics.IgnoreRaycastLayer);
 
             // Adjust the cast length if something is blocking it.
@@ -195,8 +181,8 @@
 
             if (downRayHit)
             {
-                point = ray.GetPoint(hitData.distance);
-                TargetHit = hitData;
+                RaycastHit actualHitData = GetActualTargetHit(hitData, downRayHit);
+                point = actualHitData.point;
             }
 
             return point;
@@ -260,13 +246,11 @@
             forward = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : forward;
             down = DestinationPointOverride != null ? (Vector3)DestinationPointOverride : down;
 
-            if (curvePoints.Count >= 4)
-            {
-                curvePoints[0] = Origin.transform.position;
-                curvePoints[1] = forward + (Vector3.up * CurveOffset);
-                curvePoints[2] = down;
-                curvePoints[3] = down;
-            }
+            curvePoints.Clear();
+            curvePoints.Add(Origin.transform.position);
+            curvePoints.Add(forward + (Vector3.up * CurveOffset));
+            curvePoints.Add(down);
+            curvePoints.Add(down);
 
             points.Clear();
             foreach (Vector3 generatedPoint in BezierCurveGenerator.GeneratePoints(SegmentCount, curvePoints))

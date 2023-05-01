@@ -61,5 +61,18 @@
         {
             return new Vector2(eulerAngles.x.GetSignedDegree(), eulerAngles.y.GetSignedDegree());
         }
+
+        /// <summary>
+        /// Gets the direction from a source to a target.
+        /// </summary>
+        /// <param name="source">The starting point.</param>
+        /// <param name="target">The finishing point.</param>
+        /// <param name="isNormalized">Whether to normalize the direction.</param>
+        /// <returns>The direction that the target is in from the source.</returns>
+        public static Vector2 Direction(this Vector2 source, Vector2 target, bool isNormalized = false)
+        {
+            Vector3 heading = target - source;
+            return heading / (isNormalized ? heading.magnitude : 1f);
+        }
     }
 }

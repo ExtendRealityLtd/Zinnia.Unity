@@ -222,7 +222,7 @@ namespace Test.Zinnia.Cast
             Physics.Simulate(Time.fixedDeltaTime);
             subject.Process();
 
-            Assert.AreEqual(4, subject.Points.Count);
+            Assert.AreEqual(2, subject.Points.Count);
             Assert.IsFalse(subject.TargetHit.HasValue);
             Assert.IsFalse(castResultsChangedMock.Received);
         }
@@ -375,6 +375,286 @@ namespace Test.Zinnia.Cast
             subject.ClearDestinationPointOverride();
 
             Assert.AreEqual(null, subject.DestinationPointOverride);
+        }
+
+        [Test]
+        public void IncrementFixedLength()
+        {
+            subject.FixedLength = 10f;
+            Assert.AreEqual(10f, subject.FixedLength);
+            subject.IncrementFixedLength(1f);
+            Assert.AreEqual(11f, subject.FixedLength);
+            subject.IncrementFixedLength(-2f);
+            Assert.AreEqual(9f, subject.FixedLength);
+        }
+
+        [Test]
+        public void CursorLockDuration()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.Origin = subject.gameObject;
+            subject.CursorLockThreshold = 0.2f;
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+
+            castResultsChangedMock.Reset();
+
+            expectedStart = Vector3.right * 0.15f;
+            subject.gameObject.transform.position = expectedStart;
+
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+
+            castResultsChangedMock.Reset();
+
+            expectedStart = Vector3.right * 0.25f;
+            subject.gameObject.transform.position = expectedStart;
+
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd + expectedStart).Using(comparer));
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator TransitionDuration()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.Origin = subject.gameObject;
+            subject.TransitionDuration = 1f;
+
+            validSurface.transform.position = Vector3.forward * 1f;
+
+            yield return null;
+
+            subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+            yield return null;
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = validSurface.transform.position - (Vector3.forward * (validSurface.transform.localScale.z / 2f));
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+
+            castResultsChangedMock.Reset();
+
+            subject.gameObject.transform.eulerAngles = Vector3.up * 15f;
+
+            float timePassed = 0f;
+            while (timePassed < subject.TransitionDuration)
+            {
+                Physics.Simulate(Time.fixedDeltaTime);
+                subject.Process();
+                yield return new WaitForEndOfFrame();
+                timePassed += Time.deltaTime;
+            }
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd + (Vector3.right * 0.078f)).Using(comparer));
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+        }
+
+        [Test]
+        public void CastPointsShouldFixLength()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.Origin = subject.gameObject;
+            subject.ShouldFixLength = true;
+            subject.FixedLength = 10f;
+
+            subject.ManualOnEnable();
+            subject.Process();
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = Vector3.forward * 10f;
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
+
+            Assert.IsTrue(castResultsChangedMock.Received);
+
+            castResultsChangedMock.Reset();
+
+            subject.FixedLength = 1f;
+
+            subject.Process();
+
+            expectedEnd = Vector3.forward;
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
+
+            Assert.IsTrue(castResultsChangedMock.Received);
+
+            castResultsChangedMock.Reset();
+
+            subject.ShouldFixLength = false;
+
+            subject.Process();
+
+            expectedEnd = Vector3.forward * 100f;
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
+            Assert.IsTrue(castResultsChangedMock.Received);
+        }
+
+        [Test]
+        public void CastPointsShouldFixedFindTarget()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            UnityEventListenerMock castResultsChangedMock = new UnityEventListenerMock();
+            subject.ResultsChanged.AddListener(castResultsChangedMock.Listen);
+            subject.Origin = subject.gameObject;
+            subject.FixedLength = 1f;
+            subject.ShouldFixLength = true;
+            subject.ShouldFixedFindTarget = false;
+
+            validSurface.transform.position = Vector3.forward;
+
+            subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Vector3 expectedStart = Vector3.zero;
+            Vector3 expectedEnd = Vector3.forward * subject.FixedLength;
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
+
+            Assert.IsNull(subject.TargetHit);
+            Assert.IsFalse(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+
+            castResultsChangedMock.Reset();
+
+            subject.ShouldFixedFindTarget = true;
+
+            subject.Process();
+
+            Assert.That(subject.Points[0], Is.EqualTo(expectedStart).Using(comparer));
+            Assert.That(subject.Points[1], Is.EqualTo(expectedEnd).Using(comparer));
+
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.IsTrue(castResultsChangedMock.Received);
+        }
+
+        [Test]
+        public void CastPointsDragEffectDensity()
+        {
+            subject.Origin = subject.gameObject;
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+            Assert.AreEqual(2, subject.Points.Count);
+
+            subject.DragEffectDensity = 7;
+            subject.Process();
+            Assert.AreEqual(10, subject.Points.Count);
+        }
+
+        [Test]
+        public void CastPointsDragCurveOffset()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            subject.Origin = subject.gameObject;
+            subject.DragEffectDensity = 1;
+            subject.DragCurveOffset = 0f;
+
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            Vector3 expectedMidPoint = Vector3.forward * 3.2f;
+
+            Assert.AreEqual(4, subject.Points.Count);
+            Assert.That(subject.Points[1], Is.EqualTo(expectedMidPoint).Using(comparer));
+
+            subject.DragCurveOffset = 0.5f;
+
+            subject.Process();
+
+            expectedMidPoint = Vector3.forward * 2.9f;
+
+            Assert.AreEqual(4, subject.Points.Count);
+            Assert.That(subject.Points[1], Is.EqualTo(expectedMidPoint).Using(comparer));
+        }
+
+        [Test]
+        public void UsingDragEffect()
+        {
+            subject.DragEffectDensity = 0;
+            Assert.IsFalse(subject.UsingDragEffect);
+            subject.DragEffectDensity = 1;
+            Assert.IsTrue(subject.UsingDragEffect);
+            subject.DragEffectDensity = 10;
+            Assert.IsTrue(subject.UsingDragEffect);
+            subject.DragEffectDensity = 0;
+            Assert.IsFalse(subject.UsingDragEffect);
+        }
+
+        [Test]
+        public void SetFixedLength()
+        {
+            subject.Origin = subject.gameObject;
+            validSurface.transform.position = Vector3.forward * 5f;
+
+            Assert.AreEqual(1f, subject.FixedLength);
+
+            subject.ManualOnEnable();
+            Physics.Simulate(Time.fixedDeltaTime);
+            subject.Process();
+
+            PointsCast.EventData testData = new PointsCast.EventData();
+            testData.Set(subject.TargetHit, true, subject.Points);
+
+            subject.SetFixedLength(testData);
+
+            Assert.AreEqual(validSurface.transform, subject.TargetHit.Value.transform);
+            Assert.IsTrue(subject.IsTargetHitValid);
+            Assert.AreEqual(4.5f, subject.FixedLength);
         }
     }
 

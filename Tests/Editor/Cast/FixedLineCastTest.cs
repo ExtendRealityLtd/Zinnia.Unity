@@ -45,8 +45,20 @@ namespace Test.Zinnia.Cast
 
             Assert.IsTrue(castResultsChangedMock.Received);
         }
+
+        [Test]
+        public void IncremenetCurrentLength()
+        {
+            subject.CurrentLength = 10f;
+            Assert.AreEqual(10f, subject.CurrentLength);
+            subject.IncrementCurrentLength(1f);
+            Assert.AreEqual(11f, subject.CurrentLength);
+            subject.IncrementCurrentLength(-2f);
+            Assert.AreEqual(9f, subject.CurrentLength);
+        }
     }
 
+#pragma warning disable 0618
     public class FixedLineCastMock : FixedLineCast
     {
         public void ManualOnEnable()
@@ -59,4 +71,5 @@ namespace Test.Zinnia.Cast
             OnDisable();
         }
     }
+#pragma warning restore 0618
 }
