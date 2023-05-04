@@ -29,7 +29,7 @@ namespace Zinnia.Tracking.CameraRig
         /// <summary>
         /// The last known is connected status.
         /// </summary>
-        protected bool lastKnownIsConnected;
+        protected bool? lastKnownIsConnected;
         /// <summary>
         /// The last known tracking type.
         /// </summary>
@@ -38,36 +38,39 @@ namespace Zinnia.Tracking.CameraRig
         /// <inheritdoc/>
         protected override bool HasBatteryChargeStatusChanged()
         {
-            bool hasChanged = BatteryChargeStatus != lastKnownBatteryStatus;
+            BatteryStatus currentValue = BatteryChargeStatus;
+            bool hasChanged = !currentValue.Equals(lastKnownBatteryStatus);
             if (hasChanged)
             {
-                BatteryChargeStatusChanged?.Invoke(BatteryChargeStatus);
+                BatteryChargeStatusChanged?.Invoke(currentValue);
+                lastKnownBatteryStatus = currentValue;
             }
-            lastKnownBatteryStatus = BatteryChargeStatus;
             return hasChanged;
         }
 
         /// <inheritdoc/>
         protected override bool HasIsConnectedChanged()
         {
-            bool hasChanged = IsConnected != lastKnownIsConnected;
+            bool currentValue = IsConnected;
+            bool hasChanged = currentValue != lastKnownIsConnected;
             if (hasChanged)
             {
-                ConnectionStatusChanged?.Invoke(IsConnected);
+                ConnectionStatusChanged?.Invoke(currentValue);
+                lastKnownIsConnected = currentValue;
             }
-            lastKnownIsConnected = IsConnected;
             return hasChanged;
         }
 
         /// <inheritdoc/>
         protected override bool HasTrackingTypeChanged()
         {
-            bool hasChanged = TrackingType != lastKnownTrackingType;
+            SpatialTrackingType currentValue = TrackingType;
+            bool hasChanged = !currentValue.Equals(lastKnownTrackingType);
             if (hasChanged)
             {
-                TrackingTypeChanged?.Invoke(TrackingType);
+                TrackingTypeChanged?.Invoke(currentValue);
+                lastKnownTrackingType = currentValue;
             }
-            lastKnownTrackingType = TrackingType;
             return hasChanged;
         }
 
