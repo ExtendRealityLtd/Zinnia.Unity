@@ -357,17 +357,25 @@
 
         protected virtual void OnEnable()
         {
-            points.Clear();
+            ClearState();
             OnAfterTargetHitChange();
         }
 
         protected virtual void OnDisable()
         {
+            ClearState();
+            ClearDestinationPointOverride();
+        }
+
+        /// <summary>
+        /// Clears the pointer state.
+        /// </summary>
+        protected virtual void ClearState()
+        {
             TargetHit = null;
             trackedOriginForward = null;
             IsTargetHitValid = false;
             points.Clear();
-            ClearDestinationPointOverride();
         }
 
         /// <summary>
