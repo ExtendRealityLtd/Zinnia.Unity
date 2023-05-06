@@ -1,5 +1,18 @@
 # Changelog
 
+### [2.12.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.12.0...v2.12.1) (2023-05-06)
+
+#### Bug Fixes
+
+* **Cast:** ensure pointer state is cleared on enable and disable ([c1bd830](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/c1bd8303d447c067c370705364e732ee3620a047))
+  > The state of the pointer is now cleared on enable and disable to ensure it is in the correct state.
+* **Tracking:** ensure is connected event raises ([686bd72](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/686bd72b2f397983874a77e8d93cd451e4f307b5))
+  > The HasIsConnectedChange event now starts with a null state to ensure if the event is false by default then it at least will raise the connected event and toggle the state.
+  > 
+  > There is also a test now for the BaseDeviceDetailsRecord.
+* **Visual:** ensure a forward of Vector3.zero cannot be set ([eaabbdd](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/eaabbdd3d538304908d4b55924008dea6a17ec47))
+  > There can be an error when the current forward is Vector3.zero and this value is then used to try and set the renderElement forward and causes an error. So this prevents that from happening.
+
 ## [2.12.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.11.0...v2.12.0) (2023-05-01)
 
 #### Features
