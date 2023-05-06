@@ -232,6 +232,23 @@
                 end = value;
             }
         }
+        [Tooltip("The threshold the forward value can be within 0 to be able to be set.")]
+        [SerializeField]
+        private float forwardZeroThreshold = 0.000001f;
+        /// <summary>
+        /// The threshold the forward value can be within 0 to be able to be set.
+        /// </summary>
+        public float ForwardZeroThreshold
+        {
+            get
+            {
+                return forwardZeroThreshold;
+            }
+            set
+            {
+                forwardZeroThreshold = value;
+            }
+        }
 
         /// <summary>
         /// A collection of segment clones.
@@ -383,7 +400,10 @@
                 return;
             }
 
-            renderElement.transform.forward = forward;
+            if (!forward.ApproxEquals(Vector3.zero, ForwardZeroThreshold))
+            {
+                renderElement.transform.forward = forward;
+            }
 
             Vector3 scale = renderElement.transform.lossyScale;
 
