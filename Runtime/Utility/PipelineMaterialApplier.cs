@@ -36,6 +36,23 @@
                     pipelineName = value;
                 }
             }
+            [Tooltip("The name of the pipeline shader to match the Material collection to.")]
+            [SerializeField]
+            private string pipelineShaderName = "";
+            /// <summary>
+            /// The name of the pipeline shader to match the <see cref="Material"/> collection to.
+            /// </summary>
+            public string PipelineShaderName
+            {
+                get
+                {
+                    return pipelineShaderName;
+                }
+                set
+                {
+                    pipelineShaderName = value;
+                }
+            }
 
             [Tooltip("The Material collection to set the Renderer materials to if using this render pipeline.")]
             [SerializeField]
@@ -105,7 +122,19 @@
 #if UNITY_2019_1_OR_NEWER && !ZINNIA_IGNORE_PIPELINE_MATERIALS
             foreach (PipelineMaterials pipeline in Pipelines)
             {
-                if (Regex.IsMatch(GraphicsSettings.currentRenderPipeline != null ? GraphicsSettings.currentRenderPipeline.name : "default", pipeline.PipelineName))
+                string nameMatch = "default";
+                string shaderMatch = "default";
+
+                if (GraphicsSettings.currentRenderPipeline != null)
+                {
+                    nameMatch = GraphicsSettings.currentRenderPipeline.name;
+                    shaderMatch = GraphicsSettings.currentRenderPipeline.defaultShader.ToString();
+                }
+
+                bool nameCheck = !string.IsNullOrEmpty(pipeline.PipelineName) && Regex.IsMatch(nameMatch, pipeline.PipelineName);
+                bool shaderCheck = !string.IsNullOrEmpty(pipeline.PipelineShaderName) && Regex.IsMatch(shaderMatch, pipeline.PipelineShaderName);
+
+                if (nameCheck || shaderCheck)
                 {
                     Target.sharedMaterials = pipeline.Materials;
                     break;
