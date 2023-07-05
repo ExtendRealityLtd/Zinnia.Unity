@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.13.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.12.1...v2.13.0) (2023-07-05)
+
+#### Features
+
+* **Mutation:** emit pre/post mutation events on property mutators ([cea6537](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/cea6537b0a0d496a2cb93234ce4f54ebe76386d4))
+  > The TransformPropertyMutator now emits an event on pre mutation with the value that it is going to mutate the target to. It also emits an event when the mutation has occurred with this new value.
+  > 
+  > It is also possible to prevent a mutation from occuring by setting the new Allow Mutation boolean property, which will still do the pre mutation event but will then skip the actual mutation of the target and not raise the post mutation event, but instead raise a mutation skipped event.
+  > 
+  > This makes it possible to check to see if a property mutation will provide an undesired result in the pre mutation and then prevent the mutation from occuring by turning off the Allow Mutation.
+  > 
+  > Some refactoring of the internal calls has been done too so it is cleaner and less code repetition.
+* **Utility:** allow pipeline shader to select material ([26b7e26](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/26b7e26e635f7d762865d6dc930ec3f5a593b9a6))
+  > The PipelineMaterialApplier component now has another option to determine what render pipeline is being used. The default Pipeline Shader name can also be provided to determine which render pipeline is active as sometimes the name is not robust enough as it can be renamed in the settings.
+
 ### [2.12.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.12.0...v2.12.1) (2023-05-06)
 
 #### Bug Fixes
