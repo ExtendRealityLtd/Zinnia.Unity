@@ -103,37 +103,52 @@
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)
         {
-            return Target.transform.position[axis];
+            return Target != null ? Target.transform.position[axis] : default;
         }
 
         /// <inheritdoc/>
         protected override float GetLocalAxisValue(int axis)
         {
-            return Target.transform.localPosition[axis];
+            return Target != null ? Target.transform.localPosition[axis] : default;
         }
 
         /// <inheritdoc/>
-        protected override Vector3 IncrementGlobal(Vector3 input)
+        protected override Vector3 GetNewSetValue(Vector3 input)
         {
-            return Target.transform.position += LockIncrementInput(GetFacingDirection() * input);
+            return LockSetInput(GetFacingDirection() * input);
         }
 
         /// <inheritdoc/>
-        protected override Vector3 IncrementLocal(Vector3 input)
+        protected override Vector3 GetNewIncrementValue(Vector3 input)
         {
-            return Target.transform.localPosition += LockIncrementInput(GetFacingDirection() * input);
+            if (Target == null)
+            {
+                return default;
+            }
+
+            return (UseLocalValues ? Target.transform.localPosition : Target.transform.position) + LockIncrementInput(GetFacingDirection() * input);
         }
 
         /// <inheritdoc/>
-        protected override Vector3 SetGlobal(Vector3 input)
+        protected override Vector3 SetGlobalTargetValue(Vector3 input)
         {
-            return Target.transform.position = LockSetInput(GetFacingDirection() * input);
+            if (Target == null)
+            {
+                return default;
+            }
+
+            return Target.transform.position = input;
         }
 
         /// <inheritdoc/>
-        protected override Vector3 SetLocal(Vector3 input)
+        protected override Vector3 SetLocalTargetValue(Vector3 input)
         {
-            return Target.transform.localPosition = LockSetInput(GetFacingDirection() * input);
+            if (Target == null)
+            {
+                return default;
+            }
+
+            return Target.transform.localPosition = input;
         }
 
         /// <summary>

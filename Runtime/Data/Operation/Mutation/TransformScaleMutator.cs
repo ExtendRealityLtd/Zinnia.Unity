@@ -11,39 +11,52 @@
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)
         {
-            return Target.transform.lossyScale[axis];
+            return Target != null ? Target.transform.lossyScale[axis] : default;
         }
 
         /// <inheritdoc/>
         protected override float GetLocalAxisValue(int axis)
         {
-            return Target.transform.localScale[axis];
+            return Target != null ? Target.transform.localScale[axis] : default;
         }
 
         /// <inheritdoc/>
-        protected override Vector3 IncrementGlobal(Vector3 input)
+        protected override Vector3 GetNewSetValue(Vector3 input)
         {
-            Vector3 globalScale = Target.transform.lossyScale + input;
-            Target.transform.SetGlobalScale(globalScale);
-            return globalScale;
+            return input;
         }
 
         /// <inheritdoc/>
-        protected override Vector3 IncrementLocal(Vector3 input)
+        protected override Vector3 GetNewIncrementValue(Vector3 input)
         {
-            return Target.transform.localScale += input;
+            if (Target == null)
+            {
+                return default;
+            }
+
+            return (UseLocalValues ? Target.transform.localScale : Target.transform.lossyScale) + input;
         }
 
         /// <inheritdoc/>
-        protected override Vector3 SetGlobal(Vector3 input)
+        protected override Vector3 SetGlobalTargetValue(Vector3 input)
         {
+            if (Target == null)
+            {
+                return default;
+            }
+
             Target.transform.SetGlobalScale(input);
             return input;
         }
 
         /// <inheritdoc/>
-        protected override Vector3 SetLocal(Vector3 input)
+        protected override Vector3 SetLocalTargetValue(Vector3 input)
         {
+            if (Target == null)
+            {
+                return default;
+            }
+
             return Target.transform.localScale = input;
         }
     }

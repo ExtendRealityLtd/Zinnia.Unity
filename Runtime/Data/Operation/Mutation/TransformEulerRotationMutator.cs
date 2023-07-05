@@ -108,38 +108,40 @@
         /// <inheritdoc/>
         protected override float GetGlobalAxisValue(int axis)
         {
-            return Target.transform.eulerAngles[axis];
+            return Target != null ? Target.transform.eulerAngles[axis] : default;
         }
 
         /// <inheritdoc/>
         protected override float GetLocalAxisValue(int axis)
         {
-            return Target.transform.localEulerAngles[axis];
+            return Target != null ? Target.transform.localEulerAngles[axis] : default;
         }
 
         /// <inheritdoc/>
-        protected override Vector3 IncrementGlobal(Vector3 input)
+        protected override Vector3 GetNewSetValue(Vector3 input)
         {
-            Vector3 originPosition = GetOriginPosition();
-            Target.transform.rotation = Quaternion.Euler(Target.transform.eulerAngles + input);
-            ApplyRotationOriginPosition(originPosition);
-
-            return Target.transform.eulerAngles;
+            return input;
         }
 
         /// <inheritdoc/>
-        protected override Vector3 IncrementLocal(Vector3 input)
+        protected override Vector3 GetNewIncrementValue(Vector3 input)
         {
-            Vector3 originPosition = GetOriginPosition();
-            Target.transform.localRotation = Quaternion.Euler(Target.transform.localEulerAngles + input);
-            ApplyRotationOriginPosition(originPosition);
+            if (Target == null)
+            {
+                return default;
+            }
 
-            return Target.transform.localEulerAngles;
+            return (UseLocalValues ? Target.transform.localEulerAngles : Target.transform.eulerAngles) + input;
         }
 
         /// <inheritdoc/>
-        protected override Vector3 SetGlobal(Vector3 input)
+        protected override Vector3 SetGlobalTargetValue(Vector3 input)
         {
+            if (Target == null)
+            {
+                return default;
+            }
+
             Vector3 originPosition = GetOriginPosition();
             Target.transform.eulerAngles = input;
             ApplyRotationOriginPosition(originPosition);
@@ -148,8 +150,13 @@
         }
 
         /// <inheritdoc/>
-        protected override Vector3 SetLocal(Vector3 input)
+        protected override Vector3 SetLocalTargetValue(Vector3 input)
         {
+            if (Target == null)
+            {
+                return default;
+            }
+
             Vector3 originPosition = GetOriginPosition();
             Target.transform.localEulerAngles = input;
             ApplyRotationOriginPosition(originPosition);
