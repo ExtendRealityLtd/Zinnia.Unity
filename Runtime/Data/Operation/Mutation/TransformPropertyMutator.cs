@@ -1,6 +1,8 @@
 ﻿namespace Zinnia.Data.Operation.Mutation
 {
+    using System;
     using UnityEngine;
+    using UnityEngine.Events;
     using Zinnia.Data.Type;
     using Zinnia.Extension;
 
@@ -9,6 +11,12 @@
     /// </summary>
     public abstract class TransformPropertyMutator : MonoBehaviour
     {
+        /// <summary>
+        /// Defines the event with the specified state.
+        /// </summary>
+        [Serializable]
+        public class UnityEvent : UnityEvent<Vector3> { }
+
         #region Target Settings
         [Header("Target Settings")]
         [Tooltip("The target to mutate.")]
@@ -26,6 +34,23 @@
             set
             {
                 target = value;
+            }
+        }
+        [Tooltip("Determines whether to mutate the local or global values.")]
+        [SerializeField]
+        private bool allowMutate = true;
+        /// <summary>
+        /// Determines whether to mutate the local or global values.
+        /// </summary>
+        public bool AllowMutate
+        {
+            get
+            {
+                return allowMutate;
+            }
+            set
+            {
+                allowMutate = value;
             }
         }
         [Tooltip("Determines whether to mutate the local or global values.")]
@@ -62,6 +87,22 @@
                 mutateOnAxis = value;
             }
         }
+        #endregion
+
+        #region Mutation Events
+        /// <summary>
+        /// Is emitted before the property is mutated.
+        /// </summary>
+        [Header("Mutation Events")]
+        public UnityEvent PreMutated = new UnityEvent();
+        /// <summary>
+        /// Is emitted after the property is mutated.
+        /// </summary>
+        public UnityEvent PostMutated = new UnityEvent();
+        /// <summary>
+        /// Is emitted if the mutation is skipped due to <see cref="AllowMutate"/> being false.
+        /// </summary>
+        public UnityEvent MutationSkipped = new UnityEvent();
         #endregion
 
         /// <summary>
@@ -124,20 +165,7 @@
         /// <returns>The mutated value if the current component is <see cref="Behaviour.CheckIsActiveAndEnabled()"/> and the <see cref="Target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
         public virtual Vector3 SetProperty(Vector3 input)
         {
-            if (!IsValid())
-            {
-                return default;
-            }
-
-            input = LockSetInput(input);
-            if (UseLocalValues)
-            {
-                return SetLocal(input);
-            }
-            else
-            {
-                return SetGlobal(input);
-            }
+            return UpdateProperty(GetNewSetValue(LockSetInput(input)));
         }
 
         /// <summary>
@@ -156,20 +184,7 @@
         /// <returns>The mutated value if the current component is <see cref="Behaviour.CheckIsActiveAndEnabled()"/> and the <see cref="Target"/> is valid. Otherwise returns the default value for <see cref="Vector3"/>.</returns>
         public virtual Vector3 IncrementProperty(Vector3 input)
         {
-            if (!IsValid())
-            {
-                return default;
-            }
-
-            input = LockIncrementInput(input);
-            if (UseLocalValues)
-            {
-                return IncrementLocal(input);
-            }
-            else
-            {
-                return IncrementGlobal(input);
-            }
+            return UpdateProperty(GetNewIncrementValue(LockIncrementInput(input)));
         }
 
         /// <summary>
@@ -182,29 +197,29 @@
         }
 
         /// <summary>
+        /// Gets the new value to set the input on.
+        /// </summary>
+        /// <param name="input">The input to set.</param>
+        /// <returns>The updated value.</returns>
+        protected abstract Vector3 GetNewSetValue(Vector3 input);
+        /// <summary>
+        /// Gets the new value to increment the input on.
+        /// </summary>
+        /// <param name="input">The input to increment by.</param>
+        /// <returns>The updated value.</returns>
+        protected abstract Vector3 GetNewIncrementValue(Vector3 input);
+        /// <summary>
         /// Sets the local property to the new value.
         /// </summary>
         /// <param name="input">The value to set it to.</param>
         /// <returns>The new value.</returns>
-        protected abstract Vector3 SetLocal(Vector3 input);
+        protected abstract Vector3 SetLocalTargetValue(Vector3 input);
         /// <summary>
         /// Sets the global property to the new value.
         /// </summary>
         /// <param name="input">The value to set it to.</param>
         /// <returns>The new value.</returns>
-        protected abstract Vector3 SetGlobal(Vector3 input);
-        /// <summary>
-        /// Increments the local property by the given value.
-        /// </summary>
-        /// <param name="input">The value to increment by.</param>
-        /// <returns>The new value.</returns>
-        protected abstract Vector3 IncrementLocal(Vector3 input);
-        /// <summary>
-        /// Increments the global property by the given value.
-        /// </summary>
-        /// <param name="input">The value to increment by.</param>
-        /// <returns>The new value.</returns>
-        protected abstract Vector3 IncrementGlobal(Vector3 input);
+        protected abstract Vector3 SetGlobalTargetValue(Vector3 input);
         /// <summary>
         /// Gets the value for a given axis on the local property.
         /// </summary>
@@ -217,6 +232,32 @@
         /// <param name="axis">The axis to get the value from.</param>
         /// <returns>The axis value.</returns>
         protected abstract float GetGlobalAxisValue(int axis);
+
+        /// <summary>
+        /// Updates the property to the given value.
+        /// </summary>
+        /// <param name="input">The value to update the property to.</param>
+        /// <returns>The updated value of the property.</returns>
+        protected virtual Vector3 UpdateProperty(Vector3 input)
+        {
+            if (!IsValid())
+            {
+                return default;
+            }
+
+            PreMutated?.Invoke(input);
+            if (AllowMutate)
+            {
+                input = UseLocalValues ? SetLocalTargetValue(input) : SetGlobalTargetValue(input);
+                PostMutated?.Invoke(input);
+            }
+            else
+            {
+                MutationSkipped?.Invoke(input);
+            }
+
+            return input;
+        }
 
         /// <summary>
         /// Locks the set input based on the locked axes.

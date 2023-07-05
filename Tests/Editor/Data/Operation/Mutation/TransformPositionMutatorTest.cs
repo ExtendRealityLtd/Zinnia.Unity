@@ -4,6 +4,7 @@ using Zinnia.Data.Type;
 namespace Test.Zinnia.Data.Operation.Mutation
 {
     using NUnit.Framework;
+    using Test.Zinnia.Utility.Mock;
     using UnityEngine;
     using UnityEngine.TestTools.Utils;
 
@@ -28,6 +29,13 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyLocal()
         {
+            UnityEventListenerMock preMutatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock postMutatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock mutationSkippedMock = new UnityEventListenerMock();
+            subject.PreMutated.AddListener(preMutatedMock.Listen);
+            subject.PostMutated.AddListener(postMutatedMock.Listen);
+            subject.MutationSkipped.AddListener(mutationSkippedMock.Listen);
+
             Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject target = new GameObject("TransformPositionMutatorTest");
 
@@ -36,11 +44,50 @@ namespace Test.Zinnia.Data.Operation.Mutation
             subject.MutateOnAxis = Vector3State.True;
 
             Assert.That(target.transform.localPosition, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.IsFalse(preMutatedMock.Received);
+            Assert.IsFalse(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.SetProperty(input);
 
             Assert.That(target.transform.localPosition, Is.EqualTo(input).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsTrue(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
+
+            preMutatedMock.Reset();
+            postMutatedMock.Reset();
+            mutationSkippedMock.Reset();
+
+            subject.AllowMutate = false;
+
+            Vector3 inputB = new Vector3(40f, 50f, 60f);
+            subject.SetProperty(inputB);
+
+            Assert.That(target.transform.localPosition, Is.EqualTo(input).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsFalse(postMutatedMock.Received);
+            Assert.IsTrue(mutationSkippedMock.Received);
+
+            Object.DestroyImmediate(target);
+        }
+
+        [Test]
+        public void SetPropertyLocalNoTarget()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformPositionMutatorTest");
+
+            subject.UseLocalValues = true;
+            subject.MutateOnAxis = Vector3State.True;
+
+            Assert.That(target.transform.localPosition, Is.EqualTo(Vector3.zero).Using(comparer));
+
+            Vector3 input = new Vector3(10f, 20f, 30f);
+            subject.SetProperty(input);
+
+            Assert.That(target.transform.localPosition, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -48,6 +95,13 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void SetPropertyGlobal()
         {
+            UnityEventListenerMock preMutatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock postMutatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock mutationSkippedMock = new UnityEventListenerMock();
+            subject.PreMutated.AddListener(preMutatedMock.Listen);
+            subject.PostMutated.AddListener(postMutatedMock.Listen);
+            subject.MutationSkipped.AddListener(mutationSkippedMock.Listen);
+
             Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject target = new GameObject("TransformPositionMutatorTest");
 
@@ -56,11 +110,49 @@ namespace Test.Zinnia.Data.Operation.Mutation
             subject.MutateOnAxis = Vector3State.True;
 
             Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.IsFalse(preMutatedMock.Received);
+            Assert.IsFalse(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.SetProperty(input);
 
             Assert.That(target.transform.position, Is.EqualTo(input).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsTrue(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
+
+            subject.AllowMutate = false;
+            preMutatedMock.Reset();
+            postMutatedMock.Reset();
+            mutationSkippedMock.Reset();
+
+            Vector3 inputB = new Vector3(40f, 50f, 60f);
+            subject.SetProperty(inputB);
+
+            Assert.That(target.transform.localPosition, Is.EqualTo(input).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsFalse(postMutatedMock.Received);
+            Assert.IsTrue(mutationSkippedMock.Received);
+
+            Object.DestroyImmediate(target);
+        }
+
+        [Test]
+        public void SetPropertyGlobalNoTarget()
+        {
+            Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
+            GameObject target = new GameObject("TransformPositionMutatorTest");
+
+            subject.UseLocalValues = false;
+            subject.MutateOnAxis = Vector3State.True;
+
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
+
+            Vector3 input = new Vector3(10f, 20f, 30f);
+            subject.SetProperty(input);
+
+            Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
 
             Object.DestroyImmediate(target);
         }
@@ -112,6 +204,13 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyLocal()
         {
+            UnityEventListenerMock preMutatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock postMutatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock mutationSkippedMock = new UnityEventListenerMock();
+            subject.PreMutated.AddListener(preMutatedMock.Listen);
+            subject.PostMutated.AddListener(postMutatedMock.Listen);
+            subject.MutationSkipped.AddListener(mutationSkippedMock.Listen);
+
             Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject target = new GameObject("TransformPositionMutatorTest");
 
@@ -120,15 +219,40 @@ namespace Test.Zinnia.Data.Operation.Mutation
             subject.MutateOnAxis = Vector3State.True;
 
             Assert.That(target.transform.localPosition, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.IsFalse(preMutatedMock.Received);
+            Assert.IsFalse(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.IncrementProperty(input);
 
             Assert.That(target.transform.localPosition, Is.EqualTo(input).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsTrue(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
 
+            preMutatedMock.Reset();
+            postMutatedMock.Reset();
+            mutationSkippedMock.Reset();
             subject.IncrementProperty(input);
 
             Assert.That(target.transform.localPosition, Is.EqualTo(input * 2f).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsTrue(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
+
+            subject.AllowMutate = false;
+            preMutatedMock.Reset();
+            postMutatedMock.Reset();
+            mutationSkippedMock.Reset();
+
+            Vector3 inputB = new Vector3(40f, 50f, 60f);
+            subject.IncrementProperty(inputB);
+
+            Assert.That(target.transform.localPosition, Is.EqualTo(input * 2f).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsFalse(postMutatedMock.Received);
+            Assert.IsTrue(mutationSkippedMock.Received);
 
             Object.DestroyImmediate(target);
         }
@@ -136,6 +260,13 @@ namespace Test.Zinnia.Data.Operation.Mutation
         [Test]
         public void IncrementPropertyGlobal()
         {
+            UnityEventListenerMock preMutatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock postMutatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock mutationSkippedMock = new UnityEventListenerMock();
+            subject.PreMutated.AddListener(preMutatedMock.Listen);
+            subject.PostMutated.AddListener(postMutatedMock.Listen);
+            subject.MutationSkipped.AddListener(mutationSkippedMock.Listen);
+
             Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             GameObject target = new GameObject("TransformPositionMutatorTest");
 
@@ -144,15 +275,37 @@ namespace Test.Zinnia.Data.Operation.Mutation
             subject.MutateOnAxis = Vector3State.True;
 
             Assert.That(target.transform.position, Is.EqualTo(Vector3.zero).Using(comparer));
+            Assert.IsFalse(preMutatedMock.Received);
+            Assert.IsFalse(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
 
             Vector3 input = new Vector3(10f, 20f, 30f);
             subject.IncrementProperty(input);
 
             Assert.That(target.transform.position, Is.EqualTo(input).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsTrue(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
 
             subject.IncrementProperty(input);
 
             Assert.That(target.transform.position, Is.EqualTo(input * 2f).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsTrue(postMutatedMock.Received);
+            Assert.IsFalse(mutationSkippedMock.Received);
+
+            subject.AllowMutate = false;
+            preMutatedMock.Reset();
+            postMutatedMock.Reset();
+            mutationSkippedMock.Reset();
+
+            Vector3 inputB = new Vector3(40f, 50f, 60f);
+            subject.IncrementProperty(inputB);
+
+            Assert.That(target.transform.localPosition, Is.EqualTo(input * 2f).Using(comparer));
+            Assert.IsTrue(preMutatedMock.Received);
+            Assert.IsFalse(postMutatedMock.Received);
+            Assert.IsTrue(mutationSkippedMock.Received);
 
             Object.DestroyImmediate(target);
         }
