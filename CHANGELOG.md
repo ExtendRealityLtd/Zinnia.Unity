@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.14.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.13.0...v2.14.0) (2023-07-08)
+
+#### Features
+
+* **Proxy:** add boolean event proxy emitter ([0e1f0d9](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/0e1f0d909dae553b762868430cdb5a41937a9bb4))
+  > A new Proxy Emitter has been added for Boolean data types to easily allow chaining and proxying boolean data types.
+
 ## [2.13.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.12.1...v2.13.0) (2023-07-05)
 
 #### Features
