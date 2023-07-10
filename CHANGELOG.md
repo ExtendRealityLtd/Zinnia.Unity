@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.15.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.14.0...v2.15.0) (2023-07-10)
+
+#### Features
+
+* **Action:** add option to toggle emit events ([d5dd0bc](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/d5dd0bcb3adc5fe19a73dc795437029b30114e33))
+  > The EmitEvents property can be unchecked to prevent any action events from being emitted when action values are changed.
+  > 
+  > There are also two new methods `ResetToInitialValue` and `ResetToDefaultValue` that will reset an Action value to its default or inital value without calling any events either.
+* **Tracking:** add allow mutate option to transform property applier ([1d30393](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/1d30393094043caaa7783bf632b9d13216260904))
+  > The TransformPropertyApplier now has an AllowMutate property the same as the TransformPropertyMutator, which can be used to prevent mutations occurring and will raise a skipped event if mutations are turned off.
+  > 
+  > The before update event is always raised.
+
 ## [2.14.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.13.0...v2.14.0) (2023-07-08)
 
 #### Features
