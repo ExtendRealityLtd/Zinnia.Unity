@@ -27,6 +27,44 @@ namespace Test.Zinnia.Action
         }
 
         [Test]
+        public void IgnoreEmitEvents()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock unchangedListenerMock = new UnityEventListenerMock();
+
+            subject.Activated.AddListener(activatedListenerMock.Listen);
+            subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            subject.ValueChanged.AddListener(changedListenerMock.Listen);
+            subject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
+
+            subject.EmitEvents = false;
+
+            Assert.AreEqual(0f, subject.Value);
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            subject.Receive(1f);
+
+            Assert.AreEqual(1f, subject.Value);
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            subject.Receive(0f);
+
+            Assert.AreEqual(0f, subject.Value);
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+        }
+
+        [Test]
         public void ActivatedEmitted()
         {
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
@@ -37,12 +75,14 @@ namespace Test.Zinnia.Action
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
 
+            Assert.AreEqual(0f, subject.Value);
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
             subject.Receive(1f);
 
+            Assert.AreEqual(1f, subject.Value);
             Assert.IsTrue(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsTrue(changedListenerMock.Received);
@@ -52,7 +92,7 @@ namespace Test.Zinnia.Action
         public void DeactivatedEmitted()
         {
             subject.SetIsActivated(true);
-            subject.SetValue(1f);
+            subject.Value = 1f;
 
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -62,12 +102,14 @@ namespace Test.Zinnia.Action
             subject.Deactivated.AddListener(deactivatedListenerMock.Listen);
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
 
+            Assert.AreEqual(1f, subject.Value);
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsFalse(deactivatedListenerMock.Received);
             Assert.IsFalse(changedListenerMock.Received);
 
             subject.Receive(0f);
 
+            Assert.AreEqual(0f, subject.Value);
             Assert.IsFalse(activatedListenerMock.Received);
             Assert.IsTrue(deactivatedListenerMock.Received);
             Assert.IsTrue(changedListenerMock.Received);
@@ -80,21 +122,32 @@ namespace Test.Zinnia.Action
 
             subject.ValueChanged.AddListener(changedListenerMock.Listen);
 
+            Assert.AreEqual(0f, subject.Value);
             Assert.IsFalse(changedListenerMock.Received);
 
             subject.Receive(0.1f);
+
+            Assert.AreEqual(0.1f, subject.Value);
             Assert.IsTrue(changedListenerMock.Received);
 
             changedListenerMock.Reset();
+
+            Assert.AreEqual(0.1f, subject.Value);
             Assert.IsFalse(changedListenerMock.Received);
 
             subject.Receive(0.1f);
+
+            Assert.AreEqual(0.1f, subject.Value);
             Assert.IsFalse(changedListenerMock.Received);
 
             changedListenerMock.Reset();
+
+            Assert.AreEqual(0.1f, subject.Value);
             Assert.IsFalse(changedListenerMock.Received);
 
             subject.Receive(0.2f);
+
+            Assert.AreEqual(0.2f, subject.Value);
             Assert.IsTrue(changedListenerMock.Received);
         }
 
@@ -257,7 +310,7 @@ namespace Test.Zinnia.Action
             UnityEventListenerMock unchangedListenerMock = new UnityEventListenerMock();
 
             FloatActionLiveMock liveSubject = containingObject.AddComponent<FloatActionLiveMock>();
-            liveSubject.SetInitialValue(1f);
+            liveSubject.InitialValue = 1f;
 
             liveSubject.Activated.AddListener(activatedListenerMock.Listen);
             liveSubject.Deactivated.AddListener(deactivatedListenerMock.Listen);
@@ -287,7 +340,7 @@ namespace Test.Zinnia.Action
 
             FloatActionLiveMock liveSubject = containingObject.AddComponent<FloatActionLiveMock>();
             liveSubject.DefaultValue = 1f;
-            liveSubject.SetInitialValue(1f);
+            liveSubject.InitialValue = 1f;
 
             liveSubject.ForceAwake();
 
@@ -336,7 +389,7 @@ namespace Test.Zinnia.Action
 
             FloatActionLiveMock liveSubject = containingObject.AddComponent<FloatActionLiveMock>();
             liveSubject.DefaultValue = 1f;
-            liveSubject.SetInitialValue(0f);
+            liveSubject.InitialValue = 0f;
 
             liveSubject.ForceAwake();
 
@@ -376,7 +429,7 @@ namespace Test.Zinnia.Action
         }
 
         [UnityTest]
-        public IEnumerator ResetToInitialValue()
+        public IEnumerator ReceiveInitialValue()
         {
             UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
             UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
@@ -384,7 +437,7 @@ namespace Test.Zinnia.Action
             UnityEventListenerMock unchangedListenerMock = new UnityEventListenerMock();
 
             FloatActionLiveMock liveSubject = containingObject.AddComponent<FloatActionLiveMock>();
-            liveSubject.SetInitialValue(1f);
+            liveSubject.InitialValue = 1f;
 
             liveSubject.Activated.AddListener(activatedListenerMock.Listen);
             liveSubject.Deactivated.AddListener(deactivatedListenerMock.Listen);
@@ -427,6 +480,124 @@ namespace Test.Zinnia.Action
             Assert.IsTrue(changedListenerMock.Received);
             Assert.IsFalse(unchangedListenerMock.Received);
         }
+
+        [UnityTest]
+        public IEnumerator ResetToInitialValue()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock unchangedListenerMock = new UnityEventListenerMock();
+
+            FloatActionLiveMock liveSubject = containingObject.AddComponent<FloatActionLiveMock>();
+            liveSubject.InitialValue = 0f;
+
+            liveSubject.Activated.AddListener(activatedListenerMock.Listen);
+            liveSubject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            liveSubject.ValueChanged.AddListener(changedListenerMock.Listen);
+            liveSubject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
+
+            liveSubject.ForceAwake();
+
+            Assert.AreEqual(0f, liveSubject.Value);
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            yield return null;
+
+            Assert.AreEqual(0f, liveSubject.Value);
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            liveSubject.Receive(1f);
+
+            Assert.AreEqual(1f, liveSubject.Value);
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            liveSubject.ResetToInitialValue();
+
+            Assert.AreEqual(0f, liveSubject.Value);
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator ResetToDefaultValue()
+        {
+            UnityEventListenerMock activatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock deactivatedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock changedListenerMock = new UnityEventListenerMock();
+            UnityEventListenerMock unchangedListenerMock = new UnityEventListenerMock();
+
+            FloatActionLiveMock liveSubject = containingObject.AddComponent<FloatActionLiveMock>();
+            liveSubject.DefaultValue = 0f;
+
+            liveSubject.Activated.AddListener(activatedListenerMock.Listen);
+            liveSubject.Deactivated.AddListener(deactivatedListenerMock.Listen);
+            liveSubject.ValueChanged.AddListener(changedListenerMock.Listen);
+            liveSubject.ValueUnchanged.AddListener(unchangedListenerMock.Listen);
+
+            liveSubject.ForceAwake();
+
+            Assert.AreEqual(0f, liveSubject.Value);
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            yield return null;
+
+            Assert.AreEqual(0f, liveSubject.Value);
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            liveSubject.Receive(1f);
+
+            Assert.AreEqual(1f, liveSubject.Value);
+            Assert.IsTrue(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsTrue(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+
+            activatedListenerMock.Reset();
+            deactivatedListenerMock.Reset();
+            changedListenerMock.Reset();
+            unchangedListenerMock.Reset();
+
+            liveSubject.ResetToDefaultValue();
+
+            Assert.AreEqual(0f, liveSubject.Value);
+            Assert.IsFalse(activatedListenerMock.Received);
+            Assert.IsFalse(deactivatedListenerMock.Received);
+            Assert.IsFalse(changedListenerMock.Received);
+            Assert.IsFalse(unchangedListenerMock.Received);
+        }
     }
 
     public class FloatActionMock : FloatAction
@@ -434,11 +605,6 @@ namespace Test.Zinnia.Action
         public virtual void SetIsActivated(bool value)
         {
             IsActivated = value;
-        }
-
-        public virtual void SetValue(float value)
-        {
-            Value = value;
         }
     }
 
@@ -448,11 +614,6 @@ namespace Test.Zinnia.Action
         {
             IsActivated = false;
             Awake();
-        }
-
-        public virtual void SetInitialValue(float value)
-        {
-            InitialValue = value;
         }
     }
 }
