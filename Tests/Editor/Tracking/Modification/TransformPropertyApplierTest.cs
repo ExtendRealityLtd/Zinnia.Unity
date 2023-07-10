@@ -348,8 +348,10 @@ namespace Test.Zinnia.Tracking.Modification
         {
             UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
             UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock transformUpdateSkippedMock = new UnityEventListenerMock();
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+            subject.TransformUpdateSkipped.AddListener(transformUpdateSkippedMock.Listen);
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
@@ -357,6 +359,27 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Apply();
             Assert.IsTrue(beforeTransformUpdatedMock.Received);
             Assert.IsTrue(afterTransformUpdatedMock.Received);
+            Assert.IsFalse(transformUpdateSkippedMock.Received);
+        }
+
+        [Test]
+        public void ModifyEventsDisallowMutate()
+        {
+            UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock transformUpdateSkippedMock = new UnityEventListenerMock();
+            subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
+            subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+            subject.TransformUpdateSkipped.AddListener(transformUpdateSkippedMock.Listen);
+
+            subject.Source = new TransformData(sourceObject);
+            subject.Target = targetObject;
+            subject.AllowMutate = false;
+            sourceTransformData.Transform.position = Vector3.one;
+            subject.Apply();
+            Assert.IsTrue(beforeTransformUpdatedMock.Received);
+            Assert.IsFalse(afterTransformUpdatedMock.Received);
+            Assert.IsTrue(transformUpdateSkippedMock.Received);
         }
 
         [Test]
@@ -364,14 +387,17 @@ namespace Test.Zinnia.Tracking.Modification
         {
             UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
             UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock transformUpdateSkippedMock = new UnityEventListenerMock();
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+            subject.TransformUpdateSkipped.AddListener(transformUpdateSkippedMock.Listen);
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
             subject.Apply();
             Assert.IsFalse(beforeTransformUpdatedMock.Received);
             Assert.IsFalse(afterTransformUpdatedMock.Received);
+            Assert.IsFalse(transformUpdateSkippedMock.Received);
         }
 
         [Test]
@@ -379,8 +405,10 @@ namespace Test.Zinnia.Tracking.Modification
         {
             UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
             UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock transformUpdateSkippedMock = new UnityEventListenerMock();
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+            subject.TransformUpdateSkipped.AddListener(transformUpdateSkippedMock.Listen);
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
@@ -388,6 +416,7 @@ namespace Test.Zinnia.Tracking.Modification
             subject.Apply();
             Assert.IsTrue(beforeTransformUpdatedMock.Received);
             Assert.IsTrue(afterTransformUpdatedMock.Received);
+            Assert.IsFalse(transformUpdateSkippedMock.Received);
         }
 
         [Test]
@@ -395,8 +424,10 @@ namespace Test.Zinnia.Tracking.Modification
         {
             UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
             UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock transformUpdateSkippedMock = new UnityEventListenerMock();
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+            subject.TransformUpdateSkipped.AddListener(transformUpdateSkippedMock.Listen);
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
@@ -407,6 +438,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             Assert.IsFalse(beforeTransformUpdatedMock.Received);
             Assert.IsFalse(afterTransformUpdatedMock.Received);
+            Assert.IsFalse(transformUpdateSkippedMock.Received);
         }
 
         [Test]
@@ -414,8 +446,10 @@ namespace Test.Zinnia.Tracking.Modification
         {
             UnityEventListenerMock beforeTransformUpdatedMock = new UnityEventListenerMock();
             UnityEventListenerMock afterTransformUpdatedMock = new UnityEventListenerMock();
+            UnityEventListenerMock transformUpdateSkippedMock = new UnityEventListenerMock();
             subject.BeforeTransformUpdated.AddListener(beforeTransformUpdatedMock.Listen);
             subject.AfterTransformUpdated.AddListener(afterTransformUpdatedMock.Listen);
+            subject.TransformUpdateSkipped.AddListener(transformUpdateSkippedMock.Listen);
 
             subject.Source = new TransformData(sourceObject);
             subject.Target = targetObject;
@@ -426,6 +460,7 @@ namespace Test.Zinnia.Tracking.Modification
 
             Assert.IsFalse(beforeTransformUpdatedMock.Received);
             Assert.IsFalse(afterTransformUpdatedMock.Received);
+            Assert.IsFalse(transformUpdateSkippedMock.Received);
         }
 
         [Test]

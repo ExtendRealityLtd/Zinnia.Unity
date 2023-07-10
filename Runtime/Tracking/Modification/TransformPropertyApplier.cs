@@ -157,6 +157,23 @@
 
         #region Apply Settings
         [Header("Apply Settings")]
+        [Tooltip("Determines whether to allow any mutation to take place.")]
+        [SerializeField]
+        private bool allowMutate = true;
+        /// <summary>
+        /// Determines whether to allow any mutation to take place.
+        /// </summary>
+        public bool AllowMutate
+        {
+            get
+            {
+                return allowMutate;
+            }
+            set
+            {
+                allowMutate = value;
+            }
+        }
         [Tooltip("Determines which axes to apply on when utilizing the position offset.")]
         [SerializeField]
         private Vector3State applyPositionOffsetOnAxis = Vector3State.True;
@@ -293,6 +310,10 @@
         /// Emitted after the transformation process has occured.
         /// </summary>
         public UnityEvent AfterTransformUpdated = new UnityEvent();
+        /// <summary>
+        /// Emitted if the mutation is skipped due to <see cref="AllowMutate"/> being false.
+        /// </summary>
+        public UnityEvent TransformUpdateSkipped = new UnityEvent();
         #endregion
 
         /// <summary>
@@ -582,6 +603,12 @@
             }
 
             BeforeTransformUpdated?.Invoke(eventData.Set(source, target));
+
+            if (!AllowMutate)
+            {
+                TransformUpdateSkipped?.Invoke(eventData.Set(source, target));
+                return;
+            }
 
             if (TransitionDuration.ApproxEquals(0f))
             {

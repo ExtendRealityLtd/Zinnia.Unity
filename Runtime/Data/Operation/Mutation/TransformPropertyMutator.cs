@@ -36,11 +36,11 @@
                 target = value;
             }
         }
-        [Tooltip("Determines whether to mutate the local or global values.")]
+        [Tooltip("Determines whether to allow any mutation to take place.")]
         [SerializeField]
         private bool allowMutate = true;
         /// <summary>
-        /// Determines whether to mutate the local or global values.
+        /// Determines whether to allow any mutation to take place.
         /// </summary>
         public bool AllowMutate
         {
