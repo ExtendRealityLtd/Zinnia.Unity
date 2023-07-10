@@ -18,6 +18,23 @@
         [Serializable]
         public class BooleanUnityEvent : UnityEvent<bool> { }
 
+        [Tooltip("Whether to emit the action events.")]
+        [SerializeField]
+        private bool emitEvents = true;
+        /// <summary>
+        /// Whether to emit the action events.
+        /// </summary>
+        public bool EmitEvents
+        {
+            get
+            {
+                return emitEvents;
+            }
+            set
+            {
+                emitEvents = value;
+            }
+        }
         /// <summary>
         /// Emitted when <see cref="IsActivated"/> changes.
         /// </summary>
@@ -41,7 +58,10 @@
                 }
 
                 isActivated = value;
-                ActivationStateChanged?.Invoke(value);
+                if (emitEvents)
+                {
+                    ActivationStateChanged?.Invoke(value);
+                }
             }
         }
 
@@ -178,7 +198,7 @@
         /// </summary>
         public TEvent Deactivated = new TEvent();
 
-        [Tooltip("Actions to subscribe to when this action is Behaviour.enabled. Allows chaining the source actions to this action.")]
+        [Tooltip("The value of the action.")]
         [SerializeField]
         private TValue value;
         /// <summary>
@@ -257,13 +277,19 @@
 
             if (IsActivated)
             {
-                Activated?.Invoke(Value);
-                ValueChanged?.Invoke(Value);
+                if (EmitEvents)
+                {
+                    Activated?.Invoke(Value);
+                    ValueChanged?.Invoke(Value);
+                }
             }
             else
             {
-                ValueChanged?.Invoke(Value);
-                Deactivated?.Invoke(Value);
+                if (EmitEvents)
+                {
+                    ValueChanged?.Invoke(Value);
+                    Deactivated?.Invoke(Value);
+                }
             }
         }
 
@@ -302,11 +328,30 @@
 
             if (IsValueEqual(value))
             {
-                ValueUnchanged?.Invoke(Value);
+                if (EmitEvents)
+                {
+                    ValueUnchanged?.Invoke(Value);
+                }
                 return;
             }
 
             ProcessValue(value);
+        }
+
+        /// <summary>
+        /// Resets the action to the initial value.
+        /// </summary>
+        public virtual void ResetToInitialValue()
+        {
+            ResetToValue(InitialValue);
+        }
+
+        /// <summary>
+        /// Resets the action to the default value.
+        /// </summary>
+        public virtual void ResetToDefaultValue()
+        {
+            ResetToValue(DefaultValue);
         }
 
         protected virtual void Awake()
@@ -331,6 +376,16 @@
         {
             ProcessValue(DefaultValue);
             UnsubscribeFromSources();
+        }
+
+        /// <summary>
+        /// Resets the action to the given value.
+        /// </summary>
+        /// <param name="value">The value to reset to.</param>
+        protected virtual void ResetToValue(TValue value)
+        {
+            Value = value;
+            IsActivated = ShouldActivate(value);
         }
 
         /// <summary>
@@ -409,7 +464,10 @@
             }
             else
             {
-                ValueChanged?.Invoke(Value);
+                if (EmitEvents)
+                {
+                    ValueChanged?.Invoke(Value);
+                }
             }
         }
 
