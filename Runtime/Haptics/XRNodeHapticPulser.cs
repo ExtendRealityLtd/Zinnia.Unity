@@ -1,4 +1,5 @@
-﻿namespace Zinnia.Haptics
+﻿#if UNITY_XR
+namespace Zinnia.Haptics
 {
     using UnityEngine;
     using UnityEngine.XR;
@@ -105,3 +106,4 @@
         }
     }
 }
+#endif

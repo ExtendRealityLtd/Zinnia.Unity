@@ -1,4 +1,5 @@
-﻿namespace Zinnia.Tracking.Velocity
+﻿#if UNITY_XR
+namespace Zinnia.Tracking.Velocity
 {
     using System.Collections.Generic;
     using UnityEngine;
@@ -99,4 +100,5 @@
             return new XRNodeState();
         }
     }
-}
+} 
+#endif
