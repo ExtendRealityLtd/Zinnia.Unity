@@ -9,6 +9,23 @@
     /// </summary>
     public class TransformPositionDifferenceRotation : PropertyModifier
     {
+        [Tooltip("The maximum distance the Source GameObject can be from the Offset GameObject to allow the rotation to apply.")]
+        [SerializeField]
+        private Vector3 sourceToOffsetMaximumDistance = Vector3.one * float.PositiveInfinity;
+        /// <summary>
+        /// The maximum distance the Source <see cref="GameObject"/> can be from the Offset <see cref="GameObject"/> to allow the rotation to apply.
+        /// </summary>
+        public Vector3 SourceToOffsetMaximumDistance
+        {
+            get
+            {
+                return sourceToOffsetMaximumDistance;
+            }
+            set
+            {
+                sourceToOffsetMaximumDistance = value;
+            }
+        }
         [Tooltip("The drag applied to the rotation to slow it down.")]
         [SerializeField]
         private float angularDrag = 1f;
@@ -127,7 +144,7 @@
         /// <param name="offset">The offset of the target against the source when modifying.</param>
         protected override void DoModify(GameObject source, GameObject target, GameObject offset = null)
         {
-            AngularVelocity = CalculateAngularVelocity(source, target);
+            AngularVelocity = CalculateAngularVelocity(source, target, offset);
             target.transform.localRotation *= Quaternion.Euler(AngularVelocity);
         }
 
@@ -141,16 +158,23 @@
         /// </summary>
         /// <param name="source">The source to utilize in the modification.</param>
         /// <param name="target">The target to modify.</param>
+        /// <param name="offset">The offset of the target against the source when modifying.</param>
         /// <returns>The angular velocity to project onto the target.</returns>
-        protected virtual Vector3 CalculateAngularVelocity(GameObject source, GameObject target)
+        protected virtual Vector3 CalculateAngularVelocity(GameObject source, GameObject target, GameObject offset)
         {
             Vector3 negatePosition = Ancestor != null ? Ancestor.transform.position : Vector3.zero;
             Vector3 sourcePosition = source.transform.position - negatePosition;
             Vector3 targetPosition = target.transform.position - negatePosition;
+            Vector3 offsetPosition = offset != null ? offset.transform.position - negatePosition : Vector3.zero;
 
             if (previousSourcePosition == null)
             {
                 previousSourcePosition = sourcePosition;
+            }
+
+            if (offset != null && !sourcePosition.WithinDistance(offsetPosition, SourceToOffsetMaximumDistance))
+            {
+                return Vector3.zero;
             }
 
             float xDegree = FollowOnAxis.xState ? CalculateAngle(target.transform.right, targetPosition, (Vector3)previousSourcePosition, sourcePosition) : 0f;
