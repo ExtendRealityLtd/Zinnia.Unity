@@ -1,5 +1,7 @@
 ﻿namespace Zinnia.Data.Type
 {
+#if ZINNIA_IGNORE_CUSTOM_COLLAPSIBLE_DRAWER
+#else
     using System.Collections;
     using System.Linq;
     using System.Reflection;
@@ -127,4 +129,5 @@
             DrawEventHeader(headerRect);
         }
     }
+#endif
 }
