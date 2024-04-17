@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.16.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.15.0...v2.16.0) (2024-04-17)
+
+#### Features
+
+* **Cast:** add raycast hit validity rule for points cast ([170a241](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/170a241ce43ca25eac8c89dcae1dd5ae854a5d5a))
+  > The PointsCast now has a RaycastHitValidity rule that will allow any data within the cast RaycastHit to be used within a rule for any custom.
+* **Cast:** make drag curve offset a vector3 ([f90f1e8](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/f90f1e8a12ca2f4bc447fd9cd03f856596426b17))
+  > The Drag Curve Offset is now a Vector3 allowing the curve offset to be applied to any axis rather than just the back axis.
+  > 
+  > To replicate the orignal setting, just change the Z axis to a negative value and this will replicate the same as the Vector3.back * offset.
+* **Data:** add script define to disable collapsible drawer ([36f978b](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/36f978b1e5855ed3e7985e7e72ebcbcb91215123))
+  > The custom collapisble drawer editor modification can now be disabled by setting a scripting define symbol of `ZINNIA_IGNORE_CUSTOM_COLLAPSIBLE_DRAWER`.
+* **README.md:** add section describing custom script define symbols ([3238142](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/3238142aad1f2376227fcb6ef9ce39764aa8d473))
+  > The various script define symbols that are added by Zinnia are now documented to make it easier to know when to use them.
+* **Tracking:** apply distance offset on position difference rotation ([208570d](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/208570d3e2845f008e5b4c6db69388a3f8bcdd78))
+  > The TransformPositionDifferenceRotation logic now has a source to offset maximum distance setting that will be activated if the `Apply Offset` is to true. This will ensure the rotation will only be applied when the source and offset are within the given distances and anything outside of those distances will be ignored.
+
+#### Bug Fixes
+
+* **Data:** prevent null exception in collapsible drawer in 2022.3 ([2ce9cef](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/2ce9cefb62bef2bd4568cd5d903d469058a97f3a))
+  > Due to a change in Unity 2022.3, there is now no actual need to do the reflection for replacing a default drawer and in fact the attempt to get `DrawerKeySet` will return a null, thus causing the existing error.
+  > 
+  > The fix is to simply do a null check to prevent the error and the reflection will simply be ignored on versions of Unity of 2022.3 and above.
+
 ## [2.15.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.14.0...v2.15.0) (2023-07-10)
 
 #### Features
