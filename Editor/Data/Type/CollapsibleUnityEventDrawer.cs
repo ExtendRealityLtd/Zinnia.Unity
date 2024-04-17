@@ -46,18 +46,19 @@
         public static void ReplaceDefaultDrawer()
         {
             System.Type utilityType = System.Type.GetType("UnityEditor.ScriptAttributeUtility, UnityEditor");
-            MethodInfo buildMethod = utilityType.GetMethod(
-                "BuildDrawerTypeForTypeDictionary",
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
-                null,
-                System.Type.EmptyTypes,
-                null);
-            FieldInfo dictionaryField = utilityType.GetField(
-                "s_DrawerTypeForType",
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-            FieldInfo drawerField = utilityType
-                .GetNestedType("DrawerKeySet", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetField("drawer", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (utilityType == null)
+            {
+                return;
+            }
+
+            MethodInfo buildMethod = utilityType.GetMethod("BuildDrawerTypeForTypeDictionary", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static, null, System.Type.EmptyTypes, null);
+            FieldInfo dictionaryField = utilityType.GetField("s_DrawerTypeForType", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+            System.Type drawerKeySet = utilityType.GetNestedType("DrawerKeySet", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (drawerKeySet == null)
+            {
+                return;
+            }
+            FieldInfo drawerField = drawerKeySet.GetField("drawer", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             // Ensure the key set is populated.
             buildMethod.Invoke(null, null);
