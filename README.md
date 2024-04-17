@@ -93,6 +93,17 @@ Because Zinnia is a package tests have to be explicitly enabled for this package
 
 The package will show up in the Unity Package Manager UI once the above steps have been carried out. From then on the package can be updated by selecting the package in the Unity Package Manager and clicking on the `Update` button or using the version selection UI.
 
+## Script Define Symbols
+
+There are a collection of custom script define symbols that are included that can affect functionalities provided within Zinnia:
+
+* `ZINNIA_IGNORE_CUSTOM_COLLAPSIBLE_DRAWER` - Disables the collapsible event drawer functionality in the inspector windows.
+* `ZINNIA_IGNORE_CUSTOM_INSPECTOR_EDITOR` - Disables the custom zinnia inspector that handles automatically updating property values when changed in the inspector.
+* `ZINNIA_IGNORE_CUSTOM_LIST_EDITOR` - Disables the custom observable list editor in any version of Unity.
+* `ZINNIA_IGNORE_PIPELINE_MATERIALS` - Prevents the `PipelineMaterialApplier` from updating materials to match the current render pipeline mode.
+* `ZINNIA_USE_CUSTOM_LIST_EDITOR` - Force the custom observable list editor in the version of Unity 2020.3 or above.
+* `ZINNIA_USE_ISACTIVEANDENABLED` - Determines whether to use the `behaviour.isActiveAndEnabled` property on a behvaiour when calling the `CheckIsActiveAndEnabled` method instead of using the more robust `behaviour.gameObject.activeInHierarchy && behaviour.enabled`.
+
 ## Naming
 
 Inspired by the [Zinnia] genus of plants known for their colorful, long lasting flower heads and their great ease to grow from seeds. This repository, much like the Zinnia flower aims to be easy to use and allow your projects to grow and flourish into long lasting, easy to maintain solutions.

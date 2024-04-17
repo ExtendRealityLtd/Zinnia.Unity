@@ -111,13 +111,13 @@
                 }
             }
         }
-        [Tooltip("The amount of height offset to apply to the curved drag line.")]
+        [Tooltip("The amount of offset to apply to the curved drag line.")]
         [SerializeField]
-        private float dragCurveOffset;
+        private Vector3 dragCurveOffset;
         /// <summary>
-        /// The amount of height offset to apply to the curved drag line.
+        /// The amount of offset to apply to the curved drag line.
         /// </summary>
-        public float DragCurveOffset
+        public Vector3 DragCurveOffset
         {
             get
             {
@@ -321,7 +321,7 @@
         {
             curvePoints.Clear();
             curvePoints.Add(originPoint);
-            curvePoints.Add(midPoint + (Vector3.back * DragCurveOffset));
+            curvePoints.Add(midPoint + DragCurveOffset);
             curvePoints.Add(destinationPoint);
             curvePoints.Add(destinationPoint);
 

@@ -180,6 +180,23 @@
                 targetPointValidity = value;
             }
         }
+        [Tooltip("Allows to optionally determine if the raycast hit of the cast is valud based on the set rules.")]
+        [SerializeField]
+        private RuleContainer raycastHitValidity;
+        /// <summary>
+        /// Allows to optionally determine if the raycast hit of the cast is valud based on the set rules.
+        /// </summary>
+        public RuleContainer RaycastHitValidity
+        {
+            get
+            {
+                return raycastHitValidity;
+            }
+            set
+            {
+                raycastHitValidity = value;
+            }
+        }
         [Tooltip("The amount of distance the cursor has to move before the destination of the cursor is updated to a new position.")]
         [SerializeField]
         private float cursorLockThreshold;
@@ -227,7 +244,7 @@
         public UnityEvent ResultsChanged = new UnityEvent();
 
         /// <summary>
-        /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/> or <see cref="TargetPointValidity"/> rules.
+        /// The result of the most recent cast. <see langword="null"/> when the cast didn't hit anything or an invalid target according to <see cref="TargetValidity"/> or <see cref="TargetPointValidity"/> or <see cref="RaycastHitValidity"/> rules.
         /// </summary>
         private RaycastHit? targetHit;
         public RaycastHit? TargetHit
@@ -246,7 +263,7 @@
             }
         }
         /// <summary>
-        /// Whether the current <see cref="TargetHit"/> is valid based on the <see cref="TargetValidity"/> and <see cref="TargetPointValidity"/> rules.
+        /// Whether the current <see cref="TargetHit"/> is valid based on the <see cref="TargetValidity"/> and <see cref="TargetPointValidity"/> and <see cref="RaycastHitValidity"/> rules.
         /// </summary>
         public bool IsTargetHitValid { get; protected set; }
         /// <summary>
@@ -321,6 +338,19 @@
             }
 
             TargetPointValidity = default;
+        }
+
+        /// <summary>
+        /// Clears <see cref="RaycastHitValidity"/>.
+        /// </summary>
+        public virtual void ClearRaycastHitValidity()
+        {
+            if (!this.IsValidState())
+            {
+                return;
+            }
+
+            RaycastHitValidity = default;
         }
 
         /// <summary>
@@ -414,7 +444,7 @@
         /// </summary>
         protected virtual void OnAfterTargetHitChange()
         {
-            IsTargetHitValid = TargetHit != null && TargetValidity.Accepts(TargetHit.Value.transform.gameObject) && TargetPointValidity.Accepts(TargetHit.Value.point);
+            IsTargetHitValid = TargetHit != null && TargetValidity.Accepts(TargetHit.Value.transform.gameObject) && TargetPointValidity.Accepts(TargetHit.Value.point) && RaycastHitValidity.Accepts(TargetHit);
         }
     }
 }
