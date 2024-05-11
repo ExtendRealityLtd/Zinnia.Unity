@@ -1,5 +1,14 @@
 # Changelog
 
+### [2.16.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.16.0...v2.16.1) (2024-05-11)
+
+#### Bug Fixes
+
+* **Cast:** correct type in raycast hit validity tooltip ([acc3b49](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/acc3b49c0163716a273c2fbecbf2dba34eb69f6d))
+  > The word Valid was spelt incorrectly.
+* **Data:** block custom list editor if ignore custom inspect is set ([774c112](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/774c1121d2c9619eb5a0d0f7ba9670dfbbf16641))
+  > The custom Observable List Editor should also be blocked if the ZINNIA_IGNORE_CUSTOM_INSPECTOR_EDITOR ifdef is set otherwise it will throw an error becaue it will try and inherit from a class that does not get created in those circumstances.
+
 ## [2.16.0](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.15.0...v2.16.0) (2024-04-17)
 
 #### Features
