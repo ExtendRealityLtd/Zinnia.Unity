@@ -1,6 +1,6 @@
 ﻿namespace Zinnia.Unity.Editor.Data.Collection
 {
-#if (UNITY_2020_3_OR_NEWER && !ZINNIA_USE_CUSTOM_LIST_EDITOR) || ZINNIA_IGNORE_CUSTOM_LIST_EDITOR
+#if (UNITY_2020_3_OR_NEWER && !ZINNIA_USE_CUSTOM_LIST_EDITOR) || ZINNIA_IGNORE_CUSTOM_LIST_EDITOR || ZINNIA_IGNORE_CUSTOM_INSPECTOR_EDITOR
     /// Ignore this custom list editor in Unity 2020.3 or above as it breaks with Unity 2020.3.24f due to other fixes within Unity.
     /// It can still be forced to use the custom editor if the Scripting Define Symbol of `ZINNIA_USE_CUSTOM_LIST_EDITOR` is added but the list won't be collapsible. 
     /// It can also be completely turned off if the Scripting Define Symbol of `ZINNIA_IGNORE_CUSTOM_LIST_EDITOR` is added.

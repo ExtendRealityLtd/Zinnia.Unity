@@ -180,11 +180,11 @@
                 targetPointValidity = value;
             }
         }
-        [Tooltip("Allows to optionally determine if the raycast hit of the cast is valud based on the set rules.")]
+        [Tooltip("Allows to optionally determine if the raycast hit of the cast is valid based on the set rules.")]
         [SerializeField]
         private RuleContainer raycastHitValidity;
         /// <summary>
-        /// Allows to optionally determine if the raycast hit of the cast is valud based on the set rules.
+        /// Allows to optionally determine if the raycast hit of the cast is valid based on the set rules.
         /// </summary>
         public RuleContainer RaycastHitValidity
         {
