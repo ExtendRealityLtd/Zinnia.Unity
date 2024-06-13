@@ -8,5 +8,18 @@
     "overrideReferences": true,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.modules.xr",
+            "expression": "",
+            "define": "UNITY_XR"
+        },
+        {
+            "name": "com.unity.modules.vr",
+            "expression": "",
+            "define": "UNITY_VR"
+        }
+    ],
+    "noEngineReferences": false
 }

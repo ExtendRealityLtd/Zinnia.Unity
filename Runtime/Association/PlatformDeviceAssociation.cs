@@ -3,7 +3,9 @@
     using System;
     using System.Text.RegularExpressions;
     using UnityEngine;
+#if UNITY_XR || UNITY_VR
     using UnityEngine.XR;
+#endif
 
     /// <summary>
     /// Holds <see cref="GameObject"/>s to (de)activate based on the current platform and loaded XR device type.
@@ -69,13 +71,19 @@
         {
             string modelName = "";
 #if UNITY_2020_2_OR_NEWER
+#if UNITY_XR
             InputDevice currentDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
             modelName = currentDevice != null && currentDevice.name != null ? currentDevice.name : "";
+#endif
 #else
+#if UNITY_VR
             modelName = XRDevice.model;
 #endif
+#endif
             return Regex.IsMatch(Application.platform.ToString(), PlatformPattern) &&
+#if UNITY_VR
                 Regex.IsMatch(XRSettings.loadedDeviceName, XrSdkPattern) &&
+#endif
                 Regex.IsMatch(modelName, XrModelPattern);
         }
     }
