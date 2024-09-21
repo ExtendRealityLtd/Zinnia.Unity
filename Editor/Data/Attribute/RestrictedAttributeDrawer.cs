@@ -13,23 +13,23 @@
         /// <summary>
         /// The original GUI enabled state.
         /// </summary>
-        protected static bool originalGUIEnabledState = GUI.enabled;
+        protected static bool originalGUIEnabledState;
         /// <summary>
         /// The original GUI color.
         /// </summary>
-        protected static Color originalGuiColor = GUI.color;
+        protected static Color originalGuiColor;
         /// <summary>
         /// The original font style.
         /// </summary>
-        protected static FontStyle originalFontStyle = EditorStyles.label.fontStyle;
+        protected static FontStyle originalFontStyle;
         /// <summary>
         /// The original normal text color.
         /// </summary>
-        protected static Color originalNormalTextColor = EditorStyles.label.normal.textColor;
+        protected static Color originalNormalTextColor;
         /// <summary>
         /// The original focused text color.
         /// </summary>
-        protected static Color originalFocusedTextColor = EditorStyles.label.focused.textColor;
+        protected static Color originalFocusedTextColor;
         /// <summary>
         /// The color to use for muted text.
         /// </summary>
@@ -42,6 +42,12 @@
         /// <inheritdoc/>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            originalGUIEnabledState = GUI.enabled;
+            originalGuiColor = GUI.color;
+            originalFontStyle = EditorStyles.label.fontStyle;
+            originalNormalTextColor = EditorStyles.label.normal.textColor;
+            originalFocusedTextColor = EditorStyles.label.focused.textColor;
+
             EditorGUI.BeginProperty(position, label, property);
             RestrictedAttribute attrib = (RestrictedAttribute)attribute;
             Behaviour behaviour = (Behaviour)property.serializedObject.targetObject;
