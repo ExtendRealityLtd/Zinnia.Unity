@@ -1,5 +1,14 @@
 # Changelog
 
+### [2.16.2](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.16.1...v2.16.2) (2024-09-28)
+
+#### Bug Fixes
+
+* **Attribute:** prevent null exception from RestrictedAttributeDrawer ([3e1c268](https://github.com/ExtendRealityLtd/Zinnia.Unity/commit/3e1c268553192371319351cf4eddabd3cf63c4fb))
+  > The Restricted Attribute Drawer can thrown an exception when using the Unity Quick Search functionality due to the EditorStyles not being available to assign to static fields.
+  > 
+  > Instead these fields are now just assigned in the OnGUI method before the properties are changed, this seems to resolve the error.
+
 ### [2.16.1](https://github.com/ExtendRealityLtd/Zinnia.Unity/compare/v2.16.0...v2.16.1) (2024-05-11)
 
 #### Bug Fixes
