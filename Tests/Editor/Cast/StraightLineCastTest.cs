@@ -599,7 +599,7 @@ namespace Test.Zinnia.Cast
             Vector3EqualityComparer comparer = new Vector3EqualityComparer(0.1f);
             subject.Origin = subject.gameObject;
             subject.DragEffectDensity = 1;
-            subject.DragCurveOffset = 0f;
+            subject.DragCurveOffset = Vector3.zero;
 
             validSurface.transform.position = Vector3.forward * 5f;
 
@@ -612,7 +612,7 @@ namespace Test.Zinnia.Cast
             Assert.AreEqual(4, subject.Points.Count);
             Assert.That(subject.Points[1], Is.EqualTo(expectedMidPoint).Using(comparer));
 
-            subject.DragCurveOffset = 0.5f;
+            subject.DragCurveOffset = Vector3.back * 0.5f;
 
             subject.Process();
 
