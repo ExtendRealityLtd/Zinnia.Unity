@@ -17,6 +17,7 @@ namespace Test.Zinnia.Utility
         [SetUp]
         public void SetUp()
         {
+            Time.timeScale = 1f;
             containingObject = new GameObject("CountdownTimerTest");
             containingObject.SetActive(false);
             subject = containingObject.AddComponent<CountdownTimer>();
@@ -29,8 +30,114 @@ namespace Test.Zinnia.Utility
         }
 
         [UnityTest]
-        public IEnumerator TimerComplete()
+        public IEnumerator ScaledTimerComplete()
         {
+            containingObject.SetActive(true);
+            UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerStillRunningMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerNotRunningMock = new UnityEventListenerMock();
+
+            subject.Started.AddListener(timerStartedMock.Listen);
+            subject.Cancelled.AddListener(timerCancelledMock.Listen);
+            subject.Completed.AddListener(timerCompleteMock.Listen);
+            subject.StillRunning.AddListener(timerStillRunningMock.Listen);
+            subject.NotRunning.AddListener(timerNotRunningMock.Listen);
+
+            subject.TimeSource = CountdownTimer.TimeSourceType.ScaledTime;
+
+            subject.StartTime = 0.1f;
+
+            Assert.IsFalse(timerStartedMock.Received);
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerStillRunningMock.Received);
+            Assert.IsFalse(timerNotRunningMock.Received);
+
+            subject.Begin();
+
+            Assert.IsTrue(timerStartedMock.Received);
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsFalse(timerCompleteMock.Received);
+
+            subject.EmitStatus();
+
+            Assert.IsTrue(timerStillRunningMock.Received);
+            Assert.IsFalse(timerNotRunningMock.Received);
+
+            yield return new WaitForSecondsRealtime(0.1f);
+
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsTrue(timerCompleteMock.Received);
+
+            timerStillRunningMock.Reset();
+            timerNotRunningMock.Reset();
+
+            subject.EmitStatus();
+
+            Assert.IsFalse(timerStillRunningMock.Received);
+            Assert.IsTrue(timerNotRunningMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator ScaledTimerCompleteReducedTimeScale()
+        {
+            Time.timeScale = 0.5f;
+
+            containingObject.SetActive(true);
+            UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerStillRunningMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerNotRunningMock = new UnityEventListenerMock();
+
+            subject.Started.AddListener(timerStartedMock.Listen);
+            subject.Cancelled.AddListener(timerCancelledMock.Listen);
+            subject.Completed.AddListener(timerCompleteMock.Listen);
+            subject.StillRunning.AddListener(timerStillRunningMock.Listen);
+            subject.NotRunning.AddListener(timerNotRunningMock.Listen);
+
+            subject.TimeSource = CountdownTimer.TimeSourceType.ScaledTime;
+
+            subject.StartTime = 0.1f;
+
+            Assert.IsFalse(timerStartedMock.Received);
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerStillRunningMock.Received);
+            Assert.IsFalse(timerNotRunningMock.Received);
+
+            subject.Begin();
+
+            Assert.IsTrue(timerStartedMock.Received);
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsFalse(timerCompleteMock.Received);
+
+            subject.EmitStatus();
+
+            Assert.IsTrue(timerStillRunningMock.Received);
+            Assert.IsFalse(timerNotRunningMock.Received);
+
+            yield return new WaitForSecondsRealtime(0.1f);
+
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsFalse(timerCompleteMock.Received);
+
+            timerStillRunningMock.Reset();
+            timerNotRunningMock.Reset();
+
+            subject.EmitStatus();
+
+            Assert.IsTrue(timerStillRunningMock.Received);
+            Assert.IsFalse(timerNotRunningMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator UnscaledTimerComplete()
+        {
+            subject.TimeSource = CountdownTimer.TimeSourceType.UnscaledTime;
+
             containingObject.SetActive(true);
             UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
             UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
@@ -63,7 +170,59 @@ namespace Test.Zinnia.Utility
             Assert.IsTrue(timerStillRunningMock.Received);
             Assert.IsFalse(timerNotRunningMock.Received);
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSecondsRealtime(0.1f);
+
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsTrue(timerCompleteMock.Received);
+
+            timerStillRunningMock.Reset();
+            timerNotRunningMock.Reset();
+
+            subject.EmitStatus();
+
+            Assert.IsFalse(timerStillRunningMock.Received);
+            Assert.IsTrue(timerNotRunningMock.Received);
+        }
+
+        [UnityTest]
+        public IEnumerator UnscaledTimerCompleteReduceTimeScale()
+        {
+            Time.timeScale = 0.5f;
+            subject.TimeSource = CountdownTimer.TimeSourceType.UnscaledTime;
+
+            containingObject.SetActive(true);
+            UnityEventListenerMock timerStartedMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerCancelledMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerCompleteMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerStillRunningMock = new UnityEventListenerMock();
+            UnityEventListenerMock timerNotRunningMock = new UnityEventListenerMock();
+
+            subject.Started.AddListener(timerStartedMock.Listen);
+            subject.Cancelled.AddListener(timerCancelledMock.Listen);
+            subject.Completed.AddListener(timerCompleteMock.Listen);
+            subject.StillRunning.AddListener(timerStillRunningMock.Listen);
+            subject.NotRunning.AddListener(timerNotRunningMock.Listen);
+
+            subject.StartTime = 0.1f;
+
+            Assert.IsFalse(timerStartedMock.Received);
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsFalse(timerCompleteMock.Received);
+            Assert.IsFalse(timerStillRunningMock.Received);
+            Assert.IsFalse(timerNotRunningMock.Received);
+
+            subject.Begin();
+
+            Assert.IsTrue(timerStartedMock.Received);
+            Assert.IsFalse(timerCancelledMock.Received);
+            Assert.IsFalse(timerCompleteMock.Received);
+
+            subject.EmitStatus();
+
+            Assert.IsTrue(timerStillRunningMock.Received);
+            Assert.IsFalse(timerNotRunningMock.Received);
+
+            yield return new WaitForSecondsRealtime(0.1f);
 
             Assert.IsFalse(timerCancelledMock.Received);
             Assert.IsTrue(timerCompleteMock.Received);
