@@ -1,6 +1,7 @@
 ﻿namespace Zinnia.Utility
 {
     using System;
+    using System.Collections;
     using UnityEngine;
     using UnityEngine.Events;
     using Zinnia.Extension;
@@ -10,6 +11,33 @@
     /// </summary>
     public class CountdownTimer : MonoBehaviour
     {
+        /// <summary>
+        /// The source of Time to use.
+        /// </summary>
+        public enum TimeSourceType
+        {
+            /// <summary>
+            /// Taken from <see cref="Time.time"/>.
+            /// </summary>
+            ScaledTime,
+            /// <summary>
+            /// Taken from <see cref="Time.unscaledTime"/>.
+            /// </summary>
+            UnscaledTime,
+            /// <summary>
+            /// Taken from <see cref="Time.fixedTime"/>.
+            /// </summary>
+            FixedScaledTime,
+            /// <summary>
+            /// Taken from <see cref="Time.fixedUnscaledTime"/>.
+            /// </summary>
+            FixedUnscaledTime,
+            /// <summary>
+            /// Taken from <see cref="Time.realtimeSinceStartup"/>.
+            /// </summary>
+            RealTime
+        }
+
         /// <summary>
         /// Defines the event with the specified <see cref="float"/>.
         /// </summary>
@@ -54,6 +82,25 @@
             set
             {
                 beginOnEnable = value;
+            }
+        }
+
+        [Tooltip("The source for the time to be used in the countdown.")]
+        [SerializeField]
+        private TimeSourceType timeSource;
+        /// <summary>
+        /// The source for the time to be used in the countdown.
+        /// </summary>
+        public TimeSourceType TimeSource
+        {
+            get
+            {
+                return timeSource;
+            }
+            set
+            {
+                timeSourceChanged = !timeSource.Equals(value);
+                timeSource = value;
             }
         }
         #endregion
@@ -116,7 +163,7 @@
             {
                 if (IsRunning && !IsPaused)
                 {
-                    currentTime = Time.time;
+                    currentTime = actualTime;
                 }
                 return currentTime - beginTime;
             }
@@ -131,18 +178,18 @@
             {
                 if (IsRunning && !IsPaused)
                 {
-                    currentTime = Time.time;
+                    currentTime = actualTime;
                 }
                 return StartTime + (beginTime - currentTime);
             }
         }
 
         /// <summary>
-        /// <see cref="Time.time"/> when <see cref="Begin"/> is called.
+        /// <see cref="actualTime"/> when <see cref="Begin"/> is called.
         /// </summary>
         protected float beginTime;
         /// <summary>
-        /// <see cref="Time.time"/> of the current frame.
+        /// <see cref="actualTime"/> of the current frame.
         /// </summary>
         protected float currentTime;
 
@@ -150,6 +197,55 @@
         /// The <see cref="RemainingTime"/> at the point of calling <see cref="Pause"/>.
         /// </summary>
         protected float remainingAtPauseTime;
+
+        /// <summary>
+        /// Whether the <see cref="TimeSource"/> has changed.
+        /// </summary>
+        protected bool timeSourceChanged = true;
+
+        /// <summary>
+        /// The stored function for retrieving the time.
+        /// </summary>
+        protected Func<float> selectedTimeFunction = () => Time.time;
+
+        /// <summary>
+        /// The actual time value based on the selected <see cref="TimeSource"/>.
+        /// </summary>
+        protected float actualTime
+        {
+            get
+            {
+                if (timeSourceChanged)
+                {
+                    switch(TimeSource)
+                    {
+                        case TimeSourceType.ScaledTime:
+                            selectedTimeFunction = () => Time.time;
+                            break;
+                        case TimeSourceType.UnscaledTime:
+                            selectedTimeFunction = () => Time.unscaledTime;
+                            break;
+                        case TimeSourceType.FixedScaledTime:
+                            selectedTimeFunction = () => Time.fixedTime;
+                            break;
+                        case TimeSourceType.FixedUnscaledTime:
+                            selectedTimeFunction = () => Time.fixedUnscaledTime;
+                            break;
+                        case TimeSourceType.RealTime:
+                            selectedTimeFunction = () => Time.realtimeSinceStartup;
+                            break;
+                    }
+                    timeSourceChanged = false;
+                }
+
+                return selectedTimeFunction();
+            }
+        }
+
+        /// <summary>
+        /// A container to hold the timer coroutine.
+        /// </summary>
+        protected Coroutine timerRoutine;
 
         /// <summary>
         /// Starts the timer counting down.
@@ -171,10 +267,11 @@
         /// </summary>
         public virtual void Cancel()
         {
-            CancelInvoke(nameof(Complete));
+            CancelRoutine();
+            //CancelInvoke(nameof(Complete));
             if (IsRunning)
             {
-                currentTime = Time.time;
+                currentTime = actualTime;
                 Cancelled?.Invoke();
                 IsRunning = false;
                 IsPaused = false;
@@ -194,7 +291,7 @@
 
             remainingAtPauseTime = RemainingTime;
             IsPaused = true;
-            CancelInvoke(nameof(Complete));
+            CancelRoutine();
             Paused?.Invoke();
         }
 
@@ -280,7 +377,36 @@
         protected virtual void StartTimer(float invokeTime)
         {
             SetInternalStates();
-            Invoke(nameof(Complete), invokeTime);
+            CancelRoutine();
+            timerRoutine = StartCoroutine(StartRoutine(invokeTime));
+        }
+
+        /// <summary>
+        /// Starts the timer routine.
+        /// </summary>
+        /// <param name="invokeTime">The time to wait until completion.</param>
+        /// <returns>The enumerator for the coroutine.</returns>
+        protected virtual IEnumerator StartRoutine(float invokeTime)
+        {
+            float targetTime = actualTime + invokeTime;
+            while (actualTime < targetTime)
+            {
+                yield return null;
+            }
+            Complete();
+        }
+
+        /// <summary>
+        /// Cancels the timer routine.
+        /// </summary>
+        protected virtual void CancelRoutine()
+        {
+            if (timerRoutine != null)
+            {
+                StopCoroutine(timerRoutine);
+            }
+
+            timerRoutine = null;
         }
 
         /// <summary>
@@ -294,12 +420,12 @@
         }
 
         /// <summary>
-        /// Stores current <see cref="Time.time"/> for calculations.
+        /// Stores current <see cref="actualTime"/> for calculations.
         /// </summary>
         protected virtual void SetInternalStates()
         {
-            beginTime = Time.time;
-            currentTime = Time.time;
+            beginTime = actualTime;
+            currentTime = actualTime;
         }
 
         /// <summary>
